@@ -1,7 +1,12 @@
 # Introduction to software engineering
+
+Copyright Marco Gähler, all rights reserved.
+
+This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR.
+
 Things to write:
 -	What is architecture? Or leave this chapter away all together?
--	Domain level/model driven design
+-	Domain driven design -> reread the book
 -	Code examples for all chapters
 -	Write some more about everything. Some chapters are really short.
 -	Restructure the chapters.
@@ -2368,154 +2373,258 @@ The first problem of waterfall was missing feedback. The whole project was just 
 The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. And worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
 
 ## Agile values
-In 2001, a group of people met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto, a brief guide line how software development should be done.
+
+In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto, a brief guide line how software development should be done.
 -	Individuals and interactions over processes and tools.
 -	Working software over comprehensive documentation.
 -	Customer collaboration over contract negotiation.
 -	Responding to change over following a plan.
-# write something about these values?
+
+// write something about these values?
+
 Bill of rights
+
 The bill of rights states what kind of rights each individual in an agile process has.
-# add them here or should we leave it away?
-Work planning
+
+// add them here or should we leave it away?
+
+## Work planning
+
 The product owner has a set of requirements that the code should fulfill. This pile of work is broken down into small tickets. Where I’d like to emphasize the word small. Each ticket should be doable by one person during one sprint. Preferably it’s smaller than that.
+
 Every ticket is estimated for how much work it will take. The ticket size is quantified by the number of story points it gets. This is an artificial number to give the tickets a measurable size. Yet at the same time, the story points are vague enough to indicate that this value is only a vague estimation. In most projects, a story point is between one half and one day of work.
+
 The ticket size is estimated at the sprint planning. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the actual number of story points. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers overestimated the task.
+
 Tickets all have business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the backend code and to the GUI. Everything has to be worked on. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
+
 At the same time, one can write acceptance tests for every ticket. “… if the user clicks x, then the window closes.” This is also the acceptance criterion of the ticket: does the acceptance test pass?
-QA
+
+## QA
+
 In waterfall projects, the Quality Assurance (QA) was manually trying to find bugs in the existing software. This certainly does not fit anymore with agile. Instead, the QA should write the acceptance tests of every ticket. These tests should preferably be written before the developers finished working on the same ticket. This is quite similar to TDD and is called Behavior Driven Development (BDD).
+
 Finishing the acceptance tests before the developers finish the actual ticket is a hard task. One way to mitigate this issue is working ahead. The QA team can always try to be half a sprint ahead. This is not so easy as the sprint planning was not yet done. On the other hand, the PM should know quite well one sprint ahead what is going to follow next.
 
-The Iron Cross
-#make a graph of the iron cross
+## The Iron Cross
+
+// make a graph of the iron cross
+
 As in most other domains, there is frequent problem of projects not being done in time. There is of course always the solution of reducing quality far enough to make it in time. 
+
 In Software engineering, we have the rule of the Iron Cross: Good, fast, cheap, done. Choose three.
+
 Here are some options how the management can deal with these issues.
-Good
+
+### Good
+
 Reducing the quality of the code is the first option. Albeit, it is probably the worst one. This will lead to bugs and the overall productivity of the team will plummet quite quickly. Quick and Dirty just doesn’t work. Especially not on the long term.
-Fast
+
+### Fast
+
 Reducing scope of a project is usually the best option. In Agile, the important tickets were done at the beginning of the project. Furthermore, the work was cut vertically. Meaning that all the important stuff is already working. This allows the management to remove some of the less important tickets from the scope of the project.
-Cheap
+
+### Cheap
+
 If a software project goes wrong it’s usually not that cheap anymore, no matter what’s being done. 
+
 One thing the management tends to do is throwing more developers at the problem. This, however, is not working out as planned. It takes time and effort to introduce the new developers into the project, leading to a short-term dip in the overall productivity, before ramping up.
-Done
+
+### Done
+
 Changing the schedule helps a lot and is frequently the only option. As it was already the case in waterfall times. On the other hand, there are also plenty of projects where the scope of work is tuned in order to get the work done. It is quite amazing how often the core requirements of a project were overestimated.
-Sprints
+
+## Sprints
+
 In Agile, the whole project is split up into sprints of one- or two-weeks length, called sprints. This results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough estimates on how long it will take up to the next mile stone. This biweekly progress can also be used as a monitoring tool how well the development team is doing.
+
 The first meeting of a spring is the sprint planning. It takes the whole team to discuss the tickets and which ones to scope into the sprint. The sprint planning for a two-week sprint may take a whole afternoon.
+
 Part of the meeting is the planning game, where the story points for each ticket are estimated. This is required to plan the scope of the next sprint.
+
 Next is the daily meeting. This one is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what he’s doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
+
 Toward the end of the sprint, the software developers present their work done in the sprint presentation meeting. The idea of this meeting is for the stake holders to get an idea what the status of the software is. And hopefully, the developers are proud to present their work done.
+
 The last meeting is the retro perspective. Here the team meets to discuss anything that could improve the productivity of the development. Issues why the ticket size was estimated wrongly, blockers that were not resolved for too long, unresolved MRs, etc.
-The end of the project
+
+## The end of the project
+
 The project is apparently done, when all the work is done. Meaning when there are no more tickets around worth doing.
+
 However, it’s not that simple. Frequently all tickets are done but the development team still finds work to do. Some missing test coverage or an obvious refactoring. This is to be praised. Yet at the same time one should not do too much work on a program that’s theoretically over. Go and have a beer instead. Enjoy the end of the project.
-Becoming agile
+
+## Becoming agile
+
 What I tried to explain in this chapter was supposed to be something like a manual how to become Agile. The real effort, however, lies before you. There is no Agile a manual. It is more like a schema. And you can stretch this schema in many possible directions, whether it makes sense or not.
+
 The most important point from Agile is that you should figure out by yourself what works best. And be honest with yourself. It may be more convenient to work all by yourself for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. But you lack knowledge how you are progressing. And not only you, also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
+
 Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. Your code would have to be flexible also in Waterfall, but that’s another story.
+
 In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task as you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
+
 One quite controversial topic is the role of Agile coaches. Along with the advent of Agile, there was a demand from the industry for people with Agile experience or even Agile consulting, as no one knew how Agile really works out. But as always, there are many courses offering a certificate on Agile development after a two-day course. This is not really helpful.
+
 On the other hand, there are also serious courses, including some project management. The idea that the development team is organizing itself independently may be too optimistic and some external help may be useful. In politics, independent organization frequently led to anarchy. Even though I hope that a team of software developers should do better.
 
-Agile = Courage + Feedback + Simplicity + Communication
-#write also something about the other topics or leave this section away
-Courage
+## Agile = Courage + Feedback + Simplicity + Communication
+
+// write also something about the other topics or leave this section away
+### Courage
+
 It takes a little bit of courage to work as a software engineer. If you are always afraid that your work could introduce bugs, that you could make mistakes. It is hard to keep up that courage. This has severe consequences. You’ll only make the changes you are absolutely sure they don’t introduce bugs. You’ll only add features and fix bugs that are absolutely necessary. You won’t touch a single line of code you don’t have to. This is absolutely dreadful! You will not refactor code because you are afraid you might break something. No one in the whole team will. No one will refactor your code. It will just keep rotting. Your project is doomed.
+
 Instead you need something to keep your courage up. Something that takes you the fear of breaking stuff. That allows you to refactor code even though you are not exactly sure whether your refactoring really works or not. You need good test coverage. Good test coverage is the only thing that allows you to keep your courage and refactor code as you go. It is the only thing that can prevent your code from rotting. It is the only thing that can keep your productivity up.
+
 You also need courage to be honest. The very first thing is you have to be able to say “No.” Your manager will ask you many questions throughout your career and he hopes you to say yes. But if the real answer is no, you have to tell him so. Lying to him and saying that you will be able to do something that you are not will not do you any good, nor will it to you manager. He’ll be making plans based on wrong assumptions that will not work out.
+
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
-38.	Continuous integration
+
+# Continuous integration
+
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
+
 Now the idea of Continuous Integration (CI) is to automate this whole process, allowing you to publish a nightly build if needed. You automate the whole build process. You write automated tests, both unit and acceptance tests. You automate absolutely everything you need in order to be sure you have a stable release.
+
 CI is of paramount importance. Not only because of the daily release. It also creates a very short feedback loop. You get to your desk in the morning and you know right away whether all the code works fine or if the busy employee added a hack late at night and introduced a bug that his local unit tests did not catch. You might not be completely convinced, but I cannot overstate how important CI is for bigger projects.
+
 It might have come apparent to you that automating things means using scripts everywhere. This is indeed the case. It might be a pain to you. It sounds like a lot of work. It would be much simpler to build everything with a few clicks instead and let everyone run their own tests. 
+
 This is a perfectly fine argument, but it is missing the point. On the long term, this manual working style is eating up so much time. Spending a few days on a properly set up CI with build process, automated tests, etc. outweighs the initial costs by a lot. Explaining the setup to a new employee becomes straight forward. A build is just a single command away, same for testing, etc. The overhead for a new employee to get started becomes negligible.
+
 As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t get it right so far. Keep working on it until you get it right. Then it will feel super smooth. And you learned a great deal along the way.
+
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based …?
 
-39.	Hiring and getting hired
-#most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
+# Hiring and getting hired
+
+// most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
+
 That’s the moment you’ve all been looking for your whole life. Your first real job. The first position as a software engineer. But how do you get there? What is the process behind getting hired? Or rather, what should the process behind getting hired look like?
-Hiring
-Unfortunately, quite some job application processes suck. There’s no other way to put it. And the problem behind it is very simple. The application process is being led by a manager who likes numbers. He thinks that 5 years of professional Java development is a reasonable qualification. Even though there are developers with more than 10 years of experience who don’t manage to write reasonable code. They just never made the effort to learn anything by themselves. They keep writing the same old crap code they did 10 years ago. Meanwhile someone working for 3 different companies 1 year each probably has improved his programming skill significantly in the meantime.
+
+## Hiring
+
+Let's say it frankly. Unfortunately, quite some job application processes suck. There’s no other way to put it. And the problem behind it is very simple. The application process is being led by a manager who likes numbers. He thinks that 5 years of professional Java development is a reasonable qualification. Even though there are developers with more than 10 years of experience who don’t manage to write reasonable code. They just never made the effort to learn anything by themselves. They keep writing the same old crap code they did 10 years ago. Meanwhile someone working for 3 different companies 1 year each probably has improved his programming skill significantly in the meantime.
+
 Instead of the bulleted point lists of requirements, a company should rather describe in whole sentences what they are doing and who they are looking for.
+
 Similar for the interviews. It’s about getting to know each other personally. This is a very hard task, but there’s no way around it. This is why many companies hire psychologists to support the HR processes. So, ask personal questions. What did you do at your previous job? What were the challenges? How did you get along with the previous work colleagues? There are hundreds such questions and to none of them you will find an answer on the CV. Make sure you don’t waste your time asking the standard Java questions. How can I create a memory leak? Etc. And if you do, make sure the Java version used for the questions is at least up to date.
+
 Instead do some pair programming during the interview. Let the applicant bring his own laptop and give him internet access. He should be working on his laptop the way he’s used to. It’s not about testing his knowledge on the latest IDE or testing framework. It’s about finding out whether he’s smart and sharing the same coding values as you do. About having fruitful discussions on the code, you are just writing. It’s about simulating some real pair programming, as you will also do together if the applicant gets the job.
+
 Search for applicants with that something extra. Developers who are working on some open source project in their free time. There’s hardly any better sign that someone is a very motivated and possibly also skilled programmer. Join one of these software development groups, possibly sponsor an even. This is a great opportunity to get to know other software developers and hire them without the tedious application process.
+
 Keep recruiting all the time. This is a difficult task as the number of proficient programmers is too small to cover all the open positions. Thus, you can’t be too picky about when you are hiring your new team mate. If you have to hire someone under pressure, you’ll end up hiring someone who is not quite up to the task.
-Getting hired
+
+## Getting hired
+
 Getting hired does not take quite as much knowhow as hiring someone. For the simple reason that you are getting invited and mostly follow the process. Yet at the same time you should always stay aware that you are an equal partner during the application procedure. If you don’t agree with something you may very well just leave the recruiting process.
+
 As already written above, it’s about getting to know each other. Thus, you may also ask questions. In fact, you are expected to ask questions. If you don’t know what else to ask, ask the developer what he’s exactly working at and what kind of problems they are facing. This is something to get started with.
+
 You shouldn’t take the application process too serious. Just stay yourself. They ask for 3 years of experience? Well, that’s what they wish for. But in reality, 2 years are usually enough if your application is otherwise convincing. Or if you’re living in an area with too few programmers around, which is basically all around the globe.
+
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
-40.	Work ethics
+
+# Work ethics
+
 Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
-#list with software bugs that were expensive or fatal -> clean … ?
-#we shall do no harm, etc.
-#Working hours
-#keep learning
-Examples
+
+// list with software bugs that were expensive or fatal -> clean … ?
+
+// we shall do no harm, etc.
+
+// Working hours
+
+//keep learning
+
+# Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
-User story
+
+## Apple pie
+
+###  User story
+
 Your father comes for dinner next Sunday and you want to make him happy. Creamy apple pie makes him happy, for example.
 Acceptance criteria: your father is happy
 
 Now let’s first write the acceptance test. If we invite our dad, he has to be happy.
-In acceptance_tests/test_dinner.py
-Python dinner.py
-#how to get the printed value?
-Assert( expression.contains(“I’m so happy.”))
 
+In acceptance_tests/test_dinner.py
+
+```
+python dinner.py
+// how to get the printed value?
+Assert(expression.contains(“I’m so happy.”))
+```
 That’s it. We won’t have to touch the acceptance test anymore until the ticket is done. Note that I used the function contains to make the test a little more flexible. Your dad might say other things as well that we don’t care about.
+
 The very first thing we do is running the test.
+
 Pytest acceptance_tests
 
 And we see that it fails. That was to be expected, we didn’t implement anything so far. But it was still worth the few milliseconds we spent here. There are better places where you can save time.
-Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
 
+### Implementation
+
+Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
+```
 Apple_pie = create(“apple_pie”)
 Dad Dad
 Dad.eat(apple_pie)
-
+```
 Next we implement dad and then the create function.
-
+```
 Class Dad:
     Def Eat(food):
        If food.name == “apple_pie” and food.flavour == very_creamy
           Print(“I’m so happy”)
+```
 
-Paint
+## Paint
+
 Evans p.259
+
 Idea: We want to define paint of certain color that we can mix with each other and change its color accordingly. I would like to make some comments to the implementation in the book mentioned above.
 The code starts with a simple class paint and its variables.
+```
 class Paint:
-	V
-	R
-	Y
-	B
+	V: float
+	R: int
+	Y: int
+	B: int
+```
 These member variables don’t have expressive names at all. They are renamed to
+```
 class Paint:
-	Volume
-	Red
-	Yellow
-	Blue
+	Volume: float
+	Red: int
+	Yellow: int
+	Blue: int
+```
+
 This can be further improved. The red, yellow and blue values all represent a color. They are all the same, while the volume has a clearly different meaning. Thus we can refactor the RYB colors into a dedicated object to fulfill the single responsibility principle.
+```
 class Paint:
-	Volume
-	Color
+	volume
+	color
 class Color:
 	Red
 	Yellow
 	Blue
+```
 So far so good. We made some smaller refactoring and the basic data structure looks good to go. Now comes the very tricky question: how should the syntax of mixing two colors look like?
+```
 Paint a, b, c
 C = add(a,b)
 c.add(a)
+```
 The first is the procedural #? Way, the second is the object-oriented approach. Besides this fundamental question, we also have to figure out what kind of values a and b should have after this operation. Additionally, we also might want to find another name than add.
+
 First, I would like to answer the conceptual question. What happens with a and b? This is a somewhat philosophical question and without knowing the actual problem we’d like to solve there is no clear answer. We can only reason about it.
+```
 Def add(paint1, paint2):
 	Paint paint3
 	volume = paint1.volume + paint2.volume
@@ -2524,35 +2633,57 @@ Def add(paint1, paint2):
 Paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
 Paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
 Return paint3
+```
 Now I see 3 different possibilities:
 1.	We leave paint1 and paint2 as is. We used a copy of the actual paints and didn’t change the original paints.
-2.	We set the volume of both paints to 0. This is the equivalent of mixing the two paints and being left with two empty canisters containing no paint at all.
-3.	We set both paints to None. This would be somehow equivalent to throwing the canisters away.
+1.	We set the volume of both paints to 0. This is the equivalent of mixing the two paints and being left with two empty canisters containing no paint at all.
+1.	We set both paints to None. This would be somehow equivalent to throwing the canisters away.
+
 As I said, all of them are perfectly reasonable choices. It is up to us to choose one of them, depending on what seems to be the most appropriate choice for each case. This also has consequences how we should call the add function and what the best way of implementing is.
+
 For the first option, we don’t change neither paint1 nor paint2. Here it makes sense to call the function add or even define the + operator if possible, in your programming language of choice. This is a legitimate choice as we don’t expect add to change any of its function arguments.
+
 Let’s assume that we choose option 2 and we’re left with 2 empty canisters of paint. Calling this function add is no longer an option. Instead we could call it mix or mix_in. Additionally, we have to deal with the question if we want to be more or less object oriented. We do have the following options:
+```
 Paint3 = mix(paint1, paint2)
 Paint1.mix_in(paint2)
+```
 Now this is a matter of choice. A whole generation of programmers grew up hearing that the later option is the better one. It would be more natural. But honestly, I don’t see why this is supposed to be so super natural. As already seen, for case number 1 I clearly prefer the non-OO solution, simply because we are used to the add function not changing any function arguments while with the mix function, we have to take a look at the definition in order to be sure. Even here, I still opt for the first option. It just feels more natural to me as the function is symmetric, while the OO solution is asymmetric for no apparent reason.
+
 The solution
+`
 Paint3 = mix(paint1, paint2)
-Has one drawback. It creates a new object and it changes both function arguments. Now this is a very unfortunate solution. Changing one function argument is already bad enough and changing two is even worse. Now one solution would be passing a list of paints,
-Paint3 = mix([paint1, paint2])
+`
+Has one drawback. It creates a new object and it changes both function arguments. Now this is a very unfortunate solution. Changing one function argument is already bad enough and changing two is even worse. Now one solution would be passing a list of paints, `Paint3 = mix([paint1, paint2])`
+
 Reasonable programming dictates that all list elements are treated equally and thus they are either all altered together or none at all. Furthermore, we can implement a mix function for any number of paints.
+
 Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and implementing a simple add function. This follows the general conventions and minimizes confusion. It follows the Single Responsibility Principle as it only adds the two paints and doesn’t alter anything else. Changing the volume of the function arguments can be done in a separate step, if needed.
+
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-Further reading
+# Further reading
+
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
+
 Clean code (Robert C Martin) The best seller. Uncle Bob explains how good code should look like. I followed many of his rules, quite some of them are in a similar way in this book.
+
 Clean architecture (Robert C Martin) ?
+
 Clean Agile (Robert C Martin) It’s a fairly brief explanation how agile software development is supposed to work.
+
 Design patterns (Gamma et. Al) Probably one of the most influential software engineering books ever. It explains how classes can be combined to create some whole new functionality. Alternatively, you can also watch some youtube videos about the topic.
+
 Domain-Dirven Design (Eric Evans) Certainly worth a read. But a tough one. Trying to understand what Evans wanted to explain made me understand a big deal and I learned a lot about the fundamentals of programming. Even if some parts of the book are clearly outdated.
+
 Effective C++ (Scott Meyers) If you want to work with C++ this book is certainly worth a read. You learn quite something about the background and how to use the language. However, some parts are outdated and it’s not a book for beginners.
+
 Effective modern C++ (Scott Meyers) Scott explains the ideas behind C++11 and 14. This is at the time of writing probably the more useful book. But only for advanced C++ programmers.
+
 Working with legacy code (Michael Feathers) This book is about working with code that doesn’t have any tests and probably needs some refactoring.
+
 The Pragmatic Programmer 2nd edition (Dave Thomas, …?) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book here.
+
 Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The introductory example is simply amazing. Martin takes an innocent looking function and applies some of his refactoring steps. In the end there is some code that is super smooth. It has barely any indentations!
 
 Cheat sheet bbv?
