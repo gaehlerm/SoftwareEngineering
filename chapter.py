@@ -7,7 +7,6 @@ def remove_depercated_enumerations(line):
         if re.match(pattern, words[1]):
             line = " ".join(words[2:])
             line = " ".join([words[0], line])
-            print('match')
     else:
         line = " ".join(words[:])
     return line
@@ -19,10 +18,16 @@ def add_chapter_counter(file_name):
         print(len(lines))
         chapter_counter = 1
         new_lines = ""
+        is_code_block = False
         for line in lines:
-            line = remove_depercated_enumerations(line)
+            if line.startswith('```') and not is_code_block:
+                is_code_block = True
+            elif line.startswith('```') and is_code_block:
+                is_code_block = False
+            if not is_code_block:
+                line = remove_depercated_enumerations(line)
             words = line.split(" ")
-            if words[0] == "#":
+            if words[0] == "#" and not is_code_block:
                 line = " ".join(words[1:])
                 line = " ".join([words[0], str(chapter_counter) + ".", line])
                 chapter_counter += 1
