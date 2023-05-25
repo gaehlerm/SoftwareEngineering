@@ -7,8 +7,6 @@ def remove_depercated_enumerations(line):
         if re.match(pattern, words[1]):
             line = " ".join(words[2:])
             line = " ".join([words[0], line])
-    else:
-        line = " ".join(words[:])
     return line
 
 def add_chapter_counter(file_name):
@@ -41,6 +39,5 @@ def write_new_file(new_lines, file_name):
 
 if __name__ == "__main__":
     file_name = "README.md"
-    # file_name = "test.txt"
     new_lines = add_chapter_counter(file_name)
     write_new_file(new_lines, file_name)
