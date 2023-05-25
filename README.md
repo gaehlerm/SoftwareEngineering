@@ -136,13 +136,17 @@
 
 # 1. Introduction to software engineering
 
-Copyright Marco Gähler, all rights reserved.
+Copyright Marco Gähler, all rights reserved. 
+
+I don't know yet wether I'll print and sell this book, this is why I have not chosen any more liberal license (yet). I hope you are still going to help me and give me some comments.
 
 This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR.
 
+The first half of the books seems more or less ok, the second half needs some serious reworking.
+
 Things to write:
 -	What is architecture? Or leave this chapter away all together?
--	Domain driven design -> reread the book
+-	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation?
 -	Code examples for all chapters
 -	Write some more about everything. Some chapters are really short.
 -	Restructure the chapters.
