@@ -207,7 +207,7 @@ Your boss will not let you write code for a month just for the sake of writing c
 
 The first rule of software engineering
 
-We write code in order to create value for our customers.
+**We write code in order to create value for our customers.**
 
 If you don’t like meetings nor customers you can stay at home and write whatever code you like. But unless you are a genius, chances are very low anyone will pay you for that. It is more rewarding to write mediocre code that’s being used rather than writing brilliant code no one cares about.
 
@@ -215,72 +215,81 @@ Besides the meetings you will of course spend a fair amount of time with your pr
 
 <img src=images/programmerActivity.png width="600">
 
-You certainly have to look twice to grasp the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not including all the meetings that I mentioned earlier. Of course, this depends on many factors. If you work on a new project there is no refactoring (code clean up) required and there is less code for you to read. Ultimately, you’ll spend more time coding. In a very big project, it takes more time to implement changes. It can take a year until you are fully productive in a big project! But the company is already earning money with this code for a long time, so adding new features is not that important anymore. Either way, I will continue the discussion with the value from the plot.
+You certainly have to look twice to grasp the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not including all the meetings that you have to visit as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you work on a new project there is no refactoring (code clean up) required yet and there is less code for you to read. Ultimately, you’ll spend more time coding. In a very big project, it takes more time to implement changes. It can take a year until you are fully productive in a big project! But the company is already earning money with this code for a long time, so adding new features is not that important anymore. Either way, I will continue the discussion with the value from the plot.
 
 The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It’s about reading code! If you can reduce the time required to read code by half you save more time than you spend writing code in total. By a lot. 
 
 The second rule of software engineering:
 
-We write code that is easy to understand.
+**We write code that is easy to understand.**
 
-Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. As simple as it gets. Reading good code is not like reading Shakespeare. It’s … it’s rather like watching Donald Trump… Knowing only 1000 different words is great if you are a politician. Everyone will understand you. Even as people are tired, they like seeing him on the TV. I’m sometimes embarrassed because of my lousy English. Writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help. I hope you still like the content of this book. And with code it’s fairly similar.
+Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching Donald Trump... Knowing only 1000 different words is great if you are a politician. Everyone will understand you. Even as people are tired, they like watching him on TV. I’m sometimes embarrassed because of my lousy English. Writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. I hope you still like the content of this book. And with code it’s fairly similar.
 
-Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code you will never need these gimmicks.
+Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need these gimmicks.
 
 Of course, we are not politicians. We are software engineers. What we write has to be absolutely correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
 
-Urm… let me rephrase that as well… 
+Urm... let me rephrase that as well... 
 
 Unlike politicians, we have honor. We don’t want to be responsible for people to die. We want to write code that is impeccable. We want to be absolutely certain that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
 
 The third rule of software engineering
 
-We write automated tests that cover all our code.
+**We write automated tests that cover all our code.**
 
 Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. The importance of refactoring cannot be understated. It helps you keeping the logic of the code under control by sorting things out. Without refactoring your code quite quickly becomes such a huge mess you will barely be able to make any changes. And there’s a million places where bugs can hide.
 
 The fourth rule of software engineering
 
-We constantly clean up our code.
+**We constantly clean up our code.**
 
 Now you know what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to half an hour ago. I can explain to you the fundamental principles how to write good code.
 
 These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
+
 # 4. The fundamentals
+
 ## Single responsibility principle 
+
 Every object does exactly one thing. Everything is done by exactly one object.
 
-There are different definitions of the SRP. I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
+There are different definitions of the Single Responsability Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
-The other cases are code that emerged as a duplication over time. This has to be refactored out relentlessly.
 
-#how else do you recognize a violation of the SRP?
+The other cases are code that emerged as a duplication over time. Frequently one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
 
-The importance of the single responsibility principle (SRP) cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case.
+// remark that switch case statements are a frequent source of SRP violation.
+
+The importance of the SRP cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case. Here are the most important ones.
 
 Understanding: A function or class that implements exactly one thing will always be quite easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
 
-Naming: Giving names to objects can be extremely frustrating. It’s either too long or not expressive enough. A clear sign you violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
+Naming: Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. The name is either too long or not expressive enough. This is an indication you violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
 
 Duplication: Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. The most common issue in code duplication is several programmers developing the same piece of logic. This can lead to huge amounts of code duplication without anyone ever copy pasting anything.
 
 Testing: Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, setting it up is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
 
-Bugs: As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up.
-Bug fixing: Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug at first sight becomes harder. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix.
+Bugs: As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up. It is immediately apparent which part of the code is responsible for the behavior of the bug.
+
+Bug fixing: Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for  all.
 
 ## Orthogonality
-Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system…? Let me show you a brief example that everybody knows.
+Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
 
-//pictures with water valves
+// put both images on the same line
+
+<img src ="images/water_valve1.jpg">
+<img src ="images/water_valve2.jpg">
 
 On the left-hand side, we have the old school water valves. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution for the user is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the valve.
 
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the downstream persons duty to make the upstream person’s life as comfortable as possible by converting the data handed over.
-When in doubt, the upstream should return the data in the most general representation. This has the highest chances to be orthogonal from the user point of view.
+In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
+
+It may not always be that obvious how the downstream would like the interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure there are no implementation details leak into the interface, even tough this is easier said than done. This has the highest chances to be orthogonal from the user point of view.
 
 Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you have first to orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
 
@@ -289,47 +298,63 @@ Working in an orthogonal system has many advantages:
 -	Errors just propagate straight through the system and are easy to find. They don’t spread out.
 -	Fixing these bugs is easier as the system is less fragile.
 -	It is easier to write tests for an orthogonal system.
--	You are less strongly coupled to a third-party library.
-#figure out what else to write
+-	It decouples the code as the transformation acts as an adapter.
+
+// figure out what else to write
 
 # 5. Levels of abstraction
-“Every problem in computer science can be solved with another level of abstraction” – Andrew Konig
 
-“Except the problems of too many levels of abstraction” – my hero
+“You can solve every problem with another level of indirection.” – Andrew Konig
 
-Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them.
+“Except for the problem of too many levels of indirection.” – my hero
+
+Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. 
+
+You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them.
+
 One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about operating systems and the operating system doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it.
 
-Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, this hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the real work. However, the other levels are also required. The #Abteilungsleiter have to make sure all their employees are happy, or at least make sure they do their job. And as you go further up, the work is more about strategy of the company. Politics, etc. This is the natural way companies are organized. It won’t work in any other way. The CEO cannot manage all 10’000 employees nor can he know every detail of the processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details.
+Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, this hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the real work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least make sure they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees nor can he know every detail of the processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details.
 
-You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It has new properties. In theory it combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have break them up into smaller and smaller blocks that you can understand.
+You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It has new properties. In theory it combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. 
 
-Example
+Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have break them up into smaller and smaller blocks that you can understand.
+
+Programming Example
 
 C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s as always. The code is working and it will not be changed because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental issues were removed with the release of the C++11 standard.
 
 C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous new and delete commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
+
 ```C++
 Int[] arr = new int[10]
+// do something with the array
+// the size can't be changed and in the end it has to be deleted
 Delete[] arr
 ```
+
 One of the main reasons’ java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
 
 Though it turns out there exists also a solution with pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. Finally, you can safely use C++ without facing the danger of memory leaks.
+
 ```C++
 Std::vector<int> vec;
+// you can do basically anything with vec you would expect from a modern programming language.
 ```
-This idea changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone //reference to Scott Myers book, RAII? And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface. The only price to pay is a tiny bit of performance that is so small, you won’t be able to measure it. Vectors are simply better than arrays. Don’t ever use arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
+
+This idea changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //reference to Scott Myers book
+And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance that is so small, you won’t be able to measure it. Vectors are a higher level of abstraction than arrays. They are simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
 //some title for these lines?
 
 //create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
-In your code you will also have different levels of abstraction. The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, an extremely bad idea. The only reasonable approach is writing the authors and offering help to get your suggestion implemented.
+In your code you will also have different levels of abstraction. The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
 
-Above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all our basic datatypes and all the IO code. All the technical details the user will never see. The user will not even know about.
+One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all our basic datatypes and all the IO code. All the technical details the user will never see. The user will not even know about.
 
 //add something about domain levels
+Then there is the domain level. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here.
 
 The next level is the high-level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the high-level code, he should be able to understand what is going on.
 
