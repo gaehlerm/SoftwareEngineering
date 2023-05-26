@@ -185,12 +185,13 @@ In this chapter we want to look at how code should look like. What kind of rules
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code independently. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics which are highly important but are frequently neglected in books on software development.
 
-This book contains very little code. It’s more about concepts or software engineering, rather than difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a little bit of C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know.
-This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are as in other books usually fairly vague. I can only try to lay out all the different arguments for some tradeoffs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
+This book contains very little code. It’s more about concepts or software engineering, rather than about difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know.
+
+This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are as in other books usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some tradeoffs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
 
 ## The Life of a Software Engineer
 
-“If I had 1 hour to solve a problem on which my life depends, I would first sit down and think about it for 30minutes.” #exact quote? – Albert Einstein
+“If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
 I know you want me to get started and show you some fancy code examples. And I’m sorry to tell you that this is not happening. We don’t even know yet what this book should be about. Of course, you want to become a great software engineer get a job at google earn a lot of money and life a happy life. But this is all so vague. We have to sit down and analyze the situation. I even found moral support from a fellow physicist.
 
@@ -212,7 +213,8 @@ If you don’t like meetings nor customers you can stay at home and write whatev
 
 Besides the meetings you will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up code or discussing things with your colleagues. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
 
-//Where do I find the 75% plot again?
+<img src=images/programmerActivity.png width="600">
+
 You certainly have to look twice to grasp the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not including all the meetings that I mentioned earlier. Of course, this depends on many factors. If you work on a new project there is no refactoring (code clean up) required and there is less code for you to read. Ultimately, you’ll spend more time coding. In a very big project, it takes more time to implement changes. It can take a year until you are fully productive in a big project! But the company is already earning money with this code for a long time, so adding new features is not that important anymore. Either way, I will continue the discussion with the value from the plot.
 
 The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It’s about reading code! If you can reduce the time required to read code by half you save more time than you spend writing code in total. By a lot. 
