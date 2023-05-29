@@ -4,8 +4,19 @@
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
 - [4. The fundamentals](#4-the-fundamentals)
 	- [Single responsibility principle](#single-responsibility-principle)
+		- [Example](#example)
 	- [Orthogonality](#orthogonality)
 - [5. Levels of abstraction](#5-levels-of-abstraction)
+	- [Real world example](#real-world-example)
+	- [Programming Example](#programming-example)
+	- [The onion layers](#the-onion-layers)
+		- [3rd party libraries](#3rd-party-libraries)
+		- [Infrasturcture code](#infrasturcture-code)
+		- [The domain level](#the-domain-level)
+		- [High level code](#high-level-code)
+		- [API](#api)
+		- [GUI and acceptance tests](#gui-and-acceptance-tests)
+	- [Dependency tree](#dependency-tree)
 - [6. Interfaces](#6-interfaces)
 	- [APIs](#apis)
 - [7. Functions](#7-functions)
@@ -259,7 +270,7 @@ There are different definitions of the Single Responsability Principle (SRP). I 
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
-The other cases are code that emerged as a duplication over time. Frequently one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
+The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
 
 // remark that switch case statements are a frequent source of SRP violation.
 
@@ -277,13 +288,35 @@ Bugs: As the purpose of each class becomes clearer, it will be easier to structu
 
 Bug fixing: Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for  all.
 
+### Example
+Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
+
+```py
+def print_page():
+	print("author: Marco")
+	print("*************")
+	print_body()
+	print("copyright my company")
+	print("page number 1/1")
+```
+The problem is the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the prefered solution as it's fairly easy to create these functions.
+
+```py
+def print_page():
+	print_header()
+	print_body()
+	print_footer()
+```
+
+Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
+
 ## Orthogonality
 Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
 
-// put both images on the same line
+// put both images on the same line and maybe get images of the same size.
 
-<img src ="images/water_valve1.jpg">
-<img src ="images/water_valve2.jpg">
+<img src ="images/water_valve1.jpg" width="400">
+<img src ="images/water_valve2.jpg" width="400">
 
 On the left-hand side, we have the old school water valves. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution for the user is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the valve.
 
@@ -310,6 +343,8 @@ Working in an orthogonal system has many advantages:
 
 Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. 
 
+## Real world example
+
 You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them.
 
 One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about operating systems and the operating system doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it.
@@ -320,7 +355,7 @@ You create a level of abstraction every time you combine some existing objects. 
 
 Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have break them up into smaller and smaller blocks that you can understand.
 
-Programming Example
+## Programming Example
 
 C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s as always. The code is working and it will not be changed because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental issues were removed with the release of the C++11 standard.
 
@@ -343,27 +378,44 @@ Std::vector<int> vec;
 ```
 
 This idea changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //reference to Scott Myers book
+
 And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance that is so small, you won’t be able to measure it. Vectors are a higher level of abstraction than arrays. They are simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
-//some title for these lines?
+## The onion layers
 
 //create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
-In your code you will also have different levels of abstraction. The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
+In your code you will also have different levels of abstraction. These can be companed to the layers of an onion.
 
-One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all our basic datatypes and all the IO code. All the technical details the user will never see. The user will not even know about.
+### 3rd party libraries
 
-//add something about domain levels
-Then there is the domain level. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here.
+The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
+
+### Infrasturcture code
+
+One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all our basic datatypes and all the IO code. All the technical details the user will never see. The user will not even know about. He can only guess how it could be implemented, though in good code he will not have any clue how it's actually done.
+
+### The domain level
+
+//add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
+
+Then there is the domain level. This is the core of your application (though it is not the core of the onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here.
+
+### High level code
 
 The next level is the high-level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the high-level code, he should be able to understand what is going on.
 
+### API
+
 One level higher is the API. This defines the interface between our code and the user. It’s a wrapper around the high-level code. It offers all the functionality the user would expect in an easy to use form.
+
+### GUI and acceptance tests
+
 On the highest level are the GUI and the acceptance tests in parallel. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing the on the API than testing a GUI. Only test GUIs if you absolutely have to because for whatever reason they contain too much logic.
 
 As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Good luck!
 
-Dependency tree
+## Dependency tree
 
 Between classes as well as between files there are dependencies. The high-level object always depends on the low-level object. In math we call this kind of structure a tree, or more accurately a directed acyclic graph. This graph has the additional property that there should never be any bidirectional connections, i.e. there should never be any cyclic dependencies. Diamond like shapes are fine as long as there is a unique direction of the dependencies.
 
