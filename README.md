@@ -6,6 +6,7 @@
 	- [Single responsibility principle](#single-responsibility-principle)
 		- [Example](#example)
 	- [Orthogonality](#orthogonality)
+		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
 - [5. Levels of abstraction](#5-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
@@ -311,11 +312,13 @@ def print_page():
 Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
 
 ## Orthogonality
+
 Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
 
+// TODO search images without copy right?
  <div class="row">
-    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
     <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
+    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
 </div> 
 
 On the left-hand side, we have the old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution for the user is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
@@ -326,14 +329,17 @@ It may not always be that obvious how the downstream would like the interface to
 
 Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you have first to orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
 
-A common example is the coordinate transformation between spherical and Cartesian (xyz) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
+A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
+
+### Advantages of orthogonal systems
+
 Working in an orthogonal system has many advantages:
 -	Errors just propagate straight through the system and are easy to find. They don’t spread out.
 -	Fixing these bugs is easier as the system is less fragile.
 -	It is easier to write tests for an orthogonal system.
 -	It decouples the code as the transformation acts as an adapter.
 
-// figure out what else to write
+// figure out what else to write. Maybe add some examples.
 
 # 5. Levels of abstraction
 
