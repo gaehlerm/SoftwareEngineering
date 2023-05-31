@@ -503,9 +503,6 @@ Once again, understanding Interfaces in general will allow you to write better c
 
 // mention that there will be more about interfaces all over the code?
 
-// move this to functions
-
-Functions shouldn’t have more than 3 arguments. This should be completely sufficient. Due to the single responsibility principle they should be short (10 lines) and if you need more than 3 arguments in a 10-line function something is really off. Also make sure it’s intuitive which arguments you should use and how they are ordered. And as always, you shouldn’t pass Booleans and try to avoid strings. Also, inside structured objects.
 
 Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
 
@@ -626,11 +623,19 @@ Global variables should not be used, so we’ll neglect those.
 
 A method might access only a few of the class variables. Still, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
-Following the SRP, functions can only be either a query or a command. Never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code, but at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP.
+Following the SRP, functions can only be either a query or a command. Never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code, but at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
+```C++
+if(set_node("money", 50)){ 
+	go_shopping(); 
+}
+```
+Here the `set_node` function does two things at a time.
 
-A very vexing thing are functions altering the value of the input arguments. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference. However, in other languages, this has to be clear from the context of the class. Unexpectedly changing values of an input argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of input variables. If you change the value of an input argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
+A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is so unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference. However, in other languages, this has to be clear from the context of the class. 
 
-Output arguments are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, output arguments have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function might change the first input value. Or for a method: This method might change the class instance.
+Unexpectedly changing values of an input argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of input variables. If you change the value of an input argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
+
+Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or for a method: This method might change the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
@@ -638,19 +643,21 @@ As a summary I’d like to emphasize that you should take care of the length of 
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
+// This chapter is somehow not up to the point...
+
 As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands anything, he doesn’t care. As long as the syntax is correct. Even if there is a bug, the computer just executes it. But we don’t care about the computer, this book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
-Something humans are not good at is very obvious. Math. We suck at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts.
+Something humans are not good at is very obvious. Math. We suck at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts and approximate thinking.
 
-You can play terrible tricks with humans. We obey the laws of psychology. Even though these laws are only roughly understood, you can make another person to do pretty much anything you want. Even experts on fraud fall for such tricks. You would never send a stranger a nude pic of yourself. But if you already sent him a picture of you in a bikini and one showing your boobs it’s only a small step sending another picture where you are naked. It’s easier to send it than resisting this malicious request because you are being manipulated. You just crossed the red line where the real abuse is about to begin. Any outside person could tell you immediately that this is going to end badly. But you are stuck in your fiction created by another person. These are the human weaknesses. We can only mitigate these weaknesses by accepting them.
+You can play terrible tricks with humans as we all follow the same laws of psychology. Even experts fall for such tricks. We can only mitigate our weaknesses by accepting them.
 
 On the other hand, we are amazing at understanding complex processes by creating an abstract model of a process and analyzing different parts of it. We know a lot of different things and we can have an abstract imagination what would happen if we combine many of them. 
 
 We are also pretty good in communicating with others. Using the natural language. We are able to explain fairly difficult things and others understand us. Just as you (hopefully) understand what I write here.
 
-We are terrible at math and we can be extremely easily tricked. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which… is still only semi complex. You can still describe what it does. 
+We are terrible at math and we can be extremely easily tricked. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. 
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does.
 
@@ -670,25 +677,25 @@ Decouple code, decouple functions logically, global variables are like coupling 
 
 # 10. Programming languages
 
-“I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, p.311
+“I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
-A very frequent question from beginners is “which programming language should I learn”. Some of you may have read somewhere that programming language A is better than language B for some very obscure reason.
+A very frequent question from beginners is “which programming language should I learn”. Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: "It doesn't matter too much."
 
 I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need it along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know python and C++ and a few details of Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one, even if it’s just Matlab.
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know python and C++ and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one, even if it’s just Matlab.
 
-As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
+As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative for non-scientists. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
-I would not recommend learning Java or C++ as a first programming language. They are too complicated and it takes much more time understanding the language itself. Instead you should learn how to apply the principles taught in this book and elsewhere and improve your code. Of course, later on in your career it makes sense to learn one of these languages. They are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even though I used quite some C++ code in this book. They are too complicated and it takes much more time understanding the language itself. Instead you should learn how to apply the principles taught in this book and elsewhere and improve your code. Of course, later on in your career it makes sense to learn one of these languages. They are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
 
 C++ and Java are static typed, have to be compiled and use inheritance to define interfaces. Learning new languages will show you other ways of thinking about some problems. It opens up more job opportunities as well. But it’s nothing you need to know when you just start programming.
 
-Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than the existing one. But there are dozens of millions of programmers that already use the current languages and their code is worth hundreds of billions. You cannot update such quantities of code, only because there are a few new features that make the code a little bit shinier or more performant. Instead there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than the existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code, only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has ahigh-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
 
-There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. The code should be really simple. In a few cases I will still use code examples. These are in Python or C++, whatever is more appropriate. It’s not a deliberate choice, it’s just what I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the programming language. I promise that the syntax will be very simple to understand. It requires only the very basics.
+There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. The code should be really simple. In some cases I will still use code examples. These are written in Python or C++, whatever is more appropriate. It’s not a deliberate choice, it’s just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the programming language. I promise that the syntax will be very simple to understand. It requires only the very basics.
 
 # 11. bugs, errors, exceptions
 
