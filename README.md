@@ -17,10 +17,16 @@
 		- [High level code](#high-level-code)
 		- [API](#api)
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
+		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
 - [6. Interfaces](#6-interfaces)
 	- [APIs](#apis)
+		- [Adding more functionality](#adding-more-functionality)
+		- [Versioning](#versioning)
+		- [Conclusion](#conclusion)
 - [7. Functions](#7-functions)
+	- [Temporal coupling](#temporal-coupling)
+	- [Number of arguments](#number-of-arguments)
 - [8. Understandable code](#8-understandable-code)
 - [9. Decoupling](#9-decoupling)
 - [10. Programming languages](#10-programming-languages)
@@ -70,7 +76,7 @@
 	- [Static expression](#static-expression)
 	- [Problems](#problems)
 	- [Functions and Methods](#functions-and-methods)
-	- [Temporal coupling](#temporal-coupling)
+	- [Temporal coupling](#temporal-coupling-1)
 	- [Conclusions](#conclusions)
 - [19. Design patterns](#19-design-patterns)
 	- [Factories](#factories)
@@ -200,6 +206,8 @@ But OO programming is by far not the most important topic in this book. No matte
 This book contains very little code. It’s more about concepts or software engineering, rather than about difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know.
 
 This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are as in other books usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some tradeoffs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
+
+This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Most chapters are my personal summary about several chapter in a specific book, thus I mention what book I was reading as a foundation.
 
 ## The Life of a Software Engineer
 
@@ -394,7 +402,7 @@ public:
 		capacity = 1;
         current = 0;
 	}
-	~ vectorClass()
+	~vectorClass()
     {
         delete [] arr;
     }
@@ -425,7 +433,7 @@ In your code you will also have different levels of abstraction. These can be co
 
 ### 3rd party libraries
 
-The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
+The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
 
 ### Infrasturcture code
 
@@ -439,7 +447,7 @@ Then there is the domain level. This is the core of your application (though it 
 
 ### High level code
 
-The next level is the high-level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the high-level code, he should be able to understand what is going on.
+The next level is the high-level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the high-level code, he should be able to understand what is going on and possibly also spot potential errors.
 
 ### API
 
@@ -447,19 +455,25 @@ One level higher is the API. This defines the interface between our code and the
 
 ### GUI and acceptance tests
 
-On the highest level are the GUI and the acceptance tests in parallel. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing the on the API than testing a GUI. Only test GUIs if you absolutely have to because for whatever reason they contain too much logic.
+On the highest level are the GUI and the acceptance tests in parallel. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a very bad sign.
+
+### Summary
 
 As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Good luck!
 
 ## Dependency tree
 
-Between classes as well as between files there are dependencies. The high-level object always depends on the low-level object. In math we call this kind of structure a tree, or more accurately a directed acyclic graph. This graph has the additional property that there should never be any bidirectional connections, i.e. there should never be any cyclic dependencies. Diamond like shapes are fine as long as there is a unique direction of the dependencies.
+// I think this is somehow redundant with the explanation of the DI?
+
+Between classes as well as between files there are dependencies. The high-level object always depends on objects in the same level or on lower-level objects. In math we call this kind of structure a tree, or more accurately a directed acyclic graph. This graph has the additional property that there should never be any bidirectional connections, i.e., there should never be any cyclic dependencies. Diamond like shapes are fine as long as there is a unique direction of the dependencies.
 
 //add a graph with dependencies, explain the levels of abstraction better
 
+// abstract vs concrete code -> see Clean Architecture?
+
 # 6. Interfaces
 
-“A good interface is easy to use correctly and hard to use wrong” - ? The fundamental rule of interfaces
+“Make interface is easy to use correctly and hard to use incorrectly" - Scott Meyers, The fundamental rule of interfaces
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one toward the high-level side.
 
@@ -467,13 +481,11 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 // remove some of the examples?
 
-“Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
+“Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed. USB 3 has a much more user-friendly design. You can plug it in either way, the technicians implemented a technical solution to enable this. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This is some extra work for the engineers, but once solved it is a very convenient solution for the users.
+An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed. USB 3 has a much more user-friendly design. You can plug it in either way. The technicians implemented a technical solution to enable this. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This is some extra work for the engineers, but once solved it is a very convenient solution for the users.
 
-Another example are water valves for showers. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
-
-// picture of the valves
+Another example are water tabs for showers, as already explained in the chapter on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
 
 The new handles allow you to choose the amount of water and the temperature separately. This might be technically a little bit more complicated to implement but it’s so much more convenient to use. 
 
@@ -487,7 +499,7 @@ Now there used to be a minor problem about the gear boxes. They were not user fr
 
 Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suited gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars.
 
-Once again, understanding Interfaces in general will allow you to write better code. It’s just the same as in the examples above. Try to follow the same principles. Figure out what the user really wants makes writing code using a well-designed interface quite easy. Writing some user code examples will help you a lot.
+Once again, understanding Interfaces in general will allow you to write better code. It’s just the same as in the examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
 
 // mention that there will be more about interfaces all over the code?
 
@@ -495,47 +507,116 @@ Once again, understanding Interfaces in general will allow you to write better c
 
 Functions shouldn’t have more than 3 arguments. This should be completely sufficient. Due to the single responsibility principle they should be short (10 lines) and if you need more than 3 arguments in a 10-line function something is really off. Also make sure it’s intuitive which arguments you should use and how they are ordered. And as always, you shouldn’t pass Booleans and try to avoid strings. Also, inside structured objects.
 
-#Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
+Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
 
 // is there something else left to write here? It feels very short. Figure out a good example?
 
 ## APIs
 // move this chapter further down in the book?
-The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. “They support even emojis!”
+
+The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. “They support even emojis!” Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
 That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
 
 APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! You might think this is doable. I can promise, you will get nightmares.
 
-You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to errors or, even worse, bugs. And that’s when customers go rampage. “Up to now the code worked and all of a sudden it fails. What the **** did you do?” If you don’t understand this harsh reaction, you can let a friend of yours break your code once in a while. You will feel exactly the same.
+You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to errors or, even worse, bugs in the user code. And that’s when customers go rampage. “Up to now the code worked and all of a sudden it fails. What the **** did you do?” If you don’t understand this harsh reaction, you never had a work colleague breaking your code once in a while. You would feel exactly the same.
+
+### Adding more functionality
 
 You want to add a new option to one of your API functions, but there is a lot of customer code out there. This code doesn’t use this new option so far and won’t use it in the future. Now how can you add this option without breaking this old user code?
 
 The answer are default arguments. The current behavior is set to be the default and after the update, the user can select an alternative option inside the function call. This works in all modern programming languages. You don’t even need an if statement.
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, “3.8.12”, the latest python version at the time of writing. “3” is the major version, “8” is the minor version and “12” is the …? … is not used in small projects. Every time you make a new release you increase the version number. For bug fixes or internal improvements, you increase the … number. This is for all kind of changes the user shouldn’t notice. The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. But the really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. HA! Think again. To migrate most of the python code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated.
+### Versioning
+
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, “3.8.12”, the latest python version at the time of writing. “3” is the major version, “8” is the minor version and “12” is the trace. The last is generally used only in bigger projects. 
+
+Every time you make a new release you increase the version number. 
+- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice. 
+- The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. 
+- The really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. HA! Think again. To migrate most of the python code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
+
+### Conclusion
 
 Please remember: APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
 
 # 7. Functions
+
+"Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
+
+Further Reading: Clean Code, chapter 3, Robert C. Martin
+
 // what else to write about functions? Read clean code again?
 
-We’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well. The class variables and the slightly different context are not a fundamental difference. Therefore, I won’t mention the differences too often. 
+We’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are very similar. The class variables and the slightly different context are not a fundamental difference. Therefore, I won’t mention the differences too often.
+
 Functions and methods are, along with classes, the backbone of every modern software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well.
 
 Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (less than roughly ten lines) and have as few levels of indentation as possible. Having nested if/else, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
-Naming becomes relatively easy if you follow these rules. The function body should all be one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code.
+Naming becomes relatively easy if you follow these rules. The function body should all be one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
 
 // show examples of such functions
+```C++
+def log_in(email_address)
+{
+	static int count = 0;
+	count++;
+	check(email_address)
+}
+```
 
-Functions should not have any side effects. Actually, no code should ever have side effects, but functions are the only thing that can have side effects. Side effects are terrible. They are not mentioned in the function name and they are very easy to miss when reading the code. Additionally, they lead to temporal coupling as the order of calling functions with side effects matter. Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or sometimes mutable arguments.
+This is clearly a side effect. This function says nothing about a hidden counter, thus this is hidden behavior and should be avoided.
 
+Functions should not have any side effects. Actually, no code should ever have side effects, but functions are the only thing that can have side effects because all actions are performed inside functions. Side effects are terrible. They are not mentioned in the function name and they are very easy to miss when reading the code. Additionally, they lead to temporal coupling as the order of calling functions with side effects matter.
+
+## Temporal coupling
+
+Temporal coupling is if you can do things in the wrong order. Sometimes the code enforces the right order, sometimes it doesn't. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. Let me make a brief example:
+
+```C++
+class Shopping{
+	int money;
+	std::vector<string> shopping_list;
+
+	void get_money() {money = 50;}
+	void create_shopping_list(){/* set the shopping list */}
+	void go_shopping(){/* ... */}
+}
+```
+Apparently you have to get money and create a shopping list before you go shopping.
+```C++
+Shopping shopping;
+shopping.get_money();
+shopping.create_shopping_list();
+shopping.go_shopping();
+```
+This is the natural order of things. However, this is not enforced by the code. One could also write the following code:
+```C++
+Shopping shopping;
+shopping.get_money();
+shopping.go_shopping();
+shopping.create_shopping_list();
+```
+Now you go shopping without having a shopping list. I don't know what the code will do, but it's quite certainly an error.
+
+It is one of the advantages of procedural code that such things are less likely to happen.
+```C++
+money = get_money();
+shopping_list = create_shopping_list();
+go_shopping(money, shopping_list);
+```
+In this case it is physically impossible to go shopping without having a shopping list. You will get a compiler error if you try.
+
+Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or, if necessary, to mutable arguments.
+
+## Number of arguments
 As with the length of the function, the number of arguments should be as small as possible. This simplifies the function a lot. Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it may become.
 
-Functions shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. We can use a data class instead. If you don’t know how to pack all the variables you need into three data class objects, it’s time you reconsider the function design.
+Functions shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. We can use a struct instead. If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
@@ -2925,6 +3006,8 @@ Clean code (Robert C Martin) The best seller. Uncle Bob explains how good code s
 Clean architecture (Robert C Martin) ?
 
 Clean Agile (Robert C Martin) It’s a fairly brief explanation how agile software development is supposed to work.
+
+97 things every programmer should know (Kevlin Henney et al.)
 
 Design patterns (Gamma et. Al) Probably one of the most influential software engineering books ever. It explains how classes can be combined to create some whole new functionality. Alternatively, you can also watch some youtube videos about the topic.
 
