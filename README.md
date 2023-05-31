@@ -351,11 +351,11 @@ Levels of abstraction is an extremely important concept in software engineering.
 
 ## Real world example
 
-You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them.
+You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level.
 
 One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about operating systems and the operating system doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it.
 
-Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, this hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the real work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least make sure they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees nor can he know every detail of the processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details.
+Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, this hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least make sure they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees nor can he know every detail of the processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. Neither do self organizing companies without a hierarchy work out very well.
 
 You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It has new properties. In theory it combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. 
 
@@ -368,30 +368,60 @@ C++ is a fairly low-level programming language. Its widespread usage has mostly 
 C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous new and delete commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
 
 ```C++
-Int[] arr = new int[10]
-// do something with the array
-// the size can't be changed and in the end it has to be deleted
-Delete[] arr
+Int[] arr = new int[10];
+arr[0] = 42;
+// etc.
+Delete[] arr;
 ```
 
 One of the main reasons’ java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
 
 Though it turns out there exists also a solution with pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. Finally, you can safely use C++ without facing the danger of memory leaks.
 
+Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom vectorClass contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
+
 ```C++
-Std::vector<int> vec;
-// you can do basically anything with vec you would expect from a modern programming language.
+// basic idea from https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/
+class vectorClass {
+private:
+    int* arr;
+	int capacity;
+    int current;
+public:
+    vectorClass()
+    {
+        arr = new int[1];
+		capacity = 1;
+        current = 0;
+	}
+	~ vectorClass()
+    {
+        delete [] arr;
+    }
+	void push(int data)
+    {
+		// at some point the size of the array is smaller than the size required. Then it's time to allocate more space
+        if (current == capacity) {
+            int* temp = new int[2 * capacity];
+		}
+		// etc.
+	}
+}
 ```
 
-This idea changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //reference to Scott Myers book
+This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //reference to Scott Myers book
 
-And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance that is so small, you won’t be able to measure it. Vectors are a higher level of abstraction than arrays. They are simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
+And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. 
+
+Vectors are a higher level of abstraction than arrays. They are simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
 ## The onion layers
 
 //create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
 In your code you will also have different levels of abstraction. These can be companed to the layers of an onion.
+
+//always work on the highest possible level of abstraction that is still reasonable
 
 ### 3rd party libraries
 
