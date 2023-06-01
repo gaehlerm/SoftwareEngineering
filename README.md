@@ -279,6 +279,8 @@ There are different definitions of the Single Responsability Principle (SRP). I 
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
+// Dry applies also to building the project, running tests, etc.
+
 The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
 
 // remark that switch case statements are a frequent source of SRP violation.
@@ -701,19 +703,19 @@ There are quite few code examples in this book. Most concepts that I explain her
 
 Better dead than walking wounded
 
-Even if you write absolutely amazing code, some things will go wrong. Some things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. I would briefly like to go through the different cases. Even if the distinction between errors and bugs is somewhat arbitrary.
+Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. I would briefly like to go through the different cases. Even if the distinction between errors and bugs is somewhat arbitrary.
 
 ## Bugs
 
-A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often. But this is exactly why they are so catastrophic. You don’t know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. Just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
 
 I hope you got the memo. In a small project, you can do pretty much anything you want. But you have to make sure you don’t create bugs. Write good code and make sure it’s tested.
 
 ### Debugging
 
-Debugging is the process of finding bugs. If you spend too much time debugging it’s a clear indication that your code quality is bad. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where a bug is trying to hide.
+Debugging is the process of finding bugs. If you spend too much time debugging it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where a bug is trying to hide.
 
-In order to find out what the code is actually doing I generally recommend using the debugger. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. 
+In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. 
 
 ## Errors
 
