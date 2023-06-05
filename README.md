@@ -108,8 +108,8 @@
 	- [Single Responsibility Principle](#single-responsibility-principle-1)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Interface segregation principle](#interface-segregation-principle)
-- [25. …](#25-)
-- [26. party software](#26-party-software)
+- [25. Performance Optimization](#25-performance-optimization)
+- [26. 3rd party software](#26-3rd-party-software)
 - [27. Dependencies](#27-dependencies)
 	- [Circular dependencies](#circular-dependencies)
 - [28. C++](#28-c)
@@ -279,7 +279,9 @@ There are different definitions of the Single Responsability Principle (SRP). I 
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
-// Dry applies also to building the project, running tests, etc.
+// Dry applies also to building the project, running tests, etc. 
+
+// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
 
 The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
 
@@ -753,7 +755,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
 # 12. Testing
-“Data structures + algorithms = software” # Bertrand Mayer?
+“Data structures + algorithms = software” Adapted from Bertrand Mayer
 
 Interfaces + testing = engineering
 
@@ -777,13 +779,13 @@ On the other hand, the benefits for the company would be worth this amount. At f
 1.	If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
 1.	There are less bugs as automated tests are more reliable than manual testing.
 
-And that’s only the marketing side of it. At least as important is the developers’ side of this screen. So far you were always afraid that you would break some feature when changing code. A feature was working so far but all of a sudden, it’s broken. Nobody realized when it happened. You’ll spend the rest of your work life in constant fear. This is worse than the zombie apocalypse. There is nothing that can make you feel save again. You are never going to touch a single line of code again unless you really have to as you are afraid of breaking something.
+And that’s only the marketing side of it. At least as important is the developers’ side of this screen. So far you were always afraid that you would break some feature when changing code. A feature was working so far but all of a sudden, it’s broken. Nobody realized when it happened. You’ll spend the rest of your work life in constant fear. This is worse than the zombie apocalypse. There is nothing that can make you feel save again. You are never going to touch a single line of code again unless you really have to, as you are afraid of breaking something.
 
-But now, all of a sudden… magic! You know if you accidentally broke a feature. The screen tells you everything is alright! Your paranoia starts to fade. You gain confidence again in your code. In your abilities. In yourself! You can start replacing all this old ugly code that had been sewn together like a Frankenstein monster. Things that were welded together by force because the author didn’t dare to rewrite the existing code to make a clean solution possible. Suddenly things look fine again.
+But now, all of a sudden... magic! You know if you accidentally broke a feature. The screen tells you everything is alright! Your paranoia starts to fade. You gain confidence again in your code. In your abilities. In yourself! You can start replacing all this old ugly code that had been sewn together like a Frankenstein monster. Things that were welded together by force because the author didn’t dare to rewrite the existing code to make a clean solution possible. Suddenly things look fine again.
 
 You go to your CEO, give him a hug and a box of chocolate. You thank him for saving your career and you pay him back the billion.
 
-I must admit at times I exaggerated a little to make a point. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. They are no guarantee to make your software project a success. But I can tell you projects without automated tests are doomed and will fail sooner rather than later.
+I must admit at times I exaggerated a little to make a point. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. They are no guarantees to make your software project a success. But I can tell you that projects without automated tests are doomed and will fail sooner rather than later.
 
 I hope this is enough motivation to make you read through this chapter and really try to write tests by yourself. As always, it’s not easy at the beginning. Ask the internet and others for advice and you’ll get a fairly good idea how to write them.
 
@@ -1010,6 +1012,9 @@ Secondly your production code is not made to run automated test cases. Asserts a
 So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. It forces you to decouple the code.
 
 In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed.
+
+// It is really common that programmers write more code than really needed. It is not only because they think it's going to be needed in the future. At times it is also for the pure fun of programming. This should be avoided. We wirte code primary because it creates value, not because it's fun. At least in our professional environment.
+// See 97 things every programmer should know chapter 39.
 
 Maybe you do not fully understand yet how this is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
 
@@ -1771,8 +1776,8 @@ The SRP has already been explained at the very beginning of this book due to its
 
 ## Open Closed Principle
 
-The Open Closed Principle says that an object should be open for extension and closed for modification. One example is defining an interface. This allows you to add as many objects to this interface as you want while it is fairly expensive to change the interface. Each class implementing that interface would have to be changed as well. 
-#ask the internet to get some examples and more explanations
+The Open Closed Principle was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. This is an unfortunate choice. Robert C. Martin and others suggest using interfaces instead. Interfaces allow you to add as many implementations as you want while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
+
 Liskov substitution principle
 
 // No inheritance no Liskov? Is the rectangle-square only an example or a metaphor? 
@@ -2080,13 +2085,15 @@ The goal of the software is to keep the complexity as low as possible. Close to 
 
 I cannot deny, OO programming makes some things easier and having an apple class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
 
-#write more specifically about domain models, etc.?
+// write more specifically about domain models, etc.?
 
 As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation of the experts in the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design book]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
 
 Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details at the beginning of the development.
 
-#this section here seems odd…
+// this section here seems odd... 
+
+// add the conversation from here? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
 
 In many cases the complexity of a task is extremely hard to estimate. Some developers have an idea what to do, others don’t. But nobody really knows and everyone is a little bit scared of that task. And nobody knows how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything is already there in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
 
@@ -2109,14 +2116,14 @@ The JavaScript Object Notation (json) file format is clearly the best file forma
 Once you use json on a more serious project, you might want to use a schema to check the files for correctness. You may use different schemas for different versions of your interface. And before I let you write schemas by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
 
 Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
-
+```py
 #Example.json
 {‘x’ : 1}
 
 readJSON.py
 import json
-# 25. …
-
+...
+```
 XML
 
 The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Along with some notation details the support of arrays is pretty much the only difference. Therefore, json is simply better and there is no reason to use XML if you can choose. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to.
@@ -2156,11 +2163,14 @@ There are some additional files in a project.
 1.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project.
 1.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files too big to be managed by git.
 1.	Some formatting, code quality checking and other files.
+
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
-24.	Performance Optimization
+# 25. Performance Optimization
 
 “Premature optimization is the root of all evil” - Donald Knuth
+
+// mention that for online stores and websites, performance is crucial. But it has not that much to do with programming as we learn it here. It is more about performance of the servers and inter-process communication -> 97 things every programmer should know, chapter 41
 
 One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years while the prices dropped as well. Modern programming languages like python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
@@ -2484,7 +2494,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
-# 26. party software
+# 26. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
