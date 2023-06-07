@@ -108,7 +108,33 @@
 	- [Single Responsibility Principle](#single-responsibility-principle-1)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Interface segregation principle](#interface-segregation-principle)
+- [24. Complexity](#24-complexity)
 - [25. Performance Optimization](#25-performance-optimization)
+- [26. Tools](#26-tools)
+	- [Version control software](#version-control-software)
+		- [Git, everywhere git](#git-everywhere-git)
+	- [Command line](#command-line)
+	- [IDE](#ide)
+	- [MR software #? should this mean CI software?](#mr-software--should-this-mean-ci-software)
+	- [Debugger](#debugger)
+	- [Profiler](#profiler)
+	- [Formatter](#formatter)
+	- [Code quality checker](#code-quality-checker)
+	- [Pip, cmake](#pip-cmake)
+	- [Ticketing system](#ticketing-system)
+	- [#Wiki](#wiki)
+	- [Docstring](#docstring)
+- [26.	Model-driven design WIP](#26model-driven-design-wip)
+	- [Ubiquitous Language](#ubiquitous-language)
+	- [Domain model](#domain-model)
+	- [Maintaining the model WIP](#maintaining-the-model-wip)
+		- [Unified model](#unified-model)
+		- [Separate ways](#separate-ways)
+		- [Conformist](#conformist)
+		- [Developer Client relationship](#developer-client-relationship)
+	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
+	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
+	- [Domain level, old text](#domain-level-old-text)
 - [26. 3rd party software](#26-3rd-party-software)
 - [27. Dependencies](#27-dependencies)
 	- [Circular dependencies](#circular-dependencies)
@@ -279,7 +305,7 @@ There are different definitions of the Single Responsability Principle (SRP). I 
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
-// Dry applies also to building the project, running tests, etc. 
+// Dry applies also to building the project, running tests, etc. Automate everything! -> 97-things-every-programmer-should-know chapter 63
 
 // See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
 
@@ -2075,7 +2101,7 @@ Here are some rules to follow when naming things:
 1.	The name of a function should tell you what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 1.	under_score notation is easier to read than CamelCase. Use underscore notation for variables and functions, CamelCase for classes. 
 
-22.	Complexity
+# 24. Complexity
 
 “I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it.” – Bill Gates
 
@@ -2254,7 +2280,7 @@ In a GUI the logger could store all the actions performed by the user. This may 
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle and serious.
 
-27.	Tools
+# 26. Tools
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
@@ -2262,13 +2288,19 @@ Version control software, Command line, Jenkins, MR software? Jira, IDE, debugge
 
 I have to admit that the list is pretty scrambled. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
 
-Version control software 
+## Version control software 
 
 Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs. It is clearly superior to most older version control software and there is no reason to learn anything else. The original Git software is a console application but there is also proprietary software with a GUI.
 
 I recommend learning the classic (command line) git. Start learning it as soon as possible. Every programmer has to be able to work with it. The only difference between companies is the way how they use git exactly.
 
-Command line
+### Git, everywhere git
+
+Git should not only be used for bare code. Git can also be used on any text file that you have. The build files should certainly be version controlled. But also other pure text files are worth controlling with git. For example if you do research and have some files with measurement results. This could also be version controlled. The price you pay is negligible compared to what you gain by controlling all your files with git.
+
+Or if you wirte a book like this one. It is writen in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
+
+## Command line
 
 The most common command line software is the shell used on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used.
 
@@ -2276,7 +2308,7 @@ The command line is the swiss military knife when programming. It is the glue th
 
 The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basics once you have the opportunity of automating a shell process.
 
-IDE
+## IDE
 
 The Integrated Development Environment (IDE) is a class of software used for writing code. Like Microsoft Word for programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me. I don’t think it’s worth spending too much time here by yourself so I recommend you to do the same as I did.
 
@@ -2284,19 +2316,19 @@ In all up to date IDEs, there are plug ins for most of the software mentioned ab
 
 It is worthwhile learning some of the shortcuts in your IDE that allow you to modify code in different files faster. This is useful as it improves your work flow. But don’t overdo it at the beginning, you may be wasting too much time here. You can still learn more once you know how your personal work flow looks like. And if you really like to push the shortcuts to the limit, you’ll have to learn the VIM text editor which is operated by keyboard only.
 
-MR software #? should this mean CI software?
+## MR software #? should this mean CI software?
 
 There are several different suppliers for merge request software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
 
-Debugger
+## Debugger
 
 Every programming language has its own debuggers and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger. Mostly setting break points, navigating through the code and looking at the stack trace. But generally, it’s a sign of bad code if you have to use a debugger too often. Write small classes and functions where you can tell exactly what they should do. Along with plenty of unit tests. Depending on the error you should be able to pin point the source to a certain class or area of the code without using a debugger. Anyway. Feel free to use a debugger, for example if you work with legacy code. But always keep the code quality high and make sure you don’t need the debugger at all.
 
-Profiler
+## Profiler
 
 A profiler lets you check the time required for executing each part of the code. Depending what kind of programming you do, chances are high you will never need one. Only run the profiler if the program is slower than it should be. Thus, this is not a software you have to get acquainted with at the very beginning of your programming career.
 
-Formatter
+## Formatter
 
 Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. But don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about it. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for.
 
@@ -2306,26 +2338,26 @@ There are also some companies using custom formatting where every employee can u
 
 Personally, I don’t care too much about the formatting style. If I have a choice, I use the default formatting with a tab width of 4 and a line length of 100. This is a reasonable compromise. Linus Thorwalds (the guy from Git) has a very strict opinion on that topic. It you write code for the Linux kernel you have to use a tab width of 8 and a line length of 80. Try writing code like that. You have to write extremely well to make all the code fit reasonably into this pattern. That’s exactly why he’s come up with this rule.
 
-Code quality checker
+## Code quality checker
 
 There are different programs available that check your code on the most common quality issues. I don’t know too much about them but it’s certainly worth a try. One example is the test coverage tool. Tough this metric shouldn’t be abused as a business metric. Use it to check that you have (almost) all code covered by your unit tests.
 
 If you use C++ or some other compiled language, your most important quality checker tool is the compiler. Enable the “treat warnings as errors” setting for all different groups of warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. Because why should you search for bugs yourself if the compiler can do the job?
 
-Pip, cmake
+## Pip, cmake
 
 Some people may argue pip and cmake don’t belong into this list. Of course, they are right.
 
 Pip is the Python package management software. As a python developer it’s mandatory to know pip. It’s very easy to use. The command line pip install numpy will install the numpy library. Done.
 Cmake is the most commonly used build tool for C++. Meson is a more modern alternative you can use for new projects. Make is outdated. And don’t ever use the Visual Studio build.
 
-Ticketing system
+## Ticketing system
 
 Jira is the most commonly used ticketing system and has little to do with code. It is very easy to use and most of the work in Jira will be done by the manager writing the tickets.
 This ticketing software is also helpful when managing a one-man project as it helps organizing the work. And it doesn’t even have to be a software project. You can also use it for all other kind of projects. 
 If you don’t work for a company there are also free alternatives. But I’ve never used them.
 
-Wiki
+## #Wiki
 
 Most companies use confluence as the knowledge base. Like Jira this is an industry standard. Write general thoughts here. However, things will go out of date quickly so be careful.
 
@@ -2333,23 +2365,23 @@ You may also write some high-level documentation of your code. But don’t go to
 
 Again, there are free alternatives around, though you are unlikely to see any alternatives in professional environments.
 
-Docstring
+## Docstring
 
 The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation. Instead it should be used only to document external APIs.
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-28.	Model-driven design WIP
+# 26.	Model-driven design WIP
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
-Ubiquitous Language
+## Ubiquitous Language
 
 There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to implement such a topic. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how the model really works. Thereby it is of utmost importance to use the same language as the domain experts as the development team uses among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to build new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier, better, ways to say what you want to say. Use the insight gained this way to improve the domain-model.
 
-Domain model
+## Domain model
 
 The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
 
@@ -2367,26 +2399,27 @@ The code and model always have to stay in sync. # what else to say here?
 
 Decouple the domain-model code from the other code. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code.
 
-Maintaining the model WIP
+## Maintaining the model WIP
 
 It takes a lot of communication within the team to keep the model consistent. This cannot always be guaranteed and the model may diverge in different directions. Forcing the model to remain consistent may be a solution, but there are other ways to deal with this problem.
 
 The thoughts made here are also to a large extent valid when dealing with any kind of library.
 
-Unified model
+### Unified model
 
 The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent very early. The single … gets for the required communication a unified model that has less complexity than two different models.
 
-Separate ways
+### Separate ways
 
 Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal.
 
-Conformist
+### Conformist
 
-Developer Client relationship
+### Developer Client relationship
+
 The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (developer) is willing to cooperate (for financial or political reasons), the two teams can go into a developer client relationship where the downstream team (client) can order features that the upstream team will implement. 
 
-Refactoring toward deeper insight
+## Refactoring toward deeper insight
 
 #figure out what to write here exactly
 This section is named after a chapter in the book Domain-Driven Design, p.322. It deals with a high-level point of view on refactoring, the domain level to be more precise.
@@ -2396,7 +2429,7 @@ This section is named after a chapter in the book Domain-Driven Design, p.322. I
 
 However, all the time you have to stay in close contact with a domain expert. Under no circumstances you should make changes that contradict what he says.
 
-Entities, value objects, aggregates, … WIP
+## Entities, value objects, aggregates, … WIP
 
 Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and typically an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. #what else to write about entities?
 
@@ -2406,7 +2439,7 @@ Aggregates are a combination of several other objects. For example, a car is an 
 
 Aggregates typically consist of one entity taking care of many value objects. 
 
-Domain level, old text
+## Domain level, old text
 
 #get some more from the DDD book? It feels incomplete.
 The Domain Level is an expression used by Eric Evans in his book Domain-Driven Design. The Domain Level and especially the Domain Core are the heart of the software. It represents the central part of your code. That part that you actually make money with. It may be fairly small, yet it covers much of the overall complexity of your code. The complexity of the business it represents. Frequently, the domain level is unique, you cannot buy this part of the software anywhere else. You have to develop it yourself for your business. Exactly this makes it so special and valuable.
@@ -2417,7 +2450,7 @@ The domain level is the heart of your software. Its architecture influences all 
 
 The domain level tends to grow over time. This should be prevented as code in the domain level needs to fulfill extra stringent requirements and is more costly. One of the reasons is that more and more peripheral code creeps into the domain level. Make sure that at all times, the domain level remains slim.
 
-#example stolen from DDD p.68
+// example stolen from DDD p.68
 
 You might be a little confused now about the domain level. Let me make a brief example (stolen from Domain-Driven Design).
 
