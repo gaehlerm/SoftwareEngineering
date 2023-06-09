@@ -107,7 +107,10 @@
 - [24. Solid principles](#24-solid-principles)
 	- [Single Responsibility Principle](#single-responsibility-principle-1)
 	- [Open Closed Principle](#open-closed-principle)
+	- [Liskov substitution principle](#liskov-substitution-principle)
 	- [Interface segregation principle](#interface-segregation-principle)
+	- [Dependency inversion](#dependency-inversion)
+- [17. Some rules of thumb](#17-some-rules-of-thumb)
 - [24. Complexity](#24-complexity)
 - [25. Performance Optimization](#25-performance-optimization)
 - [26. Tools](#26-tools)
@@ -1171,6 +1174,8 @@ Class variables are already quite tricky to deal with. There are just too many w
 
 Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is in fact defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use them. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
 
+// why not to use the singleton: 97-things-every-programmer-should-know chapter 73
+
 A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end.
 
 Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
@@ -1450,7 +1455,7 @@ This is one of the reasons why I recommend not to use inheritance. Inheritance i
 
 Maybe you realized by now why this rule about high cohesion does not apply to all kind of classes. A pure data class has no cohesion at all. It takes no effort to split a data class. You may split it however you like. A delegating class has very little cohesion. Yet these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes, meanwhile data classes are a lose bunch of variables without any cohesion. They are grouped together solely because it makes the code easier to understand and deal with.
 
-#move the library stuff into the architecture section
+// move the library stuff into the architecture section
 
 ## Static expression
 
@@ -1739,6 +1744,9 @@ Making sketches may help you finding ways to refactor your code. This doesn’t 
 
 Getting software to work is easy. Getting it right is hard. – Robert C. Martin
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
+
+// where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
+
 ## About Architecture
 
 An Architect designs a house from the bigger picture down to the tiny details. But designing is not all he does. He also visits the construction site at least once a week to check the progress made, discuss possible issues with the construction workers, etc. An architect is responsible for everything, including all the small details.
@@ -1787,14 +1795,16 @@ These advantages for either sides lead to tradeoffs in library sizes. Generally,
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 # 24. Solid principles 
-// rename section? We don’t discuss all of them. Or break up this chapter and move elsewhere?
+Source: https://youtu.be/pTB30aXS77U and Clean Architecture
 
-The solid principles were named by Uncle Bob. SOLID is named after 5 general rules how to write code. These are:
+The solid principles were named by Uncle Bob (Robert C. Martin). SOLID is named after 5 general rules how to write code. These are:
 1.	Single Responsibility Principle (SRP)
 1.	Open closed principle
 1.	Liskov substitution principle
 1.	Interface segregation 
 1.	Dependency Inversion
+
+These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code.
 
 ## Single Responsibility Principle
 
@@ -1804,44 +1814,137 @@ The SRP has already been explained at the very beginning of this book due to its
 
 The Open Closed Principle was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. This is an unfortunate choice. Robert C. Martin and others suggest using interfaces instead. Interfaces allow you to add as many implementations as you want while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
 
-Liskov substitution principle
+Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class is not closed for modification. This class is not obeying the open closed principle.
 
-// No inheritance no Liskov? Is the rectangle-square only an example or a metaphor? 
+```py
+class City:
+	def zurich_postal_code(self):
+		return 8000
+	def bern_postal_code(self):
+		return 3000
+
+def print_all_postal_codes():
+	city = City()
+	print(city.zurich_postal_code)
+	print(city.bern_postal_code)
+```
+
+Instead we can create an interface city and implement it for every city we are interessted in. If we are interessted in adding an additional city, we don't have to change any existing class or interface. Instead we  can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
+
+```py
+from abc import ABC, abstractmethod
+
+# In Python the base class and the inheritance could also be omited.
+class City(ABC):
+	@abstractmethod
+	def postal_code(self):
+		pass
+
+class Zurich(City):
+	def postal_code(self):
+		return 8000
+
+class Bern(City):
+	def postal_code(self):
+		return 3000
+
+zurich = Zurich()
+bern = Bern()
+
+cities = [zurich, bern]
+
+for city in cities:
+	print(city.postal_code)
+```
+
+## Liskov substitution principle
+
+// see https://youtu.be/pTB30aXS77U
+
+Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementation should really share the same interface.
+
+For example a credit card and paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
+```py
+class Payment:
+	make_payment(amount, ??)
+```
+This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle.
 
 ##  Interface segregation principle
-// Not sure if I understood this principle correctly…
+Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need a small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
 
-Interfaces should be split up into many small parts. This is important in order to keep the compilation times low, … what else? 
+Let’s make an example. We have files A, B, C and D. B, C and D import A. They all get all the functionality that is implemented in A. This introduces coupling and if the file A is really big it may also slow down the compilation process. The solution is to split up the file A into two subfiles A1 and A2. We have to find a way to do this, such that most of the other files B, C and D each use only one of the newly created files. The amount of code that they import is reduced by half. This can be repeated until it is no longer possible to reduce the amount of code imported. At this point you finished the segregation of the file A.
 
-Let’s make an example. We have files A, B, C and D. B, C and D import A. They all get everything that is implemented in A. This introduces coupling and if the file is really big it may also slow down the compilation process. The solution is to split up the file A into two subfiles A1 and A2. We have to find a way to do this, such that most of the other files B, C and D only use one of the newly created files. The amount of code that they import is reduced by half. This can be repeated until it is no longer possible to reduce the amount of code imported. At this point you finished the segregation of the file A.
+A common pattern is defining an enum inside a class, while other classes might need access to this enum as well. These other classes have to import the complete class containing this enum, even though they don’t care about anything else than this simple enum. These other classes import way too much code. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the interface segregation principle.
 
-A common pattern is defining an enum inside a class, while other classes might need access to this enum as well. These other classes have to import the complete class containing this enum, even though they don’t care about anything else than this simple enum. These other classes import way too much code. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone.
+## Dependency inversion
 
-Dependency inversion
+// Do we use DI for dependency inversion or depencendcy injection?
 
 Dependency inversion is a technique used mainly in compiled languages as C++ and Java. The files in your project include each other and form a tree with the main function at its root. The so-called dependency tree. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction.
 
-For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted lannguages.
+// add a graph for the dependency tree
+
+For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted languages.
 
 The first time you compile your code, the whole code base has to be compiled. This can easily take minutes. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
 
-We first have to understand the source of this problem. As I mentioned before, it has to do with the includes (or imports). The main file includes all the other files. If one file changes, main changes as well. It’s like a hard link.
+We first have to understand the source of this problem. As I mentioned before, it has to do with the includes (or imports). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well. It has to be recompiled as well. It’s like a hard link.
 
 Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code. If I change a file in a library, I want to recompile only the library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within this branch.
 
-This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the tree and couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
+This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
 
-The crucial part comes at the end of the compilation. The main tree and the library tree were both compiled using the interface but so far, they are not connected. This is the job of the linker. The linker will make sure the main function calls the correct implementation of this library.
+```C++
+#include stdio.h
 
-#dependency tree graphs
+class Something{
+	void do_something(){
+		std::cout << "something" << std::endl;
+	}
+}
 
-#pimpl -> reference to myers book
+int main(){
+	auto something = Something()
+	something.do_something();
+}
+```
 
-In case you ever hear of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of interfaces. There’s no need to use it. Defining interfaces is the strictly better option.
+Now `main` depends on the `Something` class and everything that's inside it. Instead we can define an interface for `Something` and break this dependency.
+
+```C++
+#include stdio.h
+
+class InterfaceToSomething{
+public:
+	virtual void do_something() = 0;
+}
+
+class Something : public InterfaceToSomething {
+public:
+	void do_something() override {
+		std::cout << "something" << std::endl;
+	}
+}
+
+int main(){
+	auto something = std::make_unique<Something>();
+	something->do_something();
+}
+```
+// I haven't coded for too long. I have to make sure this is correct.
+
+Now `main` depends only on the interface `InterfaceToSomething`, not on the implementation defined in `Something`. Changing `Something` does not change `main`. Therefore, `main` does not need to be recompiled if `Something` changes! `main` and `Something` are only connected together by the linker.The linker will make sure the main function calls the correct implementation of this library.
+
+// dependency tree graphs
+
+#pimpl -> reference to meyers book
+
+In case you've ever heared of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of abstract base classes or interfaces. There’s no need to use it. Defining interfaces is the strictly better option than using pimpl.
 
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t care about. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
-17.	Some rules of thumb
+# 17. Some rules of thumb
 
 #split up this chapter. But where to put the parts?
 
