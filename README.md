@@ -111,6 +111,26 @@
 	- [Interface segregation principle](#interface-segregation-principle)
 	- [Dependency inversion](#dependency-inversion)
 - [17. Some rules of thumb](#17-some-rules-of-thumb)
+	- [Code correlation](#code-correlation)
+	- [Single line complexity](#single-line-complexity)
+	- [Back magic code](#back-magic-code)
+- [18. Datatypes](#18-datatypes)
+	- [Lists](#lists)
+	- [Enums](#enums)
+	- [Booleans](#booleans)
+		- [Switch statements](#switch-statements)
+	- [Strings](#strings)
+		- [Boolean logic](#boolean-logic)
+		- [Natural Language](#natural-language)
+	- [Dicts](#dicts)
+	- [Trees](#trees)
+	- [Pointers](#pointers)
+- [19. Data properties](#19-data-properties)
+	- [Compile-time constant](#compile-time-constant)
+	- [Constant](#constant-1)
+	- [Mutable](#mutable)
+	- [Member variables](#member-variables)
+	- [Static Variables](#static-variables)
 - [24. Complexity](#24-complexity)
 - [25. Performance Optimization](#25-performance-optimization)
 - [26. Tools](#26-tools)
@@ -1946,96 +1966,111 @@ I think this was the longest section in this book where I explain technical deta
 
 # 17. Some rules of thumb
 
-#split up this chapter. But where to put the parts?
+// split up this chapter? But where to put the parts?
 
-Code correlation
+## Code correlation
 
 Similar things belong together. It sounds fairly easy and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
 
-There is a market for food and further down the road a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. Similarly, in code. Functions are bundled together by their functionality, as are classes. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+There is a market for food and further down the road there is a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
 
-Single line
+## Single line complexity
 
-#put this into a formatting section?
-
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code.
+A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth wirting such code once in a while. You will learn quite something about how code can look like.
 
 On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. 
 
-#example with python inline list creation
+```py
+# TODO I need a much more complicated list initialization to make my point
+a = [i for i in range(10)]
+```
 
-Back magic code
+## Back magic code
 
-Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. You have to be honest. Some programmers try to hide complex code using all kind of black magic. Sometimes it works, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this.”
+Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this.”
 
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
-18.	Datatypes
+# 18. Datatypes
 
-There is an estimated quadrillion of different datatypes. Any class that any programmer has ever defined. But again, I recommend you to use as few types as possible. Types by themselves are not improving your code. Only use additional types if you think it improves the code.
+There is an estimated quadrillion of different datatypes. Any class that any programmer has ever defined. But again, I recommend not to use too many different built-in datatypes. Types by themselves are not improving your code. Only use additional types if you think it improves the code.
 
 Here is a list of datatypes that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: numbers, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers)
 
 I give you some explanations on all these types except numbers and classes. I simply don’t have anything to write about numbers. Classes are discussed in its own section.
 
-Lists
+## Lists
 
 Lists are the work horse in programming. Whenever you deal with several values that should all be treated in the same way, they belong into a list. I would like to emphasize: to be treated the same way. If you do something with a list you should always iterate through all elements and do the same thing for all of them. If you somehow need just one value from a list, chances are high you shouldn’t use a list.
 
 Here is an example how not to do it:
-
+```py
 Fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
+```
 
 I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible. At least not without visiting a highly advanced course in C++ black magic. 
 
-The second problem is that we don’t know what these numbers mean. There is no reasonable name for this list that explains everything. This list violates the single responsibility principle all by itself. And third code based on this data structure will inevitably become brittle. It’s screaming for bugs. You can do pretty much everything wrong and I promise you will.
+The second problem is that we don’t know what these numbers mean. There is no reasonable name for this list that explains everything. This list violates the single responsibility principle all by itself. 
+
+And third code based on this data structure will inevitably become brittle. It’s screaming for bugs. You can do pretty much everything wrong and I promise you will.
 
 Apparently 3 values inside this list always belong together. In C++ we would create a struct for it, in Python we use a data class.
 
-#work out the details of the code here. Find good names.
+// work out the details of the code here. Find good names.
+
+```py
 @dataclass
-Class ShoppingItem
-    Name
-    Weight
-    Price 
+class ShoppingItem
+    name: str
+    weight: float
+    price: float
+
+apples = ShoppingItem(name='apple', weight=1.5, price=3.1)
+bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
+
+shopping_list = [apples, bananas]
+```
 
 Now the code is much better. All the elements inside the list are equal. If you do something you can just iterate over all elements. The data structure now is also pretty save. Correlated data is all stored together. It is almost impossible to mix up the weight of the apple and the banana. And it’s also pretty hard now to make an error when creating the list.
 
 We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to make a list with groups of objects you should create a class for these groups and make a list of these class instances. If you access a single object from a list, chances are high that your code is bad.
 
-Enums
+## Enums
 
 Enums is something many software developers don’t know. You don’t need it. There are simple ways to write code without them. They are all bad.
-Is_blue = True
-Favorite_color = “blue”
-Favorite_color = 7
-Favorite_color = Color::Blue
 
-The first three options have some severe drawbacks.
+```py
+is_blue = True
+favorite_color = “blue”
+favorite_color = 7
+favorite_color = Color::Blue
+```
 
-The first one is dead ugly. What does is_blue = False mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer.
+The first three options all have some severe drawbacks.
 
-The second one looks reasonable but it’s easy to introduce bugs. If you write “blu” instead of “blue” you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
+The first one is dead ugly. What does is_blue = False mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Use booleans cautiously.
+
+The second one looks reasonable but it’s easy to introduce bugs. If you write `“blu”` instead of `“blue”` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
 
 Sometimes such kind of objects are also called “string typed”. Strings are being abused for storing all kind of different data that it shouldn’t be used for.
 
-Third option: 7? A color? No. Please, don’t do this to me. Unless you use a well-known international color standard.
+Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard.
 
-Fourth option: The best solution is certainly using an enum. It looks slightly odd because of the Color:: prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write Color::blu you will get an error because you quite certainly didn’t define a color blu. In C++ you get a compile time error in C++ and a runtime error in python. Both is infinitely better than having a bug. Enums are great. Use them where ever you define a selection from a limited amount of options.
+Fourth option: The best solution is certainly using an enum. It looks slightly odd because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::blu` you will get an error because you quite certainly didn’t define a color `blu`. You get a compile time error in C++ and a runtime error in python. Both is infinitely better than having a bug. Enums are great. Use them where ever you define a selection from a limited amount of options.
 
 Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare.
 
-Booleans
+## Booleans
 
 “Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. Booleans are evil.”
 
 “What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?”
 
-“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil.”
+“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil.
 
-“There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil but dangerous.”
+There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil but dangerous.”
 
 I may be exaggerating slightly. But it’s true. Humans cannot deal with Booleans and if statements. Accept your faith and learn dealing with it.
 -	Good code design leads to few if statements.
@@ -2045,81 +2080,106 @@ I may be exaggerating slightly. But it’s true. Humans cannot deal with Boolean
 -	Make sure your unit tests cover all paths.
 -	You can use different types to prevent if statements.
 -	Don’t use old-school C++ or java iterators. Range-based loops are much safer.
--	Replace switch case iterations by polymorphism. Resolve the conversion as soon as possible.
+-	Replace switch case iterations by polymorphism. Resolve the conversion from the switch statement to the polymorphic types as soon as possible.
 
-Switch statements
+### Switch statements
 
 In case you have a switch statement, you should replace it with polymorphism. The only place where switch statements (or nested if else) is allowed is at the creation of the polymorphic objects.
 This is how the code should not look like. 
-
-Switch postcode:
-
-Case “Zurich”:
-	Return 8000
-Case “Bern”:
-	Return 3000
-
+```py
+match postcode:
+	case “Zurich”:
+		return 8000
+	case “Bern”:
+		return 3000
+```
 Instead each town should be an object containing a corresponding function. Note that for this simple example at dict would suffice as well.
-
+```py
 Class Zurich:
-	Def postcode():
+	def postcode():
 		Return 8000
 Class Bern:
 	Def postcode():
 		Return 3000
-Def cerate_town(town_name):
-	Switch postcode:
-Case “Zurich”:
+
+def cerate_town(town_name):
+	match town_name:
+		Case “Zurich”:
 			Return Zurich
-Case “Bern”:
+		Case “Bern”:
 			Return Bern
 Town = create_town(“Zurich”)
 Town.postcode()
+```
 
-Strings
+## Strings
 
-“You should never use two different languages in a single file. English is also a language” # ?
+“You should never use two different languages in a single file. English is also a language” // ?
 
-After pointers and Booleans, string is probably the third most dangerous data type. Many programmers check 2 strings for equality. One of them is written in plain text in the code. A twenty-character long string. If a single character is wrong you have a bug. Of course, you can make work. But it is extremely brittle. You should eliminate risk whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
+After pointers and Booleans, string is probably the third most dangerous data type. Many programmers check 2 strings for equality. One of them is written in plain text in the code. A twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
 
-Boolean logic
+### Boolean logic
 
-Some people even start to encode all kind of logic into strings. This is dreadful. Someone #who, quote? Used the expression “string type” to describe what strings are being used for. This example I found in the book Clean Code p.128 where Uncle Bob did some refactoring on a unit test. What he explained all made sense, but he somehow missed to mention that one should never write code like that. He encoded five different states {heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm} into a single string “hbCHl”, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean true, lower case letters mean false. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do neve use strings to encode some other king of value. To make matters worse, the letter “h” is even used twice. Like this the code becomes extra brittle.
+Some people even start to encode all kind of logic into strings. This is dreadful. Someone #who, quote? Used the expression “string type” to describe what strings are being used for. This example I found in the book Clean Code p.128 where Uncle Bob did some refactoring on a unit test. What he explained all made sense, but he somehow missed to mention that one should never write code like that. He encoded five different states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do neve use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
 
-The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is not possible to understand the meaning of this string.
+The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is not possible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary.
 
-Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like “water_state = [false, false, true, true, false]”. This is better than the string logic, but it still needs some serious reworking. Elements in an array should all be treated equally. But here you will probably need only one element at the time, “needs_hot_water != water_state[0]”. This [0] is a clear indication that we should not use an array.
+Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [false, false, true, true, false]`. This is better than the string logic, but it still needs some serious reworking. Elements in an array should all be treated equally. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. This `[0]` is a clear indication that we should not use an array.
 
-The best solution is using a struct that stores 5 different variables. One Boolean replacing each character in the string above.
-
-Struct WaterState{
-	Bool heater_state;
-	Bool blower_state;
-	Bool cooler_state;
-	Bool hi_temp_alert;
-	Bool low_temp_alert;
+A better solution is using a struct that stores 5 different variables. One Boolean replacing each character in the string above.
+```C++
+struct WaterState{
+	bool heater_state;
+	bool blower_state;
+	bool cooler_state;
+	bool hi_temp_alert;
+	bool low_temp_alert;
 }
+```
 
-Once one found this solution it looks so natural. This code is so much more readable than the encoded string that is absolutely worth the additional effort it takes to write this struct. Because remember that we always code for readability and not for fewest lines of code.
+Still, this is not yet optimal. What does `heater_state = true` or `= false` mean? Let's define an enum instead.
+
+```C++
+enum State{
+	on=true, 
+	off=false
+};
+struct WaterState{
+	State heater_state;
+	State blower_state;
+	State cooler_state;
+	State hi_temp_alert;
+	State low_temp_alert;
+};
+```
+Now the `heater_state` can be `on` or `off`. This is much more intuitive to read.
+
+Once one found this solution it looks so natural. This code is so much more readable than the encoded string that is absolutely worth the additional effort it takes to write this struct and the enum. Remember that we always code for readability and not for fewest lines of code.
 
 The code using this struct is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
 
-If(water_state.too_hot)
+```py
+if(water_state.hi_temp_alert)
 	Std::cout << “Attention: the water is too hot”;
+```
 
-Natural Language
+### Natural Language
 
 Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated file. There is no arguing with that. It is your job to extract all the human readable text from your code. Instead the code should get all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now of course, this is in theory.
 
 Ultimately you are left with barely any strings at all. Only when reading or writing a file you briefly have to deal with strings. At least in theory. For small projects it is not always worth the effort.
 
-Dicts
+## Dicts
 
 You run your code and check the values of your variables. In one case you have the first line, in another case you have the second line. When should you use which one?
 
+```py
 a = 0, b = 1
+```
 
+```py
 vars = {‘a’ : 0, ‘b’ : 1}
+```
 
 These two lines do something very similar. They both assign the value 0 to a and value 1 to b. Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code.
 
@@ -2129,34 +2189,59 @@ If the developer knows all the variables that he needs he should use normal vari
 
 Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might convert further into nested data classes.
 
-Trees
+## Trees
 
 It is not too often that I had to create a tree myself, yet I was working on a tree structure for a good part of my programming life. Trees are an extremely important data structure. As soon as you work with a recursive data structure you absolutely have to implement a tree. This allows you to use many standard algorithms that are very efficient. If you implement your own algorithms, make sure they are recursive and write automated tests for the corner cases.
 
-Pointers
+## Pointers
 
 C++ and Java use pointers everywhere. C++ used to be especially bad with that respect. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
 
-19.	Data properties
+# 19. Data properties
 
-#I’m not that sure about this chapter. I think it needs some reworking.
+// I’m not that sure about this chapter. I think it needs some reworking.
+
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers don’t know how to structure them properly at first sight. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas what to look out for.
 
 The most common way to structure data is having nested classes where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
 
-#add reference, …? 
+// add reference, …? 
 
 Here are some additional properties variables can have. They can be compile-time constant, constant, mutable, member, static, dynamic or global. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
 
-Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. For example, const double pi=3.14. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
+## Compile-time constant
+
+Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. For example, `const double pi=3.14`. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
+
+## Constant
 
 Constant variables are very limited as well, yet at the same time, they are a very important object to work with. There is simply nothing you can do wrong about them. Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the correct object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead.
 
+## Mutable
+
 Mutable variables are very powerful, yet at the same time they are tricky to deal with. They are very important, as writing code without them is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
 
-Member variables is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are in most programming languages mutable variables. Most things you have to know is explained in the section on classes. As long as your class design is alright (classes should be small!), you are mostly fine with using member variables.
+One option is to work more with unmutable objects. For example you can replace the following code,
+```py
+prime_numbers = [11, 3, 7, 5, 2]
+prime_numbers.sort()
+```
+with something that does not change the list. Instead it can return a new list.
+```py
+prime_numbers = [11, 3, 7, 5, 2]
+sorted_prime_numbers = sorted(prime_numbers)
+```
+It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates partially the SRP. This is partially the case here as the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
 
-Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. If a static variable is const, one could also create a free const variable outside the class, except if this is not allowed as in Java, for instance. Or create a const variable inside the class without it being static.
+## Member variables
+
+Member variables is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know is explained in the section on classes. As long as your class design is alright (classes should be small!), you are mostly fine with using member variables. Though you have to be carefull with them, as explained in the section on mutable variables.
+
+## Static Variables
+
+Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
+
+If a static variable is const, one could also create a free const variable outside the class, except if this is not allowed, as in Java, for instance. Or create a const variable inside the class without it being static.
 
 If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic. This is dreadful!! Do never use dark magic. Do never use static variables.
 
