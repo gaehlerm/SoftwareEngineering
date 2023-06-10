@@ -1162,7 +1162,7 @@ As always, many books only focus on OO programming. They only explain dependency
 //here I have to write about spys, mocks, fakes, stubs, etc!
 
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write complete database simulations every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
-# 15. Variables types
+# 14. Variables types
 
 Global Variables
 
@@ -1234,7 +1234,7 @@ String field(body){
 ```
 Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
 
-# 16. Programming Paradigms
+# 15. Programming Paradigms
 
 //remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
 
@@ -1254,7 +1254,7 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 
 ## Functional programming
 
-# 17. Classes
+# 16. Classes
 // There’s still much left to write here. Break up a class is one half of the functions uses one half of the variables and the other half goes together.
 
 // write a struct coordinate as an example?
@@ -1544,7 +1544,7 @@ Follow the rule “use composition, not inheritance” and don’t use friend cl
 
 Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
 
-# 19. Design patterns
+# 17. Design patterns
 There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
 ## Factories
@@ -1571,7 +1571,7 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 ## Observer
 
-# 20. Decoupling
+# 18. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
 // add some more text from the pragmatic programmer
 
@@ -1587,11 +1587,11 @@ Furthermore, there is a thing called Train Wrecks. This is a chain of class meth
 
 This chain is also very rigid and hard to change. Don’t chain method calls.
 
-# 21. Refactoring
+# 19. Refactoring
 // “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
 “Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
 
-# 22. Entropy
+# 20. Entropy
 
 Entropy is the physical law of disorder. It says that disorder is only going to increase. Fighting entropy is hard. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
 In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well.
@@ -1764,7 +1764,7 @@ Making sketches may help you finding ways to refactor your code. This doesn’t 
 
 // Add the temporal graph from Evans?
 
-# 23. Software Architecture
+# 21. Software Architecture
 
 Getting software to work is easy. Getting it right is hard. – Robert C. Martin
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
@@ -1818,7 +1818,7 @@ These advantages for either sides lead to tradeoffs in library sizes. Generally,
 
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
-# 24. Solid principles 
+# 22. Solid principles 
 Source: https://youtu.be/pTB30aXS77U and Clean Architecture
 
 The solid principles were named by Uncle Bob (Robert C. Martin). SOLID is named after 5 general rules how to write code. These are:
@@ -1968,7 +1968,7 @@ In case you've ever heared of the pimpl (pointer to implementation) idiom, it ha
 
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t care about. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
-# 17. Some rules of thumb
+# 23. Some rules of thumb
 
 // split up this chapter? But where to put the parts?
 
@@ -1997,7 +1997,7 @@ Your code will contain some complexity. There’s no doubt about it. The only qu
 
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
-# 18. Datatypes
+# 24. Datatypes
 
 There is an estimated quadrillion of different datatypes. Any class that any programmer has ever defined. But again, I recommend not to use too many different built-in datatypes. Types by themselves are not improving your code. Only use additional types if you think it improves the code.
 
@@ -2201,7 +2201,7 @@ It is not too often that I had to create a tree myself, yet I was working on a t
 
 C++ and Java use pointers everywhere. C++ used to be especially bad with that respect. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
 
-# 19. Data properties
+# 25. Data properties
 
 // I’m not that sure about this chapter. I think it needs some reworking.
 
@@ -2257,14 +2257,14 @@ Dynamic variables are the main reason why I was writing this chapter. With dynam
 
 And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them very hard to handle. Keep your fingers away.
 
-# 20. Algorithms
+# 26. Algorithms
 
 #Look up some online introduction to algorithms. Should I go down to the O(n) notation or leave this chapter away completely?
 
 I can highly recommend reading a book on data structures and algorithms. They go hand in hand. It gives you a great understanding how to tackle a problem and what you have to look out for. You absolutely have to learn recursive algorithms. They are very efficient and simple to implement. They are used everywhere. Just make sure you get the corner cases correctly. Other than that, there is nothing specific that I can recommend you. Just be smart and keep your eyes open. 
 #is there anything else to mention? Get a book on algorithms and write something about the first few pages?
 
-# 21. Naming
+# 27. Naming
 
 "And you will know, my name is the law!” – Pulp fiction #exact quote?
 
@@ -2297,7 +2297,7 @@ Here are some rules to follow when naming things:
 1.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 1.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions.
 
-# 24. Complexity
+# 28. Complexity
 
 “I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it.” – Bill Gates
 
@@ -2388,7 +2388,7 @@ There are some additional files in a project.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
-# 25. Performance Optimization
+# 29. Performance Optimization
 
 “Premature optimization is the root of all evil” - Donald Knuth
 
@@ -2476,7 +2476,7 @@ In a GUI the logger could store all the actions performed by the user. This may 
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle and serious.
 
-# 26. Tools
+# 30. Tools
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
@@ -2567,7 +2567,7 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-# 26.	Model-driven design WIP
+# 31. design WIP
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
@@ -2723,7 +2723,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
-# 26. 3rd party software
+# 32. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
@@ -2749,7 +2749,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 27. Dependencies
+# 33. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -2785,7 +2785,7 @@ Long story short: The high-level object calls the low-level object and hands ove
 
 // make a code example: A calls B calls A returns to B returns to A. -> A calls B with all info needed returns the value to A.
 
-# 28. C++
+# 34. C++
 
 // is this chapter needed?
 
@@ -2820,7 +2820,7 @@ Structs are similar to classes, however all members are public. In general, stru
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
 
-# 29. Working in teams
+# 35. Working in teams
 
 ## Team structure
 
@@ -2859,7 +2859,7 @@ In a team, the most important language is not Java but English (or German in the
 There are probably hundreds of other rules, but these two here are the ones I know. Even though I’m not that good at applying them.
 As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
 
-# 30. Merge Requests
+# 36. Merge Requests
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -2885,7 +2885,7 @@ Always be polite. An MR is like criticizing someone by email. This is a highly d
 
 One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
-# 31. Working with existing projects WIP
+# 37. Working with existing projects WIP
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
@@ -2904,7 +2904,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 // move where?
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
-# 32. Planning
+# 38. Planning
 
 TODO: read through again. Is there duplication with the agile section?
 
@@ -2942,7 +2942,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 #where to add a chapter with errors?
 
-# 33. Agile
+# 39. Agile
 // How much of this chapter is explained in Working in teams
 
 // citation Clean agile, Agile manifesto
@@ -3065,7 +3065,7 @@ You also need courage to be honest. The very first thing is you have to be able 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
 
-# 34. Continuous integration
+# 40. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
@@ -3081,7 +3081,7 @@ As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t 
 
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based …?
 
-# 35. Hiring and getting hired
+# 41. Hiring and getting hired
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
@@ -3111,7 +3111,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 36. Work ethics
+# 42. Work ethics
 
 Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
 
@@ -3123,7 +3123,7 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 
 //keep learning
 
-# 37. Examples
+# 43. Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
@@ -3245,7 +3245,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 38. Further reading
+# 44. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -3295,5 +3295,6 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
