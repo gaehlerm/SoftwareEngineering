@@ -131,6 +131,10 @@
 	- [Mutable](#mutable)
 	- [Member variables](#member-variables)
 	- [Static Variables](#static-variables)
+	- [Dynamic Variables](#dynamic-variables)
+	- [Global Variables](#global-variables)
+- [20. Algorithms](#20-algorithms)
+- [21. Naming](#21-naming)
 - [24. Complexity](#24-complexity)
 - [25. Performance Optimization](#25-performance-optimization)
 - [26. Tools](#26-tools)
@@ -2241,53 +2245,57 @@ Member variables is by far the most common property of a variable. Yet there is 
 
 Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
 
-If a static variable is const, one could also create a free const variable outside the class, except if this is not allowed, as in Java, for instance. Or create a const variable inside the class without it being static.
+If a static variable is const, one could also create a free const variable outside the class instead. Except if this is not allowed as in Java, for instance. Or you could also create a global constant.
 
 If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic. This is dreadful!! Do never use dark magic. Do never use static variables.
 
-Dynamic variables are the main reason why I was writing this chapter. With dynamic variables I mean mostly dictionaries. Pseudo variables that can be created at run time. An extremely powerful tool, yet one, that requires some understanding about when to use it. Read chapter Datatypes for more information about dicts.
+## Dynamic Variables
 
-And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them too hard to handle. Keep your fingers away.
+Dynamic variables are the main reason why I was writing this chapter. With dynamic variables I mean mostly entries of dictionaries. Pseudo variables that can be created at run time. An extremely powerful tool, yet one, that requires some understanding about when to use it. Read chapter Datatypes for more information about dicts.
 
-20.	Algorithms
+## Global Variables
+
+And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them very hard to handle. Keep your fingers away.
+
+# 20. Algorithms
 
 #Look up some online introduction to algorithms. Should I go down to the O(n) notation or leave this chapter away completely?
 
 I can highly recommend reading a book on data structures and algorithms. They go hand in hand. It gives you a great understanding how to tackle a problem and what you have to look out for. You absolutely have to learn recursive algorithms. They are very efficient and simple to implement. They are used everywhere. Just make sure you get the corner cases correctly. Other than that, there is nothing specific that I can recommend you. Just be smart and keep your eyes open. 
 #is there anything else to mention? Get a book on algorithms and write something about the first few pages?
 
-21.	Naming
+# 21. Naming
 
 "And you will know, my name is the law!” – Pulp fiction #exact quote?
 
-#figure out an example where names got mixed up
+// figure out a real life example where names got mixed up
 
-The … example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are other people around who have the same name as you do it may get dangerous. If your #namensvetter is a highly dangerous criminal, the cops may become really rough. Even in Europe. Similar issues may also occur in a hospital.
+The ... [exampe above] example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are other people around who have the same name as you do it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
 
 All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name.
 
 Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
 
-Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book WELC:
+Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
 
 “When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect.” Feathers p.340 
 
 Here are some rules to follow when naming things:
 
-1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names are unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name.
+1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name.
 1.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
-1.	Never use plain values in your code. Always create a variable instead. Pure values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Set_color(7). What does 7 mean?
+1.	Never use plain values in your code. Always create a variable instead. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. `Set_color(7)`. What does `7` mean?
 1.	High level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
 1.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding a name. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
 1.	Name collisions may happen once in a while. Consider refactoring one or both variables. They might do very similar things and should be refactored into one object. Otherwise find clearly distinguishable names.
-1.	Name collisions between different libraries are common and nothing to worry about. There are ways to have name prefixes, for example with pythons import … as … syntax or the C++ std:: prefix for the standard library objects.
-1.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with a model or name that does not exist in reality.
+1.	Name collisions between different libraries are common and nothing to worry about. Use the namespace prefixes to distinguish them.
+1.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
 1.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
-1.	You may tweak the language a little and ignore grammar rules at times. I you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is more important than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
+1.	You may tweak the language a little and ignore grammar rules at times. I you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
 1.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 1.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
-1.	The name of a function should tell you what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-1.	under_score notation is easier to read than CamelCase. Use underscore notation for variables and functions, CamelCase for classes. 
+1.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
+1.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions.
 
 # 24. Complexity
 
