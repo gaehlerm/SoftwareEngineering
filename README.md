@@ -1,4 +1,30 @@
+
+# 1. Introduction to software engineering
+
+Copyright Marco Gähler, all rights reserved. 
+
+I don't know yet wether I'll print and sell this book, this is why I have not chosen any more liberal license (yet). I hope you are still going to help me and give me some comments.
+
+This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR.
+
+The first half of the books seems more or less ok, the second half needs some serious reworking.
+
+Things to write:
+-	What is architecture? Or leave this chapter away all together?
+-	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation?
+-	Code examples for all chapters
+-	Write some more about everything. Some chapters are really short.
+-	Restructure the chapters.
+-	Some simple example on refactoring (what technique exactly? Converting a function into a class?)
+-	Design patterns -> write short explanations to all of them?
+-	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
+-	How to organize software projects
+-	Make some code examples where appropriate
+
+# Table of content
+
 - [1. Introduction to software engineering](#1-introduction-to-software-engineering)
+- [Table of content](#table-of-content)
 - [2. Preface](#2-preface)
 - [3. Introduction](#3-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
@@ -143,7 +169,7 @@
 		- [Git, everywhere git](#git-everywhere-git)
 	- [Command line](#command-line)
 	- [IDE](#ide)
-	- [MR software #? should this mean CI software?](#mr-software--should-this-mean-ci-software)
+	- [CI software](#ci-software)
 	- [Debugger](#debugger)
 	- [Profiler](#profiler)
 	- [Formatter](#formatter)
@@ -174,6 +200,7 @@
 	- [Structs](#structs)
 - [35. Working in teams](#35-working-in-teams)
 	- [Team structure](#team-structure)
+	- [Developers work](#developers-work)
 	- [Communication](#communication)
 - [36. Merge Requests](#36-merge-requests)
 - [37. Working with existing projects WIP](#37-working-with-existing-projects-wip)
@@ -205,28 +232,6 @@
 	- [Paint](#paint)
 - [44. Further reading](#44-further-reading)
 
-
-# 1. Introduction to software engineering
-
-Copyright Marco Gähler, all rights reserved. 
-
-I don't know yet wether I'll print and sell this book, this is why I have not chosen any more liberal license (yet). I hope you are still going to help me and give me some comments.
-
-This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR.
-
-The first half of the books seems more or less ok, the second half needs some serious reworking.
-
-Things to write:
--	What is architecture? Or leave this chapter away all together?
--	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation?
--	Code examples for all chapters
--	Write some more about everything. Some chapters are really short.
--	Restructure the chapters.
--	Some simple example on refactoring (what technique exactly? Converting a function into a class?)
--	Design patterns -> write short explanations to all of them
--	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
--	How to organize software projects
--	Make some code examples where appropriate
 
 
 # 2. Preface
@@ -2497,7 +2502,7 @@ And finally, a logger may be helpful for the user to send in auto created error 
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
-Version control software, Command line, Jenkins, MR software? Jira, IDE, debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring and possibly many more.
+Version control software, Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring and possibly many more.
 
 I have to admit that the list is pretty scrambled. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
 
@@ -2529,9 +2534,11 @@ In all up to date IDEs, there are plug ins for most of the software mentioned ab
 
 It is worthwhile learning some of the shortcuts in your IDE that allow you to modify code in different files faster. This is useful as it improves your work flow. But don’t overdo it at the beginning, you may be wasting too much time here. You can still learn more once you know how your personal work flow looks like. And if you really like to push the shortcuts to the limit, you’ll have to learn the VIM text editor which is operated by keyboard only.
 
-## MR software #? should this mean CI software?
+## CI software
 
-There are several different suppliers for merge request software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
+// mention Jenkins
+
+There are several different suppliers for CI software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
 
 ## Debugger
 
@@ -2839,9 +2846,15 @@ Structs are generally very useful objects, as explained in the section on classe
 
 # 35. Working in teams
 
-## Team structure
+// https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
-You will probably spend most of your career working in teams. The story of the lone programmer in the basement is a myth. Quite some of us have a wife and a family. And there are more women bringing social competences into our work life!
+You will probably spend most of your career working in teams. The story of the lone programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
+
+Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parlament with a dictator. A parlament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
+
+At the same time scaling up software projects only works with teams where all programmers are cooporating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parlament.
+
+## Team structure
 
 In most projects a team consists of roughly 4-12 software engineers, one project owner and one project manager. The software engineers are working their ass off writing awesome code while everyone else is just slacking off. The project owner is the only one who has an idea how to implement the tickets and wonders why everyone else is so stupid. And the product manager starts wondering why he has to scratch every bit of information how the software is used out of the nose of the customers. While at the same time his team of highly paid developers needs weeks to finish a tiny ticket. Yes, this will be your somewhat exaggerated future in a software development team.
 
@@ -2853,7 +2866,7 @@ You always have a few software developers. Each one draws a ticket and starts im
 
 It is important that everybody in the team talks to each other. Software engineers talk a lot about their code. But quite frequently they have questions about the ticket that the PM has to answer. Vice versa the PM wants to know the state of each feature for estimating the progress of the software.
 
-Developers work
+## Developers work
 
 The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job.
 
