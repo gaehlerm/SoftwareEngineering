@@ -44,19 +44,20 @@
 	- [Acceptance tests](#acceptance-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
+	- [When to run tests](#when-to-run-tests)
 - [13. Writing good code](#13-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
 		- [Asserts](#asserts)
 	- [Test Driven Development](#test-driven-development)
 	- [Mocking](#mocking)
-- [15. Variables types](#15-variables-types)
+- [14. Variables types](#14-variables-types)
 	- [Class variables](#class-variables)
 	- [Variable comparison](#variable-comparison)
-- [16. Programming Paradigms](#16-programming-paradigms)
+- [15. Programming Paradigms](#15-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
-- [17. Classes](#17-classes)
+- [16. Classes](#16-classes)
 	- [Different kind of classes](#different-kind-of-classes)
 		- [Data class (struct)](#data-class-struct)
 		- [Pure function classes](#pure-function-classes)
@@ -78,7 +79,7 @@
 	- [Functions and Methods](#functions-and-methods)
 	- [Temporal coupling](#temporal-coupling-1)
 	- [Conclusions](#conclusions)
-- [19. Design patterns](#19-design-patterns)
+- [17. Design patterns](#17-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
 	- [Strategy pattern](#strategy-pattern)
@@ -87,9 +88,9 @@
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
-- [20. Decoupling](#20-decoupling)
-- [21. Refactoring](#21-refactoring)
-- [22. Entropy](#22-entropy)
+- [18. Decoupling](#18-decoupling)
+- [19. Refactoring](#19-refactoring)
+- [20. Entropy](#20-entropy)
 	- [Keeping code in shape](#keeping-code-in-shape)
 	- [Levels of refactoring](#levels-of-refactoring)
 	- [When to refactor](#when-to-refactor)
@@ -101,20 +102,20 @@
 		- [Encapsulate variables](#encapsulate-variables)
 	- [Real life refactoring](#real-life-refactoring)
 		- [Sketches](#sketches)
-- [23. Software Architecture](#23-software-architecture)
+- [21. Software Architecture](#21-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
-- [24. Solid principles](#24-solid-principles)
+- [22. Solid principles](#22-solid-principles)
 	- [Single Responsibility Principle](#single-responsibility-principle-1)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Liskov substitution principle](#liskov-substitution-principle)
 	- [Interface segregation principle](#interface-segregation-principle)
 	- [Dependency inversion](#dependency-inversion)
-- [17. Some rules of thumb](#17-some-rules-of-thumb)
+- [23. Some rules of thumb](#23-some-rules-of-thumb)
 	- [Code correlation](#code-correlation)
 	- [Single line complexity](#single-line-complexity)
 	- [Back magic code](#back-magic-code)
-- [18. Datatypes](#18-datatypes)
+- [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
 	- [Booleans](#booleans)
@@ -125,7 +126,7 @@
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [19. Data properties](#19-data-properties)
+- [25. Data properties](#25-data-properties)
 	- [Compile-time constant](#compile-time-constant)
 	- [Constant](#constant-1)
 	- [Mutable](#mutable)
@@ -133,11 +134,11 @@
 	- [Static Variables](#static-variables)
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables)
-- [20. Algorithms](#20-algorithms)
-- [21. Naming](#21-naming)
-- [24. Complexity](#24-complexity)
-- [25. Performance Optimization](#25-performance-optimization)
-- [26. Tools](#26-tools)
+- [26. Algorithms](#26-algorithms)
+- [27. Naming](#27-naming)
+- [28. Complexity](#28-complexity)
+- [29. Performance Optimization](#29-performance-optimization)
+- [30. Tools](#30-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
 	- [Command line](#command-line)
@@ -151,7 +152,7 @@
 	- [Ticketing system](#ticketing-system)
 	- [#Wiki](#wiki)
 	- [Docstring](#docstring)
-- [26.	Model-driven design WIP](#26model-driven-design-wip)
+- [31. design WIP](#31-design-wip)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Domain model](#domain-model)
 	- [Maintaining the model WIP](#maintaining-the-model-wip)
@@ -162,23 +163,23 @@
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-- [26. 3rd party software](#26-3rd-party-software)
-- [27. Dependencies](#27-dependencies)
+- [32. 3rd party software](#32-3rd-party-software)
+- [33. Dependencies](#33-dependencies)
 	- [Circular dependencies](#circular-dependencies)
-- [28. C++](#28-c)
+- [34. C++](#34-c)
 	- [Pointers and arrays](#pointers-and-arrays)
 	- [Smart pointers](#smart-pointers)
 	- [Pass by reference](#pass-by-reference)
 	- [Classes](#classes)
 	- [Structs](#structs)
-- [29. Working in teams](#29-working-in-teams)
+- [35. Working in teams](#35-working-in-teams)
 	- [Team structure](#team-structure)
 	- [Communication](#communication)
-- [30. Merge Requests](#30-merge-requests)
-- [31. Working with existing projects WIP](#31-working-with-existing-projects-wip)
-- [32. Planning](#32-planning)
+- [36. Merge Requests](#36-merge-requests)
+- [37. Working with existing projects WIP](#37-working-with-existing-projects-wip)
+- [38. Planning](#38-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
-- [33. Agile](#33-agile)
+- [39. Agile](#39-agile)
 	- [Agile values](#agile-values)
 	- [Work planning](#work-planning)
 	- [QA](#qa)
@@ -192,17 +193,17 @@
 	- [Becoming agile](#becoming-agile)
 	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
 		- [Courage](#courage)
-- [34. Continuous integration](#34-continuous-integration)
-- [35. Hiring and getting hired](#35-hiring-and-getting-hired)
+- [40. Continuous integration](#40-continuous-integration)
+- [41. Hiring and getting hired](#41-hiring-and-getting-hired)
 	- [Hiring](#hiring)
 	- [Getting hired](#getting-hired)
-- [36. Work ethics](#36-work-ethics)
-- [37. Examples](#37-examples)
+- [42. Work ethics](#42-work-ethics)
+- [43. Examples](#43-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
 		- [Implementation](#implementation)
 	- [Paint](#paint)
-- [38. Further reading](#38-further-reading)
+- [44. Further reading](#44-further-reading)
 
 
 # 1. Introduction to software engineering
@@ -808,6 +809,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
 # 12. Testing
+
 “Data structures + algorithms = software” Adapted from Bertrand Mayer
 
 Interfaces + testing = engineering
@@ -1010,6 +1012,19 @@ As a summary one can say two things about classes and tests:
 -	The constructors should be small and not rely on any fancy logic
 
 Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+
+## When to run tests
+
+It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
+
+Unit tests are fasts. Each one of them takes only milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all.
+
+Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) just as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
+
+Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up jenkins //(or what else is the MR software?) accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another fixed requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
+
+With acceptance tests is becomes a little bit trickier. Acceptance tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all acceptance tests pass all the time. Instead you have to set up Jenkins to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
+
 
 # 13. Writing good code
 
@@ -2296,6 +2311,8 @@ Here are some rules to follow when naming things:
 1.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 1.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 1.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions.
+
+// wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
 
 # 28. Complexity
 
