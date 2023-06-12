@@ -202,6 +202,7 @@ Things to write:
 	- [Team structure](#team-structure)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
+	- [Working with customers](#working-with-customers)
 - [36. Merge Requests](#36-merge-requests)
 - [37. Working with existing projects WIP](#37-working-with-existing-projects-wip)
 - [38. Planning](#38-planning)
@@ -814,6 +815,12 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
 # 12. Testing
+
+// mention double entry book keeping somewhere?
+
+// in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
+
+// if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
 “Data structures + algorithms = software” Adapted from Bertrand Mayer
 
@@ -2888,6 +2895,15 @@ In a team, the most important language is not Java but English (or German in the
 
 There are probably hundreds of other rules, but these two here are the ones I know. Even though I’m not that good at applying them.
 As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
+
+##  Working with customers
+
+// https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_97 
+
+Customers are only humans. Quite frequently they don't say what they mean because they don't know it any better. Keep your vocabulary changing to figure out what certain words actually mean in the view of the customer. At times this reveals some misguided view. For instance if customer and client have some completely different meaning. Do not expect the discussion on requirements to be over after one meeting with the customer. You have to stay in touch in order to get constant feedback to make sure you implement what the customer wants and not what he says.
+
+Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
+
 
 # 36. Merge Requests
 
