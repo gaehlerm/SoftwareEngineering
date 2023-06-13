@@ -21,19 +21,19 @@ Things to write:
 -	How to organize software projects
 -	Make some code examples where appropriate
 
-# Table of content
+# 2. Table of content
 
 - [1. Introduction to software engineering](#1-introduction-to-software-engineering)
-- [Table of content](#table-of-content)
-- [2. Preface](#2-preface)
-- [3. Introduction](#3-introduction)
+- [2. Table of content](#2-table-of-content)
+- [3. Preface](#3-preface)
+- [4. Introduction](#4-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-- [4. The fundamentals](#4-the-fundamentals)
+- [5. The fundamentals](#5-the-fundamentals)
 	- [Single responsibility principle](#single-responsibility-principle)
 		- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
-- [5. Levels of abstraction](#5-levels-of-abstraction)
+- [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
 	- [The onion layers](#the-onion-layers)
@@ -45,16 +45,15 @@ Things to write:
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
 		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
-- [6. Interfaces](#6-interfaces)
+- [7. Interfaces](#7-interfaces)
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
 		- [Versioning](#versioning)
 		- [Conclusion](#conclusion)
-- [7. Functions](#7-functions)
+- [8. Functions](#8-functions)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
-- [8. Understandable code](#8-understandable-code)
-- [9. Decoupling](#9-decoupling)
+- [9. Understandable code](#9-understandable-code)
 - [10. Programming languages](#10-programming-languages)
 - [11. bugs, errors, exceptions](#11-bugs-errors-exceptions)
 	- [Bugs](#bugs)
@@ -115,8 +114,8 @@ Things to write:
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
 - [18. Decoupling](#18-decoupling)
-- [19. Refactoring](#19-refactoring)
-- [20. Entropy](#20-entropy)
+- [19. Entropy](#19-entropy)
+- [20. Refactoring](#20-refactoring)
 	- [Keeping code in shape](#keeping-code-in-shape)
 	- [Levels of Refactoring](#levels-of-refactoring)
 	- [When to Refactor](#when-to-refactor)
@@ -235,8 +234,7 @@ Things to write:
 - [44. Further reading](#44-further-reading)
 
 
-
-# 2. Preface
+# 3. Preface
 In 2007 I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, the const expression, etc. I somehow struggled understanding these things. They just felt wrong. There were so many open questions about how to write the code properly and I didn’t know where to get good advice. I passed the exam, but I was somehow dissatisfied.
 
 Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare to look at this code ever since. Already thinking about it makes me shudder.
@@ -258,7 +256,7 @@ I’m not a great software engineer, not at all. And my English is fairly lousy.
 This book is only a step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 Enjoy my book and good luck with your career.
 
-# 3. Introduction
+# 4. Introduction
 
 In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations on what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming that are only used due to historic reasons. In reality they are only leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes should be taken with care in OO programming.
 
@@ -330,7 +328,7 @@ These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
 
-# 4. The fundamentals
+# 5. The fundamentals
 
 ## Single responsibility principle 
 
@@ -414,7 +412,7 @@ Working in an orthogonal system has many advantages:
 
 // figure out what else to write. Maybe add some examples.
 
-# 5. Levels of abstraction
+# 6. Levels of abstraction
 
 “You can solve every problem with another level of indirection.” – Andrew Konig
 
@@ -536,7 +534,7 @@ Between classes as well as between files there are dependencies. The high-level 
 
 // abstract vs concrete code -> see Clean Architecture?
 
-# 6. Interfaces
+# 7. Interfaces
 
 “Make interface is easy to use correctly and hard to use incorrectly" - Scott Meyers, The fundamental rule of interfaces
 
@@ -605,7 +603,7 @@ Usually companies support many API versions simultaneously. They know their user
 
 Please remember: APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
 
-# 7. Functions
+# 8. Functions
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
 
@@ -704,7 +702,7 @@ Return values are in my opinion very normal, yet many OO programmers tend to dis
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
-# 8. Understandable code
+# 9. Understandable code
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
@@ -733,12 +731,6 @@ So far, every programmer that told me he was working on a really complex problem
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones.
-
-# 9. Decoupling
-
-// see pragmatic programmer
-
-Decouple code, decouple functions logically, global variables are like coupling glue, suggestion of Demeter
 
 # 10. Programming languages
 
@@ -1618,17 +1610,17 @@ Furthermore, there is a thing called Train Wrecks. This is a chain of class meth
 
 This chain is also very rigid and hard to change. Don’t chain method calls.
 
-# 19. Refactoring
-// “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
-“Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
-
-# 20. Entropy
+# 19. Entropy
 
 Entropy is the physical law of disorder. It says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
 
 In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well.
 
 // This text is somehow duplicated with the beginning of Refactoring
+
+# 20. Refactoring
+// “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
+“Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
 
 ## Keeping code in shape
 
@@ -3365,6 +3357,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
