@@ -211,7 +211,7 @@ Things to write:
 - [26. Algorithms](#26-algorithms)
 - [27. Naming](#27-naming)
 - [28. Complexity](#28-complexity)
-- [23. Files and folders](#23-files-and-folders)
+- [29. Files and folders](#29-files-and-folders)
 	- [Data files](#data-files)
 		- [CSV](#csv)
 		- [Json](#json)
@@ -220,8 +220,10 @@ Things to write:
 		- [Databases](#databases)
 		- [Custom file format](#custom-file-format)
 	- [Project folder](#project-folder)
-- [29. Performance Optimization](#29-performance-optimization)
-- [30. Tools](#30-tools)
+- [30. Performance Optimization](#30-performance-optimization)
+- [31. Comments](#31-comments)
+- [32. Logging](#32-logging)
+- [33. Tools](#33-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
 	- [Command line](#command-line)
@@ -235,7 +237,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring)
-- [31. Domain Driven Design](#31-domain-driven-design)
+- [34. Domain Driven Design](#34-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
 	- [Implementing a Model](#implementing-a-model)
@@ -247,25 +249,25 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-- [32. 3rd party software](#32-3rd-party-software)
-- [33. Dependencies](#33-dependencies)
+- [35. 3rd party software](#35-3rd-party-software)
+- [36. Dependencies](#36-dependencies)
 	- [Circular dependencies](#circular-dependencies)
-- [34. C++](#34-c)
+- [37. C++](#37-c)
 	- [Pointers and arrays](#pointers-and-arrays)
 	- [Smart pointers](#smart-pointers)
 	- [Pass by reference](#pass-by-reference)
 	- [Classes](#classes)
 	- [Structs](#structs)
-- [35. Working in teams](#35-working-in-teams)
+- [38. Working in teams](#38-working-in-teams)
 	- [Team structure](#team-structure)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
 	- [Working with customers](#working-with-customers)
-- [36. Merge Requests](#36-merge-requests)
-- [37. Working with existing projects](#37-working-with-existing-projects)
-- [38. Planning](#38-planning)
+- [39. Merge Requests](#39-merge-requests)
+- [40. Working with existing projects](#40-working-with-existing-projects)
+- [41. Planning](#41-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
-- [39. Agile](#39-agile)
+- [42. Agile](#42-agile)
 	- [Agile values](#agile-values)
 	- [Work planning](#work-planning)
 	- [QA](#qa)
@@ -279,17 +281,17 @@ Things to write:
 	- [Becoming agile](#becoming-agile)
 	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
 		- [Courage](#courage)
-- [40. Continuous integration](#40-continuous-integration)
-- [41. Hiring and getting hired](#41-hiring-and-getting-hired)
+- [43. Continuous integration](#43-continuous-integration)
+- [44. Hiring and getting hired](#44-hiring-and-getting-hired)
 	- [Hiring](#hiring)
 	- [Getting hired](#getting-hired)
-- [42. Work ethics](#42-work-ethics)
-- [43. Examples](#43-examples)
+- [45. Work ethics](#45-work-ethics)
+- [46. Examples](#46-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
 		- [Implementation](#implementation)
 	- [Paint](#paint)
-- [44. Further reading](#44-further-reading)
+- [47. Further reading](#47-further-reading)
 
 
 # 3. Preface
@@ -1037,7 +1039,9 @@ I’m very sorry to say, you have some serious problems. This was possibly the w
 
 ## Integration tests
 
+Integration tests are somewhat smaller than acceptance tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
 
+Integration tests, at its own right, are just as important as acceptance tests. 
 
 ## Unit tests
 
@@ -2527,7 +2531,7 @@ Finally, there are indeed some cases where you have to plan the software from sc
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
-25.	Comments
+# 31. Comments
 
 “Don’t.”
 
@@ -2575,7 +2579,7 @@ And of course, you are allowed to add the licensing and copyright comment at the
 
 Summary: Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
 
-26.	Logging
+# 32. Logging
 
 The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
 
@@ -2593,7 +2597,7 @@ In a GUI the logger could store all the actions performed by the user. This may 
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle and serious.
 
-# 31. Tools
+# 33. Tools
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
@@ -2686,7 +2690,7 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-# 32. Domain Driven Design
+# 34. Domain Driven Design
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
@@ -2844,7 +2848,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
-# 33. 3rd party software
+# 35. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
@@ -2870,7 +2874,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 34. Dependencies
+# 36. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -2906,7 +2910,7 @@ Long story short: The high-level object calls the low-level object and hands ove
 
 // make a code example: A calls B calls A returns to B returns to A. -> A calls B with all info needed returns the value to A.
 
-# 35. C++
+# 37. C++
 
 // is this chapter needed?
 
@@ -2941,7 +2945,7 @@ Structs are similar to classes, however all members are public. In general, stru
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
 
-# 36. Working in teams
+# 38. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
@@ -2995,7 +2999,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 37. Merge Requests
+# 39. Merge Requests
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -3021,7 +3025,7 @@ Always be polite. An MR is like criticizing someone by email. This is a highly d
 
 One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
-# 38. Working with existing projects
+# 40. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
@@ -3040,7 +3044,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 // move where?
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
-# 39. Planning
+# 41. Planning
 
 TODO: read through again. Is there duplication with the agile section?
 
@@ -3078,7 +3082,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 #where to add a chapter with errors?
 
-# 40. Agile
+# 42. Agile
 // How much of this chapter is explained in Working in teams
 
 // citation Clean agile, Agile manifesto
@@ -3201,7 +3205,7 @@ You also need courage to be honest. The very first thing is you have to be able 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
 
-# 41. Continuous integration
+# 43. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
@@ -3217,7 +3221,7 @@ As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t 
 
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based …?
 
-# 42. Hiring and getting hired
+# 44. Hiring and getting hired
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
@@ -3247,7 +3251,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 43. Work ethics
+# 45. Work ethics
 
 Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
 
@@ -3259,7 +3263,7 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 
 //keep learning
 
-# 44. Examples
+# 46. Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
@@ -3381,7 +3385,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 45. Further reading
+# 47. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -3431,6 +3435,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
