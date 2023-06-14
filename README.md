@@ -65,6 +65,7 @@ Things to write:
 		- [General thoughts about tests](#general-thoughts-about-tests)
 		- [Quality of tests](#quality-of-tests)
 		- [Number of test cases](#number-of-test-cases)
+		- [Flaky tests](#flaky-tests)
 	- [Acceptance tests](#acceptance-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
@@ -948,6 +949,10 @@ If you ever use random numbers in your code, you might get stuck with your tests
 
 It will happen frequently that you have a test that can only work if the other test works. For example, you have a function that writes a file. You write a test that calls this function and checks the existence of the file. Next you write a function that reads this file. In the test you will first call the function to create the file and then call the function to read it. Now these two tests are related. They both fail if the creation of the file fails. This is bad design and violates the single responsibility principle. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying. Unfortunately having all the tests completely separated is a very hard task.
 // how to skip one test in python if the previous one failed?
+
+### Flaky tests
+
+Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests, but rather it destroys then confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because, say, the network is down. At times rerunning a test might help, though this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. This reduces the flakiness by orders of magnitude. And try to design your tests such that flakiness cannot occur. Especially small tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky. Thus avoid testing any IO if possible and the tests should become much more stable. 
 
 ## Acceptance tests
 
