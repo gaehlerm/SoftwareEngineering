@@ -1,3 +1,49 @@
+1. [Introduction to software engineering](#1.-Introduction-to-software-engineering)
+2. [Table of content](#2.-Table-of-content)
+3. [Preface](#3.-Preface)
+4. [Introduction](#4.-Introduction)
+5. [Single responsibility principle ](#5.-Single-responsibility-principle-)
+6. [Levels of abstraction](#6.-Levels-of-abstraction)
+7. [Interfaces](#7.-Interfaces)
+8. [Functions](#8.-Functions)
+9. [Understandable code](#9.-Understandable-code)
+10. [Programming languages](#10.-Programming-languages)
+11. [bugs, errors, exceptions](#11.-bugs,-errors,-exceptions)
+12. [Testing](#12.-Testing)
+13. [Writing good code](#13.-Writing-good-code)
+14. [Variables types](#14.-Variables-types)
+15. [Programming Paradigms](#15.-Programming-Paradigms)
+16. [Classes](#16.-Classes)
+17. [Design patterns](#17.-Design-patterns)
+18. [Decoupling](#18.-Decoupling)
+19. [Entropy](#19.-Entropy)
+20. [Refactoring](#20.-Refactoring)
+21. [Software Architecture](#21.-Software-Architecture)
+22. [Solid principles ](#22.-Solid-principles-)
+23. [Some rules of thumb](#23.-Some-rules-of-thumb)
+24. [Datatypes](#24.-Datatypes)
+25. [Data properties](#25.-Data-properties)
+26. [Algorithms](#26.-Algorithms)
+27. [Naming](#27.-Naming)
+28. [Complexity](#28.-Complexity)
+23. [Files and folders](#23.-Files-and-folders)
+29. [Performance Optimization](#29.-Performance-Optimization)
+30. [Tools](#30.-Tools)
+31. [Domain Driven Design](#31.-Domain-Driven-Design)
+32. [3rd party software](#32.-3rd-party-software)
+33. [Dependencies](#33.-Dependencies)
+34. [C++](#34.-C++)
+35. [Working in teams](#35.-Working-in-teams)
+36. [Merge Requests](#36.-Merge-Requests)
+37. [Working with existing projects](#37.-Working-with-existing-projects)
+38. [Planning](#38.-Planning)
+39. [Agile](#39.-Agile)
+40. [Continuous integration](#40.-Continuous-integration)
+41. [Hiring and getting hired](#41.-Hiring-and-getting-hired)
+42. [Work ethics](#42.-Work-ethics)
+43. [Examples](#43.-Examples)
+44. [Further reading](#44.-Further-reading)
+
 
 # 1. Introduction to software engineering
 
@@ -68,6 +114,7 @@ Things to write:
 		- [Flaky tests](#flaky-tests)
 		- [Britle tests](#britle-tests)
 	- [Acceptance tests](#acceptance-tests)
+	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
 	- [When to run tests](#when-to-run-tests)
@@ -164,6 +211,15 @@ Things to write:
 - [26. Algorithms](#26-algorithms)
 - [27. Naming](#27-naming)
 - [28. Complexity](#28-complexity)
+- [23. Files and folders](#23-files-and-folders)
+	- [Data files](#data-files)
+		- [CSV](#csv)
+		- [Json](#json)
+		- [XML](#xml)
+		- [HDF5](#hdf5)
+		- [Databases](#databases)
+		- [Custom file format](#custom-file-format)
+	- [Project folder](#project-folder)
 - [29. Performance Optimization](#29-performance-optimization)
 - [30. Tools](#30-tools)
 	- [Version control software](#version-control-software)
@@ -978,6 +1034,10 @@ Acceptance tests are important, but they cannot tell you where an error comes fr
 One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?”
 
 I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. Good luck!
+
+## Integration tests
+
+
 
 ## Unit tests
 
@@ -2376,19 +2436,19 @@ Having a domain model is a great asset. It forces you to understand the problem 
 
 In many cases the complexity of a task is extremely hard to estimate. Some developers have an idea what to do, others don’t. But nobody really knows and everyone is a little bit scared of that task. And nobody knows how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything is already there in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
 
-23.	Files and folders
+# 29. Files and folders
 
-Data files
+## Data files
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats.
 
-CSV
+### CSV
 
 Comma Spaced Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. CSV is no file standard so you can do anything you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in csv files. Csv saves only simple, unstructured vectors.
 Long story short: CSV is the file format everyone uses who doesn’t know anything better.
 
-Json
+### Json
 
 The JavaScript Object Notation (json) file format is clearly the best file format for everyday purposes. It is very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
 
@@ -2403,26 +2463,26 @@ readJSON.py
 import json
 ...
 ```
-XML
+### XML
 
 The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Along with some notation details the support of arrays is pretty much the only difference. Therefore, json is simply better and there is no reason to use XML if you can choose. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to.
 
-HDF5
+### HDF5
 
 HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the hdf5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
 
-Databases
+### Databases
 
 Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
 
 I never really cared much about DBs so you better get your information from elsewhere. I only know that proprietary DBs are extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
 
-Custom file format
+### Custom file format
 
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no more reason to define custom file formats.
 
 
-Project folder
+## Project folder
 
 Code is a collection of text files. One question is: how do you deal with them?
 
@@ -2445,7 +2505,7 @@ There are some additional files in a project.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
-# 29. Performance Optimization
+# 30. Performance Optimization
 
 “Premature optimization is the root of all evil” - Donald Knuth
 
@@ -2533,7 +2593,7 @@ In a GUI the logger could store all the actions performed by the user. This may 
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle and serious.
 
-# 30. Tools
+# 31. Tools
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
@@ -2626,7 +2686,7 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-# 31. Domain Driven Design
+# 32. Domain Driven Design
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
@@ -2784,7 +2844,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
-# 32. 3rd party software
+# 33. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
@@ -2810,7 +2870,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 33. Dependencies
+# 34. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -2846,7 +2906,7 @@ Long story short: The high-level object calls the low-level object and hands ove
 
 // make a code example: A calls B calls A returns to B returns to A. -> A calls B with all info needed returns the value to A.
 
-# 34. C++
+# 35. C++
 
 // is this chapter needed?
 
@@ -2881,7 +2941,7 @@ Structs are similar to classes, however all members are public. In general, stru
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
 
-# 35. Working in teams
+# 36. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
@@ -2935,7 +2995,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 36. Merge Requests
+# 37. Merge Requests
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -2961,7 +3021,7 @@ Always be polite. An MR is like criticizing someone by email. This is a highly d
 
 One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
-# 37. Working with existing projects
+# 38. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
@@ -2980,7 +3040,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 // move where?
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
-# 38. Planning
+# 39. Planning
 
 TODO: read through again. Is there duplication with the agile section?
 
@@ -3018,7 +3078,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 #where to add a chapter with errors?
 
-# 39. Agile
+# 40. Agile
 // How much of this chapter is explained in Working in teams
 
 // citation Clean agile, Agile manifesto
@@ -3141,7 +3201,7 @@ You also need courage to be honest. The very first thing is you have to be able 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
 
-# 40. Continuous integration
+# 41. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
@@ -3157,7 +3217,7 @@ As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t 
 
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based …?
 
-# 41. Hiring and getting hired
+# 42. Hiring and getting hired
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
@@ -3187,7 +3247,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 42. Work ethics
+# 43. Work ethics
 
 Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
 
@@ -3199,7 +3259,7 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 
 //keep learning
 
-# 43. Examples
+# 44. Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
@@ -3321,7 +3381,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 44. Further reading
+# 45. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -3371,6 +3431,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
