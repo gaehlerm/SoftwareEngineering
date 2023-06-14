@@ -66,6 +66,7 @@ Things to write:
 		- [Quality of tests](#quality-of-tests)
 		- [Number of test cases](#number-of-test-cases)
 		- [Flaky tests](#flaky-tests)
+		- [Britle tests](#britle-tests)
 	- [Acceptance tests](#acceptance-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
@@ -952,7 +953,11 @@ It will happen frequently that you have a test that can only work if the other t
 
 ### Flaky tests
 
-Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests, but rather it destroys then confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because, say, the network is down. At times rerunning a test might help, though this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. This reduces the flakiness by orders of magnitude. And try to design your tests such that flakiness cannot occur. Especially small tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky. Thus avoid testing any IO if possible and the tests should become much more stable. 
+Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests, but rather it destroys the confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because, say, the network is down. At times rerunning a test might help, though this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. This reduces the flakiness by orders of magnitude. And try to design your tests such that flakiness cannot occur. Especially small tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky. Thus avoid testing any IO if possible and the tests should become much more stable. 
+
+### Britle tests
+
+Tests that are over specified are called brittle. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting is not defined in the json standard. It does not change any values. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file. This is what we are really interessted in. 
 
 ## Acceptance tests
 
