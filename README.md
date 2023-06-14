@@ -28,9 +28,8 @@ Things to write:
 - [3. Preface](#3-preface)
 - [4. Introduction](#4-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-- [5. The fundamentals](#5-the-fundamentals)
-	- [Single responsibility principle](#single-responsibility-principle)
-		- [Example](#example)
+- [5. Single responsibility principle](#5-single-responsibility-principle)
+	- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
@@ -132,7 +131,7 @@ Things to write:
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
 - [22. Solid principles](#22-solid-principles)
-	- [Single Responsibility Principle](#single-responsibility-principle-1)
+	- [Single Responsibility Principle](#single-responsibility-principle)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Liskov substitution principle](#liskov-substitution-principle)
 	- [Interface segregation principle](#interface-segregation-principle)
@@ -176,11 +175,12 @@ Things to write:
 	- [Code quality checker](#code-quality-checker)
 	- [Pip, cmake](#pip-cmake)
 	- [Ticketing system](#ticketing-system)
-	- [#Wiki](#wiki)
+	- [Wiki](#wiki)
 	- [Docstring](#docstring)
-- [31. design WIP](#31-design-wip)
+- [31. Domain Driven Design](#31-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
-	- [Domain model](#domain-model)
+	- [Describing a model](#describing-a-model)
+	- [Implementing a Model](#implementing-a-model)
 	- [Maintaining the model WIP](#maintaining-the-model-wip)
 		- [Unified model](#unified-model)
 		- [Separate ways](#separate-ways)
@@ -204,7 +204,7 @@ Things to write:
 	- [Communication](#communication)
 	- [Working with customers](#working-with-customers)
 - [36. Merge Requests](#36-merge-requests)
-- [37. Working with existing projects WIP](#37-working-with-existing-projects-wip)
+- [37. Working with existing projects](#37-working-with-existing-projects)
 - [38. Planning](#38-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
 - [39. Agile](#39-agile)
@@ -328,9 +328,7 @@ These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
 
-# 5. The fundamentals
-
-## Single responsibility principle 
+# 5. Single responsibility principle 
 
 Every object does exactly one thing. Everything is done by exactly one object.
 
@@ -360,7 +358,7 @@ Bugs: As the purpose of each class becomes clearer, it will be easier to structu
 
 Bug fixing: Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for  all.
 
-### Example
+## Example
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
 
 ```py
@@ -2304,7 +2302,9 @@ And last but not least, I hope you still remember the section about global varia
 
 #Look up some online introduction to algorithms. Should I go down to the O(n) notation or leave this chapter away completely?
 
-I can highly recommend reading a book on data structures and algorithms. They go hand in hand. It gives you a great understanding how to tackle a problem and what you have to look out for. You absolutely have to learn recursive algorithms. They are very efficient and simple to implement. They are used everywhere. Just make sure you get the corner cases correctly. Other than that, there is nothing specific that I can recommend you. Just be smart and keep your eyes open. 
+I can highly recommend reading a book on data structures and algorithms. They go hand in hand. It gives you a great understanding how to tackle a problem and what you have to look out for. You absolutely have to learn recursive algorithms. They are very efficient and simple to implement. They are used everywhere. Just make sure you get the corner cases correctly. Other than that, there is nothing specific that I can recommend you. Just be smart and keep your eyes open.
+
+
 #is there anything else to mention? Get a book on algorithms and write something about the first few pages?
 
 # 27. Naming
@@ -2525,7 +2525,7 @@ And finally, a logger may be helpful for the user to send in auto created error 
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
 
-Version control software, Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring and possibly many more.
+Version control software, Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring, docker and possibly many more.
 
 I have to admit that the list is pretty scrambled. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
 
@@ -2600,7 +2600,7 @@ Jira is the most commonly used ticketing system and has little to do with code. 
 This ticketing software is also helpful when managing a one-man project as it helps organizing the work. And it doesn’t even have to be a software project. You can also use it for all other kind of projects. 
 If you don’t work for a company there are also free alternatives. But I’ve never used them.
 
-## #Wiki
+## Wiki
 
 Most companies use confluence as the knowledge base. Like Jira this is an industry standard. Write general thoughts here. However, things will go out of date quickly so be careful.
 
@@ -2614,33 +2614,35 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-# 31. design WIP
+# 31. Domain Driven Design
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
 ## Ubiquitous Language
 
-There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to implement such a topic. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how the model really works. Thereby it is of utmost importance to use the same language as the domain experts as the development team uses among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
+There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molucules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to build new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier, better, ways to say what you want to say. Use the insight gained this way to improve the domain-model.
 
-## Domain model
+## Describing a model
 
 The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
 
 First, it supports only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows some temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
 
-Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as an UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information got lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
+Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as a UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information will get lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
 
-As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time.
+Instead you can use any kind of document you like. Frequently it is better to create some sort of temporal order that describes a process than a class diagram. Or you create a diagram with class objects. After all it's called Object Oriented programming, not Class Oriented programming.
 
-There are cases where you can’t implement a model you developed. It would be simply too complex. This is a clear sign that your model is not optimal. In theory the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and they would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
+As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time. Documentation has similar drawbacks as described in the chapter on comments. It takes a lot of efforts to keep a documentation up to date.
+
+## Implementing a Model
+
+There are cases where you can’t implement a model you developed. It would be simply too complex. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and they would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
 
 In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding and modeling until you have a breakthrough when you suddenly realize how the optimal model should look like.
 
-The code and model always have to stay in sync. # what else to say here?
-
-Decouple the domain-model code from the other code. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code.
+Decouple the domain-model code from your other code. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things.
 
 ## Maintaining the model WIP
 
@@ -2947,7 +2949,7 @@ Always be polite. An MR is like criticizing someone by email. This is a highly d
 
 One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
-# 37. Working with existing projects WIP
+# 37. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
