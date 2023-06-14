@@ -957,7 +957,9 @@ Tests that do not always return the same result are called flaky. This is extrem
 
 ### Britle tests
 
-Tests that are over specified are called brittle. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting is not defined in the json standard. It does not change any values. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file. This is what we are really interessted in. 
+Tests that are over specified are called brittle. They break when changing the code in seeminly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting is not defined in the json standard. It does not change any of its values. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file. This is what we are really interessted in.
+
+One example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
 
 ## Acceptance tests
 
