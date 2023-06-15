@@ -117,7 +117,9 @@ Things to write:
 	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
+	- [The testing pyramid](#the-testing-pyramid)
 	- [When to run tests](#when-to-run-tests)
+	- [Mocking and Stubs](#mocking-and-stubs)
 - [13. Writing good code](#13-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
@@ -352,7 +354,7 @@ If you don’t like meetings nor customers you can stay at home and write whatev
 
 Besides the meetings you will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up code or discussing things with your colleagues. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
 
-<img src=images/programmerActivity.png width="600">
+<img src=images/programmerActivity.png width="400">
 
 You certainly have to look twice to grasp the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not including all the meetings that you have to visit as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you work on a new project there is no refactoring (code clean up) required yet and there is less code for you to read. Ultimately, you’ll spend more time coding. In a very big project, it takes more time to implement changes. It can take a year until you are fully productive in a big project! But the company is already earning money with this code for a long time, so adding new features is not that important anymore. Either way, I will continue the discussion with the value from the plot.
 
@@ -1021,6 +1023,8 @@ One example of brittle tests are tests for methods that should be private but ar
 
 ## Acceptance tests
 
+// rename everything here to end-to-end tests
+
 Acceptance tests are pretty much what I described in the story above. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with the software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
 
 If you publish some code examples for your software you should write an acceptance test for every single one of them. There’s nothing more embarrassing than failing examples.
@@ -1041,7 +1045,7 @@ I’m very sorry to say, you have some serious problems. This was possibly the w
 
 Integration tests are somewhat smaller than acceptance tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
 
-Integration tests, at its own right, are just as important as acceptance tests. 
+Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
 
 ## Unit tests
 
@@ -1056,15 +1060,17 @@ print(f(2))
 print(f(5))
 ```
 
-This works. You will find the bug in thir case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. When changing the function, you have to test it all over again. Everything. By hand! There is as much better solution: unit tests. 
+This works. You will find the bug in thir case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. By hand! There is as much better solution: unit tests. 
 
-Unit tests cover small pieces of code. Usually they test the public function of classes or standalone functions. It may sound surprising, but unit tests are even more important than acceptance tests. Most of the time, unit tests only need a setup and an execution phase. There is no tear down required as unit tests don’t interact with any files or databases that you would have to delete in the end.
+Unit tests cover small pieces of code. Usually they test the public function of classes or standalone functions. It may sound surprising, but unit tests are even more important than acceptance tests. 
 
-Why…? How? No files? No database? 
+Most of the time, unit tests only need a setup and an execution phase. There is no tear down required as unit tests don’t interact with any files or databases that you would have to delete in the end.
 
-Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for Share_profit () we can write tests for calculate_annual_profit () and we don’t have to deal with the filesystem anymore.
+Why...? How? No files? No database? 
+
+Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_profit()` we can write tests for `calculate_annual_profit()` and we don’t have to deal with the filesystem anymore.
 ```Py
-Share_values(filename):
+share_values(filename):
 	share_value_file = read_share_values(filename)
 	share_values = extract_share_values(share_value_file)
 	return share_values
@@ -1092,6 +1098,21 @@ As a summary one can say two things about classes and tests:
 
 Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
 
+## The testing pyramid
+
+We've defined here 3 categories of tests. From the fine grained unit tests up to the very coarse end-to-end tests. As a rule of thum one can say that the testing suite of any programm should consist of a lot of small grained and few coarse tests.
+
+Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can return a detailed feedback if something is broken. They are like testing a car radio by itself before installing it into the car. There is no need testing it only once it's installed, that would be much more difficult. The end-to-end tests should only check that the installation of the radio worked out as expected. Turning it once on should be completely sufficient as there is not much more that can still go wrong. For these reasons unit tests are the foundation of the testing pyramid. Roughly estimated 80% of all tests should be unit tests. //quote software engineering at google. 
+
+Integration tests are the second level of the pyramid. They are coarser than unit tests and can't locate errors as precisely. About 15% of all tests are integration tests.
+
+End-to-end tests are the least common. They are very valueable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However the feedback you get from an acceptance test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many end-to-end tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing acceptance tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. Only about 5% of all tests are end-to-end tests.
+
+// get an image without copy right
+
+<img src=images/testing_pyramid.jpg width="300">
+
+
 ## When to run tests
 
 It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
@@ -1104,6 +1125,9 @@ Now let me repeat: It is mandatory that all unit tests pass before an MR can be 
 
 With acceptance tests is becomes a little bit trickier. Acceptance tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all acceptance tests pass all the time. Instead you have to set up Jenkins to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
 
+## Mocking and Stubs
+
+// See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
 
 # 13. Writing good code
 
