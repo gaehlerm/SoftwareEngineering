@@ -55,10 +55,12 @@ Things to write:
 	- [Number of arguments](#number-of-arguments)
 - [9. Understandable code](#9-understandable-code)
 - [10. Programming languages](#10-programming-languages)
+	- [Existing programming languages](#existing-programming-languages)
+	- [Code examples](#code-examples)
 - [11. bugs, errors, exceptions](#11-bugs-errors-exceptions)
 	- [Bugs](#bugs)
 		- [Debugging](#debugging)
-	- [Errors](#errors)
+	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
 - [12. Testing](#12-testing)
 	- [Structure of tests](#structure-of-tests)
@@ -121,6 +123,7 @@ Things to write:
 - [18. Decoupling](#18-decoupling)
 - [19. Entropy](#19-entropy)
 - [20. Refactoring](#20-refactoring)
+	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
 	- [Levels of Refactoring](#levels-of-refactoring)
 	- [When to Refactor](#when-to-refactor)
@@ -752,21 +755,25 @@ This whole book is about how to write low complexity code. The sections on the S
 
 “I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
-A very frequent question from beginners is “which programming language should I learn”. Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: "It doesn't matter too much."
+A very frequent question from beginners is “which programming language should I learn”. Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much.
 
 I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need it along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know python and C++ and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one, even if it’s just Matlab.
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know C++ and python and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one, even if it’s just Matlab.
 
 As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative for non-scientists. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
-I would not recommend learning Java or C++ as a first programming language, even though I used quite some C++ code in this book. They are too complicated and it takes much more time understanding the language itself. Instead you should learn how to apply the principles taught in this book and elsewhere and improve your code. Of course, later on in your career it makes sense to learn one of these languages. They are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even though I used quite some C++ code in this book. They are too complicated and it takes much more time understanding the language itself. Instead you should learn how to apply the principles taught in this book and elsewhere to improve your code. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
 
 C++ and Java are static typed, have to be compiled and use inheritance to define interfaces. Learning new languages will show you other ways of thinking about some problems. It opens up more job opportunities as well. But it’s nothing you need to know when you just start programming.
 
-Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than the existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code, only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+## Existing programming languages
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has ahigh-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
+Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than an existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code, only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
+
+## Code examples
 
 There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. The code should be really simple. In some cases I will still use code examples. These are written in Python or C++, whatever is more appropriate. It’s not a deliberate choice, it’s just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the programming language. I promise that the syntax will be very simple to understand. It requires only the very basics.
 
@@ -774,11 +781,13 @@ There are quite few code examples in this book. Most concepts that I explain her
 
 Better dead than walking wounded
 
-Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. I would briefly like to go through the different cases. Even if the distinction between errors and bugs is somewhat arbitrary.
+Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. I would briefly like to go through the different cases. Even if my distinction between errors and bugs is somewhat arbitrary.
 
 ## Bugs
 
 A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. Just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+
+The cost of bugs is gigantic. It may take hours, if not days to track down a bug and in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code.
 
 I hope you got the memo. In a small project, you can do pretty much anything you want. But you have to make sure you don’t create bugs. Write good code and make sure it’s tested.
 
@@ -786,17 +795,15 @@ I hope you got the memo. In a small project, you can do pretty much anything you
 
 Debugging is the process of finding bugs. If you spend too much time debugging it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where a bug is trying to hide.
 
-In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. 
+In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. Writing tests or refactoring the code would of course be better options, but these take a lot of time.
 
-## Errors
+## Syntax Errors
 
-Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use.
-
-A much worse kind of error is undefined behavior. This may occur for example when working with plain old arrays and accessing data out of the allocated memory range. Another issue with plain old arrays is memory leaks, which are pretty nasty to track down and fix. The vector class fixes all these problems by making runtime checks and returning exceptions if needed. This is a much better approach, as we’ll see in the next section.
+Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in interpreted languages you should have some unit tests in place that will find the errors before publishing the code.
 
 ## Exceptions
 
-Exceptions happen in cases where the software is supposed to do something but it can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Yet they have to be taken care of. The user has to be noticed to fix the problem.
+Exceptions happen in cases where the software is supposed to do something but it can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
 
 User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A “division by 0” error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. “Invalid input: price cannot be 0“, makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
 
@@ -1681,6 +1688,10 @@ In software engineering we have a very similar phenomenon and it has very severe
 # 20. Refactoring
 // “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
 “Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
+
+## There will be change
+
+If code lives long enough, it will have to adapt to change. The build system might change, the database might change, and you'll have to adapt yourself to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape.
 
 ## Keeping code in shape
 
