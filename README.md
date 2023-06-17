@@ -183,6 +183,8 @@ Things to write:
 	- [Project folder](#project-folder)
 - [30. Performance Optimization](#30-performance-optimization)
 - [31. Comments](#31-comments)
+	- [Bad comments](#bad-comments)
+	- [Useful comments](#useful-comments)
 - [32. Logging](#32-logging)
 - [33. Tools](#33-tools)
 	- [Version control software](#version-control-software)
@@ -2540,13 +2542,19 @@ There are many small things you can do for optimizing your code like manual loop
 
 # 31. Comments
 
-“Don’t.”
+Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
+
+## Bad comments
+
+“Comments? Don’t.”
 
 “Why?”
 
-Def add(a,b):
+```py
+def add(a,b):
   #This function returns the sum of the two arguments
-  Return a + b
+  return a + b
+```
 
 Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers who think that this comment here is justified. 
 
@@ -2574,13 +2582,13 @@ Never use comments (or dead code) for that purpose. You have my permission to de
 
 Another bad habit is TODO comments. When you implement a feature, you are responsible that the implementation is ready to be merged into master. It’s ready to be merged when there is nothing important to be done anymore that would justify a TODO comment. Make sure you never merge any TODOs into master. They only cause confusion and there is never time to do them. You will never implement a feature without ticket and for refactoring you don’t need a TODO as a justification. Therefore again: make sure you never merge any TODO comments into master.
 
-So much about why not to use comments. Now let’s talk about the few cases where using comments is fully legitimate.
+## Useful comments
 
-I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa this means that comments are allowed to explain things you cannot express in code. For example, you can add links to the source of a code fragment, library or the explanation of an algorithm. It may also be useful to use comments on the interface of a library or API used be the documentation software. 
+So much about why not to use comments. Now let’s talk about the cases where using comments is fully legitimate.
+
+I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa this means that comments are allowed to explain things you cannot express in code. For example, you can add links to the source of a code fragment, library or the explanation of an algorithm. It may also be useful to use comments on the interface of a library or API used be the documentation software. And of course comments are used at the beginning of the file for the boilerplate copyright statement.
 
 You may use docstring tools like sphynx in python for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. The code should be self-documenting such that docstrings are not required.
-
-And of course, you are allowed to add the licensing and copyright comment at the beginning of every file.
 
 #should I add some more points when comments are allowed?
 
@@ -2970,6 +2978,7 @@ Social interactions need humility, respect and trust
 keep asking questions. there is always something to learn
 Don't just say, "this is bad". Come up with some reasons.
 Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
+You always have something to teach
 
 
 Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
@@ -3445,9 +3454,9 @@ Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The 
 
 Software Engineering at google (Winters et al.)
 
-Cheat sheet bbv?
-Google code style guide
+Cheat sheet bbv, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
 
+google style guide, https://google.github.io/styleguide/
 
 # 48. Outlook
 
