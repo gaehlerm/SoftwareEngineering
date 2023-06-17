@@ -616,7 +616,7 @@ The answer are default arguments. The current behavior is set to be the default 
 
 ### Versioning
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, “3.8.12”, the latest python version at the time of writing. “3” is the major version, “8” is the minor version and “12” is the trace. The last is generally used only in bigger projects. 
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, “3.11.2”, the latest python version at the time of writing. “3” is the major version, “11” is the minor version and “2” is the trace. The last is generally used only in bigger projects. 
 
 Every time you make a new release you increase the version number. 
 - For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice. 
@@ -2112,7 +2112,7 @@ Once you start thinking about this rule, you will automatically structure your c
 
 A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth wirting such code once in a while. You will learn quite something about how code can look like.
 
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. 
+On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
 
 ```py
 # TODO I need a much more complicated list initialization to make my point
@@ -2962,6 +2962,8 @@ Structs are similar to classes, however all members are public. In general, stru
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
 
+For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
+
 # 38. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
@@ -2981,7 +2983,7 @@ keep asking questions. there is always something to learn
 You always have something to teach
 Don't just say, "this is bad". Come up with some reasons.
 Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
-
+A good manager considers how things are done. A great manager considers what is to be done and leaves the rest to his employees. He has faith in them. This is much more motivating than someone yelling around.
 
 Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
 
@@ -3037,7 +3039,7 @@ There are probably hundreds of other rules, but these two here are the ones I kn
 
 Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be critisized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to critisize each other in a constructive way.
 
-Constructive conversations take 3 things: humility, respect and trust. Discussions only work if all parties involved are treated equally. 
+In order to excel, humans need psycological savety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
 
 
 ## Working with customers
