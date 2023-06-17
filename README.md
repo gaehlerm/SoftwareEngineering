@@ -223,8 +223,10 @@ Things to write:
 	- [Structs](#structs)
 - [38. Working in teams](#38-working-in-teams)
 	- [Team structure](#team-structure)
+		- [The bus factor](#the-bus-factor)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
+	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
 - [39. Merge Requests](#39-merge-requests)
 - [40. Working with existing projects](#40-working-with-existing-projects)
@@ -2976,9 +2978,9 @@ Constructive critisism vs. flat out assault
 psychological safety is the most important part of an effective team
 Social interactions need humility, respect and trust
 keep asking questions. there is always something to learn
+You always have something to teach
 Don't just say, "this is bad". Come up with some reasons.
 Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
-You always have something to teach
 
 
 Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
@@ -3001,6 +3003,14 @@ You always have a few software developers. Each one draws a ticket and starts im
 
 It is important that everybody in the team talks to each other. Software engineers talk a lot about their code. But quite frequently they have questions about the ticket that the PM has to answer. Vice versa the PM wants to know the state of each feature for estimating the progress of the software.
 
+### The bus factor
+
+https://en.wikipedia.org/wiki/Bus_factor
+
+The bus factor says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
+
+Make sure the bus factor in your project is as high as possible. Ensure that there is a good amount of knowledge exchange between the team members. Such that everyone knows something about everything. That the whole project does not stall only because a single person is ill.
+
 ## Developers work
 
 The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job.
@@ -3021,10 +3031,16 @@ In a team, the most important language is not Java but English (or German in the
 -	Make sure you know what you are talking about and know how to talk to the specific audience.
 -	Keep communicating. Ask questions. Let the other person talk. Once you don’t get replies anymore you have an issue.
 
-There are probably hundreds of other rules, but these two here are the ones I know. Even though I’m not that good at applying them.
-As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
+There are probably hundreds of other rules, but these two here are the ones I know. Even though I’m not that good at applying them. As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
 
-##  Working with customers
+## Working with humans
+
+Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be critisized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to critisize each other in a constructive way.
+
+Constructive conversations take 3 things: humility, respect and trust. Discussions only work if all parties involved are treated equally. 
+
+
+## Working with customers
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_97 
 
