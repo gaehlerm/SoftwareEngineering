@@ -77,6 +77,7 @@ Things to write:
 	- [The testing pyramid](#the-testing-pyramid)
 	- [When to run tests](#when-to-run-tests)
 	- [Mocking and Stubs](#mocking-and-stubs)
+	- [The Beyonce rule](#the-beyonce-rule)
 - [13. Writing good code](#13-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
@@ -593,6 +594,8 @@ Big data structures take more time to build up but at the same time they are use
 ## APIs
 // move this chapter further down in the book?
 
+// Hyrums law (Software engineering at Google): It does not matter what you promisse. It only matters what the API really does. People will always find new, unexpected ways to deal with the existing functionality of an API.
+
 The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. “They support even emojis!” Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
 That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
@@ -781,7 +784,9 @@ There are quite few code examples in this book. Most concepts that I explain her
 
 Better dead than walking wounded
 
-Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. I would briefly like to go through the different cases. Even if my distinction between errors and bugs is somewhat arbitrary.
+Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the consts are significant.
+
+I would briefly like to go through the different cases.
 
 ## Bugs
 
@@ -832,7 +837,7 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 # 12. Testing
 
-// mention double entry book keeping somewhere?
+// mention double entry book keeping somewhere? -> Clean Craftsmanship
 
 // in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
 
@@ -1097,6 +1102,11 @@ With acceptance tests is becomes a little bit trickier. Acceptance tests are slo
 Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. Instead you want to simulate the device under test, the internet connection or the database.
 
 At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
+
+## The Beyonce rule
+
+A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
+She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
 
 # 13. Writing good code
 
@@ -1691,7 +1701,7 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 ## There will be change
 
-If code lives long enough, it will have to adapt to change. The build system might change, the database might change, and you'll have to adapt yourself to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape.
+If code lives long enough, it will have to adapt to change. The build system might change, the database might change, and you'll have to adapt yourself to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
 
 ## Keeping code in shape
 
@@ -2946,6 +2956,24 @@ Structs are generally very useful objects, as explained in the section on classe
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
+// see chapter 2 in google: 
+people are insecure and don't want to be critisized.
+Great things are hardly ever achieved by a single person
+Most work doesn't need a genius. But all work requires a minimal amount of social skills.
+Talk to people, don't hide your work.
+Fail early, fail fast, fail often. get feedback as early as possible
+How well is the knowledge distributed? It is better to be one part of a successful project than a critical part of a failed project.
+When working in teams you learn much more than when working alone.
+Constructive critisism vs. flat out assault
+psychological safety is the most important part of an effective team
+Social interactions need humility, respect and trust
+keep asking questions. there is always something to learn
+Don't just say, "this is bad". Come up with some reasons.
+Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
+
+
+Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
+
 You will probably spend most of your career working in teams. The story of the lone programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
 
 Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parlament with a dictator. A parlament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
@@ -2997,6 +3025,9 @@ Also frequently customers don't know what is important. Or at least things are i
 
 
 # 39. Merge Requests
+
+// MRs are critisizing your code, not yourself. 
+They are important to improve the quality of the code. This does not work without some critisism.
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -3250,6 +3281,8 @@ Make yourself seen with your application. Mention all kind of open source projec
 
 # 45. Work ethics
 
+// see Clean Craftsmanship
+
 Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
 
 // list with software bugs that were expensive or fatal -> clean … ?
@@ -3409,6 +3442,8 @@ Working with legacy code (Michael Feathers) This book is about working with code
 The Pragmatic Programmer 2nd edition (Dave Thomas, …?) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book here.
 
 Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The introductory example is simply amazing. Martin takes an innocent looking function and applies some of his refactoring steps. In the end there is some code that is super smooth. It has barely any indentations!
+
+Software Engineering at google (Winters et al.)
 
 Cheat sheet bbv?
 Google code style guide
