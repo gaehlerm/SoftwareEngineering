@@ -70,7 +70,7 @@ Things to write:
 		- [Number of test cases](#number-of-test-cases)
 		- [Flaky tests](#flaky-tests)
 		- [Britle tests](#britle-tests)
-	- [Acceptance tests](#acceptance-tests)
+	- [End-to-End tests](#end-to-end-tests)
 	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing classes](#testing-classes)
@@ -228,7 +228,8 @@ Things to write:
 	- [Communication](#communication)
 	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
-- [39. Merge Requests](#39-merge-requests)
+- [39. Code review](#39-code-review)
+	- [Drawbacks](#drawbacks)
 - [40. Working with existing projects](#40-working-with-existing-projects)
 - [41. Planning](#41-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
@@ -995,11 +996,9 @@ Tests that are over specified are called brittle. They break when changing the c
 
 One example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
 
-## Acceptance tests
+## End-to-End tests
 
-// rename everything here to end-to-end tests
-
-Acceptance tests are pretty much what I described in the story above. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with the software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
+End-to-End (E2E) tests are pretty much what I described in the story above. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with the software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
 
 If you publish some code examples for your software you should write an acceptance test for every single one of them. There’s nothing more embarrassing than failing examples.
 
@@ -3051,10 +3050,10 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 39. Merge Requests
+# 39. Code review
 
 // MRs are critisizing your code, not yourself. 
-They are important to improve the quality of the code. This does not work without some critisism.
+Code reviews are important to improve the quality of the code. This does not work without some critisism.
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -3062,9 +3061,11 @@ After some mediocre attempts to fix this issue there was our savior. Linus Thorw
 
 Unfortunately, git was not yet the final solution. It was still possible to write crappy code and merge it into the master. There was no other solution than firing this malicious developer.
 
-But now comes the real solution: Merge Requests (MR). No user is able anymore to make changes on master. Before he can merge his changes into master, he needs to create a public request and wait for someone else (or maybe even two persons) to accept it. And thus, allows the changes to be merged into master.
+But now comes the real solution: Merge Requests (MR) and code reviews. No user is able anymore to make changes on master all by himself. Before he can merge his changes into master, he needs to create a public request and wait for someone else to accept it. And thus, allows the changes to be merged into master.
 
-Now there are a few things to consider regarding MRs. First of all, MRs are a great tool not only to keep the code quality up to date, but it also helps improving the programming skills of all developers. MRs are a great location for knowledge exchange. Developers are forced to look at each-others code and thereby learn a lot.
+Now there are a few things to consider regarding code reviews. First of all, code reviews are great not only to keep the code quality up to date, but it also helps improving the programming skills of all developers. They are a great opportunity for knowledge exchange. Developers are obliged to look at each-others code and thereby learn a lot.
+
+## Drawbacks
 
 However, there are some downsides as well. They can be severe enough that teams even stopped using MRs altogether. Most importantly, everyone has to stick to the rules. There is no way to prevent foul play by the developers and sabotaging the system will render it useless or even counterproductive.
 
@@ -3074,11 +3075,13 @@ The second problem is speed. It is of utmost importance to check MRs as quickly 
 
 Another very serious problem are too long MRs. It is impossible to judge the quality of a change of a thousand lines of code. You should keep the tickets small. You should keep the commits small. And you should keep the MRs small. Huge MRs are a waste of time as no one understands what’s going on. If a ticket turns out to be too long, split up the code in several MRs and make sure the tickets become smaller in the future.
 
-There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in most cases absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove it. MRs are more about the general structure of the code. And they are about knowledge exchange.
+There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in most cases absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove it. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
 
-Always be polite. An MR is like criticizing someone by email. This is a highly delicate thing to do. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
+Always be polite. An MR is like criticizing someone by email. This is a highly delicate thing to do. Stay professional and make sure you only comment the code and not its author. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
 
 One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
+
+In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
 
 # 40. Working with existing projects
 
