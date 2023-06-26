@@ -65,7 +65,7 @@ Things to write:
 - [12. Testing](#12-testing)
 	- [Structure of tests](#structure-of-tests)
 		- [What, when and how](#what-when-and-how)
-		- [General thoughts about tests](#general-thoughts-about-tests)
+	- [General thoughts about tests](#general-thoughts-about-tests)
 		- [Quality of tests](#quality-of-tests)
 		- [Number of test cases](#number-of-test-cases)
 		- [Flaky tests](#flaky-tests)
@@ -906,58 +906,77 @@ Structure of a Software test
 
 In software we do the same. In every programming language, there is one major testing library. They all do pretty much the same. The python testing library is called pytest.
 
-// inside vector.py
 ```Python
-Class vector:
-	Def __init__(self,x,y):
-		Self.x = x
-		Self.y = y
-Def distance_to(self, other):
-		Return(((self.x-other.x)**2)**0.5)
-#inside test_vector.py
-Import vector
-Def test_distance():
-	V1 = vector(0,0)
-	V2 = vector(1,1)
-	# what’s the syntax here exactly?
-	AssertEQ((v1.distance_to(v2)), 1.41, 0.01) 
+# inside vector.py
+class vector:
+	def __init__(self,x,y):
+		self.x = x
+		self.y = y
+	def distance_to(self, other):
+		return ((self.x-other.x)**2)**0.5
+
+# inside test_vector.py
+from vector import *
+import math
+
+def test_distance(self):
+	v1 = Vector(0,0)
+	v2 = Vector(1,1)
+	assert math.isclose(v1.distance_to(v2), 2**0.5)
 ```
 
 We can run the test in the command line with
 ```
-Pytest .
+python -m pytest
 ```
-The output is this: # …
-As you can see it’s pretty simple to write a test in python. And from the testing library point of view you won’t have to learn much more for quite a while. Once again, the difficulty lies not in the user interface of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
+
+The output is this: 
+```
+E    assert False
+E     +  where False = <built-in function isclose>(1.0, (2 ** 0.5))
+```
+Apparently I made a mistake in the implementation. The correct code would be
+```py
+	def distance_to(self, other):
+		return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
+```
+Now the test passes.
+
+As you can see it’s pretty simple to write a test. Not only in python, there are testing libraries for all major prorgramming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
+
+Once again, the difficulty lies not in the user interface of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
 
 ### What, when and how
 
-Our class vector contains the member function distance_to. It is part of the interface of the class and has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible.
+Our class vector contains the member function `distance_to`. It is part of the interface of the class and has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible. Private functions give you much more degrees of freedom while for pubilc functions you have to stick to the behavior that was guaranteed by the interface. 
 
 Inside the test_vector.py file we write the test case. Before you miss it, I’d like the emphasize the very first line. We want to test the Vector class. We have to import the corresponding file.
 
-Next, we define the test case. Every test case gets a name. This name will show up in the test report as shown in #figure ? It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having an extremely long test name.
+Next, we define the test case. Every test case gets a name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
 
 Inside the test we start with the setup part. In order to test the distance_to function we need two vector objects v1 and v2. In the next line we calculate the distance between v1 and v2.
 
 Now comes the execution of the test. We check if the result of the test is correct.
 
-In our example I accidentally added a bug. Pytest told us that #… Apparently, I used a wrong formula for calculating the distance in the code. After fixing it, everything works.
 
-// add final output. Or also something more?
+## General thoughts about tests
 
-### General thoughts about tests
-// tests are not only about checking the current values calculated. Instead it should also fix the behavior for the future.
+A lot of people think that writing code is only for finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
+
+Robert C. Martin compared programming with tests to double entry book keeping //Clean Craftsman. I really like this comparison. In both cases you have two independent truths (creditor, debitor and code, tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Because they are fairly independent and it is unlikely that the same mistake was made for both cases.
+
+Having two absolute thruths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break.
+
 There are a lot of things to consider when writing tests. The example above was very simple. In real code you have to deal with much more complex objects. With many more arguments. But all together it comes down to one point: Do you really understand what you want to test? If no, there is no need to start writing a test. It would never work. It would be a waste of time. Rewrite your code to make it simpler or get someone to help you understand the problem you should solve.
 
 In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that return the desired objects. You might even have a util file for all the tests. Some fairly static objects you might need in a lot of different tests.
 
 There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximative checks you should use instead.
 
-//what other common mistakes are there when writing tests?
-//write here that tests are not made to find errors but rather prevent errors in the future?
+Then it is common to miss some of the if-else branches. These are very important to test as most bugs usually hide in conditional statements. Make sure that you cover all cases, if necessary using a code coverage tool.
 
-Automated tests are not made to find bugs. This could also be done with manual testing. The advantage of automated tests is that they preserve the behavior of the code. This is inevitable when refactoring the code. And refactoring the code is inevitable if you don’t want to end up with a code base that is rotten to the core. But frequently people have this false believe that the tests will never change as the requirements they fix would never change. They couldn’t be further from the truth.
+Similarly you have to make sure your tests cover all the corner cases. This is one of the reasons why the tests have to be written by the same person as the actual code.
+
 
 ### Quality of tests
 
@@ -3052,7 +3071,8 @@ Also frequently customers don't know what is important. Or at least things are i
 
 # 39. Code review
 
-// MRs are critisizing your code, not yourself. 
+// see chapter code review in SEG (software engineering at google)
+
 Code reviews are important to improve the quality of the code. This does not work without some critisism.
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
@@ -3102,6 +3122,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 // move where?
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
+
 # 41. Planning
 
 TODO: read through again. Is there duplication with the agile section?
