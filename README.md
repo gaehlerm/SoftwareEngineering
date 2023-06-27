@@ -88,8 +88,11 @@ Things to write:
 		- [Asserts](#asserts)
 	- [Test Driven Development](#test-driven-development)
 		- [Example](#example-1)
-	- [Mocking](#mocking)
+	- [Using fake objects](#using-fake-objects)
+		- [Mocking](#mocking)
+		- [Dependency injection](#dependency-injection)
 - [14. Variables types](#14-variables-types)
+	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
 	- [Variable comparison](#variable-comparison)
 - [15. Programming Paradigms](#15-programming-paradigms)
@@ -173,7 +176,7 @@ Things to write:
 	- [Member variables](#member-variables)
 	- [Static Variables](#static-variables)
 	- [Dynamic Variables](#dynamic-variables)
-	- [Global Variables](#global-variables)
+	- [Global Variables](#global-variables-1)
 - [26. Algorithms](#26-algorithms)
 - [27. Naming](#27-naming)
 - [28. Complexity](#28-complexity)
@@ -1375,100 +1378,138 @@ def roman_numbers(n):
 Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //?? that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
 
 
-## Mocking
+## Using fake objects
 
 //this is a tricky chapter. Only for advanced users. Rename it somehow? 
 
 There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case.
 
-Now you have to enable your code to accept the fake database. This looks tricky at first because it is used so deep inside the code. The problem can be solved by a technique called Dependency Injection (DI). You allow yourself (and possibly the user) a choice of different databases. Or you can even hide this choice with default arguments, as generally recommended when using DI. The moment the user selects his database of choice you immediately create the corresponding class instance taking care of the database connection, etc. This can be a real database but you can also select your mock (hide it from the user tough). Pass this class instance through all the functions and classes down to the point where the database is accessed.
+In general, there are two ways to mock a database. 
 
-In python this is scheme fairly easy once you understood the idea. Just create a new object that supports the same functions and implement the desired behavior.
+### Mocking
 
-//make this example work
-```Py
-class Mysql:
-	db = pyodbc
-	def select_from(arg, location):
-		return db. (f”SELECT {arg} FROM {location}”)
-class MockDB:
-	def select_from(arg, location):
-		return 1
-# make different examples of fake, spy, …? See Clean Craftsmanship p.120?
+The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file.
+
+```py
+from important_stuff import *
+
+from unittest.mock import Mock
+
+def test_mock_important_stuff():
+    read_csv = Mock(return_value=([7], [8], [9]))
+
+    assert read_csv("unexisting_file.csv") == ([7], [8], [9])
 ```
 
-In C++ there is an additional complexity as you’ll need an interface to support mocking. You have to write an abstract base class to define that interface. For every database you need an implementation of this interface, including the fake database. This is not a big deal. Especially in case of databases it is anyway recommended to write a unified interface for all kind of companies. It’s just another detail you have to take care of. Dealing with abstract classes and interfaces should anyway be one of the earlier things to learn while dependency injection is somewhat advanced.
+### Dependency injection
 
-Now first look at a simple example where we access a SQL database directly. The code is very simple and there is nothing wrong with it, except that we are stuck to databases using this exact syntax. 
+The second way is using a technique called Dependency Injection (DI). In this case you create a new object from scratch, which pretends to read a csv file. But in reality it just returns a bunch of predefined numbers. This works if the `CsvReader` object implements a `Reader` interface and an instance of the `CsvReader` is handed over as a function argument. Then one can replace this function argument with an instance of a `MockReader`.  As python uses duck typing, one can also omit the definition of the interface. The whole code would look roughly as follows:
+
+```py
+class CsvReader:
+	def read_file(file_name):
+		data = []
+		# implement reading a csv file
+		return data
+
+class MockReader:
+	def read_file(file_name="not_needed"):
+		return [1,2,3]
+
+def get_data(reader):
+	return reader.read_file("top_secret.csv")
+
+if __name__ == "__main__":
+	real_data = get_data(CsvReader())
+	mock_data = get_data(MockReader())
+```
+
+Using DI is generally a very recommended practice and should always be used when dealing with IO. For the very simple reason that you can very easily replace the code that you inject with something else. In the example above it would be fairly easy to write a `SqlReader`  that gets the data from a database instead a csv file. 
+
+// remove the C++ code?
+
+In C++ there is an additional complexity as you’ll need an interface to support mocking. You have to write an abstract base class to define that interface. It’s just another detail you have to take care of. Dealing with abstract classes and interfaces should anyway be one of the earlier things to learn while dependency injection is somewhat advanced.
 
 ```C++
-Std::vector<string> pupil_names (std::shared_ptr<DB> db, const string& class_name)
+class Reader{
+public:
+	virtual void read_file(const std::string& file_name) = 0;
+};
 
-Db->querry(“SELECT pupil FROM classes WHERE pupil.class == class_name”)
+class CsvReader : public Reader{
+public:
+	std::vector<double> read_file(const std::string& file_name) override
+	{
+		std::vector<double> data;
+		// implement reading a csv file
+		return data;
+	}
+};
+
+class MockReader : public Reader{
+public:
+	std::vector<double> read_file(const std::string&) override
+	{
+		std::vector<double> data {1.,2.,3.};
+		return data;
+	}
+};
+
+
+std::vector<double> get_data(std::unique_ptr<Reader>):
+	return reader->read_file("top_secret.csv")
+
+if __name__ == "__main__":
+	real_data = get_data(std::make_unique<Reader>(CsvReader()));
+	mock_data = get_data(std::make_unique<Reader>(MockReader()));
 ```
 
-Now in Python we could create a new class with a query function that returns the values we want to mock. In C++ we have to create a base class for DB to enable runtime polymorphism. Yes, C++ is a little bit more tedious here than Python.
-```C++
-Class DB ()
-Std::vector<string> query(string) = 0;
-Class DB_SQL() : DB ()
-      Std::vector<string> query(string class_name){
-Return query(“Select pupil from classes where pupil.class == class_name”);
-}
-Class DB_Mock() : DB ()
-      Std::vector<string> query(string class_name){		
-		Return = { “John Doe”};
-}
-```
-To use the whole code with dependency injection, we have to use pointers to the base class,
-```C++
-Auto db = std::make_unique<DB_Mock>;
-Auto names = Db->query(“1a”);
-```
-
-These pointer objects should be instantiated as soon as possible. Usually this is possible at the point where the database type is selected at a fairly high level of abstraction. The only drawback is, that the database pointer has to be passed through the whole stack down to the point where the database is actually used.
+These pointer objects should be instantiated as soon as possible. Usually this is possible at the point where the type of reader is selected at a fairly high level of abstraction. The only drawback of DI is, that the pointer has to be passed through the whole stack down to the point where the database is actually used.
 
 An alternative would be passing around a string and select the actual DB type only when needed.
 ```C++
-Switch(db_type):
-Case “SQL”:
-	Auto sql = std::make_ unique <DB_SQL>;
-Case “mock”:
-	Auto mock = std::make_ unique <DB_Mock>;
+switch(reder_type):
+case “csv”:
+	auto csv_reader = std::make_unique<Reader>(CsvReader());
+case “mock”:
+	auto mock_reader = std::make_unique<Reader>(MockReader());
 ```
 
-This would be a bad idea. Such switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding database pointer right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
+This would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding database pointer right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
 
 Now don’t worry if you haven’t understood everything. I explained dependency injection, base classes, etc., which are all fairly advanced topics. I just hope you got some of the basic ideas I tried to explain here. They can be useful and the ideas behind them are very important. In fact, these ideas are that important that you’re going to see them again in the section on the strategy design pattern.
 
-As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection. You can also pass different functions as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to mock complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection instead of using function pointers. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
+As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection. You can also pass different functions as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection instead of using function pointers. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
 
-//here I have to write about spys, mocks, fakes, stubs, etc!
+//here I have to write about spys, mocks, fakes, stubs, etc! See clean craftmanship, p.118
 
-So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write complete database simulations every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
+So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
+
 # 14. Variables types
 
-Global Variables
+## Global Variables
 
 //write about other variables??
 
 //global variables are like glue that couple the code together
 
 You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
-Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking …? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
 
-Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
+Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
+
+Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
 
 //move this into the class chapter?
 
-Now as you already realized, global variables are bad because everyone can change their value. You cannot rely on them. You never know if someone messes with its integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow each trace where the variable could be changed. This is the very definition of spaghetti code. 
+Now as you already realized, global variables are bad because everyone can change their value. You cannot rely on them. You never know if someone messes with its integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. 
 
 ## Class variables
 
 But global variables are not the only variables with this issue. Class variables have pretty much the same problem, just in a somewhat limited scope. That’s one reason why classes have to be small. Even passing output arguments to functions makes the code obscure. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not yet too wide spread, even though it exists longer than OO programming.
-As a short rule of thumb, I’d like to sort different kind of variables by the amount of side effects they may have, starting with the least side effects. Having many side effects of course makes it easier to program, but at the same time makes it extremely hard to keep everything under control. It’s best to work side effect free whenever reasonably possible.
 
 ## Variable comparison
+
+I’d like to briefly sort different kind of variables by the amount of side effects they may have, starting with the least side effects. Having many side effects of course makes it easier to program, but at the same time makes it extremely hard to keep everything under control. It’s best to work side effect free whenever reasonably possible.
 
 Here is a rough list how variable types are sorted by the amount of side effects they have, starting with the least.
 
@@ -1478,13 +1519,13 @@ There is certainly nothing wrong with immutable objects. We just can’t do it w
 
 With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention.
 
-Class variables are already quite tricky to deal with. There are just too many ways to mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos.
+Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with.
 
-Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is in fact defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use them. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
+Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
 
 // why not to use the singleton: 97-things-every-programmer-should-know chapter 73
 
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end.
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. // performance??
 
 Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
 
