@@ -1158,9 +1158,11 @@ With E2E tests it becomes a little bit trickier. E2E tests are slow and can't ju
 
 // See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
 
-Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. Instead you want to simulate the device under test, the internet connection or the database.
+Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
 
 At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
+
+Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
 
 ## The Beyonce rule
 
