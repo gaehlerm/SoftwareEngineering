@@ -87,6 +87,7 @@ Things to write:
 	- [Testing existing code](#testing-existing-code)
 		- [Asserts](#asserts)
 	- [Test Driven Development](#test-driven-development)
+		- [Example](#example-1)
 	- [Mocking](#mocking)
 - [14. Variables types](#14-variables-types)
 	- [Class variables](#class-variables)
@@ -1158,6 +1159,8 @@ With E2E tests it becomes a little bit trickier. E2E tests are slow and can't ju
 
 // See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
 
+// is using DI and faking better?
+
 Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
 
 At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
@@ -1171,7 +1174,9 @@ She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
 
 # 13. Writing good code
 
-Unit tests make sure your code is correct on the small-scale level. This is half the reason why they are so important. You don’t have to check manually anymore if the results of a function or class are correct. The other half might be a little bit unexpected for you: unit tests force you to write good code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know right away there is some flaw in your code and you should redesign it.
+// rename this chapter to "Tests and good code"? Or integrate it to the previous chapter?
+
+Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write good code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know right away there is some flaw in your code and you should redesign it.
 
 During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked.
 
@@ -1181,16 +1186,18 @@ If you write a test you have to know the expected outcome of the function call. 
 
 You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may never take more than 1ms. You’ll be running hundreds if not thousands of tests, so execution time is crucial.
 
+// move this test elsewhere? the print statements were made in the chapter before.
+
 Let’s go back to the example at the beginning. There are just a few simple steps required to create a unit test out of that code.
 
-//write the complete test here
 ```
-f(1), 1
-f(2), 4
-f(5), 25
+def test_squares():
+	assert f(1) == 1
+	assert f(2) == 4
+    assert f(5) == 25
 ```
 
-Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write unit tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
+Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
 
 ## Component tests
 
@@ -1200,13 +1207,15 @@ All together the boarder of component tests is not so well defined. Feel free so
 
 ## Testing existing code
 
-It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind the existing code. Usually there are corner cases that are really hard to find.
+It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind the existing code. Usually there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
 
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: At the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior.
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: At the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law //citation? states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviours of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API.
 
 As you write tests, always make sure they fail when you expect them to. It already happened to me several times that such checks prevented me from hours of frustrating bug fixing. Usually, due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
 
-So far, I recommended not to test private functions as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. Now with existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private functions public is indeed the only way how you can test the class. Apparently, this is just a hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
+So far, I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
+
+Apparently this way of working is a tedious hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
 
 //more about testing existing code in Refactoring? See Michael Feathers book. 
 
@@ -1220,12 +1229,9 @@ Secondly your production code is not made to run automated test cases. Asserts a
 
 ## Test Driven Development
 
-So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. It forces you to decouple the code.
+So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code.
 
-In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed.
-
-// It is really common that programmers write more code than really needed. It is not only because they think it's going to be needed in the future. At times it is also for the pure fun of programming. This should be avoided. We wirte code primary because it creates value, not because it's fun. At least in our professional environment.
-// See 97 things every programmer should know chapter 39.
+In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't wirte it. Even if you really think that it would be important and beautiful. And possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
 
 Maybe you do not fully understand yet how this is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
 
@@ -1239,19 +1245,139 @@ Once the test passes you might have to refactor to get the code back into shape.
 
 There is a general pattern how you write code in TDD and its quite simple.
 
-1.	Write a failing test.
-1.	Write code until the test passes.
-1.	Refactor.
+1. Write a failing test.
+2. Write code until the test passes.
+3. Refactor if needed.
 
 These three steps you have to repeat over and over again until you are done with your ticket.
 
 Also, with TDD you have to do some bigger refactoring once in a while. This is inevitable and has to be taken into consideration. 
 
-The basic work flow is as follows: #add an example, how complex should it be?
+### Example
+
+Let's write a program that converts arabic (the once we use) into roman numbers. Let's write a first test case.
+
+```py
+# inside test_roman_numbers.py
+from roman_numbers import *
+
+def test_one():
+    assert roman_numbers(1) == "I"
+```
+
+If we run the test, it fails as expected. But we can make it pass easily.
+
+```py
+# inside roman_numbers.py
+def roman_numbers(n):
+	return "I"
+```
+
+As there is nothing to refactor, we can continue with the second test.
+
+```py
+def test_two():
+    assert roman_numbers(2) == "II"
+```
+
+```py
+def roman_numbers(n):
+	if n == 1:
+		return "I"
+	else:
+		return "II"
+```
+
+Now the code started to become ugly. But at least for the time being we leave it as is.
+
+
+```py
+def test_three():
+    assert roman_numbers(3) == "III"
+```
+
+```py
+def roman_numbers(n):
+	if n == 1:
+		return "I"
+	elif n == 2:
+		return "II"
+	else:
+		return "III"
+```
+
+Now we have to refactor, otherwise this if else statement will take over. The new version of the code might look like this:
+
+```py
+def roman_numbers(n):
+	return n*"I"
+```
+
+Let's add a fourth test:
+
+
+```py
+def test_four():
+    assert roman_numbers(4) == "IV"
+```
+
+```py
+def roman_numbers(n):
+	if n >= 4:
+		return "IV"
+	return n*"I"
+```
+
+```py
+def test_five():
+    assert roman_numbers(5) == "V"
+```
+
+```py
+def roman_numbers(n):
+	if n >= 5:
+		return "V"
+	elif n == 4:
+		return "IV"
+	return n*"I"
+```
+
+Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works.
+
+```py
+def roman_numbers(n):
+	num = ""
+	while n >= 5:
+		num += "V"
+		n -= 5
+	while n >= 4:
+		num += "IV"
+		n -= 4
+	while n >= 1:
+		num += "I"
+		n -= 1
+	return num
+```
+
+In a second refactoring step we wrap the whole while loops into a single for loop.
+
+```py
+def roman_numbers(n):
+	num = ""
+	arabic_to_roman = {5:"V", 4:"IV", 1:"I"}
+	for arabic in arabic_to_roman:
+		while n >= arabic:
+			n -= arabic
+			num += arabic_to_roman[arabic]
+	return num
+```
+
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //?? that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
+
 
 ## Mocking
 
-//this is a tricky chapter. Only for advanced users.
+//this is a tricky chapter. Only for advanced users. Rename it somehow? 
 
 There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case.
 
@@ -1261,14 +1387,14 @@ In python this is scheme fairly easy once you understood the idea. Just create a
 
 //make this example work
 ```Py
-Class Mysql:
-	Db = pyodbc
-	Def select_from(arg, location):
-		Return db. (f”SELECT {arg} FROM {location}”)
-Class MockDB:
-	Def select_from(arg, location):
-		Return 1
-# 14. make different examples of fake, spy, …? See Clean Craftsmanship p.120?
+class Mysql:
+	db = pyodbc
+	def select_from(arg, location):
+		return db. (f”SELECT {arg} FROM {location}”)
+class MockDB:
+	def select_from(arg, location):
+		return 1
+# make different examples of fake, spy, …? See Clean Craftsmanship p.120?
 ```
 
 In C++ there is an additional complexity as you’ll need an interface to support mocking. You have to write an abstract base class to define that interface. For every database you need an implementation of this interface, including the fake database. This is not a big deal. Especially in case of databases it is anyway recommended to write a unified interface for all kind of companies. It’s just another detail you have to take care of. Dealing with abstract classes and interfaces should anyway be one of the earlier things to learn while dependency injection is somewhat advanced.
