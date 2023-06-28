@@ -104,7 +104,7 @@ Things to write:
 		- [Pure function classes](#pure-function-classes)
 		- [Delegating class](#delegating-class)
 		- [Worker class](#worker-class)
-	- [Abstract Base Class](#abstract-base-class)
+		- [Abstract Base Class](#abstract-base-class)
 		- [Interface Implementation class](#interface-implementation-class)
 		- [Inheritance classes](#inheritance-classes)
 	- [General recommendations](#general-recommendations)
@@ -1659,7 +1659,7 @@ This means, they are the only classes that do really complicated things that hav
 
 // example
 
-## Abstract Base Class
+### Abstract Base Class
 
 This class type defines only the interface (shape) of a class, not its actual implementation. It contains only public function declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, unless you think it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
 
@@ -1700,7 +1700,7 @@ class Sheep(Animal):
 
 Writing such code at first seems attractive. You don't have to redefine the `feed` function for animals eating meat. It's already there. But saving lines of code is no merit for code quality. Stability is. And this code here is not stable. It is brittle. A single typo can create a hard-to-track bug. Let's assume you define a method `fed` inside `Sheep` instead of `feed`. Then the sheep will most likely be fed with meat. 
 
-In the case above using an abstract base class, this kind of error is not possible. The following code returns an error because `Lion` does not implement the `feed` function.
+In the case above using an abstract base class, this kind of bug is not possible. The following code returns an error because `Lion` does not implement the `feed` function.
 
 ```py
 from abc import ABC, abstractmethod
@@ -1712,7 +1712,7 @@ class Animal(ABC):
 
 class Lion(Animal):
     def fed(self):
-        print("Feeding a sheep with grass.")
+        print("Feeding meat.")
 
 if __name__ == "__main__":
     lion = Lion()
@@ -1721,63 +1721,95 @@ if __name__ == "__main__":
 
 ## General recommendations
 
-It is recommended sticking to these class types. It may be convenient to add a function to a data class or a variable to a function class, however this will quite certainly make the code worse as it violates the single responsibility principle.
+It is recommended sticking to these class types. It may be convenient to add a method to a data class or a variable to a pure function class. However this will quite certainly make the code worse as it violates the single responsibility principle.
 
 The most common error is mixing the worker class and the delegating class. You can easily end up with a fairly complex function within a delegation class using a lot of member variables. This is bad by design as the delegation class is fairly high level of abstraction, meanwhile the worker class is by design a low-level object. Mixing different levels of abstraction is a really bad thing to do. Refactor the complex part into a separate class or function and call it from the delegating class. This should do the job.
 
 // this text is duplicated! See strong and loose coupling! Figure out which one to remove.
 
-A well-known rule says: “Classes should have high cohesion within themselves and low coupling between each other.” [uncle bob] If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes.” This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
+A well-known rule says: “Classes should have high cohesion within themselves and low coupling between each other.” [Robert C. Martin] If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes.” This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
 The amount of cohesion within a class may differ a lot, depending on the type of class. The cohesion within a working class is certainly much higher than within a data class. In a worker class, there is a significant amount of work required to change its structure. In a data class, there is only some weak logical coupling between the member variables. The delegating classes have fairly little cohesion. Yet there is nothing wrong about these types of classes. In fact, they are very useful to structure your objects, etc.
 
-This rule was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint what’s the best way to break it into pieces. Cluster your functions and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few functions before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand.
+This rule was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint what’s the best way to break it into pieces. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few methods before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand.
 
 ## Constant
 
 // move const description elsewhere?
 
-In C++ you can enforce an object to remain the same for as long as it exists, using the const keyword at the time of creation. In Python you cannot enforce it, you can only use the _ notation to hint that a variable should not be changed. The usage of const is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be const and can be defined so at the time of creation. You create an object and if will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables.
+In C++ you can enforce an object to remain the same for as long as it exists, using the const keyword at the time of creation. In Python you cannot enforce it, you can only use the _ notation to hint that a variable should not be changed. The usage of const is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be  made constant and can be defined so at the time of creation. You create an object and if will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables.
 
-But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one.
+But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
 
-// refine all of the text somewhat, add the code
+We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In python constness cannot be enforced. Instead it is commonly aggreed that constants have names with all capital letters, seperated by underscores.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Bottle:
+	color: str
+	size: float
+	material: str
+
+if __name__ == "__main__":
+	BOTTLE = Bottle()
+```
+
+Note that color and material should probably not be a string, but rather a `Color` or `Material` enum, respectively. We just use strings here for the sake of simplicity.
 
 Having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
 
-The first attempt is removing the const and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle.
+The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle.
 
 We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong.
 
 A completely different idea is keeping the amount of water separate from the bottle. We create a new class WaterBottle that contains a constant Bottle and a variable amount of Water.
 
-// how to deal with them? Example of a bottle that contains water. The bottle is const, but the amount of water is not. Ask the internet?
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterBottle:
+	BOTTLE: Bottle
+	amount_of_water: float
+
+@dataclass
+class Bottle:
+	color: str
+	size: float
+	material: str
+```
+
 
 ## Method vs. output argument
 
 // This text here is redundant, tough I quite like it. What to do…?
+
 There are two ways to change the value of an object by a function. Either pass a mutable object as an output argument or the object is a class instance and the function a member function acting on it. The two cases look like this:
 ```
 a.b() vs. b(a)
 ```
-In both cases, this might change the value of a. However, there are some differences. `B(a)` can access only the public variables and functions of a. If a has a public variable c, then we can write `b(a.c)`, which makes even more clear what part of a is to be changed. While in `a.b()` there is no way telling which variables in a are to be changed by `b`. You can only hope the author did well obey the SRP and give b() a more meaningful name that allows to understand easily which variables of a are going to be changed.
+In both cases, this might change the value of a. However, there are some differences. `b(a)` can access only the public variables and functions of a. If a has a public variable c, then we can write `b(a.c)`, which makes even more clear what part of a is to be changed. While in `a.b()` there is no way telling which variables in a are to be changed by `b`. You can only hope the author did well obey the SRP and give `b()` a more meaningful name that allows to understand easily which variables of a are going to be changed. Or the function has to be defined such that it's called by `a.c.b()`. 
 
-It happens you write a function that uses one or more public functions of a class. Apparently, your new function is highly related to the class, but at the same time you could also write it as an independent function. Now what should you do?
+Ultimately, both functions do roughly the same and there is no clear advantage for one or the other from the code point of view. However the class method call, `a.b()` is frequently more readable than `b(a)` as we'll see in a second.
 
-Generally, it’s better to define it as a free function. It keeps the class smaller and less complex. The price of the function is lower if it’s outside the class. But as always there might be a tradeoff. For example, you have a class behaving like a list and you want to implement a function contains. It returns true if the list contains the function argument and false otherwise. You are tempted to implement it as a member function. But you can easily implement it as an external function as well. This would generally be preferred.
+It happens you write a function that uses one or more public methods of a class. Apparently, your new method is highly related to the class, but at the same time you could also write it as an independent function. Now what should you do?
+
+Generally, it’s better to define it as a free function. It keeps the class smaller and less complex. The price of the function is lower if it’s outside the class. But as always there might be a tradeoff. For example, you have a class behaving like a list and you want to implement a function `contains`. It returns true if the list contains the function argument and false otherwise. You are tempted to implement it as a member function. But you can easily implement it as an external function as well. This would generally be preferred.
 
 One thing to consider as well is the readability of the code. The syntax becomes different whether it’s a member function or not. We have the following two options:
 
 free function:
 ```Py
-If contains(names, “Donald”):
-   Print(“You’re fired”)
+if contains(names, “Donald”):
+   print(“You’re fired”)
 Or member function:
-If names.contains(“Barak”):
-   Print(“Yes we can”)
+if names.contains(“Barak”):
+   print(“Yes we can”)
 ```
 
-From the syntax point of view, in this case I certainly prefer the second option. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the free function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage the make the right decision, you are a great programmer.
+In this case I certainly prefer the second option from the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the free function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage the make the right decision, you are a great programmer.
 
 In software engineering there are always so many things to consider. This was just another example. Probably there are more arguments for one or the other solution that I missed. They might make the whole discussion obsolete. Let me know if you found such a solution, I’d be curious.
 
@@ -1785,35 +1817,62 @@ In software engineering there are always so many things to consider. This was ju
 
 “Prefer composition over inheritance”
 
-Use composition, not inheritance 
+Or my version of this quote: Use composition, not inheritance 
 
 // add problems of inheritance: strong coupling, etc.
 
-Inheritance is one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. 
+Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. 
 
-The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became rock solid. One of the main problems here is that all inheritance levels have access to the base level variables. Meanwhile with composition, you only have to consider the variables inside the class. This is much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy. Doing so would apparently violate the principle of encapsulation.
+The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. One of the main problems here is that all inheritance levels have access to the base level variables. Meanwhile with composition, you only have to consider the variables inside the class. This is much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
 
-Furthermore, you shouldn’t follow these very old dogmas. It is your job to write code that’s easy to understand. Don’t let yourself get bothered by someone saying that a sheep is an animal and you should therefore use inheritance. It will quite certainly not improve the code and you can end the discussion. You are probably developing a model of a sheep that doesn’t need to know about animals.
+Furthermore, I regard the common usage of inheritance as an old dogma. It is your job to write code that’s easy to understand. Don’t let yourself get bothered by someone saying that a sheep is an animal and you should therefore use inheritance. It will quite certainly not improve the code and you can end the discussion. You are probably developing a model of a sheep that doesn’t need to know about animals. You have to be pragmatic. If a sheep doesn't have to know about the Animal class, then there is no reason why it should inherit from it.
 
-There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book [Working Effectively with Legacy Code] several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create errors with inheritance. One misspelled function will not override the base class function. Or you can delete a derived class function and the code still compiles due to the base class function.
+There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book [Working Effectively with Legacy Code] several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create errors with inheritance. One misspelled function will not override the base class function. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
 
-Additionally, there is the problem with variables from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying.
+Additionally, there is the problem with variables from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying. For this reason it is generally not recommended to nest inheritance. And honestly, I don't see at all, why inheritance should be used.
 
-The technical implementation of inheritance is a very complex task. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
+The technical implementation of inheritance is a very complex task. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
 
 You don’t gain anything by using inheritance. Using composition is a perfectly viable alternative. If your code looks messy as you start using composition instead of inheritance you wrote messy code all along. You just didn’t see it because the inheritance was hiding it. Which is another bad thing.
 
-In C++, you have to use inheritance for defining interfaces. There’s no reasonable way around it. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
+In C++, you have to use inheritance for defining interfaces. There’s no way around it. It's an old language. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
 
-There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. It results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. Write your code in the most common way possible and only consider something else if it really improves your code.
+There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. It results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. // cite google style guide. Write your code in the most common way possible and only consider something else if it really improves your code.
 
 Here are some problems that show up with non-interface inheritance.
 
+// this is already explained further above. At least half way.
+
 With inheritance one can override functions and variables. This is generally a bad idea as it is very error prone. One typo can introduce a bug, while in normal code you would get a compiler error. The same issue exists when refactoring the code. Here deleting the overriding variable might lead to undesired behavior. This is probably the main reason why overriding base class variables and functions is a bad idea.
 
-Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This should be avoided by not using such hard to use features.
+Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not inheritance. It's simply too error prone. Though this is better in python than in C++.
 
-// figure out more reasons why inheritance is bad, e.g. strong coupling
+Sometimes inheritance can be extremely confusing. Let's take the following example:
+
+```py
+class Animal(): 
+    def feed(self):
+        print(f"eating {self.get_food()}")
+
+    def get_food(self):
+        return "grass"
+
+class Lion(Animal):
+    def get_food(self):
+        return "meat"
+
+if __name__ == "__main__":
+    lion = Lion()
+    lion.feed()
+```
+
+Is the lion now eating grass or meat? Of course it's eating meat. But using overriden functions in the base class can quickly become confusing. This is called the Yo-yo problem. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is dreadful. Please don't write such code. 
+
+Of course, this can be avoided using the final in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, there is just too much that can go wrong.
+
+In inheritance the derived class inherits all the functions from the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad. Having to write tests for unused functions in the interface is only one of the problems.
+
+// figure out more reasons why inheritance is bad
 
 ## Constructors
 
@@ -1821,13 +1880,13 @@ Inheritance is difficult to implement properly. Especially when dealing with con
 
 Constructors are very special functions. The constructor is called once every time an object is created. This has severe consequences that many software developers are not aware of. Most notably, writing tests can become nearly impossible if the constructor contains too much logic or has side effects. The author of some code might have assumed that there will be only one class instance and planned accordingly. This might be the case in his particular part of the code. However, his assumption will break down when writing unit tests. There you have to create many objects without any interactions between them.
 
-Thus, make sure usage of a constructor is always fool proof. Everything a constructor does, for example allocating memory or opening a file, has to be undone by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone.
+Thus, make sure the usage of a constructor is always fool proof. Everything a constructor does, for example allocating memory or opening a file, has to be undone by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you shouldn't define a counter in the constructor.
 
 You will witness what I said here once you write a complicated constructor and try to write unit tests for it.
 
 ## Getter and setter functions
 
-In Java, it is common to define a class and all its private variables. The developer clicks a button in the IDE and public getter and setter functions are automatically created. For each private variable, it creates a setter and getter function to access and change it. This is extremely wide spread and in my opinion a bad habit.
+In Java, it is common practice to define a class and along with all its private variables. The developer clicks a button in the IDE and public getter and setter functions are automatically created. For each private variable, it creates a setter and getter function to access and change it. This is extremely wide spread and in my opinion a very bad habit.
 
 We distinguish here between two types of classes. 
 
@@ -1837,13 +1896,20 @@ In data classes all variables are public. Everyone can work with the variables d
 
 Let me make an example. We have the class bottle
 ```Py
-Class Bottle
-   Size
-   Get_size() return size
-   Set_size(size) self.size = size
+class Bottle
+   def get_size(self):
+       return self.size
+   def set_size(self, size):
+       self.size = size
 ```
-
-with getter and setter functions. But this fails due to the real-world restrictions. You cannot change the size of a bottle. Once the bottle formed in the factory the size is fixed. This is equivalent to setting the size in the constructor. There cannot be any set_size function to change an existing bottle. Never. It is physically impossible. Vice versa you cannot create a bottle it you don’t know it’s size. There is no need to create a bottle if you don’t know it’s size. Once the bottle is created by its constructor, it immediately becomes a constant object where no variables may, or can, be changed anymore. There is no more need for a getter function. Just access the class variable directly. You can’t make any mistakes now.
+with getter and setter functions. But this fails due to the real-world restrictions. You cannot change the size of a bottle. Once the bottle formed in the factory the size is fixed. This is equivalent to setting the size in the constructor. There cannot be any `set_size` function to change an existing bottle. Never. It is physically impossible. Vice versa you cannot create a bottle it you don’t know it’s size. There is no need to create a bottle if you don’t know it’s size. Once the bottle is created by its constructor, it immediately becomes a constant object where no variables may, or can, be changed anymore. There is no more need for a getter function. Just access the class variable directly. You can’t make any mistakes now.
+```Py
+class bottle
+	def __init__(self, size):
+		self.size = size
+    def get_size(self):
+        return self.size
+```
 
 Another point of using getters and setters was decoupling. You want to rename size into volume. It’s easy to do, there are only 3 places where size is used. Replace them with volume and you’re done.
 
