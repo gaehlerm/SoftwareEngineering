@@ -1904,7 +1904,7 @@ class Bottle
 ```
 with getter and setter functions. But this fails due to the real-world restrictions. You cannot change the size of a bottle. Once the bottle formed in the factory the size is fixed. This is equivalent to setting the size in the constructor. There cannot be any `set_size` function to change an existing bottle. Never. It is physically impossible. Vice versa you cannot create a bottle it you don’t know it’s size. There is no need to create a bottle if you don’t know it’s size. Once the bottle is created by its constructor, it immediately becomes a constant object where no variables may, or can, be changed anymore. There is no more need for a getter function. Just access the class variable directly. You can’t make any mistakes now.
 ```Py
-class bottle
+class Bottle
 	def __init__(self, size):
 		self.size = size
     def get_size(self):
@@ -1914,69 +1914,75 @@ class bottle
 Another point of using getters and setters was decoupling. You want to rename size into volume. It’s easy to do, there are only 3 places where size is used. Replace them with volume and you’re done.
 
 ```Py
-Class Bottle
-   volume
-   Get_size() return volume
-   Set_size(size) self. volume = size
+class Bottle
+    def get_size(self):
+		return self.volume
+    def set_size(self, size):
+		self.volume = size
 ```
 
-See the problem? You didn’t improve anything at all. Everyone still uses the get_size function which returns a volume. This will cause a hell lot of confusion. You would have to rename the getter and setter function as well. It only decoupled the code in theory. Writing getters and setters is only useful if the value returned by the getter is the result of a calculation, but then it’s not really a pure getter function anymore…
+See the problem? You didn’t improve anything at all. Everyone still uses the get_size function which returns a volume. This will cause a hell lot of confusion. You would have to rename the getter and setter function as well. It only decoupled the code in theory. Writing getters and setters is only useful if the value returned by the getter is the result of a calculation, but then it’s not really a pure getter function anymore...
 
 One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters and work with the plain variable.
 
 ### Other class types
 
-The other case are the normal classes. It is very well possible to have getter and setter functions here. But if they refer to a variable within the same class it is a hint that your class design may be bad. Access functions should shift you to a higher level of abstraction while the plain getter and setter functions here do nothing with that respect. Instead they have to access or change data that is located in a nested data structure. They just make it more convenient to get there. 
+The other case are the "normal" worker classes. It is very well possible to have getter and setter functions here. But if they refer directly to a variable within the same class it is a hint that your class design may be bad. Access functions should shift you to a higher level of abstraction while the plain getter and setter functions here do nothing with that respect. Instead they have to access or change data that is located in a nested data structure. They just make it more convenient to get there. 
 
 //do we have to write something more here?
 
 One example is a car. You can set the temperature. But this is no fundamental property that had been set in the production line of the car. It’s just a parameter that is controlled by the air conditioning and a temperature sensor.
+
 ```Py
-Car.set_temperature(temperature):
-	Car.air_conditioning.set_temperature(temperature)
+class Car:
+	#contains an object air_conditioning
+	def set_temperature(temperature):
+		self.air_conditioning.set_temperatur(temperature)
 ```
 
 The car class is only delegating the set_temperature function call to another object. And also, the heating does not have a temperature variable. It takes a lot of logic to control the temperature.
 
 This might be only one example, but there aren’t any other variables in the car where you can use a get or set call directly. It doesn’t improve the code if you write a set_air_conditioing function.
 
-I hope I managed to convince you not to write bare getter and setter functions to member variables.
+I hope I managed to convince you not to write bare getter and setter functions to member variables. Especially not to all of them.
 
 ## Lose and strong coupling
+
+// is this section somehow redundant?
 
 You should have high cohesion within a class and low coupling between classes. This is a generally accepted rule for good class design. However, it is only true for some types of classes. Let me briefly explain.
 
 High cohesion means that one thing effects everything else. You have one or two class variables and most of the methods use them. This is high cohesion. From the code point of view, it makes sense to have all these methods together as they quite certainly do similar things. They use the same variables. The opposite is having many variables where each of them is only used by one or two methods. This class has low cohesion. It would be fairly easy to break it into pieces.
 
-Classes have low coupling if the number of interaction points between them is comparably low. Ideally, every class does its work and then hands it over to the next one, as in a rally race #staffetenlauf?. The interface of every class would consist of only one function. High coupling on the other hand is like two (or many) classes playing ping-pong. They all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is strong coupling. Neither of the two classes can be changed without changing everything at once. Such code is solid as a rock.
+Classes have low coupling if the number of interaction points between them is comparably low. Ideally, every class does its work and then hands it over to the next one, as in a rally race. The interface of every class would consist of only one function. High coupling on the other hand is like two (or many) classes playing ping-pong. They all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
 
-I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle. Which isn’t any better. It becomes increasingly hard to make any changes. Implementing new features will take a long time and fixing bugs is hard because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
+I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn’t any better. It becomes increasingly hard to make any changes. Implementing new features will take a long time and fixing bugs is hard because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
 This is one of the reasons why I recommend not to use inheritance. Inheritance is one of the strongest coupling we have available in software development. It obfuscates the code and getting rid of the inheritance at a later point can be almost impossible.
 
-Maybe you realized by now why this rule about high cohesion does not apply to all kind of classes. A pure data class has no cohesion at all. It takes no effort to split a data class. You may split it however you like. A delegating class has very little cohesion. Yet these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes, meanwhile data classes are a lose bunch of variables without any cohesion. They are grouped together solely because it makes the code easier to understand and deal with.
-
-// move the library stuff into the architecture section
+Maybe you realized by now why this rule about high cohesion does not apply to all kind of classes. A pure data class has no cohesion at all. It takes no effort at all to split a data class. You may split it however you like. A delegating class has very little cohesion. Yet these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes, meanwhile data classes are a lose bunch of variables without any cohesion. They are grouped together solely because it makes the code easier to understand and deal with.
 
 ## Static expression
 
-Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes as small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero. Now I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code.
+Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes as small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
+
+I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code.
 
 As we are talking about static, we can also discuss static variables. Bluntly speaking, they are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables.
 
 ## Problems
 
-Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, the member variables become … global variables!
+Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables!
 
-But also, for smaller classes the member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables.
+But also for smaller classes the member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables.
 
-If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 you should consider sorting them in sub classes. However as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. Keep the number of variables at one or two. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
+If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 member variables you should consider sorting them in sub classes. However as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. Keep the number of variables at one or two. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
 
 It’s a good rule of thumb to say that the class design is probably ok as long as writing unit tests works out fine and you don’t feel the urge to test private functions because class implementation is too complex. Make classes as small as possible, yet still convenient to work with.
 
 ## Functions and Methods
 
-Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function is meant for member and non-member functions. The difference between the two is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and free functions inside a namespace are indistinguishable.
+Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for member and non-member functions. The difference between member and non-member functions is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and free functions inside a namespace are indistinguishable in C++.
 
 ## Temporal coupling
 
@@ -1984,8 +1990,11 @@ The combination of member variables with different methods leads to an implicit 
 
 // add an example with the clutch of a car
 Example 
+
 // TODO, I don’t know yet exactly if/how to write this example
+
 I would like to discuss an example. Many people completely misunderstand what belongs into a class. 
+
 // I think this belongs elsewhere: Once again, I’d like to mention the rules of software engineering. We write code that generates values for our customers and we write code that is easy to understand. We don’t write code that mimics the whole world. It’s more like a cartoon. It’s minimalistic.
 
 // Apple pie example? Or do we have another example? And is it about what we need or what belongs into a class or outside?
@@ -1995,29 +2004,37 @@ Let’s take the example of an apple pie. It has a lot of different properties a
 Sweetness, weight, price, baking_grade, ingredients
 
 Now some of these properties are really the properties of a single pie. The baking_grade for example. One pie may be burned while another one is baked_perfectly. Other properties are more about apple pies in general. The price is something the sales department of the bakery cares about, while the ingredients are used by the bakers. These are not intrinsic properties of the pie and can be stored elsewhere. For example, in a dict. We could also define a variable apple_pie_price, but storing all prices in a single data structure is way more convenient. The only drawback is that the apple_pie object needs to have a variable name=”apple_pie”. A small price to pay.
+
+// the whole thing here is still somewhat of a mess...
+
 ```Py
 @dataclass
-Class ApplePie:
+class ApplePie:
     Name, sweetness, weight, baking_grade
-# 18. write a fancy constructor? It takes ingredients and a baking temperature
-Def__init__(Ingredients, baking_temperature):
-Weight = sum(ingredients.weight), if ingredients.sugar.weight / weight > 0.3: sweetness = very_sweet
+	# write a fancy constructor? It takes ingredients and a baking temperature
+	def __init__(ingredients, baking_temperature):
+		weight = sum(ingredients.weight) if ingredients.sugar.weight / weight > 0.3: sweetness = very_sweet
 
 Enums sweetness
 
 Prices = {“apple_pie” : 25, “croissant” : 1.20} 
 Ingredients = {“apple_pie“ : {« apple » : 0.3, « flour » 0.3, « eggs », 0.1, « sugar » : 0.4}}
 ```
+
 Now the code can be used as follows:
+```py
 Ordered_dish = «apple_pie»
 Ingredients = get_ingredients(Ingredients[Ordered_dish])
 Dish = 
+```
 
 ## Conclusions
 
-I think we can agree that OO programming is important and everyone should know it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming too complex. As long as you are confident about the test coverage you should be fine.
+I think we can agree on the fact that OO programming is important and everyone should know it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming too complex. As long as you are confident about the test coverage you should be fine.
 
 Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. 
+
+Many guidelines on how to write classes are defined for worker classes. It seems like most people overlooked the other kinds of classes.
 
 Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
 
