@@ -104,8 +104,9 @@ Things to write:
 		- [Pure function classes](#pure-function-classes)
 		- [Delegating class](#delegating-class)
 		- [Worker class](#worker-class)
+	- [Abstract Base Class](#abstract-base-class)
 		- [Interface Implementation class](#interface-implementation-class)
-		- [Base class/inheritance class](#base-classinheritance-class)
+		- [Inheritance classes](#inheritance-classes)
 	- [General recommendations](#general-recommendations)
 	- [Constant](#constant)
 	- [Method vs. output argument](#method-vs-output-argument)
@@ -1537,7 +1538,7 @@ Immutable variables are always safe to use, yet at the same time they are not al
 
 Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following code //example from working effectively with legacy code, p. 273
 ```Java
-Outputstream.wirte(“header”); 
+Outputstream.write(“header”); 
 writeField(outputstream, body1);
 writeField(outputstream, body2);
 ```
@@ -1553,6 +1554,7 @@ void writeField(Outputstream outputStream, Sting field){
 Here Feathers could have modified the string within its own function and keep the code much more readable.
 ```Java
 Outputstream.write(field(body1))
+
 String field(body){
     Return body + 0x00;
 }
@@ -1580,23 +1582,22 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 ## Functional programming
 
 # 16. Classes
-// There’s still much left to write here. Break up a class is one half of the functions uses one half of the variables and the other half goes together.
 
 // write a struct coordinate as an example?
 
-The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes. But it has something very similar, structs. It is the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. You may also store functions within a struct, though this is generally not done. At least not in C++. For this purpose, we have classes.
+The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes. But it has something very similar: structs. It is roughly the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. You may also store functions within a struct, though this is generally not done. At least not in C++. For this purpose, we have classes.
 
 Nowadays structs or dataclasses are not that much used anymore. Especially the java community seems to avoid such kind of objects at all cost. Though there is absolutely nothing wrong about structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It helps you sort your stuff.
 
 Classes are pretty much the same as structs. Besides some technical details, the only real difference are the encapsulation of variables and functions and the introduction of inheritance. You can decide for each one of the variables and functions to be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs. 
 
-But more powerful is not always better. If you have a gun, you can shoot yourself in your foot. So actually, it’s not the best idea to own a gun because the danger may be bigger than the advantages. With great power comes great responsibility!
+But more powerful is not always better. A gun is more powerful than a knife, but at the same time it is also more dangerous. You can easily shoot yourself into the foot. So actually, it’s not the best idea to own a gun because the danger may be bigger than the advantages. With great power comes great responsibility!
 
 If you are not so used to working with classes, this may be very confusing. Why would you like to make anything private at all? Isn’t it easier to make everything public?
 
-Indeed, this is a very important question. Even extremely important. Once you can create a class and decide right away which members should be private or public you are already a fairly good programmer. To make it short, it has to do with power once more.
+Indeed, this is a very important question. Even extremely important. Once you are able to create a class and decide right away which members should be private or public you are already a fairly good programmer. To make it short, it has to do with power once more.
 
-Let’s figure out why there should be private variables and functions at all. We need something where you face only the surface of it and you only have very few ways to interact with it. It’s not hard to find an example. This description holds for almost everything around you. For example, your car. It is a highly complex object. It contains an engine, breaks and tons of other parts. You don’t even want to know. You only want it to drive. You need the speed bar, the brake pedal and the steering wheel. As well as some other gadgets that we ignore here. You have this absolutely massive objects and you can do only three things with it: turn the steering wheel, push the speed bar and push the brake pad. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with any internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
+Let’s figure out why there should be private variables and functions at all. We need something where you face only the surface of it and you only have very few ways to interact with it. It’s not hard to find an example. This description holds for almost everything around you. For example, your car. It is a highly complex object. It contains an engine, breaks and tons of other parts. You don’t even want to know. You only want it to drive. You need the speed bar, the brake pedal and the steering wheel. As well as some other gadgets that we ignore here. You have this absolutely massive object and you can do only three things with it: increase the velocity, reduce the velocity and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with any internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
 
 There is one very simple rule of thumb which parts of a class should be public or private. If a class has no functions, it’s a struct and all variables should be public. Otherwise as few functions as possible should be public and all variables are private. But we’ll look at this rule in more detail in the next section.
 
@@ -1610,28 +1611,113 @@ There are some quite distinct types of classes. They can be categorized by the n
 
 The data class has no member functions and all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a data class has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
 
+// rethink the example?
+```py
+from dataclasses import dataclass
+
+@dataclass
+class InventoryItem:
+    name: str
+    unit_price: float
+    quantity_on_hand: int = 0
+```
+
 ### Pure function classes
 
 A class may have no member variables at all. It may have public and maybe also some private functions. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure function classes. In C++ and python you can define the corresponding functions free standing instead.
+
+```py
+class Math:
+	def sin(angle):
+		return 0
+
+	def cos(angle):
+		return 1
+```
 
 ### Delegating class
 
 The delegating class is a mixture of the struct and the function class. It contains private variables and public functions. Calls to one of these functions are all delegated to one of the objects. It’s like a car. Setting the temperature will just pass the corresponding command to the AC. Any other part of the car doesn’t have to know anything about the temperature or its control at all.
 
+```py
+class Car:
+	def set_velocity(new_velocity):
+		self._engine.set_velocity(new_velocity)
+
+	def change_direction(direction):
+		self._steering_servo.set_direction(direction)
+```
+
 ### Worker class
 
-Worker classes are doing the hard work in your code and they are the most commonly used. People may say these are the only real classes. Worker classes have few private variables, some private functions and few public functions. They are the only type of class with private functions. This means, they are the only classes that do really complicated things that have to be hidden from the other programmers. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Thus, it shouldn’t have more than 3 member variables and about 100 lines of code, depending on the number of member variables. Consider also using functions instead of a worker class.
+Worker classes are doing the hard work in your code and they are the most commonly used. People may say these are the only real classes. Worker classes have few private variables, some private functions and few public functions. 
 
-Interface definition class (Pure abstract base class)
-This defines only the interface (shape) of a class, not its actual implementation. It contains only public function declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, unless you think it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
+// Is this true?
+They are the only type of class with private functions.
+
+This means, they are the only classes that do really complicated things that have to be hidden from the other programmers. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Thus, it shouldn’t have more than 3 member variables and about 100 lines of code, depending on the number of member variables and the general complexity. Consider also using functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand.
+
+// example
+
+## Abstract Base Class
+
+This class type defines only the interface (shape) of a class, not its actual implementation. It contains only public function declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, unless you think it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
+
+In python a class has to inherit from `ABC` in order to be an abstract base class.
+
+```py
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod 
+    def feed(self):
+        pass
+```
 
 ### Interface Implementation class
 
-This class inherits from a pure abstract base class and implements it. As the base class, it contains only public functions but no variables.
+This class inherits from a pure abstract base class and implements it. As the base class, it contains only public functions but no variables. Therefore the complexity of interface implementation classes is very low.
 
-### Base class/inheritance class
+```py
+class Sheep(Animal):
+    def feed(self):
+        print("Feeding a sheep with grass.") 
+```
 
-These Classes can be either delegating or worker classes. However, as I mentioned before, I do not recommend using inheritance (except for defining interfaces in C++). Anything you want to do using inheritance can be done using composition as well. And keeping your fingers off inheritance will possibly save you quite some trouble. I read many books and there are many refactoring techniques and similar that work perfectly well, except for inheritance. The main problem is usually overriding base class functions that can cause all kind of issues. Furthermore, you don’t gain anything by using inheritance.
+### Inheritance classes
+
+Inheritance classes are usually delegating classes. They can be worker classes as well, though this is not recommnded due to the complexity of the resulting class. However, as I mentioned before, I generally do not recommend using inheritance, except for defining interfaces. Anything you want to do using inheritance can be done using composition as well. And keeping your fingers off inheritance will possibly save you quite some trouble. I read many books and there are many refactoring techniques and similar that work perfectly well, except for inheritance. The main problem is usually overriding base class functions that can cause all kind of issues. Furthermore, you don’t really gain anything by using inheritance.
+
+```py
+class Animal():
+    def feed(self):
+        print("Feeding meat.")
+
+class Sheep(Animal):
+    def feed(self):
+        print("Feeding grass.") 
+```
+
+Writing such code at first seems attractive. You don't have to redefine the `feed` function for animals eating meat. It's already there. But saving lines of code is no merit for code quality. Stability is. And this code here is not stable. It is brittle. A single typo can create a hard-to-track bug. Let's assume you define a method `fed` inside `Sheep` instead of `feed`. Then the sheep will most likely be fed with meat. 
+
+In the case above using an abstract base class, this kind of error is not possible. The following code returns an error because `Lion` does not implement the `feed` function.
+
+```py
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod 
+    def feed(self):
+        pass
+
+class Lion(Animal):
+    def fed(self):
+        print("Feeding a sheep with grass.")
+
+if __name__ == "__main__":
+    lion = Lion()
+    lion.feed()
+```
 
 ## General recommendations
 
