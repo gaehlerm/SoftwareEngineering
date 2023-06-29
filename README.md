@@ -124,6 +124,7 @@ Things to write:
 - [17. Design patterns](#17-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
+		- [Implementation](#implementation)
 	- [Strategy pattern](#strategy-pattern)
 	- [Façade](#façade)
 	- [Adapter](#adapter)
@@ -264,7 +265,7 @@ Things to write:
 - [46. Examples](#46-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
-		- [Implementation](#implementation)
+		- [Implementation](#implementation-1)
 	- [Paint](#paint)
 - [47. Further reading](#47-further-reading)
 - [48. Outlook](#48-outlook)
@@ -2040,7 +2041,9 @@ Prefer free functions over methods. It improves clarity which variables may be c
 
 # 17. Design patterns
 
-// visit the youtube videos of Derek Banas, https://youtu.be/VKIzUuMdmag?list=PLF206E906175C7E07
+// not sure yet what I should write about design patterns.
+
+// visit the youtube videos of Derek Banas, https://youtu.be/vNHpsC5ng_E
 
 There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
@@ -2051,7 +2054,39 @@ There is a famous book called design patterns [Gamma et al., 1995]. It describes
 There are different kind of factories. These are objects that create other objects. It makes sense to set up a factory if the output object is fairly complex. Setting up such an object within the constructor would clutter the class. It wouldn’t obey the single responsibility theorem anymore. I would like to highlight as well that a factory does not have to be a class. It can be a simple function as well.
 
 ## Visitor
-// why use a visitor pattern at all? Can this not be done with specialized function operating on 
+
+Let's say you write a compiler and you have an Abstract Syntax Tree (AST). This tree represents the code that is to be compiled. Each node in the tree is of a certain kind. For example + is converted into an "add" node having two children.
+
+Now you could write all the steps of the compiler, like the loop processor for example, into the nodes themselves. This, however, would result in code that is poorly structured. Changes usually involve compilation steps as the loop processor mentioned above. This would involve changing all node types at once and spreads all the related code across the whole code base.
+
+Instead one can use the visitor pattern. This allows to add functionality to an existing class. In this way, the loop processor can be written as a single class, that acts on all the different nodes.
+
+### Implementation
+
+// not yet completed.
+
+```py
+from abc import ABC
+
+for node in nodes:
+    node.accept(visitor)
+
+class City:
+    def accept(visitor):
+        visitor.do_for_city(this)
+
+class Visitor(ABC):
+	def do_for_city(city):
+		pass
+
+class Tourist(Visitor):
+	def do_for_city(city):
+		print("visiting city")
+
+class SalesPerson(Visitor):
+	def do_for_city(city):
+		print("Meeting clients")
+```
 
 ## Strategy pattern
 //need to add some more text
@@ -2070,14 +2105,23 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 # 18. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
+
 // add some more text from the pragmatic programmer
 
 Decoupling is a very essential part of software engineering. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change the whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
 
-This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue together the whole code at once. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
+This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. This is not how flexible code is supposed to be. Don’t use inheritance.
-Furthermore, there is a thing called Train Wrecks. This is a chain of class methods. 
+
+// need to look at the law of demeter again, see fowler p.192 or the pragmatic programmer
+
+//Fowler: The occasionally useful suggestion of Demeter
+
+Furthermore, there is a thing called Train Wrecks. This is a chain of class methods. This happens if 
+
+Don't chain method calls. Unless they are very unlikely to change.
+
 // change the example: customer.orders.last().total().amount
 
 // suggestion of Demeter (Fowler ca. p200)
