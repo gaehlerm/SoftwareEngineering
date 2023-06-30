@@ -157,9 +157,9 @@ Things to write:
 - [22. Solid principles](#22-solid-principles)
 	- [Single Responsibility Principle](#single-responsibility-principle)
 	- [Open Closed Principle](#open-closed-principle)
-	- [Liskov substitution principle](#liskov-substitution-principle)
-	- [Interface segregation principle](#interface-segregation-principle)
-	- [Dependency inversion](#dependency-inversion)
+	- [Liskov Substitution Principle](#liskov-substitution-principle)
+	- [Interface Segregation Principle](#interface-segregation-principle)
+	- [Dependency Inversion Principle](#dependency-inversion-principle)
 - [23. Some rules of thumb](#23-some-rules-of-thumb)
 	- [Code correlation](#code-correlation)
 	- [Single line complexity](#single-line-complexity)
@@ -2482,7 +2482,7 @@ for city in cities:
 
 // maybe write something more why this is exactly better?
 
-## Liskov substitution principle
+## Liskov Substitution Principle
 
 // see https://youtu.be/pTB30aXS77U
 
@@ -2497,7 +2497,8 @@ class Payment:
 
 This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
 
-##  Interface segregation principle
+##  Interface Segregation Principle
+
 Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need a small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
 
 // add graphs
@@ -2523,17 +2524,58 @@ from ImportantStuff import BigClass
 # ...
 ```
 
-## Dependency inversion
+## Dependency Inversion Principle
 
-// Do we use DI for dependency inversion or depencendcy injection?
-
-Dependency inversion is a technique used mainly in compiled languages as C++ and Java. The files in your project include each other and form a tree with the main function at its root. The so-called dependency tree. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction.
+Dependency inversion principle (DIP) is a technique used mainly in compiled languages as C++ and Java. The files in your project include each other and form a tree with the main function at its root. The so-called dependency tree. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction.
 
 // add a graph for the dependency tree
 
 For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted languages.
 
-The first time you compile your code, the whole code base has to be compiled. This can easily take minutes. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
+With this code a change in the function `do_nothing` causes the file `OtherClass.hpp` to be recompiled.
+
+```C++
+// inside MyClass.hpp
+class MyClass {       
+public:
+	inline void do_nothing(){}
+};
+
+// inside OtherClass.hpp
+#include MyClass.hpp
+int main()
+{
+	auto class = std::make_unique<MyClass>();
+	class->do_nothing();
+}
+```
+
+Meanwhile in this case, the function `do_nothing` inside myclass can be changed without causing OtherClass.hpp to recompile. Only once the Base class is changed, OtherClass.hpp has to be recompiled.
+
+```C++
+// inside BaseClass.hpp
+class BaseClass {       
+public:
+	virtual void do_nothing() = 0;
+};
+
+// inside MyClass.hpp
+#include BaseClass.hpp
+class MyClass : public BaseClass {       
+public:
+	inline void do_nothing() override {};
+};
+
+// inside OtherClass.hpp
+#include BaseClass.hpp
+int main()
+{
+	auto class = std::make_unique<MyClass>();
+	class->do_nothing();
+}
+```
+
+The first time you compile your code, the whole code base has to be compiled. This can easily take minutes, maybe even hours. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
 
 We first have to understand the source of this problem. As I mentioned before, it has to do with the includes (or imports). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well. It has to be recompiled as well. It’s like a hard link.
 
