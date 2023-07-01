@@ -2735,91 +2735,114 @@ I may be exaggerating slightly. But it’s true. Humans cannot deal with Boolean
 -	Good code design leads to few if statements.
 -	Resolve if statements as early as possible on the lowest level of abstraction. Don’t pass Booleans as function arguments.
 -	Consider using enums instead.
--	Never nest if statements within a dedicated function.
--	Make sure your unit tests cover all paths.
+-	Never nest if statements.
+-	Make sure your unit tests cover all branches of if else statements.
 -	You can use different types to prevent if statements.
--	Don’t use old-school C++ or java iterators. Range-based loops are much safer.
+-	Don’t use old-school C++ or java iterators. Looping over iterators requires comparisons. Range-based loops are much safer.
 -	Replace switch case iterations by polymorphism. Resolve the conversion from the switch statement to the polymorphic types as soon as possible.
 
 ### Switch statements
 
 In case you have a switch statement, you should replace it with polymorphism. The only place where switch statements (or nested if else) is allowed is at the creation of the polymorphic objects.
-This is how the code should not look like. 
+
+This is how the code should not look like. Even though it's short and looks neat.
 ```py
-match postcode:
-	case “Zurich”:
-		return 8000
-	case “Bern”:
-		return 3000
+def get_post_code(town_name)
+	match town_name:
+		case “Zurich”:
+			return 8000
+		case “Bern”:
+			return 3000
+
+get_post_code("Zurich")
 ```
+
 Instead each town should be an object containing a corresponding function. Note that for this simple example at dict would suffice as well.
+
 ```py
-Class Zurich:
+class Zurich:
 	def postcode():
-		Return 8000
-Class Bern:
-	Def postcode():
-		Return 3000
+		return 8000
+class Bern:
+	def postcode():
+		return 3000
 
 def cerate_town(town_name):
 	match town_name:
-		Case “Zurich”:
-			Return Zurich
-		Case “Bern”:
-			Return Bern
-Town = create_town(“Zurich”)
-Town.postcode()
+		case “Zurich”:
+			return Zurich
+		case “Bern”:
+			return Bern
+
+town = create_town(“Zurich”)
+town.postcode()
 ```
+
+Now this looks all quite verbose but this code will be hidden at a low level of abstraction. `create_town` will be called where you get the `town_name` and then the match case (switch case in most other programming languages) will be resolved once and for all.
+
+A small side remark: In this case, it would be worth having a dict instead of the match case. This would also allow us to read all the town name to post code conversion from a file. // when is it not better to have a dict?
 
 ## Strings
 
 “You should never use two different languages in a single file. English is also a language” // ?
 
-After pointers and Booleans, string is probably the third most dangerous data type. Many programmers check 2 strings for equality. One of them is written in plain text in the code. A twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
+After pointers and Booleans, strings are probably the third most dangerous data type. Many programmers check 2 strings for equality. One of them is written in plain text in the code. A twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
 
 ### Boolean logic
 
-Some people even start to encode all kind of logic into strings. This is dreadful. Someone #who, quote? Used the expression “string type” to describe what strings are being used for. This example I found in the book Clean Code p.128 where Uncle Bob did some refactoring on a unit test. What he explained all made sense, but he somehow missed to mention that one should never write code like that. He encoded five different states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do neve use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
+Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings.
+
+This example I found in the book Clean Code p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. A book I can highly recommend. But here he somehow went haywire. What he explained all made sense, but he somehow missed  that one should never write code like that. 
+
+He encoded five boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
 
 The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is not possible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary.
 
-Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [false, false, true, true, false]`. This is better than the string logic, but it still needs some serious reworking. Elements in an array should all be treated equally. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. This `[0]` is a clear indication that we should not use an array.
+Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is better than the string logic, but it still needs some serious reworking. Elements in an array should all be treated equally. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. This `[0]` is a clear indication that we should not use an array.
 
-A better solution is using a struct that stores 5 different variables. One Boolean replacing each character in the string above.
-```C++
-struct WaterState{
-	bool heater_state;
-	bool blower_state;
-	bool cooler_state;
-	bool hi_temp_alert;
-	bool low_temp_alert;
+A better solution is using a dataclass that stores 5 different variables. One Boolean replacing each character in the string above.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterState{
+	heater_state: bool
+	blower_state: bool
+	cooler_state: bool
+	high_temp_alert: bool
+	low_temp_alert: bool
 }
 ```
 
 Still, this is not yet optimal. What does `heater_state = true` or `= false` mean? Let's define an enum instead.
 
-```C++
-enum State{
-	on=true, 
-	off=false
-};
-struct WaterState{
-	State heater_state;
-	State blower_state;
-	State cooler_state;
-	State hi_temp_alert;
-	State low_temp_alert;
-};
+```py
+from enum import Enum
+from dataclasses import dataclass
+
+class State(Enum):
+	on = True # use 1 and 2 instead of True and False?
+	off = False
+
+@dataclass
+class WaterState:
+	heater_state: State
+	blower_state: State
+	cooler_state: State
+	hi_temp_alert: State
+	low_temp_alert: State
 ```
+
 Now the `heater_state` can be `on` or `off`. This is much more intuitive to read.
 
 Once one found this solution it looks so natural. This code is so much more readable than the encoded string that is absolutely worth the additional effort it takes to write this struct and the enum. Remember that we always code for readability and not for fewest lines of code.
 
-The code using this struct is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
+The code using this dataclass is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
 
 ```py
-if(water_state.hi_temp_alert)
-	Std::cout << “Attention: the water is too hot”;
+if water_state.high_temp_alert.value:
+	print(“Attention: the water is too hot”)
 ```
 
 ### Natural Language
