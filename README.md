@@ -186,7 +186,6 @@ Things to write:
 	- [Static Variables](#static-variables)
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables-1)
-- [26. Algorithms](#26-algorithms)
 - [27. Naming](#27-naming)
 - [28. Complexity](#28-complexity)
 - [29. Files and folders](#29-files-and-folders)
@@ -2924,15 +2923,15 @@ On the other hand, the second solution may be a performance bottle neck as it ne
 
 ## Member variables
 
-Member variables is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know is explained in the section on classes. As long as your class design is alright (classes should be small!), you are mostly fine with using member variables. Though you have to be carefull with them, as explained in the section on mutable variables.
+Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no side unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them, as explained in the section on mutable variables.
 
 ## Static Variables
 
 Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
 
-If a static variable is const, one could also create a free const variable outside the class instead. Except if this is not allowed as in Java, for instance. Or you could also create a global constant.
+If a static variable is const, one could also create a free const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
 
-If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic. This is dreadful!! Do never use dark magic. Do never use static variables.
+If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables.
 
 ## Dynamic Variables
 
@@ -2941,15 +2940,6 @@ Dynamic variables are the main reason why I was writing this chapter. With dynam
 ## Global Variables
 
 And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them very hard to handle. Keep your fingers away.
-
-# 26. Algorithms
-
-#Look up some online introduction to algorithms. Should I go down to the O(n) notation or leave this chapter away completely?
-
-I can highly recommend reading a book on data structures and algorithms. They go hand in hand. It gives you a great understanding how to tackle a problem and what you have to look out for. You absolutely have to learn recursive algorithms. They are very efficient and simple to implement. They are used everywhere. Just make sure you get the corner cases correctly. Other than that, there is nothing specific that I can recommend you. Just be smart and keep your eyes open.
-
-
-#is there anything else to mention? Get a book on algorithms and write something about the first few pages?
 
 # 27. Naming
 
