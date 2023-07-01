@@ -2882,39 +2882,45 @@ C++ used pointers everywhere. Pointers were used to point to a certain location 
 
 # 25. Data properties
 
-// I’m not that sure about this chapter. I think it needs some reworking.
-
-Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers don’t know how to structure them properly at first sight. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas what to look out for.
+Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
 The most common way to structure data is having nested classes where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
 
 // add reference, …? 
 
-Here are some additional properties variables can have. They can be compile-time constant, constant, mutable, member, static, dynamic or global. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
+Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
 
 ## Compile-time constant
 
-Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. For example, `const double pi=3.14`. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
+Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. In python there is no way to enforce constness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces constness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
 
 ## Constant
 
-Constant variables are very limited as well, yet at the same time, they are a very important object to work with. There is simply nothing you can do wrong about them. Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the correct object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead.
+Compared to compile-time constants, constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
+
+Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the correct object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead.
 
 ## Mutable
 
-Mutable variables are very powerful, yet at the same time they are tricky to deal with. They are very important, as writing code without them is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
+In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
 
 One option is to work more with unmutable objects. For example you can replace the following code,
+
 ```py
 prime_numbers = [11, 3, 7, 5, 2]
 prime_numbers.sort()
 ```
+
 with something that does not change the list. Instead it can return a new list.
+
 ```py
 prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
+
 It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates partially the SRP. This is partially the case here as the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
+
+On the other hand, the second solution may be a performance bottle neck as it needs more memory. This may be a problem for large lists.
 
 ## Member variables
 
@@ -3695,6 +3701,9 @@ I also had such a moment during my master thesis when I was calculating the expe
 #where to add a chapter with errors?
 
 # 42. Agile
+
+All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner. - Fundamentals of Software Architecture
+
 // How much of this chapter is explained in Working in teams
 
 // citation Clean agile, Agile manifesto
