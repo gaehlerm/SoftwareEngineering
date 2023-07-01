@@ -2847,7 +2847,7 @@ if water_state.high_temp_alert.value:
 
 ### Natural Language
 
-Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated file. There is no arguing with that. It is your job to extract all the human readable text from your code. Instead the code should get all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now of course, this is in theory.
+Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to writen his text into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should get all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now, of course, this is in theory.
 
 Ultimately you are left with barely any strings at all. Only when reading or writing a file you briefly have to deal with strings. At least in theory. For small projects it is not always worth the effort.
 
@@ -2856,7 +2856,8 @@ Ultimately you are left with barely any strings at all. Only when reading or wri
 You run your code and check the values of your variables. In one case you have the first line, in another case you have the second line. When should you use which one?
 
 ```py
-a = 0, b = 1
+a = 0
+b = 1
 ```
 
 ```py
@@ -2877,7 +2878,7 @@ It is not too often that I had to create a tree myself, yet I was working on a t
 
 ## Pointers
 
-C++ and Java use pointers everywhere. C++ used to be especially bad with that respect. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
+C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
 
 # 25. Data properties
 
