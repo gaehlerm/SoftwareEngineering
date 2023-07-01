@@ -160,6 +160,9 @@ Things to write:
 	- [Liskov Substitution Principle](#liskov-substitution-principle)
 	- [Interface Segregation Principle](#interface-segregation-principle)
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
+		- [Example](#example-2)
+		- [Pimpl](#pimpl)
+	- [Summary](#summary-1)
 - [23. Some rules of thumb](#23-some-rules-of-thumb)
 	- [Code correlation](#code-correlation)
 	- [Single line complexity](#single-line-complexity)
@@ -2532,48 +2535,6 @@ Dependency inversion principle (DIP) is a technique used mainly in compiled lang
 
 For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted languages.
 
-With this code a change in the function `do_nothing` causes the file `OtherClass.hpp` to be recompiled.
-
-```C++
-// inside MyClass.hpp
-class MyClass {       
-public:
-	inline void do_nothing(){}
-};
-
-// inside OtherClass.hpp
-#include MyClass.hpp
-int main()
-{
-	auto class = std::make_unique<MyClass>();
-	class->do_nothing();
-}
-```
-
-Meanwhile in this case, the function `do_nothing` inside myclass can be changed without causing OtherClass.hpp to recompile. Only once the Base class is changed, OtherClass.hpp has to be recompiled.
-
-```C++
-// inside BaseClass.hpp
-class BaseClass {       
-public:
-	virtual void do_nothing() = 0;
-};
-
-// inside MyClass.hpp
-#include BaseClass.hpp
-class MyClass : public BaseClass {       
-public:
-	inline void do_nothing() override {};
-};
-
-// inside OtherClass.hpp
-#include BaseClass.hpp
-int main()
-{
-	auto class = std::make_unique<MyClass>();
-	class->do_nothing();
-}
-```
 
 The first time you compile your code, the whole code base has to be compiled. This can easily take minutes, maybe even hours. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
 
@@ -2583,52 +2544,58 @@ Instead we want a soft link. Main should depend only on the public interface of 
 
 This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
 
+### Example
+
 ```C++
 #include stdio.h
 
-class Something{
-	void do_something(){
-		std::cout << "something" << std::endl;
-	}
+class Nothing{
+	void do_nothing() {}
 }
 
 int main(){
-	auto something = Something()
-	something.do_something();
+	auto nothing = Nothing()
+	nothing.do_nothing();
 }
 ```
 
-Now `main` depends on the `Something` class and everything that's inside it. Instead we can define an interface for `Something` and break this dependency.
+Now `main` depends on the `Nothing` class and everything that's inside it. Instead we can define an interface for `Nothing` and break this dependency.
 
 ```C++
-#include stdio.h
-
-class InterfaceToSomething{
+// inside NothingBase.hpp
+class NothingBase{
 public:
-	virtual void do_something() = 0;
+	virtual void do_nothing() = 0;
 }
 
-class Something : public InterfaceToSomething {
+// inside Nothing.hpp
+#include "NothingBase.hpp"
+
+class Nothing : public NothingBase {
 public:
-	void do_something() override {
-		std::cout << "something" << std::endl;
-	}
+	void do_nothing() override {}
 }
 
+// inside main.cpp
+#include "NothingBase.hpp
 int main(){
-	auto something = std::make_unique<Something>();
-	something->do_something();
+	auto nothing = std::make_unique<Nothing>();
+	nothing->do_nothing();
 }
 ```
 // I haven't coded for too long. I have to make sure this is correct.
 
-Now `main` depends only on the interface `InterfaceToSomething`, not on the implementation defined in `Something`. Changing `Something` does not change `main`. Therefore, `main` does not need to be recompiled if `Something` changes! `main` and `Something` are only connected together by the linker.The linker will make sure the main function calls the correct implementation of this library.
+Now `main` depends only on the interface `NothingBase`, not on the implementation defined in `Nothing`. Changing `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker.The linker will make sure the main function calls the correct implementation of this library.
 
 // dependency tree graphs
 
-#pimpl -> reference to meyers book
+### Pimpl
+
+// reference to meyers book. or skip this part?
 
 In case you've ever heared of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of abstract base classes or interfaces. There’s no need to use it. Defining interfaces is the strictly better option than using pimpl.
+
+## Summary
 
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t care about. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
@@ -2638,7 +2605,9 @@ I think this was the longest section in this book where I explain technical deta
 
 ## Code correlation
 
-Similar things belong together. It sounds fairly easy and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
+//remove first paragraph?
+
+Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
 
 There is a market for food and further down the road there is a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
@@ -2650,9 +2619,10 @@ A frequent topic is the amount of logic in a single line of code. There are very
 
 On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
 
+Now this is still one of the more readable inline list initializations. But it is banned by the google style guide as it contains two variables.
+
 ```py
-# TODO I need a much more complicated list initialization to make my point
-a = [i for i in range(10)]
+[[[0] * 2 for i in range(3)] for j in range(4)]
 ```
 
 ## Back magic code
@@ -2663,11 +2633,13 @@ It is much better to be honest. The problem is complex and we break down the com
 
 # 24. Datatypes
 
-There is an estimated quadrillion of different datatypes. Any class that any programmer has ever defined. But again, I recommend not to use too many different built-in datatypes. Types by themselves are not improving your code. Only use additional types if you think it improves the code.
+There are hundreds of built-in datatypes. But again, I recommend not to use too many of them. Types by themselves are not improving your code. Only use additional built-in types if you think it improves it.
 
-Here is a list of datatypes that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: numbers, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers)
+At the same time it has to be said that using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write.
 
-I give you some explanations on all these types except numbers and classes. I simply don’t have anything to write about numbers. Classes are discussed in its own section.
+Here is a list of datatypes that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
+
+I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints. Except that I never use unsigned ints, see google style guide. Classes are discussed in their own section.
 
 ## Lists
 
@@ -2690,7 +2662,7 @@ Apparently 3 values inside this list always belong together. In C++ we would cre
 
 ```py
 @dataclass
-class ShoppingItem
+class ShoppingItem:
     name: str
     weight: float
     price: float
@@ -2707,26 +2679,45 @@ We can summarize: Lists are very common. They should always contain objects of e
 
 ## Enums
 
-Enums is something many software developers don’t know. You don’t need it. There are simple ways to write code without them. They are all bad.
+Enums is something many software developers don’t know,you don’t need it. But they should know it, as it makes the code much better. There are several different ways to write code without using enums. They are all bad.
 
 ```py
+# 1. boolean:
 is_blue = True
+
+# 2. string:
 favorite_color = “blue”
+
+# 3. integer:
 favorite_color = 7
-favorite_color = Color::Blue
+
+# 4. class instance:
+class Blue:
+	pass
+
+favorite_color = Blue()
+
+# 5. enum:
+from enum import Enum
+class Color(Enum):
+	BLUE = 1
+
+favorite_color = Color::BLUE
 ```
 
-The first three options all have some severe drawbacks.
+The first four options all have some severe drawbacks.
 
-The first one is dead ugly. What does is_blue = False mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Use booleans cautiously.
+The first one is dead ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Use booleans cautiously.
 
 The second one looks reasonable but it’s easy to introduce bugs. If you write `“blu”` instead of `“blue”` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
 
 Sometimes such kind of objects are also called “string typed”. Strings are being abused for storing all kind of different data that it shouldn’t be used for.
 
-Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard.
+Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard. For example the RGB standard, `blue = [0,0,255]`.
 
-Fourth option: The best solution is certainly using an enum. It looks slightly odd because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::blu` you will get an error because you quite certainly didn’t define a color `blu`. You get a compile time error in C++ and a runtime error in python. Both is infinitely better than having a bug. Enums are great. Use them where ever you define a selection from a limited amount of options.
+Fourth option: For once using types is not the best option. It can be checked using `isinstance(blue, Blue)`, but this is tedious and not possible in C++ for example. For once using classes does not offer any advantages, only drawbacks.
+
+Fifth option: The best solution is certainly using an enum. It looks slightly odd because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::BLU` you will get an error because you quite certainly didn’t define a color `BLU`. You get a compile time error in C++ and a runtime error in python. Both is infinitely better than having a bug. Enums are great. Use them where ever you define a selection from a limited amount of options.
 
 Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare.
 
