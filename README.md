@@ -187,7 +187,9 @@ Things to write:
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables-1)
 - [27. Naming](#27-naming)
+- [Automatization](#automatization)
 - [28. Complexity](#28-complexity)
+	- [Estimating complexity](#estimating-complexity)
 - [29. Files and folders](#29-files-and-folders)
 	- [Data files](#data-files)
 		- [CSV](#csv)
@@ -1738,6 +1740,8 @@ A well-known rule says: “Classes should have high cohesion within themselves a
 
 The amount of cohesion within a class may differ a lot, depending on the type of class. The cohesion within a working class is certainly much higher than within a data class. In a worker class, there is a significant amount of work required to change its structure. In a data class, there is only some weak logical coupling between the member variables. The delegating classes have fairly little cohesion. Yet there is nothing wrong about these types of classes. In fact, they are very useful to structure your objects, etc.
 
+// see fundamentals of software architecture p. 43, LCOM metric. Add a similar graphic
+
 This rule was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint what’s the best way to break it into pieces. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few methods before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand.
 
 ## Constant
@@ -2945,11 +2949,11 @@ And last but not least, I hope you still remember the section about global varia
 
 "And you will know, my name is the law!” – Pulp fiction #exact quote?
 
-// figure out a real life example where names got mixed up
+How long does a football game take? This is a very inocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
 
-The ... [exampe above] example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are other people around who have the same name as you do it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
+The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are other people around who have the same name as you do it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
 
-All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name.
+All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name.
 
 Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
 
@@ -2960,43 +2964,53 @@ Coming up with your own names is everything but easy. Especially new programmers
 Here are some rules to follow when naming things:
 
 1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name.
-1.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
-1.	Never use plain values in your code. Always create a variable instead. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. `Set_color(7)`. What does `7` mean?
-1.	High level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
-1.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding a name. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
-1.	Name collisions may happen once in a while. Consider refactoring one or both variables. They might do very similar things and should be refactored into one object. Otherwise find clearly distinguishable names.
-1.	Name collisions between different libraries are common and nothing to worry about. Use the namespace prefixes to distinguish them.
-1.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
-1.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
-1.	You may tweak the language a little and ignore grammar rules at times. I you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
-1.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
-1.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
-1.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-1.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions.
+2.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
+3.	Never use plain values in your code. Always create a variable instead. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. `Set_color(7)`. What does `7` mean?
+4.	High level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
+5.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding a name. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
+6.	Name collisions may happen once in a while. Consider refactoring one or both variables. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
+7.	Name collisions between different libraries are common and nothing to worry about. Use the namespace prefixes to distinguish them.
+8.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
+9.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
+10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
+11.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
+12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
+13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
+14.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
+
+# Automatization
 
 // wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
+
+According to DRY, you should not repeat yourself. This is also true for processes like building and testing of your software. And the solution is quite easy: You have to automate everything. Use all your build, test and CI tools in order to do so.
+
+It is generally recommended to do all the automatization in the beginning of a project. This has several reasons. First of all, it's the most efficient way to do it. You can use the automated pipelines right from the beginning. And all new team members can simply clone and build the project with a few commandline commands.
+
+Furthermore it may be difficult to automate an existing project. Thus automating it right from the beginning might save you quite some work.
 
 # 28. Complexity
 
 “I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it.” – Bill Gates
 
-As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code has to be always at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers.
+As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers.
 
-The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. Equal to the real problem. It should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class apple and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
+The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. It should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
 
-I cannot deny, OO programming makes some things easier and having an apple class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
-
-// write more specifically about domain models, etc.?
+I cannot deny, OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
 
 As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation of the experts in the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design book]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
 
 Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details at the beginning of the development.
 
-// this section here seems odd... 
+## Estimating complexity
+
+// this section here seems odd... remove it completely? estimation is treated in the agile section as well.
 
 // add the conversation from here? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
 
-In many cases the complexity of a task is extremely hard to estimate. Some developers have an idea what to do, others don’t. But nobody really knows and everyone is a little bit scared of that task. And nobody knows how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything is already there in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
+In many cases the complexity of a task is extremely hard to estimate. Some developers might have an idea what to do, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. 
+
+Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
 
 # 29. Files and folders
 
