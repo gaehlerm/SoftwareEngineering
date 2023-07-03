@@ -190,15 +190,14 @@ Things to write:
 - [Automatization](#automatization)
 - [28. Complexity](#28-complexity)
 	- [Estimating complexity](#estimating-complexity)
-- [29. Files and folders](#29-files-and-folders)
-	- [Data files](#data-files)
-		- [CSV](#csv)
-		- [Json](#json)
-		- [XML](#xml)
-		- [HDF5](#hdf5)
-		- [Databases](#databases)
-		- [Custom file format](#custom-file-format)
-	- [Project folder](#project-folder)
+- [Data files](#data-files)
+	- [CSV](#csv)
+	- [Json](#json)
+	- [XML](#xml)
+	- [HDF5](#hdf5)
+	- [Databases](#databases)
+	- [Custom file format](#custom-file-format)
+- [Project folder](#project-folder)
 - [30. Performance Optimization](#30-performance-optimization)
 - [31. Comments](#31-comments)
 	- [Bad comments](#bad-comments)
@@ -3012,63 +3011,120 @@ In many cases the complexity of a task is extremely hard to estimate. Some devel
 
 Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
 
-# 29. Files and folders
-
-## Data files
+# Data files
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
+
 The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats.
 
-### CSV
+## CSV
 
-Comma Spaced Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. CSV is no file standard so you can do anything you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in csv files. Csv saves only simple, unstructured vectors.
+Comma Spaced Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. But this is also one of the weaknesses of CSV. In some (natural) languages, the comma character is used for the floating point separator (exact name??). Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems.
+
+CSV is no file standard so you can do anything you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
+
 Long story short: CSV is the file format everyone uses who doesn’t know anything better.
 
-### Json
+Here is some example code how to read a CSV file:
+
+```py
+def read_csv(filename):
+    with open(filename) as file:
+        x = []
+        y = []
+        for line in file:
+            if line.startswith("#"):
+                continue
+            x.append(float(line.split(",")[0]))
+            y.append(float(line.split(",")[1]))
+    return (x,y)
+```
+
+## Json
 
 The JavaScript Object Notation (json) file format is clearly the best file format for everyday purposes. It is very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
 
 Once you use json on a more serious project, you might want to use a schema to check the files for correctness. You may use different schemas for different versions of your interface. And before I let you write schemas by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
 
 Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
-```py
-#Example.json
-{‘x’ : 1}
 
-readJSON.py
+The following code creates a json file:
+```py
 import json
-...
+
+def write_json(filename, data):
+    with open(filename, 'w') as f:
+        f.write(json.dumps(data, indent=4))
+
+if __name__ == "__main__":
+    data = {'x': [1,2,3], 'y':[4,5,6]}
+    write_json("temp.json", data)
 ```
-### XML
+
+Meanwhile this code here reads out the data.
+```py
+import json
+
+def read_json(filename):
+    with open(filename) as f:
+        return json.load(f)
+
+if __name__ == "__main__":
+	data = read_json("temp.json")
+    print(data['x']) # prints [1,2,3]
+    print(data['y']) # prints [4,5,6]
+```
+As you can see, working with json files is much easier and less error prone than working with CSV files. The underlying data structure is a dict, which is a pretty bullet proof way to work with data. There is hardly a way to introduce unnoticed bugs.
+
+## XML
 
 The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Along with some notation details the support of arrays is pretty much the only difference. Therefore, json is simply better and there is no reason to use XML if you can choose. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to.
 
-### HDF5
+## HDF5
 
-HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the hdf5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
+HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the HDF5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
 
-### Databases
+Working with HDF5 is in my opinion a tad less intuitive as working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
+
+The following code saves a list of values inside an HDF5 file.
+
+```py
+import h5py
+
+with h5py.File("temp.hdf5", "w") as f:
+    dset = f.create_dataset("x", data=[8, 3, 13, 1])
+```
+
+Reading a file returns an HDF5 file object. It may be a little intimidating at first, but it is fairly easy to work with. With many respects, it behaves similar to a dictionary.
+```py
+import h5py
+
+f = h5py.File('temp.hdf5', 'r')
+print(list(f.keys()))
+print(list(f['x']))
+```
+
+## Databases
 
 Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
 
-I never really cared much about DBs so you better get your information from elsewhere. I only know that proprietary DBs are extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
+I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
 
-### Custom file format
+## Custom file format
 
-Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no more reason to define custom file formats.
+Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
 
-
-## Project folder
+# Project folder
 
 Code is a collection of text files. One question is: how do you deal with them?
 
-The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class, a bunch of similar functions or data. Classes that have more than 1000 lines should have been broken into a lot of pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should be usually much smaller than this.
+The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should be usually much smaller than this.
 
-The way to arrange the files in folders depends on the programming language. The code is inside the src folder, sorted by further subfolders. Generally, a subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside this folder. Or at least make sure they all get cleaned up immediately. Auto generated files should never make it into the master branch!
+The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside of the src folder. Or at least make sure they all get cleaned up immediately. Auto generated files should never make it into the master branch!
 
 Acceptance tests should also remain outside of the src folder. These tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
 
-The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, in other languages the unit tests are written right next to the corresponding source file.
+The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as python for example, the unit tests are written right next to the corresponding source file. This is necessary as in python it's very tedious to import files from a parent folder.
 
 3rd party libraries belong into the lib folder. They are not part of the git project. They are too big and none of your business. You need some other way to manage them. If you use few libraries just manage them manually. In python use pip and the requirements.txt file.
 
