@@ -238,7 +238,8 @@ Things to write:
 	- [Circular dependencies](#circular-dependencies)
 - [37. C++](#37-c)
 	- [Pointers and arrays](#pointers-and-arrays)
-	- [Smart pointers](#smart-pointers)
+		- [Smart pointers](#smart-pointers)
+		- [Vectors](#vectors)
 	- [Pass by reference](#pass-by-reference)
 	- [Classes](#classes)
 	- [Structs](#structs)
@@ -3560,22 +3561,37 @@ Long story short: The high-level object calls the low-level object and hands ove
 
 # 37. C++
 
-// is this chapter needed?
+C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages tac.
 
 C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is a very old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
 
 ## Pointers and arrays
 
-Pointers point to an address of the heap. The place where the dynamically allocated variables are. It is used to access complex objects that should not be passed around as a whole due to performance issues. However, passing around raw pointers can lead to all kind of errors and even worse, undefined behavior.
+Pointers point to an address on the heap. The place where the dynamically allocated variables are. It is used to access complex objects that should not be passed around as a whole due to performance issues. However, passing around raw pointers can lead to all kind of errors, memory leaks, and even worse, undefined behavior.
 
 Along with pointers go arrays. They are a continuous piece of memory that the user has to manage on his own. He has to allocate them manually and delete the memory at the end of its life time.
 
 Pointers and arrays are barely used anymore on a daily basis. In most cases, they are taken care off by the modern C++ data formats like vectors. Vectors are a high-level object that offers about the same functionality as arrays, but it is much more user friendly as it’s almost impossible to introduce any errors.
 
-// code for vector?
-## Smart pointers
+### Smart pointers
 
-Smart pointers are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like for example weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+Smart pointers (`std::unique_ptr` and `std::shared_ptr`) are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like for example weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+
+There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers all throughout the code. Instead you can convert the smart pointer into a pointer using the `get()` function.
+
+```C++
+auto foo = std::make_unique<Foo>();
+some_old_C_library(foo.get());
+```
+
+### Vectors
+
+Similar to the issue with smart pointer, there are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` function as needed.
+
+```C++
+std::vector<int> vec {1,2,3,4};
+some_old_C_library(vec.data(), vec.size());
+```
 
 ## Pass by reference
 
