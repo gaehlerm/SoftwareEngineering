@@ -201,7 +201,11 @@ Things to write:
 - [30. Performance Optimization](#30-performance-optimization)
 - [31. Comments](#31-comments)
 	- [Bad comments](#bad-comments)
+		- [Commented out code](#commented-out-code)
+		- [TODO comments](#todo-comments)
 	- [Useful comments](#useful-comments)
+		- [Docstring](#docstring)
+	- [Summary](#summary-2)
 - [32. Logging](#32-logging)
 - [33. Tools](#33-tools)
 	- [Version control software](#version-control-software)
@@ -216,7 +220,7 @@ Things to write:
 	- [Pip, cmake](#pip-cmake)
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
-	- [Docstring](#docstring)
+	- [Docstring](#docstring-1)
 - [34. Domain Driven Design](#34-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -3104,6 +3108,8 @@ print(list(f.keys()))
 print(list(f['x']))
 ```
 
+As HDF5 is a binary format you cannot look at the data using a text editor. Instead you have to use the HDFview software, https://www.hdfgroup.org/downloads/hdfview/
+
 ## Databases
 
 Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
@@ -3141,27 +3147,25 @@ There are a few pitfalls how to arrange the files and folder of your project. Bu
 
 “Premature optimization is the root of all evil” - Donald Knuth
 
-// mention that for online stores and websites, performance is crucial. But it has not that much to do with programming as we learn it here. It is more about performance of the servers and inter-process communication -> 97 things every programmer should know, chapter 41
-
 One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years while the prices dropped as well. Modern programming languages like python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
-As we have learned the main goals of a software engineer are creating value for the customer, writing code that is easy to understand, correct and well covered with tests. Performance is not a main goal. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore. You may only start optimizing your code if it creates value for your customer.
+As we have learned the main goals of a software engineer are creating value for the customer, writing code that is easy to understand, correct and well covered with tests. Performance is not a main goal. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore.
 
 Let’s say you start writing one of the few applications that you assume needs performance. You’re a bit lost at which point in time you should start optimizing the code. Right from the beginning? Should you plan your algorithms such that they will be faster? How should you proceed?
 
-First of all, it is not recommended to optimize the code at all. In fact, it is best to ignore the performance topic all together. Write your code with the usual test – code – refactor work cycles. The result will be code that is, at least in theory, modular, stable, easy to understand and well tested. Code that meets all your requirements, except for performance. 
+First of all, it is not recommended to optimize the code at all. In fact, it is best to ignore the performance topic for the time being. Write your code with the usual test – code – refactor work cycles. The result will be code that is, at least in theory, modular, stable, easy to understand and well tested. Code that meets all your requirements, except for performance. 
 
-Is this really the case, was performance really an issue? You had this feeling that you had to write highly optimized code. But you didn’t know for sure. And now is the time to test your assumption. If you have to run your code only once and it takes 2 days, run it over the weekend. Spending hours for optimization would be wasted time.
+Is this really the case, that performance was an issue? You had this feeling that you had to write highly optimized code. But you didn’t know for sure. And now is the time to test your assumption. If you have to run your code only once and it takes 2 days, run it over the weekend. Spending hours for optimization would be wasted time.
 
-If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottle necks of your code. Pretty much all code that you’ll ever see has very few bottle necks. Usually it’s some fancy calculation on a huge data structure. This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottle neck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually inacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
+If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottle necks of your code. Pretty much all code that you’ll ever see has very few bottle necks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottle neck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually inacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
 
-Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be working in a team where every single team member knows way more about parallel programming than I do.
+Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be working in a team where every single team member knows way more about parallel programming than I do.
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
 # 31. Comments
 
-Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
+Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
 
 ## Bad comments
 
@@ -3171,8 +3175,8 @@ Comments are a very double-edged sword. While they may be useful at times, they 
 
 ```py
 def add(a,b):
-  #This function returns the sum of the two arguments
-  return a + b
+	# This function returns the sum of the two arguments
+	return a + b
 ```
 
 Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers who think that this comment here is justified. 
@@ -3187,19 +3191,25 @@ Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienc
 
 Not convinced? You think you won’t have these issues because you work carefully? 
 
-“Ha! NO! “
+“Ha ha. NO!“
 
-Now you’re certainly wrong and I’m not sorry at all for losing my temper anymore. Because this time you should know better. This is exactly what I’m trying to teach you all throughout this book. You are human. Every human makes mistakes. You will make mistakes. It’s inevitable, accept your faith and deal with it. Code is good if you can make only few mistakes. Removing useless comments is a must. They are an unneeded potential source of bugs.
+Now you’re certainly wrong and I’m not sorry at all for losing my temper anymore. Because by now you should know better. This is exactly what I’m trying to teach you throughout this book. You are human. Every human makes mistakes. You will make mistakes. It’s inevitable, accept your faith and deal with it. Code is good if you can make only few mistakes. Removing useless comments is a must. They are an unneeded potential source of bugs.
 
 You want to become a software engineer. Stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
+### Commented out code
+
 Another thing you might have seem somewhere is commented out code. Someone was developing a feature. Maybe he was replacing some code and wasn’t sure how to implement the new version. So, he commented out the old code and started implementing. He somehow didn’t understand all the details but at some point, everything seemed to work. He knew that he was more guessing that writing structured code. He knew his work was really bad. Therefore, he decided to leave the old code in the repo and just commented it out, right beside the new code.
 
-Commenting out code is absolutely dreadful. This is one of the candidates for the worst programming practices. What are you supposed to do with commented out code? Everybody reads it. Nobody knows how to deal with it. It’s just causing confusion and wastes everybody’s time. If we only had a tool to browse the history of the code… Something like git… 
+Commenting out code is absolutely dreadful. This is one of the candidates for the worst programming practices. What are you supposed to do with commented out code? Everybody reads it. Nobody knows how to deal with it. It’s just causing confusion and wastes everybody’s time. If we only had a tool to browse the history of the code... Something like git...
 
 Never use comments (or dead code) for that purpose. You have my permission to delete any commented-out code that you ever see. You may show this book as a proof if needed.
 
+### TODO comments
+
 Another bad habit is TODO comments. When you implement a feature, you are responsible that the implementation is ready to be merged into master. It’s ready to be merged when there is nothing important to be done anymore that would justify a TODO comment. Make sure you never merge any TODOs into master. They only cause confusion and there is never time to do them. You will never implement a feature without ticket and for refactoring you don’t need a TODO as a justification. Therefore again: make sure you never merge any TODO comments into master.
+
+At the same time it is fine if you use TODO comments during the development of a feature. It might help you to organize your work. Just make sure to remove all the TODO comments at the end of the development.
 
 ## Useful comments
 
@@ -3207,11 +3217,15 @@ So much about why not to use comments. Now let’s talk about the cases where us
 
 I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa this means that comments are allowed to explain things you cannot express in code. For example, you can add links to the source of a code fragment, library or the explanation of an algorithm. It may also be useful to use comments on the interface of a library or API used be the documentation software. And of course comments are used at the beginning of the file for the boilerplate copyright statement.
 
-You may use docstring tools like sphynx in python for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. The code should be self-documenting such that docstrings are not required.
+### Docstring
+
+You may use docstring tools like sphynx in python for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring docummentation if you can read the source code and all its comments?
 
 #should I add some more points when comments are allowed?
 
-Summary: Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
+## Summary
+
+Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
 
 # 32. Logging
 
