@@ -212,7 +212,7 @@ Things to write:
 		- [Git, everywhere git](#git-everywhere-git)
 	- [Command line](#command-line)
 	- [IDE](#ide)
-	- [CI software](#ci-software)
+	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
 	- [Profiler](#profiler)
 	- [Formatter](#formatter)
@@ -243,6 +243,9 @@ Things to write:
 	- [Pass by reference](#pass-by-reference)
 	- [Classes](#classes)
 	- [Structs](#structs)
+- [Python](#python)
+	- [Type hints](#type-hints)
+	- [Slots](#slots)
 - [38. Working in teams](#38-working-in-teams)
 	- [Team structure](#team-structure)
 		- [The bus factor](#the-bus-factor)
@@ -3248,15 +3251,17 @@ And finally, a logger may be helpful for the user to send in auto created error 
 
 # 33. Tools
 
-There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important tools or products I worked with so far:
+There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important classes of tools I worked with so far:
 
-Version control software, Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring, docker and possibly many more.
+Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring, docker and possibly many more.
 
 I have to admit that the list is pretty scrambled. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
 
 ## Version control software 
 
-Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs. It is clearly superior to most older version control software and there is no reason to learn anything else. The original Git software is a console application but there is also proprietary software with a GUI.
+Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs or licencins issues // citation wikepedia?. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard.
+
+The original Git software is a console application but there is also proprietary software with a GUI.
 
 I recommend learning the classic (command line) git. Start learning it as soon as possible. Every programmer has to be able to work with it. The only difference between companies is the way how they use git exactly.
 
@@ -3270,25 +3275,30 @@ Or if you wirte a book like this one. It is writen in Markdown and version contr
 
 The most common command line software is the shell used on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used.
 
-The command line is the swiss military knife when programming. It is the glue that connects all the different tools together. It enables us to automate all the build processes, etc. For this reason, the command line is generally to be preferred over GUI based tools. They are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
+The command line is the swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
-The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basics once you have the opportunity of automating a shell process.
+The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
 
 ## IDE
 
-The Integrated Development Environment (IDE) is a class of software used for writing code. Like Microsoft Word for programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me. I don’t think it’s worth spending too much time here by yourself so I recommend you to do the same as I did.
+The Integrated Development Environment (IDE) is a class of software used for writing code. Like Microsoft Word adapted for programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me. I don’t think it’s worth spending too much time here by yourself so I recommend you to do the same as I did.
 
-In all up to date IDEs, there are plug ins for most of the software mentioned above. Ask your work colleague which ones. Spend a few hours with him to get an idea what they are used for. This is not wasted time. You also learn something about the code during that time.
+In all up to date IDEs, there are plug ins for most of the tools mentioned above. Ask your work colleague which ones you need. Spend a few hours with him to get an idea what they are used for. This is not wasted time. You also learn something about the code during that time.
 
 It is worthwhile learning some of the shortcuts in your IDE that allow you to modify code in different files faster. This is useful as it improves your work flow. But don’t overdo it at the beginning, you may be wasting too much time here. You can still learn more once you know how your personal work flow looks like. And if you really like to push the shortcuts to the limit, you’ll have to learn the VIM text editor which is operated by keyboard only.
 
-## CI software
+## Continuous Integration
 
-// mention Jenkins
+"Continuous integration (CI) is the practice of merging all developers' working copies to a shared mainline several times a day." // https://en.wikipedia.org/wiki/Continuous_integration
+This typically means checking in the latests changes of the code, compiling it if required, running all the tests and building the final artifact.
 
-There are several different suppliers for CI software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
+There are several different suppliers for Continuous Integration (CI) software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
+
+At the time of writing, Jenkins is the most commmonly used CI software.
 
 ## Debugger
+
+Probably everybody knows what debugging is. Because it is about the first thing you learn at programming: The code doesn't work and I don't understand what it does. Let's walk through it and see what my variables do. For example using print statements. But there is a better way than using print statements. The Debugger.
 
 Every programming language has its own debuggers and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger. Mostly setting break points, navigating through the code and looking at the stack trace. But generally, it’s a sign of bad code if you have to use a debugger too often. Write small classes and functions where you can tell exactly what they should do. Along with plenty of unit tests. Depending on the error you should be able to pin point the source to a certain class or area of the code without using a debugger. Anyway. Feel free to use a debugger, for example if you work with legacy code. But always keep the code quality high and make sure you don’t need the debugger at all.
 
@@ -3298,9 +3308,9 @@ A profiler lets you check the time required for executing each part of the code.
 
 ## Formatter
 
-Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. But don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about it. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for.
+Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. But don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about it. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for. Making an MR becomes impossible.
 
-If you work with old code that was formatted with an out dated rule set you have to run the formatter and create an MR before you start writing code. Or at least the formatting needs to be in a separate commit, though a separate, dedicated MR is to be preferred. If you change the formatting rule set, run the formatter on all code and create a dedicated MR.
+If you work with old code that was formatted with an out dated ruleset, you have to run the formatter and create an MR before you start writing code. Or at least the formatting needs to be in a separate commit, though a separate, dedicated MR is to be preferred. If you change the formatting rule set, run the formatter on all code and create a dedicated MR.
 
 There are also some companies using custom formatting where every employee can use any formatting style he wants. Once he creates an MR, the official formatter runs on the code before merging it into master.
 
@@ -3310,7 +3320,7 @@ Personally, I don’t care too much about the formatting style. If I have a choi
 
 There are different programs available that check your code on the most common quality issues. I don’t know too much about them but it’s certainly worth a try. One example is the test coverage tool. Tough this metric shouldn’t be abused as a business metric. Use it to check that you have (almost) all code covered by your unit tests.
 
-If you use C++ or some other compiled language, your most important quality checker tool is the compiler. Enable the “treat warnings as errors” setting for all different groups of warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. Because why should you search for bugs yourself if the compiler can do the job?
+If you use C++ or another compiled language, your most important quality checker tool is the compiler. Enable the “treat warnings as errors” setting for all different groups of warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. Because why should you search for bugs yourself if the compiler can do the job?
 
 ## Pip, cmake
 
@@ -3610,6 +3620,52 @@ Structs are similar to classes, however all members are public. In general, stru
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
 
 For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
+
+# Python
+
+Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning.
+
+## Type hints
+
+// https://youtu.be/dgBCEB2jVU0
+Python is dynamically typed. At first, this seems like a great thing. But it also comes along with its drawbacks. Because types are an important part of the information on a variable. You know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
+
+While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not pythonic, it is possible to write type hints. A simple `: int` following a function argument to indicate that it should be an integer.
+
+Here is an example using type hints:
+```py
+def digits_of(number: str) -> list[int]:
+	return [int(d) for d in number]
+```
+But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
+
+I generally recommend using type hints as it makes the code much more readable. Even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
+
+## Slots
+
+// https://youtu.be/Fot3_9eDmOs
+Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class as such:
+```py
+class Apple:
+	def __init__(self, price: float, weight: float):
+		self.price = price
+		self.weight = weight
+
+apple = Apple()
+apple.hi = "hi"
+```
+Adding this member variable `hi` to an existing class wouldn't be possible in hardly any other language. And this for good reasons. It's generally not good coding practice to do such things. For example you could accidentally misspell something like `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new variable `pice` and assigns it a value of `2.50`.
+
+This issue can be prevented by using slots. 
+```py
+class Apple:
+	__slots__ = "price", "weight"
+
+	def __init__(self, price: float, weight: float):
+		self.price = price
+		self.weight = weight
+```
+Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible.
 
 # 38. Working in teams
 
