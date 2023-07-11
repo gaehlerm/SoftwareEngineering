@@ -30,6 +30,14 @@ Things to write:
 - [4. Introduction](#4-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
+	- [Do not Repeat Yourself](#do-not-repeat-yourself)
+	- [Advantages of the SRP](#advantages-of-the-srp)
+		- [Understanding](#understanding)
+		- [Naming](#naming)
+		- [Duplication](#duplication)
+		- [Testing](#testing)
+		- [Bugs](#bugs)
+		- [Bug fixing](#bug-fixing)
 	- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
@@ -68,7 +76,7 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs)
 - [11. bugs, errors, exceptions](#11-bugs-errors-exceptions)
-	- [Bugs](#bugs)
+	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
@@ -357,7 +365,9 @@ The second rule of software engineering:
 
 Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching Donald Trump... Knowing only 1000 different words is great if you are a politician. Everyone understands him. Even as people are tired, they like watching him on TV. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes it easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
 
-Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need these gimmicks.
+Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks some programming languages offer.
+
+// somehow I'm not happy with the transition here. Is there some other way to change the topic?
 
 Of course, we are not politicians. We are software engineers. What we write has to be absolutely correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
 
@@ -369,7 +379,7 @@ The third rule of software engineering
 
 **We write automated tests that cover all our code.**
 
-Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. The importance of refactoring cannot be understated. It helps you keeping the logic of the code under control by sorting things out. Without refactoring your code quite quickly becomes such a huge mess you will barely be able to make any changes. And there’s a million places where bugs can hide.
+Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. The importance of refactoring cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide.
 
 The fourth rule of software engineering
 
@@ -387,29 +397,40 @@ Every object does exactly one thing. Everything is done by exactly one object.
 
 There are different definitions of the Single Responsability Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
 
+## Do not Repeat Yourself
+
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
-// Dry applies also to building the project, running tests, etc. Automate everything! -> 97-things-every-programmer-should-know chapter 63
+The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. 
+//97-things-every-programmer-should-know chapter 63
 
-// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
+// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before? -> chapter automatization?
 
 The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
 
 // remark that switch case statements are a frequent source of SRP violation.
 
+## Advantages of the SRP
+
 The importance of the SRP cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case. Here are the most important ones.
 
-Understanding: A function or class that implements exactly one thing will always be quite easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
+### Understanding
+A function or class that implements exactly one thing will always be quite easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
 
-Naming: Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. The name is either too long or not expressive enough. This is an indication you violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
+### Naming
+Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
 
-Duplication: Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. The most common issue in code duplication is several programmers developing the same piece of logic. This can lead to huge amounts of code duplication without anyone ever copy pasting anything.
+### Duplication
+Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. The most common issue in code duplication is several programmers developing the same piece of logic. This can lead to huge amounts of code duplication without anyone ever copy pasting anything.
 
-Testing: Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, setting it up is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
+### Testing
+Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, setting it up is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
 
-Bugs: As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up. It is immediately apparent which part of the code is responsible for the behavior of the bug.
+### Bugs
+As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up. It is immediately apparent which part of the code is responsible for the behavior of the bug.
 
-Bug fixing: Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for  all.
+### Bug fixing
+Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all.
 
 ## Example
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
@@ -422,7 +443,7 @@ def print_page():
 	print("copyright my company")
 	print("page number 1/1")
 ```
-The problem is the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the prefered solution as it's fairly easy to create these functions.
+The problem are the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the prefered solution as it's fairly easy to create these functions.
 
 ```py
 def print_page():
@@ -437,19 +458,19 @@ Now all of the code looks very uniform. This is an indication that the SRP is no
 
 Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
 
-// TODO search images without copy right?
- <div class="row">
+// TODO search images without copy right
+<div class="row">
     <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
     <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
 </div> 
 
-On the left-hand side, we have the old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution for the user is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
+On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
 
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
+In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
 
 It may not always be that obvious how the downstream would like the interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure there are no implementation details leak into the interface, even tough this is easier said than done. This has the highest chances to be orthogonal from the user point of view.
 
-Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you have first to orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
+Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
 
 A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
 
@@ -3120,6 +3141,7 @@ Here are some rules to follow when naming things:
 # Automatization
 
 // wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
+// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
 
 According to DRY, you should not repeat yourself. This is also true for processes like building and testing of your software. And the solution is quite easy: You have to automate everything. Use all your build, test and CI tools in order to do so.
 
