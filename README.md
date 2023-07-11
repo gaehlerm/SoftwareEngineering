@@ -10,15 +10,13 @@ The first half of the books seems more or less ok, the second half needs some se
 
 Things to write:
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
--	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation?
--	Code examples for all chapters
+-	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation? DDD distilled may help to get the essence.
 -	Write some more about everything. Some chapters are really short.
--	Restructure the chapters.
+-	Restructure and sort the chapters somehow.
 -	Some simple example on refactoring (what technique exactly? Converting a function into a class?)
--	Design patterns -> write short explanations to all of them?
+-	Design patterns -> write short explanations to all of them? Or leave this chapter away completely.
 -	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
 -	How to organize software projects
--	Make some code examples where appropriate
 
 # 2. Table of content
 
