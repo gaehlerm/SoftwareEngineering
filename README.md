@@ -130,6 +130,7 @@ Things to write:
 	- [Problems](#problems)
 	- [Functions and Methods](#functions-and-methods)
 	- [Temporal coupling](#temporal-coupling-1)
+	- [Example](#example-2)
 	- [Conclusions](#conclusions)
 - [17. Design patterns](#17-design-patterns)
 	- [Factories](#factories)
@@ -170,7 +171,7 @@ Things to write:
 	- [Liskov Substitution Principle](#liskov-substitution-principle)
 	- [Interface Segregation Principle](#interface-segregation-principle)
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
-		- [Example](#example-2)
+		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
 - [23. Some rules of thumb](#23-some-rules-of-thumb)
@@ -2121,10 +2122,8 @@ Functions inside classes are also referred to as methods. Mostly by the Java peo
 
 The combination of member variables with different methods leads to an implicit temporal coupling which may introduce all kind of bugs. Implicit logic is always hard to get control of. Much better is explicit logic as it reduces the potential for unintended usage of the code significantly.
 
-// add an example with the clutch of a car
-Example 
-
-// TODO, I don’t know yet exactly if/how to write this example
+## Example
+// TODO, I don’t know yet exactly if/how to write this example. What is exactly my point?
 
 I would like to discuss an example. Many people completely misunderstand what belongs into a class. 
 
@@ -2134,31 +2133,47 @@ I would like to discuss an example. Many people completely misunderstand what be
 
 Let’s take the example of an apple pie. It has a lot of different properties and I’d like to show you how to deal with some of them.
 
-Sweetness, weight, price, baking_grade, ingredients
+Here is a list of properties the pie has: Sweetness, weight, price, baking grade, ingredients
 
-Now some of these properties are really the properties of a single pie. The baking_grade for example. One pie may be burned while another one is baked_perfectly. Other properties are more about apple pies in general. The price is something the sales department of the bakery cares about, while the ingredients are used by the bakers. These are not intrinsic properties of the pie and can be stored elsewhere. For example, in a dict. We could also define a variable apple_pie_price, but storing all prices in a single data structure is way more convenient. The only drawback is that the apple_pie object needs to have a variable name=”apple_pie”. A small price to pay.
+Now some of these properties are really the properties of a single pie. The baking_grade for example. One pie may be burned while another one is baked perfectly. Other properties are more about apple pies in general. The price is something the sales department of the bakery cares about, while the ingredients are used by the bakers. These are not intrinsic properties of the pie and can be stored elsewhere. For example, in a dict. We could also define a variable apple_pie_price, but storing all prices in a single data structure is way more convenient. The only drawback is that the apple_pie object needs to have a variable `name="apple_pie"`. A small price to pay.
 
-// the whole thing here is still somewhat of a mess...
+// the whole thing here is still somewhat of a mess... and there is no point.
 
 ```Py
+class Sweetness(Enum):
+	too_sweet = auto()
+	just_fine = auto()
+
+class BakingGrade(Enum):
+	burned = auto()
+	well_done = auto()
+
 @dataclass
 class ApplePie:
-    Name, sweetness, weight, baking_grade
-	# write a fancy constructor? It takes ingredients and a baking temperature
-	def __init__(ingredients, baking_temperature):
-		weight = sum(ingredients.weight) if ingredients.sugar.weight / weight > 0.3: sweetness = very_sweet
+	def __init__(self, ingredients, baking_temperature):
+		self.weight = sum([ingredient.weight for ingredient in ingredients])
+		if ingredients.sugar.weight / self.weight > 0.2:
+			self.sweetness = Sweetness.too_sweet
+		else:
+			self.sweetness = Sweetness.just_fine
+		self.name = "apple_pie"
+		if baking_temperature > 220.:
+			self.baking_grade = BakingGrade.burned
+			self.name = "burned_apple_pie"
+		else:
+			self.baking_grade = BakingGrade.well_done
 
-Enums sweetness
+prices = {"apple_pie": 25, "burned_apple_pie": 15} 
+ingredients = {"apple_pie" : {"apple": 0.3, "flour": 0.3, "eggs": 0.1, "sugar": 0.4}}
 
-Prices = {“apple_pie” : 25, “croissant” : 1.20} 
-Ingredients = {“apple_pie“ : {« apple » : 0.3, « flour » 0.3, « eggs », 0.1, « sugar » : 0.4}}
+burned_apple_pie = ApplePie(ingredients=ingredients["apple_pie"], baking_temperature=225.)
 ```
 
 Now the code can be used as follows:
 ```py
-Ordered_dish = «apple_pie»
-Ingredients = get_ingredients(Ingredients[Ordered_dish])
-Dish = 
+ordered_dish = "apple_pie"
+ingredients = get_ingredients(ingredients[ordered_dish])
+dish = 
 ```
 
 ## Conclusions
@@ -2235,12 +2250,14 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 ## Observer
 
+//etc. ...
+
 # 18. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
 
 // add some more text from the pragmatic programmer
 
-Decoupling is a very essential part of software engineering. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change the whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
+Decoupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as it makes everything sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
 
 This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
 
@@ -2262,7 +2279,7 @@ This chain is also very rigid and hard to change. Don’t chain method calls.
 
 # 19. Entropy
 
-// remove this part. 
+// move this part elsewhere. 
 
 Entropy is the physical law of disorder. It says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
 
