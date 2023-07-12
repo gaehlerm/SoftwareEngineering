@@ -484,38 +484,38 @@ Working in an orthogonal system has many advantages:
 
 # 6. Levels of abstraction
 
-“You can solve every problem with another level of indirection.” – Andrew Konig
+"You can solve every problem with another level of indirection." – Andrew Konig
 
-“Except for the problem of too many levels of indirection.” – my hero
+"Except for the problem of too many levels of indirection." – my hero
 
-Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. 
+Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. Something completely new emerges.
 
 ## Real world example
 
-You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system. I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level.
+You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing programm emerged from combinind all these imensly complex objects.
 
-One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about operating systems and the operating system doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it.
+One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
 
-Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, this hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least make sure they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees nor can he know every detail of the processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. Neither do self organizing companies without a hierarchy work out very well.
+Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
 
-You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It has new properties. In theory it combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. 
+You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It may have completely different properties than the lower levels. In theory the higher level combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average and make very accurate predictions on a combustion engine or the aerodynamics of an airplane.
 
 Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have break them up into smaller and smaller blocks that you can understand.
 
 ## Programming Example
 
-C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s as always. The code is working and it will not be changed because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental issues were removed with the release of the C++11 standard.
+C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental issues were removed with the release of the C++11 standard.
 
 C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous new and delete commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
 
 ```C++
-Int[] arr = new int[10];
+int * arr = new int[10];
 arr[0] = 42;
 // etc.
-Delete[] arr;
+delete[] arr;
 ```
 
-One of the main reasons’ java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
+One of the main reasons Java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
 
 Though it turns out there exists also a solution with pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. Finally, you can safely use C++ without facing the danger of memory leaks.
 
@@ -550,11 +550,11 @@ public:
 }
 ```
 
-This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //reference to Scott Myers book
+This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //see Effective Modern C++
 
-And if there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. 
+If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. 
 
-Vectors are a higher level of abstraction than arrays. They are simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
+Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
 ## The onion layers
 
@@ -562,21 +562,19 @@ Vectors are a higher level of abstraction than arrays. They are simply better th
 
 In your code you will also have different levels of abstraction. These can be companed to the layers of an onion.
 
-//always work on the highest possible level of abstraction that is still reasonable
-
 ### 3rd party libraries
 
 The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
 
 ### Infrasturcture code
 
-One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all our basic datatypes and all the IO code. All the technical details the user will never see. The user will not even know about. He can only guess how it could be implemented, though in good code he will not have any clue how it's actually done.
+One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic datatypes and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how it could be implemented, though in good code he will not have any clue how it's actually done.
 
 ### The domain level
 
 //add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
 
-Then there is the domain level. This is the core of your application (though it is not the core of the onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here.
+Then there is the domain level. This is the core of your application (though it is not the core of the onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain level is the part that is hard to develop and you can't buy elsewhere. You have to do it yourself. Because this is what you will earn money with.
 
 ### High level code
 
@@ -588,7 +586,7 @@ One level higher is the API. This defines the interface between our code and the
 
 ### GUI and acceptance tests
 
-On the highest level are the GUI and the acceptance tests in parallel. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a very bad sign.
+On the highest level are the GUI and the acceptance tests, both at the same level. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a clear indication of very bad sign.
 
 ### Summary
 
@@ -596,7 +594,7 @@ As a summary I want to emphasize again the tremendous importance of abstraction 
 
 ## Dependency tree
 
-// I think this is somehow redundant with the explanation of the DI?
+// I think this is somehow redundant with the explanation of the DIP?
 
 Between classes as well as between files there are dependencies. The high-level object always depends on objects in the same level or on lower-level objects. In math we call this kind of structure a tree, or more accurately a directed acyclic graph. This graph has the additional property that there should never be any bidirectional connections, i.e., there should never be any cyclic dependencies. Diamond like shapes are fine as long as there is a unique direction of the dependencies.
 
