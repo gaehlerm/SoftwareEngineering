@@ -65,8 +65,10 @@ Things to write:
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
 - [16. Classes](#16-classes)
+	- [Structs](#structs)
+	- [Private or Public](#private-or-public)
 	- [Different kind of classes](#different-kind-of-classes)
-		- [Data class (struct)](#data-class-struct)
+		- [Struct](#struct)
 		- [Pure function classes](#pure-function-classes)
 		- [Delegating class](#delegating-class)
 		- [Worker class](#worker-class)
@@ -101,7 +103,7 @@ Things to write:
 			- [Vectors](#vectors)
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
-		- [Structs](#structs)
+		- [Structs](#structs-1)
 - [11. bugs, errors, exceptions](#11-bugs-errors-exceptions)
 	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
@@ -793,14 +795,17 @@ As a summary I’d like to emphasize that you should take care of the length of 
 # 16. Classes
 
 // write a struct coordinate as an example?
+## Structs
 
-The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes. But it has something very similar: structs. It is roughly the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. You may also store functions within a struct, though this is generally not done. At least not in C++. For this purpose, we have classes.
+The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes. But it has something very similar: structs. It is roughly the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. You may also store functions within a struct, though this is generally not done, at least not in C++. For storing functions, we have classes.
 
 Nowadays structs or dataclasses are not that much used anymore. Especially the java community seems to avoid such kind of objects at all cost. Though there is absolutely nothing wrong about structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It helps you sort your stuff.
 
 Classes are pretty much the same as structs. Besides some technical details, the only real difference are the encapsulation of variables and functions and the introduction of inheritance. You can decide for each one of the variables and functions to be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs. 
 
 But more powerful is not always better. A gun is more powerful than a knife, but at the same time it is also more dangerous. You can easily shoot yourself into the foot. So actually, it’s not the best idea to own a gun because the danger may be bigger than the advantages. With great power comes great responsibility!
+
+## Private or Public
 
 If you are not so used to working with classes, this may be very confusing. Why would you like to make anything private at all? Isn’t it easier to make everything public?
 
@@ -814,21 +819,17 @@ There is one very simple rule of thumb which parts of a class should be public o
 
 // make some examples
 
-There are some quite distinct types of classes. They can be categorized by the number of variables and the complexity of the functions.
+Classes can be broadly categorized by the number of variables and the complexity of the functions they contain. Making sure that your classes are fitting into one of these categories is helpful for fulfilling the SRP.
 
-### Data class (struct) 
+### Struct
 
-The data class has no member functions and all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a data class has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
+The struct (data class) has no member functions and therefore all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a struct has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
 
-// rethink the example?
-```py
-from dataclasses import dataclass
-
-@dataclass
-class InventoryItem:
-    name: str
-    unit_price: float
-    quantity_on_hand: int = 0
+```C++
+struct Shopping { 
+  int money;
+  std::vector<std::string> shopping_list;
+}; 
 ```
 
 ### Pure function classes
@@ -846,7 +847,7 @@ class Math:
 
 ### Delegating class
 
-The delegating class is a mixture of the struct and the function class. It contains private variables and public functions. Calls to one of these functions are all delegated to one of the objects. It’s like a car. Setting the temperature will just pass the corresponding command to the AC. Any other part of the car doesn’t have to know anything about the temperature or its control at all.
+The delegating class is a mixture of the struct and the function class. It contains private variables and public functions. Calls to one of these functions are all delegated to one of the member variables. It’s like a car. Setting the temperature will just pass the corresponding command to the AC. Any other part of the car doesn’t have to know anything about the temperature or its control at all.
 
 ```py
 class Car:
@@ -859,18 +860,13 @@ class Car:
 
 ### Worker class
 
-Worker classes are doing the hard work in your code and they are the most commonly used. People may say these are the only real classes. Worker classes have few private variables, some private functions and few public functions. 
+Worker classes are doing the hard work in your code and they are the most commonly used. Some people may say these are the only real classes. At least quite some design rules for classes apply only to worker classes. Worker classes have few private variables, some rather complicated private functions and few public functions. Worker classes are the only type of classes with private functions. Other classes don't have functions to hide, other classes hide only variables. 
 
-// Is this true?
-They are the only type of class with private functions.
-
-This means, they are the only classes that do really complicated things that have to be hidden from the other programmers. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Thus, it shouldn’t have more than 3 member variables and about 100 lines of code, depending on the number of member variables and the general complexity. Consider also using functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand.
-
-// example
+This means that worker classes are the only classes that do really complicated things that have to be hidden from the other programmers. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class, such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Thus, it shouldn’t have more than 3 member variables and about 100 lines of code, depending on the number of member variables and the general complexity. Consider also using functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand.
 
 ### Abstract Base Class
 
-This class type defines only the interface (shape) of a class, not its actual implementation. It contains only public function declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, unless you think it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
+This class type defines only the interface (shape) of a class, not its actual implementation. It contains only public function declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, but it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
 
 In python a class has to inherit from `ABC` in order to be an abstract base class.
 
