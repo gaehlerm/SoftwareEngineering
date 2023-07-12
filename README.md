@@ -52,10 +52,12 @@ Things to write:
 		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
 - [7. Interfaces](#7-interfaces)
+	- [Real world interfaces](#real-world-interfaces)
+	- [Code interfaces](#code-interfaces)
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
-		- [Versioning](#versioning)
-		- [Conclusion](#conclusion)
+		- [Semantic Versioning](#semantic-versioning)
+	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
@@ -608,9 +610,9 @@ Between classes as well as between files there are dependencies. The high-level 
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one toward the high-level side.
 
-Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot but the basic principles are very similar.
+## Real world interfaces
 
-// remove some of the examples?
+Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot but the basic principles are very similar.
 
 “Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
@@ -628,50 +630,58 @@ Car engines are operating best around roughly 2000-3000rpm. At lower rotations t
 
 Now there used to be a minor problem about the gear boxes. They were not user friendly. The user had to manually change the gear using a clutch. Most car drivers got the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They do not want to care about neither the gear box nor the clutch in your car!
 
-Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suited gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars.
+Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suitable gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars.
+
+## Code interfaces
 
 Once again, understanding Interfaces in general will allow you to write better code. It’s just the same as in the examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
 
-// mention that there will be more about interfaces all over the code?
+Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
+An interface that is designed by the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use. Thus, it misses the point of a good interface.
 
-Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
+Interfaces are everywhere. Every function or class has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
+
+// Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
 
 // is there something else left to write here? It feels very short. Figure out a good example?
 
 ## APIs
-// move this chapter further down in the book?
 
-// Hyrums law (Software engineering at Google): It does not matter what you promisse. It only matters what the API really does. People will always find new, unexpected ways to deal with the existing functionality of an API.
+"With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
 
-The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. “They support even emojis!” Yes, sadly enough, supporting emojis is important nowadays for business reasons.
+The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
 That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
 
-APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! You might think this is doable. I can promise, you will get nightmares.
+APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! You might think this is doable. But I can promise, you will get nightmares.
 
-You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to errors or, even worse, bugs in the user code. And that’s when customers go rampage. “Up to now the code worked and all of a sudden it fails. What the **** did you do?” If you don’t understand this harsh reaction, you never had a work colleague breaking your code once in a while. You would feel exactly the same.
+You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to compilation errors or, even worse, bugs in the user code. And that’s when customers go rampage. "Up to now the code worked and all of a sudden it fails. What the **** did you do?" If you don’t understand this harsh reaction, you never had a work colleague breaking your code once in a while. You would feel exactly the same.
 
 ### Adding more functionality
 
-You want to add a new option to one of your API functions, but there is a lot of customer code out there. This code doesn’t use this new option so far and won’t use it in the future. Now how can you add this option without breaking this old user code?
+You want to add a new option to one of your API functions, but there is a lot of customer code out there. This code doesn’t use this new option so far and won’t use it in the future. How can you add this option without breaking this old user code?
 
 The answer are default arguments. The current behavior is set to be the default and after the update, the user can select an alternative option inside the function call. This works in all modern programming languages. You don’t even need an if statement.
 
-### Versioning
+Removing functionality on the other hand is really hard. This inevitably changes the behavior of existing functionality. You are not allowed to do so except under very special circumstances, as explained in the next section.
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, “3.11.2”, the latest python version at the time of writing. “3” is the major version, “11” is the minor version and “2” is the trace. The last is generally used only in bigger projects. 
+### Semantic Versioning
+
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2", the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The last is generally used only in bigger projects. 
 
 Every time you make a new release you increase the version number. 
-- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice. 
+- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to increase to a higher trace version without any issues.
 - The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. 
-- The really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. HA! Think again. To migrate most of the python code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated.
+- The really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the python code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
 
-### Conclusion
+## Conclusion
 
-Please remember: APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
+Interfaces should always be designed from a user point of view. This makes them much better as user friendlines is the main goal of any interface.
+
+APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
 
 # 8. Functions
 
