@@ -1549,7 +1549,7 @@ Making sketches may help you finding ways to refactor your code. This doesn’t 
 
 // Add the temporal graph from Evans?
 
-# 10. Understandable code
+# 11. Understandable code
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
@@ -1579,7 +1579,7 @@ You should never underestimate the complexity you can create with bad code. If y
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones.
 
-# 11. Programming languages
+# 12. Programming languages
 
 “I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
@@ -1720,7 +1720,7 @@ For more intormation about C++ I can recommend the google C++ style guide, https
 
 
 
-# 12. bugs, errors, exceptions
+# 13. bugs, errors, exceptions
 
 Better dead than walking wounded
 
@@ -1775,7 +1775,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
-# 13. Testing
+# 14. Testing
 
 // mention double entry book keeping somewhere? -> Clean Craftsmanship
 
@@ -2102,7 +2102,7 @@ Generally it is recommended to use DI instead of mocking. This forces you to wri
 A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
 She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
 
-# 14. Writing good code
+# 15. Writing good code
 
 // rename this chapter to "Tests and good code"? Or integrate it to the previous chapter?
 
@@ -2412,7 +2412,7 @@ As always, many books only focus on OO programming. They only explain dependency
 
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
 
-# 15. Variables types
+# 16. Variables types
 
 ## Global Variables
 
@@ -2487,7 +2487,7 @@ String field(body){
 ```
 Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
 
-# 16. Programming Paradigms
+# 17. Programming Paradigms
 
 //remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
 
@@ -2507,7 +2507,7 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 
 ## Functional programming
 
-# 17. Design patterns
+# 18. Design patterns
 
 // not sure yet what I should write about design patterns.
 
@@ -2573,7 +2573,7 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 //etc. ...
 
-# 18. Decoupling
+# 19. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
 
 // add some more text from the pragmatic programmer
@@ -2598,7 +2598,7 @@ Don't chain method calls. Unless they are very unlikely to change.
 
 This chain is also very rigid and hard to change. Don’t chain method calls.
 
-# 19. Entropy
+# 20. Entropy
 
 // move this part elsewhere. 
 
@@ -4349,6 +4349,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
