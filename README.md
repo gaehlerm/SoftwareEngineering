@@ -40,6 +40,7 @@ Things to write:
 	- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+	- [Exercises](#exercises)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
@@ -52,6 +53,7 @@ Things to write:
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
 		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
+	- [Exercises](#exercises-1)
 - [7. Interfaces](#7-interfaces)
 	- [Real world interfaces](#real-world-interfaces)
 	- [Code interfaces](#code-interfaces)
@@ -65,6 +67,7 @@ Things to write:
 	- [Number of arguments](#number-of-arguments)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
+	- [Exercises](#exercises-2)
 - [9. Classes](#9-classes)
 	- [Structs](#structs)
 	- [Private or Public](#private-or-public)
@@ -80,7 +83,16 @@ Things to write:
 	- [Constant](#constant)
 	- [Method vs. output argument](#method-vs-output-argument)
 	- [Inheritance](#inheritance)
+		- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
+			- [Tight Coupling](#tight-coupling)
+			- [Error prone](#error-prone)
+			- [Obscure code](#obscure-code)
+			- [Implementation](#implementation)
+			- [Overriden baseclass functions](#overriden-baseclass-functions)
+		- [Advantages of Inheritance](#advantages-of-inheritance)
+			- [Code reuse](#code-reuse)
 		- [Interfaces in C++](#interfaces-in-c)
+		- [Conclusions](#conclusions)
 	- [Constructors](#constructors)
 	- [Getter and setter functions](#getter-and-setter-functions)
 		- [Data classes](#data-classes)
@@ -91,7 +103,8 @@ Things to write:
 	- [Functions and Methods](#functions-and-methods)
 	- [Temporal coupling](#temporal-coupling-1)
 	- [Example](#example-1)
-	- [Conclusions](#conclusions)
+	- [Conclusions](#conclusions-1)
+	- [Exercises](#exercises-3)
 - [10. Understandable code](#10-understandable-code)
 - [11. Programming languages](#11-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
@@ -150,7 +163,7 @@ Things to write:
 - [17. Design patterns](#17-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
-		- [Implementation](#implementation)
+		- [Implementation](#implementation-1)
 	- [Strategy pattern](#strategy-pattern)
 	- [Façade](#façade)
 	- [Adapter](#adapter)
@@ -296,7 +309,7 @@ Things to write:
 - [46. Examples](#46-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
-		- [Implementation](#implementation-1)
+		- [Implementation](#implementation-2)
 	- [Paint](#paint)
 - [47. Further reading](#47-further-reading)
 - [48. Outlook](#48-outlook)
@@ -491,6 +504,10 @@ Working in an orthogonal system has many advantages:
 
 // figure out what else to write. Maybe add some examples.
 
+## Exercises
+
+
+
 # 6. Levels of abstraction
 
 "You can solve every problem with another level of indirection." – Andrew Konig
@@ -610,6 +627,15 @@ Between classes as well as between files there are dependencies. The high-level 
 //add a graph with dependencies, explain the levels of abstraction better
 
 // abstract vs concrete code -> see Clean Architecture?
+
+## Exercises
+
+Sort the following function calls by their level of abstraction, starting with the lowest:
+- main()
+- look_up_flight()
+- select_from()
+- plan_voyage()
+- book_flight()
 
 # 7. Interfaces
 
@@ -793,6 +819,11 @@ Unexpected changes of values of a function argument are very hard to keep track 
 Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or for a method: This method might change the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
+
+## Exercises
+
+The following code has temporal coupling. Remove the temporal coupling by rewriting the code.
+...
 
 # 9. Classes
 
@@ -1026,43 +1057,49 @@ In this case I certainly prefer the second option from the readability point of 
 In software engineering there are always so many things to consider. This was just another example. Probably there are more arguments for one or the other solution that I missed. They might make the whole discussion obsolete. Let me know if you found such a solution, I’d be curious.
 
 ## Inheritance
-// rewrite this with subsections advantages and drawbacks?
+// move this into it's own chapter?
 
-“Prefer composition over inheritance”
+"Prefer composition over inheritance"
 
-Or my version of this quote: Use composition, not inheritance 
+Or my version of this quote: "Use composition, not inheritance"
 
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. 
 
-The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. One of the main problems here is that all inheritance levels have access to the base level variables. Meanwhile with composition, you only have to consider the variables inside the class. This is much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
+### Drawbacks of Inheritance
+
+#### Tight Coupling
+
+The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
+
+One of the main problems here is that all inheritance levels have access to the base level variables. Meanwhile with composition, you only have to consider the variables inside the class. This is much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
 
 Furthermore, I regard the common usage of inheritance as an old dogma. It is your job to write code that’s easy to understand. Don’t let yourself get bothered by someone saying that a sheep is an animal and you should therefore use inheritance. It will quite certainly not improve the code and you can end the discussion. You are probably developing a model of a sheep that doesn’t need to know about animals. You have to be pragmatic. If a sheep doesn't have to know about the Animal class, then there is no reason why it should inherit from it.
+
+#### Error prone
 
 There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book //Working Effectively with Legacy Code// several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create bugs with inheritance. One misspelled function will not override the base class function. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
 
 Though it has to be said, that with the `override` keyword or attribute, this problem has been resolved in some programming languages as C++ and Java. Still, I would recommend not to use inheritance and always use `override` to prevent nasty bugs.
 
+#### Obscure code
+
 Additionally, there is the problem with variables inherited from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying. For this reason it is generally not recommended to nest inheritance. And honestly, I don't see at all, why inheritance should be used, other than for defining interfaces. Code reuse can be better implemented using functions and composition.
 
-The technical implementation of inheritance can be complex task, depending on the programming language. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
+#### Implementation
 
-When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languagues like java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
+The implementation of inheritance can be complex task, depending on the programming language. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
 
-You don’t gain anything by using inheritance. Using composition is a perfectly viable alternative. If your code looks messy as you start using composition instead of inheritance you wrote messy code all along. You just didn’t see it because the inheritance was hiding it. Which is another bad thing.
+// add a plot
 
-### Interfaces in C++
+When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use?
 
-In C++, you have to use inheritance for defining interfaces. There’s no way around it. It's an old language. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
-
-There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. It results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. // cite google style guide. Write your code in the most common way possible and only consider something else if it really improves your code.
-
-Here are some problems that show up with non-interface inheritance.
+This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languagues like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
 
 // this is already explained further above. At least half way.
 
-With inheritance one can override functions and variables. This is generally a bad idea as it is very error prone. One typo can introduce a bug, while in normal code you would get a compiler error. The same issue exists when refactoring the code. Here deleting the overriding variable might lead to undesired behavior. This is probably the main reason why overriding base class variables and functions is a bad idea.
+#### Overriden baseclass functions
 
-Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not inheritance. It's simply too error prone. Though this is better in python than in C++.
+Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritacne is simply too error prone. Though this is better in python than in C++.
 
 Sometimes inheritance can be extremely confusing. Let's take the following example:
 
@@ -1089,7 +1126,23 @@ Of course, this can be avoided using the final in some programming languages. Bu
 
 In inheritance the derived class inherits all the functions from the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad. Having to write tests for unused functions in the interface is only one of the problems.
 
-// figure out more reasons why inheritance is bad
+### Advantages of Inheritance
+
+#### Code reuse
+
+The biggest advantage of inheritance is certainly code reuse. You may define a function in a base class and reues it in several derived classes. This saves you from repeating yourself. On the other hand, you can usually also write a function with the corresponding functionality and reuse that one. In most cases this works out just fine as well.
+
+
+### Interfaces in C++
+
+In C++, you have to use inheritance for defining interfaces. There’s no way around it. It's an old language. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
+
+### Conclusions
+
+You don’t gain much by using inheritance. Using composition is a perfectly viable alternative. If your code looks messy as you start using composition instead of inheritance you wrote messy code all along. You just didn’t see it because the inheritance was hiding it. Which is another bad thing.
+
+There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. It results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. // cite google style guide. Write your code in the most common way possible and only consider something else if it really improves your code.
+
 
 ## Constructors
 
@@ -1268,6 +1321,12 @@ Follow the rule “use composition, not inheritance” and don’t use friend cl
 Many guidelines on how to write classes are defined for worker classes. It seems like most people overlooked the other kinds of classes.
 
 Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
+
+## Exercises
+
+The following class is too big. Refactor it such that you get several smaller classes.
+
+This class is a mixture of a delegating class and a worker class. 
 
 # 10. Understandable code
 
@@ -2329,8 +2388,8 @@ In software engineering we have a very similar phenomenon and it has very severe
 // This text is somehow duplicated with the beginning of Refactoring
 
 # 20. Refactoring
-// “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
-“Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
+“If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
+//“Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
 
 ## There will be change
 
