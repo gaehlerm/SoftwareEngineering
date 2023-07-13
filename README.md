@@ -65,7 +65,7 @@ Things to write:
 	- [Number of arguments](#number-of-arguments)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
-- [16. Classes](#16-classes)
+- [9. Classes](#9-classes)
 	- [Structs](#structs)
 	- [Private or Public](#private-or-public)
 	- [Different kind of classes](#different-kind-of-classes)
@@ -92,8 +92,8 @@ Things to write:
 	- [Temporal coupling](#temporal-coupling-1)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
-- [9. Understandable code](#9-understandable-code)
-- [10. Programming languages](#10-programming-languages)
+- [10. Understandable code](#10-understandable-code)
+- [11. Programming languages](#11-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
 	- [Python](#python)
@@ -106,12 +106,12 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
-- [11. bugs, errors, exceptions](#11-bugs-errors-exceptions)
+- [12. bugs, errors, exceptions](#12-bugs-errors-exceptions)
 	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
-- [12. Testing](#12-testing)
+- [13. Testing](#13-testing)
 	- [Structure of tests](#structure-of-tests)
 		- [What, when and how](#what-when-and-how)
 	- [General thoughts about tests](#general-thoughts-about-tests)
@@ -131,7 +131,7 @@ Things to write:
 	- [When to run tests](#when-to-run-tests)
 	- [Mocking and Stubs](#mocking-and-stubs)
 	- [The Beyonce rule](#the-beyonce-rule)
-- [13. Writing good code](#13-writing-good-code)
+- [14. Writing good code](#14-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
 		- [Asserts](#asserts)
@@ -140,11 +140,11 @@ Things to write:
 	- [Using fake objects](#using-fake-objects)
 		- [Mocking](#mocking)
 		- [Dependency injection](#dependency-injection)
-- [14. Variables types](#14-variables-types)
+- [15. Variables types](#15-variables-types)
 	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
 	- [Variable comparison](#variable-comparison)
-- [15. Programming Paradigms](#15-programming-paradigms)
+- [16. Programming Paradigms](#16-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 - [17. Design patterns](#17-design-patterns)
@@ -212,28 +212,28 @@ Things to write:
 	- [Static Variables](#static-variables)
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables-1)
-- [27. Naming](#27-naming)
-- [Automatization](#automatization)
+- [26. Naming](#26-naming)
+- [27. Automatization](#27-automatization)
 - [28. Complexity](#28-complexity)
 	- [Estimating complexity](#estimating-complexity)
-- [Data files](#data-files)
+- [29. Data files](#29-data-files)
 	- [CSV](#csv)
 	- [Json](#json)
 	- [XML](#xml)
 	- [HDF5](#hdf5)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
-- [Project folder](#project-folder)
-- [30. Performance Optimization](#30-performance-optimization)
-- [31. Comments](#31-comments)
+- [30. Project folder](#30-project-folder)
+- [31. Performance Optimization](#31-performance-optimization)
+- [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
 		- [TODO comments](#todo-comments)
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
-- [32. Logging](#32-logging)
-- [33. Tools](#33-tools)
+- [33. Logging](#33-logging)
+- [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
 	- [Command line](#command-line)
@@ -247,7 +247,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-- [34. Domain Driven Design](#34-domain-driven-design)
+- [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
 	- [Implementing a Model](#implementing-a-model)
@@ -259,8 +259,8 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-- [35. 3rd party software](#35-3rd-party-software)
-- [36. Dependencies](#36-dependencies)
+- [36. 3rd party software](#36-3rd-party-software)
+- [37. Dependencies](#37-dependencies)
 	- [Circular dependencies](#circular-dependencies)
 - [38. Working in teams](#38-working-in-teams)
 	- [Team structure](#team-structure)
@@ -794,7 +794,7 @@ Return values are in my opinion very normal, yet many OO programmers tend to dis
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
-# 16. Classes
+# 9. Classes
 
 // write a struct coordinate as an example?
 ## Structs
@@ -1269,7 +1269,7 @@ Many guidelines on how to write classes are defined for worker classes. It seems
 
 Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
 
-# 9. Understandable code
+# 10. Understandable code
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
@@ -1299,7 +1299,7 @@ You should never underestimate the complexity you can create with bad code. If y
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones.
 
-# 10. Programming languages
+# 11. Programming languages
 
 “I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
@@ -1440,7 +1440,7 @@ For more intormation about C++ I can recommend the google C++ style guide, https
 
 
 
-# 11. bugs, errors, exceptions
+# 12. bugs, errors, exceptions
 
 Better dead than walking wounded
 
@@ -1495,7 +1495,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
-# 12. Testing
+# 13. Testing
 
 // mention double entry book keeping somewhere? -> Clean Craftsmanship
 
@@ -1822,7 +1822,7 @@ Generally it is recommended to use DI instead of mocking. This forces you to wri
 A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
 She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
 
-# 13. Writing good code
+# 14. Writing good code
 
 // rename this chapter to "Tests and good code"? Or integrate it to the previous chapter?
 
@@ -2132,7 +2132,7 @@ As always, many books only focus on OO programming. They only explain dependency
 
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
 
-# 14. Variables types
+# 15. Variables types
 
 ## Global Variables
 
@@ -2207,7 +2207,7 @@ String field(body){
 ```
 Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
 
-# 15. Programming Paradigms
+# 16. Programming Paradigms
 
 //remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
 
@@ -3125,7 +3125,7 @@ Dynamic variables are the main reason why I was writing this chapter. With dynam
 
 And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them very hard to handle. Keep your fingers away.
 
-# 27. Naming
+# 26. Naming
 
 "And you will know, my name is the law!” – Pulp fiction #exact quote?
 
@@ -3158,7 +3158,7 @@ Here are some rules to follow when naming things:
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
 
-# Automatization
+# 27. Automatization
 
 // wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
 // See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
@@ -3193,7 +3193,7 @@ In many cases the complexity of a task is extremely hard to estimate. Some devel
 
 Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
 
-# Data files
+# 29. Data files
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 
@@ -3298,7 +3298,7 @@ I never really cared much about DBs and I'd like to teach you other things inste
 
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
 
-# Project folder
+# 30. Project folder
 
 Code is a collection of text files. One question is: how do you deal with them?
 
@@ -3321,7 +3321,7 @@ There are some additional files in a project.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
-# 30. Performance Optimization
+# 31. Performance Optimization
 
 “Premature optimization is the root of all evil” - Donald Knuth
 
@@ -3341,7 +3341,7 @@ Finally, there are indeed some cases where you have to plan the software from sc
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
-# 31. Comments
+# 32. Comments
 
 Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
 
@@ -3405,7 +3405,7 @@ You may use docstring tools, like sphynx in python, for automatically generated 
 
 Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
 
-# 32. Logging
+# 33. Logging
 
 The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
 
@@ -3423,7 +3423,7 @@ In a GUI the logger could store all the actions performed by the user. This may 
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
-# 33. Tools
+# 34. Tools
 
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important classes of tools I worked with so far:
 
@@ -3523,7 +3523,7 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
-# 34. Domain Driven Design
+# 35. Domain Driven Design
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
 
@@ -3681,7 +3681,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
-# 35. 3rd party software
+# 36. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
@@ -3708,7 +3708,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 36. Dependencies
+# 37. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -4288,6 +4288,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
