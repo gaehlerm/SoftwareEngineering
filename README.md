@@ -9,6 +9,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 The first half of the books seems more or less ok, the second half needs some serious reworking.
 
 Things to write:
+-	Write more exercises. This is what Pearson wants. But I don't know how to always write code examples. Not to talk about using the copilot.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
 -	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation? DDD distilled may help to get the essence.
 -	Write some more about everything. Some chapters are really short.
@@ -123,8 +124,10 @@ Things to write:
 		- [Encapsulate variables](#encapsulate-variables)
 	- [Real life refactoring](#real-life-refactoring)
 		- [Sketches](#sketches)
-- [10. Understandable code](#10-understandable-code)
-- [11. Programming languages](#11-programming-languages)
+	- [Exercises](#exercises-4)
+- [11. Understandable code](#11-understandable-code)
+	- [Exercises](#exercises-5)
+- [12. Programming languages](#12-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
 	- [Python](#python)
@@ -137,12 +140,13 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
-- [12. bugs, errors, exceptions](#12-bugs-errors-exceptions)
+	- [Exercises](#exercises-6)
+- [13. bugs, errors, exceptions](#13-bugs-errors-exceptions)
 	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
-- [13. Testing](#13-testing)
+- [14. Testing](#14-testing)
 	- [Structure of tests](#structure-of-tests)
 		- [What, when and how](#what-when-and-how)
 	- [General thoughts about tests](#general-thoughts-about-tests)
@@ -154,15 +158,20 @@ Things to write:
 	- [Problematic tests](#problematic-tests)
 		- [Flaky tests](#flaky-tests)
 		- [Britle tests](#britle-tests)
+	- [When what and how](#when-what-and-how)
+		- [When to run tests](#when-to-run-tests)
+		- [The Beyonce rule](#the-beyonce-rule)
+		- [Mocking and Stubs](#mocking-and-stubs)
+	- [Exercises](#exercises-7)
+- [Types of tests](#types-of-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
+		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
 	- [The testing pyramid](#the-testing-pyramid)
-	- [When to run tests](#when-to-run-tests)
-	- [Mocking and Stubs](#mocking-and-stubs)
-	- [The Beyonce rule](#the-beyonce-rule)
-- [14. Writing good code](#14-writing-good-code)
+	- [Exercises](#exercises-8)
+- [15. Writing good code](#15-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
 		- [Asserts](#asserts)
@@ -171,14 +180,15 @@ Things to write:
 	- [Using fake objects](#using-fake-objects)
 		- [Mocking](#mocking)
 		- [Dependency injection](#dependency-injection)
-- [15. Variables types](#15-variables-types)
+- [16. Variables types](#16-variables-types)
 	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
 	- [Variable comparison](#variable-comparison)
-- [16. Programming Paradigms](#16-programming-paradigms)
+	- [Exercises](#exercises-9)
+- [17. Programming Paradigms](#17-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
-- [17. Design patterns](#17-design-patterns)
+- [18. Design patterns](#18-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
 		- [Implementation](#implementation-1)
@@ -188,8 +198,9 @@ Things to write:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
-- [18. Decoupling](#18-decoupling)
-- [19. Entropy](#19-entropy)
+- [19. Decoupling](#19-decoupling)
+	- [Exercises](#exercises-10)
+- [20. Entropy](#20-entropy)
 - [21. Software Architecture](#21-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
@@ -202,6 +213,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
+	- [Exercises](#exercises-11)
 - [23. Some rules of thumb](#23-some-rules-of-thumb)
 	- [Code correlation](#code-correlation)
 	- [Single line complexity](#single-line-complexity)
@@ -238,6 +250,7 @@ Things to write:
 	- [Custom file format](#custom-file-format)
 - [30. Project folder](#30-project-folder)
 - [31. Performance Optimization](#31-performance-optimization)
+	- [Exercise](#exercise)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -260,6 +273,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
+	- [Exercises](#exercises-12)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -272,6 +286,8 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
+	- [Exercises](#exercises-13)
+- [29. Good code](#29-good-code)
 - [36. 3rd party software](#36-3rd-party-software)
 - [37. Dependencies](#37-dependencies)
 	- [Circular dependencies](#circular-dependencies)
@@ -506,7 +522,9 @@ Working in an orthogonal system has many advantages:
 
 ## Exercises
 
+Make an example where the SRP is violated and the code should be refactored.
 
+Create a non-orthogonal system that the reader should orthongonalize.
 
 # 6. Levels of abstraction
 
@@ -630,10 +648,10 @@ Between classes as well as between files there are dependencies. The high-level 
 
 ## Exercises
 
-Sort the following function calls by their level of abstraction, starting with the lowest:
+Sort the following function calls by their level of abstraction, starting with the highest:
 - main()
 - look_up_flight()
-- select_from()
+- select_flight_from()
 - plan_voyage()
 - book_flight()
 
@@ -823,9 +841,13 @@ As a summary I’d like to emphasize that you should take care of the length of 
 ## Exercises
 
 The following code has temporal coupling. Remove the temporal coupling by rewriting the code.
-...
+
+The following function is too long. Break it into shorter pieces.
+
 
 # 9. Classes
+
+// Break up this chapter? It's too long...
 
 // write a struct coordinate as an example?
 ## Structs
@@ -1549,6 +1571,10 @@ Making sketches may help you finding ways to refactor your code. This doesn’t 
 
 // Add the temporal graph from Evans?
 
+## Exercises
+
+// get some convoluted pieces of code and let the reader refactor them. How should he be guided by copilot? I really don't know. 
+
 # 11. Understandable code
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
@@ -1559,7 +1585,7 @@ As we have discussed, good code is easy to understand. But what makes code easy 
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
-Something humans are not good at is very obvious. Math. We suck at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts and approximate thinking.
+Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts and approximate thinking.
 
 You can play terrible tricks with humans as we all follow the same laws of psychology. Even experts fall for such tricks. We can only mitigate our weaknesses by accepting them.
 
@@ -1567,7 +1593,7 @@ On the other hand, we are amazing at understanding complex processes by creating
 
 We are also pretty good in communicating with others. Using the natural language. We are able to explain fairly difficult things and others understand us. Just as you (hopefully) understand what I write here.
 
-We are terrible at math and we can be extremely easily tricked. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. 
+We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. 
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does.
 
@@ -1578,6 +1604,10 @@ So far, every programmer that told me he was working on a really complex problem
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones.
+
+## Exercises
+
+// ...? Write some very general question as done in the Pragmatic Programmer.
 
 # 12. Programming languages
 
@@ -1718,7 +1748,10 @@ Structs are generally very useful objects, as explained in the section on classe
 
 For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
 
+## Exercises
 
+- Learn some new programming languages. Write a program to read a simple comma separated value (CSV) file and save the values in a list/vector/array/... for at least 5 different programming languages.
+- ...
 
 # 13. bugs, errors, exceptions
 
@@ -1777,6 +1810,8 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 # 14. Testing
 
+// Break up this chapter? It's too long...
+
 // mention double entry book keeping somewhere? -> Clean Craftsmanship
 
 // in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
@@ -1785,11 +1820,11 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 // source: Software Engineering at Google
 
-“Data structures + algorithms = software” Adapted from Bertrand Mayer
+Software Engineering:
 
-Interfaces + testing = engineering
+"Data structures + algorithms = software" Adapted from Bertrand Mayer
 
-Software + engineering = Software engineering
+Modularity + testing = engineering
 
 It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It forces you to write better code. In fact, this was the first chapter that I wrote for this book.
 
@@ -1976,6 +2011,43 @@ Tests that are over specified are called brittle. They break when changing the c
 
 Another example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
 
+## When what and how
+
+### When to run tests
+
+It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
+
+Unit tests are fasts. Each one of them takes only milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all.
+
+Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) just as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
+
+Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
+
+With E2E tests it becomes a little bit trickier. E2E tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all E2E tests pass all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
+
+### The Beyonce rule
+
+A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
+She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
+
+### Mocking and Stubs
+
+// See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
+
+// is using DI and faking better?
+
+Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
+
+At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
+
+Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
+
+## Exercises
+
+// 
+
+# Types of tests
+
 ## End-to-End tests
 
 // end-to-end tests vs. acceptance tests?
@@ -1997,6 +2069,8 @@ One last question you might ask: “And what should I do if the GUI code contain
 I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. Good luck!
 
 ## Integration tests
+
+// what else to write here?
 
 Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
 
@@ -2020,6 +2094,8 @@ This works. They will find the bug in this case. People worked like this for dec
 Unit tests cover small pieces of code. Usually they test a public method or standalone functions. In the example above they would check everything that is checked using print statements.
 
 It may sound surprising, but unit tests are even more important than acceptance tests. 
+
+### Testing files
 
 Most of the time, unit tests only need a setup and an execution phase. There is no tear down required as unit tests don’t interact with any files or databases that you would have to delete in the end.
 
@@ -2072,35 +2148,13 @@ E2E tests are the least common. They are very valueable to check that a program 
 
 <img src=images/testing_pyramid.jpg width="300">
 
+## Exercises
 
-## When to run tests
+Write some tests to existing code
 
-It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
+Refactor tests
 
-Unit tests are fasts. Each one of them takes only milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all.
-
-Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) just as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
-
-Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
-
-With E2E tests it becomes a little bit trickier. E2E tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all E2E tests pass all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
-
-## Mocking and Stubs
-
-// See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
-
-// is using DI and faking better?
-
-Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
-
-At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
-
-Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
-
-## The Beyonce rule
-
-A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
-She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
+...?
 
 # 15. Writing good code
 
@@ -2120,7 +2174,7 @@ You will be running the unit tests all the time. After every function you define
 
 Let’s go back to the example at the beginning. There are just a few simple steps required to create a unit test out of that code.
 
-```
+```py
 def test_squares():
 	assert f(1) == 1
 	assert f(2) == 4
@@ -2414,19 +2468,15 @@ So far for the technical implementation and the introduction to mocking. But the
 
 # 16. Variables types
 
+Variables have a different scope. Depending on how large this scope is, the variables do have different advantages and drawbacks.
+
 ## Global Variables
-
-//write about other variables??
-
-//global variables are like glue that couple the code together
 
 You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
 
 Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
 
 Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
-
-//move this into the class chapter?
 
 Now as you already realized, global variables are bad because everyone can change their value. You cannot rely on them. You never know if someone messes with its integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. 
 
@@ -2440,7 +2490,7 @@ I’d like to briefly sort different kind of variables by the amount of side eff
 
 Here is a rough list how variable types are sorted by the amount of side effects they have, starting with the least.
 
-Immutable object < mutable object ~ class variable < inherited variable < global variable
+Immutable object < mutable object ~ class variable < inherited variable < singleton ~ global variable
 
 There is certainly nothing wrong with immutable objects. We just can’t do it without them. 
 
@@ -2460,32 +2510,38 @@ With mutable and class variables one has to always pay attention. Especially wit
 
 Immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
 
-//where to move this text here?
+//where to move this text here? Somewhere to class functions? Or remove it completely?
 
-Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following code //example from working effectively with legacy code, p. 273
-```Java
-Outputstream.write(“header”); 
-writeField(outputstream, body1);
-writeField(outputstream, body2);
-```
-
-where outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified. The function writeField looks as follows
+Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following Java code //example from working effectively with legacy code, p. 273
 
 ```Java
+outputstream.write("header"); 
+writeField(outputstream, body);
+
 void writeField(Outputstream outputStream, Sting field){
     outputstream.write(field.getBytes());
     outputstream.write(0x00);
 }
 ```
-Here Feathers could have modified the string within its own function and keep the code much more readable.
-```Java
-Outputstream.write(field(body1))
 
-String field(body){
-    Return body + 0x00;
+where outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
+
+Here Feathers could have modified the string within its own function and keep the code much more readable.
+
+```Java
+outputstream.write("header"); 
+outputstream.write(field(body))
+
+string field(body){
+    return (body + '0').getBytes();
 }
 ```
+
 Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
+
+## Exercises
+
+???
 
 # 17. Programming Paradigms
 
@@ -2597,6 +2653,10 @@ Don't chain method calls. Unless they are very unlikely to change.
 // suggestion of Demeter (Fowler ca. p200)
 
 This chain is also very rigid and hard to change. Don’t chain method calls.
+
+## Exercises
+
+// Compare 2 different versions of some code and let the reader figure out why one is more coupled than the other.
 
 # 20. Entropy
 
@@ -2842,6 +2902,10 @@ In case you've ever heared of the pimpl (pointer to implementation) idiom, it ha
 ## Summary
 
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t care about. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
+
+## Exercises
+
+For each principle create an example where it's violated and let the user correct it.
 
 # 23. Some rules of thumb
 
@@ -3402,6 +3466,12 @@ Finally, there are indeed some cases where you have to plan the software from sc
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
+## Exercise
+
+Take code with one or two slow algorithms. The user should use the profiler to find the bottle necks and then improve the performance. Or can Copilot do that?
+
+The user should write a pairlist algorithm (or FFT or something else) and in a second step write a more optimized version.
+
 # 32. Comments
 
 Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
@@ -3584,6 +3654,10 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
 
+## Exercises
+
+Get acquainted with Git and some other tools mentioned here.
+
 # 35. Domain Driven Design
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
@@ -3694,7 +3768,11 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 #write some examples here?
 
-29.	Good code
+## Exercises
+
+Take Robert Martin's bowling example and let the user programm it?
+
+# 29. Good code
 
 This is an attempt to distillate a list of rules that allow you to judge the quality of code.
 
@@ -4315,7 +4393,7 @@ Effective modern C++ (Scott Meyers) Scott explains the ideas behind C++11 and 14
 
 Working with legacy code (Michael Feathers) This book is about working with code that doesn’t have any tests and probably needs some refactoring.
 
-The Pragmatic Programmer 2nd edition (Dave Thomas, …?) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book here.
+The Pragmatic Programmer 2nd edition (Thomas, Hunt) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book here.
 
 Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The introductory example is simply amazing. Martin takes an innocent looking function and applies some of his refactoring steps. In the end there is some code that is super smooth. It has barely any indentations!
 
