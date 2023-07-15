@@ -1361,7 +1361,7 @@ This class is a mixture of a delegating class and a worker class. Convert it int
 // create such a class
 
 
-# 14. Testing
+# 10. Testing
 
 // mention double entry book keeping somewhere -> Clean Craftsmanship
 
@@ -1597,7 +1597,7 @@ Generally it is recommended to use DI instead of mocking. This forces you to wri
 
 // 
 
-# Types of tests
+# 11. Types of tests
 
 ## End-to-End tests
 
@@ -1708,7 +1708,7 @@ Refactor tests
 ...?
 
 
-# 15. Writing good code
+# 12. Writing good code
 
 "Programmer: A machine that turns coffee into code." – Anonymous
 
@@ -2021,7 +2021,7 @@ As always, many books only focus on OO programming. They only explain dependency
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
 
 
-# 10. Refactoring
+# 13. Refactoring
 “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
 
 //“Code rots. I don’t know how it’s physically possible but I’ve seen it.” – Robert C. Martin aka Uncle Bob
@@ -2245,7 +2245,7 @@ Making sketches may help you finding ways to refactor your code. This doesn’t 
 
 // get some convoluted pieces of code and let the reader refactor them. How should he be guided by copilot? I really don't know. 
 
-# 11. Understandable code
+# 14. Understandable code
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
@@ -2279,7 +2279,7 @@ This whole book is about how to write low complexity code. The sections on the S
 
 // ...? Write some very general question as done in the Pragmatic Programmer.
 
-# 12. Programming languages
+# 15. Programming languages
 
 “I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
@@ -2423,7 +2423,7 @@ For more intormation about C++ I can recommend the google C++ style guide, https
 - Learn some new programming languages. Write a program to read a simple comma separated value (CSV) file and save the values in a list/vector/array/... for at least 5 different programming languages.
 - ...
 
-# 13. bugs, errors, exceptions
+# 16. bugs, errors, exceptions
 
 "It’s not a bug; it’s an undocumented feature." - Anonymous
 
@@ -2478,7 +2478,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
-# 16. Variables types
+# 17. Variables types
 
 "God is real … unless declared integer." - 
 
@@ -2557,7 +2557,7 @@ Now this is just a little example in between how constantly considering how func
 
 ???
 
-# 17. Programming Paradigms
+# 18. Programming Paradigms
 
 //remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
 
@@ -2577,7 +2577,7 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 
 ## Functional programming
 
-# 18. Design patterns
+# 19. Design patterns
 
 // not sure yet what I should write about design patterns.
 
@@ -2643,7 +2643,7 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 //etc. ...
 
-# 19. Decoupling
+# 20. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
 
 // add some more text from the pragmatic programmer
@@ -2672,7 +2672,7 @@ This chain is also very rigid and hard to change. Don’t chain method calls.
 
 // Compare 2 different versions of some code and let the reader figure out why one is more coupled than the other.
 
-# 20. Physical laws of code
+# 21. Physical laws of code
 
 "I think you should always bear in mind that entropy is not on your side." - Elon Musk
 
@@ -2694,7 +2694,7 @@ There is a market for food and further down the road there is a store selling el
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
 
 
-# 21. Software Architecture
+# 22. Software Architecture
 
 "The perfect kind of architecture decision is the one which never has to be made" ― Robert C. Martin
 
@@ -2751,7 +2751,7 @@ These advantages for either sides lead to tradeoffs in library sizes. Generally,
 
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
-# 22. Solid principles 
+# 23. Solid principles 
 // Source: https://youtu.be/pTB30aXS77U and Clean Architecture
 
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write code. These are:
@@ -3351,7 +3351,7 @@ On the other end of the spectrum are some python programmers. It seems like addi
 Now this is still one of the more readable inline list initializations. But it is banned by the google style guide as it contains two variables.
 
 ```py
-[[[0] * (i + j) for i in range(3)] for j in range(4)]
+[[[0] * (i + j) for i in range(2)] for j in range(3)]
 ```
 
 # 29. Data files
@@ -3833,7 +3833,7 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 Take Robert Martin's bowling example and let the user programm it?
 
-# 29. Good code
+# 36. Good code
 
 This is an attempt to distille a list of rules that allow you to judge the quality of code.
 
@@ -3883,7 +3883,7 @@ Make the code self-commenting. Only use comments for things the code can’t exp
 
 Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
-# 36. 3rd party software
+# 37. 3rd party software
 
 “Prefer visa over power shell” – some youtube video 
 
@@ -3910,7 +3910,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 37. Dependencies
+# 38. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -3945,7 +3945,7 @@ Usually, circular dependencies occur as two classes exchange data between each o
 Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction.
 
 // make a code example: A calls B calls A returns to B returns to A. -> A calls B with all info needed returns the value to A.
-# 38. Working in teams
+# 39. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
@@ -4032,7 +4032,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 39. Code review
+# 40. Code review
 
 // see chapter code review in SEG (software engineering at google)
 
@@ -4066,7 +4066,7 @@ One thing I can highly recommend is looking at the code together. In theory, the
 
 In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
 
-# 40. Working with existing projects
+# 41. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
@@ -4086,7 +4086,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
 
-# 41. Planning
+# 42. Planning
 
 TODO: read through again. Is there duplication with the agile section?
 
@@ -4124,7 +4124,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 #where to add a chapter with errors?
 
-# 42. Agile
+# 43. Agile
 
 “Intelligence is the ability to adapt to change.” – Stephen Hawking, among others
 
@@ -4251,7 +4251,7 @@ You also need courage to be honest. The very first thing is you have to be able 
 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
-# 43. Continuous integration
+# 44. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
@@ -4267,7 +4267,7 @@ As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t 
 
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...?
 
-# 44. Hiring and getting hired
+# 45. Hiring and getting hired
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
@@ -4297,7 +4297,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 45. Work ethics
+# 46. Work ethics
 
 // see Clean Craftsmanship
 
@@ -4311,7 +4311,7 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 
 //keep learning
 
-# 46. Examples
+# 47. Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
@@ -4433,7 +4433,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 47. Further reading
+# 48. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -4467,7 +4467,7 @@ Cheat sheet bbv, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
 
 google style guide, https://google.github.io/styleguide/
 
-# 48. Outlook
+# 49. Outlook
 
 "Programming is learned by writing programs." ― Brian Kernighan
 
@@ -4493,6 +4493,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
