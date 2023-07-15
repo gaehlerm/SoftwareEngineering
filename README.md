@@ -106,6 +106,31 @@ Things to write:
 	- [Example](#example-1)
 	- [Conclusions](#conclusions-1)
 	- [Exercises](#exercises-3)
+- [14. Testing](#14-testing)
+	- [Structure of tests](#structure-of-tests)
+		- [What, when and how](#what-when-and-how)
+	- [General thoughts about tests](#general-thoughts-about-tests)
+		- [Quality of test code](#quality-of-test-code)
+	- [Number of test cases](#number-of-test-cases)
+	- [Setup and Teardown](#setup-and-teardown)
+	- [Best practice](#best-practice)
+		- [Random numbers](#random-numbers)
+	- [Problematic tests](#problematic-tests)
+		- [Flaky tests](#flaky-tests)
+		- [Britle tests](#britle-tests)
+	- [When what and how](#when-what-and-how)
+		- [When to run tests](#when-to-run-tests)
+		- [The Beyonce rule](#the-beyonce-rule)
+		- [Mocking and Stubs](#mocking-and-stubs)
+	- [Exercises](#exercises-4)
+- [Types of tests](#types-of-tests)
+	- [End-to-End tests](#end-to-end-tests)
+	- [Integration tests](#integration-tests)
+	- [Unit tests](#unit-tests)
+		- [Testing files](#testing-files)
+		- [Testing classes](#testing-classes)
+	- [The testing pyramid](#the-testing-pyramid)
+	- [Exercises](#exercises-5)
 - [10. Refactoring](#10-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -124,9 +149,9 @@ Things to write:
 		- [Encapsulate variables](#encapsulate-variables)
 	- [Real life refactoring](#real-life-refactoring)
 		- [Sketches](#sketches)
-	- [Exercises](#exercises-4)
+	- [Exercises](#exercises-6)
 - [11. Understandable code](#11-understandable-code)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-7)
 - [12. Programming languages](#12-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -140,37 +165,12 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-8)
 - [13. bugs, errors, exceptions](#13-bugs-errors-exceptions)
 	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
-- [14. Testing](#14-testing)
-	- [Structure of tests](#structure-of-tests)
-		- [What, when and how](#what-when-and-how)
-	- [General thoughts about tests](#general-thoughts-about-tests)
-		- [Quality of test code](#quality-of-test-code)
-	- [Number of test cases](#number-of-test-cases)
-	- [Setup and Teardown](#setup-and-teardown)
-	- [Best practice](#best-practice)
-		- [Random numbers](#random-numbers)
-	- [Problematic tests](#problematic-tests)
-		- [Flaky tests](#flaky-tests)
-		- [Britle tests](#britle-tests)
-	- [When what and how](#when-what-and-how)
-		- [When to run tests](#when-to-run-tests)
-		- [The Beyonce rule](#the-beyonce-rule)
-		- [Mocking and Stubs](#mocking-and-stubs)
-	- [Exercises](#exercises-7)
-- [Types of tests](#types-of-tests)
-	- [End-to-End tests](#end-to-end-tests)
-	- [Integration tests](#integration-tests)
-	- [Unit tests](#unit-tests)
-		- [Testing files](#testing-files)
-		- [Testing classes](#testing-classes)
-	- [The testing pyramid](#the-testing-pyramid)
-	- [Exercises](#exercises-8)
 - [15. Writing good code](#15-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
@@ -240,6 +240,7 @@ Things to write:
 - [26. Naming](#26-naming)
 	- [Exercise](#exercise)
 - [27. Automatization](#27-automatization)
+	- [Exercise](#exercise-1)
 - [28. Complexity](#28-complexity)
 	- [Estimating complexity](#estimating-complexity)
 - [29. Data files](#29-data-files)
@@ -249,9 +250,11 @@ Things to write:
 	- [HDF5](#hdf5)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
+	- [Exercise](#exercise-2)
 - [30. Project folder](#30-project-folder)
+	- [Exercise](#exercise-3)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [Exercise](#exercise-1)
+	- [Exercise](#exercise-4)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -259,7 +262,9 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
+	- [Exercises](#exercises-12)
 - [33. Logging](#33-logging)
+	- [Exercises](#exercises-13)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -274,7 +279,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-12)
+	- [Exercises](#exercises-14)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -287,7 +292,7 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-13)
+	- [Exercises](#exercises-15)
 - [29. Good code](#29-good-code)
 - [36. 3rd party software](#36-3rd-party-software)
 - [37. Dependencies](#37-dependencies)
@@ -1352,6 +1357,355 @@ The following class is too big. Refactor it such that you get several smaller cl
 This class is a mixture of a delegating class and a worker class. Convert it into a delegating class by moving the complex code into a dedicated function. 
 // create such a class
 
+
+# 14. Testing
+
+// Break up this chapter? It's too long...
+
+// mention double entry book keeping somewhere? -> Clean Craftsmanship
+
+// in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
+
+// if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
+
+// source: Software Engineering at Google
+
+Software Engineering:
+
+"Data structures + algorithms = software" Adapted from Bertrand Mayer
+
+Modularity + testing = engineering
+
+It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It forces you to write better code. In fact, this was the first chapter that I wrote for this book.
+
+In the early days of software engineering, people wrote code and packaged it into the software they were selling. Before the release, the whole company had to drop all its work for 2 weeks and manually check that all the features were implemented correctly. The software developers had to spend night shifts to fix the bugs ASAP because otherwise the release of the software would be delayed.
+
+But that's not the end of it. Of course, the company wants to make more money. They add some small features to this huge software and sell it again. But here comes the problem: before they can release the software and make a lot of money, they have to do the quality assurance all over again. And all the code that was changed since the last check has to be tested. ALL the code has to be tested because developers changed also code used by old features. Once again, the whole company freezes for 2 weeks.
+
+Obviously, this is highly frustrating. Every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Every release you waste 2 weeks of your time to do the same boring repetitive task. Every release, the company spends millions to test things that were already tested several times before. And even worse. As the software grows, the number of bugs increases. Some of them even slip through the expensive testing. And the release gets delayed as the bugs become harder and harder to fix. It's a nightmare.
+
+After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says “Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you one Billion.”
+
+Silence in the room. One Billion??? You may laugh. But there are more than enough companies that would actually pay this amount. It’s an enormous amount, but at the same time the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It’s hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working and maybe the company will be bankrupt before you finish.
+
+On the other hand, the benefits for the company would be worth this amount. At first you might think “ah, spend one billion for saving 2 weeks of testing??”. But there is so much more to it.
+
+1.	You can release anytime the screen is green. If the team works well, you can release every day (“nightly build”)
+1.	If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
+1.	There are less bugs as automated tests are more reliable than manual testing.
+
+And that’s only the marketing side of it. At least as important is the developers’ side of this screen. So far you were always afraid that you would break some feature when changing code. A feature was working so far but all of a sudden, it’s broken. Nobody realized when it happened. You’ll spend the rest of your work life in constant fear. This is worse than the zombie apocalypse. There is nothing that can make you feel save again. You are never going to touch a single line of code again unless you really have to, as you are afraid of breaking something.
+
+But now, all of a sudden... magic! You know if you accidentally broke a feature. The screen tells you everything is alright! Your paranoia starts to fade. You gain confidence again in your code. In your abilities. In yourself! You can start replacing all this old ugly code that had been sewn together like a Frankenstein monster. Things that were welded together by force because the author didn’t dare to rewrite the existing code to make a clean solution possible. Suddenly things look fine again.
+
+You go to your CEO, give him a hug and a box of chocolate. You thank him for saving your career and you pay him back the billion.
+
+I must admit at times I exaggerated a little to make a point. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. They are no guarantees to make your software project a success. But I can tell you that projects without automated tests are doomed and will fail sooner rather than later.
+
+I hope this is enough motivation to make you read through this chapter and really try to write tests by yourself. As always, it’s not easy at the beginning. Ask the internet and others for advice and you’ll get a fairly good idea how to write them.
+
+## Structure of tests
+
+Here is a small real-world example how a test works. 
+
+1.	Make sure the coffee machine is clean, has coffee, water and electricity.
+Press the coffee button.
+Wait until the coffee has finished.
+1.	Taste the coffee. If you like it, the test passes. Otherwise it fails.
+1.	Throw away the cup and the remaining coffee.
+
+This is it. Tests always consist of a few instructions that should be easy to understand. The result of the test can take up only two values. It passed (you like the coffee) or it failed (you didn’t like it). If it failed, you should call the technician to fix it. Or you write a script that calls the technician automatically.
+
+Tests consist of three stages that are run on a test bench.
+
+1.	Setup: make everything ready for the test
+1.	Execution: check the requirements are fulfilled
+1.	Tear-down: clean up everything used for the test
+
+Structure of a Software test
+
+In software we do the same. In every programming language, there is one major testing library. They all do pretty much the same. The python testing library is called pytest.
+
+```Python
+# inside vector.py
+class vector:
+	def __init__(self,x,y):
+		self.x = x
+		self.y = y
+	def distance_to(self, other):
+		return ((self.x-other.x)**2)**0.5
+
+# inside test_vector.py
+from vector import *
+import math
+
+def test_distance(self):
+	v1 = Vector(0,0)
+	v2 = Vector(1,1)
+	assert math.isclose(v1.distance_to(v2), 2**0.5)
+```
+
+We can run the test in the command line with
+```
+python -m pytest
+```
+
+The output is this: 
+```
+E    assert False
+E     +  where False = <built-in function isclose>(1.0, (2 ** 0.5))
+```
+Apparently I made a mistake in the implementation. The correct code would be
+```py
+	def distance_to(self, other):
+		return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
+```
+Now the test passes.
+
+As you can see it’s pretty simple to write a test. Not only in python, there are testing libraries for all major prorgramming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
+
+Once again, the difficulty lies not in the user interface of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
+
+### What, when and how
+
+Our class vector contains the member function `distance_to`. It is part of the interface of the class and has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible. Private functions give you much more degrees of freedom while for pubilc functions you have to stick to the behavior that was guaranteed by the interface. 
+
+Inside the test_vector.py file we write the test case. Before you miss it, I’d like the emphasize the very first line. We want to test the Vector class. We have to import the corresponding file.
+
+Next, we define the test case. Every test case gets a name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
+
+Inside the test we start with the setup part. In order to test the distance_to function we need two vector objects v1 and v2. In the next line we calculate the distance between v1 and v2.
+
+Now comes the execution of the test. We check if the result of the test is correct.
+
+
+## General thoughts about tests
+
+A lot of people think that writing code is only for finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
+
+Robert C. Martin compared programming with tests to double entry book keeping //Clean Craftsman. I really like this comparison. In both cases you have two independent truths (creditor, debitor and code, tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Because they are fairly independent and it is unlikely that the same mistake was made for both cases.
+
+Having two absolute thruths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break.
+
+There are a lot of things to consider when writing tests. The example above was very simple. In real code you have to deal with much more complex objects. With many more arguments. But all together it comes down to one point: Do you really understand what you want to test? If no, there is no need to start writing a test. It would never work. It would be a waste of time. Rewrite your code to make it simpler or get someone to help you understand the problem you should solve.
+
+// where does the setup and teardown part go?
+
+In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that return the desired objects. You might even have a util file for all the tests. Some fairly static objects you might need in a lot of different tests.
+
+There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximative checks you should use instead.
+
+Then it is common to miss some of the if-else branches. These are very important to test as most bugs usually hide in conditional statements. Make sure that you cover all cases, if necessary using a code coverage tool.
+
+Similarly you have to make sure your tests cover all the corner cases. This is one of the reasons why the tests have to be written by the same person as the actual code.
+
+
+### Quality of test code
+
+Tests are somewhat special, but ultimately, they are still code. Probably the tests in most modern software consist of more code than the actual code itself. Thinking about it, it becomes apparent that when writing tests some coding guidelines have to be followed as well.
+
+The very first point is once again the SRP. The code in tests should be clear to the reader. Do so by refactoring it as you would with any other code. Keep the functions short, find appropriate names and remove excessive duplication. These things frequently get overlooked when writing tests. Even tough the requirements on test code are somewhat different than for production code. Test code may not be complex and shouldn't cointain too many function calls. On the other hand, having some amount of duplication is acceptable. Or as Jay Fields (Working Effectively with Unit Tests) put it: "when writing tests you should prefer DAMP (Descriptive And Maintainable Procedures) to DRY."
+
+## Number of test cases
+
+Probably the hardest decision is what values you want to use in your tests. Writing one test case for a function is much better than nothing. But maybe you just got lucky and your code works exactly for this one number? For a single argument function, I recommend testing all possible corner cases and about two other values. As you wrote the function you will know the corner cases. Division by zero, etc.
+
+For functions with many variables it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with 3^3 = 27 test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. There might be cases where the variables don’t interact with each other. They are independent. 
+
+Now if you see that they are all independent, you may test them independently. The number of tests reduces to about 3*3 = 9. This sounds much more reasonable. Usually the variables are not independent. And it’s not feasible to write 27 test cases. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number of arguments low.
+
+It is important to really know what a function actually does. As I already wrote several times you have to test the corner cases. This only works if you know the code. You won’t find them by chance. Nor can you figure out if some variables are independent of each other or not. This is just one of the reasons why you have to write tests right along with the actual code. If someone else has to write the tests for your code, he’s missing this very crucial information and either has to read and understand all the code or just guess what it does. Both cases are a real issue.
+
+You may also have structured objects as an input or output of a function. This can become worse than having three variables by orders of magnitude. The structured objects may have a thousand fields, for example elements in a list. Everything we discussed so far becomes peanuts. But we can still achieve reasonable test coverage if we try. First of all, all elements in the list have to be treated equally. One of the few corner cases is the empty list. But also in large structured objects the complexity is usually managable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function. Again, it all comes down to the programmer knowing the relationship between different objects.
+
+## Setup and Teardown
+
+Setup and teardown are the functions automatically called at the beginning and the end of a test. Most of the time they are not needed. The setup can also be managed with a few helper functions and at the end of the test, the framework cleans up all the variables used. However, if your tests use text files or databases, things become tricky. You might need temporary files, change values in databases, etc. It becomes messy. You need a fool proof way that your file handling always works. This is where setup and teardown come into play.
+
+For the file creation there is not that much that can go wrong. You create if from code or copy it from another location. This is to be implemented in the setup part of the test. The tricky part is deleting the files in the end. It may sound very simple to delete a file at the end of the test, but if the test fails, a normal function call will never be executed. There will be a mess of undeleted files. This may impact future runs of the tests and they become flaky. This problem can be solved by implementing the teardown function that is guaranteed to be always executed. 
+
+Anyway, try to write tests that don’t need files. It makes things much easier. Especially in unit tests you won't have to deal with setup and teardown if you don't want to bother with it.
+
+## Best practice
+
+A test is also a programming object. Accordingly, it has to follow the basic rules, for example the single responsibility principle. Each test has exactly one purpose. It tests exactly one function. Testing many functions inside a single test is bad practice. Write helper functions for the setup of a test and writing an additional test will be simple. You may even use copy paste in tests! Having many smaller tests forces you to structure them better and improves the overall overview.
+
+It will happen frequently that you have a test that can only work if the other test works. For example, you have a function that writes a file. You write a test that calls this function and checks the existence of the file. Next you write a function that reads this file. In the test you will first call the function to create the file and then call the function to read it. Now these two tests are related. They both fail if the creation of the file fails. This is bad design and violates the single responsibility principle. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying. 
+
+Unfortunately having all the tests completely separated is a very hard, if not impossible task. There is always some correlation between failing tests. In python tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that would certainly fail under the current circumstances.
+
+```py
+@pytest.mark.dependency()
+def test_a():
+    assert False
+
+# skip test_b if test_a fails
+@pytest.mark.dependency(depends=["test_a"])
+def test_b():
+    pass
+```
+
+### Random numbers
+
+If you ever use random numbers in your code, you might get stuck with your tests. You think. Because how can you test something that’s random? Well, you can. Your random numbers are usually not really random. Your computer fakes them. Always use exactly the same random number algorithm and seed to get reproducible results for every test case. Only use real random numbers once you ship your software.
+
+## Problematic tests
+
+### Flaky tests
+
+Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests, but rather it destroys the confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because, say, the network is down. At times rerunning a test might help, though this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. This reduces the flakiness by orders of magnitude. And try to design your tests such that flakiness cannot occur. Especially unit tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky. Thus avoid testing any IO if possible and the tests should become stable. 
+
+### Britle tests
+
+Tests that are over specified are called brittle. They break when changing the code in seeminly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting does not matter. It does not change any of its values. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interessted in.
+
+Another example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
+
+## When what and how
+
+### When to run tests
+
+It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
+
+Unit tests are fasts. Each one of them takes only milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all.
+
+Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) just as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
+
+Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
+
+With E2E tests it becomes a little bit trickier. E2E tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all E2E tests pass all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
+
+### The Beyonce rule
+
+A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
+She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
+
+### Mocking and Stubs
+
+// See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
+
+// is using DI and faking better?
+
+Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
+
+At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
+
+Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
+
+## Exercises
+
+// 
+
+# Types of tests
+
+## End-to-End tests
+
+// end-to-end tests vs. acceptance tests?
+
+End-to-End (E2E) tests are pretty much what I described in the story at the beginning of this chapter. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
+
+If you publish some code examples as a documentation of your API, you should write an end-to-end test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
+
+End-to-end tests are user centered. The user doesn’t know anything about the internals of the code (nor the coffee machine). He has only the interfaces you give him: GUI, API, joystick, microphone, coffee cup, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
+
+Sounds good. But at the same time, it seems extremely difficult to write these tests...? True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine.
+
+Testing on the API level is in theory fairly trivial. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. One option is comparing hash values instead of comparing complete files. 
+
+E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. It is important to combine them with unit tests. 
+
+One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?”
+
+I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. Good luck!
+
+## Integration tests
+
+// what else to write here?
+
+Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
+
+Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
+
+## Unit tests
+
+A lot of programmers work as follows. They write a function and have to figure out if it works correctly. In order to do so, they use print statements. They run the code and check if the results are correct.
+```Py
+def square(x):
+	if x == 2:
+		x = 3
+	return x**2
+print(square(1))
+print(square(2))
+print(square(5))
+```
+
+This works. They will find the bug in this case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of DRY that should be optimized away. And the solution are unit tests.
+
+Unit tests cover small pieces of code. Usually they test a public method or standalone functions. In the example above they would check everything that is checked using print statements.
+
+It may sound surprising, but unit tests are even more important than acceptance tests. 
+
+### Testing files
+
+Most of the time, unit tests only need a setup and an execution phase. There is no tear down required as unit tests don’t interact with any files or databases that you would have to delete in the end.
+
+"Why...? How? No files? No database?"
+
+Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_profit()` we can write tests for `calculate_annual_profit()` and we don’t have to deal with the filesystem anymore.
+
+```Py
+def share_values(filename):
+	share_value_file = read_share_values(filename)
+	share_values = extract_share_values(share_value_file)
+	return share_values
+```
+
+You can save the content of the file as a string inside your test code and call the second function, `extract_share_values`. This is similar to the GUI case for acceptance tests. You pack everything you don’t want to test into a small layer that is unlikely to fail and the remaining test becomes much smoother.
+
+The same holds for database access. You put all the code that requires DB access into a few simple functions that you are not going to write unit tests for but you make sure you test everything else.
+
+An even better approach is using dependency injection as explained in chapter //...? but for the moment we’ll leave it with the small wrapper function.
+
+### Testing classes
+
+Writing unit tests for classes is probably the most important part of this chapter. This is not only because of the prevalence of classes, but also because classes tend to become messy without any unit tests.
+
+First of all, classes tend to become too big. They have too many member variables and private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
+
+Furthermore, there is the issue of how to deal with private methods in big classes. Because apparently, the testing framework doesn’t have access to private functions. No one has, except for the class itself. A first attempt is making the private functions public. This, however, is not recommended. You should not make functions public, only in order to test them. This will lead to crippled code with too many public functions, which is the exact opposite of encapsulation. Therefore, unit tests should only test the public interface of a class. If you are tempted to test also some private functions, you should resist. This is a clear sign that your private functions are too complex. Make this private function a class on its own with a public interface that you can test.
+
+Classes that are hard to instantiate are another problem. For example, if the constructor has side effects that are not guaranteed to be undone, as opening a file, incrementing a counter, etc. In the real code, it may be guaranteed that all the required conditions are met to never run into troubles. When running unit tests however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
+
+As a summary one can say two things about classes and tests:
+-	Classes should be small and contain few member variables
+-	The constructors should be small and not rely on any fancy logic
+
+Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+
+## The testing pyramid
+
+We've defined here 3 categories of tests. From the fine grained unit tests up to the very coarse end-to-end tests. As a rule of thumb one can say that the testing suite of any programm should consist of a lot of small grained and few coarse tests.
+
+Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can return a detailed feedback if something is broken. They are like testing the individual parts of a car radio before assembling it. Unit tests prevent the usage of faulty parts. Roughly estimated 80% of all tests should be unit tests. //quote software engineering at google. 
+
+Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still usefull to check the functionality of the radio. About 15% of all tests are integration tests.
+
+The E2E tests should only check that the installation of the assembled radio worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
+
+E2E tests are the least common. They are very valueable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However the feedback you get from an E2E test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing E2E tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. Only about 5% of all tests are end-to-end tests.
+
+// get an image without copy right
+
+<img src=images/testing_pyramid.jpg width="300">
+
+## Exercises
+
+Write some tests to existing code
+
+Refactor tests
+
+...?
+
 # 10. Refactoring
 “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
 
@@ -1808,354 +2162,6 @@ One common pattern is catching and reraising exceptions. This allows you to add 
 Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We’ll go into more details in the section on dependency injection. 
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
-
-# 14. Testing
-
-// Break up this chapter? It's too long...
-
-// mention double entry book keeping somewhere? -> Clean Craftsmanship
-
-// in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
-
-// if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
-
-// source: Software Engineering at Google
-
-Software Engineering:
-
-"Data structures + algorithms = software" Adapted from Bertrand Mayer
-
-Modularity + testing = engineering
-
-It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It forces you to write better code. In fact, this was the first chapter that I wrote for this book.
-
-In the early days of software engineering, people wrote code and packaged it into the software they were selling. Before the release, the whole company had to drop all its work for 2 weeks and manually check that all the features were implemented correctly. The software developers had to spend night shifts to fix the bugs ASAP because otherwise the release of the software would be delayed.
-
-But that's not the end of it. Of course, the company wants to make more money. They add some small features to this huge software and sell it again. But here comes the problem: before they can release the software and make a lot of money, they have to do the quality assurance all over again. And all the code that was changed since the last check has to be tested. ALL the code has to be tested because developers changed also code used by old features. Once again, the whole company freezes for 2 weeks.
-
-Obviously, this is highly frustrating. Every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Every release you waste 2 weeks of your time to do the same boring repetitive task. Every release, the company spends millions to test things that were already tested several times before. And even worse. As the software grows, the number of bugs increases. Some of them even slip through the expensive testing. And the release gets delayed as the bugs become harder and harder to fix. It's a nightmare.
-
-After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says “Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you one Billion.”
-
-Silence in the room. One Billion??? You may laugh. But there are more than enough companies that would actually pay this amount. It’s an enormous amount, but at the same time the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It’s hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working and maybe the company will be bankrupt before you finish.
-
-On the other hand, the benefits for the company would be worth this amount. At first you might think “ah, spend one billion for saving 2 weeks of testing??”. But there is so much more to it.
-
-1.	You can release anytime the screen is green. If the team works well, you can release every day (“nightly build”)
-1.	If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
-1.	There are less bugs as automated tests are more reliable than manual testing.
-
-And that’s only the marketing side of it. At least as important is the developers’ side of this screen. So far you were always afraid that you would break some feature when changing code. A feature was working so far but all of a sudden, it’s broken. Nobody realized when it happened. You’ll spend the rest of your work life in constant fear. This is worse than the zombie apocalypse. There is nothing that can make you feel save again. You are never going to touch a single line of code again unless you really have to, as you are afraid of breaking something.
-
-But now, all of a sudden... magic! You know if you accidentally broke a feature. The screen tells you everything is alright! Your paranoia starts to fade. You gain confidence again in your code. In your abilities. In yourself! You can start replacing all this old ugly code that had been sewn together like a Frankenstein monster. Things that were welded together by force because the author didn’t dare to rewrite the existing code to make a clean solution possible. Suddenly things look fine again.
-
-You go to your CEO, give him a hug and a box of chocolate. You thank him for saving your career and you pay him back the billion.
-
-I must admit at times I exaggerated a little to make a point. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. They are no guarantees to make your software project a success. But I can tell you that projects without automated tests are doomed and will fail sooner rather than later.
-
-I hope this is enough motivation to make you read through this chapter and really try to write tests by yourself. As always, it’s not easy at the beginning. Ask the internet and others for advice and you’ll get a fairly good idea how to write them.
-
-## Structure of tests
-
-Here is a small real-world example how a test works. 
-
-1.	Make sure the coffee machine is clean, has coffee, water and electricity.
-Press the coffee button.
-Wait until the coffee has finished.
-1.	Taste the coffee. If you like it, the test passes. Otherwise it fails.
-1.	Throw away the cup and the remaining coffee.
-
-This is it. Tests always consist of a few instructions that should be easy to understand. The result of the test can take up only two values. It passed (you like the coffee) or it failed (you didn’t like it). If it failed, you should call the technician to fix it. Or you write a script that calls the technician automatically.
-
-Tests consist of three stages that are run on a test bench.
-
-1.	Setup: make everything ready for the test
-1.	Execution: check the requirements are fulfilled
-1.	Tear-down: clean up everything used for the test
-
-Structure of a Software test
-
-In software we do the same. In every programming language, there is one major testing library. They all do pretty much the same. The python testing library is called pytest.
-
-```Python
-# inside vector.py
-class vector:
-	def __init__(self,x,y):
-		self.x = x
-		self.y = y
-	def distance_to(self, other):
-		return ((self.x-other.x)**2)**0.5
-
-# inside test_vector.py
-from vector import *
-import math
-
-def test_distance(self):
-	v1 = Vector(0,0)
-	v2 = Vector(1,1)
-	assert math.isclose(v1.distance_to(v2), 2**0.5)
-```
-
-We can run the test in the command line with
-```
-python -m pytest
-```
-
-The output is this: 
-```
-E    assert False
-E     +  where False = <built-in function isclose>(1.0, (2 ** 0.5))
-```
-Apparently I made a mistake in the implementation. The correct code would be
-```py
-	def distance_to(self, other):
-		return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
-```
-Now the test passes.
-
-As you can see it’s pretty simple to write a test. Not only in python, there are testing libraries for all major prorgramming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
-
-Once again, the difficulty lies not in the user interface of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
-
-### What, when and how
-
-Our class vector contains the member function `distance_to`. It is part of the interface of the class and has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible. Private functions give you much more degrees of freedom while for pubilc functions you have to stick to the behavior that was guaranteed by the interface. 
-
-Inside the test_vector.py file we write the test case. Before you miss it, I’d like the emphasize the very first line. We want to test the Vector class. We have to import the corresponding file.
-
-Next, we define the test case. Every test case gets a name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
-
-Inside the test we start with the setup part. In order to test the distance_to function we need two vector objects v1 and v2. In the next line we calculate the distance between v1 and v2.
-
-Now comes the execution of the test. We check if the result of the test is correct.
-
-
-## General thoughts about tests
-
-A lot of people think that writing code is only for finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
-
-Robert C. Martin compared programming with tests to double entry book keeping //Clean Craftsman. I really like this comparison. In both cases you have two independent truths (creditor, debitor and code, tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Because they are fairly independent and it is unlikely that the same mistake was made for both cases.
-
-Having two absolute thruths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break.
-
-There are a lot of things to consider when writing tests. The example above was very simple. In real code you have to deal with much more complex objects. With many more arguments. But all together it comes down to one point: Do you really understand what you want to test? If no, there is no need to start writing a test. It would never work. It would be a waste of time. Rewrite your code to make it simpler or get someone to help you understand the problem you should solve.
-
-// where does the setup and teardown part go?
-
-In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that return the desired objects. You might even have a util file for all the tests. Some fairly static objects you might need in a lot of different tests.
-
-There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximative checks you should use instead.
-
-Then it is common to miss some of the if-else branches. These are very important to test as most bugs usually hide in conditional statements. Make sure that you cover all cases, if necessary using a code coverage tool.
-
-Similarly you have to make sure your tests cover all the corner cases. This is one of the reasons why the tests have to be written by the same person as the actual code.
-
-
-### Quality of test code
-
-Tests are somewhat special, but ultimately, they are still code. Probably the tests in most modern software consist of more code than the actual code itself. Thinking about it, it becomes apparent that when writing tests some coding guidelines have to be followed as well.
-
-The very first point is once again the SRP. The code in tests should be clear to the reader. Do so by refactoring it as you would with any other code. Keep the functions short, find appropriate names and remove excessive duplication. These things frequently get overlooked when writing tests. Even tough the requirements on test code are somewhat different than for production code. Test code may not be complex and shouldn't cointain too many function calls. On the other hand, having some amount of duplication is acceptable. Or as Jay Fields (Working Effectively with Unit Tests) put it: "when writing tests you should prefer DAMP (Descriptive And Maintainable Procedures) to DRY."
-
-## Number of test cases
-
-Probably the hardest decision is what values you want to use in your tests. Writing one test case for a function is much better than nothing. But maybe you just got lucky and your code works exactly for this one number? For a single argument function, I recommend testing all possible corner cases and about two other values. As you wrote the function you will know the corner cases. Division by zero, etc.
-
-For functions with many variables it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with 3^3 = 27 test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. There might be cases where the variables don’t interact with each other. They are independent. 
-
-Now if you see that they are all independent, you may test them independently. The number of tests reduces to about 3*3 = 9. This sounds much more reasonable. Usually the variables are not independent. And it’s not feasible to write 27 test cases. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number of arguments low.
-
-It is important to really know what a function actually does. As I already wrote several times you have to test the corner cases. This only works if you know the code. You won’t find them by chance. Nor can you figure out if some variables are independent of each other or not. This is just one of the reasons why you have to write tests right along with the actual code. If someone else has to write the tests for your code, he’s missing this very crucial information and either has to read and understand all the code or just guess what it does. Both cases are a real issue.
-
-You may also have structured objects as an input or output of a function. This can become worse than having three variables by orders of magnitude. The structured objects may have a thousand fields, for example elements in a list. Everything we discussed so far becomes peanuts. But we can still achieve reasonable test coverage if we try. First of all, all elements in the list have to be treated equally. One of the few corner cases is the empty list. But also in large structured objects the complexity is usually managable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function. Again, it all comes down to the programmer knowing the relationship between different objects.
-
-## Setup and Teardown
-
-Setup and teardown are the functions automatically called at the beginning and the end of a test. Most of the time they are not needed. The setup can also be managed with a few helper functions and at the end of the test, the framework cleans up all the variables used. However, if your tests use text files or databases, things become tricky. You might need temporary files, change values in databases, etc. It becomes messy. You need a fool proof way that your file handling always works. This is where setup and teardown come into play.
-
-For the file creation there is not that much that can go wrong. You create if from code or copy it from another location. This is to be implemented in the setup part of the test. The tricky part is deleting the files in the end. It may sound very simple to delete a file at the end of the test, but if the test fails, a normal function call will never be executed. There will be a mess of undeleted files. This may impact future runs of the tests and they become flaky. This problem can be solved by implementing the teardown function that is guaranteed to be always executed. 
-
-Anyway, try to write tests that don’t need files. It makes things much easier. Especially in unit tests you won't have to deal with setup and teardown if you don't want to bother with it.
-
-## Best practice
-
-A test is also a programming object. Accordingly, it has to follow the basic rules, for example the single responsibility principle. Each test has exactly one purpose. It tests exactly one function. Testing many functions inside a single test is bad practice. Write helper functions for the setup of a test and writing an additional test will be simple. You may even use copy paste in tests! Having many smaller tests forces you to structure them better and improves the overall overview.
-
-It will happen frequently that you have a test that can only work if the other test works. For example, you have a function that writes a file. You write a test that calls this function and checks the existence of the file. Next you write a function that reads this file. In the test you will first call the function to create the file and then call the function to read it. Now these two tests are related. They both fail if the creation of the file fails. This is bad design and violates the single responsibility principle. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying. 
-
-Unfortunately having all the tests completely separated is a very hard, if not impossible task. There is always some correlation between failing tests. In python tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that would certainly fail under the current circumstances.
-
-```py
-@pytest.mark.dependency()
-def test_a():
-    assert False
-
-# skip test_b if test_a fails
-@pytest.mark.dependency(depends=["test_a"])
-def test_b():
-    pass
-```
-
-### Random numbers
-
-If you ever use random numbers in your code, you might get stuck with your tests. You think. Because how can you test something that’s random? Well, you can. Your random numbers are usually not really random. Your computer fakes them. Always use exactly the same random number algorithm and seed to get reproducible results for every test case. Only use real random numbers once you ship your software.
-
-## Problematic tests
-
-### Flaky tests
-
-Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests, but rather it destroys the confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because, say, the network is down. At times rerunning a test might help, though this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. This reduces the flakiness by orders of magnitude. And try to design your tests such that flakiness cannot occur. Especially unit tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky. Thus avoid testing any IO if possible and the tests should become stable. 
-
-### Britle tests
-
-Tests that are over specified are called brittle. They break when changing the code in seeminly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting does not matter. It does not change any of its values. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interessted in.
-
-Another example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
-
-## When what and how
-
-### When to run tests
-
-It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly however depends on the kind of test.
-
-Unit tests are fasts. Each one of them takes only milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all.
-
-Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) just as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
-
-Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
-
-With E2E tests it becomes a little bit trickier. E2E tests are slow and can't just be run in or before every MR. Therefore you can't guarantee that all E2E tests pass all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. In most cases it is fairly obvious why. 
-
-### The Beyonce rule
-
-A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
-She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
-
-### Mocking and Stubs
-
-// See chapter 13 of Software Engineering at google. Mocking seems great at first sight but it's not.
-
-// is using DI and faking better?
-
-Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky. In short: IO. Instead you want to simulate the device under test, the internet connection or the database.
-
-At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
-
-Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
-
-## Exercises
-
-// 
-
-# Types of tests
-
-## End-to-End tests
-
-// end-to-end tests vs. acceptance tests?
-
-End-to-End (E2E) tests are pretty much what I described in the story at the beginning of this chapter. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
-
-If you publish some code examples as a documentation of your API, you should write an end-to-end test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
-
-End-to-end tests are user centered. The user doesn’t know anything about the internals of the code (nor the coffee machine). He has only the interfaces you give him: GUI, API, joystick, microphone, coffee cup, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
-
-Sounds good. But at the same time, it seems extremely difficult to write these tests...? True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine.
-
-Testing on the API level is in theory fairly trivial. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. One option is comparing hash values instead of comparing complete files. 
-
-E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. It is important to combine them with unit tests. 
-
-One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?”
-
-I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. Good luck!
-
-## Integration tests
-
-// what else to write here?
-
-Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
-
-Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
-
-## Unit tests
-
-A lot of programmers work as follows. They write a function and have to figure out if it works correctly. In order to do so, they use print statements. They run the code and check if the results are correct.
-```Py
-def square(x):
-	if x == 2:
-		x = 3
-	return x**2
-print(square(1))
-print(square(2))
-print(square(5))
-```
-
-This works. They will find the bug in this case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of DRY that should be optimized away. And the solution are unit tests.
-
-Unit tests cover small pieces of code. Usually they test a public method or standalone functions. In the example above they would check everything that is checked using print statements.
-
-It may sound surprising, but unit tests are even more important than acceptance tests. 
-
-### Testing files
-
-Most of the time, unit tests only need a setup and an execution phase. There is no tear down required as unit tests don’t interact with any files or databases that you would have to delete in the end.
-
-"Why...? How? No files? No database?"
-
-Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_profit()` we can write tests for `calculate_annual_profit()` and we don’t have to deal with the filesystem anymore.
-
-```Py
-def share_values(filename):
-	share_value_file = read_share_values(filename)
-	share_values = extract_share_values(share_value_file)
-	return share_values
-```
-
-You can save the content of the file as a string inside your test code and call the second function, `extract_share_values`. This is similar to the GUI case for acceptance tests. You pack everything you don’t want to test into a small layer that is unlikely to fail and the remaining test becomes much smoother.
-
-The same holds for database access. You put all the code that requires DB access into a few simple functions that you are not going to write unit tests for but you make sure you test everything else.
-
-An even better approach is using dependency injection as explained in chapter //...? but for the moment we’ll leave it with the small wrapper function.
-
-### Testing classes
-
-Writing unit tests for classes is probably the most important part of this chapter. This is not only because of the prevalence of classes, but also because classes tend to become messy without any unit tests.
-
-First of all, classes tend to become too big. They have too many member variables and private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
-
-Furthermore, there is the issue of how to deal with private methods in big classes. Because apparently, the testing framework doesn’t have access to private functions. No one has, except for the class itself. A first attempt is making the private functions public. This, however, is not recommended. You should not make functions public, only in order to test them. This will lead to crippled code with too many public functions, which is the exact opposite of encapsulation. Therefore, unit tests should only test the public interface of a class. If you are tempted to test also some private functions, you should resist. This is a clear sign that your private functions are too complex. Make this private function a class on its own with a public interface that you can test.
-
-Classes that are hard to instantiate are another problem. For example, if the constructor has side effects that are not guaranteed to be undone, as opening a file, incrementing a counter, etc. In the real code, it may be guaranteed that all the required conditions are met to never run into troubles. When running unit tests however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
-
-As a summary one can say two things about classes and tests:
--	Classes should be small and contain few member variables
--	The constructors should be small and not rely on any fancy logic
-
-Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
-
-## The testing pyramid
-
-We've defined here 3 categories of tests. From the fine grained unit tests up to the very coarse end-to-end tests. As a rule of thumb one can say that the testing suite of any programm should consist of a lot of small grained and few coarse tests.
-
-Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can return a detailed feedback if something is broken. They are like testing the individual parts of a car radio before assembling it. Unit tests prevent the usage of faulty parts. Roughly estimated 80% of all tests should be unit tests. //quote software engineering at google. 
-
-Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still usefull to check the functionality of the radio. About 15% of all tests are integration tests.
-
-The E2E tests should only check that the installation of the assembled radio worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
-
-E2E tests are the least common. They are very valueable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However the feedback you get from an E2E test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing E2E tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. Only about 5% of all tests are end-to-end tests.
-
-// get an image without copy right
-
-<img src=images/testing_pyramid.jpg width="300">
-
-## Exercises
-
-Write some tests to existing code
-
-Refactor tests
-
-...?
 
 # 15. Writing good code
 
@@ -3253,7 +3259,7 @@ And last but not least, I hope you still remember the section about global varia
 
 # 26. Naming
 
-"And you will know, my name is the law!” – Pulp fiction #exact quote?
+"And you will know, my name is the Lord!” – Samel L. Jackson, Pulp fiction
 
 How long does a football game take? This is a very inocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
 
@@ -3299,6 +3305,10 @@ According to DRY, you should not repeat yourself. This is also true for processe
 It is generally recommended to do all the automatization in the beginning of a project. This has several reasons. First of all, it's the most efficient way to do it. You can use the automated pipelines right from the beginning. And all new team members can simply clone and build the project with a few commandline commands.
 
 Furthermore it may be difficult to automate an existing project. Thus automating it right from the beginning might save you quite some work.
+
+## Exercise
+
+Take an existing project and automate getting the project as well as the build. // how to set up such a project as an exercise?
 
 # 28. Complexity
 
@@ -3445,6 +3455,10 @@ I never really cared much about DBs and I'd like to teach you other things inste
 
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
 
+## Exercise
+
+// Create an exercise where the user has to save some data by himself and remove the examples in the code? But somehow I don't like removing the examples in the code.
+
 # 30. Project folder
 
 Code is a collection of text files. One question is: how do you deal with them?
@@ -3468,6 +3482,14 @@ There are some additional files in a project.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
+## Exercise
+
+Figure out what kind of hidden files (starting with a `.`) your toools support and what is their purpose.
+
+// git: .gitinore
+// various .env
+// ...
+
 # 31. Performance Optimization
 
 “Premature optimization is the root of all evil” - Donald Knuth
@@ -3490,9 +3512,9 @@ There are many small things you can do for optimizing your code like manual loop
 
 ## Exercise
 
-Take code with one or two slow algorithms. The user should use the profiler to find the bottle necks and then improve the performance. Or can Copilot do that?
+// Take code with one or two slow algorithms. The user should use the profiler to find the bottle necks and then improve the performance.
 
-The user should write a pairlist algorithm (or FFT or something else) and in a second step write a more optimized version.
+// The user should write a pairlist algorithm (or FFT or something else) and in a second step write a more optimized version.
 
 # 32. Comments
 
@@ -3558,6 +3580,11 @@ You may use docstring tools, like sphynx in python, for automatically generated 
 
 Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
 
+## Exercises
+
+// Create some code with comments and ask the user how to improve it.
+// take them from clean code?
+
 # 33. Logging
 
 The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
@@ -3575,6 +3602,10 @@ For non-deterministic software it may be useful. For example, if you have severa
 In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
+
+## Exercises
+
+
 
 # 34. Tools
 
