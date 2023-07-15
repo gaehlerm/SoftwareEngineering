@@ -238,6 +238,7 @@ Things to write:
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables-1)
 - [26. Naming](#26-naming)
+	- [Exercise](#exercise)
 - [27. Automatization](#27-automatization)
 - [28. Complexity](#28-complexity)
 	- [Estimating complexity](#estimating-complexity)
@@ -250,7 +251,7 @@ Things to write:
 	- [Custom file format](#custom-file-format)
 - [30. Project folder](#30-project-folder)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [Exercise](#exercise)
+	- [Exercise](#exercise-1)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -3283,6 +3284,11 @@ Here are some rules to follow when naming things:
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
 
+## Exercise
+
+Try to find better names for the following code:
+// get the bowling code from clean craftsman?
+
 # 27. Automatization
 
 // wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
@@ -3302,7 +3308,7 @@ As we are writing software, we have to deal with two different complexities. The
 
 The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. It should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
 
-I cannot deny, OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
+I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
 
 As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation of the experts in the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design book]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
 
@@ -3312,7 +3318,21 @@ Having a domain model is a great asset. It forces you to understand the problem 
 
 // this section here seems odd... remove it completely? estimation is treated in the agile section as well.
 
-// add the conversation from here? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
+Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management.
+
+Project Manager: Can you give me an estimate of the time necessary to develop feature xyz?
+
+Programmer: One month.
+
+Project Manager: That's far too long! We've only got one week.
+
+Programmer: I need at least three.
+
+Project Manager: I can give you two at most.
+
+Programmer: Deal!
+
+// source https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
 
 In many cases the complexity of a task is extremely hard to estimate. Some developers might have an idea what to do, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. 
 
@@ -3325,6 +3345,7 @@ There are several file formats to save data or use them as an interface. A lot o
 The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats.
 
 ## CSV
+// move the code examples into an exercise?
 
 Comma Spaced Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. But this is also one of the weaknesses of CSV. In some (natural) languages, the comma character is used for the floating point separator (exact name??). Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems.
 
@@ -3342,9 +3363,10 @@ def read_csv(filename):
         for line in file:
             if line.startswith("#"):
                 continue
-            x.append(float(line.split(",")[0]))
-            y.append(float(line.split(",")[1]))
-    return (x,y)
+			variables = line.split(",")
+            x.append(float(variables[0]))
+            y.append(float(variables[1]))
+    return (x, y)
 ```
 
 ## Json
@@ -3399,7 +3421,7 @@ The following code saves a list of values inside an HDF5 file.
 import h5py
 
 with h5py.File("temp.hdf5", "w") as f:
-    dset = f.create_dataset("x", data=[8, 3, 13, 1])
+    dset = f.create_dataset("x", data=[1, 2, 3])
 ```
 
 Reading a file returns an HDF5 file object. It may be a little intimidating at first, but it is fairly easy to work with. With many respects, it behaves similar to a dictionary.
@@ -3774,7 +3796,7 @@ Take Robert Martin's bowling example and let the user programm it?
 
 # 29. Good code
 
-This is an attempt to distillate a list of rules that allow you to judge the quality of code.
+This is an attempt to distille a list of rules that allow you to judge the quality of code.
 
 Here are some signs for good code:
 
@@ -3819,6 +3841,8 @@ Don’t pass Booleans as function arguments. They are a strong sign of violated 
 Don’t do string comparisons, use enums instead. Convert the string into an enum as soon as you have the string object available.
 
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
+
+Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
 # 36. 3rd party software
 
@@ -4186,7 +4210,6 @@ You also need courage to be honest. The very first thing is you have to be able 
 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
-
 # 43. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
@@ -4201,7 +4224,7 @@ This is a perfectly fine argument, but it is missing the point. On the long term
 
 As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t get it right so far. Keep working on it until you get it right. Then it will feel super smooth. And you learned a great deal along the way.
 
-The most commonly used tool at the time of writing for CI is Jenkins. It is web based …?
+The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...?
 
 # 44. Hiring and getting hired
 
