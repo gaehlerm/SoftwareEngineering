@@ -131,6 +131,15 @@ Things to write:
 		- [Testing classes](#testing-classes)
 	- [The testing pyramid](#the-testing-pyramid)
 	- [Exercises](#exercises-5)
+- [15. Writing good code](#15-writing-good-code)
+	- [Component tests](#component-tests)
+	- [Testing existing code](#testing-existing-code)
+		- [Asserts](#asserts)
+	- [Test Driven Development](#test-driven-development)
+		- [Example](#example-2)
+	- [Using fake objects](#using-fake-objects)
+		- [Mocking](#mocking)
+		- [Dependency injection](#dependency-injection)
 - [10. Refactoring](#10-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -171,15 +180,6 @@ Things to write:
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
-- [15. Writing good code](#15-writing-good-code)
-	- [Component tests](#component-tests)
-	- [Testing existing code](#testing-existing-code)
-		- [Asserts](#asserts)
-	- [Test Driven Development](#test-driven-development)
-		- [Example](#example-2)
-	- [Using fake objects](#using-fake-objects)
-		- [Mocking](#mocking)
-		- [Dependency injection](#dependency-injection)
 - [16. Variables types](#16-variables-types)
 	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
@@ -200,7 +200,9 @@ Things to write:
 	- [Observer](#observer)
 - [19. Decoupling](#19-decoupling)
 	- [Exercises](#exercises-10)
-- [20. Entropy](#20-entropy)
+- [20. Physical laws of code](#20-physical-laws-of-code)
+	- [Entropy](#entropy)
+	- [Correlation](#correlation)
 - [21. Software Architecture](#21-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
@@ -214,9 +216,6 @@ Things to write:
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
 	- [Exercises](#exercises-11)
-- [23. Some rules of thumb](#23-some-rules-of-thumb)
-	- [Code correlation](#code-correlation)
-	- [Single line complexity](#single-line-complexity)
 	- [Back magic code](#back-magic-code)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
@@ -242,7 +241,9 @@ Things to write:
 - [27. Automatization](#27-automatization)
 	- [Exercise](#exercise-1)
 - [28. Complexity](#28-complexity)
+	- [Complexity of code](#complexity-of-code)
 	- [Estimating complexity](#estimating-complexity)
+	- [Single line complexity](#single-line-complexity)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
 	- [Json](#json)
@@ -361,6 +362,8 @@ Enjoy my book and good luck with your career.
 
 # 4. Introduction
 
+"If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
+
 In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming that are only used due to historic reasons. In reality they are only leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes should be taken with care in OO programming.
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code independently. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics which are highly important but are frequently neglected in books on software development.
@@ -372,8 +375,6 @@ This book tries to give clear answers to simple problems. I also try giving answ
 This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book, thus I mention what book I was reading as a foundation for the corresponding chapter.
 
 ## The Life of a Software Engineer
-
-“If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
 I know you want me to get started and show you some fancy code examples. And I’m sorry to tell you that this is not happening. We don’t even know yet what this book should be about. Of course, you want to become a great software engineer get a job at google earn a lot of money and life a happy life. But this is all so vague. We have to sit down and analyze the situation. I even found moral support from a fellow physicist.
 
@@ -852,6 +853,8 @@ The following function is too long. Break it into shorter pieces.
 
 
 # 9. Classes
+
+"Q: What did the Java code say to the C code? A: You’ve got no class." - HampusMa on devrant.com
 
 // Break up this chapter? It's too long...
 
@@ -1360,9 +1363,7 @@ This class is a mixture of a delegating class and a worker class. Convert it int
 
 # 14. Testing
 
-// Break up this chapter? It's too long...
-
-// mention double entry book keeping somewhere? -> Clean Craftsmanship
+// mention double entry book keeping somewhere -> Clean Craftsmanship
 
 // in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
 
@@ -1705,6 +1706,320 @@ Write some tests to existing code
 Refactor tests
 
 ...?
+
+
+# 15. Writing good code
+
+"Programmer: A machine that turns coffee into code." – Anonymous
+
+// rename this chapter to "Tests and good code"? Or integrate it to the previous chapter?
+
+Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write good code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know right away there is some flaw in your code and you should redesign it.
+
+During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked.
+
+In good code, all the relevant data is easily accessible and constructing it manually for a test case is not harder than you would expect it to be. Preferably you have one big object with fairly static information that you can reuse in all tests and one small dynamic object that is different in every test.
+
+If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your function is too complex. It should be simplified. Rewrite the code until you can explain to your colleagues what it actually does. Until you can write a unit test. Otherwise you’ll run into huge problems down the bumpy road.
+
+You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may never take more than 1ms. You’ll be running hundreds if not thousands of tests, so execution time is crucial.
+
+// move this test elsewhere? the print statements were made in the chapter before.
+
+Let’s go back to the example at the beginning. There are just a few simple steps required to create a unit test out of that code.
+
+```py
+def test_squares():
+	assert f(1) == 1
+	assert f(2) == 4
+    assert f(5) == 25
+```
+
+Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
+
+## Component tests
+
+Component tests cover everything between unit and acceptance tests. Usually the interplay between a few classes or a complete library. If the library becomes an external interface, you could move the according component tests in to the acceptance tests.
+
+All together the boarder of component tests is not so well defined. Feel free so write some if you really feel like it, but generally having good unit and acceptance tests should be sufficient.
+
+## Testing existing code
+
+It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind the existing code. Usually there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
+
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: At the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law //citation? states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviours of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API.
+
+As you write tests, always make sure they fail when you expect them to. It already happened to me several times that such checks prevented me from hours of frustrating bug fixing. Usually, due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
+
+So far, I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
+
+Apparently this way of working is a tedious hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
+
+//more about testing existing code in Refactoring? See Michael Feathers book. 
+
+### Asserts
+
+There were times when people thought writing assert commands in to the production code was a good idea. There are even famous books favoring this approach. This is so terribly wrong! 
+
+The most obvious reason is that using asserts inside production code is a violation of the SRP. You are writing tests inside production code. I guess today everyone agrees that tests and production code should be in different files, possibly even in completely different folders.
+
+Secondly your production code is not made to run automated test cases. Asserts are only executed if you run the software you create. It will highlight you any violations of the assertions along the way, but this is not something that can be automated. It can be used at most like something of an emergency light. You’d rather focus on writing better tests instead.
+
+## Test Driven Development
+
+So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code.
+
+In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't wirte it. Even if you really think that it would be important and beautiful. And possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
+
+Maybe you do not fully understand yet how this is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
+
+You write one test for the feature you want to implement or the bug you want to fix. I repeat, one and only one test. In case you have acceptance and unit tests (I hope so), you may have one open test case for each of them. If both tests pass you can take a day off. 
+
+Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should. 
+
+Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is not yet implemented. Write enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you understand it well enough until the test passes.
+
+Once the test passes you might have to refactor to get the code back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
+
+There is a general pattern how you write code in TDD and its quite simple.
+
+1. Write a failing test.
+2. Write code until the test passes.
+3. Refactor if needed.
+
+These three steps you have to repeat over and over again until you are done with your ticket.
+
+Also, with TDD you have to do some bigger refactoring once in a while. This is inevitable and has to be taken into consideration. 
+
+### Example
+
+Let's write a program that converts arabic (the once we use) into roman numbers. Let's write a first test case.
+
+```py
+# inside test_roman_numbers.py
+from roman_numbers import *
+
+def test_one():
+    assert roman_numbers(1) == "I"
+```
+
+If we run the test, it fails as expected. But we can make it pass easily.
+
+```py
+# inside roman_numbers.py
+def roman_numbers(n):
+	return "I"
+```
+
+As there is nothing to refactor, we can continue with the second test.
+
+```py
+def test_two():
+    assert roman_numbers(2) == "II"
+```
+
+```py
+def roman_numbers(n):
+	if n == 1:
+		return "I"
+	else:
+		return "II"
+```
+
+Now the code started to become ugly. But at least for the time being we leave it as is.
+
+
+```py
+def test_three():
+    assert roman_numbers(3) == "III"
+```
+
+```py
+def roman_numbers(n):
+	if n == 1:
+		return "I"
+	elif n == 2:
+		return "II"
+	else:
+		return "III"
+```
+
+Now we have to refactor, otherwise this if else statement will take over. The new version of the code might look like this:
+
+```py
+def roman_numbers(n):
+	return n*"I"
+```
+
+Let's add a fourth test:
+
+
+```py
+def test_four():
+    assert roman_numbers(4) == "IV"
+```
+
+```py
+def roman_numbers(n):
+	if n >= 4:
+		return "IV"
+	return n*"I"
+```
+
+```py
+def test_five():
+    assert roman_numbers(5) == "V"
+```
+
+```py
+def roman_numbers(n):
+	if n >= 5:
+		return "V"
+	elif n == 4:
+		return "IV"
+	return n*"I"
+```
+
+Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works.
+
+```py
+def roman_numbers(n):
+	num = ""
+	while n >= 5:
+		num += "V"
+		n -= 5
+	while n >= 4:
+		num += "IV"
+		n -= 4
+	while n >= 1:
+		num += "I"
+		n -= 1
+	return num
+```
+
+In a second refactoring step we wrap the whole while loops into a single for loop.
+
+```py
+def roman_numbers(n):
+	num = ""
+	arabic_to_roman = {5:"V", 4:"IV", 1:"I"}
+	for arabic in arabic_to_roman:
+		while n >= arabic:
+			n -= arabic
+			num += arabic_to_roman[arabic]
+	return num
+```
+
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //?? that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
+
+
+## Using fake objects
+
+//this is a tricky chapter. Only for advanced users. Rename it somehow? 
+
+There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case.
+
+In general, there are two ways to mock a database. 
+
+### Mocking
+
+The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file.
+
+```py
+from important_stuff import *
+
+from unittest.mock import Mock
+
+def test_mock_important_stuff():
+    read_csv = Mock(return_value=([7], [8], [9]))
+
+    assert read_csv("unexisting_file.csv") == ([7], [8], [9])
+```
+
+### Dependency injection
+
+The second way is using a technique called Dependency Injection (DI). In this case you create a new object from scratch, which pretends to read a csv file. But in reality it just returns a bunch of predefined numbers. This works if the `CsvReader` object implements a `Reader` interface and an instance of the `CsvReader` is handed over as a function argument. Then one can replace this function argument with an instance of a `MockReader`.  As python uses duck typing, one can also omit the definition of the interface. The whole code would look roughly as follows:
+
+```py
+class CsvReader:
+	def read_file(file_name):
+		data = []
+		# implement reading a csv file
+		return data
+
+class MockReader:
+	def read_file(file_name="not_needed"):
+		return [1,2,3]
+
+def get_data(reader):
+	return reader.read_file("top_secret.csv")
+
+if __name__ == "__main__":
+	real_data = get_data(CsvReader())
+	mock_data = get_data(MockReader())
+```
+
+Using DI is generally a very recommended practice and should always be used when dealing with IO. For the very simple reason that you can very easily replace the code that you inject with something else. In the example above it would be fairly easy to write a `SqlReader`  that gets the data from a database instead a csv file. 
+
+// remove the C++ code?
+
+In C++ there is an additional complexity as you’ll need an interface to support mocking. You have to write an abstract base class to define that interface. It’s just another detail you have to take care of. Dealing with abstract classes and interfaces should anyway be one of the earlier things to learn while dependency injection is somewhat advanced.
+
+```C++
+class Reader{
+public:
+	virtual void read_file(const std::string& file_name) = 0;
+};
+
+class CsvReader : public Reader{
+public:
+	std::vector<double> read_file(const std::string& file_name) override
+	{
+		std::vector<double> data;
+		// implement reading a csv file
+		return data;
+	}
+};
+
+class MockReader : public Reader{
+public:
+	std::vector<double> read_file(const std::string&) override
+	{
+		std::vector<double> data {1.,2.,3.};
+		return data;
+	}
+};
+
+
+std::vector<double> get_data(std::unique_ptr<Reader>):
+	return reader->read_file("top_secret.csv")
+
+if __name__ == "__main__":
+	real_data = get_data(std::make_unique<Reader>(CsvReader()));
+	mock_data = get_data(std::make_unique<Reader>(MockReader()));
+```
+
+These pointer objects should be instantiated as soon as possible. Usually this is possible at the point where the type of reader is selected at a fairly high level of abstraction. The only drawback of DI is, that the pointer has to be passed through the whole stack down to the point where the database is actually used.
+
+An alternative would be passing around a string and select the actual DB type only when needed.
+```C++
+switch(reder_type):
+case “csv”:
+	auto csv_reader = std::make_unique<Reader>(CsvReader());
+case “mock”:
+	auto mock_reader = std::make_unique<Reader>(MockReader());
+```
+
+This would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding database pointer right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
+
+Now don’t worry if you haven’t understood everything. I explained dependency injection, base classes, etc., which are all fairly advanced topics. I just hope you got some of the basic ideas I tried to explain here. They can be useful and the ideas behind them are very important. In fact, these ideas are that important that you’re going to see them again in the section on the strategy design pattern.
+
+As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection. You can also pass different functions as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection instead of using function pointers. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
+
+//here I have to write about spys, mocks, fakes, stubs, etc! See clean craftmanship, p.118
+
+So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
+
 
 # 10. Refactoring
 “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
@@ -2110,7 +2425,7 @@ For more intormation about C++ I can recommend the google C++ style guide, https
 
 # 13. bugs, errors, exceptions
 
-Better dead than walking wounded
+"It’s not a bug; it’s an undocumented feature." - Anonymous
 
 Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the consts are significant.
 
@@ -2163,317 +2478,9 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
-# 15. Writing good code
-
-// rename this chapter to "Tests and good code"? Or integrate it to the previous chapter?
-
-Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write good code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know right away there is some flaw in your code and you should redesign it.
-
-During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked.
-
-In good code, all the relevant data is easily accessible and constructing it manually for a test case is not harder than you would expect it to be. Preferably you have one big object with fairly static information that you can reuse in all tests and one small dynamic object that is different in every test.
-
-If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your function is too complex. It should be simplified. Rewrite the code until you can explain to your colleagues what it actually does. Until you can write a unit test. Otherwise you’ll run into huge problems down the bumpy road.
-
-You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may never take more than 1ms. You’ll be running hundreds if not thousands of tests, so execution time is crucial.
-
-// move this test elsewhere? the print statements were made in the chapter before.
-
-Let’s go back to the example at the beginning. There are just a few simple steps required to create a unit test out of that code.
-
-```py
-def test_squares():
-	assert f(1) == 1
-	assert f(2) == 4
-    assert f(5) == 25
-```
-
-Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
-
-## Component tests
-
-Component tests cover everything between unit and acceptance tests. Usually the interplay between a few classes or a complete library. If the library becomes an external interface, you could move the according component tests in to the acceptance tests.
-
-All together the boarder of component tests is not so well defined. Feel free so write some if you really feel like it, but generally having good unit and acceptance tests should be sufficient.
-
-## Testing existing code
-
-It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind the existing code. Usually there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
-
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: At the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law //citation? states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviours of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API.
-
-As you write tests, always make sure they fail when you expect them to. It already happened to me several times that such checks prevented me from hours of frustrating bug fixing. Usually, due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
-
-So far, I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
-
-Apparently this way of working is a tedious hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
-
-//more about testing existing code in Refactoring? See Michael Feathers book. 
-
-### Asserts
-
-There were times when people thought writing assert commands in to the production code was a good idea. There are even famous books favoring this approach. This is so terribly wrong! 
-
-The most obvious reason is that using asserts inside production code is a violation of the SRP. You are writing tests inside production code. I guess today everyone agrees that tests and production code should be in different files, possibly even in completely different folders.
-
-Secondly your production code is not made to run automated test cases. Asserts are only executed if you run the software you create. It will highlight you any violations of the assertions along the way, but this is not something that can be automated. It can be used at most like something of an emergency light. You’d rather focus on writing better tests instead.
-
-## Test Driven Development
-
-So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code.
-
-In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't wirte it. Even if you really think that it would be important and beautiful. And possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
-
-Maybe you do not fully understand yet how this is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
-
-You write one test for the feature you want to implement or the bug you want to fix. I repeat, one and only one test. In case you have acceptance and unit tests (I hope so), you may have one open test case for each of them. If both tests pass you can take a day off. 
-
-Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should. 
-
-Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is not yet implemented. Write enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you understand it well enough until the test passes.
-
-Once the test passes you might have to refactor to get the code back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
-
-There is a general pattern how you write code in TDD and its quite simple.
-
-1. Write a failing test.
-2. Write code until the test passes.
-3. Refactor if needed.
-
-These three steps you have to repeat over and over again until you are done with your ticket.
-
-Also, with TDD you have to do some bigger refactoring once in a while. This is inevitable and has to be taken into consideration. 
-
-### Example
-
-Let's write a program that converts arabic (the once we use) into roman numbers. Let's write a first test case.
-
-```py
-# inside test_roman_numbers.py
-from roman_numbers import *
-
-def test_one():
-    assert roman_numbers(1) == "I"
-```
-
-If we run the test, it fails as expected. But we can make it pass easily.
-
-```py
-# inside roman_numbers.py
-def roman_numbers(n):
-	return "I"
-```
-
-As there is nothing to refactor, we can continue with the second test.
-
-```py
-def test_two():
-    assert roman_numbers(2) == "II"
-```
-
-```py
-def roman_numbers(n):
-	if n == 1:
-		return "I"
-	else:
-		return "II"
-```
-
-Now the code started to become ugly. But at least for the time being we leave it as is.
-
-
-```py
-def test_three():
-    assert roman_numbers(3) == "III"
-```
-
-```py
-def roman_numbers(n):
-	if n == 1:
-		return "I"
-	elif n == 2:
-		return "II"
-	else:
-		return "III"
-```
-
-Now we have to refactor, otherwise this if else statement will take over. The new version of the code might look like this:
-
-```py
-def roman_numbers(n):
-	return n*"I"
-```
-
-Let's add a fourth test:
-
-
-```py
-def test_four():
-    assert roman_numbers(4) == "IV"
-```
-
-```py
-def roman_numbers(n):
-	if n >= 4:
-		return "IV"
-	return n*"I"
-```
-
-```py
-def test_five():
-    assert roman_numbers(5) == "V"
-```
-
-```py
-def roman_numbers(n):
-	if n >= 5:
-		return "V"
-	elif n == 4:
-		return "IV"
-	return n*"I"
-```
-
-Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works.
-
-```py
-def roman_numbers(n):
-	num = ""
-	while n >= 5:
-		num += "V"
-		n -= 5
-	while n >= 4:
-		num += "IV"
-		n -= 4
-	while n >= 1:
-		num += "I"
-		n -= 1
-	return num
-```
-
-In a second refactoring step we wrap the whole while loops into a single for loop.
-
-```py
-def roman_numbers(n):
-	num = ""
-	arabic_to_roman = {5:"V", 4:"IV", 1:"I"}
-	for arabic in arabic_to_roman:
-		while n >= arabic:
-			n -= arabic
-			num += arabic_to_roman[arabic]
-	return num
-```
-
-Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //?? that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
-
-
-## Using fake objects
-
-//this is a tricky chapter. Only for advanced users. Rename it somehow? 
-
-There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case.
-
-In general, there are two ways to mock a database. 
-
-### Mocking
-
-The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file.
-
-```py
-from important_stuff import *
-
-from unittest.mock import Mock
-
-def test_mock_important_stuff():
-    read_csv = Mock(return_value=([7], [8], [9]))
-
-    assert read_csv("unexisting_file.csv") == ([7], [8], [9])
-```
-
-### Dependency injection
-
-The second way is using a technique called Dependency Injection (DI). In this case you create a new object from scratch, which pretends to read a csv file. But in reality it just returns a bunch of predefined numbers. This works if the `CsvReader` object implements a `Reader` interface and an instance of the `CsvReader` is handed over as a function argument. Then one can replace this function argument with an instance of a `MockReader`.  As python uses duck typing, one can also omit the definition of the interface. The whole code would look roughly as follows:
-
-```py
-class CsvReader:
-	def read_file(file_name):
-		data = []
-		# implement reading a csv file
-		return data
-
-class MockReader:
-	def read_file(file_name="not_needed"):
-		return [1,2,3]
-
-def get_data(reader):
-	return reader.read_file("top_secret.csv")
-
-if __name__ == "__main__":
-	real_data = get_data(CsvReader())
-	mock_data = get_data(MockReader())
-```
-
-Using DI is generally a very recommended practice and should always be used when dealing with IO. For the very simple reason that you can very easily replace the code that you inject with something else. In the example above it would be fairly easy to write a `SqlReader`  that gets the data from a database instead a csv file. 
-
-// remove the C++ code?
-
-In C++ there is an additional complexity as you’ll need an interface to support mocking. You have to write an abstract base class to define that interface. It’s just another detail you have to take care of. Dealing with abstract classes and interfaces should anyway be one of the earlier things to learn while dependency injection is somewhat advanced.
-
-```C++
-class Reader{
-public:
-	virtual void read_file(const std::string& file_name) = 0;
-};
-
-class CsvReader : public Reader{
-public:
-	std::vector<double> read_file(const std::string& file_name) override
-	{
-		std::vector<double> data;
-		// implement reading a csv file
-		return data;
-	}
-};
-
-class MockReader : public Reader{
-public:
-	std::vector<double> read_file(const std::string&) override
-	{
-		std::vector<double> data {1.,2.,3.};
-		return data;
-	}
-};
-
-
-std::vector<double> get_data(std::unique_ptr<Reader>):
-	return reader->read_file("top_secret.csv")
-
-if __name__ == "__main__":
-	real_data = get_data(std::make_unique<Reader>(CsvReader()));
-	mock_data = get_data(std::make_unique<Reader>(MockReader()));
-```
-
-These pointer objects should be instantiated as soon as possible. Usually this is possible at the point where the type of reader is selected at a fairly high level of abstraction. The only drawback of DI is, that the pointer has to be passed through the whole stack down to the point where the database is actually used.
-
-An alternative would be passing around a string and select the actual DB type only when needed.
-```C++
-switch(reder_type):
-case “csv”:
-	auto csv_reader = std::make_unique<Reader>(CsvReader());
-case “mock”:
-	auto mock_reader = std::make_unique<Reader>(MockReader());
-```
-
-This would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding database pointer right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
-
-Now don’t worry if you haven’t understood everything. I explained dependency injection, base classes, etc., which are all fairly advanced topics. I just hope you got some of the basic ideas I tried to explain here. They can be useful and the ideas behind them are very important. In fact, these ideas are that important that you’re going to see them again in the section on the strategy design pattern.
-
-As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection. You can also pass different functions as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection instead of using function pointers. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
-
-//here I have to write about spys, mocks, fakes, stubs, etc! See clean craftmanship, p.118
-
-So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid.
-
 # 16. Variables types
+
+"God is real … unless declared integer." - 
 
 Variables have a different scope. Depending on how large this scope is, the variables do have different advantages and drawbacks.
 
@@ -2665,9 +2672,11 @@ This chain is also very rigid and hard to change. Don’t chain method calls.
 
 // Compare 2 different versions of some code and let the reader figure out why one is more coupled than the other.
 
-# 20. Entropy
+# 20. Physical laws of code
 
-// move this part elsewhere. 
+"I think you should always bear in mind that entropy is not on your side." - Elon Musk
+
+## Entropy
 
 Entropy is the physical law of disorder. It says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
 
@@ -2675,9 +2684,19 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 // This text is somehow duplicated with the beginning of Refactoring
 
+
+## Correlation
+
+Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
+
+There is a market for food and further down the road there is a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+
+Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
+
+
 # 21. Software Architecture
 
-Getting software to work is easy. Getting it right is hard. – Robert C. Martin
+"The perfect kind of architecture decision is the one which never has to be made" ― Robert C. Martin
 
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
@@ -2914,31 +2933,6 @@ I think this was the longest section in this book where I explain technical deta
 
 For each principle create an example where it's violated and let the user correct it.
 
-# 23. Some rules of thumb
-
-// split up this chapter? But where to put the parts?
-
-## Code correlation
-
-//remove first paragraph?
-
-Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
-
-There is a market for food and further down the road there is a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
-
-Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
-
-## Single line complexity
-
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth wirting such code once in a while. You will learn quite something about how code can look like.
-
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
-
-Now this is still one of the more readable inline list initializations. But it is banned by the google style guide as it contains two variables.
-
-```py
-[[[0] * 2 for i in range(3)] for j in range(4)]
-```
 
 ## Back magic code
 
@@ -3314,6 +3308,8 @@ Take an existing project and automate getting the project as well as the build. 
 
 “I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it.” – Bill Gates
 
+## Complexity of code
+
 As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers.
 
 The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. It should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
@@ -3325,8 +3321,6 @@ As a next step, you have to get an idea how you can convert all this knowledge i
 Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details at the beginning of the development.
 
 ## Estimating complexity
-
-// this section here seems odd... remove it completely? estimation is treated in the agile section as well.
 
 Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management.
 
@@ -3346,7 +3340,19 @@ Programmer: Deal!
 
 In many cases the complexity of a task is extremely hard to estimate. Some developers might have an idea what to do, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. 
 
-Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. # rewrite this section, it doesn’t make sense. add example?
+Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. // rewrite this section, it doesn’t make sense. add example?
+
+## Single line complexity
+
+A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth wirting such code once in a while. You will learn quite something about how code can look like.
+
+On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
+
+Now this is still one of the more readable inline list initializations. But it is banned by the google style guide as it contains two variables.
+
+```py
+[[[0] * (i + j) for i in range(3)] for j in range(4)]
+```
 
 # 29. Data files
 
@@ -3517,6 +3523,8 @@ There are many small things you can do for optimizing your code like manual loop
 // The user should write a pairlist algorithm (or FFT or something else) and in a second step write a more optimized version.
 
 # 32. Comments
+
+"Code is like humor. When you have to explain it, it’s bad." – Cory House
 
 Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
 
@@ -4118,6 +4126,8 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 # 42. Agile
 
+“Intelligence is the ability to adapt to change.” – Stephen Hawking, among others
+
 All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner. - Fundamentals of Software Architecture
 
 // How much of this chapter is explained in Working in teams
@@ -4458,6 +4468,8 @@ Cheat sheet bbv, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
 google style guide, https://google.github.io/styleguide/
 
 # 48. Outlook
+
+"Programming is learned by writing programs." ― Brian Kernighan
 
 Maybe you were surprised sometimes that there were so few code examples. But I hope you understood that they are not required. I wanted to explain fundamental concepts of software engineering. I wanted to give you an overview of the most important things to look out for. This should be a book that tells you the very basic rules that make your code better. There are not so many. But they are really important.
 
