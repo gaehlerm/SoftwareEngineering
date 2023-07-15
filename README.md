@@ -106,7 +106,7 @@ Things to write:
 	- [Example](#example-1)
 	- [Conclusions](#conclusions-1)
 	- [Exercises](#exercises-3)
-- [14. Testing](#14-testing)
+- [10. Testing](#10-testing)
 	- [Structure of tests](#structure-of-tests)
 		- [What, when and how](#what-when-and-how)
 	- [General thoughts about tests](#general-thoughts-about-tests)
@@ -123,7 +123,7 @@ Things to write:
 		- [The Beyonce rule](#the-beyonce-rule)
 		- [Mocking and Stubs](#mocking-and-stubs)
 	- [Exercises](#exercises-4)
-- [Types of tests](#types-of-tests)
+- [11. Types of tests](#11-types-of-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
@@ -131,7 +131,7 @@ Things to write:
 		- [Testing classes](#testing-classes)
 	- [The testing pyramid](#the-testing-pyramid)
 	- [Exercises](#exercises-5)
-- [15. Writing good code](#15-writing-good-code)
+- [12. Writing good code](#12-writing-good-code)
 	- [Component tests](#component-tests)
 	- [Testing existing code](#testing-existing-code)
 		- [Asserts](#asserts)
@@ -140,7 +140,7 @@ Things to write:
 	- [Using fake objects](#using-fake-objects)
 		- [Mocking](#mocking)
 		- [Dependency injection](#dependency-injection)
-- [10. Refactoring](#10-refactoring)
+- [13. Refactoring](#13-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
 		- [Refactoring and automated test](#refactoring-and-automated-test)
@@ -159,9 +159,9 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Sketches](#sketches)
 	- [Exercises](#exercises-6)
-- [11. Understandable code](#11-understandable-code)
+- [14. Understandable code](#14-understandable-code)
 	- [Exercises](#exercises-7)
-- [12. Programming languages](#12-programming-languages)
+- [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
 	- [Python](#python)
@@ -175,20 +175,20 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs-1)
 	- [Exercises](#exercises-8)
-- [13. bugs, errors, exceptions](#13-bugs-errors-exceptions)
+- [16. bugs, errors, exceptions](#16-bugs-errors-exceptions)
 	- [Bugs](#bugs-1)
 		- [Debugging](#debugging)
 	- [Syntax Errors](#syntax-errors)
 	- [Exceptions](#exceptions)
-- [16. Variables types](#16-variables-types)
+- [17. Variables types](#17-variables-types)
 	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
 	- [Variable comparison](#variable-comparison)
 	- [Exercises](#exercises-9)
-- [17. Programming Paradigms](#17-programming-paradigms)
+- [18. Programming Paradigms](#18-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
-- [18. Design patterns](#18-design-patterns)
+- [19. Design patterns](#19-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
 		- [Implementation](#implementation-1)
@@ -198,15 +198,15 @@ Things to write:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
-- [19. Decoupling](#19-decoupling)
+- [20. Decoupling](#20-decoupling)
 	- [Exercises](#exercises-10)
-- [20. Physical laws of code](#20-physical-laws-of-code)
+- [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
-- [21. Software Architecture](#21-software-architecture)
+- [22. Software Architecture](#22-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
-- [22. Solid principles](#22-solid-principles)
+- [23. Solid principles](#23-solid-principles)
 	- [Single Responsibility Principle](#single-responsibility-principle)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Liskov Substitution Principle](#liskov-substitution-principle)
@@ -294,23 +294,23 @@ Things to write:
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
 	- [Exercises](#exercises-15)
-- [29. Good code](#29-good-code)
-- [36. 3rd party software](#36-3rd-party-software)
-- [37. Dependencies](#37-dependencies)
+- [36. Good code](#36-good-code)
+- [37. 3rd party software](#37-3rd-party-software)
+- [38. Dependencies](#38-dependencies)
 	- [Circular dependencies](#circular-dependencies)
-- [38. Working in teams](#38-working-in-teams)
+- [39. Working in teams](#39-working-in-teams)
 	- [Team structure](#team-structure)
 		- [The bus factor](#the-bus-factor)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
 	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
-- [39. Code review](#39-code-review)
+- [40. Code review](#40-code-review)
 	- [Drawbacks](#drawbacks)
-- [40. Working with existing projects](#40-working-with-existing-projects)
-- [41. Planning](#41-planning)
+- [41. Working with existing projects](#41-working-with-existing-projects)
+- [42. Planning](#42-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
-- [42. Agile](#42-agile)
+- [43. Agile](#43-agile)
 	- [Agile values](#agile-values)
 	- [Work planning](#work-planning)
 	- [QA](#qa)
@@ -324,18 +324,18 @@ Things to write:
 	- [Becoming agile](#becoming-agile)
 	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
 		- [Courage](#courage)
-- [43. Continuous integration](#43-continuous-integration)
-- [44. Hiring and getting hired](#44-hiring-and-getting-hired)
+- [44. Continuous integration](#44-continuous-integration)
+- [45. Hiring and getting hired](#45-hiring-and-getting-hired)
 	- [Hiring](#hiring)
 	- [Getting hired](#getting-hired)
-- [45. Work ethics](#45-work-ethics)
-- [46. Examples](#46-examples)
+- [46. Work ethics](#46-work-ethics)
+- [47. Examples](#47-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
 		- [Implementation](#implementation-2)
 	- [Paint](#paint)
-- [47. Further reading](#47-further-reading)
-- [48. Outlook](#48-outlook)
+- [48. Further reading](#48-further-reading)
+- [49. Outlook](#49-outlook)
 
 
 # 3. Preface
@@ -745,19 +745,17 @@ APIs are extremely delicate. You have to get it right on the first attempt. You 
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
 
-Further Reading: Clean Code, chapter 3, Robert C. Martin
+// Further Reading: Clean Code, chapter 3, Robert C. Martin
 
-// what else to write about functions? Read clean code again?
+Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as mutable output arguments. Therefore, I won’t mention the differences between functions and methods too often.
 
-Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Therefore, I won’t mention the differences too often.
-
-Functions and methods are, along with classes, the backbone of modern software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well.
+Functions are, along with classes, the backbone of modern OO software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well.
 
 ## Do one thing only
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (less than roughly ten lines) and have as few levels of indentation as possible. Having nested if/else, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
+Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (preferably less than ten lines) and have as few levels of indentation as possible. Having nested if/else, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
-Naming becomes relatively easy if you follow these rules. The function body should all be one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
+Naming becomes comparably easy if you follow these rules. The function body is one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
 
 ```C++
 void log_in(const std::string& email_address):
@@ -766,9 +764,7 @@ void log_in(const std::string& email_address):
 	check(email_address);
 ```
 
-This is clearly a side effect. This function says nothing about a hidden counter, thus this is hidden behavior and should be avoided.
-
-Functions should not have any side effects. Actually, no code should ever have side effects. But functions are the only thing that can have side effects because all actions are performed inside functions. Side effects are terrible. They are not mentioned in the function name and they are very easy to miss when reading the code. Additionally, they lead to temporal coupling as the order of calling functions with side effects matter.
+This function clearly has a side effect. It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
 
 ## Temporal coupling
 
@@ -781,10 +777,11 @@ class Shopping{
 	def create_shopping_list(self, shopping_list):
 		self.shopping_list = shopping_list
 	def go_shopping():
-		# do something
+		# use the shopping_list and money
 }
 ```
-Apparently you have to get money and create a shopping list before you go shopping.
+Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
+
 ```py
 shopping = Shopping()
 shopping.get_money(50)
@@ -793,6 +790,7 @@ shopping.go_shopping()
 ```
 
 This is the natural order of things. However, this is not enforced by the code. One could also write the following code:
+
 ```py
 shopping = Shopping()
 shopping.get_money(50)
@@ -800,7 +798,7 @@ shopping.go_shopping()
 shopping.create_shopping_list(["apple", "banana"])
 ```
 
-Now you go shopping without having a shopping list. I don't know what the code will do, but it's quite certainly an error.
+Now you go shopping without having a shopping list. In fact, the call of `create_shopping_list` is probably superfluous. I don't know what the code will do, but it has quite certainly unintended behavior.
 
 It is one of the advantages of procedural code that such things are less likely to happen.
 ```Py
@@ -814,19 +812,21 @@ In this case it is physically impossible to go shopping without having a shoppin
 Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or, if necessary, to mutable arguments.
 
 ## Number of arguments
-As with the length of the function, the number of arguments should be as small as possible. This simplifies the function a lot. Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it will become.
+As for the length of the function, the number of arguments should be as small as possible as well. This simplifies the function a lot. 
 
-Functions shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
+Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it will become.
+
+Functions generally shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 ```py
-Total variables = argument variables + class variables + global variables
+Total variables = function arguments + class variables
 ```
-Global variables should not be used as explained in chapter //? , so we’ll neglect those.
+Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
 
-A method might access only a few of the class variables. Still, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
+A method might access only a few of the class variables. Still, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
-Following the SRP, functions can only be either a query or a command //https://en.wikipedia.org/wiki/Command%E2%80%93query_separation. Never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code, but at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
+Following the SRP, functions can only be either a query or a command //https://en.wikipedia.org/wiki/Command%E2%80%93query_separation, but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
 ```py
 if set_node("money", 50):
 	go_shopping(); 
@@ -835,13 +835,13 @@ Here the `set_node` function does two things at a time which certainly doesn't h
 
 ## Output arguments
 
-A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is so unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference. However, in other languages, this has to be clear from the context of the function.
+A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference. However, in other languages, this has to be clear from the context of the function.
 
-Unexpected changes of values of a function argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of input variables. If you change the value of an input argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
+Unexpected changes of values of a function argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of function arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
 
 ## Return values
 
-Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or for a method: This method might change the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
+Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or, this method might change a variable of the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
