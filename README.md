@@ -72,6 +72,7 @@ Things to write:
 - [9. Classes](#9-classes)
 	- [Structs](#structs)
 	- [Private or Public](#private-or-public)
+	- [Functions and Methods](#functions-and-methods)
 	- [Different kind of classes](#different-kind-of-classes)
 		- [Struct](#struct)
 		- [Pure method classes](#pure-method-classes)
@@ -92,14 +93,15 @@ Things to write:
 		- [Delegating classes](#delegating-classes)
 		- [Other points of consideration](#other-points-of-consideration)
 	- [Lose and strong coupling](#lose-and-strong-coupling)
+		- [Worker classes](#worker-classes-1)
+		- [Inheritance](#inheritance)
+		- [Other class types](#other-class-types)
 	- [Static expression](#static-expression)
-	- [Problems](#problems)
-	- [Functions and Methods](#functions-and-methods)
-	- [Temporal coupling](#temporal-coupling-1)
+	- [Drawbacks](#drawbacks)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
 	- [Exercises](#exercises-3)
-- [Inheritance](#inheritance)
+- [Inheritance](#inheritance-1)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
 		- [Error prone](#error-prone)
@@ -310,7 +312,7 @@ Things to write:
 	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
 - [40. Code review](#40-code-review)
-	- [Drawbacks](#drawbacks)
+	- [Drawbacks](#drawbacks-1)
 - [41. Working with existing projects](#41-working-with-existing-projects)
 - [42. Planning](#42-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
@@ -892,6 +894,10 @@ You have this absolutely massive object and you can do only three things with it
 
 There is one very simple rule of thumb which parts of a class should be public or private. If a class has no functions, it’s a struct and all variables should be public. Otherwise as few functions as possible should be public and all variables are private. But we’ll look at this rule in more detail in the next section.
 
+## Functions and Methods
+
+Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for both, member and non-member functions. The difference between member and non-member functions is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and free functions inside a namespace are indistinguishable in C++.
+
 ## Different kind of classes
 
 // make some examples
@@ -1195,28 +1201,35 @@ class Car:
 
 The car class is only delegating the `set_temperature` function call to the `air_conditioning`. And also, the `air_conditioning` does not have a temperature variable. It has only a temperature sensor that measures the temperature along with its possibility to change the temperature.
 
-This might be only one example, but there aren’t any other variables in the car where you can use a get or set call directly. It doesn’t improve the code if you write a set_air_conditioing function.
+This might be only one example, but there aren’t any other variables in the car where you can use a get or set call directly. It doesn’t improve the code if you write a `get_air_conditioing` function.
 
 I hope I managed to convince you not to write bare getter and setter functions to member variables. Especially not to all of them.
 
 ### Other points of consideration
 
-One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters and work with the plain variable.
+One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a plain variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. 
 
+Generally I don't regard this reason as sufficient to write setter and getter functions. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters and work with the plain variable.
 
 ## Lose and strong coupling
 
-// is this section somehow redundant?
-
 You should have high cohesion within a class and low coupling between classes. This is a generally accepted rule for good class design. However, it is only true for some types of classes. Let me briefly explain.
 
-High cohesion means that one thing effects everything else. You have one or two class variables and most of the methods use them. This is high cohesion. From the code point of view, it makes sense to have all these methods together as they quite certainly do similar things. They use the same variables. The opposite is having many variables where each of them is only used by one or two methods. This class has low cohesion. It would be fairly easy to break it into pieces.
+High cohesion means that one thing effects everything else. You have one or two class variables and most of the methods use them. This is high cohesion. From the code point of view, it makes sense to have all these methods together as they quite certainly do similar things. They use the same variables. The opposite is having many variables where each of them is only used by one or two methods. This class has low cohesion. It would be fairly easy to break it into pieces. A good class has high cohesion.
 
-Classes have low coupling if the number of interaction points between them is comparably low. Ideally, every class does its work and then hands it over to the next one, as in a rally race. The interface of every class would consist of only one function. High coupling on the other hand is like two (or many) classes playing ping-pong. They all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
+### Worker classes
+
+Classes have low coupling if the number of interaction points between different classes is comparably low. Ideally, every class does its work and then hands it over to the next one, as in a rally race. The interface of every class would consist of only one function. High coupling on the other hand is like two (or many) classes playing ping-pong. They all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
 
 I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn’t any better. It becomes increasingly hard to make any changes. Implementing new features will take a long time and fixing bugs is hard because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
-This is one of the reasons why I recommend not to use inheritance. Inheritance is one of the strongest coupling we have available in software development. It obfuscates the code and getting rid of the inheritance at a later point can be almost impossible.
+There always has to be some amount of coupling. Code cannot exist without it. But the amount of coupling between classes should be kept as low as possible. Additionally there are techniques to decouple your code. Writing an adapter between two classes for instance can give you more flexibility.
+
+### Inheritance
+
+This is one of the reasons why I recommend not to use inheritance. Inheritance is one of the strongest coupling we have available in software development. The derived class inherits all the implementations of the base class functions. Vice versa, the behavior of the base class functions may change if some function calls get overridden by the derived class. Inheritance obfuscates the code and getting rid of it at a later point can be almost impossible.
+
+### Other class types
 
 Maybe you realized by now why this rule about high cohesion does not apply to all kind of classes. A pure data class has no cohesion at all. It takes no effort at all to split a data class. You may split it however you like. A delegating class has very little cohesion. Yet these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes, meanwhile data classes are a lose bunch of variables without any cohesion. They are grouped together solely because it makes the code easier to understand and deal with.
 
@@ -1226,25 +1239,17 @@ Static methods are another thing that I discourage using. It’s not super bad, 
 
 I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code.
 
-As we are talking about static, we can also discuss static variables. Bluntly speaking, they are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables.
+As we are talking about static, we can also discuss static variables. Static variables are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables.
 
-## Problems
+## Drawbacks
 
-Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables!
+Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables! The whole code becomes a big ball of mud // https://de.wikipedia.org/wiki/Big_Ball_of_Mud
 
-But also for smaller classes the member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables.
+But also for slightly smaller classes, member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables. Keep your classes small in order to limit the scope of your class variables.
 
-If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 member variables you should consider sorting them in sub classes. However as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. Keep the number of variables at one or two. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
+If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 member variables you should consider sorting them in sub classes. However, as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. The combination of complex functions and many member variables lets the complexity skyrocket. Keep the number of variables at one or two when dealing with complex functions, as recommended in the section on worker classes. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
 
-It’s a good rule of thumb to say that the class design is probably ok as long as writing unit tests works out fine and you don’t feel the urge to test private functions because class implementation is too complex. Make classes as small as possible, yet still convenient to work with.
-
-## Functions and Methods
-
-Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for member and non-member functions. The difference between member and non-member functions is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and free functions inside a namespace are indistinguishable in C++.
-
-## Temporal coupling
-
-The combination of member variables with different methods leads to an implicit temporal coupling which may introduce all kind of bugs. Implicit logic is always hard to get control of. Much better is explicit logic as it reduces the potential for unintended usage of the code significantly.
+It’s a good rule of thumb to say that the class design is probably ok as long as writing unit tests works out fine. And you don’t feel the urge to test private functions because class implementation is too complex. Make classes as small as possible, yet still convenient to work with.
 
 ## Example
 // TODO, I don’t know yet exactly if/how to write this example. What is exactly my point?
