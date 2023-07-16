@@ -1307,7 +1307,7 @@ dish =
 
 ## Conclusions
 
-I think we can agree on the fact that OO programming is important and everyone should know it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming too complex. As long as you are confident about the test coverage you should be fine.
+I think we can agree on the fact that OO programming is important and everyone should know it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. But as long as you are confident about the test coverage you should be fine.
 
 Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. 
 
@@ -1328,7 +1328,7 @@ This class is a mixture of a delegating class and a worker class. Convert it int
 
 Or my version of this rule: "Use composition, not inheritance"
 
-Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. 
+Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
 ## Drawbacks of Inheritance
 
@@ -1336,13 +1336,13 @@ Inheritance is considered to be one of the integral parts of OO programming and 
 
 The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
 
-One of the main problems here is that all inheritance levels have access to the base level variables. Meanwhile with composition, you only have to consider the variables inside the class. This is much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
+One of the main problems here is that all inheritance levels have access to the base level variables. The variables and methods are not sorted. They are just there. Meanwhile with composition, you only have to consider the variables inside the class. This makes it much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
 
 Furthermore, I regard the common usage of inheritance as an old dogma. It is your job to write code that’s easy to understand. Don’t let yourself get bothered by someone saying that a sheep is an animal and you should therefore use inheritance. It will quite certainly not improve the code and you can end the discussion. You are probably developing a model of a sheep that doesn’t need to know about animals. You have to be pragmatic. If a sheep doesn't have to know about the Animal class, then there is no reason why it should inherit from it.
 
 ### Error prone
 
-There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book //Working Effectively with Legacy Code// several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create bugs with inheritance. One misspelled function will not override the base class function. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
+There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book //Working Effectively with Legacy Code// several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create bugs with inheritance. One misspelled function will not override the base class function and thus creating a bug. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
 
 Though it has to be said, that with the `override` keyword or attribute, this problem has been resolved in some programming languages as C++ and Java. Still, I would recommend not to use inheritance and always use `override` to prevent nasty bugs.
 
@@ -1354,13 +1354,11 @@ Additionally, there is the problem with variables inherited from the base class.
 
 The implementation of inheritance can be complex task, depending on the programming language. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
 
-// add a plot
+// add a plot of the diamond problem below
 
 When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use?
 
 This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languagues like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
-
-// this is already explained further above. At least half way.
 
 ### Overriden baseclass functions
 
@@ -1385,9 +1383,9 @@ if __name__ == "__main__":
     lion.feed()
 ```
 
-Is the lion now eating grass or meat? Of course it's eating meat. But using overriden functions in the base class can quickly become confusing. This is called the Yo-yo problem. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is dreadful. Please don't write such code. 
+Is the lion now eating grass or meat? Of course it's eating meat. But using overriden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem where the programmer has switch between reading code of the base class and the derived class in oder to understand the code. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is so confusing, it is dreadful. Please don't write such code.
 
-Of course, this can be avoided using the final in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, there is just too much that can go wrong.
+Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, there is just too much that can go wrong with inheritance.
 
 In inheritance the derived class inherits all the functions from the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad. Having to write tests for unused functions in the interface is only one of the problems.
 
