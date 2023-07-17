@@ -124,7 +124,7 @@ Things to write:
 	- [Parts of a test](#parts-of-a-test)
 		- [Setup and Teardown](#setup-and-teardown)
 		- [Helper functions](#helper-functions)
-		- [Test body (?)](#test-body-)
+		- [Test body](#test-body)
 	- [Problematic tests](#problematic-tests)
 		- [Dependent tests](#dependent-tests)
 		- [Flaky tests](#flaky-tests)
@@ -1591,14 +1591,17 @@ For the file creation there is not that much that can go wrong. You create it fr
 
 Anyway, try to write tests that don’t need files or IO. It makes things much easier. Especially in unit tests you won't have to deal with setup and teardown if you don't want to bother with it.
 
+// write a code example?
+
 ### Helper functions
 
 A test is also a programming object. Accordingly, it has to follow the basic rules, for example the single responsibility principle. Each test has exactly one purpose. It tests exactly one function. Testing many functions inside a single test is bad practice. Write helper functions for the setup of a test and then writing an additional test case will be simple. You may even use copy paste in tests! Having many smaller tests forces you to structure them better and improves the overall overview.
 
 //make an example how the test can look much smoother with helper functions
 
-### Test body (?)
+### Test body
 
+// what to write here? Are there some best practices?
 
 ## Problematic tests
 
@@ -1606,7 +1609,7 @@ Just as with normal code, the design of tests can be problematic.
 
 ### Dependent tests
 
-It will happen frequently that you have a test that can only work if the other test works. They are coupled. For example, you have a function that writes a file. You write a test that calls this function and checks the existence of the file. Next you write a function that reads this file. In the test you will first call the function to create the file and then call the function to read it. Now these two tests are related. They both fail if the first test fails. If the code fails to write a file it won't be possible to read it. This kind of dependency is bad design and violates the single responsibility principle. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying. 
+It will happen frequently that you have a test that can only work if another test works. They are coupled. For example, you have a function that writes a file. You write a test that calls this function and checks the existence of the file. Next you write a function that reads this file. In the test you will first call the function to create the file and then call the function to read it. Now these two tests are related. They both fail if the first test fails. If the code fails to write a file it won't be possible to read it. This kind of dependency is bad design and violates the single responsibility principle. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying. 
 
 Unfortunately having all the tests completely separated is a very hard, if not an impossible task. There is always some correlation between failing tests. In python tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that would certainly fail under the current circumstances.
 
@@ -1668,41 +1671,50 @@ At first, mocking sounds great. Just simulate the database and everything is gre
 
 Generally it is recommended to use DI instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
 
+// write some examples
+
 ## Untestable behavior
 
-As software engineers, we want to automate everything, tests included. However, this is not always possible. There are still things that we can barely automate. One example are image processing algorithms. How much can you compress an image such that it still looks good? This is very hard to tell with an automated test and is better judged by humans. Also if you run some complex simulation, like the aerodynamics of an airplane for instance, you cannot write a test to check that your simulation yields the correct result. Simply because you don't know the correct result. You can only judge from your experience that the result makes sense.
+As software engineers, we want to automate everything, tests included. However, this is not always possible. There are still things that we can barely automate. One example are image processing algorithms. How much can you compress an image such that it still looks good? This is very hard to tell with an automated test and is better judged by humans. Also if you run some complex simulation, like the aerodynamics of an airplane, you cannot write a test to check that your simulation yields the correct result. Simply because you don't know the correct result. You can only judge from your experience that the result makes sense. There are still things that are better tested by humans than computers.
 
 ## Exercises
 
-// 
+// refactor a badly written test
 
 # 11. Types of tests
+
+There are different types of tests, depending on their scope. The most common tests are:
+- Unit tests test the behavior of individual functions and classes.
+- Component tests test the functionality of libaries.
+- End-to-end or acceptance tests test the behavior of the complete software.
+
+As we will see, each of these categories has its right to exist as they cover different parts of the code.
 
 ## End-to-End tests
 
 // end-to-end tests vs. acceptance tests?
 
-End-to-End (E2E) tests are pretty much what I described in the story at the beginning of this chapter. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
+End-to-End (E2E) tests are what most people would intuitively expect from a test. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
 
 If you publish some code examples as a documentation of your API, you should write an end-to-end test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
 
-End-to-end tests are user centered. The user doesn’t know anything about the internals of the code (nor the coffee machine). He has only the interfaces you give him: GUI, API, joystick, microphone, coffee cup, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
+E2E tests are user centered. The user doesn’t know anything about the internals of the code. He has only the interfaces you give him: GUI, API, joystick, microphone, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
 
-Sounds good. But at the same time, it seems extremely difficult to write these tests...? True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine.
+Sounds good. But at the same time, it seems extremely difficult to write these tests? Testing a GUI or the input of a microphone sounds pretty hard. 
 
-Testing on the API level is in theory fairly trivial. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. One option is comparing hash values instead of comparing complete files. 
+True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine. // use the expression used by Robert C Martin??
+
+Testing on the API level is in comparably easy. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. The fiels first have to be created. Either from code or by copying them from another location. The result of comparing big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files. 
 
 E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. It is important to combine them with unit tests. 
 
-One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?”
-
-I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. Good luck!
+One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?” I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. There is no reasonable way to test your code. Good luck!
 
 ## Integration tests
 
 // what else to write here?
 
-Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested allone, without creating an end-to-end test.
+Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. See section Mocking and Stubs in the previous chapter. Mocks allow a library to be tested allone, without creating an end-to-end test.
 
 Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
 
@@ -1719,11 +1731,11 @@ print(square(2))
 print(square(5))
 ```
 
-This works. They will find the bug in this case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of DRY that should be optimized away. And the solution are unit tests.
+This works. They will find the bug in this case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is really supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of procedural DRY that should be optimized away. And the solution are unit tests.
 
-Unit tests cover small pieces of code. Usually they test a public method or standalone functions. In the example above they would check everything that is checked using print statements.
+Unit tests cover small pieces of code. Usually they test a public method or a standalone functions. In the example above, they would check everything that is checked using print statements.
 
-It may sound surprising, but unit tests are even more important than acceptance tests. 
+It may sound surprising, but unit tests are even more important than E2E tests. This is because they can give you precise information about what piece of your code contains a bug, meanwhile E2E tests can only tell you that something is wrong within the whole code base. Therefore, having your whole code covered with unit tests will have a similar, though not the same, effect as having E2E tests. But with the advantage that you'll know exactly where some error occured. The drawback being that unit tests do not test if these building blocks are connected correctly.
 
 ### Testing files
 
@@ -1731,7 +1743,7 @@ Most of the time, unit tests only need a setup and an execution phase. There is 
 
 "Why...? How? No files? No database?"
 
-Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_profit()` we can write tests for `calculate_annual_profit()` and we don’t have to deal with the filesystem anymore.
+Yes, good point. Somewhere in the code you might have to interact with the file system. Reading a file is 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_values()` we can write tests for `extract_share_values()` and pass it a string that looks like the content of the file. Such that we don’t have to deal with the filesystem anymore.
 
 ```Py
 def share_values(filename):
@@ -1740,17 +1752,17 @@ def share_values(filename):
 	return share_values
 ```
 
-You can save the content of the file as a string inside your test code and call the second function, `extract_share_values`. This is similar to the GUI case for acceptance tests. You pack everything you don’t want to test into a small layer that is unlikely to fail and the remaining test becomes much smoother.
+This is similar to the GUI case for acceptance tests. You pack everything you don’t want to test into a small layer that is unlikely to fail and the remaining test becomes much smoother. In this case this small layer is the function `read_share_values` which reads the file into a string.
 
 The same holds for database access. You put all the code that requires DB access into a few simple functions that you are not going to write unit tests for but you make sure you test everything else.
 
-An even better approach is using dependency injection as explained in chapter //...? but for the moment we’ll leave it with the small wrapper function.
+An even better approach is using dependency injection as explained in the next chapter but for the moment we’ll leave it with the small wrapper function.
 
 ### Testing classes
 
 Writing unit tests for classes is probably the most important part of this chapter. This is not only because of the prevalence of classes, but also because classes tend to become messy without any unit tests.
 
-First of all, classes tend to become too big. They have too many member variables and private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
+First of all, classes tend to become too big. They have too many member variables and comlicated private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
 
 Furthermore, there is the issue of how to deal with private methods in big classes. Because apparently, the testing framework doesn’t have access to private functions. No one has, except for the class itself. A first attempt is making the private functions public. This, however, is not recommended. You should not make functions public, only in order to test them. This will lead to crippled code with too many public functions, which is the exact opposite of encapsulation. Therefore, unit tests should only test the public interface of a class. If you are tempted to test also some private functions, you should resist. This is a clear sign that your private functions are too complex. Make this private function a class on its own with a public interface that you can test.
 
@@ -1770,7 +1782,7 @@ Unit tests are the foundation of the testing pyramid. They are generally the mos
 
 Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still usefull to check the functionality of the radio. About 15% of all tests are integration tests.
 
-The E2E tests should only check that the installation of the assembled radio worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
+The E2E tests should only check that the installation of the radio in the car worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
 
 E2E tests are the least common. They are very valueable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However the feedback you get from an E2E test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing E2E tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. Only about 5% of all tests are end-to-end tests.
 
