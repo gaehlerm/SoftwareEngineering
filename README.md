@@ -182,6 +182,7 @@ Things to write:
 	- [Python](#python)
 		- [Type hints](#type-hints)
 		- [Slots](#slots)
+	- [Abstract base classes](#abstract-base-classes)
 	- [C++](#c)
 		- [Pointers and arrays](#pointers-and-arrays)
 			- [Smart pointers](#smart-pointers)
@@ -190,11 +191,14 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs-1)
 	- [Exercises](#exercises-8)
-- [16. bugs, errors, exceptions](#16-bugs-errors-exceptions)
-	- [Bugs](#bugs-1)
-		- [Debugging](#debugging)
+- [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
+	- [Bugs](#bugs-1)
+		- [Cost of Bugs](#cost-of-bugs)
+		- [Debugging](#debugging)
 	- [Exceptions](#exceptions)
+		- [Wrapping exceptions](#wrapping-exceptions)
+		- [Exceptions and goto](#exceptions-and-goto)
 - [17. Variables types](#17-variables-types)
 	- [Global Variables](#global-variables)
 	- [Class variables](#class-variables)
@@ -2315,7 +2319,7 @@ Making sketches and diagramms may help you finding ways to refactor your code. T
 
 // This chapter is somehow not up to the point...
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands anything, he doesn’t care. As long as the syntax is correct. Even if there is a bug, the computer just executes it. But we don’t care about the computer, this book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands anything, he doesn’t care. As long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
@@ -2347,21 +2351,21 @@ This whole book is about how to write low complexity code. The sections on the S
 
 “I think I’m a much better programmer now than I used to be, even though I know less about the details in each programming language I work in.” – Michael Feathers, Working Effectively with Legacy Code, p.311
 
-A very frequent question from beginners is “which programming language should I learn”. Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented are similar enough and the different programming philosophies don't matter too much. A lot of the low level C++ features for instance can be wrapped into a higher level object that is similar to python code.
+A very frequent question from beginners is “which programming language should I learn”. Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the different programming philosophies don't matter too much. A lot of the low level C++ features for instance can be wrapped into a higher level object, making it an intermediate level language. However it's still not such a high level language as Python.
 
 I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax you can easily look up, meanwhile concepts you have to understand.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know C++ and python and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one, even if it’s just Matlab.
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know C++ and python and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab.
 
 As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative for non-scientists. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
-I would not recommend learning Java or C++ as a first programming language, even though I use some C++ code in this book. C++ and Java are too complicated and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain the differences to Python. Instead you should learn how to apply the principles taught in this book and elsewhere to improve your code. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even though I use some C++ code in this book. C++ and Java are too complicated and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain things you don't have to care about in Python. Instead you should learn how to apply the principles taught in this book and elsewhere to improve your code. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
 
 C++ and Java are static typed, have to be compiled, use inheritance to define interfaces and in C++ you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing you need to know when you just start programming.
 
 ## Existing programming languages
 
-Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than an existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code, only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than an existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
 For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
 
@@ -2370,6 +2374,7 @@ For example: In C++ there is the boost library. Pretty much everyone programming
 There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. In some cases I will still use code examples, but the code should be really simple. The code examples are mostly written in Python and sometimes in C++ if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, it’s just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
 
 ## Python
+// Do I need the opinion of some expert?
 
 Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning.
 
@@ -2417,6 +2422,10 @@ class Apple:
 		self.weight = weight
 ```
 Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible.
+
+## Abstract base classes
+
+Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
 
 ## C++
 
@@ -2487,7 +2496,7 @@ For more intormation about C++ I can recommend the google C++ style guide, https
 - Learn some new programming languages. Write a program to read a simple comma separated value (CSV) file and save the values in a list/vector/array/... for at least 5 different programming languages.
 - ...
 
-# 16. bugs, errors, exceptions
+# 16. Bugs, Errors, Exceptions
 
 "It’s not a bug; it’s an undocumented feature." - Anonymous
 
@@ -2495,13 +2504,21 @@ Even if you write absolutely amazing code, some things will still go wrong. Some
 
 I would briefly like to go through the different cases.
 
+## Syntax Errors
+
+Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the corectnes of the syntax.
+
+At the beginning of our programming careers, we were all bothered by the compiler errors. We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us. It is a good thing we got compiler errors because this might have saved us from creating serious bugs.
+
 ## Bugs
 
 A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. Just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
 
-The cost of bugs is gigantic. It may take hours, if not days to track down a bug and in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code.
+### Cost of Bugs
 
-I hope you got the memo. In a small project, you can do pretty much anything you want. But you have to make sure you don’t create bugs. Write good code and make sure it’s tested.
+The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code. // SE at google, p.207
+
+I hope you got the memo. In a small project, you can do pretty much anything you want. But you have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
 
 ### Debugging
 
@@ -2509,36 +2526,38 @@ Debugging is the process of finding bugs. If you spend too much time debugging i
 
 In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. Writing tests or refactoring the code would of course be better options, but these take a lot of time.
 
-## Syntax Errors
-
-Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in interpreted languages you should have some unit tests in place that will find the errors before publishing the code.
 
 ## Exceptions
 
 Exceptions happen in cases where the software is supposed to do something but it can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
 
-User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A “division by 0” error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. “Invalid input: price cannot be 0“, makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
+User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
 
 In case of connection problems or missing disk space, the user needs a corresponding error message to be able to resolve the issue. “no network connection available”, “not enough disk space”, etc.
 
+### Wrapping exceptions
+
 You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it possibly should be terminated anyway. But in serious software development you cannot allow this to happen. It is recommended to define your own error types. Put a try catch block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong. Add another try catch block around the whole program in order to catch all exceptions. These are unexpected errors, bugs. Write a different error message and kindly ask the user to contact your support as this is a programming error.
 
-Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, this is not worth the effort. Exceptions originating not from faulty user input should result in a message, to send in a bug report.
+Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, this is not worth the effort. Exceptions originating not from faulty user input should result in a message to send a bug report.
 ```Python
-If __name__ == “__main__”:
-Try:
+if __name__ == “__main__”:
+try:
     main()
-Catch CustomException:
-	# return some error message how to resolve the issue
-	Catch:
-		# something went really wrong. The user should send in a bug report.
+except CustomException:
+	# You defined this exception, so you know what went wrong.
+	# Return some error message how to resolve the issue
+except:
+	# You don't know what went wrong. The user should send in a bug report.
 ```
 
-Try catch blocks have some similarity to if else or switch case blocks. They are all susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try catch blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message.
+Try except blocks have some similarity to if else or switch case blocks. They are all susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsability of this function is managing the try catch block.
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it.
 
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We’ll go into more details in the section on dependency injection. 
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We go into more details in the section on dependency injection. 
+
+### Exceptions and goto
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
