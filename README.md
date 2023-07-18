@@ -2,9 +2,7 @@
 
 Copyright Marco Gähler, all rights reserved. 
 
-I don't know yet wether I'll print and sell this book, this is why I have not chosen any more liberal license (yet). I hope you are still going to help me and give me some comments.
-
-This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR.
+This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
 
 The first half of the books seems more or less ok, the second half needs some serious reworking.
 
@@ -199,11 +197,6 @@ Things to write:
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
-- [17. Variables types](#17-variables-types)
-	- [Global Variables](#global-variables)
-	- [Class variables](#class-variables)
-	- [Variable comparison](#variable-comparison)
-	- [Exercises](#exercises-9)
 - [18. Programming Paradigms](#18-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
@@ -218,7 +211,7 @@ Things to write:
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-10)
+	- [Exercises](#exercises-9)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -234,7 +227,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
-	- [Exercises](#exercises-11)
+	- [Exercises](#exercises-10)
 	- [Back magic code](#back-magic-code)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
@@ -247,14 +240,15 @@ Things to write:
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [25. Data properties](#25-data-properties)
+- [25. Variable types](#25-variable-types)
 	- [Compile-time constant](#compile-time-constant)
 	- [Constant](#constant)
 	- [Mutable](#mutable)
 	- [Member variables](#member-variables)
 	- [Static Variables](#static-variables)
 	- [Dynamic Variables](#dynamic-variables)
-	- [Global Variables](#global-variables-1)
+	- [Global Variables](#global-variables)
+	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
 	- [Exercise](#exercise)
 - [27. Automatization](#27-automatization)
@@ -282,9 +276,9 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-12)
+	- [Exercises](#exercises-11)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-13)
+	- [Exercises](#exercises-12)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -299,7 +293,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-14)
+	- [Exercises](#exercises-13)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -312,7 +306,7 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-15)
+	- [Exercises](#exercises-14)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
@@ -2561,84 +2555,6 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
-# 17. Variables types
-
-"God is real … unless declared integer." - 
-
-Variables have a different scope. Depending on how large this scope is, the variables do have different advantages and drawbacks.
-
-## Global Variables
-
-You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
-
-Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
-
-Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
-
-Now as you already realized, global variables are bad because everyone can change their value. You cannot rely on them. You never know if someone messes with its integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. 
-
-## Class variables
-
-But global variables are not the only variables with this issue. Class variables have pretty much the same problem, just in a somewhat limited scope. That’s one reason why classes have to be small. Even passing output arguments to functions makes the code obscure. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not yet too wide spread, even though it exists longer than OO programming.
-
-## Variable comparison
-
-I’d like to briefly sort different kind of variables by the amount of side effects they may have, starting with the least side effects. Having many side effects of course makes it easier to program, but at the same time makes it extremely hard to keep everything under control. It’s best to work side effect free whenever reasonably possible.
-
-Here is a rough list how variable types are sorted by the amount of side effects they have, starting with the least.
-
-Immutable object < mutable object ~ class variable < inherited variable < singleton ~ global variable
-
-There is certainly nothing wrong with immutable objects. We just can’t do it without them. 
-
-With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention.
-
-Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with.
-
-Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
-
-// why not to use the singleton: 97-things-every-programmer-should-know chapter 73
-
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. // performance??
-
-Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
-
-With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
-
-Immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
-
-//where to move this text here? Somewhere to class functions? Or remove it completely?
-
-Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following Java code //example from working effectively with legacy code, p. 273
-
-```Java
-outputstream.write("header"); 
-writeField(outputstream, body);
-
-void writeField(Outputstream outputStream, Sting field){
-    outputstream.write(field.getBytes());
-    outputstream.write(0x00);
-}
-```
-
-where outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
-
-Here Feathers could have modified the string within its own function and keep the code much more readable.
-
-```Java
-outputstream.write("header"); 
-outputstream.write(field(body))
-
-string field(body){
-    return (body + '0').getBytes();
-}
-```
-
-Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
-
-## Exercises
-
-???
 
 # 18. Programming Paradigms
 
@@ -2844,7 +2760,7 @@ The solid principles were named by Robert C. Martin. SOLID is named after 5 gene
 4.	Interface segregation 
 5.	Dependency Inversion
 
-These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code.
+These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code. Interestingly enough, most people agree on the fact that these pirnciples are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly.
 
 ## Single Responsibility Principle
 
@@ -3272,7 +3188,7 @@ It is not too often that I had to create a tree myself, yet I was working on a t
 
 C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
 
-# 25. Data properties
+# 25. Variable types
 
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
@@ -3318,7 +3234,9 @@ On the other hand, the second solution may be a performance bottle neck as it ne
 
 ## Member variables
 
-Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no side unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them, as explained in the section on mutable variables.
+Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no side unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
+
+Class variables have pretty much the same problem as global variables, just in a somewhat limited scope. That’s one reason why classes have to be small. Even passing output arguments to functions makes the code obscure. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not yet too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessability and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessability side.
 
 ## Static Variables
 
@@ -3334,7 +3252,69 @@ Dynamic variables are the main reason why I was writing this chapter. With dynam
 
 ## Global Variables
 
-And last but not least, I hope you still remember the section about global variables: Don’t use global variables. They are extremely powerful but this makes them very hard to handle. Keep your fingers away.
+You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
+
+Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
+
+Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
+
+Now as you already realized, global variables are bad because everyone can change their value. You cannot rely on them. You never know if someone messes with its integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. 
+
+## Variable comparison
+
+I’d like to briefly sort different kind of variables by the amount of side effects they may have, starting with the least side effects. Having many side effects of course makes it easier to program, but at the same time makes it extremely hard to keep everything under control. It’s best to work side effect free whenever reasonably possible.
+
+Here is a rough list how variable types are sorted by the amount of side effects they have, starting with the least.
+
+Immutable object < mutable object ~ class variable < inherited variable < singleton ~ global variable
+
+There is certainly nothing wrong with immutable objects. We just can’t do it without them. 
+
+With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention.
+
+Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with.
+
+Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
+
+// why not to use the singleton: 97-things-every-programmer-should-know chapter 73
+
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. // performance??
+
+Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
+
+With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
+
+Immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
+
+//where to move this text here? Somewhere to class functions? Or remove it completely?
+
+Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following Java code //example from working effectively with legacy code, p. 273
+
+```Java
+outputstream.write("header"); 
+writeField(outputstream, body);
+
+void writeField(Outputstream outputStream, Sting field){
+    outputstream.write(field.getBytes());
+    outputstream.write(0x00);
+}
+```
+
+where outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
+
+Here Feathers could have modified the string within its own function and keep the code much more readable.
+
+```Java
+outputstream.write("header"); 
+outputstream.write(field(body))
+
+string field(body){
+    return (body + '0').getBytes();
+}
+```
+
+Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
+
 
 # 26. Naming
 
