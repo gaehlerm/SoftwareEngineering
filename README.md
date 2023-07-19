@@ -2664,25 +2664,27 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 // add some more text from the pragmatic programmer
 
-Decoupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as it makes everything sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
+Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as it makes everything sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
 
 This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
 
-Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. This is not how flexible code is supposed to be. Don’t use inheritance.
+Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
 
-// need to look at the law of demeter again, see fowler p.192 or the pragmatic programmer
+One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192. More formally, the Law of Demeter for functions requires that a method `m` of an object `a` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
+- `a` itself;
+- `m`'s parameters;
+- any objects instantiated within `m`;
+- `a`'s attributes;
 
-//Fowler: The occasionally useful suggestion of Demeter
-
-Furthermore, there is a thing called Train Wrecks. This is a chain of class methods. This happens if 
-
-Don't chain method calls. Unless they are very unlikely to change.
-
-// change the example: customer.orders.last().total().amount
-
-// suggestion of Demeter (Fowler ca. p200)
-
-This chain is also very rigid and hard to change. Don’t chain method calls.
+The idea is to avoid so called train wrecks where you start chaining methods to achieve something. For instance you shouldn't write code as
+```py
+car.get_engine().turn_on()
+```
+Instead the `car` object should take over such function calls. Write a function inside the `Car` class `turn_on_engine()`,
+```py
+car.turn_on_engine()
+```
+Though as I already said before, this is only a vague recommendation. Don't become over enthusiastic about it. 
 
 ## Exercises
 
