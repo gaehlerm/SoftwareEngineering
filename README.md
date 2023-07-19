@@ -200,6 +200,7 @@ Things to write:
 - [18. Programming Paradigms](#18-programming-paradigms)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
+	- [Conclusions](#conclusions-2)
 - [19. Design patterns](#19-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
@@ -2523,6 +2524,8 @@ In order to find out what some existing, badly tested piece of code is doing, I 
 
 ## Exceptions
 
+// throw exceptions only for the exceptional case. Exceptions are expensive as they do stack unwinding, etc. Only throw exceptions for the really exceptional cases. In C++ they have soon std::expected instead.
+
 Exceptions happen in cases where the software is supposed to do something but it can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
 
 User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
@@ -2574,7 +2577,21 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 
 ## Procedural programming
 
+While OO programming is mostly based on classes, class instances and methods, procedural programming depends mostly on functions and logical operations. In procedural programming, functions are more important than data types. Though, contrary to functional programming, you are allowed to have hidden states and use output arguments. This simplifies writing code at times but the code created this way is harder to understand due to the additional complexity.
+
 ## Functional programming
+
+Functional programming is the way to programm using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+
+Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier.
+
+Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are easy to understand.
+
+In many programming languages you can mimic functional programming to some degree by using only pure functions. And I highly recommend doing so. Using only functional programming, however, is quite tedious to get started with, but it's certainly worth the effort to get a new view on how programming can be done.
+
+## Conclusions
+
+All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible, you can write better code.
 
 # 19. Design patterns
 
@@ -2941,13 +2958,17 @@ It is much better to be honest. The problem is complex and we break down the com
 
 # 24. Datatypes
 
-There are hundreds of built-in datatypes. But again, I recommend not to use too many of them. Types by themselves are not improving your code. Only use additional built-in types if you think it improves it.
+// primitive obsession -> David Sackstein Cppcon 2022
+
+There are hundreds of built-in datatypes. But again, I recommend not to use too many of them. Types by themselves are not improving your code. Only use other built-in types than mentioned here if you think it does so.
 
 At the same time it has to be said that using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write.
 
+"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
+
 Here is a list of datatypes that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
 
-I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints. Except that I never use unsigned ints, see google style guide. Classes are discussed in their own section.
+I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints. Except that I never use unsigned ints, as recommended by the google style guide. Classes are discussed in their own section.
 
 ## Lists
 
@@ -2955,7 +2976,7 @@ Lists are the work horse in programming. Whenever you deal with several values t
 
 Here is an example how not to do it:
 ```py
-Fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
+fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
 ```
 
 I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible. At least not without visiting a highly advanced course in C++ black magic. 
@@ -3098,7 +3119,7 @@ After pointers and Booleans, strings are probably the third most dangerous data 
 
 ### Boolean logic
 
-Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings.
+Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings. // see also "primitive obsession"
 
 This example I found in the book Clean Code p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. A book I can highly recommend. But here he somehow went haywire. What he explained all made sense, but he somehow missed  that one should never write code like that. 
 
@@ -3262,29 +3283,33 @@ Now as you already realized, global variables are bad because everyone can chang
 
 ## Variable comparison
 
-I’d like to briefly sort different kind of variables by the amount of side effects they may have, starting with the least side effects. Having many side effects of course makes it easier to program, but at the same time makes it extremely hard to keep everything under control. It’s best to work side effect free whenever reasonably possible.
+// call it differently than effects? Rewrite this section. It's confusing.
 
-Here is a rough list how variable types are sorted by the amount of side effects they have, starting with the least.
+I’d like to briefly sort different kind of variables by the amount of effects they may have, starting with the least side effects. Having many effects of course makes it easier to program as you can do pretty much wahtever you want, but at the same time makes it extremely hard to keep everything under control. It’s best to choose variables with the least possible effects that let's you still implement what you want.
 
-Immutable object < mutable object ~ class variable < inherited variable < singleton ~ global variable
+Here is a rough list how variable types are sorted by the amount of effects they have, starting with the least.
 
-There is certainly nothing wrong with immutable objects. We just can’t do it without them. 
+Immutable object < mutable object < class variable < inherited variable < singleton < global variable
 
-With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention.
+There is certainly nothing wrong with immutable objects. We just can’t do it without them. It's just that they can't do much. They are just there and do nothing. They can only be used within the current scope and when passed as a function argument their value can't be changed.
 
-Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with.
+With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
 
-Inherited variables are even worse than class variables. You don’t see at first sight, where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition compared to inherited variables. This is certainly one of the reasons why inheritance should not be used at all.
+Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big.
+
+Inherited variables are even worse than class variables. You don’t see at first sight where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor where they belong to. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is certainly one of the reasons why it's better not to use inheritance at all.
 
 // why not to use the singleton: 97-things-every-programmer-should-know chapter 73
 
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. // performance??
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. However singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is generally discouraged to use singletons. // performance??
 
 Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
 
 With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
 
 Immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
+
+
 
 //where to move this text here? Somewhere to class functions? Or remove it completely?
 
