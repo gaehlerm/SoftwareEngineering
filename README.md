@@ -229,7 +229,6 @@ Things to write:
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
 	- [Exercises](#exercises-10)
-	- [Back magic code](#back-magic-code)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -258,6 +257,7 @@ Things to write:
 	- [Complexity of code](#complexity-of-code)
 	- [Estimating complexity](#estimating-complexity)
 	- [Single line complexity](#single-line-complexity)
+	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
 	- [Json](#json)
@@ -357,7 +357,7 @@ In 2007 I had my first semester at university. It was the first time I learned p
 
 Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare to look at this code ever since. Already thinking about it makes me shudder.
 
-After my studies I wanted to improve my programming skills and bout the book “Effective modern C++” by Schott Myers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
+After my studies I wanted to improve my programming skills and bout the book “Effective modern C++” by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
 
 Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I fought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them. I got the job.
 
@@ -2684,7 +2684,7 @@ Instead the `car` object should take over such function calls. Write a function 
 ```py
 car.turn_on_engine()
 ```
-Though as I already said before, this is only a vague recommendation. Don't become over enthusiastic about it. 
+Though as I already said before, this is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
 
 ## Exercises
 
@@ -2707,7 +2707,7 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
 
-There is a market for food and further down the road there is a store selling electronics. Each one has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls, no string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+There is a market for food and further down the road there is a store selling electronics. Each kind of store has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
 
@@ -2717,8 +2717,6 @@ Once you start thinking about this rule, you will automatically structure your c
 "The perfect kind of architecture decision is the one which never has to be made" ― Robert C. Martin
 
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
-
-// I ordered a book on architecture. Read that one and we'll see.
 
 // where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
 
@@ -2770,7 +2768,7 @@ These advantages for either sides lead to tradeoffs in library sizes. Generally,
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 # 23. Solid principles 
-// Source: https://youtu.be/pTB30aXS77U and Clean Architecture
+// Source: https://youtu.be/pTB30aXS77U, https://youtu.be/9ch7tZN4jeI and Clean Architecture
 
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write code. These are:
 1.	Single Responsibility Principle (SRP)
@@ -2781,15 +2779,19 @@ The solid principles were named by Robert C. Martin. SOLID is named after 5 gene
 
 These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code. Interestingly enough, most people agree on the fact that these pirnciples are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly.
 
+These principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but there are ways around them.
+
 ## Single Responsibility Principle
 
 The SRP has already been explained at the very beginning of this book due to its high importance.
 
 ## Open Closed Principle
 
-The Open Closed Principle was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. This is an unfortunate choice. Robert C. Martin and others suggest using interfaces instead. Interfaces allow you to add as many implementations as you want while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
+The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. This is an unfortunate choice. Robert C. Martin and others suggest using interfaces instead. Interfaces allow you to add as many implementations as you want at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
 
-Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the open closed principle.
+Our code should be stable with respect to extensions later on, but not to changes. If the requirements change, we have to change our code as will. This is inevitable. But we shouldn't have to change our code if someone else wants to change his code. Thus the solution is to use abstractions at potential abstraction points. This allows the user of our code to extend it without us having to change anything in our code.
+
+Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the OCP.
 
 ```py
 class City:
@@ -2803,8 +2805,9 @@ def print_all_postal_codes():
 	print(city.zurich_postal_code())
 	print(city.bern_postal_code())
 ```
+If the user of this code wants to add another city, we have to do this within our own code inside the class `City`. This is the oposite of what the OCP says.
 
-Instead we can create an interface city and implement it for every city we are interessted in. If we are interessted in adding an additional city, we don't have to change any existing class or interface. Instead we  can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
+Instead we can create an interface city and implement it for every city we are interessted in. If we are interessted in adding an additional city, we don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
 
 ```py
 from abc import ABC, abstractmethod
@@ -2831,7 +2834,7 @@ for city in cities:
 	print(city.postal_code)
 ```
 
-// maybe write something more why this is exactly better?
+Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
 
 ## Liskov Substitution Principle
 
@@ -2839,7 +2842,7 @@ for city in cities:
 
 Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
 
-For example a credit card and paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
+For example credit cards and paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
 
 ```py
 class Payment:
@@ -2850,13 +2853,35 @@ This logical contradiction about what the second argument should be (email addre
 
 ##  Interface Segregation Principle
 
-Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need a small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
+The Interface Segregation Principle (ISP) is like the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need one small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
 
-// add graphs
+Here the file A does not follow the ISP. It does 2 independent things. Most other code needs only one of these functions. They are independent. Thus, they should be in different files. 
 
-Let’s make an example. We have files A, B, C and D. B, C and D import A. They all get all the functionality that is implemented in A. This introduces coupling and if the file A is really big it may also slow down the compilation process. The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files B, C and D each use only one of the newly created files A1 and A2. The amount of code that they import is reduced roughly by half. This can be repeated until it is no longer possible to reduce the amount of code imported. At this point you finished the segregation of the file A.
+Now in Python this is not such a big deal as you can import each function individually and even if you import the whole file A it's not a big deal. In C++ on the other hand, this is really a no no. In C++ you always include a whole header file at once and you'll have to compile everything that comes with it. There might be a hefty price to pay if the file A would be too big.
+```py
+# file A
+def function_1():
+	return 1
 
-A common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code import much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the interface segregation principle.
+def function_2():
+	return 2
+```
+
+// add graphs on the file dependencies below
+
+The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. The amount of code that they import is reduced roughly by half. This can be repeated until it is no longer possible to reduce the amount of code imported. At this point you finished the segregation of the file A.
+
+```py
+# file A1
+def function_1():
+	return 1
+
+# file A2
+def function_2():
+	return 2
+```
+
+A common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code import much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
 
 ```py
 # inside ImportantStuff.py
@@ -2872,34 +2897,36 @@ class BigClass:
 # inside SomeOtherFile.py
 from ImportantStuff import BigClass
 
-# ...
+c = BigClass()
+color = c.Color.BLUE
 ```
+
+Here we first need a class instance of `BigClass` because the enum is hidden inside of the class definition. This could be avoided by moving the enum outside the class. This would reduce the coupling of the code as the user code depended only on the enum and not on the whole class around it.
 
 ## Dependency Inversion Principle
 
-Dependency inversion principle (DIP) is a technique used mainly in compiled languages as C++ and Java. The files in your project include each other and form a tree with the main function at its root. The so-called dependency tree. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction.
+Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree with the main function at its root. The so-called dependency tree. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
 
 // add a graph for the dependency tree
 
-For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted languages.
+For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist for interpreted languages. Though it's still good to know this principle as a python user as it is very fundamental.
 
+The first time you compile your code, the whole code base (the whole tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
 
-The first time you compile your code, the whole code base has to be compiled. This can easily take minutes, maybe even hours. The resulting files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
+We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well as main directly or indirectly includes all other files of the project. Therefore, the main file has to be recompiled as well. It’s like a hard link.
 
-We first have to understand the source of this problem. As I mentioned before, it has to do with the includes (or imports). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well. It has to be recompiled as well. It’s like a hard link.
-
-Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code. If I change a file in a library, I want to recompile only the library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within this branch.
+Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code within a library. If I change a file in a library, I want to recompile only the library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within this branch. Main shouldn't have to recompile if the code within this branch changes.
 
 This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
 
 ### Example
 
 ```C++
-#include stdio.h
+#include <iostream.h>
 
 class Nothing{
 	void do_nothing() {}
-}
+};
 
 int main(){
 	auto nothing = Nothing()
@@ -2914,7 +2941,7 @@ Now `main` depends on the `Nothing` class and everything that's inside it. Inste
 class NothingBase{
 public:
 	virtual void do_nothing() = 0;
-}
+};
 
 // inside Nothing.hpp
 #include "NothingBase.hpp"
@@ -2922,7 +2949,7 @@ public:
 class Nothing : public NothingBase {
 public:
 	void do_nothing() override {}
-}
+};
 
 // inside main.cpp
 #include "NothingBase.hpp
@@ -2931,9 +2958,8 @@ int main(){
 	nothing->do_nothing();
 }
 ```
-// I haven't coded for too long. I have to make sure this is correct.
 
-Now `main` depends only on the interface `NothingBase`, not on the implementation defined in `Nothing`. Changing `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker.The linker will make sure the main function calls the correct implementation of this library.
+Now `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker. The linker will make sure the main function calls the correct implementation of this library.
 
 // dependency tree graphs
 
@@ -2945,18 +2971,13 @@ In case you've ever heared of the pimpl (pointer to implementation) idiom, it ha
 
 ## Summary
 
-I think this was the longest section in this book where I explain technical details for C++ that Python users don’t care about. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
+I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
 ## Exercises
 
 For each principle create an example where it's violated and let the user correct it.
 
 
-## Back magic code
-
-Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this.”
-
-It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
 # 24. Datatypes
 
@@ -3445,6 +3466,13 @@ Now this is still one of the more readable inline list initializations. But it i
 ```py
 [[[0] * (i + j) for i in range(2)] for j in range(3)]
 ```
+
+## Back magic code
+
+Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this.”
+
+It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
+
 
 # 29. Data files
 
