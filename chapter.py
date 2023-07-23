@@ -1,5 +1,6 @@
 import re
 
+
 def remove_depercated_enumerations(line):
     words = line.split(" ")
     if words[0] == "#" and len(words) > 1:
