@@ -135,11 +135,11 @@ Things to write:
 	- [Untestable behavior](#untestable-behavior)
 	- [Exercises](#exercises-4)
 - [11. Types of tests](#11-types-of-tests)
-	- [End-to-End tests](#end-to-end-tests)
-	- [Integration tests](#integration-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
+	- [Integration tests](#integration-tests)
+	- [End-to-End tests](#end-to-end-tests)
 	- [The testing pyramid](#the-testing-pyramid)
 	- [Exercises](#exercises-5)
 - [12. Writing good Code with Tests](#12-writing-good-code-with-tests)
@@ -240,7 +240,7 @@ Things to write:
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [25. Variable types](#25-variable-types)
+- [25. Variable Properties](#25-variable-properties)
 	- [Compile-time constant](#compile-time-constant)
 	- [Constant](#constant)
 	- [Mutable](#mutable)
@@ -353,6 +353,8 @@ Things to write:
 
 
 # 3. Preface
+"I have been consistently disappointed by the quality of CS graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
+
 In 2007 I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, the const expression, etc. I somehow struggled understanding these things. They just felt wrong. There were so many open questions about how to write the code properly and I didn’t know where to get good advice. I passed the exam, but I was somehow dissatisfied.
 
 Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare to look at this code ever since. Already thinking about it makes me shudder.
@@ -1691,33 +1693,7 @@ There are different types of tests, depending on their scope. The most common te
 
 As we will see, each of these categories has its right to exist as they cover different parts of the code.
 
-## End-to-End tests
-
-// end-to-end tests vs. acceptance tests?
-
-End-to-End (E2E) tests are what most people would intuitively expect from a test. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
-
-If you publish some code examples as a documentation of your API, you should write an end-to-end test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
-
-E2E tests are user centered. The user doesn’t know anything about the internals of the code. He has only the interfaces you give him: GUI, API, joystick, microphone, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
-
-Sounds good. But at the same time, it seems extremely difficult to write these tests? Testing a GUI or the input of a microphone sounds pretty hard. 
-
-True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine. // use the expression used by Robert C Martin??
-
-Testing on the API level is in comparably easy. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. The fiels first have to be created. Either from code or by copying them from another location. The result of comparing big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files. 
-
-E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. It is important to combine them with unit tests. 
-
-One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?” I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. There is no reasonable way to test your code. Good luck!
-
-## Integration tests
-
-// what else to write here?
-
-Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. See section Mocking and Stubs in the previous chapter. Mocks allow a library to be tested allone, without creating an end-to-end test.
-
-Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
+// small tests are the foundation of the testing pyramid. They can be executed quickly. Meanwhile going towards bigger tests,they take longer to execute and are testing the interaction of components, rather than individual components themselves. Bigger tests might also be written in a different programming language than the underlying code. 
 
 ## Unit tests
 
@@ -1774,6 +1750,36 @@ As a summary one can say two things about classes and tests:
 -	The constructors should be small and not rely on any fancy logic
 
 Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+
+## Integration tests
+
+// what else to write here?
+
+Integration tests are somewhat smaller than E2E tests. They only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. See section Mocking and Stubs in the previous chapter. Mocks allow a library to be tested allone, without creating an end-to-end test.
+
+Integration tests, at its own right, are just as important as acceptance tests. Integration tests are different from acceptance tests as they can use fakes and stubs to mimic the behavior of collaborating objects.
+
+
+## End-to-End tests
+
+// end-to-end tests vs. acceptance tests?
+
+End-to-End (E2E) tests do what most people would intuitively expect from a test. Some marketing person orders a new feature. He tells you exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story above, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code.
+
+If you publish some code examples as a documentation of your API, you should write an end-to-end test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
+
+E2E tests are user centered. The user doesn’t know anything about the internals of the code. He has only the interfaces you give him: GUI, API, joystick, microphone, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed.
+
+Sounds good. But at the same time, it seems extremely difficult to write these tests? Testing a GUI or the input of a microphone sounds pretty hard. 
+
+True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click is a function call to the underlying API. If the GUI looks fine, it quite certainly is fine. // use the expression used by Robert C Martin??
+
+Testing on the API level is in comparably easy. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. The fiels first have to be created. Either from code or by copying them from another location. The result of comparing big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files. 
+
+E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. It is important to combine them with unit tests. 
+
+One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?” I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. There is no reasonable way to test your code. Good luck!
+
 
 ## The testing pyramid
 
@@ -2981,11 +2987,13 @@ For each principle create an example where it's violated and let the user correc
 
 # 24. Datatypes
 
+// what is the definition of data types and variable types?
+
 // primitive obsession -> David Sackstein Cppcon 2022
 
 There are hundreds of built-in datatypes. But again, I recommend not to use too many of them. Types by themselves are not improving your code. Only use other built-in types than mentioned here if you think it does so.
 
-At the same time it has to be said that using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write.
+At the same time it has to be said that using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
 
 "Primitive obsession is a code smell in which primitive data is used excessively to represent data models." This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
 
@@ -3002,7 +3010,7 @@ Here is an example how not to do it:
 fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
 ```
 
-I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible. At least not without visiting a highly advanced course in C++ black magic. 
+I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible. At least not without visiting a highly advanced course in C++ black magic. In Python on the other hand, this is syntactically correct code and it is frequently tempting to write such a list. Please resist this temptation!
 
 The second problem is that we don’t know what these numbers mean. There is no reasonable name for this list that explains everything. This list violates the single responsibility principle all by itself. 
 
@@ -3010,7 +3018,7 @@ And third code based on this data structure will inevitably become brittle. It�
 
 Apparently 3 values inside this list always belong together. In C++ we would create a struct for it, in Python we use a data class.
 
-// work out the details of the code here. Find good names.
+In Python the code should be rewritten to something like this:
 
 ```py
 @dataclass
@@ -3025,13 +3033,13 @@ bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
 shopping_list = [apples, bananas]
 ```
 
-Now the code is much better. All the elements inside the list are equal. If you do something you can just iterate over all elements. The data structure now is also pretty save. Correlated data is all stored together. It is almost impossible to mix up the weight of the apple and the banana. And it’s also pretty hard now to make an error when creating the list.
+Now the code is much longer, but it is also much better. All the elements inside the list are equal. If you do something you can just iterate over all elements. The data structure now is also pretty save. Correlated data is all stored together. It is almost impossible to mix up the weight of the apple and the banana. And it’s also pretty hard now to make an error when creating the list.
 
-We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to make a list with groups of objects you should create a class for these groups and make a list of these class instances. If you access a single object from a list, chances are high that your code is bad.
+We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to make a list with groups of objects you should create a class for these groups and make a list of these class instances. If you want to access a single object from a list, chances are high that your code is bad.
 
 ## Enums
 
-Enums is something many software developers don’t know,you don’t need it. But they should know it, as it makes the code much better. There are several different ways to write code without using enums. They are all bad.
+Enums are something many software developers don’t know. You don’t need it. But they should know it, as enums make the code much better. There are several different ways to write code without using enums. They are all bad.
 
 ```py
 # 1. boolean:
@@ -3144,7 +3152,7 @@ After pointers and Booleans, strings are probably the third most dangerous data 
 
 Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings. // see also "primitive obsession"
 
-This example I found in the book Clean Code p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. A book I can highly recommend. But here he somehow went haywire. What he explained all made sense, but he somehow missed  that one should never write code like that. 
+This example I found in book Clean Code on p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code like that. 
 
 He encoded five boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
 
@@ -3166,6 +3174,8 @@ class WaterState{
 	low_temp_alert: bool
 }
 ```
+
+// do we need this second enum??? I'm not sure anymore if it increases readability.
 
 Still, this is not yet optimal. What does `heater_state = true` or `= false` mean? Let's define an enum instead.
 
@@ -3193,7 +3203,7 @@ Once one found this solution it looks so natural. This code is so much more read
 The code using this dataclass is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
 
 ```py
-if water_state.high_temp_alert.value:
+if water_state.high_temp_alert == State.On:
 	print(“Attention: the water is too hot”)
 ```
 
@@ -3216,13 +3226,11 @@ b = 1
 vars = {‘a’ : 0, ‘b’ : 1}
 ```
 
-These two lines do something very similar. They both assign the value 0 to a and value 1 to b. Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code.
+These two lines do something very similar. They both assign the value 0 to a and value 1 to b. Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be ‘a’ and ‘b’ used as keys. Maybe he didn’t and these dict entries were generated by some user input.
 
-In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be ‘a’ and ‘b’ used as keys. Maybe he didn’t and these dict entries were generated by some user input.
+If the developer knows all the variables that he needs, he should use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure. A dict is more appropriate than a list as you can use the name of the recipe as a key.
 
-If the developer knows all the variables that he needs he should use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure. A dict is more appropriate than a list as you can use the name of the recipe as a key.
-
-Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might convert further into nested data classes.
+Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might convert further into nested classe instances.
 
 ## Trees
 
@@ -3232,7 +3240,7 @@ It is not too often that I had to create a tree myself, yet I was working on a t
 
 C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. Pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care at all.
 
-# 25. Variable types
+# 25. Variable Properties
 
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
@@ -3246,13 +3254,13 @@ Variables do not only have a type, but they can also have additional properties 
 
 Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. In python there is no way to enforce constness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces constness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
 
+In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time.
+
 ## Constant
 
 Compared to compile-time constants, constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
 
 Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the correct object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead.
-
-// example of constant?
 
 ## Mutable
 
@@ -3280,7 +3288,9 @@ On the other hand, the second solution may be a performance bottle neck as it ne
 
 Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no side unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
 
-Class variables have pretty much the same problem as global variables, just in a somewhat limited scope. That’s one reason why classes have to be small. Even passing output arguments to functions makes the code obscure. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not yet too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessability and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessability side.
+Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. This is one reason why classes have to be small. 
+
+Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessability and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessability side. Keep your classes small and make everything privat that can be.
 
 ## Static Variables
 
@@ -3288,7 +3298,9 @@ Static variables are member variables that share the same value over all class i
 
 If a static variable is const, one could also create a free const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
 
-If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables.
+If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
+
+And if you don't beleave me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is absolutely brittle.
 
 ## Dynamic Variables
 
@@ -3314,9 +3326,9 @@ Here is a rough list how variable types are sorted by the amount of effects they
 
 Immutable object < mutable object < class variable < inherited variable < singleton < global variable
 
-There is certainly nothing wrong with immutable objects. We just can’t do it without them. It's just that they can't do much. They are just there and do nothing. They can only be used within the current scope and when passed as a function argument their value can't be changed.
+There is certainly nothing wrong with immutable objects. We just can’t do it without them. It's just that they can't do much. They are just there and do nothing. They can only be used within the current scope and when passed as a function argument their value can't be changed. If you like working only with immutable objects, I can recommend you functional programming.
 
-With mutable objects we have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
+With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
 
 Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big.
 
