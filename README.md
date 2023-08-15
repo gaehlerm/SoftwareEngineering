@@ -1,6 +1,8 @@
 # 1. Introduction to software engineering
 
-Copyright Marco Gähler, all rights reserved. 
+Copyright Marco Gähler, all rights reserved.
+
+Please give me feedback on the book. Either as a merge request or by email, marco.gaehler@gmx.ch
 
 This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
 
@@ -460,6 +462,8 @@ There are different definitions of the Single Responsability Principle (SRP). I 
 
 ## Do not Repeat Yourself
 
+// DRY does not always have to be obeyed that stricty. Repeat yourself until it is clear what the acronym should be.
+
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
 The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. 
@@ -497,6 +501,9 @@ Tracking down bugs will be much easier. You can fairly well understand what each
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
 
 ```py
+def print_body():
+	# print something
+
 def print_page():
 	print("author: Marco")
 	print("*************")
@@ -507,6 +514,17 @@ def print_page():
 The problem are the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the prefered solution as it's fairly easy to create these functions.
 
 ```py
+def print_header():
+	print("author: Marco")
+	print("*************")
+	
+def print_body():
+	# print something
+
+def print_footer():
+	print("copyright my company")
+	print("page number 1/1")
+
 def print_page():
 	print_header()
 	print_body()
@@ -514,6 +532,8 @@ def print_page():
 ```
 
 Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
+
+Admitedly I was a little bit picky here. But I can't make much more convoluted examples in a book.
 
 ## Orthogonality
 
@@ -1420,13 +1440,7 @@ There are also some more esoteric things, for example friend classes. At first s
 
 # 10. Testing
 
-// mention double entry book keeping somewhere -> Clean Craftsmanship
-
-// in a test you use the code under test. you write higher level code. this gives you an understanding how the interface of the actual code should look like
-
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
-
-// source: Software Engineering at Google
 
 Software Engineering:
 
@@ -1686,10 +1700,10 @@ As software engineers, we want to automate everything, tests included. However, 
 
 # 11. Types of tests
 
-There are different types of tests, depending on their scope. The most common tests are:
+There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types.
 - Unit tests test the behavior of individual functions and classes.
-- Component tests test the functionality of libaries.
-- End-to-end or acceptance tests test the behavior of the complete software.
+- Component tests test the interplay of many functions. Typically they test the functionality of libaries.
+- End-to-end (E2E) or acceptance tests test the behavior of the complete software.
 
 As we will see, each of these categories has its right to exist as they cover different parts of the code.
 
@@ -2214,7 +2228,7 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have gobal variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier as the compiler does valuable checking of names, functions, types, etc.
 
-There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler //reference.
+There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler //Refactoring, Addison Wesley, 2019.
 
 // add or remove some techniques?
 
@@ -2609,6 +2623,18 @@ There is a famous book called design patterns [Gamma et al., 1995]. It describes
 
 ## Factories
 
+// Don't write code like this. The car calls the factory to create a part of the car. Instead you should call the engine and build up the car from it. 
+```C++
+class Car{
+	Engine engine;
+
+	Car(String modelNo) {
+		auto factory = EngineFactory();
+		engine = factory.create_engine(modelNo);
+	}
+};
+```
+
 // when to really use a factory? Polymorphism?
 
 There are different kind of factories. These are objects that create other objects. It makes sense to set up a factory if the output object is fairly complex. Setting up such an object within the constructor would clutter the class. It wouldn’t obey the single responsibility theorem anymore. I would like to highlight as well that a factory does not have to be a class. It can be a simple function as well.
@@ -2670,11 +2696,18 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 // add some more text from the pragmatic programmer
 
-Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as it makes everything sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one of them, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
+Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
 
 This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
+
+// A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
+instead of asking what you want, you go to the service locator and reach through the service locator.
+https://youtu.be/RlfLCWKxHJ0 video on service locators
+Only ask for things you directly need
+
+// Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
 
 One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192. More formally, the Law of Demeter for functions requires that a method `m` of an object `a` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
 - `a` itself;
@@ -2710,6 +2743,8 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 
 ## Correlation
+
+// don't mix good and bad stuff. Then everything becomes bad.
 
 Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
 
@@ -3082,6 +3117,8 @@ Fifth option: The best solution is certainly using an enum. It looks slightly od
 Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare.
 
 ## Booleans
+
+// stay pragmatic. Once in a while an if statement is not too bad. This is more of a general advice.
 
 “Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. Booleans are evil.”
 
