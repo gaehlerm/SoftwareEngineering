@@ -1,0 +1,102 @@
+Sinlge Responsability Principle
+
+Es gibt verschiedene Definitionen des Single Responsability Principles (SRP, "Einziges Verantwortungs Prinzip"). Ich denke nicht, dass die Unterschiede zwischen ihnen wichtig sind. Es ist viel wichtiger, dass Du die Idee dahinter verstehst.
+
+Do not Repeat Yourself
+
+Du sollst keinen code kopieren und einfügen. Das wiederspricht dem Do not Repeat Yourself (DRY, "Wiederhole Dich Nicht") Prinzip, ausser Du entfernst die Duplikation umgehend. Falls Du duplizierten Code hast, musst Du Änderungen nicht an einer, sondern an mehreren Stellen vornehmen. Stattdessen solltest Du eine Funktion schreiben und von nun an diese benutzen. Dies deckt die meisten Fälle des SRP ab.
+
+Das DRY Prinzip gilt aber nicht nur für code. Es gilt auch für das ganze Projekt. Falls Du einen Schritt beim build, test o.ä. immer wiederhohlen musst, so wiederspricht dies ebenfalls dem DRY Prinzip. Du solltest diesen Schritt automatisieren.
+
+Duplikation kann aber auch ohne copy-paste Code auftreten. Oft auftretende Probleme werden von mehreren Personen innerhalb von einer Organisation unabhängig von einander gelöst. Diese Art von Repetition ist nur schwer zu beheben, da sie nicht so offensichtlich ist. Sie kann nur durch das ganze Team gelöst werden, indem es solche Redundanzen konsequent entfernt.
+
+Vorteile des SRP
+
+Die Bedeutung des SRP kann nicht überschätzt werden. Es macht alleine Code um eine Grössenordnung besser, wenn es richtig angewendet, oder schlechter wenn es ignoriert wird. Und es ist recht einfach zu lernen. Es gibt dutzende Gründe, warum dies der Fall ist. Hier sind die wichtigsten.
+
+Verständnis
+Eine Funktion oder Klasse, welche genau etwas implementiert, ist einfach zu verstehen. Es folgt alles der selben Logik und es gibt kein unerwartetes Verhalten. Zusätztlich ist der Code für ein bestimmtes Problem kurz, da er sich nur auf den Kern des Problems fokusiert.
+
+Namensgebung
+Objekten einen Namen zu geben ist eines der schwierigsten Probleme im Programmieren und kann extrem frustrierend sein. Namen sind immer zu lang oder nicht ausdrucksstark genug. Das ist ein Hinweis, dass Du vielleicht gegen das SRP verstossen hast. Wenn ein Objekt das SRP befolgt, so tut es nur eine Sache. Und Objekte zu benennen, die nur eine Sache tun, ist normalerweise nicht übermässig schwierig.
+
+Duplikation
+Jedes Stück Logik wird an genau einer Stelle im Code implementiert. Es gibt keine Duplikationen. Man darf nicht Code Kopieren und Einfügen. Wiederhole Dich nicht. DRY. Allerdings gilt DRY nicht nur für Kopieren und Einfügen von Code. Es kann auch passieren, dass unabhängig von einander zwei mal ein sehr ähnliches Stück Code geschrieben wird. Dies ist der Fall, wenn zwei Programmierer unabhängig von einander die selbe Funktionalität implementieren. Unbeabsichtigte Duplikation ist genau so schlecht wie copy-paste Code, nur ist dies viel schwerer zu verhindern. Unbeabsichtigte Code Duplikationen können insbesondere bei grösseren Organisationen zu enorm viel zusätzlichem Code und Komplexität führen.
+
+Testing
+Unit tests schreiben wird verhältnismässig einfach. Klassen und Funktionen, welche DRY befolgen sind relativ kurz und einfach geschrieben. Eine Klassen Instanz zu erzeugen und die Logik dahinter zu verstehen ist nicht so schwer. Die relevanten Stellen im Code zu finden wird dank DRY relativ einfach. Man kann einfach die öffentlichen Funktionen der Klassen anschauen und weiss, was man testen muss. Und da der Code der Klasse recht einfach ist, sollte es nicht so schwer sein, die Resultate der Berechnungen vorherzusagen.
+
+Fehler
+Da der Zweck jeder Klasse dank dem SRP offensichtlich ist, ist es einfacher die Logik des ganzen Problems zu strukturieren. Du wirst nur Code schreiben, der zur Lösung beiträgt. Du wirst weniger Fehler erzeugen. Und es wird für die Fehler schwieriger sein, sich zu verstecken. Oftmals weisst Du sofort, wo ein Fehler sich befinden muss. Es ist offensichtlich, welcher Teil des Codes verantwortlich für den Fehlers ist.
+
+Fehler flicken
+Die Fehlersuche wird durch das SRP deutlich einfacher. Du verstehst bei jeder Klasse recht gut, was sie tun soll und entsprechend findest Du unerwartetes Verhalten deutlich schneller. Allerdings wird das Flicken von Fehlern auf den ersten Blick etwas schwieriger. Du darfst nicht mehr einfach an der erstbesten Stelle einen Flicken anwenden. Dies würde dem SRP widersprechen. Stattdessen muss die Ursache des Fehlers im Code gefunden und behoben werden. Schlussendlich ist dies meistens einfacher als den Fehler an der erstbesten Stelle zu flicken, da so keine Folgefehler auftreten. Und vorallen flickt man so den Fehler für ein und allemal.
+
+Beispiel
+
+Schauen wir uns ein kurzes Code Beispiel an. Obwohl der Code nur wenige Zeilen lang ist, widerspricht er dem SRP. Kannst Du herausfinden, warum?
+
+
+```py
+def print_body():
+	# print something
+
+def print_page():
+	print("author: Marco")
+	print("*************")
+	print_body()
+	print("copyright my company")
+	print("page number 1/1")
+```
+
+Das Problem sind die unterschiedlichen Abstraktionsniveaus. Die Ausgabe eines Strings ist definitiv ein tieferes Abstraktionsniveau als der Aufruf einer Funktion. Wobei diese Funktion vermutlich ebenfalls einen String ausgibt. Es sollten nicht die Ausgabe von Strings, sowie der Aufruf von Funktionen im selben Stück Code sein.
+
+Nun gibt es zwei Möglichkeiten:
+- Wir können entweder die Funktion `print_body` ausrollen.
+- Oder wir packen die Print Aufforderungen in zwei Funktionen.
+Da die Funktion hier recht kurz ist, sind beide Möglichkeiten valable Optionen. Wenn es sich aber um richtigen Code handelt, kann die Funktion schon deutlich länger sein. Entsprechend ist es zu bevorzugen, wenn man die print Aufforderungen in zwei Funktionen extrahiert.
+
+
+```py
+def print_header():
+	print("author: Marco")
+	print("*************")
+	
+def print_body():
+	# print something
+
+def print_footer():
+	print("copyright my company")
+	print("page number 1/1")
+
+def print_page():
+	print_header()
+	print_body()
+	print_footer()
+```
+
+Nun sieht der Code sehr gleichmässig aus. Dies ist ein deutliches Zeichen, dass das SRP nun erfüllt ist.
+
+Orthogonalität
+
+Orthogonalität ist eine mathematische Definition. Sie besagt, dass zwei Objekte bezüglich einem bestimmten Koordinatensystem senkrecht zu einander sind. Diese Definition mag auf den ersten Blick intuitiv erscheinen. Doch was hat es mit dem Koordinatensystem auf sich...? Lassen sie mich ein kurzes Beispiel zeigen, dass jeder kennt.
+
+// Beispiel mit den Wasserhahnen
+
+Auf der linken Seite haben wir einen altmodischen Wasserhahn. Der Benutzer hat zwei Freiheitsgrade. Einer für die Menge an kaltem Wasser, ein zweiter für die Menge an warmem Wasser. Aber das ist normalerweise nicht, was der Benutzer will. Es stellt sich heraus, dass der Benutzer die zwei Freiheitsgrade anders kontrollieren möchte. Die orthogonale Lösung aus Sicht des Benutzers ist auf der rechten Seite dargestellt. Der Wasserhahn auf der linken Seite ist veraltet. Er ist orthogonal aus der Sicht des Klempners, erfüllt aber die heutigen Anforderungen der Benutzer nicht mehr. Wir erwarten, dass der Wasserhahn für uns die Koordinatentransformation übernimmt und wir in dem von uns bevorzugten Koordinatensystem arbeiten können.
+
+In der Softwareentwicklung haben wir genau das selbe Phänomen. Wir haben einen Benutzer und einen Entwickler. Beide möchten mit orthogonalen Daten arbeiten, aber dies können unterschiedliche Koordinatensysteme sein. Nun ist es immer die Arbeit des Entwicklers, die ausgegebenen Daten so zu transformieren, dass sie aus sicht des Benutzers orthogonal sind. Es ist immer die Aufgabe des Entwicklers, sich den Anforderungen des Benutzers anzupassen, nicht umgekehrt!
+
+Es mag nicht immer offensichtlich sein, wie das Interface aus Sicht des Benutzers aussehen soll. Im Zweifelsfalle soll eine möglichst generelle Datenstruktur zurückgegeben werden. Anhand der Datenstruktur sollen sich keine Implementationsdetails erahnen lassen, obwohl dies in manchen Fällen einfacher gesagt als getan ist. Ein möglichst allgemeines interface hat die höchste Wahrscheinlichkeit, dass es aus Sicht des Benutzers orthogonal ist.
+
+Oftmals kann man nicht wählen, wie die Datenstrukturen aussehen, mit denen man arbeitet. Zum Beispiel, wenn sie von einer Drittpartei Bibliothek stammen. Und die Datenstruktur passt nicht zum Algorithmus, den man für das spezifische Problem verwenden möchte. In einem solchen Fall sollte man zuerst die Daten orthogonalisieren, damit sie zum Algorithmus passen. Die Schritte Orthogonalisierung und Ausführung des Algorithmus zu separieren ist normalerweise weniger Aufwand, als den Algorithmus an eine suboptimale Datenstruktur anzupassen.
+
+Ein verbreitetes Beispiel ist die Koordinatentransformation zwischen sphärischen (r $\phi$ $\theta$) und kartesischen (x y z) Koordinaten. Einige Probleme werden einfacher im einen Koordinatensystem gelöst, andere im Anderen. In den meisten Fällen lohnt es sich zuerst die Daten zu transformieren eher als den Algorithmus anzupassen. Die Koordinatentransformation und den Algorithmus zu verbinden widerspricht dem SRP.
+
+Vorteile von orthgonalen Systemen
+
+In einem orthogonalen System zu arbeiten hat mehrere Vorteile:
+- Fehler propagieren gerade durch das System und sind einfach zu finden. Sie vergrössern sich nicht.
+- Diese Fehler zu flicken ist einfacher da das System weniger fragil ist.
+- Es ist einfacher, Tests für ein orthogonales System zu schreiben.
+- Es entkoppelt den Code da die Transformation wie ein Adapter wirkt.

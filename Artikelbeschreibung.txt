@@ -1,0 +1,6 @@
+Artikelbeschreibung
+Es gibt unendlich viele Möglichkeiten, wie man ein Computerprogramm mit einem spezifischen Output schreiben kann. Dem Computer sind die Unterschiede egal. Nicht aber für die Menschen, welche mit dem Code arbeiten müssen. Je nachdem wie der Code geschrieben ist, gibt es grosse Unterschiede, wieviel Aufwand man für eine Änderung im Code braucht. Zum Beispiel wie schwer es ist, einen Fehler im Code zu finden.
+
+Dieses Buch liefert Ihnen die Grundlagen, worauf es ankommt, damit Sie guten Code schreiben können. Es vermittelt die grundlegenden Konzepte und Strukturen, auf welchen guter Code basiert.
+
+Dieses Buch ist für alle Leser geeignet, welche bereits mit dem Grundlagen der Programmierung, wie zum Beispiel Klassen, vertraut sind und nun einen Schritt in Richtung professioneller Softwareentwicklung machen möchten.

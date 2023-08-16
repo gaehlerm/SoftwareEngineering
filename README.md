@@ -375,7 +375,10 @@ There is so much I learned in the few years since my friend fell into the shit h
 
 I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I think.
 
-This book is only a step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
+I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and critisize some parts of it, even better. 
+
+This book is only a step in your career. Now you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
+
 Enjoy my book and good luck with your career.
 
 # 4. Introduction
@@ -840,14 +843,15 @@ shopping.create_shopping_list(["apple", "banana"])
 
 Now you go shopping without having a shopping list. In fact, the call of `create_shopping_list` is probably superfluous. I don't know what the code will do, but it has quite certainly unintended behavior.
 
-It is one of the advantages of procedural code that such things are less likely to happen.
+It is one of the advantages of procedural code that such things are less likely to happen. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
+
 ```Py
 money = get_money(50)
 shopping_list = create_shopping_list(["apple", "banana"])
 go_shopping(money, shopping_list)
 ```
 
-In this case it is physically impossible to go shopping without having a shopping list. You will get a runtime error if there is no `shopping_list` available.
+In this case it is physically impossible to go shopping without having a shopping list. You will get a runtime error (or in compiled languages a compilation error) if there is no `shopping_list` available.
 
 Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or, if necessary, to mutable arguments.
 
