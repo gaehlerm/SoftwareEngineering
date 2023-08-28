@@ -9,7 +9,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 The first half of the books seems more or less ok, the second half needs some serious reworking.
 
 Things to write:
--	Write more exercises. This is what Pearson wants. But I don't know how to always write code examples. Not to talk about using the copilot.
+-	Figure out how to use Copilot. That's what the guy from Pearson wants.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
 -	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation? DDD distilled may help to get the essence.
 -	Write some more about everything. Some chapters are really short.
@@ -61,6 +61,7 @@ Things to write:
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
 		- [Semantic Versioning](#semantic-versioning)
+	- [Copilot](#copilot)
 	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
@@ -68,7 +69,6 @@ Things to write:
 	- [Number of arguments](#number-of-arguments)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
-	- [Exercises](#exercises-2)
 - [9. Classes](#9-classes)
 	- [Structs](#structs)
 	- [Private or Public](#private-or-public)
@@ -100,7 +100,7 @@ Things to write:
 	- [Drawbacks](#drawbacks)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
-	- [Exercises](#exercises-3)
+	- [Exercises](#exercises-2)
 - [Inheritance](#inheritance-1)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
@@ -135,7 +135,7 @@ Things to write:
 		- [The Beyonce rule](#the-beyonce-rule)
 		- [Mocking and Stubs](#mocking-and-stubs)
 	- [Untestable behavior](#untestable-behavior)
-	- [Exercises](#exercises-4)
+	- [Exercises](#exercises-3)
 - [11. Types of tests](#11-types-of-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
@@ -143,7 +143,7 @@ Things to write:
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [The testing pyramid](#the-testing-pyramid)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-4)
 - [12. Writing good Code with Tests](#12-writing-good-code-with-tests)
 	- [Unit tests](#unit-tests-1)
 	- [Component tests](#component-tests)
@@ -173,9 +173,9 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-5)
 - [14. Understandable code](#14-understandable-code)
-	- [Exercises](#exercises-7)
+	- [Exercises](#exercises-6)
 - [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -190,7 +190,7 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
-	- [Exercises](#exercises-8)
+	- [Exercises](#exercises-7)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
@@ -214,7 +214,7 @@ Things to write:
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-9)
+	- [Exercises](#exercises-8)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -230,7 +230,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-1)
-	- [Exercises](#exercises-10)
+	- [Exercises](#exercises-9)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -279,9 +279,9 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-11)
+	- [Exercises](#exercises-10)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-12)
+	- [Exercises](#exercises-11)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -296,7 +296,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-13)
+	- [Exercises](#exercises-12)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -309,7 +309,7 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-14)
+	- [Exercises](#exercises-13)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
@@ -352,6 +352,12 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
+- [Copilot](#copilot-1)
+	- [Duplicated code](#duplicated-code)
+	- [Refactoring](#refactoring)
+	- [Naming](#naming-1)
+	- [Functions](#functions)
+- [Abbreviations](#abbreviations)
 
 
 # 3. Preface
@@ -776,6 +782,10 @@ Every time you make a new release you increase the version number.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
 
+## Copilot
+
+Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps.
+
 ## Conclusion
 
 Interfaces should always be designed from a user point of view. This makes them much better as user friendlines is the main goal of any interface.
@@ -814,14 +824,13 @@ This function clearly has a side effect. It says nothing about a hidden counter,
 Temporal coupling is if you can do things in the wrong order. Sometimes the code enforces the right order, sometimes it doesn't. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. Let me make a brief example:
 
 ```Py
-class Shopping{
+class Shopping():
 	def get_money(self, amount):
 		self.money = amount
 	def create_shopping_list(self, shopping_list):
 		self.shopping_list = shopping_list
 	def go_shopping():
 		# use the shopping_list and money
-}
 ```
 Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
 
@@ -832,7 +841,7 @@ shopping.create_shopping_list(["apple", "banana"])
 shopping.go_shopping()
 ```
 
-This is the natural order of things. However, this is not enforced by the code. One could also write the following code:
+This sequence of function calls is given by the natural order of the shopping process. First you need money and a shopping lst, before you go shopping. However, this order is not enforced by the code. One could also swap two of the function calls as follows:
 
 ```py
 shopping = Shopping()
@@ -841,7 +850,7 @@ shopping.go_shopping()
 shopping.create_shopping_list(["apple", "banana"])
 ```
 
-Now you go shopping without having a shopping list. In fact, the call of `create_shopping_list` is probably superfluous. I don't know what the code will do, but it has quite certainly unintended behavior.
+Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is probably empty.
 
 It is one of the advantages of procedural code that such things are less likely to happen. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
 
@@ -855,6 +864,8 @@ In this case it is physically impossible to go shopping without having a shoppin
 
 Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or, if necessary, to mutable arguments.
 
+// how to make these steps work with copilot?
+
 ## Number of arguments
 As for the length of the function, the number of arguments should be as small as possible as well. This simplifies the function a lot. 
 
@@ -863,9 +874,10 @@ Now there are very few functions with zero arguments. These are the easiest, the
 Functions generally shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
-```py
+
+// equation?
 Total variables = function arguments + class variables
-```
+
 Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
 
 A method might access only a few of the class variables. Still, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
@@ -888,13 +900,6 @@ Unexpected changes of values of a function argument are very hard to keep track 
 Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or, this method might change a variable of the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
-
-## Exercises
-
-The following code has temporal coupling. Remove the temporal coupling by rewriting the code.
-
-The following function is too long. Break it into shorter pieces.
-
 
 # 9. Classes
 
@@ -4654,8 +4659,88 @@ Your next step will be to apply all the things you learned on your journey so fa
 I hope you learned a lot of things that will help you in your life as a software engineer. Good luck!
 Marco
 
+# Copilot
 
-Abbreviations
+Copilot is the AI code generator by github. Birger Peil wants me to write something about it, however I doubt that it can really live up to the expectations. However this might change with future versions.
+
+## Duplicated code
+
+```
+print('hello')
+print('hello')
+```
+
+```
+# remove the duplicate print statements
+```
+
+Copilot makes a suggestion after typing an additional `for`,
+```
+for i in range(5):
+    print('hello')
+```
+Now where does the `5` come from? When writing the comment after the code it works.
+
+## Refactoring
+```
+print('hello')
+print('hello')
+print('hello')
+```
+When refactoring the code above using a comment, copilot helps writing the comment by auto completing it.
+```
+# refactor the code above to use a loop
+for i in range(3):
+    print('hello')
+```
+
+When writting the comment after the actual code it works better.
+```
+print('1', end='')
+print('2', end='')
+print('3', end='')
+print('4', end='')
+print('5', end='')
+print('6')
+```
+```
+# merge the print statements
+```
+Copilot correctly suggests
+```
+print('123456')
+```
+
+## Naming
+Naming is one of the strengths of Copilot. The suggestions are not always perfect, but at least they are a good start.
+```
+def a(b,c):
+    return b/c
+
+# suggest a better function name
+def divide(b,c):
+    return b/c
+```
+
+## Functions
+```
+def some_fancy_function_name(b,c):
+    return b+c
+```
+```
+# suggest a better function name
+def add(b,c):
+    return b+c
+```
+Also the function calls can be refactored using copilot. Though the question is wether this is worth the effort.
+```
+some_fancy_function_name("hello ", "bob")
+#refactor the code above to use the add function
+add("hello ", "bob")
+```
+
+
+# Abbreviations
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
 DB	Database
