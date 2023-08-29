@@ -9,7 +9,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 The first half of the books seems more or less ok, the second half needs some serious reworking.
 
 Things to write:
--	Figure out how to use Copilot. That's what the guy from Pearson wants.
+-	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
 -	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation? DDD distilled may help to get the essence.
 -	Write some more about everything. Some chapters are really short.
@@ -263,7 +263,9 @@ Things to write:
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
 	- [Json](#json)
+		- [Copilot](#copilot-1)
 	- [XML](#xml)
+		- [Copilot](#copilot-2)
 	- [HDF5](#hdf5)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
@@ -352,7 +354,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-1)
+- [Copilot](#copilot-3)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -3599,9 +3601,90 @@ if __name__ == "__main__":
 ```
 As you can see, working with json files is much easier and less error prone than working with CSV files. The underlying data structure is a dict, which is a pretty bullet proof way to work with data. There is hardly a way to introduce unnoticed bugs.
 
+### Copilot
+Reading and writing json files using Copilot works out pretty well. Upon writing the following code
+```py
+a = [1,2,3]
+b = [4,5,6]
+# write a and b to a json file called 'data.json'
+```
+Copilot makes the following suggestion:
+```py
+import json
+with open('data.json', 'w') as f:
+    json.dump({'a':a, 'b':b}, f)
+```
+Also when reading a json file, the suggesiton of Copilot is quite sound. Following the comment
+```py
+# read the json file into a and b
+```
+Copilot makes the following suggestion:
+```py
+with open('data.json', 'r') as f:
+    data = json.load(f)
+    a = data['a']
+    b = data['b']
+```
+Thus one can say that Copilot allows us to save some time writing code and saving brain memory when working with json files.
+
 ## XML
 
-The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Along with some notation details the support of arrays is pretty much the only difference. Therefore, json is simply better and there is no reason to use XML if you can choose. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to.
+The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily readable. Other than that, there are only minor diffirences like the XML supporting comments and namespaces.
+
+Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
+
+The following code converts an XML file into a json object:
+```py
+import json
+import xmltodict
+
+with open("data.xml") as xml_file:
+    data_dict = xmltodict.parse(xml_file.read())
+    json_data = json.dumps(data_dict)
+```
+Writing XML files is rather tedious as well. Here I recommend as well to work with json data and convert it to XML just before writing.
+```py
+import json
+import xmltodict
+json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "Software Engineer"}}}
+"""
+python_dict=json.loads(json_string)
+with open("person.xml", 'w') as file:
+	xmltodict.unparse(python_dict, output=file)
+```
+
+### Copilot
+Copilot struggles a lot when dealing with XML files. It seems as if it didn't know the xml libraries that would simplify it's life. Instead it assembles strings into an XML file by itself which results in very brittle code that is very hard to read.
+```py
+x = [1,2,3]
+y = [4,5,6]
+# write x and y to an xml file called 'data.xml'
+```
+This code worked out without any problems for json files, but for XML the result at the time of writing was dissatisfactory. The suggestion of Copilot is:
+```py
+with open('data.xml', 'w') as f:
+    f.write('<data>\n')
+    for i in range(len(x)):
+        f.write(f'\t<x>{x[i]}</x>\n')
+        f.write(f'\t<y>{y[i]}</y>\n')
+    f.write('</data>')
+```
+Now this does the job, but this is certainly now how an XML file is supposed to be created. Reading XML files is even worse.
+```py
+x = []
+y = []
+# read the xml file into x and y
+```
+The code Copilot suggests is extremely brittle and doesn't even work in my case. Somehow Copilot doesn't seem to know about XML libraries that would simplify its life a lot.
+```py
+with open('data.xml', 'r') as f:
+    for line in f:
+        if '<x>' in line:
+            x.append(int(line[3:-5]))
+        elif '<y>' in line:
+            y.append(int(line[3:-5]))
+```
+
 
 ## HDF5
 
