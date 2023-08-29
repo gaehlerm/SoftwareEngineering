@@ -262,11 +262,13 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-	- [Json](#json)
 		- [Copilot](#copilot-1)
-	- [XML](#xml)
+	- [Json](#json)
 		- [Copilot](#copilot-2)
+	- [XML](#xml)
+		- [Copilot](#copilot-3)
 	- [HDF5](#hdf5)
+		- [Copilot](#copilot-4)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
 	- [Exercise](#exercise-2)
@@ -354,7 +356,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-3)
+- [Copilot](#copilot-5)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -3565,6 +3567,23 @@ def read_csv(filename):
     return (x, y)
 ```
 
+### Copilot
+
+Copilot seems to be getting along with csv files quite well. Though I would have expected the data to be saved in columns instead of rows. But as I already said, there is no real standard for CSV files, thus such things have to be specified to Copilot.
+```py
+x = [1,2,3,4]
+y = [5,6,7,8]
+# write x and y to a csv file called 'data.csv'
+```
+This prompts the following code:
+```py
+import csv
+with open('data.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(x)
+    writer.writerow(y)
+```
+
 ## Json
 
 The JavaScript Object Notation (json) file format is clearly the best file format for everyday purposes. It is very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
@@ -3705,12 +3724,34 @@ Reading a file returns an HDF5 file object. It may be a little intimidating at f
 ```py
 import h5py
 
-f = h5py.File('temp.hdf5', 'r')
-print(list(f.keys()))
-print(list(f['x']))
+with h5py.File('temp.hdf5', 'r') as f:
+    print(list(f.keys()))
+    print(list(f['x']))
+
 ```
 
 As HDF5 is a binary format you cannot look at the data using a text editor. Instead you have to use the HDFview software, https://www.hdfgroup.org/downloads/hdfview/
+
+### Copilot
+
+Copilot seems to be getting along quite well with HDF5. On the following code snippet:
+```py
+x = [1,2,3,4]
+# write x to an hdf5 file called 'data.hdf5'
+```
+Copilot correctly complements it to
+```py
+with h5py.File('data.hdf5', 'w') as f:
+    f.create_dataset('x', data=x)
+```
+Also reading out data from an HDF5 file is no problem.
+```py
+# read the hdf5 file into x
+```
+```py
+with h5py.File('data.hdf5', 'r') as f:
+    x = list(f['x'])
+```
 
 ## Databases
 
