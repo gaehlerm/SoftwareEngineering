@@ -194,12 +194,14 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
+	- [Copilot](#copilot-4)
 	- [Exercises](#exercises-7)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
 		- [Cost of Bugs](#cost-of-bugs)
 		- [Debugging](#debugging)
+		- [Copilot](#copilot-5)
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
@@ -218,6 +220,7 @@ Things to write:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
+	- [Copilot](#copilot-6)
 - [20. Decoupling](#20-decoupling)
 	- [Exercises](#exercises-8)
 - [21. Physical laws of code](#21-physical-laws-of-code)
@@ -257,7 +260,7 @@ Things to write:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
-	- [Copilot](#copilot-4)
+	- [Copilot](#copilot-7)
 	- [Exercise](#exercise)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
@@ -266,13 +269,13 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-5)
-	- [Json](#json)
-		- [Copilot](#copilot-6)
-	- [XML](#xml)
-		- [Copilot](#copilot-7)
-	- [HDF5](#hdf5)
 		- [Copilot](#copilot-8)
+	- [Json](#json)
+		- [Copilot](#copilot-9)
+	- [XML](#xml)
+		- [Copilot](#copilot-10)
+	- [HDF5](#hdf5)
+		- [Copilot](#copilot-11)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
 	- [Exercise](#exercise-1)
@@ -288,14 +291,16 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
-	- [Copilot](#copilot-9)
+	- [Copilot](#copilot-12)
 	- [Exercises](#exercises-10)
 - [33. Logging](#33-logging)
 	- [Exercises](#exercises-11)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
+		- [Copilot](#copilot-13)
 	- [Command line](#command-line)
+		- [Copilot](#copilot-14)
 	- [IDE](#ide)
 	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
@@ -362,7 +367,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-10)
+- [Copilot](#copilot-15)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -2634,6 +2639,23 @@ Structs are generally very useful objects, as explained in the section on classe
 
 For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
 
+## Copilot
+
+Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of copilot. Though I don't know how difficult code snippets copilot can translate.
+
+```C++
+#include <iostream>
+
+for (int i = 0; i < 10; i++) {
+    std::cout << i << std::endl;
+}
+```
+
+```py
+for i in range(10):
+    print(i)
+```
+
 ## Exercises
 
 - Learn some new programming languages. Write a program to read a simple comma separated value (CSV) file and save the values in a list/vector/array/... for at least 5 different programming languages.
@@ -2669,6 +2691,22 @@ Debugging is the process of finding bugs. If you spend too much time debugging i
 
 In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. Writing tests or refactoring the code would of course be better options, but these take a lot of time.
 
+### Copilot
+
+Copilot is able to find some bugs. Though I expect it to find only minor bugs, this is already a real feat. For example take the following code snippet,
+
+```py
+    roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
+    roman = ''
+    for key in sorted(roman_map.keys(), reverse=True):
+        while number > key:
+            roman += roman_map[key]
+            number -= key
+    return roman
+```
+Here I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
+
+Once again, there is the question wether this bug was fixed because copilot know the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
 
 ## Exceptions
 
@@ -2818,6 +2856,32 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 ## Observer
 
 //etc. ...
+
+## Copilot
+
+Copilot knows quite well about design patterns. The bigger challange is explaining to copilot what you actually want to do. Here is the example of a factory created by a single comment and very little help to get the code started.
+```py
+# write a factory that creates a logistics object that implements a road logistics or sea logistics
+def create_logistics(type):
+    if type == 'road':
+        return RoadLogistics()
+    elif type == 'sea':
+        return SeaLogistics()
+    else:
+        raise ValueError(f'Invalid logistics type: {type}')
+    
+class Logistics:
+    def plan_delivery(self):
+        raise NotImplementedError('Subclasses must implement plan_delivery')
+
+class RoadLogistics(Logistics):
+    def plan_delivery(self):
+        print('Plan road delivery')
+
+class SeaLogistics(Logistics):
+    def plan_delivery(self):
+        print('Plan sea delivery')
+```
 
 # 20. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
@@ -4032,7 +4096,7 @@ Use comments only for things that cannot be made apparent by the code itself, ye
 
 ## Copilot
 
-Copilot is not yet able to write really useful comments.
+Copilot is not yet able to write really useful comments. The following comment was created by the document function of Copilot Labs.
 
 ```py
 def roman_number(number):
@@ -4097,6 +4161,10 @@ Git should not only be used for bare code. Git can also be used on any text file
 
 Or if you wirte a book like this one. It is writen in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
 
+### Copilot
+
+// is here the location to write about Merge (Pull) Requests? Seems like Copilot can help here as well, https://youtu.be/8_0DJ9FOlOM?t=559
+
 ## Command line
 
 The most common command line software is the shell used on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used.
@@ -4104,6 +4172,15 @@ The most common command line software is the shell used on Unix systems. However
 The command line is the swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
 The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
+
+### Copilot
+
+// Copilot for CLI might change how we use the command line (and all its programs with it). Now you no longer have to use google to find the syntax, but you can use Copilot CLI instead. https://youtu.be/8_0DJ9FOlOM?t=787 https://youtu.be/pw0SH7AHIFI -> how does this work exactly?
+
+```
+git? how do I update the message of my last commit
+```
+This returns the command `git commit --amend` along with a detailed explanation. The command can also be executed right away. Furthermore the `Revision` prompt allows you to ask for specific changes to the suggestion made.
 
 ## IDE
 
