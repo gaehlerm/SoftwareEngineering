@@ -42,6 +42,7 @@ Things to write:
 	- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+	- [Copilot](#copilot)
 	- [Exercises](#exercises)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
@@ -62,12 +63,12 @@ Things to write:
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
 		- [Semantic Versioning](#semantic-versioning)
-	- [Copilot](#copilot)
 	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
+		- [Copilot](#copilot-1)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
 - [9. Classes](#9-classes)
@@ -141,7 +142,7 @@ Things to write:
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
-		- [Copilot](#copilot-1)
+		- [Copilot](#copilot-2)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [The testing pyramid](#the-testing-pyramid)
@@ -175,7 +176,7 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
-	- [Copilot](#copilot-2)
+	- [Copilot](#copilot-3)
 	- [Exercises](#exercises-5)
 - [14. Understandable code](#14-understandable-code)
 	- [Exercises](#exercises-6)
@@ -203,6 +204,7 @@ Things to write:
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
 - [18. Programming Paradigms](#18-programming-paradigms)
+	- [Object Oriented programming](#object-oriented-programming)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 	- [Conclusions](#conclusions-2)
@@ -255,10 +257,8 @@ Things to write:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
-	- [Copilot](#copilot-3)
+	- [Copilot](#copilot-4)
 	- [Exercise](#exercise)
-- [27. Automatization](#27-automatization)
-	- [Exercise](#exercise-1)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
 	- [Estimating complexity](#estimating-complexity)
@@ -266,21 +266,21 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-4)
-	- [Json](#json)
 		- [Copilot](#copilot-5)
-	- [XML](#xml)
+	- [Json](#json)
 		- [Copilot](#copilot-6)
-	- [HDF5](#hdf5)
+	- [XML](#xml)
 		- [Copilot](#copilot-7)
+	- [HDF5](#hdf5)
+		- [Copilot](#copilot-8)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
-	- [Exercise](#exercise-2)
+	- [Exercise](#exercise-1)
 - [30. Setting up a project](#30-setting-up-a-project)
 	- [Project folder](#project-folder)
-	- [Exercise](#exercise-3)
+	- [Exercise](#exercise-2)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [Exercise](#exercise-4)
+	- [Exercise](#exercise-3)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -361,7 +361,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-8)
+- [Copilot](#copilot-9)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -583,6 +583,10 @@ Working in an orthogonal system has many advantages:
 
 // figure out what else to write. Maybe add some examples.
 
+## Copilot
+
+// Is there some way to refactor code towards the SRP using Copilot?
+
 ## Exercises
 
 Make an example where the SRP is violated and the code should be refactored.
@@ -791,9 +795,9 @@ Every time you make a new release you increase the version number.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
 
-## Copilot
+// ## Copilot
 
-Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps.
+// Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps. -> remove comment?
 
 ## Conclusion
 
@@ -884,7 +888,7 @@ Functions generally shouldn’t have more than three arguments. This shouldn’t
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
-// equation?
+// how to write a mathematical equation?
 Total variables = function arguments + class variables
 
 Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
@@ -897,6 +901,10 @@ if set_node("money", 50):
 	go_shopping(); 
 ```
 Here the `set_node` function does two things at a time which certainly doesn't help with understanding the code.
+
+### Copilot
+
+// Is there a way so sort input variables into an array?
 
 ## Output arguments
 
@@ -1257,7 +1265,7 @@ I hope I managed to convince you not to write bare getter and setter functions t
 
 One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a plain variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. 
 
-Generally I don't regard this reason as sufficient to write setter and getter functions. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters and work with the plain variable.
+Generally I don't regard this reason as sufficient to write setter and getter functions. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters in structs and work with the plain variable.
 
 ## Lose and strong coupling
 
@@ -1379,6 +1387,8 @@ Or my version of this rule: "Use composition, not inheritance"
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
 ## Drawbacks of Inheritance
+
+Inheritance comes along with quite some issues and should thus be avoided if possible. 
 
 ### Tight Coupling
 
@@ -2674,7 +2684,7 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 //remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
 
-Object Oriented programming
+## Object Oriented programming
 
 Object Oriented (OO) programming started in the 80ies. It peaked with the still very wide spread languages C++ and Java. Somehow the whole software developer community became absolutely ecstatic about it. OO programming is great. It makes everything so easy. It is the natural representation of things. It will save the world!!!
 
@@ -3558,21 +3568,6 @@ This is pretty much what was expected.
 
 Try to find better names for the following code:
 // get the bowling code from clean craftsman?
-
-# 27. Automatization
-
-// wirte a chapter about automatization? https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_78 and create the whole automatization process upfront -> source?
-// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before?
-
-According to DRY, you should not repeat yourself. This is also true for processes like building and testing of your software. And the solution is quite easy: You have to automate everything. Use all your build, test and CI tools in order to do so.
-
-It is generally recommended to do all the automatization in the beginning of a project. This has several reasons. First of all, it's the most efficient way to do it. You can use the automated pipelines right from the beginning. And all new team members can simply clone and build the project with a few commandline commands.
-
-Furthermore it may be difficult to automate an existing project. Thus automating it right from the beginning might save you quite some work.
-
-## Exercise
-
-Take an existing project and automate getting the project as well as the build. // how to set up such a project as an exercise?
 
 # 28. Complexity
 
