@@ -288,6 +288,7 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
+	- [Copilot](#copilot-9)
 	- [Exercises](#exercises-10)
 - [33. Logging](#33-logging)
 	- [Exercises](#exercises-11)
@@ -361,7 +362,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-9)
+- [Copilot](#copilot-10)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -1811,6 +1812,16 @@ However there are two minor things that I'd like to have improved. First of all 
 
 Second the test is testing things that were not even implemented in the code. The roman number function was only implemented for values up to a value of 3. So it seems as if Copilot somehow guessed what kind of tests were needed but did not check what is actually implemented.
 
+The code above can be refactored using a dict,
+
+```py
+    # refactor this code to use a dictionary
+    dictionary = {1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V'}
+    for key in dictionary.keys():
+        assert roman_number(key) == dictionary[key]
+```
+Looking at the code it is not quite clear if this is an improvement over the original code. We have removed some redundancy and use only one assert. On the other hand the redundancy was not that bad and the old code was very easy to understand, which is maybe even more important than removing the repeating code. This is a decision that takes human judgement and I'm still not sure which one is the better solution.
+
 // Person example from https://youtu.be/IavOJI5OV7g?t=588 ?
 
 ## Integration tests
@@ -2409,7 +2420,8 @@ This works out but it's not quite what I wanted. After commenting out the case f
             roman += 'I'
             number -= 1
 ```
-This is pretty much what I wanted, except that one could use a dict with number-roman number pairs. Asking explicitly for using a dict, the code looks pretty much how I wanted it to be.
+This is pretty much what I wanted, except that one could use a dict with number-roman number pairs. Asking explicitly for using a dict, the code looks pretty much how I wanted it to be. 
+
 ```py
     # refactor this code using a dictionary
     roman = ''
@@ -2420,8 +2432,23 @@ This is pretty much what I wanted, except that one could use a dict with number-
                 roman += roman_map[key]
                 number -= key
                 break
+	return roman
 ```
+
+This code can be further refactored with the following command:
+```py
+    # refactor this code using a for loop
+    roman = ''
+    roman_map = {1: 'I', 4: 'IV', 5: 'V'}
+    for key in sorted(roman_map.keys(), reverse=True):
+        while number >= key:
+            roman += roman_map[key]
+            number -= key
+	return roman
+```
+
 It seems as if Copilot worked best for refactoring if one gives it some step by step instructions.
+
 
 // how does Copilot do with refactoring some more difficult problems?
 
@@ -2810,11 +2837,11 @@ Only ask for things you directly need
 
 // Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
 
-One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192. More formally, the Law of Demeter for functions requires that a method `m` of an object `a` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
-- `a` itself;
+One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
+- `o` itself;
 - `m`'s parameters;
 - any objects instantiated within `m`;
-- `a`'s attributes;
+- `o`'s attributes;
 
 The idea is to avoid so called train wrecks where you start chaining methods to achieve something. For instance you shouldn't write code as
 ```py
@@ -4002,6 +4029,24 @@ You may use docstring tools, like sphynx in python, for automatically generated 
 ## Summary
 
 Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
+
+## Copilot
+
+Copilot is not yet able to write really useful comments.
+
+```py
+def roman_number(number):
+    # The roman_map dictionary is a lookup table that maps numbers to
+    # roman numerals. It is used by the to_roman function to convert
+    # numbers into roman numerals.
+    roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
+    roman = ''
+    for key in sorted(roman_map.keys(), reverse=True):
+        while number >= key:
+            roman += roman_map[key]
+            number -= key
+    return roman
+```
 
 ## Exercises
 
