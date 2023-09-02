@@ -18,6 +18,7 @@ Things to write:
 -	Design patterns -> write short explanations to all of them? Or leave this chapter away completely.
 -	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
 -	How to organize software projects
+-	Mention combinatorial explosion somewhere?
 
 
 # 2. Table of content
@@ -78,7 +79,7 @@ Things to write:
 		- [Pure method classes](#pure-method-classes)
 		- [Delegating class](#delegating-class)
 		- [Worker class](#worker-class)
-		- [Abstract Base Class](#abstract-base-class)
+		- [Pure Abstract Base Class](#pure-abstract-base-class)
 		- [Implementation class](#implementation-class)
 		- [Inheritance classes](#inheritance-classes)
 		- [General recommendations](#general-recommendations)
@@ -140,6 +141,7 @@ Things to write:
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
+		- [Copilot](#copilot-1)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [The testing pyramid](#the-testing-pyramid)
@@ -173,6 +175,7 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
+	- [Copilot](#copilot-2)
 	- [Exercises](#exercises-5)
 - [14. Understandable code](#14-understandable-code)
 	- [Exercises](#exercises-6)
@@ -252,6 +255,7 @@ Things to write:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
+	- [Copilot](#copilot-3)
 	- [Exercise](#exercise)
 - [27. Automatization](#27-automatization)
 	- [Exercise](#exercise-1)
@@ -262,17 +266,18 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-1)
-	- [Json](#json)
-		- [Copilot](#copilot-2)
-	- [XML](#xml)
-		- [Copilot](#copilot-3)
-	- [HDF5](#hdf5)
 		- [Copilot](#copilot-4)
+	- [Json](#json)
+		- [Copilot](#copilot-5)
+	- [XML](#xml)
+		- [Copilot](#copilot-6)
+	- [HDF5](#hdf5)
+		- [Copilot](#copilot-7)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
 	- [Exercise](#exercise-2)
-- [30. Project folder](#30-project-folder)
+- [30. Setting up a project](#30-setting-up-a-project)
+	- [Project folder](#project-folder)
 	- [Exercise](#exercise-3)
 - [31. Performance Optimization](#31-performance-optimization)
 	- [Exercise](#exercise-4)
@@ -356,7 +361,7 @@ Things to write:
 	- [Paint](#paint)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-5)
+- [Copilot](#copilot-8)
 	- [Duplicated code](#duplicated-code)
 	- [Refactoring](#refactoring)
 	- [Naming](#naming-1)
@@ -945,11 +950,11 @@ Functions inside classes are also referred to as methods. Mostly by the Java peo
 
 // make some examples
 
-Classes can be broadly categorized by the number of variables and the complexity of the functions they contain. Making sure that your classes are fitting into one of these categories is helpful for fulfilling the SRP.
+I like to broadly categorize classes by the number of variables and the complexity of the functions they contain. Making sure that your classes are fitting into one of these categories is helpful for fulfilling the SRP.
 
 ### Struct
 
-The struct (data class) has no member functions and therefore all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a struct has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
+The struct (data class in Python) has no member functions (even though in theory it may have) and therefore all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a struct has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
 
 ```C++
 struct Shopping { 
@@ -992,9 +997,9 @@ Worker classes are doing the hard work in your code and they are the most common
 
 This means that worker classes are the only classes that do really complicated things that have to be hidden from the other programmers or users. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class, such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Therefore a worker class shouldn’t have more than 3 member variables and about 100 lines of code, depending on the number of member variables and the general complexity. Consider also using functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand.
 
-### Abstract Base Class
+### Pure Abstract Base Class
 
-The abstract base class has a different name in every programming language. In C++ it's called pure abstract class, in Java it's called an interface. This class type defines only the interface (shape) of a class, not its actual implementation. It contains only public method declarations and no variables. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, but it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
+The pure abstract base class has a different name in every programming language. In Java it's called an interface. This class type defines only the interface (shape) of a class. It doesn't contain an actual implementation. It contains only public method declarations and no variables. Variables are a hidden detail that should not be defined in an interface. One has to write classes that inherit from this abstract base class to implement it. In python and other dynamically typed languages you don’t need any interfaces, but it makes the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compile time and allow run time polymorphism.
 
 In python a class has to inherit from `ABC` in order to be an abstract base class.
 
@@ -1778,6 +1783,26 @@ As a summary one can say two things about classes and tests:
 
 Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
 
+### Copilot
+
+Copilot can be a significant help when writing unit tests. I wrote a function to convert literal numbers into roman numbers and created a unit test file. Copilot started implementing the unit tests right away and without further instructions.
+
+```py
+from refactoring import roman_number
+
+def test_roman_number():
+    assert roman_number(1) == 'I'
+    assert roman_number(2) == 'II'
+    assert roman_number(3) == 'III'
+	# ... and tests up to number 42
+```
+
+However there are two minor things that I'd like to have improved. First of all there should be preferably only one assert per test. Here we have 42 of them.
+
+Second the test is testing things that were not even implemented in the code. The roman number function was only implemented for values up to a value of 3. So it seems as if Copilot somehow guessed what kind of tests were needed but did not check what is actually implemented.
+
+// Person example from https://youtu.be/IavOJI5OV7g?t=588 ?
+
 ## Integration tests
 
 // what else to write here?
@@ -2336,6 +2361,59 @@ However, the piece of code you hold in your hands between two seams may be way t
 Making sketches and diagramms may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. Some kind of temporal behavior or what Feathers called a “scratch refactoring”. Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans?
+
+## Copilot
+
+It seems as if Copilot sometimes struggles with refactoring code. At times it doesn't find a reasonable refactoring suggestion. Though with playing around a little and giving Copilot some hints, it works out quite well. Here is an example:
+
+```py
+def roman_number(number):
+    if number == 1:
+        return 'I'
+    elif number == 2:
+        return 'II'
+    elif number == 3:
+        return 'III'
+    # elif number == 4:
+    #     return 'IV'
+    # elif number == 5:
+    #     return 'V'
+```
+Having only the first 3 cases and asking Copilot to refactor this code, it makes the following suggestion:
+```py
+    # refactor this code to use a dictionary instead of if/elif/else
+	return {1: 'I', 2: 'II', 3: 'III'}.get(n, 'Invalid number')
+```
+This works out but it's not quite what I wanted. After commenting out the case for 4 and 5 and explicitly asking for a while loop, the code looks as follows:
+```py
+    # refactor this code using a while loop
+    roman = ''
+    while number > 0:
+        if number >= 5:
+            roman += 'V'
+            number -= 5
+        elif number >= 4:
+            roman += 'IV'
+            number -= 4
+        elif number >= 1:
+            roman += 'I'
+            number -= 1
+```
+This is pretty much what I wanted, except that one could use a dict with number-roman number pairs. Asking explicitly for using a dict, the code looks pretty much how I wanted it to be.
+```py
+    # refactor this code using a dictionary
+    roman = ''
+    roman_map = {1: 'I', 4: 'IV', 5: 'V'}
+    while number > 0:
+        for key in sorted(roman_map.keys(), reverse=True):
+            if number >= key:
+                roman += roman_map[key]
+                number -= key
+                break
+```
+It seems as if Copilot worked best for refactoring if one gives it some step by step instructions.
+
+// how does Copilot do with refactoring some more difficult problems?
 
 ## Exercises
 
@@ -3133,21 +3211,19 @@ Enums can only be used if you know all possible options when writing the code. I
 
 // stay pragmatic. Once in a while an if statement is not too bad. This is more of a general advice.
 
-“Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. Booleans are evil.”
+“Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. But it has to be said: Booleans are evil.”
 
 “What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?”
 
-“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil.
-
-There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil but dangerous.”
+“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil. There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil, but dangerous.”
 
 I may be exaggerating slightly. But it’s true. Humans cannot deal with Booleans and if statements. Accept your faith and learn dealing with it.
 -	Good code design leads to few if statements.
 -	Resolve if statements as early as possible on the lowest level of abstraction. Don’t pass Booleans as function arguments.
 -	Consider using enums instead.
--	Never nest if statements.
+-	Never nest if statements. Having too many levels of indentation are a sign for bad code.
 -	Make sure your unit tests cover all branches of if else statements.
--	You can use different types to prevent if statements.
+-	You can use polymorphism to prevent if statements.
 -	Don’t use old-school C++ or java iterators. Looping over iterators requires comparisons. Range-based loops are much safer.
 -	Replace switch case iterations by polymorphism. Resolve the conversion from the switch statement to the polymorphic types as soon as possible.
 
@@ -3167,7 +3243,7 @@ def get_post_code(town_name)
 get_post_code("Zurich")
 ```
 
-Instead each town should be an object containing a corresponding function. Note that for this simple example at dict would suffice as well.
+But as you'll learn in a second, you should never use strings unless you have to. Instead each town should be an object containing a corresponding function. Note that for this simple example at dict would suffice as well.
 
 ```py
 class Zurich:
@@ -3457,8 +3533,27 @@ Here are some rules to follow when naming things:
 11.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-14.	under_score notation is easier to read than CamelCase. Use under_score notation for variables and functions, CamelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
+14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
 
+## Copilot
+
+Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let copilot find appropriate names for you.
+```py
+def print_states(states): 
+    for a in states:
+        print(a)
+```
+Here `a` is clearly not an appropriate name. Writing a comment to copilot to search for a better name works out pretty well.
+```py
+	for a in states:
+    # find a better name for this variable
+```
+Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
+```py
+	for state in states:
+    	print(state)
+```
+This is pretty much what was expected.
 ## Exercise
 
 Try to find better names for the following code:
@@ -3767,15 +3862,37 @@ Similar to the CSV file you can also define your own file format for other thing
 
 // Create an exercise where the user has to save some data by himself and remove the examples in the code? But somehow I don't like removing the examples in the code.
 
-# 30. Project folder
+# 30. Setting up a project
+
+"If it's your job to eat a frog, it's best to do it in the morning. And If it's your job to eat two frogs, it's best to eat the biggest one first.", Mark Twain
+
+// https://youtu.be/LfIPVIsH4ZU
+
+Many students start with writing code when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
+
+Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
+
+For small projects, setting up git and a proper build tool need barely any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. Same for the build process. Typing in a long command not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforseen way that introduces hard to understand behavior.
+
+Similarly for CI. It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests) always run. The code commited to master has been compiled and the tests pass without any errors.
+
+So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
+- You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
+- You will save a lot of time down the road. This will outweight the time needed now to set everything up.
+- Having properly set up tools makes it easier for new team members to get started. They only have to clone the repo and run the build tool and they can get started.
+
+## Project folder
+// Add a plot with the folder structure
 
 Code is a collection of text files. One question is: how do you deal with them?
 
-The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should be usually much smaller than this.
+The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should usually be much smaller than this.
 
 The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside of the src folder. Or at least make sure they all get cleaned up immediately. Auto generated files should never make it into the master branch!
 
-Acceptance tests should also remain outside of the src folder. These tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
+Generated files generally belong into the build folder. Like this cleaning up the build is quite simple. Just delete the folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
+
+Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
 
 The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as python for example, the unit tests are written right next to the corresponding source file. This is necessary as in python it's very tedious to import files from a parent folder.
 
@@ -3797,6 +3914,7 @@ Figure out what kind of hidden files (starting with a `.`) your toools support a
 // git: .gitinore
 // various .env
 // ...
+
 
 # 31. Performance Optimization
 
