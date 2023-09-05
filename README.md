@@ -71,6 +71,7 @@ Things to write:
 		- [Copilot](#copilot-1)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
+	- [Copilot](#copilot-2)
 - [9. Classes](#9-classes)
 	- [Structs](#structs)
 	- [Private or Public](#private-or-public)
@@ -102,6 +103,7 @@ Things to write:
 	- [Drawbacks](#drawbacks)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
+	- [Copilot](#copilot-3)
 	- [Exercises](#exercises-2)
 - [Inheritance](#inheritance-1)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
@@ -142,7 +144,7 @@ Things to write:
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
-		- [Copilot](#copilot-2)
+		- [Copilot](#copilot-4)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
 	- [The testing pyramid](#the-testing-pyramid)
@@ -159,6 +161,7 @@ Things to write:
 		- [Mocking](#mocking)
 		- [Faking](#faking)
 		- [Dependency injection](#dependency-injection)
+		- [Copilot](#copilot-5)
 - [13. Refactoring](#13-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -176,7 +179,7 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
-	- [Copilot](#copilot-3)
+	- [Copilot](#copilot-6)
 	- [Exercises](#exercises-5)
 - [14. Understandable code](#14-understandable-code)
 	- [Exercises](#exercises-6)
@@ -194,14 +197,14 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs-1)
-	- [Copilot](#copilot-4)
+	- [Copilot](#copilot-7)
 	- [Exercises](#exercises-7)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
 		- [Cost of Bugs](#cost-of-bugs)
 		- [Debugging](#debugging)
-		- [Copilot](#copilot-5)
+		- [Copilot](#copilot-8)
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
@@ -210,6 +213,7 @@ Things to write:
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 	- [Conclusions](#conclusions-2)
+	- [Copilot](#copilot-9)
 - [19. Design patterns](#19-design-patterns)
 	- [Factories](#factories)
 	- [Visitor](#visitor)
@@ -220,7 +224,7 @@ Things to write:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer)
-	- [Copilot](#copilot-6)
+	- [Copilot](#copilot-10)
 - [20. Decoupling](#20-decoupling)
 	- [Exercises](#exercises-8)
 - [21. Physical laws of code](#21-physical-laws-of-code)
@@ -260,7 +264,7 @@ Things to write:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
-	- [Copilot](#copilot-7)
+	- [Copilot](#copilot-11)
 	- [Exercise](#exercise)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
@@ -269,13 +273,15 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-8)
+		- [Copilot](#copilot-12)
 	- [Json](#json)
-		- [Copilot](#copilot-9)
+		- [Copilot](#copilot-13)
 	- [XML](#xml)
-		- [Copilot](#copilot-10)
+		- [Copilot](#copilot-14)
+	- [TOML](#toml)
+	- [YAML](#yaml)
 	- [HDF5](#hdf5)
-		- [Copilot](#copilot-11)
+		- [Copilot](#copilot-15)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
 	- [Exercise](#exercise-1)
@@ -291,16 +297,16 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-2)
-	- [Copilot](#copilot-12)
+	- [Copilot](#copilot-16)
 	- [Exercises](#exercises-10)
 - [33. Logging](#33-logging)
 	- [Exercises](#exercises-11)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
-		- [Copilot](#copilot-13)
+		- [Copilot](#copilot-17)
 	- [Command line](#command-line)
-		- [Copilot](#copilot-14)
+		- [Copilot](#copilot-18)
 	- [IDE](#ide)
 	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
@@ -365,13 +371,9 @@ Things to write:
 		- [User story](#user-story)
 		- [Implementation](#implementation-2)
 	- [Paint](#paint)
+- [More Copilot](#more-copilot)
 - [48. Further reading](#48-further-reading)
 - [49. Outlook](#49-outlook)
-- [Copilot](#copilot-15)
-	- [Duplicated code](#duplicated-code)
-	- [Refactoring](#refactoring)
-	- [Naming](#naming-1)
-	- [Functions](#functions)
 - [Abbreviations](#abbreviations)
 
 
@@ -924,6 +926,12 @@ Return values are in my opinion very normal, yet many OO programmers tend to dis
 
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
+## Copilot
+
+Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. 
+
+// make some examples?
+
 # 9. Classes
 
 "Q: What did the Java code say to the C code? A: You’ve got no class." - HampusMa on devrant.com
@@ -1376,6 +1384,28 @@ Follow the rule “use composition, not inheritance” and don’t use friend cl
 Many guidelines on how to write classes are defined for worker classes. It seems like most people overlooked the other kinds of classes.
 
 Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
+
+## Copilot
+
+Just as with functions, Copilot can write classes from scratch as well. Here I wrote only the first half of the first line of the comments, the rest is a suggestion by copilot.
+
+```py
+# wirte a class Person with attributes name and age
+# and a method get_name that returns the name
+# and a method get_age that returns the age
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def get_name(self):
+        return self.name
+    def get_age(self):
+        return self.age
+```
+The code is, though very simple, correct. It only misses the pythonic notation with the leading underscore to make `name` and `age` private. However, I generally don't like the code here as I explained in the section on getters and setters. Instead of this class here, we could also write a dataclass.
+
+One method to get what you really want is writing code as soon as superfluous comments pop up. Here I started writing `class` as I was not satisfied with the suggestion. The result is a suggestion for a class without getter and setters.
+
 
 ## Exercises
 
@@ -2184,6 +2214,26 @@ As always, many books only focus on OO programming. They only explain dependency
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid. // and now what...?
 
 
+### Copilot
+
+Copilot knows about dependency injection as well. Again I had to write only about half of the comment in order to get a reasonable suggestion.
+
+```py
+# write a class person with attributes name and age
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+def print_name():
+    person = Person('John', 30)
+    print(person.name)
+
+# use dependency injection to print the name of the person
+def print_name(person=Person('John', 30)):
+    print(person.name)
+```
+
 # 13. Refactoring
 “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
 
@@ -2778,6 +2828,27 @@ In many programming languages you can mimic functional programming to some degre
 ## Conclusions
 
 All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible, you can write better code.
+
+## Copilot
+Here is an example where copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
+```py
+a = []
+for i in range(10):
+    a.append(i)
+
+#rewrite the code above using functional programming paradigm
+
+# Path: code_examples/softare_paradigms.py
+a = []
+for i in range(10):
+    if i % 2 == 0:
+        a.append(i)
+```
+When explicitly asking for a list comprehension, it works out.
+```py
+# rewrite the code above using list comprehension
+a = [i for i in range(10)]
+```
 
 # 19. Design patterns
 
@@ -3654,7 +3725,18 @@ Though Copilot needs some help to get started and I had to write the beginning `
 	for state in states:
     	print(state)
 ```
-This is pretty much what was expected.
+This is pretty much what was expected. The same works out for function names as well.
+```py
+def some_fancy_function_name(b,c):
+    return b+c
+```
+```py
+# suggest a better function name
+def add(b,c):
+    return b+c
+```
+
+
 ## Exercise
 
 Try to find better names for the following code:
@@ -3884,6 +3966,11 @@ with open('data.xml', 'r') as f:
         elif '<y>' in line:
             y.append(int(line[3:-5]))
 ```
+
+## TOML
+
+
+## YAML
 
 
 ## HDF5
@@ -4177,7 +4264,7 @@ The shell is an extremely powerful and versatile tool for executing other progra
 
 // Copilot for CLI might change how we use the command line (and all its programs with it). Now you no longer have to use google to find the syntax, but you can use Copilot CLI instead. https://youtu.be/8_0DJ9FOlOM?t=787 https://youtu.be/pw0SH7AHIFI -> how does this work exactly?
 
-```
+```sh
 git? how do I update the message of my last commit
 ```
 This returns the command `git commit --amend` along with a detailed explanation. The command can also be executed right away. Furthermore the `Revision` prompt allows you to ask for specific changes to the suggestion made.
@@ -4481,7 +4568,37 @@ Usually, circular dependencies occur as two classes exchange data between each o
 
 Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction.
 
-// make a code example: A calls B calls A returns to B returns to A. -> A calls B with all info needed returns the value to A.
+This example here is deliberately made simple. No one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted than it had to be.
+
+```py
+def a(counter):
+    if counter > 0:
+        b(counter -1)
+
+def b(counter):
+    print(counter)
+    a(counter)
+
+a(5)
+```
+We could simplify it by inserting the definition of b into the function call,
+```py
+def a(counter):
+	if counter > 0:
+		print(counter-1)
+		a(counter-1)
+
+a(5)
+```
+This is already much simpler. Of course it could be simplified even further by removing the recursion all together.
+```py
+def a(counter):
+	for i in range(counter-1, 0):
+		print(i)
+```
+As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard and it improves the readability of the code significantly. Even single recursive call can often be refactored away and make the code even more readable.
+
+
 # 39. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
@@ -4970,6 +5087,26 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
+# More Copilot
+
+The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
+
+Here is an example with a list of books. In the function `parse_line`, Copilot suggested `author, title = book.spilt(',')` which is wrong. It correctly anticipated that this list contains authors and titles of book. But interestingly enough, it didn't understand that the first and last names of the authors were split by a comma. Only after typing `last_name`, Copilot understood how the line should be parsed.
+
+```py
+books =["Rowling,J.K.,Harry Potter and the Philosopher's Stone",
+        "Tolkien,JRR.,The Lord of the Rings",
+        "Tolkien,JRR.,The Hobbit",
+        "Martin,George R.R.,A Game of Thrones",
+        "Martin,Robert C.,Clean Code",]
+
+def parse_line(book):
+    last_name, first_name, title = book.split(',')
+    return f"{first_name} {last_name}: {title}"
+
+print(parse_line(books[0]))
+```
+
 # 48. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
@@ -5018,85 +5155,6 @@ Your next step will be to apply all the things you learned on your journey so fa
 I hope you learned a lot of things that will help you in your life as a software engineer. Good luck!
 Marco
 
-# Copilot
-
-Copilot is the AI code generator by github. Birger Peil wants me to write something about it, however I doubt that it can really live up to the expectations. However this might change with future versions.
-
-## Duplicated code
-
-```
-print('hello')
-print('hello')
-```
-
-```
-# remove the duplicate print statements
-```
-
-Copilot makes a suggestion after typing an additional `for`,
-```
-for i in range(5):
-    print('hello')
-```
-Now where does the `5` come from? When writing the comment after the code it works.
-
-## Refactoring
-```
-print('hello')
-print('hello')
-print('hello')
-```
-When refactoring the code above using a comment, copilot helps writing the comment by auto completing it.
-```
-# refactor the code above to use a loop
-for i in range(3):
-    print('hello')
-```
-
-When writting the comment after the actual code it works better.
-```
-print('1', end='')
-print('2', end='')
-print('3', end='')
-print('4', end='')
-print('5', end='')
-print('6')
-```
-```
-# merge the print statements
-```
-Copilot correctly suggests
-```
-print('123456')
-```
-
-## Naming
-Naming is one of the strengths of Copilot. The suggestions are not always perfect, but at least they are a good start.
-```
-def a(b,c):
-    return b/c
-
-# suggest a better function name
-def divide(b,c):
-    return b/c
-```
-
-## Functions
-```
-def some_fancy_function_name(b,c):
-    return b+c
-```
-```
-# suggest a better function name
-def add(b,c):
-    return b+c
-```
-Also the function calls can be refactored using copilot. Though the question is wether this is worth the effort.
-```
-some_fancy_function_name("hello ", "bob")
-#refactor the code above to use the add function
-add("hello ", "bob")
-```
 
 
 # Abbreviations
