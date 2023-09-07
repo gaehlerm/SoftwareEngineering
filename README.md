@@ -51,7 +51,7 @@ Things to write:
 		- [3rd party libraries](#3rd-party-libraries)
 		- [Infrasturcture code](#infrasturcture-code)
 		- [The domain level](#the-domain-level)
-		- [High level code](#high-level-code)
+		- [The application level](#the-application-level)
 		- [API](#api)
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
 		- [Summary](#summary)
@@ -335,6 +335,7 @@ Things to write:
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
 	- [Circular dependencies](#circular-dependencies)
+		- [Example](#example-4)
 - [39. Working in teams](#39-working-in-teams)
 	- [Team structure](#team-structure)
 		- [The bus factor](#the-bus-factor)
@@ -679,7 +680,16 @@ Vectors are a higher level of abstraction than arrays. They are easier to use an
 
 //create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
-In your code you will also have different levels of abstraction. These can be companed to the layers of an onion.
+// where did I get these layers from? And I think I have to look at this again. Most graphics I found have the domain level in the center.
+
+In your code you will also have different levels of abstraction. These can be compared to the layers of an onion. Thus it is also called the onion architecture. The outer layer always depends on the interface of the inner layer.
+
+The innermost layer is the Domain Model. It is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your busines. It doesn't know anything about the outer layers. 
+
+// TODO search images without copy right, sort the layers differently
+<div class="row">
+    <img src ="images/onion_layers.webp" alt="Example onion layers of a project"width="247">
+</div> 
 
 ### 3rd party libraries
 
@@ -687,17 +697,19 @@ The lowest, inner most level is the programming language and 3rd party libraries
 
 ### Infrasturcture code
 
-One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic datatypes and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how it could be implemented, though in good code he will not have any clue how it's actually done.
+One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic datatypes and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
 
 ### The domain level
 
 //add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
 
-Then there is the domain level. This is the core of your application (though it is not the core of the onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain level is the part that is hard to develop and you can't buy elsewhere. You have to do it yourself. Because this is what you will earn money with.
+Then there is the domain level. This is the core of your application (though it is not the core of the onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain model converts the computer language from the infrastructure into a human readable language. The interface of the domain level reads almost like normal text. Every business person should be able to understand this text.
 
-### High level code
+The domain level is the part that is hard to develop and you can't buy elsewhere. You have to do it yourself. Because this is what you will earn money with.
 
-The next level is the high-level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the high-level code, he should be able to understand what is going on and possibly also spot potential errors.
+### The application level
+
+The next level is the application level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the application level code, he should be able to understand what is going on and possibly also spot potential errors.
 
 ### API
 
@@ -732,9 +744,9 @@ Sort the following function calls by their level of abstraction, starting with t
 
 # 7. Interfaces
 
-“Make interface is easy to use correctly and hard to use incorrectly" - Scott Meyers, The fundamental rule of interfaces
+“Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers, The fundamental rule of interfaces
 
-Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one toward the high-level side.
+Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
 ## Real world interfaces
 
@@ -742,7 +754,7 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 “Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed. USB 3 has a much more user-friendly design. You can plug it in either way. The technicians implemented a technical solution to enable this. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This is some extra work for the engineers, but once solved it is a very convenient solution for the users.
+An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed. USB 3 has a much more user-friendly design. You can plug it in either way. The technicians implemented a technical solution to enable this. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This is some extra work for the engineers, but once solved it is a very convenient solution for the users.
 
 Another example are water tabs for showers, as already explained in the chapter on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
 
@@ -754,17 +766,17 @@ I hope these simple examples gave you an idea what good interfaces are about. If
 
 Car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running it faster makes it inefficient. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities.
 
-Now there used to be a minor problem about the gear boxes. They were not user friendly. The user had to manually change the gear using a clutch. Most car drivers got the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They do not want to care about neither the gear box nor the clutch in your car!
+Now there used to be a minor problem about the gear boxes. They were not user friendly. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to set the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
 
-Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suitable gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars.
+Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suitable gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars in order to remove the steering wheel and the speed bar all together.
 
 ## Code interfaces
 
-Once again, understanding Interfaces in general will allow you to write better code. It’s just the same as in the examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
+Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
 
 Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
-An interface that is designed by the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use. Thus, it misses the point of a good interface.
+An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have and lack the visions of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality is mostly given by the engineers. They gave the designers strict limitations on what they could do. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an easy to use interface.
 
 Interfaces are everywhere. Every function or class has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
 
@@ -780,7 +792,7 @@ The Application Programable Interface (API) is an extremely important part of yo
 
 That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
 
-APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! You might think this is doable. But I can promise, you will get nightmares.
+APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! Now you might think this is doable. But I can promise, you will get nightmares.
 
 You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to compilation errors or, even worse, bugs in the user code. And that’s when customers go rampage. "Up to now the code worked and all of a sudden it fails. What the **** did you do?" If you don’t understand this harsh reaction, you never had a work colleague breaking your code once in a while. You would feel exactly the same.
 
@@ -813,7 +825,7 @@ Interfaces should always be designed from a user point of view. This makes them 
 
 APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
 
-// Parts of code
+Defining interfaces should generally not be done by Copilot. Rather this is a task that should be done by the programmer. Copilot is better with writing the implementation of a function or class, depending on the interface provided.
 
 # 8. Functions
 
@@ -2858,21 +2870,29 @@ a = [i for i in range(10)]
 
 There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
+One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. // https://youtu.be/BPSuWUXyA58
+
 ## Factories
 
-// Don't write code like this. The car calls the factory to create a part of the car. Instead you should call the engine and build up the car from it. 
-```C++
-class Car{
-	Engine engine;
+// Don't write code like this. The car calls the factory to create a part of the car. Instead you should call the engine and build up the car from it.
 
-	Car(String modelNo) {
-		auto factory = EngineFactory();
-		engine = factory.create_engine(modelNo);
-	}
-};
+A factory is used if the construction of an object becomes too complex to handle in a constructor. Instead you want to have a dedicated object or function to take care of it's construction.
+
+```py
+class Car():
+	def __init__(self, brand, model, has_AC):
+		if brand == "mycar" and model == "123":
+			self.engine = # ...
+
+
+class CarFactory():
+	def create_car(self, brand, model, has_AC):
+		self.engine = self.create_engine(brand, model)
+		self.AC = self.create_AC(has_AC)
+		
 ```
 
-// when to really use a factory? Polymorphism?
+// when to really use a factory? Polymorphism? when an object becomes too complex to create it by the constructor
 
 There are different kind of factories. These are objects that create other objects. It makes sense to set up a factory if the output object is fairly complex. Setting up such an object within the constructor would clutter the class. It wouldn’t obey the single responsibility theorem anymore. I would like to highlight as well that a factory does not have to be a class. It can be a simple function as well.
 
@@ -4568,6 +4588,8 @@ Usually, circular dependencies occur as two classes exchange data between each o
 
 Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction.
 
+### Example
+
 This example here is deliberately made simple. No one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted than it had to be.
 
 ```py
@@ -4596,7 +4618,7 @@ def a(counter):
 	for i in range(counter-1, 0):
 		print(i)
 ```
-As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard and it improves the readability of the code significantly. Even single recursive call can often be refactored away and make the code even more readable.
+As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code even more readable.
 
 
 # 39. Working in teams
