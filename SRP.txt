@@ -100,3 +100,7 @@ In einem orthogonalen System zu arbeiten hat mehrere Vorteile:
 - Diese Fehler zu flicken ist einfacher da das System weniger fragil ist.
 - Es ist einfacher, Tests für ein orthogonales System zu schreiben.
 - Es entkoppelt den Code da die Transformation wie ein Adapter wirkt.
+
+Copilot
+...? Leider kann Copilot redundanten code nicht automatisch erkennen und entfernen.
+
