@@ -487,6 +487,8 @@ Every object does exactly one thing. Everything is done by exactly one object.
 
 There are different definitions of the Single Responsability Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
 
+The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation to write readable code.
+
 ## Do not Repeat Yourself
 
 // DRY does not always have to be obeyed that stricty. Repeat yourself until it is clear what the acronym should be.
@@ -748,6 +750,8 @@ Sort the following function calls by their level of abstraction, starting with t
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
+In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface millions of times. Thus it pays off to design an interface properly.
+
 ## Real world interfaces
 
 Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot but the basic principles are very similar.
@@ -833,9 +837,9 @@ Defining interfaces should generally not be done by Copilot. Rather this is a ta
 
 // Further Reading: Clean Code, chapter 3, Robert C. Martin
 
-Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as mutable output arguments. Therefore, I won’t mention the differences between functions and methods too often.
+Functions are, along with classes, the backbone of modern OO software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well. We'll learn that functions have to follow the SRP and that they shouldn't have any side effects.
 
-Functions are, along with classes, the backbone of modern OO software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well.
+Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as mutable output arguments. Therefore, I generally won’t mention the differences between functions and methods.
 
 ## Do one thing only
 
@@ -843,14 +847,16 @@ Due to the single responsibility principle, functions may cover only one level o
 
 Naming becomes comparably easy if you follow these rules. The function body is one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
 
-```C++
-void log_in(const std::string& email_address):
-	static int count = 0;
-	count++;
-	check(email_address);
+```py
+counter = 0
+def log_in(email_address):
+	counter +=1
+	check(email_address)
 ```
 
 This function clearly has a side effect. It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
+
+Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because temporal coupling.
 
 ## Temporal coupling
 
@@ -883,9 +889,11 @@ shopping.go_shopping()
 shopping.create_shopping_list(["apple", "banana"])
 ```
 
-Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is probably empty.
+Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is empty or not existant.
 
-It is one of the advantages of procedural code that such things are less likely to happen. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
+This is one of the drawbacks of OO code. Methods change the state of the object. Thus it is very hard to enforce that the methods get called in the correct order. 
+
+It is one of the advantages of procedural code that such issues are less likely to occure. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
 
 ```Py
 money = get_money(50)
@@ -893,9 +901,17 @@ shopping_list = create_shopping_list(["apple", "banana"])
 go_shopping(money, shopping_list)
 ```
 
-In this case it is physically impossible to go shopping without having a shopping list. You will get a runtime error (or in compiled languages a compilation error) if there is no `shopping_list` available.
+In this case it is physically impossible to go shopping without having a shopping list.
 
-Long story short: make sure your functions never have side effects. Functions should only have an effect on the class instance or, if necessary, to mutable arguments.
+```Py
+money = get_money(50)
+go_shopping(money, shopping_list)
+shopping_list = create_shopping_list(["apple", "banana"])
+```
+
+After swaping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+
+Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments.
 
 // how to make these steps work with copilot?
 
@@ -904,18 +920,18 @@ As for the length of the function, the number of arguments should be as small as
 
 Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it will become.
 
-Functions generally shouldn’t have more than three arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
+Try to have at most 3 function arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
-// how to write a mathematical equation?
-Total variables = function arguments + class variables
+`Total variables = function arguments + class variables`
 
 Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
 
-A method might access only a few of the class variables. Still, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
+A method might access only a few of the class variables. However, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
 Following the SRP, functions can only be either a query or a command //https://en.wikipedia.org/wiki/Command%E2%80%93query_separation, but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
+
 ```py
 if set_node("money", 50):
 	go_shopping(); 
@@ -928,21 +944,41 @@ Here the `set_node` function does two things at a time which certainly doesn't h
 
 ## Output arguments
 
-A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference. However, in other languages, this has to be clear from the context of the function.
+A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable. However, in other languages, this has to be clear from the context of the function.
 
 Unexpected changes of values of a function argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of function arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
+
+Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values, just that the class instance is obviously a very special variable. The function acting on these variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
 
 ## Return values
 
 Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or, this method might change a variable of the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
 
+Return values are very central in functional programming. There you are not allowed to change existing objects. So you don't have the issue of output arguments changing their values. And the work around are return values. They have the advantage that it's obviously a new object with new properties. Each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique.
+
 As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
 
 ## Copilot
 
-Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. 
+Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. The following code needed only very little guidance. The usage of dependency injection with the `condition` argument was also a suggestion by Copilot.
 
-// make some examples?
+```py
+books = [
+    {'title': 'The Alchemist', 'author': 'Paulo Coelho', 'price': 10.2},
+    {'title': 'The Prophet', 'author': 'Kahlil Gibran', 'price': 12.3},
+    {'title': 'The Little Prince', 'author': 'Antoine de Saint-Exupery', 'price': 8.5}
+]
+
+def print_books_where(condition):
+    for book in books:
+        if condition(book):
+            print(book['title'], book['author'], book['price'])
+
+def author_is(author):
+    return lambda book: book['author'] == author
+
+print_books_where(author_is('Paulo Coelho'))
+```
 
 # 9. Classes
 
