@@ -97,10 +97,10 @@ Things to write:
 	- [Lose and strong coupling](#lose-and-strong-coupling)
 		- [Coupling and Cohesion](#coupling-and-cohesion)
 		- [Worker classes](#worker-classes-1)
-		- [Inheritance](#inheritance)
 		- [Other class types](#other-class-types)
+		- [Inheritance](#inheritance)
 	- [Static expression](#static-expression)
-	- [Drawbacks](#drawbacks)
+	- [Drawbacks of classes](#drawbacks-of-classes)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
 	- [Copilot](#copilot-3)
@@ -344,7 +344,7 @@ Things to write:
 	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
 - [40. Code review](#40-code-review)
-	- [Drawbacks](#drawbacks-1)
+	- [Drawbacks](#drawbacks)
 - [41. Working with existing projects](#41-working-with-existing-projects)
 - [42. Planning](#42-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
@@ -1338,55 +1338,49 @@ Generally I don't regard this reason as sufficient to write setter and getter fu
 
 ### Coupling and Cohesion
 
-// this text is duplicated! See strong and loose coupling! Figure out which one to remove.
+A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." (Robert C. Martin) If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes.” This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
-A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." //Robert C. Martin If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes.” This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
-
-The amount of cohesion within a class may differ a lot, depending on the type of class. The cohesion within a working class is certainly much higher than within a data class. In a worker class, there is a significant amount of work required to change its structure. In a data class, there is barely any cohesion between the member variables. The delegating classes have fairly little cohesion. Yet there is nothing wrong about these types of classes. In fact, they are very useful to structure your objects, etc.
-
-// see fundamentals of software architecture p. 43, LCOM metric. Add a similar graphic
-
-The rule above defined by Robert C. Martin was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint how to break it into pieces preferably. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few methods before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand. And you'll be a much better software engineer.
-
-Unfortunately it is very difficult to make an example here of such a complicated class. Thus I can only explain here in rough terms how you could break such a complicated class into pieces.
-
-// end of duplication
-
-You should have high cohesion within a class and low coupling between classes. This is a generally accepted rule for good class design. However, it is only true for some types of classes. Let me briefly explain.
-
-High cohesion means that one thing effects everything else. You have one or two class variables and most of the methods use them. This is high cohesion. From the code point of view, it makes sense to have all these methods together as they quite certainly do similar things. They use the same variables. The opposite is having many variables where each of them is only used by one or two methods. This class has low cohesion. It would be fairly easy to break it into pieces. A good class has high cohesion.
+The amount of cohesion within a class may differ a lot, depending on the type of class. The cohesion within a worker class is certainly much higher than within a data class. In a worker class, there is a significant amount of work required to change its structure. In a data class, there is barely any cohesion between the member variables. Also the delegating classes have fairly little cohesion. Yet there is nothing wrong about these types of classes. In fact, they are very useful to structure your objects, etc.
 
 ### Worker classes
 
-Classes have low coupling if the number of interaction points between different classes is comparably low. Ideally, every class does its work and then hands it over to the next one, as in a rally race. The interface of every class would consist of only one function. High coupling on the other hand is like two (or many) classes playing ping-pong. They all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
+The rule above defined by Robert C. Martin was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint how to break them into pieces preferably. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few methods before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand. And you have become a much better software engineer.
+
+// create such a plot. There is a similar one in one of the books, but I don't remember where.
+
+// see fundamentals of software architecture p. 43, LCOM metric.
+
+Unfortunately it is very difficult to make an example here of such a complicated class. Thus I can only explain here in rough terms how you could break such a complicated class into pieces.
+
+Classes have low coupling if the number of interaction points between different classes is comparably low. Ideally, every class does its work and then hands it over to the next one, like in a rally race. The interface of every class would consist of only one function. High coupling on the other hand is like two classes playing ping-pong. The classes all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
 
 I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn’t any better. It becomes increasingly hard to make any changes. Implementing new features will take a long time and fixing bugs is hard because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
 There always has to be some amount of coupling. Code cannot exist without it. But the amount of coupling between classes should be kept as low as possible. Additionally there are techniques to decouple your code. Writing an adapter between two classes for instance can give you more flexibility.
 
-### Inheritance
-
-This is one of the reasons why I recommend not to use inheritance. Inheritance is one of the strongest coupling we have available in software development. The derived class inherits all the implementations of the base class functions. Vice versa, the behavior of the base class functions may change if some function calls get overridden by the derived class. Inheritance obfuscates the code and getting rid of it at a later point can be almost impossible.
-
 ### Other class types
 
 Maybe you realized by now why this rule about high cohesion does not apply to all kind of classes. A pure data class has no cohesion at all. It takes no effort at all to split a data class. You may split it however you like. A delegating class has very little cohesion. Yet these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes, meanwhile data classes are a lose bunch of variables without any cohesion. They are grouped together solely because it makes the code easier to understand and deal with.
+
+### Inheritance
+
+Coupling is one of the reasons why I recommend not to use inheritance. Inheritance is among the strongest coupling we have available in software development. The derived class inherits all the implementations of the base class functions. Vice versa, the behavior of the base class functions may change if some function calls get overridden by the derived class. Inheritance obfuscates the code and getting rid of inheritance at a later point can be almost impossible.
 
 ## Static expression
 
 Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes as small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
 
-I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code.
+I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be undistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
 
-As we are talking about static, we can also discuss static variables. Static variables are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables.
+As we are talking about static, we can also discuss static variables as used for instance in C++. Static variables are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables. As soon as you start writing unit tests for static variables you'll see why I discourage using static variables.
 
-## Drawbacks
+## Drawbacks of classes
 
-Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables! The whole code becomes a big ball of mud // https://de.wikipedia.org/wiki/Big_Ball_of_Mud
+Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables! The whole code becomes a big ball of mud. // https://de.wikipedia.org/wiki/Big_Ball_of_Mud
 
 But also for slightly smaller classes, member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables. Keep your classes small in order to limit the scope of your class variables.
 
-If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 member variables you should consider sorting them in sub classes. However, as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. The combination of complex functions and many member variables lets the complexity skyrocket. Keep the number of variables at one or two when dealing with complex functions, as recommended in the section on worker classes. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
+If you write a class where all function implementations consist of a single line (delegating class) or you have no functions at all (data class), the number of class variables is not too critical. If you have more than about 6 to 8 member variables you should consider sorting them in sub classes. However, as soon as you have to write complex functions you have to be extremely careful as things might get out of hand otherwise. The combination of complex functions and many member variables lets the complexity skyrocket. Keep the number of variables at one or two when dealing with complex functions, as recommended in the section on worker classes. Or even better, replace the class with a few functions if you find a reasonable way to get rid of all member variables.
 
 It’s a good rule of thumb to say that the class design is probably ok as long as writing unit tests works out fine. And you don’t feel the urge to test private functions because class implementation is too complex. Make classes as small as possible, yet still convenient to work with.
 
@@ -1405,7 +1399,7 @@ Here is a list of properties the pie has: Sweetness, weight, price, baking grade
 
 Now some of these properties are really the properties of a single pie. The baking_grade for example. One pie may be burned while another one is baked perfectly. Other properties are more about apple pies in general. The price is something the sales department of the bakery cares about, while the ingredients are used by the bakers. These are not intrinsic properties of the pie and can be stored elsewhere. For example, in a dict. We could also define a variable apple_pie_price, but storing all prices in a single data structure is way more convenient. The only drawback is that the apple_pie object needs to have a variable `name="apple_pie"`. A small price to pay.
 
-// the whole thing here is still somewhat of a mess... and there is no point.
+// what do I want to say with this code here?
 
 ```Py
 class Sweetness(Enum):
@@ -1416,25 +1410,31 @@ class BakingGrade(Enum):
 	burned = auto()
 	well_done = auto()
 
+def bake_apple_pie(ingredients, baking_temperature):
+	weight = sum([ingredient.weight for ingredient in ingredients])
+	if ingredients["sugar"] / weight > 0.2:
+		sweetness = Sweetness.too_sweet
+	else:
+		sweetness = Sweetness.just_fine
+	name = "apple_pie"
+	if baking_temperature > 220.:
+		baking_grade = BakingGrade.burned
+		name = "burned_apple_pie"
+	else:
+		baking_grade = BakingGrade.well_done
+	return ApplePie(weight, sweetness, baking_grade, name)
+
 @dataclass
 class ApplePie:
-	def __init__(self, ingredients, baking_temperature):
-		self.weight = sum([ingredient.weight for ingredient in ingredients])
-		if ingredients.sugar.weight / self.weight > 0.2:
-			self.sweetness = Sweetness.too_sweet
-		else:
-			self.sweetness = Sweetness.just_fine
-		self.name = "apple_pie"
-		if baking_temperature > 220.:
-			self.baking_grade = BakingGrade.burned
-			self.name = "burned_apple_pie"
-		else:
-			self.baking_grade = BakingGrade.well_done
+	weight: float
+	sweetness: Sweetness
+	baking_grade: BakingGrade
+	name: str
 
 prices = {"apple_pie": 25, "burned_apple_pie": 15} 
-ingredients = {"apple_pie" : {"apple": 0.3, "flour": 0.3, "eggs": 0.1, "sugar": 0.4}}
+ingredients = {"apple_pie" : {"apple": 0.3, "flour": 0.3, "eggs": 0.1, "sugar": 0.1}}
 
-burned_apple_pie = ApplePie(ingredients=ingredients["apple_pie"], baking_temperature=225.)
+burned_apple_pie = bake_apple_pie(ingredients=ingredients["apple_pie"], baking_temperature=225.)
 ```
 
 Now the code can be used as follows:
@@ -1446,13 +1446,13 @@ dish =
 
 ## Conclusions
 
-I think we can agree on the fact that OO programming is important and everyone should know it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. But as long as you are confident about the test coverage you should be fine.
+I think we can agree on the fact that OO programming is important and everyone should know about it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. Many people simply don't know that this is an issue. As a rule of thumb we can say that your class design is fine as long as wirting tests is not an issue.
 
-Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. 
+Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
 
-Many guidelines on how to write classes are defined for worker classes. It seems like most people overlooked the other kinds of classes.
+Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it a perfectly viable object.
 
-Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read.
+Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read and are thus prefered.
 
 ## Copilot
 
