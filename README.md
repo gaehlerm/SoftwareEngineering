@@ -184,7 +184,6 @@ Things to write:
 	- [Copilot](#copilot-6)
 	- [Exercises](#exercises-3)
 - [14. Understandable code](#14-understandable-code)
-	- [Exercises](#exercises-4)
 - [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -200,7 +199,7 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs)
 	- [Copilot](#copilot-7)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-4)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
@@ -228,7 +227,7 @@ Things to write:
 	- [Observer](#observer)
 	- [Copilot](#copilot-10)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-5)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -244,7 +243,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-7)
+	- [Exercises](#exercises-6)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -300,9 +299,9 @@ Things to write:
 		- [Docstring](#docstring)
 	- [Summary](#summary-3)
 	- [Copilot](#copilot-16)
-	- [Exercises](#exercises-8)
+	- [Exercises](#exercises-7)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-9)
+	- [Exercises](#exercises-8)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -319,7 +318,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-10)
+	- [Exercises](#exercises-9)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -332,7 +331,7 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-11)
+	- [Exercises](#exercises-10)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
@@ -2619,8 +2618,6 @@ As always, Copilot works best if you give it some step by step instructions.
 
 “Any fool can write code that a computer can understand. A good programmer writes code a human can understand.” – Martin Fowler
 
-// This chapter is somehow not up to the point...
-
 As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands anything, he doesn’t care. As long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
@@ -2631,11 +2628,11 @@ You can play terrible tricks with humans as we all follow the same laws of psych
 
 On the other hand, we are amazing at understanding complex processes by creating an abstract model of a process and analyzing different parts of it. We know a lot of different things and we can have an abstract imagination what would happen if we combine many of them. 
 
-We are also pretty good in communicating with others. Using the natural language. We are able to explain fairly difficult things and others understand us. Just as you (hopefully) understand what I write here.
+We are also pretty good in communicating with others. Using the natural language. We are able to explain fairly difficult things and others understand us. Just as you (hopefully) understand what I write here. There are so many ways to communicate. There are so many ways I can explain something in this book here.
 
-We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. 
+We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does.
 
-This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does.
+This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
 Most people driving a car have a fair idea how it works. It has an engine, wheels, breaks, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can probably guess quite well, which of all these parts broke.
 
@@ -2643,11 +2640,7 @@ So far, every programmer that told me he was working on a really complex problem
 
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
-This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones.
-
-## Exercises
-
-// ...? Write some very general question as done in the Pragmatic Programmer.
+This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
 
 # 15. Programming languages
 
