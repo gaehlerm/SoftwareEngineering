@@ -30,6 +30,7 @@ Things to write:
 - [3. Preface](#3-preface)
 - [4. Introduction](#4-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+	- [About this book](#about-this-book)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
 	- [Do not Repeat Yourself](#do-not-repeat-yourself)
 	- [Advantages of the SRP](#advantages-of-the-srp)
@@ -481,6 +482,11 @@ These four rules will accompany us throughout our book.
 //make a list of the 4 rules in a box
 
 // The fundamentals
+
+## About this book
+// move to preface?
+
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are some best practice rules but it is never really clear wether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only tradeoffs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
 
 # 5. Single responsibility principle 
 
@@ -2346,14 +2352,13 @@ Refactoring is the art of changing existing code without altering its functional
 
 If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database might change, and you'll have to adapt yourself to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
 
-
 ## Keeping code in shape
 
 // first refactor the core, refactor subsidiary code only when needed. It is important to focus on some parts. Refactoring the whole code is a tremendous amount of work. Make supporting code to be generic.
 
 // The behavior of the software may not be changed or the users stop using it.
 
-Even without external changes it is important to refactor your code once in a while. We have to face the sad that fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder //Thomas & Hunt. Fighting entropy is hard. It takes a lot of efforts. // see section on entropy
+Even without external changes it is important to refactor your code once in a while. We have to face the sad that fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder //Thomas & Hunt. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy.
 
 Refactoring is just like cleaning up your kitchen. Every time you cook something you have dirty dishes. But unlike for the kitchen you cannot hire a cleaning lady to clean up your code. She wouldn’t know what to do. You have to clean up your code by yourself. You have to refactor it. Continuously. You will be spending more time refactoring than writing new code. And as the code becomes older it only gets worse. That’s the faith of a software engineer.
 
@@ -2361,7 +2366,7 @@ I guess everybody reading (or writing) this book knows some of the problems why 
 
 ### Refactoring and automated test
 
-Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would change functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging feeling that something is wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but now they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became so messy.
+Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would change functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging feeling that something is wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but now they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
 
 I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... You need... automated tests! Unit tests, end-to-end tests, whatever. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
 
@@ -2371,13 +2376,13 @@ If you are confident about the test coverage you can do pretty much anything you
 
 Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly.
 
-Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the chapter on Test Driven Development. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you’re not perfect.
+Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the chapter on Test Driven Development. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
 
-Then you write the tests. Some tests may fail as you’re not so perfect code contains bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development. You never write perfect code to start with. It always takes some refactoring in order to get there.
+Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development. You never write perfect code to start with. It always takes some refactoring in order to end up with good code.
 
 Finally, you refactor. You look at all the code that you wrote since you refactored the last time. Possibly also at code that existed for a long time and could be merged with your new code because it’s very similar. The code will probably look more complicated than you would expect it to be. You try to rethink the logic of the problem you just solved. Can you change the algorithm somehow that you can drop all the if statements for the corner cases? Or do you have to sort the data differently to make the code better?
 
-There are hundreds of things you could do for improving the quality of the code. Look at the code and figure out what the most important things are you want to change. Try to write good code and follow your gut feeling. But make sure you also get some real work done between the refactoring sessions.
+There are hundreds of things you could do for improving the quality of the code. Look at the code and figure out what the most important things are you want to change. Try to write good code and follow your gut feeling. But make sure you also get some real work done between the refactoring sessions. The code will never be perfect. But it will be good enough. Move on once this is the case. Don't be stuck with endless discussions on the name of a variable. Go and write some code again.
 
 ## Levels of Refactoring
 
@@ -2393,7 +2398,7 @@ I hope you got the memo. Small refactoring should be done all the time. Every fe
 
 ### Refactoring is dynamic
 
-Also consider that waterfall refactoring is bound to fail just as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. And software engineering is concrete. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
+Waterfall refactoring is bound to fail just as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. And software engineering is concrete. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
 
 You have to face the facts. Waterfall refactoring is not working out. Instead you have to follow the actual dynamics of making changes, learning more about your code and adapting your future changes. These three steps are the only way how refactoring is done. 
 
@@ -2417,17 +2422,15 @@ It is generally a good idea to do refactoring. Most developers do rather too lit
 
 Every few lines of code you wrote, you should consider refactoring them. It is not always necessary, tough it is by far the best moment. You still know what you just programmed and you might have an idea what there is left to improve. Additionally, you are always working on a tidy workplace which increases your productivity. Code that’s well taken care of is much easier to modify.
 
-As already mentioned above, you should always refactor the code you just wrote. This is the number one rule. Furthermore, you should stick to the boy scout rule: Leave the camp ground tidier than you found it. Always refactor a little bit more than you should have. This helps fighting the code entropy. This rule is also known as the boys scout rule.
+As already mentioned above, you should always refactor the code you just wrote. This is the number one rule. Furthermore, you should stick to the boy scout rule: Leave the camp ground tidier than you found it. Always refactor a little bit more than you should have. This helps fighting the code entropy.
 
 Refactor when you found a bug. Don’t just add a patch that might resolve the issue superficially. Search for the real source of the problem. Then consider if there is some redundant code that might need fixing, or better refactoring, as well. Find a good fix for the bug, possibly including some refactoring.
 
-If you add a feature, it may not really fit into the code. Most likely, because the code has not been cleaned up, or the other authors simply didn’t know how the code should look like. But now, as you’re adding this new feature, you’re smarter. You might have an idea how the code should really look like for the feature to fit in. Now don’t squeeze the feature into the existing code base. Refactor instead and make sure the new feature fits in smoothly. Altogether, this is less work. And especially the code will ultimately be in a much better condition.
+If you add a feature, it may not really fit into the code. Most likely, because the code has not been cleaned up, or the other authors simply didn’t know how the code should look in the future. But now, as you’re adding this new feature, you’re smarter. You might have an idea how the code should really look like for the feature to fit in. Now don’t squeeze the feature into the existing code base. Refactor instead and make sure the new feature fits in smoothly. Altogether, this is less work. And especially the code will ultimately be in a much better condition. This was explained in the section on orthogonality. Write an adapter to make the feature fit neatly into the code base.
 
 Also, during code review you can do refactoring. Team up with the author of the code and do some pair programming. This is much more motivating than a normal review as there is better knowledge exchange and the output of the review is significantly increased.
 
 Generally, you should refactor code that you work with. In some cases, you may refactor code that you just walked by, but this should not be the rule. If there is no reason for you to touch that code at the time being, you shouldn’t refactor it. It is important in software engineering to know when to postpone some work and this is one of the cases. If no one works with a piece of code at the moment, there is no need to refactor right now.
-
-// is this redundant?
 
 Once in a while, you have to do a bigger refactoring. One that you don’t just do between writing a few lines of code, but it will take considerable efforts to get it done. You should probably discuss this topic with your work colleagues, opposite to the smaller refactorings that you just do by yourself.
 
@@ -2443,11 +2446,11 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 ## Refactoring techniques
 
-The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have gobal variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier as the compiler does valuable checking of names, functions, types, etc.
+The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have gobal variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier than for interpreted languages as the compiler does valuable checking of names, functions, types, etc.
 
 There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler //Refactoring, Addison Wesley, 2019.
 
-// add or remove some techniques?
+// add or remove some techniques? From WELC?
 
 ### Renaming
 
@@ -2483,16 +2486,15 @@ def print_content():
 
 For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway.
 
-There is really not that much more to know about extracting functions than what I just showed here. It is really a simple refactoring technique, yet it is very important. This is probably the most used refactoring technique.
+There is really not that much more to know about extracting functions than what I just showed here. It is really a simple refactoring technique, yet it is very important. This is probably the most used refactoring technique. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. You may extract methods from this class later on if needed.
 
-Inlining functions is the opposite and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function.
-
+Inlining functions is the opposite and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function.
 
 ### Scratch refactoring [Feathers p. 212] 
 
-Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like and don’t care about bugs or similar issues. Figure out how the code should look like in a dream world.
+Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like and don’t care about bugs or similar issues. Figure out how the code should look like in a dream world. I like this concept very much as it gives you an idea how the code could look like instead.
 
-Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement what you did before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
+Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
 
 ## Real life refactoring
 // Stuff here is from Feathers book. Read it again and add some more stuff here.
@@ -2533,7 +2535,7 @@ Passing a Boolean as done above is bad design. It is much better making the choi
 
 Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
 
-However, the piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are system tests. And if you don’t have any useful API you might be completely screwed.
+However, the piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are system tests. And if you don’t have any useful API you might be completely screwed. I'm sorry, there's no other way to say it.
 
 ### Sketches
 
@@ -2605,8 +2607,7 @@ This code can be further refactored with the following command:
 	return roman
 ```
 
-It seems as if Copilot worked best for refactoring if one gives it some step by step instructions.
-
+As always, Copilot works best if you give it some step by step instructions.
 
 // how does Copilot do with refactoring some more difficult problems?
 
