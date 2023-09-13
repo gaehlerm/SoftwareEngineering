@@ -2866,7 +2866,8 @@ In case of connection problems or missing disk space, the user needs a correspon
 
 You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it possibly should be terminated anyway. But in serious software development you cannot allow this to happen. It is recommended to define your own error types. Put a try catch block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong. Add another try catch block around the whole program in order to catch all exceptions. These are unexpected errors, bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
 
-Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, this is not worth the effort. Exceptions originating not from faulty user input should result in a message to send a bug report.
+Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state. This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
+
 ```Python
 if __name__ == “__main__”:
 	try:
@@ -2878,7 +2879,7 @@ if __name__ == “__main__”:
 		# You don't know what went wrong. The user should send in a bug report.
 ```
 
-Try except blocks have some similarity to if else or switch case blocks. They are all susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsability of this function is managing the try catch block.
+Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsability of this function is managing the try catch block.
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it.
 
@@ -2886,12 +2887,12 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 
 ### Exceptions and goto
 
-By the way, you might have heard of the goto statement that was widely used until about 1970. Dijkstra wrote the famous paper “Goto considered harmful”. As always there was a lot of truth behind his argument but there are cases where Goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses Goto statements instead. The goto is called when an error occurs and redirects the code to the catch block. Thus, goto statements are not all that bad, they were only used in a bad manner as you can write terrible spaghetti code using goto statements.
+By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edgar Dijkstra wrote the famous paper “Goto considered harmful” which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not all that bad. They were only used in a bad manner as you can write terrible spaghetti code using goto statements.
 
 
 # 18. Programming Paradigms
 
-//remove this chapter? I don’t have much to say here, even though I’d like to. See clean Architecture (?)
+There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python where you can mix these 3 different programming paradigms.
 
 ## Object Oriented programming
 
@@ -3067,10 +3068,13 @@ This is one of the reasons why global variables and inheritance are not recommen
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
 
+Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. The only major difference being that the glue code in between micro services is much more dynamic than in functional programming. // https://youtu.be/4GnjjocWGOE
+
 // A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
 instead of asking what you want, you go to the service locator and reach through the service locator.
 https://youtu.be/RlfLCWKxHJ0 video on service locators
-Only ask for things you directly need
+
+Only ask for things you directly need. This is another advantage of functional programming or micro services. You have to validate an email, so you call the email validator which does the job for you, where the email validator can be either a micro service or a function. The email validator returns a result and terminates. You only got what you asked for, nothing else. There are no semi useful objects wobbeling around that you don't know how to deal with them. You need exactly what is around.
 
 // Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
 
