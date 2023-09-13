@@ -190,7 +190,7 @@ Things to write:
 	- [Python](#python)
 		- [Type hints](#type-hints)
 		- [Slots](#slots)
-	- [Abstract base classes](#abstract-base-classes)
+		- [Abstract base classes and protocols](#abstract-base-classes-and-protocols)
 	- [C++](#c)
 		- [Pointers and arrays](#pointers-and-arrays)
 			- [Smart pointers](#smart-pointers)
@@ -199,7 +199,6 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs)
 	- [Copilot](#copilot-7)
-	- [Exercises](#exercises-4)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
@@ -227,7 +226,7 @@ Things to write:
 	- [Observer](#observer)
 	- [Copilot](#copilot-10)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-4)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -243,7 +242,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-5)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -299,9 +298,9 @@ Things to write:
 		- [Docstring](#docstring)
 	- [Summary](#summary-3)
 	- [Copilot](#copilot-16)
-	- [Exercises](#exercises-7)
+	- [Exercises](#exercises-6)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-8)
+	- [Exercises](#exercises-7)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -318,7 +317,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-9)
+	- [Exercises](#exercises-8)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [Describing a model](#describing-a-model)
@@ -331,7 +330,7 @@ Things to write:
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-10)
+	- [Exercises](#exercises-9)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
@@ -2652,24 +2651,23 @@ I really want to emphasize that you shouldn’t learn a programming language in 
 
 But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know C++ and python and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab.
 
-As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative for non-scientists. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
+As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
-I would not recommend learning Java or C++ as a first programming language, even though I use some C++ code in this book. C++ and Java are too complicated and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain things you don't have to care about in Python. Instead you should learn how to apply the principles taught in this book and elsewhere to improve your code. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even though I use some C++ code in this book. C++ and Java are too complicated and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your code. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because they are better, but simply because there are so many old projects around. 
 
 C++ and Java are static typed, have to be compiled, use inheritance to define interfaces and in C++ you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing you need to know when you just start programming.
 
 ## Existing programming languages
 
-Programming languages and APIs share the same difficulties. It would be easy to create a new programming language that is clearly better than an existing one. But there are millions of programmers that already use the current languages and their code is worth billions. You cannot update such quantities of code only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language. And he is certainly right. But there are millions of programmers that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard.
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is certainly the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
 ## Code examples
 
 There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. In some cases I will still use code examples, but the code should be really simple. The code examples are mostly written in Python and sometimes in C++ if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, it’s just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
 
 ## Python
-// Do I need the opinion of some expert?
 
 Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning.
 
@@ -2677,7 +2675,7 @@ Even though Python is a fairly easy programming language to learn, there are som
 
 // https://youtu.be/dgBCEB2jVU0
 
-Python is dynamically typed. At first, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
+Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
 
 While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not pythonic, it is possible to write type hints. A simple `: int` following a function argument to indicate that it should be an integer.
 
@@ -2718,15 +2716,17 @@ class Apple:
 ```
 Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible.
 
-## Abstract base classes
+### Abstract base classes and protocols
 
 Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
 
+An alternative to abstract baseclasses are protocols. They are mostly equivalent, so I won't go into further details here.
+
 ## C++
 
-C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages tac.
+C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
 
-C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is a very old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
+C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
 
 ### Pointers and arrays
 
@@ -2774,15 +2774,15 @@ In order for an object to be mutable, it can be either passed by pointer or by r
 
 ### Classes
 
-C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance. #source? But as I told you not to use inheritance, you don’t have to worry about such details.
+C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance. //source? But as I told you not to use inheritance, you don’t have to worry about such details.
 
-There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ one has to define an abstract base class. This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule.
+There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or python one has to define an "abstract base class". This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule.
 
 ### Structs
 
-Structs are similar to classes, however all members are public. In general, structs are used to store different data types, though in theory they could also contain functions. The last is only forbidden by general agreement.
+Structs are essentially the same as dataclasses in python. They are classes where all members are public. In general, structs are used to store different data types, though in theory they could also contain functions. The last is only forbidden by general agreement.
 
-Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not too common.
+Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not done too often.
 
 For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
 
@@ -2803,11 +2803,6 @@ for i in range(10):
     print(i)
 ```
 
-## Exercises
-
-- Learn some new programming languages. Write a program to read a simple comma separated value (CSV) file and save the values in a list/vector/array/... for at least 5 different programming languages.
-- ...
-
 # 16. Bugs, Errors, Exceptions
 
 "It’s not a bug; it’s an undocumented feature." - Anonymous
@@ -2824,13 +2819,13 @@ At the beginning of our programming careers, we were all bothered by the compile
 
 ## Bugs
 
-A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. Just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
 
 ### Cost of Bugs
 
 The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code. // SE at google, p.207
 
-I hope you got the memo. In a small project, you can do pretty much anything you want. But you have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
+I hope you got the memo. In a small project, you can do pretty much anything you want. But you still have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
 
 ### Debugging
 
@@ -2855,13 +2850,13 @@ Copilot is able to find some bugs. Though I expect it to find only minor bugs, t
 ```
 Here I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
 
-Once again, there is the question wether this bug was fixed because copilot know the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
+Once again, there is the question wether this bug was fixed because copilot knows the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
 
 ## Exceptions
 
 // throw exceptions only for the exceptional case. Exceptions are expensive as they do stack unwinding, etc. Only throw exceptions for the really exceptional cases. In C++ they have soon std::expected instead.
 
-Exceptions happen in cases where the software is supposed to do something but it can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
+Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
 
 User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
 
@@ -2869,18 +2864,18 @@ In case of connection problems or missing disk space, the user needs a correspon
 
 ### Wrapping exceptions
 
-You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it possibly should be terminated anyway. But in serious software development you cannot allow this to happen. It is recommended to define your own error types. Put a try catch block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong. Add another try catch block around the whole program in order to catch all exceptions. These are unexpected errors, bugs. Write a different error message and kindly ask the user to contact your support as this is a programming error.
+You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it possibly should be terminated anyway. But in serious software development you cannot allow this to happen. It is recommended to define your own error types. Put a try catch block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong. Add another try catch block around the whole program in order to catch all exceptions. These are unexpected errors, bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
 
 Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, this is not worth the effort. Exceptions originating not from faulty user input should result in a message to send a bug report.
 ```Python
 if __name__ == “__main__”:
-try:
-    main()
-except CustomException:
-	# You defined this exception, so you know what went wrong.
-	# Return some error message how to resolve the issue
-except:
-	# You don't know what went wrong. The user should send in a bug report.
+	try:
+		main()
+	except CustomException:
+		# You defined this exception, so you know what went wrong.
+		# Return some error message how to resolve the issue
+	except:
+		# You don't know what went wrong. The user should send in a bug report.
 ```
 
 Try except blocks have some similarity to if else or switch case blocks. They are all susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsability of this function is managing the try catch block.
