@@ -320,15 +320,16 @@ Things to write:
 	- [Exercises](#exercises-8)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
-	- [Describing a model](#describing-a-model)
+	- [The Domain Model](#the-domain-model)
 	- [Implementing a Model](#implementing-a-model)
-	- [Maintaining the model WIP](#maintaining-the-model-wip)
+	- [Domain boundaries](#domain-boundaries)
 		- [Unified model](#unified-model)
+		- [Anticorruption layer](#anticorruption-layer)
 		- [Separate ways](#separate-ways)
 		- [Conformist](#conformist)
 		- [Developer Client relationship](#developer-client-relationship)
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
-	- [Entities, value objects, aggregates, … WIP](#entities-value-objects-aggregates--wip)
+	- [Entities, value objects, aggregates](#entities-value-objects-aggregates)
 	- [Domain level, old text](#domain-level-old-text)
 	- [Exercises](#exercises-9)
 - [36. Good code](#36-good-code)
@@ -3115,9 +3116,9 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 // don't mix good and bad stuff. Then everything becomes bad.
 
-Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty any aspect in programming. Not only code objects, but also abstract concepts. 
+Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty much any aspect in programming. Not only code objects, but also abstract concepts. 
 
-There is a market for food and further down the road there is a store selling electronics. Each kind of store has its own domain. If you find a market store selling apples, chances are high the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+There is a market for food and further down the road there is a store selling electronics. Each kind of store has its own domain. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
 
@@ -3138,9 +3139,9 @@ In software development, the word architect seems to be used a little carelessly
 
 In the following I’ll follow the notation of Robert C. Martin what architecture should be. Architecture should be everything. From the high-level design all the way down to the tiny details. If you were hoping to get here some general advice how to design the high-level part of your software, I’ll have to disappoint you. It’s more about the general picture.
 
-Good architecture takes time. It takes time to think about the structure of the code, time to clean up leftovers and time to write tests. But what if you have to be faster and start sacrificing quality of your architecture? It will take time to understand the code, time to change the code, time to explain your new colleague how everything works. Brief, you don’t gain anything. On the opposite, you will be much slower on the long run. Even under the pressure from the marketing and sales department, don’t let the quality of the architecture down. It will never pay off. Quick and dirty does not exist. There’s only slow and dirty.
+Good architecture takes time. It takes time to think about the structure of the code, time to clean up leftovers from previous coding attempts and time to write tests. But what if you have to be faster and start sacrificing quality of your architecture? It will take time to understand the code, time to change the code, time to explain your new colleague how everything works. Brief, you don’t gain anything. On the opposite, you will be much slower on the long run. Even under the pressure from the marketing and sales department, don’t let the quality of the architecture down. It will never pay off. Quick and dirty does not exist. There’s only slow and dirty.
 
-One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only partial interfaces, meaning that it’s like an interface within a library. It fulfills all the requirements for a real interface and the library could easily be broken into two pieces at this point.
+One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only partial interfaces, meaning that it’s like an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface.
 
 A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
 
@@ -4451,43 +4452,52 @@ Get acquainted with Git and some other tools mentioned here.
 
 # 35. Domain Driven Design
 
-This chapter is highly influenced by Eric Evans book Domain-Driven Design. The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and this chapter.
+"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totaly different questions, even though they sound and spell exactly the same." - Mel Conway
+
+This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
+
 
 ## Ubiquitous Language
 
 There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molucules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
 
-Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to build new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier, better, ways to say what you want to say. Use the insight gained this way to improve the domain-model.
+Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier and better ways to express what you want to say. Use the insight gained this way to improve the domain-model.
 
-## Describing a model
+## The Domain Model
+
+When writing code, we implement a model of the reality. One that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
 
 The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
 
-First, it supports only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows some temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
+First, it supports only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows the temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
 
 Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as a UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information will get lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
 
-Instead you can use any kind of document you like. Frequently it is better to create some sort of temporal order that describes a process than a class diagram. Or you create a diagram with class objects. After all it's called Object Oriented programming, not Class Oriented programming.
+Instead you can use any kind of document you like. At times it is better to create a temporal order of a process than a class diagram. Or you create a diagram with class objects rather than classes. After all it's called Object Oriented programming, not Class Oriented programming.
 
 As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time. Documentation has similar drawbacks as described in the chapter on comments. It takes a lot of efforts to keep a documentation up to date.
 
+Though documentation has its merits. Code is often too detailed to really explain what it does. And there are plenty of things that code alone cannot explain. It has to be complemented either by comments or some additional documentation.
+
+Make sure that design documents make ample usage of the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitious language, it is not useful. It doesn't help explaining what you are trying to implement.
+
 ## Implementing a Model
 
-There are cases where you can’t implement a model you developed. It would be simply too complex. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and they would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
+There are cases where you can’t implement a model you developed. It would be simply too complex. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
 
 In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding and modeling until you have a breakthrough when you suddenly realize how the optimal model should look like.
 
 Decouple the domain-model code from your other code. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things.
 
-## Maintaining the model WIP
+## Domain boundaries
 
-It takes a lot of communication within the team to keep the model consistent. This cannot always be guaranteed and the model may diverge in different directions. Forcing the model to remain consistent may be a solution, but there are other ways to deal with this problem.
-
-The thoughts made here are also to a large extent valid when dealing with any kind of library.
+As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processses that tend to tear the domain model appart. An object may have very different properties, depending on what part of the code you are working on. So there is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
 
 ### Unified model
 
-The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent very early. The single … gets for the required communication a unified model that has less complexity than two different models.
+The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent very early. On the other hand working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big.
+
+### Anticorruption layer
 
 ### Separate ways
 
@@ -4509,15 +4519,22 @@ This section is named after a chapter in the book Domain-Driven Design, p.322. I
 
 However, all the time you have to stay in close contact with a domain expert. Under no circumstances you should make changes that contradict what he says.
 
-## Entities, value objects, aggregates, … WIP
+## Entities, value objects, aggregates
+
+// https://youtu.be/4rhzdZIDX_k
 
 Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and typically an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. #what else to write about entities?
 
-Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time.
+Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. Thus if you don't like the apple, replacing it with another one is the only option you have.
 
-Aggregates are a combination of several other objects. For example, a car is an aggregate. #what is the aggregate and what is the entity here? Ddd p.150?
+Having value objects is extremely usefull, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the corectness of the adress in the constructor. You won't have to deal with it anywhere else.
 
-Aggregates typically consist of one entity taking care of many value objects. 
+Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
+
+Aggregates are a combination of several other objects. They typically consist of some entities and value objects. For example a car consists of an engine, a chassis and wheels. Let's say that the wheels wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. 
+// Ddd p.150?
+
+An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a subdomain of your code.
 
 ## Domain level, old text
 
