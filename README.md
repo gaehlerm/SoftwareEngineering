@@ -6,19 +6,19 @@ Please give me feedback on the book. Either as a merge request or by email, marc
 
 This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
 
-The first half of the books seems more or less ok, the second half needs some serious reworking.
+The first half of the books seems more or less OK, the second half needs some serious reworking.
 
 Things to write:
 -	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
--	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like destillation? DDD distilled may help to get the essence.
+-	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like distillation? DDD distilled may help to get the essence.
 -	Write some more about everything. Some chapters are really short.
 -	Restructure and sort the chapters somehow.
 -	Some simple example on refactoring (what technique exactly? Converting a function into a class?)
 -	Design patterns -> write short explanations to all of them? Or leave this chapter away completely.
 -	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
 -	How to organize software projects
--	Mention combinatorial explosion somewhere?
+-	Mention combination explosion somewhere?
 
 
 # 2. Table of content
@@ -400,7 +400,7 @@ There is so much I learned in the few years since my friend fell into the shit h
 
 I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I think.
 
-I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and critisize some parts of it, even better. 
+I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and criticize some parts of it, even better. 
 
 This book is only a step in your career. Now you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 
@@ -416,7 +416,7 @@ But OO programming is by far not the most important topic in this book. No matte
 
 This book contains very little code. It’s more about concepts or software engineering, rather than difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know.
 
-This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some tradeoffs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
+This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
 
 This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book, thus I mention what book I was reading as a foundation for the corresponding chapter.
 
@@ -485,28 +485,28 @@ These four rules will accompany us throughout our book.
 ## About this book
 // move to preface?
 
-Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are some best practice rules but it is never really clear wether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only tradeoffs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
 
 # 5. Single responsibility principle 
 
 Every object does exactly one thing. Everything is done by exactly one object.
 
-There are different definitions of the Single Responsability Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
+There are different definitions of the Single Responsibility Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
 
 The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation to write readable code.
 
 ## Do not Repeat Yourself
 
-// DRY does not always have to be obeyed that stricty. Repeat yourself until it is clear what the acronym should be.
+// DRY does not always have to be obeyed that strictly. Repeat yourself until it is clear what the acronym should be.
 
 You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
 The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. 
 //97-things-every-programmer-should-know chapter 63
 
-// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before? -> chapter automatization?
+// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before? -> chapter automation?
 
-The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is reimplemented several times. This kind of duplication has to be refactored out relentlessly.
+The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly.
 
 // remark that switch case statements are a frequent source of SRP violation.
 
@@ -546,7 +546,7 @@ def print_page():
 	print("copyright my company")
 	print("page number 1/1")
 ```
-The problem are the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the prefered solution as it's fairly easy to create these functions.
+The problem are the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the preferred solution as it's fairly easy to create these functions.
 
 ```py
 def print_header():
@@ -568,7 +568,7 @@ def print_page():
 
 Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
 
-Admitedly I was a little bit picky here. But I can't make much more convoluted examples in a book.
+Admittedly I was a little bit picky here. But I can't make much more convoluted examples in a book.
 
 ## Orthogonality
 
@@ -620,11 +620,11 @@ Levels of abstraction is an extremely important concept in software engineering.
 
 ## Real world example
 
-You take a CPU, a mainboard, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing programm emerged from combinind all these imensly complex objects.
+You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combined all these immensely complex objects.
 
 One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
 
-Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hirarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
+Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hierarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
 
 You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It may have completely different properties than the lower levels. In theory the higher level combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average and make very accurate predictions on a combustion engine or the aerodynamics of an airplane.
 
@@ -678,7 +678,7 @@ public:
 }
 ```
 
-This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calles Resource Acquisition Is Intialization (RAII) by Scott Myers //see Effective Modern C++
+This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calls Resource Acquisition Is Initialization (RAII) by Scott Myers //see Effective Modern C++
 
 If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. 
 
@@ -692,7 +692,7 @@ Vectors are a higher level of abstraction than arrays. They are easier to use an
 
 In your code you will also have different levels of abstraction. These can be compared to the layers of an onion. Thus it is also called the onion architecture. The outer layer always depends on the interface of the inner layer.
 
-The innermost layer is the Domain Model. It is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your busines. It doesn't know anything about the outer layers. 
+The innermost layer is the Domain Model. It is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your business. It doesn't know anything about the outer layers. 
 
 // TODO search images without copy right, sort the layers differently
 <div class="row">
@@ -703,9 +703,9 @@ The innermost layer is the Domain Model. It is the heart of your software. The D
 
 The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
 
-### Infrasturcture code
+### Infrastructure code
 
-One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic datatypes and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
+One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
 
 ### The domain level
 
@@ -798,7 +798,7 @@ Interfaces are everywhere. Every function or class has an external interface and
 
 "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
 
-The Application Programable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
+The Application Programmable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
 That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
 
@@ -895,11 +895,11 @@ shopping.go_shopping()
 shopping.create_shopping_list(["apple", "banana"])
 ```
 
-Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is empty or not existant.
+Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is empty or not existent.
 
 This is one of the drawbacks of OO code. Methods change the state of the object. Thus it is very hard to enforce that the methods get called in the correct order. 
 
-It is one of the advantages of procedural code that such issues are less likely to occure. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
+It is one of the advantages of procedural code that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
 
 ```Py
 money = get_money(50)
@@ -915,7 +915,7 @@ go_shopping(money, shopping_list)
 shopping_list = create_shopping_list(["apple", "banana"])
 ```
 
-After swaping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+After swapping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
 
 Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments.
 
@@ -926,7 +926,7 @@ As for the length of the function, the number of arguments should be as small as
 
 Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it will become.
 
-Try to have at most 3 function arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the dataclass (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
+Try to have at most 3 function arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
@@ -992,7 +992,7 @@ print_books_where(author_is('Paulo Coelho'))
 
 // Break up this chapter? It's quite long...
 
-Classes are undoubtadly one of the backbones of modern code. Unless you are one of the few functional programmers, chances are high that you use them every day. Therefore, it is time we have an in depth discussion about them. 
+Classes are undoubtedly one of the backbones of modern code. Unless you are one of the few functional programmers, chances are high that you use them every day. Therefore, it is time we have an in depth discussion about them. 
 
 This book is not about explaining what classes are exactly. This you have to learn else where. Instead this chapter is about how classes should be used. How one can distinguish different kind of classes, depending on the functions and variables they use. We'll try to understand when a function or variable should be public or private and I'll explain why I think plain getter and setter functions should generally be avoided.
 
@@ -1061,7 +1061,7 @@ class Math:
 
 ### Delegating class
 
-The delegating class is a mixture of the struct and the function class. It contains private variables and public functions. Calls to one of these functions are all delegated to one of the member variables. It’s similar to a car. It consists of many comlex parts that each has its own functionality. Setting the temperature will just pass the corresponding command to the AC. Any other part of the car doesn’t have to know anything about the temperature or its control at all.
+The delegating class is a mixture of the struct and the function class. It contains private variables and public functions. Calls to one of these functions are all delegated to one of the member variables. It’s similar to a car. It consists of many complex parts that each has its own functionality. Setting the temperature will just pass the corresponding command to the AC. Any other part of the car doesn’t have to know anything about the temperature or its control at all.
 
 ```py
 class Car:
@@ -1115,7 +1115,7 @@ class Sheep(Animal):
 
 ### Inheritance classes
 
-Inheritance classes are usually delegating classes. They can be worker classes as well, though this is not recommnded due to the complexity of the resulting class. However, as I mentioned before, I generally do not recommend using inheritance, except for defining interfaces. Anything you want to do using inheritance can be done using composition as well. And keeping your fingers off inheritance will possibly save you quite some trouble. I read many books and there are many refactoring techniques and similar that work perfectly well, except for inheritance. The main problem is usually overriding base class functions that can cause all kind of issues. Furthermore, you don’t really gain anything by using inheritance.
+Inheritance classes are usually delegating classes. They can be worker classes as well, though this is not recommended due to the complexity of the resulting class. However, as I mentioned before, I generally do not recommend using inheritance, except for defining interfaces. Anything you want to do using inheritance can be done using composition as well. And keeping your fingers off inheritance will possibly save you quite some trouble. I read many books and there are many refactoring techniques and similar that work perfectly well, except for inheritance. The main problem is usually overriding base class functions that can cause all kind of issues. Furthermore, you don’t really gain anything by using inheritance.
 
 Here is one of the issues of using inheritance.
 
@@ -1226,7 +1226,7 @@ From the code point of view, both functions do roughly the same and there is no 
 
 It happens you write a function that uses one or more public methods of a class. Apparently, your new function is related to the class, but at the same time you could also write it as an independent function. Now what should you do?
 
-Generally, it’s better to define it as a free function. It keeps the class smaller and less complex. The price of the function is lower if it’s outside the class. But as always there might be a tradeoff. For example, you have a class behaving like a list and you want to implement a function `contains`. It returns true if the list contains the function argument and false otherwise. You are tempted to implement it as a member function. But you can easily implement it as a free function as well. This would generally be preferred. We have the following two options:
+Generally, it’s better to define it as a free function. It keeps the class smaller and less complex. The price of the function is lower if it’s outside the class. But as always there might be a trade off. For example, you have a class behaving like a list and you want to implement a function `contains`. It returns true if the list contains the function argument and false otherwise. You are tempted to implement it as a member function. But you can easily implement it as a free function as well. This would generally be preferred. We have the following two options:
 
 ```Py
 # Free function:
@@ -1376,7 +1376,7 @@ Coupling is one of the reasons why I recommend not to use inheritance. Inheritan
 
 Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes as small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
 
-I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be undistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
+I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
 
 As we are talking about static, we can also discuss static variables as used for instance in C++. Static variables are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables. As soon as you start writing unit tests for static variables you'll see why I discourage using static variables.
 
@@ -1452,13 +1452,13 @@ dish =
 
 ## Conclusions
 
-I think we can agree on the fact that OO programming is important and everyone should know about it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. Many people simply don't know that this is an issue. As a rule of thumb we can say that your class design is fine as long as wirting tests is not an issue.
+I think we can agree on the fact that OO programming is important and everyone should know about it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. Many people simply don't know that this is an issue. As a rule of thumb we can say that your class design is fine as long as writing tests is not an issue.
 
 Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
 
 Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it a perfectly viable object.
 
-Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read and are thus prefered.
+Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read and are thus preferred.
 
 ## Copilot
 
@@ -1527,11 +1527,11 @@ The implementation of inheritance can be complex task, depending on the programm
 
 When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use?
 
-This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languagues like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
+This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languages like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
 
 ### Overriden baseclass functions
 
-Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritacne is simply too error prone. Though this is better in python than in C++.
+Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritance is simply too error prone. Though this is better in python than in C++.
 
 Sometimes inheritance can be extremely confusing. Let's take the following example:
 
@@ -1552,7 +1552,7 @@ if __name__ == "__main__":
     lion.feed()
 ```
 
-Is the lion now eating grass or meat? Of course it's eating meat. But using overriden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem where the programmer has switch between reading code of the base class and the derived class in oder to understand the code. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is so confusing, it is dreadful. Please don't write such code.
+Is the lion now eating grass or meat? Of course it's eating meat. But using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem where the programmer has switch between reading code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is so confusing, it is dreadful. Please don't write such code.
 
 Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, there is just too much that can go wrong with inheritance.
 
@@ -1682,7 +1682,7 @@ Apparently I made a mistake in the implementation. The correct implementation of
 
 Now the test passes.
 
-As you can see it’s pretty simple to write a test. Not only in python. There are testing libraries for all major prorgramming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
+As you can see it’s pretty simple to write a test. Not only in python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
 
 Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
 
@@ -1706,7 +1706,7 @@ A lot of people think that the only reason for writing tests is finding bugs. Th
 
 ### Double Entry Book Keeping
 
-Robert C. Martin compared programming with tests to double entry book keeping //Clean Craftsman. I really like this comparison. In both cases you have two independent truths (creditor and debitor, or code and tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Because it is unlikely that the same mistake was made for both code and tests when implementing both of them independently.
+Robert C. Martin compared programming with tests to double entry book keeping //Clean Craftsman. I really like this comparison. In both cases you have two independent truths (creditor and debtor, or code and tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Because it is unlikely that the same mistake was made for both code and tests when implementing both of them independently.
 
 Having two absolute truths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break.
 
@@ -1720,7 +1720,7 @@ Make sure all the tests pass. Tests that don't pass are worthless. Even worse, t
 
 In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that return the desired objects. You might even have a util file for all the tests. It contains some fairly static objects you might need in a lot of different tests.
 
-There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximative checks you should use instead. As the `isclose` function used in the example above.
+There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximate checks you should use instead. As the `isclose` function used in the example above.
 
 Then it is common to miss some of the if-else branches. These are very important to test as most bugs usually hide in conditional statements. Make sure that you cover all cases, if necessary using a code coverage tool.
 
@@ -1748,17 +1748,17 @@ Now if you see that they are all independent, you may test them independently. T
 
 Usually the variables are not independent, or at least it's not so clear how they interact. And it’s not feasible to write 27 test cases. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number of arguments low.
 
-I'd like to state again that it is important to really know what a function does. As I already wrote several times you have to test the corner cases. And you only know them if you know the code. You won’t find them by chance. Nor can you figure out if some variables are independent of each other or not. This is just one of the reasons why you have to write tests right along with the actual code. If someone else has to write the tests for your code, he’s missing this very crucial information and either has to read and understand all the code or just guess what it does. Both cases are suboptimal.
+I'd like to state again that it is important to really know what a function does. As I already wrote several times you have to test the corner cases. And you only know them if you know the code. You won’t find them by chance. Nor can you figure out if some variables are independent of each other or not. This is just one of the reasons why you have to write tests right along with the actual code. If someone else has to write the tests for your code, he’s missing this very crucial information and either has to read and understand all the code or just guess what it does. Both cases are sub optimal.
 
 You may also have structured objects as an input or output of a function. This can become worse than having three variables by orders of magnitude. The structured objects may have a thousand fields, for example elements in a list. Everything we discussed so far becomes peanuts. But we can still achieve reasonable test coverage if we try. First of all, all elements in a list have to be treated equally. This is a fundamental property when dealing with lists. It allows you to write tests for a fairly short list and deal with only one element of it. All the other elements will behave the same. The only corner case you'll have to take care of is the empty list.
 
-But also in large structured objects the complexity is usually managable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function as the object is fairly generic. Again, it all comes down to the programmer knowing the relationship between different objects. Which parts of the object are really used inside the function? Write one generic test with default values for every part of the object. Then write also tests for some specific values of the object. Though again, here you'll have to figure out which are the important values. 
+But also in large structured objects the complexity is usually manageable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function as the object is fairly generic. Again, it all comes down to the programmer knowing the relationship between different objects. Which parts of the object are really used inside the function? Write one generic test with default values for every part of the object. Then write also tests for some specific values of the object. Though again, here you'll have to figure out which are the important values. 
 
 ## Parts of a test
 
-A test generally constists of 3 stages. 
+A test generally consists of 3 stages. 
 
-The first stage is the setup. It creates all the required objects for the test. Usually these are all the variables. For componentss and integration tests, this may also be copying or creating files or even databases.
+The first stage is the setup. It creates all the required objects for the test. Usually these are all the variables. For components and integration tests, this may also be copying or creating files or even databases.
 
 The second stage is the execution of the test. Here you run the function you want to test and check that the result is as expected.
 
@@ -1770,7 +1770,7 @@ Setup and teardown are the functions automatically called at the beginning and t
 
 So in most cases and especially in unit tests, there is no need for a teardown function. However, if your tests use text files, databases or something else that is presistant, things become tricky. Your tests might need temporary files, change values in databases, have network connections, etc. It becomes messy. You need a fool proof way that your file handling always works. This is where setup and teardown really come into play.
 
-For the file creation there is not that much that can go wrong. You create it from code or copy it from another location. This is to be implemented in the setup part of the test or using some function. The tricky part is deleting the files in the end. It may sound very simple to delete a file at the end of the test, but if the test fails, the test aborts. A normal function call for deleting the file will never be executed. There will be a mess of undeleted files. This may impact future runs of the tests and they become flaky. This problem can be solved by implementing the teardown function that is guaranteed to be always executed, no matter the result of the test. This is where the dedicated teardown function comes into play. It is guaranteed to be executed, even if there is some error occuring inside the test. Only in very serious cases like a segmentation fault, the teardown may not be executed. 
+For the file creation there is not that much that can go wrong. You create it from code or copy it from another location. This is to be implemented in the setup part of the test or using some function. The tricky part is deleting the files in the end. It may sound very simple to delete a file at the end of the test, but if the test fails, the test aborts. A normal function call for deleting the file will never be executed. There will be a mess of undeleted files. This may impact future runs of the tests and they become flaky. This problem can be solved by implementing the teardown function that is guaranteed to be always executed, no matter the result of the test. This is where the dedicated teardown function comes into play. It is guaranteed to be executed, even if there is some error occurring inside the test. Only in very serious cases like a segmentation fault, the teardown may not be executed. 
 
 Anyway, try to write tests that don’t need files or IO. It makes things much easier. Especially in unit tests you won't have to deal with setup and teardown if you don't want to bother with it.
 
@@ -1815,7 +1815,7 @@ Tests that do not always return the same result are called flaky. This is extrem
 
 ### Britle tests
 
-Tests that are over specified are called brittle. They break when changing the code in seeminly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting does not matter. It does not change any of the values in the file. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interessted in. Never use any string operations when reading a json file. This is the very definition of brittle code!
+Tests that are over specified are called brittle. They break when changing the code in seemingly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting does not matter. It does not change any of the values in the file. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interested in. Never use any string operations when reading a json file. This is the very definition of brittle code!
 
 Another example of brittle tests are tests for methods that should be private but are made public in order to test them. When refactoring such a function, the tests should not break because it shouldn't be part of the public interface. But the opposite is true. Refactoring the internals of the surrounding class will inevitably break the test. Even though the public interface is undisturbed. This is the very definition of brittle. Instead the tests should be written using only the public interface of the class. Then a test breaks only if the interface is changed inadvertently. And that's when the test should really break.
 
@@ -1839,7 +1839,7 @@ With End-to-End (E2E) tests it becomes a little bit trickier. E2E tests are slow
 
 ### The Beyonce rule
 
-A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equaly extensive. Instead, at google they came up with the Beyonce rule. // Software Engeneering at google 
+A common question is "what to test?". A very simple answer is everything. This is certainly a correct answer, though you cannot always test everything equally extensive. Instead, at google they came up with the Beyonce rule. // Software Engineering at google 
 She sings in her song "If you like it shoulda put a ~~ring~~ *test* on it."
 
 ### Mocking and Stubs
@@ -1865,7 +1865,7 @@ As software engineers, we want to automate everything, tests included. However, 
 
 There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types.
 - Unit tests test the behavior of individual functions and classes.
-- Component tests test the interplay of many functions. Typically they test the functionality of libaries.
+- Component tests test the interplay of many functions. Typically they test the functionality of libraries.
 - End-to-end (E2E) or acceptance tests test the behavior of the complete software.
 
 As we will see, each of these categories has its own right to exist as they cover different parts of the code.
@@ -1890,7 +1890,7 @@ This works. They will find the bug in this case. People worked like this for dec
 
 Unit tests cover small pieces of code. Usually they test a public method or a standalone functions. In the example above, they would check everything that is checked using print statements.
 
-It may sound surprising, but unit tests are even more important than E2E tests. This is because they can give you precise information about what piece of your code contains a bug, meanwhile E2E tests can only tell you that something is wrong within the whole code base. Therefore, having your whole code covered with unit tests will have a similar, though not the same, effect as having E2E tests. But with the advantage that you'll know exactly where some error occured. The drawback being that unit tests do not test if these building blocks are connected correctly.
+It may sound surprising, but unit tests are even more important than E2E tests. This is because they can give you precise information about what piece of your code contains a bug, meanwhile E2E tests can only tell you that something is wrong within the whole code base. Therefore, having your whole code covered with unit tests will have a similar, though not the same, effect as having E2E tests. But with the advantage that you'll know exactly where some error occurred. The drawback being that unit tests do not test if these building blocks are connected correctly.
 
 ### Testing files
 
@@ -1917,7 +1917,7 @@ An even better approach is using Dependency Injection (DI) as explained in the n
 
 Writing unit tests for classes is probably the most important part of this chapter. This is not only because of the prevalence of classes, but also because classes tend to become messy without any unit tests.
 
-First of all, classes tend to become too big. They have too many member variables and comlicated private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
+First of all, classes tend to become too big. They have too many member variables and complicated private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
 
 Furthermore, there is the issue of how to deal with private methods in big classes. Because apparently, the testing framework doesn’t have access to private functions. No one has, except for the class itself. A first attempt is making the private functions public. This, however, is not recommended. You should not make functions public, only in order to test them. This will lead to crippled code with too many public functions, which is the exact opposite of encapsulation. Therefore, unit tests should only test the public interface of a class. If you are tempted to test also some private functions, you should resist. This is a clear sign that your private functions are too complex. Make this private function a class on its own with a public interface that you can test.
 
@@ -1956,7 +1956,7 @@ The code above can be refactored using a dict,
         assert roman_number(key) == dictionary[key]
 ```
 
-Looking at the code it is not quite clear if this is an improvement over the original code. We have removed some redundancy and use only one assert. On the other hand the redundancy was not that bad and the old code was very easy to understand, which is maybe even more important than removing the repeating code. This is a decision that takes human judgement and I'm still not sure which one is the better solution.
+Looking at the code it is not quite clear if this is an improvement over the original code. We have removed some redundancy and use only one assert. On the other hand the redundancy was not that bad and the old code was very easy to understand, which is maybe even more important than removing the repeating code. This is a decision that takes human judgment and I'm still not sure which one is the better solution.
 
 // Person example from https://youtu.be/IavOJI5OV7g?t=588 ?
 
@@ -1983,7 +1983,7 @@ Sounds good. But at the same time, it seems extremely difficult to write these t
 
 True. But under a few conditions the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure // layers of software...? the GUI is an abstraction level higher than the API. The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click corresponds to a function call to the underlying API. If the GUI looks fine, it quite certainly is fine. It is a thin layer that doesn't contain any logic and it's not able to hide bugs. // use the expression used by Robert C Martin??
 
-Testing on the API level is in comparably easy. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. The fiels first have to be created. Either from code or by copying them from another location. The result of comparing big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files. 
+Testing on the API level is in comparably easy. Translate the button clicks from the examples into function calls. Check that the result is as expected and you’re done. In practice you have to deal with potentially huge files and databases that you have to check. This can become quite tedious and slow. The fields first have to be created. Either from code or by copying them from another location. The result of comparing big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files. 
 
 E2E tests are important, but they cannot tell you where an error comes from. E2E tests are quite frequently highly correlated. A single bug can cause many tests to fail. Therefore it is important to combine them with unit tests. 
 
@@ -1992,15 +1992,15 @@ One last question you might ask: “And what should I do if the GUI code contain
 
 ## The testing pyramid
 
-We've defined here 3 categories of tests. From the fine grained unit tests up to the very coarse end-to-end tests. As a rule of thumb one can say that the testing suite of any programm should consist of a lot of small grained and few coarse tests.
+We've defined here 3 categories of tests. From the fine grained unit tests up to the very coarse end-to-end tests. As a rule of thumb one can say that the testing suite of any program should consist of a lot of small grained and few coarse tests.
 
 Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can return a detailed feedback if something is broken. They are like testing the individual parts of a car radio before assembling it. Unit tests prevent the usage of faulty parts. Roughly estimated 80% of all tests should be unit tests. //quote software engineering at google. 
 
-Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still usefull to check the functionality of the radio. About 15% of all tests are integration tests.
+Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still useful to check the functionality of the radio. About 15% of all tests are integration tests.
 
 The E2E tests should only check that the installation of the radio in the car worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
 
-E2E tests are the least common. They are very valueable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you get from an E2E test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing E2E tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are end-to-end tests.
+E2E tests are the least common. They are very valuable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you get from an E2E test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing E2E tests. Once you know that the engine, the gear box and the breaks of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are end-to-end tests.
 
 // get an image without copy right
 
@@ -2059,7 +2059,7 @@ The boarder of component tests is not so well defined. Feel free so write some i
 
 It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind existing code. Usually, there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
 
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law  states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviours of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. // Hyrums law is already mentioned in the section on APIs
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law  states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. // Hyrums law is already mentioned in the section on APIs
 
 As you write tests, always make sure they fail when you expect them to. It already happened to me several times that such checks prevented me from hours of frustrating bug fixing. Usually, due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
 
@@ -2081,7 +2081,7 @@ Secondly your production code is not made to run automated test cases. Asserts a
 
 So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code as your tests force you to. 
 
-In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't wirte it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
+In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
 
 Maybe you do not fully understand yet how TDD is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
 
@@ -2111,7 +2111,7 @@ As we learned in the chapter on interfaces, they should always be defined from t
 
 ### Example
 
-Let's write a program that converts arabic numbers (the once we use) into roman numbers. Let's write a first test case.
+Let's write a program that converts Arabic numbers (the once we use) into roman numbers. Let's write a first test case.
 
 ```py
 # inside test_roman_numbers.py
@@ -2241,7 +2241,7 @@ In general, there are two ways to use a set-up database. Faking and mocking.
 
 ### Mocking
 
-//here I have to write about spys, mocks, fakes, stubs, etc! See clean craftmanship, p.118
+//here I have to write about spies, mocks, fakes, stubs, etc! See clean craftsmanship, p.118
 
 The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file. In python this is easily done using the Mock library.
 
@@ -2259,7 +2259,7 @@ def test_mock_important_stuff():
 
 ### Faking
 
-//here I have to write about spys, mocks, fakes, stubs, etc! See clean craftmanship, p.118
+//here I have to write about spies, mocks, fakes, stubs, etc! See clean craftsmanship, p.118
 
 A fake is a working version of the object you want to replace, albeit it's a simplified version. For example your fake csv reader does not read a file from the disk, but just returns a string stored in the code. For running tests this is usually good enough without having the drawback of dealing with the file system, where your original data could easily be deleted or messed with by anyone else.
 
@@ -2298,7 +2298,7 @@ Using DI is generally a very recommended practice and should always be used when
 
 These `Reader` objects should be instantiated as soon as possible. Usually this is possible at the point where the type of reader is selected, which is at a fairly high level of abstraction. The only drawback of DI is, that this object has to be passed through the whole stack down to the point where the database is actually used. On the other hand, this would have to be done with a string if DI was not used. Which certainly isn't any better. It just delays the selection process.
 
-You may choose wether you want to pass the `reder_type` or the `reader` as a function argument through the stack. But as we learned, you should not pass strings as function arguments. So passing the `reader` object is the prefered option.
+You may choose whether you want to pass the `reder_type` or the `reader` as a function argument through the stack. But as we learned, you should not pass strings as function arguments. So passing the `reader` object is the preferred option.
 
 ```py
 filename = ...
@@ -2309,7 +2309,7 @@ else:
 reader.read_file(filename)
 ```
 
-Delaying this decision would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding reder object right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
+Delaying this decision would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding reader object right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
 
 DI is very similar to the strategy pattern. The main difference being what you want to achieve. DI is mostly used for testing meanwhile the strategy pattern is generally used to allow the user to make a selection at run time.
 
@@ -2361,7 +2361,7 @@ Even without external changes it is important to refactor your code once in a wh
 
 Refactoring is just like cleaning up your kitchen. Every time you cook something you have dirty dishes. But unlike for the kitchen you cannot hire a cleaning lady to clean up your code. She wouldn’t know what to do. You have to clean up your code by yourself. You have to refactor it. Continuously. You will be spending more time refactoring than writing new code. And as the code becomes older it only gets worse. That’s the faith of a software engineer.
 
-I guess everybody reading (or writing) this book knows some of the problems why code rots. The very first example is copy paste code. This should be banned altogether. Instead of rewriting a function to fit its new needs, one just copies it and changes a line or two in its new location. Another issue is adding more and more features to an existing class. Also the features that you add are in hindsigth at the wrong place in your code and have to be moved to the correct location. These are some of the reasons why code rots and needs regular refactoring.
+I guess everybody reading (or writing) this book knows some of the problems why code rots. The very first example is copy paste code. This should be banned altogether. Instead of rewriting a function to fit its new needs, one just copies it and changes a line or two in its new location. Another issue is adding more and more features to an existing class. Also the features that you add are in hindsight at the wrong place in your code and have to be moved to the correct location. These are some of the reasons why code rots and needs regular refactoring.
 
 ### Refactoring and automated test
 
@@ -2375,7 +2375,7 @@ If you are confident about the test coverage you can do pretty much anything you
 
 Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly.
 
-Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the chapter on Test Driven Development. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
+Probably you do some smaller refactoring quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the chapter on Test Driven Development. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
 
 Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development. You never write perfect code to start with. It always takes some refactoring in order to end up with good code.
 
@@ -2445,7 +2445,7 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 ## Refactoring techniques
 
-The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have gobal variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier than for interpreted languages as the compiler does valuable checking of names, functions, types, etc.
+The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier than for interpreted languages as the compiler does valuable checking of names, functions, types, etc.
 
 There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler //Refactoring, Addison Wesley, 2019.
 
@@ -2538,7 +2538,7 @@ However, the piece of code you hold in your hands between two seams may be way t
 
 ### Sketches
 
-Making sketches and diagramms may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. Some kind of temporal behavior or what Feathers called a “scratch refactoring”. Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
+Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. Some kind of temporal behavior or what Feathers called a “scratch refactoring”. Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans?
 
@@ -2785,7 +2785,7 @@ Structs are essentially the same as dataclasses in python. They are classes wher
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not done too often.
 
-For more intormation about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
+For more information about C++ I can recommend the google C++ style guide, https://google.github.io/styleguide/cppguide.html
 
 ## Copilot
 
@@ -2814,7 +2814,7 @@ I would briefly like to go through the different cases.
 
 ## Syntax Errors
 
-Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the corectnes of the syntax.
+Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the correctness of the syntax.
 
 At the beginning of our programming careers, we were all bothered by the compiler errors. We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us. It is a good thing we got compiler errors because this might have saved us from creating serious bugs.
 
@@ -2851,7 +2851,7 @@ Copilot is able to find some bugs. Though I expect it to find only minor bugs, t
 ```
 Here I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
 
-Once again, there is the question wether this bug was fixed because copilot knows the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
+Once again, there is the question whether this bug was fixed because copilot knows the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
 
 ## Exceptions
 
@@ -2880,7 +2880,7 @@ if __name__ == “__main__”:
 		# You don't know what went wrong. The user should send in a bug report.
 ```
 
-Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsability of this function is managing the try catch block.
+Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it.
 
@@ -2913,7 +2913,7 @@ While OO programming is mostly based on classes, class instances and methods, pr
 
 ## Functional programming
 
-Functional programming is the way to programm using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+Functional programming is the way to program using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
 
 Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier.
 
@@ -3034,7 +3034,7 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 ## Copilot
 
-Copilot knows quite well about design patterns. The bigger challange is explaining to copilot what you actually want to do. Here is the example of a factory created by a single comment and very little help to get the code started.
+Copilot knows quite well about design patterns. The bigger challenge is explaining to copilot what you actually want to do. Here is the example of a factory created by a single comment and very little help to get the code started.
 ```py
 # write a factory that creates a logistics object that implements a road logistics or sea logistics
 def create_logistics(type):
@@ -3075,7 +3075,7 @@ Micro services on the other hand are very much decoupled. They are chunks of cod
 instead of asking what you want, you go to the service locator and reach through the service locator.
 https://youtu.be/RlfLCWKxHJ0 video on service locators
 
-Only ask for things you directly need. This is another advantage of functional programming or micro services. You have to validate an email, so you call the email validator which does the job for you, where the email validator can be either a micro service or a function. The email validator returns a result and terminates. You only got what you asked for, nothing else. There are no semi useful objects wobbeling around that you don't know how to deal with them. You need exactly what is around.
+Only ask for things you directly need. This is another advantage of functional programming or micro services. You have to validate an email, so you call the email validator which does the job for you, where the email validator can be either a micro service or a function. The email validator returns a result and terminates. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around.
 
 // Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
 
@@ -3160,7 +3160,7 @@ Separate Libraries
 
 In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
 s
-// These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecutre.
+// These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecture.
 
 Reasons favoring bigger libraries are:
 -	Flow between user tasks is smoother when more is handled with a unified model
@@ -3172,7 +3172,7 @@ Reasons favoring smaller libraries are:
 -	Continuous Integration is easier with smaller teams and code bases
 -	Larger contexts may call for more versatile abstract models, requiring skills that are in short supply.
 
-These advantages for either sides lead to tradeoffs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
+These advantages for either sides lead to trade offs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
 
 ### Coupling
 
@@ -3188,7 +3188,7 @@ The solid principles were named by Robert C. Martin. SOLID is named after 5 gene
 4.	Interface segregation 
 5.	Dependency Inversion
 
-These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code. Interestingly enough, most people agree on the fact that these pirnciples are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly.
+These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code. Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly.
 
 These principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but there are ways around them.
 
@@ -3216,9 +3216,9 @@ def print_all_postal_codes():
 	print(city.zurich_postal_code())
 	print(city.bern_postal_code())
 ```
-If the user of this code wants to add another city, we have to do this within our own code inside the class `City`. This is the oposite of what the OCP says.
+If the user of this code wants to add another city, we have to do this within our own code inside the class `City`. This is the opposite of what the OCP says.
 
-Instead we can create an interface city and implement it for every city we are interessted in. If we are interessted in adding an additional city, we don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
+Instead we can create an interface city and implement it for every city we are interested in. If we are interested in adding an additional city, we don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
 
 ```py
 from abc import ABC, abstractmethod
@@ -3253,7 +3253,7 @@ Now this code on the other hand fulfills the OCP. If the user wants to add anoth
 
 Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
 
-For example credit cards and paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
+For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
 
 ```py
 class Payment:
@@ -3378,7 +3378,7 @@ Now `main` depends only on the interface of `NothingBase`, not on the implementa
 
 // reference to meyers book. or skip this part?
 
-In case you've ever heared of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of abstract base classes or interfaces. There’s no need to use it. Defining interfaces is the strictly better option than using pimpl.
+In case you've ever heard of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of abstract base classes or interfaces. There’s no need to use it. Defining interfaces is the strictly better option than using pimpl.
 
 ## Summary
 
@@ -3559,7 +3559,7 @@ Some people even start to encode all kind of logic into strings. This is dreadfu
 
 This example I found in book Clean Code on p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code like that. 
 
-He encoded five boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
+He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
 
 The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is not possible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary.
 
@@ -3614,7 +3614,7 @@ if water_state.high_temp_alert == State.On:
 
 ### Natural Language
 
-Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to writen his text into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should get all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now, of course, this is in theory.
+Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to written his text into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should get all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now, of course, this is in theory.
 
 Ultimately you are left with barely any strings at all. Only when reading or writing a file you briefly have to deal with strings. At least in theory. For small projects it is not always worth the effort.
 
@@ -3635,7 +3635,7 @@ These two lines do something very similar. They both assign the value 0 to a and
 
 If the developer knows all the variables that he needs, he should use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure. A dict is more appropriate than a list as you can use the name of the recipe as a key.
 
-Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might convert further into nested classe instances.
+Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might convert further into nested class instances.
 
 ## Trees
 
@@ -3657,7 +3657,7 @@ Variables do not only have a type, but they can also have additional properties 
 
 ## Compile-time constant
 
-Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. In python there is no way to enforce constness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces constness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
+Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. In python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
 
 In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time.
 
@@ -3671,7 +3671,7 @@ Once created you can pass and copy them around as much as you please. You are al
 
 In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
 
-One option is to work more with unmutable objects. For example you can replace the following code,
+One option is to work more with immutable objects. For example you can replace the following code,
 
 ```py
 prime_numbers = [11, 3, 7, 5, 2]
@@ -3695,7 +3695,7 @@ Member variable is by far the most common property of a variable. Yet there is a
 
 Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. This is one reason why classes have to be small. 
 
-Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessability and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessability side. Keep your classes small and make everything privat that can be.
+Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be.
 
 ## Static Variables
 
@@ -3705,7 +3705,7 @@ If a static variable is const, one could also create a free const variable outsi
 
 If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
 
-And if you don't beleave me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is absolutely brittle.
+And if you don't believe me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is absolutely brittle.
 
 ## Dynamic Variables
 
@@ -3725,7 +3725,7 @@ Now as you already realized, global variables are bad because everyone can chang
 
 // call it differently than effects? Rewrite this section. It's confusing.
 
-I’d like to briefly sort different kind of variables by the amount of effects they may have, starting with the least side effects. Having many effects of course makes it easier to program as you can do pretty much wahtever you want, but at the same time makes it extremely hard to keep everything under control. It’s best to choose variables with the least possible effects that let's you still implement what you want.
+I’d like to briefly sort different kind of variables by the amount of effects they may have, starting with the least side effects. Having many effects of course makes it easier to program as you can do pretty much whatever you want, but at the same time makes it extremely hard to keep everything under control. It’s best to choose variables with the least possible effects that let's you still implement what you want.
 
 Here is a rough list how variable types are sorted by the amount of effects they have, starting with the least.
 
@@ -3785,7 +3785,7 @@ Now this is just a little example in between how constantly considering how func
 
 "And you will know, my name is the Lord!” – Samel L. Jackson, Pulp fiction
 
-How long does a football game take? This is a very inocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
+How long does a football game take? This is a very innocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
 
 The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are other people around who have the same name as you do it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
 
@@ -3808,11 +3808,11 @@ Here are some rules to follow when naming things:
 7.	Name collisions between different libraries are common and nothing to worry about. Use the namespace prefixes to distinguish them.
 8.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
 9.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
-10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
+10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
 11.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than comming up with your own notation rules.
+14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
 
 ## Copilot
 
@@ -3889,7 +3889,7 @@ Probably everyone could have come up with a neat solution for solving the proble
 
 ## Single line complexity
 
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth wirting such code once in a while. You will learn quite something about how code can look like.
+A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
 
 On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
 
@@ -3958,9 +3958,9 @@ with open('data.csv', 'w') as f:
 
 The JavaScript Object Notation (json) file format is clearly the best file format for everyday purposes. It is very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
 
-Once you use json on a more serious project, you might want to use a schema to check the files for correctness. You may use different schemas for different versions of your interface. And before I let you write schemas by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
+Once you use json on a more serious project, you might want to use a schema to check the files for correctness. You may use different schema for different versions of your interface. And before I let you write schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
 
-Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
+Thanks to schema, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
 
 The following code creates a json file:
 ```py
@@ -4003,7 +4003,7 @@ import json
 with open('data.json', 'w') as f:
     json.dump({'a':a, 'b':b}, f)
 ```
-Also when reading a json file, the suggesiton of Copilot is quite sound. Following the comment
+Also when reading a json file, the suggestion of Copilot is quite sound. Following the comment
 ```py
 # read the json file into a and b
 ```
@@ -4018,7 +4018,7 @@ Thus one can say that Copilot allows us to save some time writing code and savin
 
 ## XML
 
-The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily readable. Other than that, there are only minor diffirences like the XML supporting comments and namespaces.
+The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
 
 Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
 
@@ -4049,7 +4049,7 @@ x = [1,2,3]
 y = [4,5,6]
 # write x and y to an xml file called 'data.xml'
 ```
-This code worked out without any problems for json files, but for XML the result at the time of writing was dissatisfactory. The suggestion of Copilot is:
+This code worked out without any problems for json files, but for XML the result at the time of writing was unsatisfactory. The suggestion of Copilot is:
 ```py
 with open('data.xml', 'w') as f:
     f.write('<data>\n')
@@ -4152,13 +4152,13 @@ Many students start with writing code when they have some task to do. And they p
 
 Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
 
-For small projects, setting up git and a proper build tool need barely any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. Same for the build process. Typing in a long command not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforseen way that introduces hard to understand behavior.
+For small projects, setting up git and a proper build tool need barely any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. Same for the build process. Typing in a long command not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior.
 
-Similarly for CI. It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests) always run. The code commited to master has been compiled and the tests pass without any errors.
+Similarly for CI. It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests) always run. The code committed to master has been compiled and the tests pass without any errors.
 
 So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
 - You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
-- You will save a lot of time down the road. This will outweight the time needed now to set everything up.
+- You will save a lot of time down the road. This will outweigh the time needed now to set everything up.
 - Having properly set up tools makes it easier for new team members to get started. They only have to clone the repo and run the build tool and they can get started.
 
 ## Project folder
@@ -4210,7 +4210,7 @@ First of all, it is not recommended to optimize the code at all. In fact, it is 
 
 Is this really the case, that performance was an issue? You had this feeling that you had to write highly optimized code. But you didn’t know for sure. And now is the time to test your assumption. If you have to run your code only once and it takes 2 days, run it over the weekend. Spending hours for optimization would be wasted time.
 
-If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottle necks of your code. Pretty much all code that you’ll ever see has very few bottle necks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottle neck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually inacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
+If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottle necks of your code. Pretty much all code that you’ll ever see has very few bottle necks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottle neck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
 
 Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be working in a team where every single team member knows way more about parallel programming than I do.
 
@@ -4254,7 +4254,7 @@ Not convinced? You think you won’t have these issues because you work carefull
 
 “Ha ha. NO!“
 
-Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make only few mistakes. Removing useless comments is a must. They are an unnecesary source for bugs.
+Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make only few mistakes. Removing useless comments is a must. They are an unnecessary source for bugs.
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
@@ -4280,7 +4280,7 @@ I have explained that you should not use comments for anything that could (or sh
 
 ### Docstring
 
-You may use docstring tools, like sphynx in python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring docummentation if you can read the source code and all its comments?
+You may use docstring tools, like sphynx in python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
 
 #should I add some more points when comments are allowed?
 
@@ -4343,7 +4343,7 @@ I have to admit that the list is pretty scrambled. We have some specific softwar
 
 ## Version control software 
 
-Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs or licencins issues // citation wikepedia?. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard.
+Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs or licencins issues // citation Wikipedia?. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard.
 
 The original Git software is a console application but there is also proprietary software with a GUI.
 
@@ -4353,7 +4353,7 @@ I recommend learning the classic (command line) git. Start learning it as soon a
 
 Git should not only be used for bare code. Git can also be used on any text file that you have. The build files should certainly be version controlled. But also other pure text files are worth controlling with git. For example if you do research and have some files with measurement results. This could also be version controlled. The price you pay is negligible compared to what you gain by controlling all your files with git.
 
-Or if you wirte a book like this one. It is writen in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
+Or if you write a book like this one. It is written in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
 
 ### Copilot
 
@@ -4363,7 +4363,7 @@ Or if you wirte a book like this one. It is writen in Markdown and version contr
 
 The most common command line software is the shell used on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used.
 
-The command line is the swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
+The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
 The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
 
@@ -4387,11 +4387,11 @@ It is worthwhile learning some of the shortcuts in your IDE that allow you to mo
 ## Continuous Integration
 
 "Continuous integration (CI) is the practice of merging all developers' working copies to a shared mainline several times a day." // https://en.wikipedia.org/wiki/Continuous_integration
-This typically means checking in the latests changes of the code, compiling it if required, running all the tests and building the final artifact.
+This typically means checking in the latest changes of the code, compiling it if required, running all the tests and building the final artifact.
 
 There are several different suppliers for Continuous Integration (CI) software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
 
-At the time of writing, Jenkins is the most commmonly used CI software.
+At the time of writing, Jenkins is the most commonly used CI software.
 
 ## Debugger
 
@@ -4444,7 +4444,7 @@ Again, there are free alternatives around, though you are unlikely to see any al
 
 The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation. Instead it should be used only to document external APIs.
 
-Every programming language has one docstring tool. For python it’s sphynx, for C++ it’s doxygen.
+Every programming language has one docstring tool. For python it’s Sphynx, for C++ it’s doxygen.
 
 ## Exercises
 
@@ -4452,14 +4452,14 @@ Get acquainted with Git and some other tools mentioned here.
 
 # 35. Domain Driven Design
 
-"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totaly different questions, even though they sound and spell exactly the same." - Mel Conway
+"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
 
 
 ## Ubiquitous Language
 
-There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molucules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
+There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier and better ways to express what you want to say. Use the insight gained this way to improve the domain-model.
 
@@ -4491,7 +4491,7 @@ Decouple the domain-model code from your other code. This is important to keep t
 
 ## Domain boundaries
 
-As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processses that tend to tear the domain model appart. An object may have very different properties, depending on what part of the code you are working on. So there is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
+As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. So there is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
 
 ### Unified model
 
@@ -4527,7 +4527,7 @@ Entities are unique objects. Their lifetime typically spans over most of the cod
 
 Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. Thus if you don't like the apple, replacing it with another one is the only option you have.
 
-Having value objects is extremely usefull, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the corectness of the adress in the constructor. You won't have to deal with it anywhere else.
+Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else.
 
 Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
 
@@ -4578,11 +4578,11 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 ## Exercises
 
-Take Robert Martin's bowling example and let the user programm it?
+Take Robert Martin's bowling example and let the user program it?
 
 # 36. Good code
 
-This is an attempt to distille a list of rules that allow you to judge the quality of code.
+This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
 Here are some signs for good code:
 
@@ -4632,10 +4632,10 @@ Functions asking for more information than they need. They ask for a complicated
 
 # 37. 3rd party software
 
-“Prefer visa over power shell” – some youtube video 
+“Prefer visa over power shell” – some YouTube video 
 
 // where to write about integration?
-// In the google book they write a whole chapter about the proplems on how to deal with 3rd party libraries. This really seems to be an issue.
+// In the google book they write a whole chapter about the problems on how to deal with 3rd party libraries. This really seems to be an issue.
 
 There are thousands, if not millions of companies selling parts for your software. For many problems there are also open source solutions available. This is great, but as always there is a price to pay.
 
@@ -4728,8 +4728,8 @@ As a summary one can say that circular dependencies should be avoided all togeth
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
-// see chapter 2 in google: 
-people are insecure and don't want to be critisized.
+// see chapter 2 in SWE at google: 
+people are insecure and don't want to be criticized.
 Great things are hardly ever achieved by a single person
 Most work doesn't need a genius. But all work requires a minimal amount of social skills.
 Talk to people, don't hide your work.
@@ -4749,9 +4749,9 @@ Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
 
 You will probably spend most of your career working in teams. The story of the lone programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
 
-Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parlament with a dictator. A parlament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
+Cooperating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parliament with a dictator. A parliament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
 
-At the same time scaling up software projects only works with teams where all programmers are cooporating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parlament.
+At the same time scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parliament.
 
 ## Team structure
 
@@ -4797,9 +4797,9 @@ There are probably hundreds of other rules, but these two here are the ones I kn
 
 ## Working with humans
 
-Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be critisized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to critisize each other in a constructive way.
+Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be criticized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to criticize each other in a constructive way.
 
-In order to excel, humans need psycological savety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
+In order to excel, humans need psychological safety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
 
 
 ## Working with customers
@@ -4815,7 +4815,7 @@ Also frequently customers don't know what is important. Or at least things are i
 
 // see chapter code review in SEG (software engineering at google)
 
-Code reviews are important to improve the quality of the code. This does not work without some critisism.
+Code reviews are important to improve the quality of the code. This does not work without some criticism.
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -4895,7 +4895,7 @@ In an Agile project it is important to cut the tickets as small as possible. Thi
 
 ## Planning code # move elsewhere? Rename section?
 
-A widely used tool to display interactions between objects or classes are UML diagrams. To put it up front, I don’t like them. They are a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same. Just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming sucks, it is harder to understand than code. Small UML diagrams are ok, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
+A widely used tool to display interactions between objects or classes are UML diagrams. To put it up front, I don’t like them. They are a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same. Just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming sucks, it is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
 
 One also has to consider the limitations of UML diagrams. The only represent classes and their relationships. This covers only a tiny fraction of a program. Quite frequently you have to understand the logic behind a problem where UMLs don’t help you. You need something different. Try out whatever you feel like. Some different sketch, a plot, a coffee break, a walk in the forest, … As long as it helps you understanding the problem it’s good. 
 
@@ -4945,7 +4945,7 @@ Every ticket is estimated for how much work it will take. The ticket size is qua
 
 The ticket size is estimated at the sprint planning. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the actual number of story points. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers overestimated the task.
 
-Tickets all have business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the backend code and to the GUI. Everything has to be worked on. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
+Tickets all have business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
 
 At the same time, one can write acceptance tests for every ticket. “… if the user clicks x, then the window closes.” This is also the acceptance criterion of the ticket: does the acceptance test pass?
 
@@ -5068,7 +5068,7 @@ Keep recruiting all the time. This is a difficult task as the number of proficie
 
 ## Getting hired
 
-Getting hired does not take quite as much knowhow as hiring someone. For the simple reason that you are getting invited and mostly follow the process. Yet at the same time you should always stay aware that you are an equal partner during the application procedure. If you don’t agree with something you may very well just leave the recruiting process.
+Getting hired does not take quite as much know-how as hiring someone. For the simple reason that you are getting invited and mostly follow the process. Yet at the same time you should always stay aware that you are an equal partner during the application procedure. If you don’t agree with something you may very well just leave the recruiting process.
 
 As already written above, it’s about getting to know each other. Thus, you may also ask questions. In fact, you are expected to ask questions. If you don’t know what else to ask, ask the developer what he’s exactly working at and what kind of problems they are facing. This is something to get started with.
 
