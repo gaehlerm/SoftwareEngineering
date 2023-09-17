@@ -48,9 +48,9 @@ Things to write:
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
-	- [The onion layers](#the-onion-layers)
+	- [The abstraction layers](#the-abstraction-layers)
 		- [3rd party libraries](#3rd-party-libraries)
-		- [Infrasturcture code](#infrasturcture-code)
+		- [Infrastructure code](#infrastructure-code)
 		- [The domain level](#the-domain-level)
 		- [The application level](#the-application-level)
 		- [API](#api)
@@ -219,7 +219,7 @@ Things to write:
 	- [Visitor](#visitor)
 		- [Implementation](#implementation-1)
 	- [Strategy pattern](#strategy-pattern)
-	- [Façade](#façade)
+	- [Façades](#façades)
 	- [Adapter](#adapter)
 	- [Template](#template)
 	- [Flyweight](#flyweight)
@@ -329,7 +329,11 @@ Things to write:
 		- [Conformist](#conformist)
 		- [Developer Client relationship](#developer-client-relationship)
 	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
-	- [Entities, value objects, aggregates](#entities-value-objects-aggregates)
+	- [Building blocks of DDD](#building-blocks-of-ddd)
+		- [Entities](#entities)
+		- [Value Object](#value-object)
+		- [Services](#services)
+		- [Aggregates](#aggregates)
 	- [Domain level, old text](#domain-level-old-text)
 	- [Exercises](#exercises-9)
 - [36. Good code](#36-good-code)
@@ -684,21 +688,24 @@ If there is a code pattern that everyone uses it becomes part of the programming
 
 Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
-## The onion layers
+## The abstraction layers
 
 //create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
 // where did I get these layers from? And I think I have to look at this again. Most graphics I found have the domain level in the center.
 
-In your code you will also have different levels of abstraction. These can be compared to the layers of an onion. Thus it is also called the onion architecture. The outer layer always depends on the interface of the inner layer.
+// some layers are in DDD p.70. 
 
-The innermost layer is the Domain Model. It is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your business. It doesn't know anything about the outer layers. 
+In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. A layer never depends on higher levels.
+
+The lowest layer is the infrastructure layer. It manages the access to Input/Output (IO) and wraps all kind of low level functionality. It is followed by the Domain layer. The domain layer is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your business. It doesn't know anything about the outer layers. 
 
 // TODO search images without copy right, sort the layers differently
 <div class="row">
     <img src ="images/onion_layers.webp" alt="Example onion layers of a project"width="247">
 </div> 
 
+// rewrite this text here!
 ### 3rd party libraries
 
 The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
@@ -2952,6 +2959,11 @@ a = [i for i in range(10)]
 
 // visit the youtube videos of Derek Banas, https://youtu.be/vNHpsC5ng_E
 
+// https://youtu.be/YMAwgRwjEOQ
+An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you only know roughly how it will look like.
+
+// https://refactoring.guru/design-patterns
+
 There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
 One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. // https://youtu.be/BPSuWUXyA58
@@ -2988,6 +3000,8 @@ Now you could write all the steps of the compiler, like the loop processor for e
 
 Instead one can use the visitor pattern. This allows to add functionality to an existing class. In this way, the loop processor can be written as a single class, that acts on all the different nodes.
 
+That being said, the visitor pattern is not something that is used too often. It is really just useful if you have a tree of different nodes. One could of course also implement it for a single class, but that would be missing the point.
+
 ### Implementation
 
 // not yet completed.
@@ -3000,27 +3014,58 @@ for node in nodes:
 
 class City:
     def accept(visitor):
-        visitor.do_for_city(this)
+        visitor.do_something_for_city(this)
 
 class Visitor(ABC):
-	def do_for_city(city):
+	def do_something_for_city(city):
 		pass
 
 class Tourist(Visitor):
-	def do_for_city(city):
+	def do_something_for_city(city):
 		print("visiting city")
 
 class SalesPerson(Visitor):
-	def do_for_city(city):
+	def do_something_for_city(city):
 		print("Meeting clients")
 ```
+
 
 ## Strategy pattern
 //need to add some more text
 
 The strategy pattern is basically the same as dependency injection. Once again, it’s worth to remark that the strategy pattern can be used with functions as well as classes.
 
-## Façade
+```py
+from abc import ABC
+// get a better example than animals
+class Vechicle(ABC):
+	def travel():
+		pass
+
+class Car(Vehicle):
+	def travel():
+		print("driving")
+
+class Airplane(Vehicle):
+	def travel():
+		print("flying")
+
+def create_vehicle(vehicle_type):
+	if vehicle_type == "car":
+		return Car()
+	elif vehicle_type == "airplane":
+		return Airplane()
+	else:
+		raise Exception()
+
+if __name__ == "__main__":
+	# get the vehicle type of choice
+	# vehicle_type = ...
+	vehicle = create_vehicle(vehicle_type)
+	vehicle.travel()
+```
+
+## Façades
 
 ## Adapter
 
@@ -3030,7 +3075,25 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 ## Observer
 
-//etc. ...
+```py
+class Publisher():
+	def __init__(self):
+		self._subscribers = []
+
+	def add_subscriber(self, subscriber):
+		self._subscribers.append(subscriber)
+
+	def notify_subscribers(self):
+		for subscriber in self._subscribers:
+			subscriber.notify()
+
+class Subscriber():
+	def __init__(self, name):
+		self._name = name
+
+	def notify(self):
+		print(f"subscriber {name} got notified")
+```
 
 ## Copilot
 
@@ -3130,6 +3193,25 @@ Once you start thinking about this rule, you will automatically structure your c
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
 // where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
+
+// DDD p. 61: Every technical employee working on the model also has to write code. For large projects, however, there still have to be some persons responsible for making higher level design choices.
+
+// should I eplain the different architecture types? horizontal, hexagonal, onion layers?
+
+// https://youtu.be/7ZXW_oWdTk4
+
+// the 4 layers are also called: presentation layer, application layer, business logic layer and data access layer, https://youtu.be/BrT3AO8bVQY?t=57
+when implementing a feature, you have to slice the layers vertically. Like this you break up the big layers into small blocks. It is generally recommended for comparably small apps. It should have performance issues? Seriously?
+
+Model view controller (MVC) pattern is probably the oldest one.
+
+Microservices
+
+Hexagonal architecture
+
+Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
+
+Monotliths vs. microservices, https://youtu.be/NdeTGlZ__Do?t=83
 
 ## About Architecture
 
@@ -4483,7 +4565,7 @@ Make sure that design documents make ample usage of the Ubiquitous language. If 
 
 ## Implementing a Model
 
-There are cases where you can’t implement a model you developed. It would be simply too complex. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
+There are cases where you can’t implement a model you've developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
 
 In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding and modeling until you have a breakthrough when you suddenly realize how the optimal model should look like.
 
@@ -4498,6 +4580,8 @@ As your code base grows, it becomes more and more difficult to keep working with
 The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent very early. On the other hand working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big.
 
 ### Anticorruption layer
+
+
 
 ### Separate ways
 
@@ -4519,17 +4603,44 @@ This section is named after a chapter in the book Domain-Driven Design, p.322. I
 
 However, all the time you have to stay in close contact with a domain expert. Under no circumstances you should make changes that contradict what he says.
 
-## Entities, value objects, aggregates
+## Building blocks of DDD
+
+In the book Domain-Driven Design, Eric Evans also introduced the terms of entities, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
+
+### Entities
 
 // https://youtu.be/4rhzdZIDX_k
 
-Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and typically an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. #what else to write about entities?
+Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and typically an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
+
+One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved.
+
+Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects.
+
+A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and cannot be explained in this book.
+
+When creating an entity it is important to stripe it down to the absolutely essential properties. # Does the email address belong into the entity or only inside an aggregate?
+
+### Value Object
 
 Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. Thus if you don't like the apple, replacing it with another one is the only option you have.
 
-Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else.
+Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, for example a price. A price is set in its constructor and cannot be changed anymore. Furthermore the constructor can ensure that the price is valid. Similar things can be done i.e. for making email address its own type, rather than using plain strings.
 
 Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
+
+### Services
+
+Services are used for operations on value objects or entities. A good service has 3 properties //Quote DDD p. 105:
+- The operation does not naturally fit into an entity or a value object.
+- The interface of the service is defined in terms of the domain model.
+- The service does not have any internal state that can change over time.
+
+A service is an operation on the domain model. Its name is part of the Ubiquitous language. Services are generally represented by functions.
+
+While entities and value objects are generally too fine grained to be reused, services are medium grained and thus appropriate for reuse.
+
+### Aggregates
 
 Aggregates are a combination of several other objects. They typically consist of some entities and value objects. For example a car consists of an engine, a chassis and wheels. Let's say that the wheels wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. 
 // Ddd p.150?
@@ -5265,6 +5376,9 @@ Software Engineering at google (Winters et al.)
 Cheat sheet bbv, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
 
 google style guide, https://google.github.io/styleguide/
+
+And several youtube channels,
+@alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim
 
 # 49. Outlook
 
