@@ -95,7 +95,6 @@ Things to write:
 		- [Worker classes](#worker-classes)
 		- [Delegating classes](#delegating-classes)
 		- [Other points of consideration](#other-points-of-consideration)
-	- [Lose and strong coupling](#lose-and-strong-coupling)
 		- [Coupling and Cohesion](#coupling-and-cohesion)
 		- [Worker classes](#worker-classes-1)
 		- [Other class types](#other-class-types)
@@ -318,6 +317,17 @@ Things to write:
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
 	- [Exercises](#exercises-8)
+- [Software Engineering principles](#software-engineering-principles)
+	- [Divide and Conquer](#divide-and-conquer)
+	- [Increase Cohesion](#increase-cohesion)
+	- [Reduce coupling](#reduce-coupling)
+	- [Increase abstraction](#increase-abstraction)
+	- [Increase reusability](#increase-reusability)
+	- [Design for flexibility](#design-for-flexibility)
+	- [Anticipate Obsolesence](#anticipate-obsolesence)
+	- [Design for Portability](#design-for-portability)
+	- [Design for Testability](#design-for-testability)
+	- [Design Defensively](#design-defensively)
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [The Domain Model](#the-domain-model)
@@ -335,7 +345,6 @@ Things to write:
 		- [Services](#services)
 		- [Aggregates](#aggregates)
 	- [Domain level, old text](#domain-level-old-text)
-	- [Exercises](#exercises-9)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
 - [38. Dependencies](#38-dependencies)
@@ -408,7 +417,7 @@ I'm not god and this is not the holy bible. This book tries to help you with you
 
 This book is only a step in your career. Now you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 
-Enjoy my book and good luck with your career.
+Enjoy this book and good luck with your career.
 
 # 4. Introduction
 
@@ -436,15 +445,7 @@ Let me start with a very blunt question: What do you think does a software engin
 
 Indeed, these answers contain some truth. But writing code covers only a tiny fraction of your future working day. One thing you will do is the same as we do right now: you analyze a problem and try to figure out what to do next. 
 
-Your boss will not let you write code for a month just for the sake of writing code. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
-
-The first rule of software engineering
-
-**We write code in order to create value for our customers.**
-
-If you don’t like meetings nor customers you can stay at home and write whatever code you like. But unless you are a genius, chances are very low anyone will pay you for that. It is more rewarding to write mediocre code that’s being used rather than writing brilliant code no one cares about.
-
-Besides the meetings, you will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up code or discussing things with your colleagues. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
+You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up code or discussing things with your colleagues. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
 
 <img src=images/programmerActivity.png width="400">
 
@@ -452,11 +453,11 @@ You certainly have to look twice to grasp the meaning of this plot. You will spe
 
 The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It’s about reading code! If you can reduce the time required to read code by half you save more time than you spend writing code in total. By a lot. 
 
-The second rule of software engineering:
+The first rule of software engineering:
 
 **We write code that is easy to understand.**
 
-Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching Donald Trump... Knowing only 1000 different words is great if you are a politician. Everyone understands him. Even as people are tired, they like watching him on TV. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes it easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
+Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired, they like listening to you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
 
 Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks some programming languages offer.
 
@@ -468,23 +469,30 @@ Urm... let me rephrase that as well...
 
 Unlike politicians, we have honor. We don’t want to be responsible for people to die. We want to write code that is impeccable. We want to be absolutely certain that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
 
-The third rule of software engineering
+The second rule of software engineering
 
 **We write automated tests that cover all our code.**
 
 Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. The importance of refactoring cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide.
 
-The fourth rule of software engineering
+The third rule of software engineering
 
 **We constantly clean up our code.**
 
 Now you know what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to half an hour ago. I can explain to you the fundamental principles how to write good code.
 
+You might be already working in a company, or at least you soon will be. Your boss is not going to let you write code for a month just for the sake of writing code. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
+
+The fourth rule of software engineering
+
+**We write code in order to create value for our customers.**
+
+If you don’t like meetings nor customers you can stay at home and write whatever code you like. But unless you are a genius, chances are very low anyone will pay you for that. It is more rewarding to write mediocre code that’s being used rather than writing brilliant code no one cares about.
+
 These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
 
-// The fundamentals
 
 ## About this book
 // move to preface?
@@ -1345,8 +1353,6 @@ I hope I managed to convince you not to write bare getter and setter functions t
 One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a plain variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. 
 
 Generally I don't regard this reason as sufficient to write setter and getter functions. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters in structs and work with the plain variable.
-
-## Lose and strong coupling
 
 
 ### Coupling and Cohesion
@@ -3209,6 +3215,8 @@ Microservices
 
 Hexagonal architecture
 
+Layered architecture
+
 Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
 
 Monotliths vs. microservices, https://youtu.be/NdeTGlZ__Do?t=83
@@ -4532,6 +4540,32 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 
 Get acquainted with Git and some other tools mentioned here.
 
+# Software Engineering principles
+
+// https://youtu.be/XQzEo1qag4A
+
+## Divide and Conquer
+
+## Increase Cohesion
+// physical law of code?
+
+## Reduce coupling
+
+## Increase abstraction
+
+## Increase reusability
+
+## Design for flexibility
+
+## Anticipate Obsolesence
+
+## Design for Portability
+
+## Design for Testability
+
+## Design Defensively
+
+
 # 35. Domain Driven Design
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
@@ -4642,14 +4676,53 @@ While entities and value objects are generally too fine grained to be reused, se
 
 ### Aggregates
 
-Aggregates are a combination of several other objects. They typically consist of some entities and value objects. For example a car consists of an engine, a chassis and wheels. Let's say that the wheels wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. 
-// Ddd p.150?
+Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model. There no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires.
+// Ddd p.127?
+
+```py
+class Car():
+	def __init__(self):
+		self.ID = "123" # some unique id
+		self._engine = Engine()
+		self._chassis = Chassis()
+		self._tires = [Tire() for _ in range(4)]
+
+	def drive(self, distance):
+		for tire in self._tires:
+			if tire.distance_remaining < distance:
+				tire = Tire()
+			tire.drive(distance)
+
+class Engine():
+	pass
+
+class Chassis():
+	pass
+
+class Tire():
+	def __init__(self):
+		self.distance_remaining = 1000
+
+	def drive(self, distance):
+		self.distance_remaining -= distance
+```
+
+The class `Car` might have the following invariants. It needs:
+- a unique identifier
+- 1 chassis
+- 1 engine
+- 4 tires
+These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires after the replacement.
 
 An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a subdomain of your code.
 
+As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
+
+Aggregate instances are frequently created by a factory or another of the creational design patterns. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex then it is a noteworthy task and should be dealt with in a dedicated object. Furthermore the factory can also take care of invariants of the class instance at its creation.
+
 ## Domain level, old text
 
-#get some more from the DDD book? It feels incomplete.
+// get some more from the DDD book? It feels incomplete.
 The Domain Level is an expression used by Eric Evans in his book Domain-Driven Design. The Domain Level and especially the Domain Core are the heart of the software. It represents the central part of your code. That part that you actually make money with. It may be fairly small, yet it covers much of the overall complexity of your code. The complexity of the business it represents. Frequently, the domain level is unique, you cannot buy this part of the software anywhere else. You have to develop it yourself for your business. Exactly this makes it so special and valuable.
 
 While the UI and all the infrastructure code are usually fairly generic, the domain level consists of highly specialized code. Both, from the complexity and from the business rules point of view. It thus requires the best and most experienced programmers to implement and improve the domain level. This is an apparent contradiction to the rule that any programmer should be able to implement any open ticket around. Apparently, this means that extra care has to be taken with the team. The domain level developers have to stay and work on the domain level and not wander off, dealing with some database nuisances.
@@ -4685,11 +4758,7 @@ See DDD p.205
 
 Explicit logic is much easier to understand than implicit logic. The logic is usually only implicitly known, but the logic in the code has to be explicit.
 
-#write some examples here?
-
-## Exercises
-
-Take Robert Martin's bowling example and let the user program it?
+// write some examples here?
 
 # 36. Good code
 
