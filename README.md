@@ -4,6 +4,8 @@ Copyright Marco Gähler, all rights reserved.
 
 Please give me feedback on the book. Either as a merge request or by email, marco.gaehler@gmx.ch
 
+If you prefer to have the book as a pdf, let me know. I can send it to you.
+
 This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
 
 The first half of the books seems more or less OK, the second half needs some serious reworking.
@@ -67,6 +69,8 @@ Things to write:
 	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
+		- [Levels of indentation](#levels-of-indentation)
+		- [Naming](#naming-1)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
 		- [Copilot](#copilot-1)
@@ -331,7 +335,7 @@ Things to write:
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [The Domain Model](#the-domain-model)
-	- [Implementing a Model](#implementing-a-model)
+		- [Implementing a Model](#implementing-a-model)
 	- [Domain boundaries](#domain-boundaries)
 		- [Unified model](#unified-model)
 		- [Anticorruption layer](#anticorruption-layer)
@@ -344,6 +348,7 @@ Things to write:
 		- [Value Object](#value-object)
 		- [Services](#services)
 		- [Aggregates](#aggregates)
+		- [Organizing aggregates](#organizing-aggregates)
 	- [Domain level, old text](#domain-level-old-text)
 - [36. Good code](#36-good-code)
 - [37. 3rd party software](#37-3rd-party-software)
@@ -708,12 +713,6 @@ In your code you will also have different levels of abstraction. The upper level
 
 The lowest layer is the infrastructure layer. It manages the access to Input/Output (IO) and wraps all kind of low level functionality. It is followed by the Domain layer. The domain layer is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your business. It doesn't know anything about the outer layers. 
 
-// TODO search images without copy right, sort the layers differently
-<div class="row">
-    <img src ="images/onion_layers.webp" alt="Example onion layers of a project"width="247">
-</div> 
-
-// rewrite this text here!
 ### 3rd party libraries
 
 The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
@@ -864,7 +863,58 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 ## Do one thing only
 
+### Levels of indentation
+
 Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (preferably less than ten lines) and have as few levels of indentation as possible. Having nested if/else, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
+
+A frequent problem are deeply nested `if/else` clauses.
+
+```py
+# https://youtu.be/rHRbBXWT3Kc
+button = input("")
+if button != "":
+	if not is_sprinting():
+		if not is_blocking():
+			attack()
+		else:
+			print("Cannot attack while blocking")
+	else:
+		print("Cannot attack while sprinting")
+```
+
+This code is very hard to understand. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
+
+```py
+button = input("")
+if button == "":
+	return
+if not is_sprinting():
+	if not is_blocking():
+		attack()
+	else:
+		print("Cannot attack while blocking")
+else:
+	print("Cannot attack while sprinting")
+```
+
+We can return this technique also for the other `if` clauses. The resulting code will look as follows:
+
+```py
+button = input("")
+if button == "":
+	return
+if is_sprinting():
+	print("Cannot attack while sprinting")
+	return
+if is_blocking():
+	print("Cannot attack while blocking")
+	return
+attack()
+```
+
+With this technique, the code became much easier to read.
+
+### Naming
 
 Naming becomes comparably easy if you follow these rules. The function body is one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
 
@@ -3271,7 +3321,7 @@ Interestingly, all the explanations made here about coupling and cohesion are al
 # 23. Solid principles 
 // Source: https://youtu.be/pTB30aXS77U, https://youtu.be/9ch7tZN4jeI and Clean Architecture
 
-The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write code. These are:
+The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
 1.	Single Responsibility Principle (SRP)
 2.	Open closed principle
 3.	Liskov substitution principle
@@ -3280,7 +3330,7 @@ The solid principles were named by Robert C. Martin. SOLID is named after 5 gene
 
 These 5 very general rules describe mostly how classes should be structured and connected with each other. Obeying them helps a lot with the design of the code. Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly.
 
-These principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but there are ways around them.
+In my opinion, these principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but there are ways around them.
 
 ## Single Responsibility Principle
 
@@ -3326,20 +3376,21 @@ class Bern(City):
 	def postal_code(self):
 		return 3000
 
-zurich = Zurich()
-bern = Bern()
-
-cities = [zurich, bern]
+cities = [Zurich(), Bern()]
 
 for city in cities:
-	print(city.postal_code)
+	print(city.postal_code())
 ```
 
 Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
 
+The example mentioned here is the classical example for the OCP. It is the strategy pattern. However, you might also use the decorator pattern which fulfills the OCP as well.
+
 ## Liskov Substitution Principle
 
 // see https://youtu.be/pTB30aXS77U
+
+"If it looks like a duck, it quacks like a duck, and it needs batteries, you probably have the wrong abstraction." - the internet
 
 Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
 
@@ -4572,7 +4623,6 @@ Get acquainted with Git and some other tools mentioned here.
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
 
-
 ## Ubiquitous Language
 
 There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
@@ -4597,13 +4647,13 @@ Though documentation has its merits. Code is often too detailed to really explai
 
 Make sure that design documents make ample usage of the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitious language, it is not useful. It doesn't help explaining what you are trying to implement.
 
-## Implementing a Model
+### Implementing a Model
 
 There are cases where you can’t implement a model you've developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
 
-In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding and modeling until you have a breakthrough when you suddenly realize how the optimal model should look like.
+In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding, modeling and refactoring until you have a breakthrough when you suddenly realize how the optimal model should look like.
 
-Decouple the domain-model code from your other code. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things.
+Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
 
 ## Domain boundaries
 
@@ -4719,6 +4769,12 @@ An aggregate also acts as a transactional boundary. Or as we called it in the se
 As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
 
 Aggregate instances are frequently created by a factory or another of the creational design patterns. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex then it is a noteworthy task and should be dealt with in a dedicated object. Furthermore the factory can also take care of invariants of the class instance at its creation.
+
+### Organizing aggregates
+
+// see graphic p. 181, DDD
+
+Is there some general rule how to organize the aggregates? Or just throw all the pieces on the table and see how they fit toegther?
 
 ## Domain level, old text
 
