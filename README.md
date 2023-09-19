@@ -218,15 +218,28 @@ Things to write:
 	- [Conclusions](#conclusions-2)
 	- [Copilot](#copilot-9)
 - [19. Design patterns](#19-design-patterns)
+	- [Creational Patterns](#creational-patterns)
+		- [Factory](#factory)
+		- [Builder](#builder)
+	- [Structural Patterns](#structural-patterns)
+		- [Adapter](#adapter)
+		- [Bridge](#bridge)
+		- [Composite](#composite)
+		- [Decorator](#decorator)
+		- [Facade](#facade)
+	- [Behavioral Patterns](#behavioral-patterns)
+		- [Observer](#observer)
+		- [Strategy](#strategy)
+		- [Visitor](#visitor)
+	- [Old text](#old-text)
 	- [Factories](#factories)
-	- [Visitor](#visitor)
-		- [Implementation](#implementation-1)
+	- [Visitor](#visitor-1)
 	- [Strategy pattern](#strategy-pattern)
 	- [Façades](#façades)
-	- [Adapter](#adapter)
+	- [Adapter](#adapter-1)
 	- [Template](#template)
 	- [Flyweight](#flyweight)
-	- [Observer](#observer)
+	- [Observer](#observer-1)
 	- [Copilot](#copilot-10)
 - [20. Decoupling](#20-decoupling)
 	- [Exercises](#exercises-4)
@@ -389,7 +402,7 @@ Things to write:
 - [47. Examples](#47-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
-		- [Implementation](#implementation-2)
+		- [Implementation](#implementation-1)
 	- [Paint](#paint)
 - [More Copilot](#more-copilot)
 - [48. Further reading](#48-further-reading)
@@ -865,7 +878,7 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 ### Levels of indentation
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (preferably less than ten lines) and have as few levels of indentation as possible. Having nested if/else, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
+Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (preferably less than ten lines) and have as few levels of indentation as possible. Having nested `if/else`, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
 A frequent problem are deeply nested `if/else` clauses.
 
@@ -873,13 +886,13 @@ A frequent problem are deeply nested `if/else` clauses.
 # https://youtu.be/rHRbBXWT3Kc
 button = input("")
 if button != "":
-	if not is_sprinting():
-		if not is_blocking():
-			attack()
+	if not is_sleeping():
+		if not is_eating():
+			fight()
 		else:
-			print("Cannot attack while blocking")
+			print("Cannot fight while eating")
 	else:
-		print("Cannot attack while sprinting")
+		print("Cannot fight while sleeping")
 ```
 
 This code is very hard to understand. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
@@ -888,13 +901,13 @@ This code is very hard to understand. And as I wrote before, it has too many lev
 button = input("")
 if button == "":
 	return
-if not is_sprinting():
-	if not is_blocking():
+if not is_sleeping():
+	if not is_eating():
 		attack()
 	else:
-		print("Cannot attack while blocking")
+		print("Cannot fight while eating")
 else:
-	print("Cannot attack while sprinting")
+	print("Cannot fight while sleeping")
 ```
 
 We can return this technique also for the other `if` clauses. The resulting code will look as follows:
@@ -903,16 +916,30 @@ We can return this technique also for the other `if` clauses. The resulting code
 button = input("")
 if button == "":
 	return
-if is_sprinting():
-	print("Cannot attack while sprinting")
+if is_sleeping():
+	print("Cannot fight while sleeping")
 	return
-if is_blocking():
-	print("Cannot attack while blocking")
+if is_eating():
+	print("Cannot fight while eating")
 	return
 attack()
 ```
 
-With this technique, the code became much easier to read.
+With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depinding on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
+
+```py
+def can_fight(button):
+	if button == "":
+		return false
+	if is_sleeping():
+		print("Cannot fight while sleeping")
+		return false
+	if is_eating():
+		print("Cannot fight while eating")
+		return false
+	return true
+```
+Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frquently no perfect solution, but at least we can improve it compared to the initial code.
 
 ### Naming
 
@@ -1279,13 +1306,17 @@ This is just one example how one can deal with const objects. One always has to 
 
 // This text here is redundant (where? output arguments?), tough I quite like it. What to do…?
 
+// having a function has the advantage that there are probably no side effects
+
 There are two ways to change the value of an object by a function. Either pass a mutable object as an output argument or the object is a class instance and the function a method acting on it. The two cases look like this:
 
 ```py
 a.b() vs. b(a)
 ```
 
-In both cases, this might change the value of a. However, there are some differences. `b(a)` can access only the public variables and functions of a. If a has a public variable c, then we can write `b(a.c)`, which makes even more clear what part of a is to be changed. While in `a.b()` there is no way telling which variables in `a` are going to be changed by `b`. You can only hope the author did well obey the SRP and give `b()` a more meaningful name that allows to understand easily which variables of a are going to be changed. Or `a` has to be a struct, such that the method is called by `a.c.b()`. 
+In both cases, this might change the value of a. However, there are some differences. In `b(a)` it is generally assumed that `a` is not going to be changed. And if, it may be stated so explicitly in some programming languages as C++. Thus we can assume that `b(a)` has no side effects, unless the name of `b` states otherwise. 
+
+`b(a)` can access only the public variables and functions of a. If a has a public variable `c`, then we can write `b(a.c)`, which makes even more clear what part of a is to be changed. While in `a.b()` there is no way telling which variables in `a` are going to be changed by `b`. You can only hope the author did well obey the SRP and give `b()` a more meaningful name that allows to understand easily which variables of a are going to be changed. Or `a` has to be a struct, such that the method is called by `a.c.b()`. 
 
 From the code point of view, both functions do roughly the same and there is no clear advantage for one or the other. However the class method call, `a.b()` is frequently more readable than `b(a)` as we'll see in a second. Simply because of the way our natural language is structured.
 
@@ -2076,7 +2107,7 @@ E2E tests are the least common. They are very valuable to check that a program r
 
 // https://www.testim.io/blog/test-automation-benefits/
 
-Tests are not only important to write correct code. They are equally important to improve the code you write.
+Tests are not only important to write correct code. They are equally important to improve the code you write. At least if you embrace them and you are not just testing for the sake of it.
 
 ## Unit tests 
 
@@ -2465,6 +2496,8 @@ Waterfall refactoring is bound to fail just as most waterfall projects are. Refa
 You have to face the facts. Waterfall refactoring is not working out. Instead you have to follow the actual dynamics of making changes, learning more about your code and adapting your future changes. These three steps are the only way how refactoring is done. 
 
 // Make circle graphic: changes to be made, make changes, more changes to be made
+
+A refactoring certainly has the highest impact if you have some new understanding of the problem you try to solve. This allows you to rewrite a complete piece of code at once and make significant progress with your code quality.
 
 ### The circle of doom
 
@@ -3011,44 +3044,191 @@ a = [i for i in range(10)]
 
 # 19. Design patterns
 
+"An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, https://youtu.be/YMAwgRwjEOQ
+
 // not sure yet what I should write about design patterns.
 
 // visit the youtube videos of Derek Banas, https://youtu.be/vNHpsC5ng_E
-
-// https://youtu.be/YMAwgRwjEOQ
-An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you only know roughly how it will look like.
 
 // https://refactoring.guru/design-patterns
 
 There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
-One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. // https://youtu.be/BPSuWUXyA58
+One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. // https://youtu.be/BPSuWUXyA58 // Making things more abstract may be useful at times, but it complicates the code unnecessarily.
 
-## Factories
+I tried to keep the descriptions and the code examples to the point to teach you only the basic idea of each design pattern. I'm not writing any UML diagramms, but show you a complete code example instead. If you don't understand one of the patterns, play around with the code, watch some youtube video or get one of the more extensive books on design patterns.
 
-// Don't write code like this. The car calls the factory to create a part of the car. Instead you should call the engine and build up the car from it.
+## Creational Patterns
+
+Creational patterns abstract the creation of class objects. Each creational pattern has its own advantages when it comes to changing the object created.
+
+### Factory
 
 A factory is used if the construction of an object becomes too complex to handle in a constructor. Instead you want to have a dedicated object or function to take care of it's construction.
 
+Let's say you want to create a car. But it is very complicated to create the car. Depending on the brand and the model you have to choose an engine, an AC and a whole lot of other parts. This leads to a very bloated constructor and many `if/else` clauses.
 ```py
 class Car():
 	def __init__(self, brand, model, has_AC):
 		if brand == "mycar" and model == "123":
 			self.engine = # ...
+		if # ...
+```
 
 
+```py
 class CarFactory():
 	def create_car(self, brand, model, has_AC):
 		self.engine = self.create_engine(brand, model)
 		self.AC = self.create_AC(has_AC)
-		
+		# ...
+		return Car(self.engine, self.AC)	
 ```
 
-// when to really use a factory? Polymorphism? when an object becomes too complex to create it by the constructor
+Here is the "classical" factory. Depending on some input, it return a polymorphic object.
+```py
+class Dog():
+    def make_noise(self):
+        print("bark")
+
+class Cat():
+    def make_noise(self):
+        print("meow")
+
+class Fish():
+    def make_noise(self):
+        print("blubb")
+
+class AnimalFactory():
+    def create_animal(self):
+        char = input("create an animal: D = dog, C = cat, F = fish\n")
+        if char == "D":
+            return Dog()
+        elif char == "C":
+            return Cat()
+        elif char == "F":
+            return Fish()
+        else:
+            raise Exception("Invalid character")
+        
+animal = AnimalFactory().create_animal()
+animal.make_noise()
+```
 
 There are different kind of factories. These are objects that create other objects. It makes sense to set up a factory if the output object is fairly complex. Setting up such an object within the constructor would clutter the class. It wouldn’t obey the single responsibility theorem anymore. I would like to highlight as well that a factory does not have to be a class. It can be a simple function as well.
 
-## Visitor
+
+### Builder
+
+## Structural Patterns
+
+Structural patterns are building blocks of your code. They allow you to taylor the functionality of your code to your needs.
+
+### Adapter
+
+The adapter is used if one object supports similiar functionality than another one, but it doesn't support the same interface. Then you can write an adapter which wrapps the existing object into a new one that supports the same interface. In this case here the `Mech` object does not support the generic interface of the `Tank`. So we have to write a wrapper around the `Mech`, the `MechAdapter`. Then both objects support the same interface as shown at the end of the code.
+
+It may be important to note that the constructor of the adapter takes a `Mech` instance as a function argument and stores it as a member variable.
+
+```py
+class Tank():
+    def drive(self, distance):
+        print(f"Driving {distance}km.")
+    
+    def attack(self):
+        print("firing cannon")
+
+class Mech():
+    def walk(self, distance):
+        print(f"Walking {distance}km.")
+
+    def smash(self):
+        print("Smashing with his arms.")
+
+class MechAdapter():
+    def __init__(self, mech) -> None:
+        self._mech = mech
+
+    def drive(self, distance):
+        self._mech.walk(distance)
+
+    def attack(self):
+        self._mech.smash()
+
+units = [Tank(), MechAdapter(Mech())]
+
+for unit in units:
+    unit.drive(50)
+    unit.attack()
+```
+
+### Bridge
+
+### Composite
+
+### Decorator
+
+You open up a burger restaurant and you want to give the clients full controll over what kind of ingredients they want to have in their burgers. If you create all the possibilities by yourself, you end up with `2^n` different burgers, where `n` is the number of possible ingredients. This is clearly not feasible. Instead you want the users to choose the ingredients themselfes.
+
+Now one way to do this is the decorator pattern. The user gets a bun and he can decorate it with any of the `n` different ingredients.
+
+It has to be noticed that every decorator takes a `Burger` object as an argument for the decorator and is itself a `Burger` object as well. This allows the decotrators to be chained. Only the Bread does not need a `Burger` object as an argument for the constructor as it is the innermost argument of the decorator chain.
+
+```py
+from abc import ABC, abstractmethod
+
+class Burger(ABC):
+    @abstractmethod
+    def description():
+        pass
+
+    @abstractmethod
+    def price():
+        pass
+
+class Bread(Burger):
+    def description(self):    
+        return "Thin dough"
+
+    def price(self):
+        return 3.00
+
+class Meat(Burger):
+    def __init__(self, burger) -> None:
+        self.burger = burger
+
+    def description(self):
+        return self.burger.description() + ", Mozzarella"
+    
+    def price(self):
+        return self.burger.price() + 2.50
+
+class Ketchup(Burger):
+    def __init__(self, burger) -> None:
+        self.burger = burger
+
+    def description(self):
+        return self.burger.description() + ", Ketchup"
+
+    def price(self):
+        return self.burger.price() + 1.00
+
+basic_burger = Ketchup(Meat(Bread()))
+print(basic_burger.price())
+print(basic_burger.description())
+```
+
+### Facade
+
+## Behavioral Patterns
+
+Behavioral patterns are supporting algorithms with their functionality.
+
+### Observer
+
+### Strategy
+
+### Visitor
 
 Let's say you write a compiler and you have an Abstract Syntax Tree (AST). This tree represents the code that is to be compiled. Each node in the tree is of a certain kind. For example + is converted into an "add" node having two children.
 
@@ -3058,10 +3238,7 @@ Instead one can use the visitor pattern. This allows to add functionality to an 
 
 That being said, the visitor pattern is not something that is used too often. It is really just useful if you have a tree of different nodes. One could of course also implement it for a single class, but that would be missing the point.
 
-### Implementation
-
-// not yet completed.
-
+// Is this code here correct??? I don't think so.
 ```py
 from abc import ABC
 
@@ -3084,6 +3261,15 @@ class SalesPerson(Visitor):
 	def do_something_for_city(city):
 		print("Meeting clients")
 ```
+
+
+
+
+## Old text
+
+## Factories
+
+## Visitor
 
 
 ## Strategy pattern
@@ -3954,6 +4140,7 @@ Here are some rules to follow when naming things:
 12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
+15. Classes and operations should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the Ubiquitous language.
 
 ## Copilot
 
@@ -4627,7 +4814,7 @@ This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD).
 
 There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
 
-Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier and better ways to express what you want to say. Use the insight gained this way to improve the domain-model.
+Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier and better ways to express what you want to say. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
 
 ## The Domain Model
 
