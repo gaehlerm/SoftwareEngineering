@@ -348,14 +348,19 @@ Things to write:
 - [35. Domain Driven Design](#35-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [The Domain Model](#the-domain-model)
+		- [Documentation and planning](#documentation-and-planning)
 		- [Implementing a Model](#implementing-a-model)
+		- [Domain Levels](#domain-levels)
+	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Domain boundaries](#domain-boundaries)
+		- [Bounded Context](#bounded-context)
 		- [Unified model](#unified-model)
+		- [Context map](#context-map)
+		- [Shared kernel](#shared-kernel)
 		- [Anticorruption layer](#anticorruption-layer)
 		- [Separate ways](#separate-ways)
 		- [Conformist](#conformist)
 		- [Developer Client relationship](#developer-client-relationship)
-	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
 	- [Building blocks of DDD](#building-blocks-of-ddd)
 		- [Entities](#entities)
 		- [Value Object](#value-object)
@@ -419,13 +424,13 @@ Three years later I took a course on computational physics. There I had to write
 
 After my studies I wanted to improve my programming skills and bout the book “Effective modern C++” by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
 
-Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I fought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them. I got the job.
+Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them thanks to the books I read. I got the job.
 
 In the beginning a struggled a little. I was overwhelmed by the amount of code, I didn’t know what IDE to use and the make build I used was flawed. You name it. Still, I good some very good feedback by my boss. A few months later I had my first big feature implemented. It also had automated tests and the code was much cleaner than comparable features. Another month later I implemented my second feature. Everyone in the company expected this to be very difficult, but I found a neat way to implement it.
 
 My boss wrote most of the code and the success of the company was based to a fair amount on his efforts. He knew everything, but I hardly ever understood what he was talking about. It was all too difficult. 
 
-Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He made a gigantic merge request and made the comment “I fell into a shit hole”. He opened my eyes. He made me realize the way he works was so much better. So much more structured. This was engineering. Software engineering.
+Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the comment “I fell into a shit hole”. He opened my eyes. He made me realize the way he works was so much better. So much more structured. This was engineering. Software engineering.
 
 There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. This book is what this book is about. No fancy code. But fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by all the possibilities a programmer has. It also contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other engineering jobs. Therefore, a car or a computer are frequently better examples than some fancy code you struggle understanding.
 
@@ -3052,9 +3057,9 @@ a = [i for i in range(10)]
 
 // https://refactoring.guru/design-patterns
 
-There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, but as with many books on OO programming, it turns out to be slightly outdated. Here I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
+There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, though it is a bit theoretical. In this chapter, I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
-One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. // https://youtu.be/BPSuWUXyA58 // Making things more abstract may be useful at times, but it complicates the code unnecessarily.
+One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. [https://youtu.be/BPSuWUXyA58] Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
 
 I tried to keep the descriptions and the code examples to the point to teach you only the basic idea of each design pattern. I'm not writing any UML diagramms, but show you a complete code example instead. If you don't understand one of the patterns, play around with the code, watch some youtube video or get one of the more extensive books on design patterns.
 
@@ -3075,7 +3080,7 @@ class Car():
 		if # ...
 ```
 
-
+// this is not the classical factory. though from the description it would fit.
 ```py
 class CarFactory():
 	def create_car(self, brand, model, has_AC):
@@ -3117,8 +3122,44 @@ animal.make_noise()
 
 There are different kind of factories. These are objects that create other objects. It makes sense to set up a factory if the output object is fairly complex. Setting up such an object within the constructor would clutter the class. It wouldn’t obey the single responsibility theorem anymore. I would like to highlight as well that a factory does not have to be a class. It can be a simple function as well.
 
-
 ### Builder
+
+The builder pattern is generally used if you want to construct something that consists of many parts that you have to assemble.
+
+```py
+class House():
+    def set_roof(self, roof):
+        self.roof = roof
+
+    def get_roof(self):
+        return self.roof
+
+# why old???
+class OldHouseBuilder():
+    def __init__(self) -> None:
+        self.house = House()
+
+    def build_roof(self):
+        self.house.set_roof("Copper roof")
+
+    def get_house(self):
+        return self.house
+    
+class HouseEngineer():
+    def __init__(self, house_builder) -> None:
+        self.house_builder = house_builder
+
+    def get_house(self):
+        return self.house_builder.get_house()
+    
+    def make_house(self):
+        self.house_builder.build_roof()
+
+houseEngineer = HouseEngineer(OldHouseBuilder())
+houseEngineer.make_house()
+my_home = houseEngineer.get_house()
+print("Roof Type: " + my_home.get_roof())
+```
 
 ## Structural Patterns
 
@@ -3429,6 +3470,10 @@ Once you start thinking about this rule, you will automatically structure your c
 
 
 # 22. Software Architecture
+
+Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+
+"Architecture is the important stuff - whatever that is." - Ralph Johnson
 
 "The perfect kind of architecture decision is the one which never has to be made" ― Robert C. Martin
 
@@ -4018,7 +4063,7 @@ On the other hand, the second solution may be a performance bottle neck as it ne
 
 ## Member variables
 
-Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no side unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
+Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
 
 Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. This is one reason why classes have to be small. 
 
@@ -4808,19 +4853,25 @@ Get acquainted with Git and some other tools mentioned here.
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
 
-This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
+This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
 
 ## Ubiquitous Language
 
-There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. It takes a lot of effort to understand the topic well enough to be able to implement it reasonably well. Especially it takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their model is built up. It is of utmost importance that the development teams learns the language used by the domain experts use among each other. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
+There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
 
-Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learn to speak a natural language. Find easier and better ways to express what you want to say. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
+It takes a lot of effort to understand the topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
+
+Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
 
 ## The Domain Model
+
+A model is a simplification of something real. A computer game for instance is always a model. Interesstingly enough, a computer game does not necessarily become better if the model is more accurate. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
 
 When writing code, we implement a model of the reality. One that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
 
 The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
+
+### Documentation and planning
 
 First, it supports only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows the temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
 
@@ -4842,27 +4893,15 @@ In reality, finding this optimal model is a really hard process. Most likely you
 
 Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
 
-## Domain boundaries
+### Domain Levels
 
-As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. So there is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
+Not every part of the software can be treated with equal priority. You'll have to prioritize what is important. There will be different domains in your project. For example the core domain. It is a first class citizen of the domains and has to be treated as such. The core domain is the most important domain of your project. The core domain is what your company makes money with. It is unique and has to be treated with special care. Try to keep it slim, only the most important things belong into the core domain. Your most experienced developers should be working on this topic.
 
-### Unified model
+Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. Keeping the other domains and the core domain appart is important as it prevents you from writing a Big Ball of Mud.
 
-The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent very early. On the other hand working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big.
+Each domain corresponds to a piece of code, for example a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise there doesn't have to be that much resemblances between the different domains. For example the ubiquitous language does not have to be the same between different models. Rather the opposite. The ubiquitous language is expected to change between different models and at the interface there is an adapter that functions as a translator between the different languages.
 
-### Anticorruption layer
-
-
-
-### Separate ways
-
-Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal.
-
-### Conformist
-
-### Developer Client relationship
-
-The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (developer) is willing to cooperate (for financial or political reasons), the two teams can go into a developer client relationship where the downstream team (client) can order features that the upstream team will implement. 
+As one example a flight may be the time between take off and landing. But there may be also direct flights or flights with stop overs. This is an example where one expression may have different meanings, depending on what kind of model you are working in. Therefore it is always important to keep in mind what kind of domain model you are currently working in, what kind of flight you are talking about.
 
 ## Refactoring toward deeper insight
 
@@ -4874,7 +4913,50 @@ This section is named after a chapter in the book Domain-Driven Design, p.322. I
 
 However, all the time you have to stay in close contact with a domain expert. Under no circumstances you should make changes that contradict what he says.
 
+Deep domain models cannot be planned in a waterfall manner. They have to evolve over time. They only emerge from deeper insight that is gained over time. It has to be refactored toward deeper insight.
+
+## Domain boundaries
+
+As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. For example a `user` has different properties in the payment domain than in the GUI domain. There is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
+
+### Bounded Context
+
+A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is an interface. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the `Math` library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context.
+
+Typically domain models consists of one or many bounded contexts. All the problems mentioned so far for the models are true for the bounded contexts as well. 
+
+### Unified model
+
+The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is continuous integration. This forces the team to merge often and early and therefore differences between the model and the actual code become apparent early. The automated tests enforce the behavior of the model and warn the developers if they are inadvertedly changing it. 
+
+On the other hand working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprice scale software it is simply not possible to work in a single model. The different requirements to the code become too big.
+
+### Context map
+
+A context map is important when a model is split up in two parts. Both parts are now bounded contexts. They are individual domain models with a clearly defined boundary. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one inteface the other one.
+
+### Shared kernel
+
+Two bounded contexts may share a common sub-context. This is usually the domain core that is used by several different domain models. Having a shared domain core means that all involved models have to pay attention that the domain core is always in sync. This can be done by the CI. Additionally it takes quite some communication between the teams or else the core domain may get fragmented.
+
+The models involved with a shared context may be seen as 
+
+### Anticorruption layer
+
+### Separate ways
+
+Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal.
+
+### Conformist
+
+### Developer Client relationship
+
+The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (developer) is willing to cooperate (for financial or political reasons), the two teams can go into a developer client relationship where the downstream team (client) can order features that the upstream team will implement. 
+
+
 ## Building blocks of DDD
+
+// I really need to look at this again. Especially the part with all the IDs is not yet clear to me.
 
 In the book Domain-Driven Design, Eric Evans also introduced the terms of entities, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
 
@@ -4912,6 +4994,8 @@ A service is an operation on the domain model. Its name is part of the Ubiquitou
 While entities and value objects are generally too fine grained to be reused, services are medium grained and thus appropriate for reuse.
 
 ### Aggregates
+
+// aggregates should be small. They are always a single transaction to the DB.
 
 Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model. There no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires.
 // Ddd p.127?
@@ -4963,7 +5047,11 @@ Aggregate instances are frequently created by a factory or another of the creati
 
 Is there some general rule how to organize the aggregates? Or just throw all the pieces on the table and see how they fit toegther?
 
+
+
 ## Domain level, old text
+
+// remove this text here (?)
 
 // get some more from the DDD book? It feels incomplete.
 The Domain Level is an expression used by Eric Evans in his book Domain-Driven Design. The Domain Level and especially the Domain Core are the heart of the software. It represents the central part of your code. That part that you actually make money with. It may be fairly small, yet it covers much of the overall complexity of your code. The complexity of the business it represents. Frequently, the domain level is unique, you cannot buy this part of the software anywhere else. You have to develop it yourself for your business. Exactly this makes it so special and valuable.
