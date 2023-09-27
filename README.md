@@ -246,6 +246,7 @@ Things to write:
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
+	- [Requirements](#requirements)
 - [22. Software Architecture](#22-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
@@ -827,6 +828,8 @@ Interfaces are everywhere. Every function or class has an external interface and
 // is there something else left to write here? It feels very short. Figure out a good example?
 
 ## APIs
+
+// write something about REST, SOAP, etc.?
 
 "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
 
@@ -1910,7 +1913,7 @@ As in this example `test_a` is always going to fail, `test_b` will never be exec
 
 ### Flaky tests
 
-Tests that do not always return the same result are called flaky. This is extremely bad. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests. The main problem is rather that it destroys the confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because for example the network is down. At times rerunning a test might help, but this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. All tests relying on the network connection will have a dependency on this check. This reduces the flakiness by orders of magnitude. And it is good practice to design your tests such that flakiness cannot occur. Especially unit tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky and this should never be the case for unit tests. Thus avoid testing any input/output (IO) for unit tests and reduce it as much as possible for other tests.
+Tests that do not always return the same result are called flaky. This is extremely bad. It's just like a fire alert going of once in a while without any reason. You'll be annoyed and start ignoring it. Or if the alarm doesn't go off even though it should have. Try to avoid flaky tests at all costs. It won't take much effort to rerun the tests. The main problem is rather that it destroys the confidence of the team into the test suite. You will never know if a test is failing due to your changes in the code or because for example the network is down. At times rerunning a test might help, but this is only a superficial fix. The only real solution is writing fail save tests. Make sure for example that the network connection is checked before running a test. All tests relying on the network connection will have a dependency on this check. This reduces the flakiness by orders of magnitude. And it is good practice to design your tests such that flakiness cannot occur. Especially unit tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky and this should never be the case for unit tests. Thus avoid testing any input/output (IO) for unit tests and reduce it as much as possible for other tests.
 
 ### Britle tests
 
@@ -3468,6 +3471,14 @@ There is a market for food and further down the road there is a store selling el
 
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
 
+## Requirements
+// Does this go into the physical laws of code?
+
+When buying a new car, you probably make a list of requirements. It needs to have five seats, ample of space for lugage, an AC, etc. Then you go to a car dealer and he'll show you a car that meets these requirements. Would you buy that car right away? Or do you first test drive it and look at some other cars as well? Even though chances are that you'll get back to that first car you've had a look at.
+
+In software engineering we have a similar phenomenon. You have a problem and you're looking for a solution. There are several requirements and once you found a solution that meets all of them, you are happy and implement it. This would be the equivalent of buying the first car that meets all the requirements. Why would you change your behavior depending whether you buy a car or if you write a piece of code? The costs of your decision are comparable. Actually it might be even bigger in software engineering because you'll have to stick to this decision for a long time and live with its consequences.
+
+Perhaps we should take more care when making software decisions just as we do when buying a new car. It may pay off on the long term.
 
 # 22. Software Architecture
 
@@ -4283,10 +4294,9 @@ It is much better to be honest. The problem is complex and we break down the com
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 
-The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats.
+The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't go into those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
 
 ## CSV
-// move the code examples into an exercise?
 
 Comma Spaced Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. But this is also one of the weaknesses of CSV. In some (natural) languages, the comma character is used for the floating point separator (exact name??). Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems.
 
@@ -4956,7 +4966,7 @@ The model is split into two parts and one development team is relying on the mod
 
 ## Building blocks of DDD
 
-// I really need to look at this again. Especially the part with all the IDs is not yet clear to me.
+// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. https://youtu.be/jnutb5Z4wyg
 
 In the book Domain-Driven Design, Eric Evans also introduced the terms of entities, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
 
@@ -4964,19 +4974,19 @@ In the book Domain-Driven Design, Eric Evans also introduced the terms of entiti
 
 // https://youtu.be/4rhzdZIDX_k
 
-Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and typically an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
+Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
 
-One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved.
+One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved. Every seat has its unique ID. Two seats are only equal if their IDs are the same. Even if all other properties are the same, if the IDs are not the same the seats are not equal.
 
-Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects.
+Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects. 
 
-A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and cannot be explained in this book.
+A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and is out of scope for this book.
 
 When creating an entity it is important to stripe it down to the absolutely essential properties. # Does the email address belong into the entity or only inside an aggregate?
 
 ### Value Object
 
-Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. Thus if you don't like the apple, replacing it with another one is the only option you have.
+Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have any unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. You can only change the properties of a value object at its creation. Thus if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change it.
 
 Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, for example a price. A price is set in its constructor and cannot be changed anymore. Furthermore the constructor can ensure that the price is valid. Similar things can be done i.e. for making email address its own type, rather than using plain strings.
 
@@ -4997,7 +5007,7 @@ While entities and value objects are generally too fine grained to be reused, se
 
 // aggregates should be small. They are always a single transaction to the DB.
 
-Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model. There no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires.
+Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model. At the recycling plant no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires. The tire becomes a value object.
 // Ddd p.127?
 
 ```py
@@ -5028,11 +5038,13 @@ class Tire():
 		self.distance_remaining -= distance
 ```
 
+You might have realized that `car` is a delegating class. Delegating classes generally fulfill the requirements of an aggregate, other than the ID. A delegating class hides all the functionality within the class such that it's only accessible through the class instance itself. It is not possible to change the instance of the `car` and its internals in any other way. It is not possible to violate the invariants of the car.
+
 The class `Car` might have the following invariants. It needs:
 - a unique identifier
-- 1 chassis
-- 1 engine
-- 4 tires
+- 1 chassis (value object)
+- 1 engine (value object)
+- 4 tires (entities)
 These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires after the replacement.
 
 An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a subdomain of your code.
