@@ -4,7 +4,7 @@ Copyright Marco Gähler, all rights reserved.
 
 Please give me feedback on the book. Either as a merge request or by email, marco.gaehler@gmx.ch
 
-If you prefer to have the book as a pdf, let me know. I can send it to you.
+If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with VS code. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
 
 This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
 
@@ -149,8 +149,10 @@ Things to write:
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
 		- [Copilot](#copilot-4)
+	- [Functional tests](#functional-tests)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
+	- [Who should write tests](#who-should-write-tests)
 	- [The testing pyramid](#the-testing-pyramid)
 - [12. Writing better Code with Tests](#12-writing-better-code-with-tests)
 	- [Unit tests](#unit-tests-1)
@@ -295,8 +297,6 @@ Things to write:
 		- [Copilot](#copilot-13)
 	- [XML](#xml)
 		- [Copilot](#copilot-14)
-	- [TOML](#toml)
-	- [YAML](#yaml)
 	- [HDF5](#hdf5)
 		- [Copilot](#copilot-15)
 	- [Databases](#databases)
@@ -722,11 +722,13 @@ Vectors are a higher level of abstraction than arrays. They are easier to use an
 
 ## The abstraction layers
 
-//create a Figure with levels of abstraction. Levels: Infrastructure – Domain level – application level – API – acceptance tests/GUI
+//create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
 // where did I get these layers from? And I think I have to look at this again. Most graphics I found have the domain level in the center.
 
 // some layers are in DDD p.70. 
+
+// this has to be rewritten. parts here are still using the onion layers while I want to use the horizontal layers.
 
 In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. A layer never depends on higher levels.
 
@@ -741,6 +743,8 @@ The lowest, inner most level is the programming language and 3rd party libraries
 One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
 
 ### The domain level
+
+// Is this redundant with the DDD chapter?
 
 //add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
 
@@ -1804,6 +1808,8 @@ Now comes the execution of the test. We check if the result of the test is corre
 
 ## General thoughts about tests
 
+One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct.
+
 A lot of people think that the only reason for writing tests is finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
 
 ### Double Entry Book Keeping
@@ -2062,6 +2068,8 @@ Looking at the code it is not quite clear if this is an improvement over the ori
 
 // Person example from https://youtu.be/IavOJI5OV7g?t=588 ?
 
+## Functional tests
+
 ## Integration tests
 
 // what else to write here?
@@ -2091,6 +2099,15 @@ E2E tests are important, but they cannot tell you where an error comes from. E2E
 
 One last question you might ask: “And what should I do if the GUI code contains a lot of logic? How do I test directly on the GUI?” I’m very sorry to say, you have some serious problems. This was possibly the worst mistake ever and now you pay a huge price for it. There is no reasonable way to test your code. Good luck!
 
+## Who should write tests
+
+Especially with E2E tests, there is the question who should write the tests. Should it be someone from the development team or an independent tester? As always in testing, this question has no easy answer. There are just some trade offs to be made.
+
+Having a developer write the tests has the advantage that he knows the code (white box testing). He knows where the difficulties lie. He can target these difficulties by writing dedicated tests. A developer might also know what the custormers want and where generally the issues are. This helps as well to target the most important areas of the code.
+
+On the other hand, having an independent tester has some advantages as well. He doesn't know about the weaknesses of the code, rather he writes more explorative tests. These tests might find bugs that were not expected by the developers as they are in areas of the code that were not expected to contain bugs.
+
+When ever possible, tests should be written as early as possible. Writing tests at the end of a project has the drawback that possible issues will be very hard to resolve as the whole software is nearly finished and making changes has become very difficult.
 
 ## The testing pyramid
 
@@ -3498,7 +3515,8 @@ Architecture: "the decisions you wish you could get right early" - Ralph Johnson
 
 // https://youtu.be/7ZXW_oWdTk4
 
-// the 4 layers are also called: presentation layer, application layer, business logic layer and data access layer, https://youtu.be/BrT3AO8bVQY?t=57
+// the 4 layers are also called: presentation layer, application layer, business logic layer and data access layer, https://youtu.be/BrT3AO8bVQY?t=57 though there can be more or less layers.
+
 when implementing a feature, you have to slice the layers vertically. Like this you break up the big layers into small blocks. It is generally recommended for comparably small apps. It should have performance issues? Seriously?
 
 Model view controller (MVC) pattern is probably the oldest one.
@@ -3561,6 +3579,7 @@ These advantages for either sides lead to trade offs in library sizes. Generally
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 # 23. Solid principles 
+
 // Source: https://youtu.be/pTB30aXS77U, https://youtu.be/9ch7tZN4jeI and Clean Architecture
 
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
@@ -4271,6 +4290,10 @@ In many cases the complexity of a task is extremely hard to estimate. Some devel
 
 Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. // rewrite this section, it doesn’t make sense. add example?
 
+Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or their complexity underestimated.
+
+The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left.
+
 ## Single line complexity
 
 A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
@@ -4456,12 +4479,6 @@ with open('data.xml', 'r') as f:
         elif '<y>' in line:
             y.append(int(line[3:-5]))
 ```
-
-## TOML
-
-
-## YAML
-
 
 ## HDF5
 
