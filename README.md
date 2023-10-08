@@ -59,13 +59,13 @@ Things to write:
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
 		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
-	- [Exercises](#exercises)
 - [7. Interfaces](#7-interfaces)
 	- [Real world interfaces](#real-world-interfaces)
 	- [Code interfaces](#code-interfaces)
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
 		- [Semantic Versioning](#semantic-versioning)
+	- [Copilot](#copilot-1)
 	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
@@ -73,10 +73,10 @@ Things to write:
 		- [Naming](#naming-1)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
-		- [Copilot](#copilot-1)
+		- [Copilot](#copilot-2)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
-	- [Copilot](#copilot-2)
+	- [Copilot](#copilot-3)
 - [9. Classes](#9-classes)
 	- [Data classes and structs](#data-classes-and-structs)
 	- [Private or Public](#private-or-public)
@@ -107,8 +107,8 @@ Things to write:
 	- [Drawbacks of classes](#drawbacks-of-classes)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
-	- [Copilot](#copilot-3)
-	- [Exercises](#exercises-1)
+	- [Copilot](#copilot-4)
+	- [Exercises](#exercises)
 - [Inheritance](#inheritance-1)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
@@ -148,7 +148,7 @@ Things to write:
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
-		- [Copilot](#copilot-4)
+		- [Copilot](#copilot-5)
 	- [Functional tests](#functional-tests)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
@@ -168,7 +168,7 @@ Things to write:
 		- [Faking](#faking)
 		- [Dependency injection](#dependency-injection)
 	- [Summary](#summary-1)
-		- [Copilot](#copilot-5)
+		- [Copilot](#copilot-6)
 - [13. Refactoring](#13-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -186,8 +186,8 @@ Things to write:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
-	- [Copilot](#copilot-6)
-	- [Exercises](#exercises-2)
+	- [Copilot](#copilot-7)
+	- [Exercises](#exercises-1)
 - [14. Understandable code](#14-understandable-code)
 - [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
@@ -203,13 +203,13 @@ Things to write:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs)
-	- [Copilot](#copilot-7)
+	- [Copilot](#copilot-8)
 - [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
 		- [Cost of Bugs](#cost-of-bugs)
 		- [Debugging](#debugging)
-		- [Copilot](#copilot-8)
+		- [Copilot](#copilot-9)
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
@@ -218,7 +218,7 @@ Things to write:
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 	- [Conclusions](#conclusions-2)
-	- [Copilot](#copilot-9)
+	- [Copilot](#copilot-10)
 - [19. Design patterns](#19-design-patterns)
 	- [Creational Patterns](#creational-patterns)
 		- [Factory](#factory)
@@ -242,9 +242,9 @@ Things to write:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer-1)
-	- [Copilot](#copilot-10)
+	- [Copilot](#copilot-11)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-3)
+	- [Exercises](#exercises-2)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -261,7 +261,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-4)
+	- [Exercises](#exercises-3)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -283,7 +283,7 @@ Things to write:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [26. Naming](#26-naming)
-	- [Copilot](#copilot-11)
+	- [Copilot](#copilot-12)
 	- [Exercise](#exercise)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
@@ -292,13 +292,13 @@ Things to write:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-12)
-	- [Json](#json)
 		- [Copilot](#copilot-13)
-	- [XML](#xml)
+	- [Json](#json)
 		- [Copilot](#copilot-14)
-	- [HDF5](#hdf5)
+	- [XML](#xml)
 		- [Copilot](#copilot-15)
+	- [HDF5](#hdf5)
+		- [Copilot](#copilot-16)
 	- [Databases](#databases)
 	- [Custom file format](#custom-file-format)
 	- [Exercise](#exercise-1)
@@ -314,16 +314,16 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-3)
-	- [Copilot](#copilot-16)
-	- [Exercises](#exercises-5)
+	- [Copilot](#copilot-17)
+	- [Exercises](#exercises-4)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-5)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
-		- [Copilot](#copilot-17)
-	- [Command line](#command-line)
 		- [Copilot](#copilot-18)
+	- [Command line](#command-line)
+		- [Copilot](#copilot-19)
 	- [IDE](#ide)
 	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
@@ -334,7 +334,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-7)
+	- [Exercises](#exercises-6)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -664,6 +664,8 @@ Working in an orthogonal system has many advantages:
 
 # 6. Levels of abstraction
 
+// somehow I'm not happy with this chapter. The real world example and the programming example are fine. But the rest is ... not up to the point. Should I just remove the rest?
+
 "You can solve every problem with another level of indirection." – Andrew Konig
 
 "Except for the problem of too many levels of indirection." – my hero
@@ -672,21 +674,21 @@ Levels of abstraction is an extremely important concept in software engineering.
 
 ## Real world example
 
-You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combined all these immensely complex objects.
+You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
 
-One can also look at the problem bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
+One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
 
 Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hierarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
 
 You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It may have completely different properties than the lower levels. In theory the higher level combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average and make very accurate predictions on a combustion engine or the aerodynamics of an airplane.
 
-Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have break them up into smaller and smaller blocks that you can understand.
+Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have to break them up into smaller and smaller blocks that you can understand.
 
 ## Programming Example
 
-C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental issues were removed with the release of the C++11 standard.
+C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
-C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous new and delete commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
+C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous `new` and `delete` commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
 
 ```C++
 int * arr = new int[10];
@@ -697,25 +699,25 @@ delete[] arr;
 
 One of the main reasons Java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
 
-Though it turns out there exists also a solution with pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. Finally, you can safely use C++ without facing the danger of memory leaks.
+Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. Finally, you can safely use C++ without facing the danger of memory leaks.
 
-Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom vectorClass contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
+Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
 ```C++
 // basic idea from https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/
-class vectorClass {
+class VectorClass {
 private:
     int* arr;
 	int capacity;
     int current;
 public:
-    vectorClass()
+    VectorClass()
     {
         arr = new int[1];
 		capacity = 1;
         current = 0;
 	}
-	~vectorClass()
+	~VectorClass()
     {
         delete [] arr;
     }
@@ -730,13 +732,15 @@ public:
 }
 ```
 
-This idea how to simplify the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been calls Resource Acquisition Is Initialization (RAII) by Scott Myers //see Effective Modern C++
+This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called Resource Acquisition Is Initialization (RAII) by Scott Myers //see Effective Modern C++
 
-If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. 
+If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability very significant.
 
 Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
 ## The abstraction layers
+
+// is this part of the architecture chapter? What should I write here or in the chapter on architecture?
 
 //create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
@@ -752,11 +756,11 @@ The lowest layer is the infrastructure layer. It manages the access to Input/Out
 
 ### 3rd party libraries
 
-The lowest, inner most level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
+The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestion implemented.
 
 ### Infrastructure code
 
-One layer above the programming language and the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
+One layer above the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details the user will never see. The user will not even know about. He can only guess how this code could be implemented, though in good code he will not have any clue how it's actually done.
 
 ### The domain level
 
@@ -774,7 +778,7 @@ The next level is the application level code. Here the code follows pretty much 
 
 ### API
 
-One level higher is the API. This defines the interface between our code and the user. It’s a wrapper around the high-level code. It offers all the functionality the user would expect in an easy to use form.
+One level higher is the API. This defines the interface between our code and the user. It’s a wrapper around the high-level code. It offers all the functionality the user would expect in an easy to use form. One cannot state the importance enough for decoupling the API from the GUI. This will also become apparent in the section on testing.
 
 ### GUI and acceptance tests
 
@@ -794,18 +798,9 @@ Between classes as well as between files there are dependencies. The high-level 
 
 // abstract vs concrete code -> see Clean Architecture?
 
-## Exercises
-
-Sort the following function calls by their level of abstraction, starting with the highest:
-- main()
-- look_up_flight()
-- select_flight_from()
-- plan_voyage()
-- book_flight()
-
 # 7. Interfaces
 
-“Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers, The fundamental rule of interfaces
+“Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
@@ -817,9 +812,9 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 “Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed. USB 3 has a much more user-friendly design. You can plug it in either way. The technicians implemented a technical solution to enable this. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This is some extra work for the engineers, but once solved it is a very convenient solution for the users.
+An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. USB 3 has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved it is a very convenient solution for the users.
 
-Another example are water tabs for showers, as already explained in the chapter on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
+Another example are water tabs for showers, as already explained in the section on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
 
 The new handles allow you to choose the amount of water and the temperature separately. This might be technically a little bit more complicated to implement but it’s so much more convenient to use. 
 
@@ -839,7 +834,7 @@ Once again, understanding interfaces in general will allow you to write much bet
 
 Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
-An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have and lack the visions of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality is mostly given by the engineers. They gave the designers strict limitations on what they could do. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an easy to use interface.
+An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have and lack the visions of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality is mostly given by the engineers. The designers were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use.
 
 Interfaces are everywhere. Every function or class has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
 
@@ -871,20 +866,22 @@ Removing functionality on the other hand is really hard. This inevitably changes
 
 ### Semantic Versioning
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2", the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The last is generally used only in bigger projects. 
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2", the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The last is used only in bigger projects. 
 
 Every time you make a new release you increase the version number. 
-- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to increase to a higher trace version without any issues.
+- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to change to a software with a higher or lower trace version without any issues.
 - The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. 
-- The really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the python code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface.
+- The really big disaster starts with major version changes. Sometimes this is required and it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the python2 code to the major version 3 took 20 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface. Only increase the major version of your software if it is absolutely required.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
 
-// ## Copilot
+## Copilot
 
-// Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps. -> remove comment?
+Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps.
 
 ## Conclusion
+
+// remove conclusions?
 
 Interfaces should always be designed from a user point of view. This makes them much better as user friendlines is the main goal of any interface.
 
