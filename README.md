@@ -35,10 +35,11 @@ Things to write:
 	- [About this book](#about-this-book)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
 	- [Do not Repeat Yourself](#do-not-repeat-yourself)
+		- [Exceptions of DRY](#exceptions-of-dry)
 	- [Advantages of the SRP](#advantages-of-the-srp)
 		- [Understanding](#understanding)
 		- [Naming](#naming)
-		- [Duplication](#duplication)
+		- [No Duplication](#no-duplication)
 		- [Testing](#testing)
 		- [Bugs](#bugs)
 		- [Bug fixing](#bug-fixing)
@@ -46,7 +47,6 @@ Things to write:
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
 	- [Copilot](#copilot)
-	- [Exercises](#exercises)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
@@ -59,7 +59,7 @@ Things to write:
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
 		- [Summary](#summary)
 	- [Dependency tree](#dependency-tree)
-	- [Exercises](#exercises-1)
+	- [Exercises](#exercises)
 - [7. Interfaces](#7-interfaces)
 	- [Real world interfaces](#real-world-interfaces)
 	- [Code interfaces](#code-interfaces)
@@ -108,7 +108,7 @@ Things to write:
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
 	- [Copilot](#copilot-3)
-	- [Exercises](#exercises-2)
+	- [Exercises](#exercises-1)
 - [Inheritance](#inheritance-1)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
@@ -187,7 +187,7 @@ Things to write:
 		- [Seams](#seams)
 		- [Sketches](#sketches)
 	- [Copilot](#copilot-6)
-	- [Exercises](#exercises-3)
+	- [Exercises](#exercises-2)
 - [14. Understandable code](#14-understandable-code)
 - [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
@@ -244,7 +244,7 @@ Things to write:
 	- [Observer](#observer-1)
 	- [Copilot](#copilot-10)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-4)
+	- [Exercises](#exercises-3)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -261,7 +261,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-2)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-4)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -315,9 +315,9 @@ Things to write:
 		- [Docstring](#docstring)
 	- [Summary](#summary-3)
 	- [Copilot](#copilot-16)
-	- [Exercises](#exercises-6)
+	- [Exercises](#exercises-5)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-7)
+	- [Exercises](#exercises-6)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -334,7 +334,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-8)
+	- [Exercises](#exercises-7)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -542,31 +542,53 @@ The DRY principle also applies to processes like building your project. If you h
 
 // See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before? -> chapter automation?
 
-The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly.
+The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. This kind of duplication has the problem that it is hard to detect. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. At the cost that if the social security numbers ever change, there will be a lot of work finding all the parsers and adapting them. This might be a serious source of bugs.
 
-// remark that switch case statements are a frequent source of SRP violation.
+As I said, it is hard to keep track of these kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
+
+One common source of repetition are switch case or if statements. They looks something like this:
+```py
+if job == "president":
+	residency = "White house"
+if job == "president":
+	security_standards = "very high"
+```
+etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them by using polymorphism. Create a `president` object with the corresponding properties.
+```py
+class President:
+	def __init__(self):
+		self.residency = "White house"
+		self.security_standards = "very high"
+```
+Now you only have to create a `president` object once and there is no more need for any if statements.
+
+### Exceptions of DRY
+
+The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. This is also in agreement with the test driven design (TDD) where you only have to refactor if there is a three-fold duplication of the code.
 
 ## Advantages of the SRP
 
 The importance of the SRP cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case. Here are the most important ones.
 
 ### Understanding
-A function or class that implements exactly one thing will always be quite easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
+A function or class that implements exactly one thing will always be compareably easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
 
 ### Naming
 Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
 
-### Duplication
-Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. The most common issue in code duplication is several programmers developing the same piece of logic. This can lead to huge amounts of code duplication without anyone ever copy pasting anything.
+### No Duplication
+Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. 
+
+Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparably easy as you have to change code only in one location.
 
 ### Testing
-Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, setting it up is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
+Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, initializing class instances is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
 
 ### Bugs
-As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up. It is immediately apparent which part of the code is responsible for the behavior of the bug.
+As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up as it is immediately apparent which part of the code is responsible for the behavior of the bug.
 
 ### Bug fixing
-Tracking down bugs will be much easier. You can fairly well understand what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add and if statement in your code. This would violate the SRP and is bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all.
+Tracking down bugs will be much easier. You can understand fairly well what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add an if statement in your code. This would violate the SRP and lead to bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all.
 
 ## Example
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
@@ -604,7 +626,7 @@ def print_page():
 
 Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
 
-Admittedly I was a little bit picky here. But I can't make much more convoluted examples in a book.
+Admittedly I was a little bit picky here. But I can't write much more convoluted examples in a book.
 
 ## Orthogonality
 
@@ -616,7 +638,7 @@ Orthogonality is a mathematical definition. It states that two objects are under
     <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
 </div> 
 
-On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays we have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
+On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
 
 In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
 
@@ -638,13 +660,7 @@ Working in an orthogonal system has many advantages:
 
 ## Copilot
 
-// Is there some way to refactor code towards the SRP using Copilot?
-
-## Exercises
-
-Make an example where the SRP is violated and the code should be refactored.
-
-Create a non-orthogonal system that the reader should orthongonalize.
+// Is there some way to refactor code towards the SRP using Copilot? I don't think it understands the meaning of the single responsability principle...
 
 # 6. Levels of abstraction
 
@@ -1808,7 +1824,7 @@ Now comes the execution of the test. We check if the result of the test is corre
 
 ## General thoughts about tests
 
-One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct.
+One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct. Tests can only prove the existance of bugs, not their inexistance.
 
 A lot of people think that the only reason for writing tests is finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
 
@@ -3471,7 +3487,7 @@ Though as I already said before, this is only a vague recommendation and not a s
 
 ## Entropy
 
-Entropy is the physical law of disorder. It says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
+Entropy is the physical law of disorder. The second law of thermodynamics says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
 
 In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well.
 
@@ -3486,7 +3502,10 @@ Similar things belong together. It sounds fairly trivial and it is extremely hel
 
 There is a market for food and further down the road there is a store selling electronics. Each kind of store has its own domain. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. The same holds for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
-Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better.
+Also bugs tend to cluster inside your code. Did you find a bug in some very complicated part of the code? Chances are you will find more bugs in the same area of the code.
+
+Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better. And you will find your bugs faster as you check the complex parts of the code earlier on.
+
 
 ## Requirements
 // Does this go into the physical laws of code?
@@ -3500,10 +3519,6 @@ Perhaps we should take more care when making software decisions just as we do wh
 # 22. Software Architecture
 
 Architecture: "the decisions you wish you could get right early" - Ralph Johnson
-
-"Architecture is the important stuff - whatever that is." - Ralph Johnson
-
-"The perfect kind of architecture decision is the one which never has to be made" ― Robert C. Martin
 
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
@@ -4879,6 +4894,8 @@ Get acquainted with Git and some other tools mentioned here.
 # 35. Domain Driven Design
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
+
+// https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/
 
 This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
 
