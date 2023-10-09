@@ -76,6 +76,7 @@ Things to write:
 		- [Copilot](#copilot-2)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
+	- [Summary](#summary-1)
 	- [Copilot](#copilot-3)
 - [9. Classes](#9-classes)
 	- [Data classes and structs](#data-classes-and-structs)
@@ -167,7 +168,7 @@ Things to write:
 		- [Mocking](#mocking)
 		- [Faking](#faking)
 		- [Dependency injection](#dependency-injection)
-	- [Summary](#summary-1)
+	- [Summary](#summary-2)
 		- [Copilot](#copilot-6)
 - [13. Refactoring](#13-refactoring)
 	- [There will be change](#there-will-be-change)
@@ -260,7 +261,7 @@ Things to write:
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
-	- [Summary](#summary-2)
+	- [Summary](#summary-3)
 	- [Exercises](#exercises-3)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
@@ -313,7 +314,7 @@ Things to write:
 		- [TODO comments](#todo-comments)
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
-	- [Summary](#summary-3)
+	- [Summary](#summary-4)
 	- [Copilot](#copilot-17)
 	- [Exercises](#exercises-4)
 - [33. Logging](#33-logging)
@@ -901,9 +902,11 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 ## Do one thing only
 
+Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short (at most twenty lines, less is better) and therefore they cover only a single level of abstraction.
+
 ### Levels of indentation
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they should be very short (preferably less than ten lines) and have as few levels of indentation as possible. Having nested `if/else`, while or for loops would also violate the SRP. This reduces the amount of logic you can pack into a single function and makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
+The easiest way to judge the complexity of a function is the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This means that there is hardly any complex logic hiding inside a single function. Having nested `if/else`, `while` or `for` loops would violate the SRP because the function has two jobs: resolving the logical operator and doing some other work. Having few levels of indentation in a function automatically makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
 A frequent problem are deeply nested `if/else` clauses.
 
@@ -979,7 +982,7 @@ def log_in(email_address):
 
 This function clearly has a side effect. It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
 
-Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because temporal coupling.
+Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because of the temporal coupling.
 
 ## Temporal coupling
 
@@ -991,7 +994,7 @@ class Shopping():
 		self.money = amount
 	def create_shopping_list(self, shopping_list):
 		self.shopping_list = shopping_list
-	def go_shopping():
+	def go_shopping(self):
 		# use the shopping_list and money
 ```
 Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
@@ -1032,26 +1035,26 @@ go_shopping(money, shopping_list)
 shopping_list = create_shopping_list(["apple", "banana"])
 ```
 
-After swapping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+After swapping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
 
 Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments.
 
-// how to make these steps work with copilot?
-
 ## Number of arguments
-As for the length of the function, the number of arguments should be as small as possible as well. This simplifies the function a lot. 
+As for the length of the function, the number of arguments should be as small as possible as well. This simplifies the function a lot. Here I try to give you a rough estimate on how many variables a function or method may have. But this ultimately depends on the general complexity of the code, etc.
 
-Now there are very few functions with zero arguments. These are the easiest, they always behave the same way. There’s not much to test. The more function arguments a function has, the more functionality it can contain. Yet at the same time the more complex it will become.
+Now there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments using class variables as a replacement for function arguments). These functions are the easiest, they always behave the same way. There’s not much to test, but at the same time there isn't much such a function can do.
 
-Try to have at most 3 function arguments. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
+As a function has more arguments, it can contain more functionality. Yet at the same time the more complex it will become. Functions with one or two arguments are usually fairly easy to handle and they should cover most of the code. Try using functions with 3 arguments as rarely as possible.
+
+Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
-`Total variables = function arguments + class variables`
+`Total variables = method arguments + class variables`
 
 Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
 
-A method might access only a few of the class variables. However, one does not know until one has read all of the method and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
+A method might access only a few of the class variables. However, one does not know until one has read all of the methods and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
 Following the SRP, functions can only be either a query or a command //https://en.wikipedia.org/wiki/Command%E2%80%93query_separation, but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
 
@@ -1063,23 +1066,47 @@ Here the `set_node` function does two things at a time which certainly doesn't h
 
 ### Copilot
 
-// Is there a way so sort input variables into an array?
+Copilot can help out with reducing the number of arguments by using dataclasses. Though the suggested code is not necessarily always better.
+```py
+def do_something(a, b):
+    return a + b
+```
+With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of copilot is not always an improvement. Wheter such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
+
+```py
+@dataclass
+class Numbers:
+    a: int
+    b: int
+
+def do_something(numbers: Numbers):
+    return numbers.a + numbers.b
+```
+
 
 ## Output arguments
 
-A very vexing thing are functions altering the value of the input arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable. However, in other languages, this has to be clear from the context of the function.
+A very irritaging thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable or by const to make it unmodifiable. However, in other languages, this has to be clear from the context of the function.
 
-Unexpected changes of values of a function argument are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter values of function arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special.
+Unexpected changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter its arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
 
-Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values, just that the class instance is obviously a very special variable. The function acting on these variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
+Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values. Just that the class instance is obviously a very special variable. The function acting on those variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
+
+As always, output arguments give you a lot of power if used wisely. But at the same time it can be also a source of very unreadable code when used carelessly.
 
 ## Return values
 
-Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instance. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first input value. Or, this method might change a variable of the class instance. And once again, keep in mind the SRP. A function may only have either a return value or an output argument but never both at the same time.
+Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instances. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first function argument. Or: this method might change a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value or an output argument but never both at the same time.
 
-Return values are very central in functional programming. There you are not allowed to change existing objects. So you don't have the issue of output arguments changing their values. And the work around are return values. They have the advantage that it's obviously a new object with new properties. Each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique.
+Return values are very central in functional programming. There you are not allowed to change existing objects. So you don't have the issue of function arguments changing their values. The work around are return values. They have the advantage that it's obviously a new object with new properties. Each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique. After every step of your computation, you create a new variable so you'll never store different information inside a single variable. You just create a new one.
 
-As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of an input argument.
+All together there is really nothing wrong with return values. Use them if it's not a performance critical task where reusing the existing data structure is required.
+
+## Summary
+
+As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of a function argument. Such function arguments are very delicate as they may cause a lot of confusion.
+
+Return values are completely fine even if some folks tends to dislike them. Use return values every time the object created is not too big for causing performance issues.
 
 ## Copilot
 
