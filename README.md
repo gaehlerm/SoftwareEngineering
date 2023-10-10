@@ -1134,7 +1134,7 @@ print_books_where(author_is('Paulo Coelho'))
 
 "Q: What did the Java code say to the C code? A: You’ve got no class." - HampusMa on devrant.com
 
-// Break up this chapter? It's quite long...
+// Break up this chapter? It's quite long... even after breaking out the chapter on inheritance.
 
 Classes are undoubtedly one of the backbones of modern code. Unless you are one of the few functional programmers, chances are high that you use them every day. Therefore, it is time we have an in depth discussion about them. 
 
@@ -1679,7 +1679,7 @@ Though it has to be said, that with the `override` keyword or attribute, this pr
 
 ### Obscure code
 
-Additionally, there is the problem with variables inherited from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying. For this reason it is generally not recommended to nest inheritance. And honestly, I don't see at all, why inheritance should be used, other than for defining interfaces. Code reuse can be better implemented using composition or functions.
+Additionally, there is the problem with variables inherited from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying. With composition on the other hand, you'd have to dig your self a way through all the variables. This seems like a drawback at first sigth, but it turns out to be a distinct advantage as you always know where in the instance chain you are exactly. For this reason it is generally not recommended to nest inheritance and use composition instead. And honestly, I don't see at all, why inheritance should be used, other than for defining interfaces. Code reuse can be better implemented using composition or functions.
 
 ### Implementation
 
@@ -1695,7 +1695,7 @@ This leads to all kind of nasty ambiguities which functions should be used. For 
 
 Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritance is simply too error prone. Though this is better in python than in C++.
 
-Sometimes inheritance can be extremely confusing. Let's take the following example:
+Sometimes inheritance can be confusing. Let's take the following example:
 
 ```py
 class Animal(): 
@@ -1718,7 +1718,7 @@ Is the lion now eating grass or meat? Of course it's eating meat. But using over
 
 Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, there is just too much that can go wrong with inheritance.
 
-In inheritance, the derived class inherits all the functions from the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad as it violates the Interface Segregation Principle, see chapter on SOLID principles. Having to write tests for unused functions in the interface is only one of the problems.
+In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad as it violates the Interface Segregation Principle, see chapter on SOLID principles. Having to write tests for unused functions in the interface is only the most obvious problem.
 
 ## Advantages of Inheritance
 
@@ -1728,11 +1728,13 @@ There are quite few advantages and none of them justify using inheritance.
 
 The biggest advantage of inheritance is certainly code reuse. You may define a function in a base class and reues it in several derived classes. This saves you from repeating yourself. 
 
-On the other hand, you can usually also use composition or write functions with the corresponding functionality and reuse them. In most cases this works out just fine as well.
+On the other hand, you can usually also use composition or write functions with the corresponding functionality and reuse them. In most cases this works out just fine as well. Additionally you are forced to reuse all of the code in the base class. This is frequently undesired behavior as you don't want to inherit everything the base class has to offer. You would like to inherit only a fraction of it.
 
 ## Interfaces
 
 In C++, you have to use inheritance for defining interfaces. There’s no way around it. It's an old language. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
+
+Similarly in Python, you can use abstract base classes to define the interface of a class. This is quite useful as it makes the code more readable than just implementing an interface without the abstract base class.
 
 ## Conclusions
 
