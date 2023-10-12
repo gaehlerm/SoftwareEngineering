@@ -4146,7 +4146,7 @@ sorted_prime_numbers = sorted(prime_numbers)
 
 It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates partially the SRP. This is partially the case here as the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
 
-On the other hand, the second solution may be a performance bottle neck as it needs more memory. This may be a problem for large lists.
+On the other hand, the second solution may be a performance bottleneck as it needs more memory. This may be a problem for large lists.
 
 ## Member variables
 
@@ -4521,7 +4521,7 @@ with open('data.xml', 'w') as f:
         f.write(f'\t<y>{y[i]}</y>\n')
     f.write('</data>')
 ```
-Now this does the job, but this is certainly not how (FG) an XML file is supposed to be created. Reading XML files is even worse.
+Now this does the job, but this is certainly not how an XML file is supposed to be created. Reading XML files is even worse.
 ```py
 x = []
 y = []
@@ -4667,7 +4667,7 @@ First of all, it is not recommended to optimize the code at all. In fact, it is 
 
 Is this really the case, that performance was an issue? You had this feeling that you had to write highly optimized code. But you didn’t know for sure. And now is the time to test your assumption. If you have to run your code only once and it takes 2 days, run it over the weekend. Spending hours for optimization would be wasted time.
 
-If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottlenecks (FG: bottleneck 1Wort) of your code. Pretty much all code that you’ll ever see has very few bottle necks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottle neck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
+If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottlenecks of your code. Pretty much all code that you’ll ever see has very few bottlenecks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottleneck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
 
 Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be working in a team where every single team member knows way more about parallel programming than I do.
 
@@ -4675,7 +4675,7 @@ There are many small things you can do for optimizing your code like manual loop
 
 ## Exercise
 
-// Take code with one or two slow algorithms. The user should use the profiler to find the bottle necks and then improve the performance.
+// Take code with one or two slow algorithms. The user should use the profiler to find the bottlenecks and then improve the performance.
 
 // The user should write a pairlist algorithm (or FFT or something else) and in a second step write a more optimized version.
 
