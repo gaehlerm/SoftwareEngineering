@@ -158,7 +158,7 @@ Things to write:
 	- [The testing pyramid](#the-testing-pyramid)
 - [12. Writing better Code with Tests](#12-writing-better-code-with-tests)
 	- [Unit tests](#unit-tests-1)
-	- [Component tests](#component-tests)
+	- [Integration and E2E tests](#integration-and-e2e-tests)
 	- [Testing existing code](#testing-existing-code)
 	- [Asserts](#asserts)
 	- [Test Driven Development](#test-driven-development)
@@ -2226,6 +2226,8 @@ E2E tests are the least common. They are very valuable to check that a program r
 
 # 12. Writing better Code with Tests
 
+// This chapter needs improvement...
+
 "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
 // https://www.testim.io/blog/test-automation-benefits/
@@ -2234,53 +2236,37 @@ Tests are not only important to write correct code. They are equally important t
 
 ## Unit tests 
 
-Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write good code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know there is some flaw in your code and you should redesign it.
+Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write better code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know there is some flaw in your code and you should redesign it.
 
 During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be, your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked.
 
 In good code, all the relevant data is easily accessible and constructing it manually for a test case is not harder than you would expect it to be. Preferably you have one big object with fairly static information that you can reuse in all tests and one small dynamic object that is different in every test.
 
-If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your function is too complex. It should be simplified. Rewrite the code until you can explain to your colleagues what it actually does. Until you can write a unit test. Otherwise you’ll run into huge problems down the bumpy road.
+If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your function is too complex. It should be simplified. Rewrite the code until you can explain to your colleagues what the code actually does. Until you can write a unit test. Otherwise you’ll run into huge problems down the bumpy road.
 
-You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may never take more than 1ms. You’ll be running hundreds if not thousands of tests, so execution time is crucial.
-
-// remove? There is a section on TDD
-As I explained in the chapter on interfaces, it is important to design them from the user point of view. The unit tests are in fact this user. They use your code in order to test it. So you should write your unit tests such that they are convenient and then adapt the code to fit the syntax of the tests. This is also the main reason why test driven development (TDD) is in my opinion a very good coding practice. In TDD you write the tests before you know how the code will look like and this is a good thing. It lets the user of the code decide how the interfaces should look like.
-
-Writing unit tests is not that hard. It is certainly not harder than using print statements. So far you wrote code like this for testing the `square` function.
-
-```py
-print(square(1))
-print(square(2))
-print(square(5))
-```
-
-Now instead you could be writing this:
-
-```py
-def test_squares():
-	assert f(1) == 1
-	assert f(2) == 4
-    assert f(5) == 25
-```
+You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may not take more than a few milliseconds. You’ll be running hundreds if not thousands of tests all the time, so execution time is crucial.
 
 Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
 
-## Component tests
+## Integration and E2E tests
 
-Component tests cover everything between unit and E2E tests. Usually the interplay between a few classes or a complete library. If the library becomes an external interface, you could move the according component tests in to the E2E tests.
+// rewrite this text here or remove it completely?
 
-The boarder of component tests is not so well defined. Feel free so write some if you really feel like it, but generally having good unit and E2E tests should be sufficient in most projects.
+At first, it sounds great to write integration, or even E2E tests. With comparably short tests you cover a fair amount of the code base. But this comes at a price.
+
+There is much more code covered by integration tests than by unit tests. This makes integration tests much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or E2E tests is much harder than fixing bugs found by unit tests. At the same time, integration tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately these tests are expensive to run. They are huge and slow.
+
+Despite these drawbacks, integration and E2E tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early.
 
 ## Testing existing code
 
 It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind existing code. Usually, there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
 
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law  states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. // Hyrums law is already mentioned in the section on APIs
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law  states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. 
 
-As you write tests, always make sure they fail when you expect them to. It already happened to me several times that such checks prevented me from hours of frustrating bug fixing. Usually, due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
+As you write tests, always make sure they fail when you expect them to. It already happened to me several times that some tests were unexpectedly passing without writing any code. Such checks prevented me from hours of frustrating bug fixing. Usually due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
 
-So far, I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
+So far I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
 
 Apparently this way of working is a hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
 
@@ -2298,19 +2284,19 @@ Secondly your production code is not made to run automated test cases. Asserts a
 
 So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code as your tests force you to. 
 
-In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Going to Need It). // citation  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
+In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Gonna Need It). // citation //  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
 
 Maybe you do not fully understand yet how TDD is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
 
 ### How TDD works
 
-You write one test for the feature you want to implement or the bug you want to fix. I repeat, one and only one test. In case you have acceptance and unit tests (I hope so), you may have one open test case for each of them. If both tests pass you can take a day off.
+You write one test for the feature you want to implement or the bug you want to fix. I repeat, one and only one test. In case you have E2E and unit tests (I hope so), you may have one open test case for each of them. One test case which fails at the moment. If both, unit and E2E tests, pass, you can take a day off.
 
 Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should. 
 
-Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is not yet implemented. Write enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you understand it well enough until the test passes.
+Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is simply not yet implemented. Write just enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you understand it well enough until the test passes.
 
-Once the test passes you might have to refactor to get the code back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
+Once the test passes you might have to refactor the code a little to get back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
 
 There is a general pattern how you write code in TDD and its quite simple.
 
@@ -2320,11 +2306,11 @@ There is a general pattern how you write code in TDD and its quite simple.
 
 These three steps you have to repeat over and over again until you are done with your ticket.
 
-Also, with TDD you have to do some bigger refactoring once in a while. This is inevitable and has to be taken into consideration. 
+Also, with TDD you have to do some bigger refactoring once in a while. This is inevitable and has to be taken into consideration. These refactorings involve complete components and you'll have to deal with several classes at once.
 
 ### Importance of TDD
 
-As we learned in the chapter on interfaces, they should always be defined from the user perspective. With TDD you are taking the user perspective of your code. When writing a test, you are a user of the corresponding code. Therefore writing your tests before the code forces the code to adapt the code to the test. This is a good thing. It forces the code to adapt to the user and therefore its interface becomes more user friendly.
+As we learned in the chapter on interfaces, they should always be defined from the user perspective. With TDD you are taking the user perspective of your code. When writing a test, you are the user of the corresponding code. Therefore writing your tests before the code forces the programmer to adapt the code to the test. This is a good thing. It forces the programmer to write code that is adapting to the user and therefore the interface of the code becomes more user friendly.
 
 ### Example
 
@@ -2447,7 +2433,7 @@ def roman_numbers(n):
 	return num
 ```
 
-Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //?? that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //??// that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
 
 
 ## Fakes and Mocks
