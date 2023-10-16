@@ -93,7 +93,7 @@ Things to write:
 		- [General recommendations](#general-recommendations)
 	- [Constant Class instances](#constant-class-instances)
 		- [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
-	- [Free Function vs. Method](#free-function-vs-method)
+	- [Function vs. Method](#function-vs-method)
 	- [Constructors](#constructors)
 	- [Getter and setter functions](#getter-and-setter-functions)
 		- [Data classes](#data-classes)
@@ -1178,7 +1178,7 @@ There is one very simple rule of thumb which parts of a class should be public o
 
 ## Functions and Methods
 
-Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for both, free functions and methods. The difference between them is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and free functions inside a namespace are indistinguishable in C++. Methods are essentially the same as functions with some hidden additional variables.
+Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for both, functions outside of classes and methods. The difference between them is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and functions inside a namespace are indistinguishable in C++. Methods are essentially the same as functions with some hidden additional variables.
 
 ## Different kind of classes
 
@@ -1359,7 +1359,7 @@ class Bottle:
 
 This is just one example how one can deal with const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
 
-## Free Function vs. Method
+## Function vs. Method
 
 // This text here is redundant (where? output arguments?), tough I quite like it. What to do…?
 
@@ -1375,10 +1375,10 @@ It turns out for most criteria, these two function or method calls are pretty mu
 - If `a` has a public variable `c`, we can rewrite `b` to `b(a.c)`, or `a.c.b()`, respectively.
 - In C++, const'ness can be enabled for both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method.
 
-To sum it up, there are no big differences. `b(a)` offers somewhat better decoupling and should thus be slightly preferred. But ultimately, it all comes down to readability. What is easier to understand? The free function or the method? Let's look at the following code:
+To sum it up, there are no big differences. `b(a)` offers somewhat better decoupling and should thus be slightly preferred. But ultimately, it all comes down to readability. What is easier to understand? The function or the method? Let's look at the following code:
 
 ```Py
-# Free function:
+# Function:
 if contains(names, “Donald”):
    print(“Make America great again”)
 # Or method:
@@ -1386,7 +1386,7 @@ if names.contains(“Barak”):
    print(“Yes we can”)
 ```
 
-In this case I certainly prefer the second option from the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the free function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage to make the right decision, you are a great programmer.
+In this case I certainly prefer the second option from the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage to make the right decision, you are a great programmer.
 
 In software engineering there are always so many things to consider. This was just another example. Probably there are more arguments for one or the other solution that I missed. They might make the whole discussion obsolete. Let me know if you found such a solution, I’d be curious.
 
@@ -1620,7 +1620,7 @@ Follow the rule “use composition, not inheritance” and don’t use friend cl
 
 Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it a perfectly viable object.
 
-Prefer free functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read and are thus preferred.
+Prefer functions over methods. It improves clarity which variables may be changed. Though sometimes methods may make the code more intuitive to read and are thus preferred.
 
 ## Copilot
 
