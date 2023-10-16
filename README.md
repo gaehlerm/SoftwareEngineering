@@ -2236,39 +2236,37 @@ Tests are not only important to write correct code. They are equally important t
 
 ## Unit tests 
 
-Unit tests make sure your code is correct on the small-scale level. You don’t have to check manually anymore if the results of a function or class are correct. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write better code. When writing unit tests, you realize right away if you code is good or bad. If it’s hard to extract the filesystem part of the code, you know there is some flaw in your code and you should redesign it.
+Unit tests make sure your code is correct on the small-scale level. Thanks to unit tests, you don’t have to check manually anymore if the results of a function or class are correct. The unit test checks it automatically. But this is only half the reason why they are so important. The other half might be a little bit unexpected for you: unit tests force you to write better code. When writing unit tests, you realize right away if you code is good or bad. If it's hard to write a unit test, your code has some design issues and you should redesign it.
 
-During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be, your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked.
+During the setup phase of the code, you have to create all the objects required. If this becomes more tedious than you would expect it to be, your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked. When writing a unit test you are a user of your own code. And your code should be easy to use as we have learned in the chapter on interfaces. Thus, if your code is hard to use, it is a serious issue.
 
-In good code, all the relevant data is easily accessible and constructing it manually for a test case is not harder than you would expect it to be. Preferably you have one big object with fairly static information that you can reuse in all tests and one small dynamic object that is different in every test.
+In good code, all the relevant data is easily accessible and constructing it manually for a test case is fairly simple. Preferably you have one big object with fairly static information that you can reuse in all tests and one small dynamic object that is different in every test.
 
 If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your function is too complex. It should be simplified. Rewrite the code until you can explain to your colleagues what the code actually does. Until you can write a unit test. Otherwise you’ll run into huge problems down the bumpy road.
 
-You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may not take more than a few milliseconds. You’ll be running hundreds if not thousands of tests all the time, so execution time is crucial.
+You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or if you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may not take more than a few milliseconds. You’ll be running hundreds if not thousands of tests all the time, so execution time is crucial.
 
-Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your friends. This is how you’ll really make progress.
+Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your colleagues. This is how you’ll really make progress.
 
 ## Integration and E2E tests
-
-// rewrite this text here or remove it completely?
 
 At first, it sounds great to write integration, or even E2E tests. With comparably short tests you cover a fair amount of the code base. But this comes at a price.
 
 There is much more code covered by integration tests than by unit tests. This makes integration tests much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or E2E tests is much harder than fixing bugs found by unit tests. At the same time, integration tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately these tests are expensive to run. They are huge and slow.
 
-Despite these drawbacks, integration and E2E tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early.
+Despite these drawbacks, integration and E2E tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early. E2E tests for example are important to prove that the user stories are really working. To prove that the software really works. Or to write a test case if a bug was found.
 
 ## Testing existing code
 
-It happens frequently that you’ll be writing tests for existing code. This is much harder than writing tests along with new code, as it is very hard to figure out the weaknesses and the logic behind existing code. Usually, there are corner cases that are really hard to find. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
+When working with code, you'll end up writing tests for existing code. In know, in theory this shouldn't happen, yet reality and theory do not always agree. Writing tests for existing code is much harder than writing tests along with new code. It is very hard to figure out the weaknesses and the logic behind existing code. Usually, there are corner cases that are really hard to find if you don't know about them. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
 
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law  states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. 
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. At least if you are not part of the Quality Assurance (QA) team. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior. As Hyrums law states, "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. Users are smart and they probably found a way to deal with your buggy code. Fixing the bugs might destroy the user code.
 
 As you write tests, always make sure they fail when you expect them to. It already happened to me several times that some tests were unexpectedly passing without writing any code. Such checks prevented me from hours of frustrating bug fixing. Usually due to some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize something was already implemented.
 
-So far I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, make sure the initial method becomes private again.
+In the previous chapters I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, clean it up and make all methods private again that should be.
 
-Apparently this way of working is a hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
+Apparently this way of dealing with private methods is a hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
 
 //more about testing existing code in Refactoring? See Michael Feathers book. 
 
@@ -2278,13 +2276,13 @@ There were times when people thought writing assert commands in to the productio
 
 The most obvious reason is that using asserts inside production code is a violation of the SRP. You are writing tests inside production code. I guess today everyone agrees that tests and production code should be in different files, possibly even in completely different folders.
 
-Secondly your production code is not made to run automated test cases. Asserts are only executed if you run the software you create. It will highlight you any violations of the assertions along the way, but this is not something that can be automated. It can be used at most like something of an emergency light. You’d rather focus on writing better tests instead.
+Secondly your production code is not made to run automated test cases. Asserts are only executed if you run the software you create. It will highlight you any violations of the assertions along the way, but this is not something that can be automated. It can be used at most like something of an emergency sign. You should rather focus on writing better tests than using asserts in production code.
 
 ## Test Driven Development
 
 So far, we wrote tests to check if our code works correctly. We wrote them once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. TDD forces you to decouple the code as your tests force you to. 
 
-In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Gonna Need It). // citation //  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure they all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and maybe it never will be.
+In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Gonna Need It). // citation //  Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure these test cases all pass. Everything else you can take care of later on once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now then chances are it will never be needed.
 
 Maybe you do not fully understand yet how TDD is really going to work. Don’t worry. You should maybe first get some experience with normal tests. At least if you don’t immediately see how a test should look like. Or if you don’t know how the final interface of the code will look like. Yes, there are several things about TDD that seem a little odd and it takes time getting used to it. But it is worth the effort. Keep trying it once in a while and start using TDD more and more often.
 
@@ -2294,7 +2292,7 @@ You write one test for the feature you want to implement or the bug you want to 
 
 Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should. 
 
-Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is simply not yet implemented. Write just enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you understand it well enough until the test passes.
+Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is simply not yet implemented. Write just enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you find a good enough solution such that the test passes.
 
 Once the test passes you might have to refactor the code a little to get back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
 
@@ -2310,11 +2308,11 @@ Also, with TDD you have to do some bigger refactoring once in a while. This is i
 
 ### Importance of TDD
 
-As we learned in the chapter on interfaces, they should always be defined from the user perspective. With TDD you are taking the user perspective of your code. When writing a test, you are the user of the corresponding code. Therefore writing your tests before the code forces the programmer to adapt the code to the test. This is a good thing. It forces the programmer to write code that is adapting to the user and therefore the interface of the code becomes more user friendly.
+As we learned in the chapter on interfaces, they should always be defined from the user perspective. With TDD you are taking the user perspective of your code. When writing a test, you are the user of the corresponding code. 	Therefore writing your tests before the code forces the programmer to adapt the code to the test. This is a good thing. It forces the programmer to write code that is adapting to the user and therefore the interfaces of the code become more user friendly.
 
 ### Example
 
-Let's write a program that converts Arabic numbers (the once we use) into roman numbers. Let's write a first test case.
+Let's write a program that converts Arabic numbers (the once we use) into roman numbers. As we learned just now, we start by writing a first test case.
 
 ```py
 # inside test_roman_numbers.py
@@ -2332,7 +2330,7 @@ def roman_numbers(_):
 	return "I"
 ```
 
-This is perfectly viable code in TDD. There is no duplication and it does everything required to make the test pass. As there is nothing to refactor, we can continue with the second test.
+This code may look add at first sight, but it is perfectly viable code in TDD. There is no duplication and it does everything required to make the test pass, even if the function argument just gets ignored. As there is nothing to refactor, we can continue with the second test.
 
 ```py
 def test_two():
@@ -2347,8 +2345,7 @@ def roman_numbers(n):
 		return "II"
 ```
 
-Now the code started to become ugly. But at least for the time being we leave it as is.
-
+The code from the first test is not sufficient anymore. We have to use at least some `if/else` clause. You might feel the urge to refactor this code. But at least for the time being we leave it as is. The need to refactor the code is not yet strong enough.
 
 ```py
 def test_three():
@@ -2365,7 +2362,7 @@ def roman_numbers(n):
 		return "III"
 ```
 
-Now we have to refactor, otherwise this if else statement will take over. The new version of the code might look like this:
+Now the `if/else` statements start to take over. We have 3 possible cases and with a little bit of thinking we find an easy way to refactor them away. The new version of the code might look like this:
 
 ```py
 def roman_numbers(n):
@@ -2374,20 +2371,21 @@ def roman_numbers(n):
 
 Let's add a fourth test:
 
-
 ```py
 def test_four():
     assert roman_numbers(4) == "IV"
 ```
 
-We don't know how to deal with numbers > 4, so we may return any value we want.
+We don't know how to deal with `numbers > 4`, so we may return any value we want.
 
 ```py
 def roman_numbers(n):
-	if n >= 4:
+	if n == 4:
 		return "IV"
 	return n*"I"
 ```
+
+// add some comment?
 
 ```py
 def test_five():
@@ -2403,7 +2401,7 @@ def roman_numbers(n):
 	return n*"I"
 ```
 
-Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works.
+Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works. One possible outcome of this refactoring is the following code:
 
 ```py
 def roman_numbers(n):
@@ -2433,12 +2431,29 @@ def roman_numbers(n):
 	return num
 ```
 
-Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //??// that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle.
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter //??// that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for python versions >= 3.7. The following solution would probably be the best:
 
+```py
+from dataclasses import dataclass
+
+@dataclass
+class NumberPair:
+	arabic: int
+	roman: str
+
+def roman_numbers(n):
+	num = ""
+	arabic_roman = [NumberPair(5, "V"), NumberPair(4, "IV"), NumberPair(1, "I")]
+	for number_pair in arabic_roman:
+		while n >= number_pair.arabic:
+			n -= number_pair.arabic
+			num += number_pair.roman
+	return num
+```
 
 ## Fakes and Mocks
 
-There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending on how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case.
+There are many cases where you have to write a test but the code you want to test contains something you don’t want to test. Like a database or an internet connection. You want to have a fake database that returns the value you expect and will never fail. The solution is writing a database on your own. Not a complete one. One that does only what you really need for this test case. It implements every function you call and returns some values that you want. You may have to implement quite some logic into the fake database to implement the desired behavior, depending on how complex your test cases should be. Maybe you need different fake databases for different tests. You might need a dedicated database that throws an exception in some special case. All together programming such fake objects is a lot of work and it makes the code rigid as not all the functionality of the fake object are implemented.
 
 In general, there are two ways to use a set-up database. Faking and mocking.
 
@@ -2446,12 +2461,15 @@ In general, there are two ways to use a set-up database. Faking and mocking.
 
 //here I have to write about spies, mocks, fakes, stubs, etc! See clean craftsmanship, p.118
 
-The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file. In python this is easily done using the Mock library.
+The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file. In python this is easily done using the Mock library. Most other programming languages have similar mocking libraries as well.
 
 ```py
 from important_stuff import *
 
 from unittest.mock import Mock
+
+def read_csv(file_name):
+	# ...
 
 def test_mock_important_stuff():
 	# Override the `read_csv` function defined in important_stuff.py and simply return some values.
@@ -2462,15 +2480,17 @@ def test_mock_important_stuff():
 
 ### Faking
 
-//here I have to write about spies, mocks, fakes, stubs, etc! See clean craftsmanship, p.118
+// here I have to write about spies, mocks, fakes, stubs, etc! See clean craftsmanship, p.118
+// is there more to write about fakes/mocks/...?
+// wirte an example for a fake?
 
-A fake is a working version of the object you want to replace, albeit it's a simplified version. For example your fake csv reader does not read a file from the disk, but just returns a string stored in the code. For running tests this is usually good enough without having the drawback of dealing with the file system, where your original data could easily be deleted or messed with by anyone else.
+A fake is a working version of the object you want to replace, albeit it's a simplified one. For example your fake csv reader does not read a file from the disk, but just returns a string stored in the code. For running tests this is usually good enough without having the drawback of dealing with the file system, where your original data could easily be deleted or messed with by anyone else.
 
 Faking is usually closely related to dependency injection. For this reason these things are both explained at the same time in the next section.
 
 ### Dependency injection
 
-When using Dependency Injection (DI) you can create a new object from scratch, which pretends to read a csv file. But in reality it just returns a bunch of predefined numbers. This works if the `CsvReader` object implements a `Reader` interface and an instance of the `CsvReader` is handed over as a function argument. Then one can replace this function argument with an instance of a `MockReader`.  As python uses duck typing, one can also omit the definition of the interface. The whole code would look roughly as follows:
+When using Dependency Injection (DI) you can create a new object from scratch, which pretends to read for example a csv file. But in reality it just returns a bunch of predefined numbers. This works if the `CsvReader` object implements a `Reader` interface and an instance of the `CsvReader` is handed over as a function argument. Then one can replace this function argument with an instance of a `MockReader`.  As python uses duck typing, one can also omit the definition of the interface. The whole code would look roughly as follows:
 
 ```py
 from abc import ABC
@@ -2501,8 +2521,9 @@ Using DI is generally a very recommended practice and should always be used when
 
 These `Reader` objects should be instantiated as soon as possible. Usually this is possible at the point where the type of reader is selected, which is at a fairly high level of abstraction. The only drawback of DI is, that this object has to be passed through the whole stack down to the point where the database is actually used. On the other hand, this would have to be done with a string if DI was not used. Which certainly isn't any better. It just delays the selection process.
 
-You may choose whether you want to pass the `reder_type` or the `reader` as a function argument through the stack. But as we learned, you should not pass strings as function arguments. So passing the `reader` object is the preferred option.
+You may choose whether you want to pass the `reder_type` string or the `reader` object as a function argument through the call stack. But as we learned, you should not pass strings as function arguments. So passing the `reader` object is the preferred option.
 
+// make some comments on the code?
 ```py
 filename = ...
 if reder_type == "fake":
@@ -2512,9 +2533,9 @@ else:
 reader.read_file(filename)
 ```
 
-Delaying this decision would be a bad idea. Switch case selections should be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding reader object right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
+Delaying the decision to resolve the string would be a bad idea. Switch case selections should always be resolved as soon as possible. There will be one place in your code where the user (or you) selects the kind of database he wants to use. Create the corresponding reader object right away. Dependency injection is the way to do it and it prevents you from writing really bad code.
 
-DI is very similar to the strategy pattern. The main difference being what you want to achieve. DI is mostly used for testing meanwhile the strategy pattern is generally used to allow the user to make a selection at run time.
+DI is very similar to the strategy design pattern. The main difference being what you want to achieve. DI is mostly used for testing, meanwhile the strategy pattern is generally used to allow the user to make a selection at run time.
 
 ## Summary
 
@@ -2522,7 +2543,7 @@ Now don’t worry if you haven’t understood everything. I just explained very 
 
 As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection or the strategy pattern. You can also pass different function objects as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection with classes instead of injecting function objects. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
 
-So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid. // and now what...?
+So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid. // why so...?
 
 
 ### Copilot
