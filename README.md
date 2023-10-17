@@ -171,6 +171,9 @@ Things to write:
 		- [Dependency injection](#dependency-injection)
 	- [Summary](#summary-2)
 		- [Copilot](#copilot-6)
+- [DevOps](#devops)
+	- [The early 2000s](#the-early-2000s)
+		- [Getting a project](#getting-a-project)
 - [13. Refactoring](#13-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -2567,6 +2570,35 @@ def print_name(person=Person('John', 30)):
 ```
 
 // write something about CI/CD?
+
+# DevOps
+
+Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build to the release. But in order to understand more precisely, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
+
+## The early 2000s
+
+Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something like the main branch) and no one knew whether the code was really working. Possibly even without a merge request. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and definitely with the Agile Manifesto in 2001, testing really took up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one test, but several different kind of tests it becomes apparent that doing all the builds by hand won't scale. You have unit tests, integration tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
+- The code is formated according to specification
+- The static code analysis passes
+- The build passes
+- Building all the tests works
+- All the tests pass
+
+Even though there are companies that don't care about the formatting anymore. They just let the formatter being run in any merge request and locally the developers can use whatever format he likes.
+
+Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
+
+We have the development (Dev) and the IT operations (Ops) Bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building and testing of the new software.
+
+### Getting a project
+
+Furthermore getting started with an existing project was frequently a pain. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
+
+It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
+
+// what else to write?
 
 # 13. Refactoring
 “If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
