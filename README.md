@@ -193,6 +193,8 @@ Things to write:
 		- [Sketches](#sketches)
 	- [Copilot](#copilot-7)
 - [14. Understandable code](#14-understandable-code)
+	- [How humans think](#how-humans-think)
+	- [Writing understandable code](#writing-understandable-code)
 - [15. Programming languages](#15-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -2886,9 +2888,13 @@ As always, Copilot works best if you give it some step by step instructions.
 
 # 14. Understandable code
 
+// I somehow like this chapter, yet I feel like there is room for improvement
+
 "Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands anything, he doesn’t care. As long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
+## How humans think
+
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything, he doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
@@ -2898,15 +2904,17 @@ You can play terrible tricks with humans as we all follow the same laws of psych
 
 On the other hand, we are amazing at understanding complex processes by creating an abstract model of a process and analyzing different parts of it. We know a lot of different things and we can have an abstract imagination what would happen if we combine many of them. 
 
-We are also pretty good in communicating with others. Using the natural language. We are able to explain fairly difficult things and others understand us. Just as you (hopefully) understand what I write here. There are so many ways to communicate. There are so many ways I can explain something in this book here.
+We are also pretty good in communicating with others using the natural language. We are able to explain fairly difficult things and others understand us. Just as you hopefully understand what I write here. In your imagination you have some image of what I am writing about. There are so many ways to communicate. There are so many ways I can explain something in this book here.
 
 We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does.
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
-Most people driving a car have a fair idea how it works. It has an engine, wheels, breaks, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can probably guess quite well, which of all these parts broke.
+Most people driving a car have a fair idea how it works. It has an engine, wheels, breaks, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke.
 
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex you absolutely have to break it down. As long as someone can explain to you in words how something works, you can also write understandable code.
+## Writing understandable code
+
+So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as someone can explain to you in words how something works, you can also write understandable code.
 
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
