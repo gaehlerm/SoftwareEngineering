@@ -250,7 +250,6 @@ Things to write:
 	- [Observer](#observer-1)
 	- [Copilot](#copilot-11)
 - [20. Decoupling](#20-decoupling)
-	- [Exercises](#exercises-1)
 - [21. Physical laws of code](#21-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -267,7 +266,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-3)
-	- [Exercises](#exercises-2)
+	- [Exercises](#exercises-1)
 - [24. Datatypes](#24-datatypes)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -321,9 +320,9 @@ Things to write:
 		- [Docstring](#docstring)
 	- [Summary](#summary-4)
 	- [Copilot](#copilot-17)
-	- [Exercises](#exercises-3)
+	- [Exercises](#exercises-2)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-4)
+	- [Exercises](#exercises-3)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -340,7 +339,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-5)
+	- [Exercises](#exercises-4)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -3605,35 +3604,45 @@ This is one of the reasons why global variables and inheritance are not recommen
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
 
+// Are Micro serives the same? They can probably have inner states...
+
 Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. The only major difference being that the glue code in between micro services is much more dynamic than in functional programming. // https://youtu.be/4GnjjocWGOE
 
 // A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
-instead of asking what you want, you go to the service locator and reach through the service locator.
-https://youtu.be/RlfLCWKxHJ0 video on service locators
 
-Only ask for things you directly need. This is another advantage of functional programming or micro services. You have to validate an email, so you call the email validator which does the job for you, where the email validator can be either a micro service or a function. The email validator returns a result and terminates. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around.
+// instead of asking what you want, you go to the service locator and reach through the service locator. https://youtu.be/RlfLCWKxHJ0 video on service locators
+
+Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around.
 
 // Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
 
-One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
+One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192//. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
 - `o` itself;
 - `m`'s parameters;
 - any objects instantiated within `m`;
 - `o`'s attributes;
 
 The idea is to avoid so called train wrecks where you start chaining methods to achieve something. For instance you shouldn't write code as
+
 ```py
 car.get_engine().turn_on()
 ```
+
 Instead the `car` object should take over such function calls. Write a function inside the `Car` class `turn_on_engine()`,
+
 ```py
+car = Car()
 car.turn_on_engine()
+
+class Car:
+	# define _engine somewhere
+	def turn_on_engine(self):
+		self._engine.turn_on()
 ```
-Though as I already said before, this is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
 
-## Exercises
+This would be a perfect example for a delegating class, as we have discussed in the chapter on classes.
 
-// Compare 2 different versions of some code and let the reader figure out why one is more coupled than the other.
+Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
 
 # 21. Physical laws of code
 
