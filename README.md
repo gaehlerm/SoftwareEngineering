@@ -3208,11 +3208,11 @@ While OO programming is mostly based on classes, class instances and methods, pr
 
 // It this correct what I'm writing here? No classes? Not even structs?
 
-Functional programming is the way to program using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+Functional programming is the way to program using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
 
 Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier.
 
-Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are easy to understand.
+Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are always apparent and easy to understand.
 
 In many programming languages you can mimic functional programming to some degree by using only pure functions. And I highly recommend doing so. Using only functional programming, however, is quite tedious to get started with, but it's certainly worth the effort to get a new view on how programming can be done.
 
@@ -3222,6 +3222,7 @@ All different programming paradigms have its advantages and drawbacks. Statement
 
 ## Copilot
 Here is an example where copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
+
 ```py
 a = []
 for i in range(10):
@@ -3229,7 +3230,7 @@ for i in range(10):
 
 #rewrite the code above using functional programming paradigm
 
-# Path: code_examples/softare_paradigms.py
+// Path: code_examples/softare_paradigms.py
 a = []
 for i in range(10):
     if i % 2 == 0:
@@ -3251,9 +3252,9 @@ a = [i for i in range(10)]
 
 // https://refactoring.guru/design-patterns
 
-There is a famous book called design patterns [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, though it is a bit theoretical. In this chapter, I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
+There is a famous book called "Design Patterns" [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, though it is a bit theoretical. In this chapter, I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
-One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. [https://youtu.be/BPSuWUXyA58] Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
+One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. //https://youtu.be/BPSuWUXyA58// Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
 
 I tried to keep the descriptions and the code examples to the point to teach you only the basic idea of each design pattern. I'm not writing any UML diagramms, but show you a complete code example instead. If you don't understand one of the patterns, play around with the code, watch some youtube video or get one of the more extensive books on design patterns.
 
@@ -3322,19 +3323,14 @@ The builder pattern is generally used if you want to construct something that co
 
 ```py
 class House():
-    def set_roof(self, roof):
-        self.roof = roof
+    pass
 
-    def get_roof(self):
-        return self.roof
-
-# why old???
-class OldHouseBuilder():
+class HouseBuilder():
     def __init__(self) -> None:
         self.house = House()
 
     def build_roof(self):
-        self.house.set_roof("Copper roof")
+        self.house.roof = "Copper roof"
 
     def get_house(self):
         return self.house
@@ -3349,9 +3345,9 @@ class HouseEngineer():
     def make_house(self):
         self.house_builder.build_roof()
 
-houseEngineer = HouseEngineer(OldHouseBuilder())
-houseEngineer.make_house()
-my_home = houseEngineer.get_house()
+house_engineer = HouseEngineer(OldHouseBuilder())
+house_engineer.make_house()
+my_home = house_engineer.get_house()
 print("Roof Type: " + my_home.get_roof())
 ```
 
