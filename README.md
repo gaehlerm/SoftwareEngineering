@@ -429,7 +429,7 @@ In 2007 I had my first semester at university. It was the first time I learned p
 
 Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare to look at this code ever since. Already thinking about it makes me shudder.
 
-After my studies I wanted to improve my programming skills and bout the book “Effective modern C++” by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
+After my studies I wanted to improve my programming skills and bout the book “Effective modern C++" by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
 
 Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them thanks to the books I read. I got the job.
 
@@ -437,7 +437,7 @@ In the beginning a struggled a little. I was overwhelmed by the amount of code, 
 
 My boss wrote most of the code and the success of the company was based to a fair amount on his efforts. He knew everything, but I hardly ever understood what he was talking about. It was all too difficult. 
 
-Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the comment “I fell into a shit hole”. He opened my eyes. He made me realize the way he works was so much better. So much more structured. This was engineering. Software engineering.
+Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the comment “I fell into a shit hole". He opened my eyes. He made me realize the way he works was so much better. So much more structured. This was engineering. Software engineering.
 
 There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. This book is what this book is about. No fancy code. But fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by all the possibilities a programmer has. It also contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other engineering jobs. Therefore, a car or a computer are frequently better examples than some fancy code you struggle understanding.
 
@@ -469,9 +469,9 @@ I know you want me to get started and show you some fancy code examples. And I�
 
 Let me start with a very blunt question: What do you think does a software engineer do?
 
-“He writes code” may be your first response.
+“He writes code" may be your first response.
 
-“He engineers software” is a very smart one.
+“He engineers software" is a very smart one.
 
 Indeed, these answers contain some truth. But writing code covers only a tiny fraction of your future working day. One thing you will do is the same as we do right now: you analyze a problem and try to figure out what to do next. 
 
@@ -816,7 +816,7 @@ In this chapter we learn that interfaces exist not only in software but also in 
 
 Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot but the basic principles are very similar.
 
-“Plugs”, you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
+“Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
 An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. USB 3 has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved it is a very convenient solution for the users.
 
@@ -1383,11 +1383,11 @@ To sum it up, there are no big differences. `b(a)` offers somewhat better decoup
 
 ```Py
 # Function:
-if contains(names, “Donald”):
-   print(“Make America great again”)
+if contains(names, “Donald"):
+   print(“Make America great again")
 # Or method:
-if names.contains(“Barak”):
-   print(“Yes we can”)
+if names.contains(“Barak"):
+   print(“Yes we can")
 ```
 
 In this case I certainly prefer the second option from the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage to make the right decision, you are a great programmer.
@@ -1510,7 +1510,7 @@ Generally I don't regard this reason as sufficient to write setter and getter fu
 
 ## Coupling and Cohesion
 
-A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." (Robert C. Martin) If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes.” This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
+A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." (Robert C. Martin) If you don’t understand these expressions, we could rewrite it to: “There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
 ### Worker classes
 
@@ -1540,7 +1540,7 @@ Coupling is one of the reasons why I recommend not to use inheritance. Inheritan
 
 Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
 
-I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free” functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
+I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write “free" functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
 
 As we are talking about static, we can also discuss static variables as used for instance in C++. Static variables are similar to singletons and you’ll have a hard time testing classes containing static variables. Do not use singletons and do not use static variables. As soon as you start writing unit tests for static variables you'll see why I discourage using static variables.
 
@@ -1620,7 +1620,7 @@ dish =
 
 I think we can agree on the fact that OO programming is important and everyone should know about it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a big ball of mud. Many people simply don't know that this is an issue. As a rule of thumb we can say that your class design is fine as long as writing tests is not an issue.
 
-Follow the rule “use composition, not inheritance” and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
+Follow the rule “use composition, not inheritance" and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
 
 Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it a perfectly viable object.
 
@@ -1662,7 +1662,7 @@ This class is a mixture of a delegating class and a worker class. Convert it int
 
 Or my version of this rule: "Use composition, not inheritance"
 
-Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a” relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
+Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an “is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
 ## Drawbacks of Inheritance
 
@@ -1770,13 +1770,13 @@ But that's not the end of it. Of course, the company wants to make more money. T
 
 Obviously, this is highly frustrating. Every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Every release you waste 2 weeks of your time to do the same boring repetitive task. Every release, the company spends millions to test things that were already tested several times before. And even worse. As the software grows, the number of bugs increases. Some of them even slip through the expensive testing. And the release gets delayed as the bugs become harder and harder to fix. It's a nightmare.
 
-After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says “Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you a hundret Millions.”
+After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says “Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you a hundret Millions."
 
 Silence in the room. One hundret Millions??? You may laugh. But there are more than enough companies that would actually pay this amount. It’s an enormous amount, but at the same time the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It’s hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working and chances are the company will be bankrupt before you finish.
 
-On the other hand, the benefits for the company would be worth this amount. At first you might think “ah, spend one hundred Millions for saving 2 weeks of testing??”. But there is so much more to it.
+On the other hand, the benefits for the company would be worth this amount. At first you might think “ah, spend one hundred Millions for saving 2 weeks of testing??". But there is so much more to it.
 
-1.	You can release anytime the screen is green. If the team works well, you can release every day (“nightly build”)
+1.	You can release anytime the screen is green. If the team works well, you can release every day (“nightly build")
 1.	If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
 1.	There are less bugs as automated tests are more reliable than manual testing.
 
@@ -2602,7 +2602,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 // what else to write?
 
 # 13. Refactoring
-“If you wait until you can make a complete justification for a change, you’ve waited too long.” – Eric Evans
+“If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
 Refactoring is the art of changing existing code without altering its functionality. 
 
@@ -2700,7 +2700,7 @@ Most important of all, it is your code. You are responsible. You are the one to 
 
 ## Refactoring process
 
-Refactoring follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: “By refactoring I move the understanding from my head into the code.”
+Refactoring follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: “By refactoring I move the understanding from my head into the code."
 
 // add the graph from p.193, DDD. Refactoring is no linear process.
 
@@ -2783,7 +2783,7 @@ Let’s say you want to break a class into pieces, but it's really big. It has n
 
 ### Seams
 
-Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a “seam”. “A seam is a place where you can alter behavior in your program without editing in that place.” //WELC// Vice versa, you can edit it elsewhere, in the so-called enabling point.
+Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a “seam". “A seam is a place where you can alter behavior in your program without editing in that place." //WELC// Vice versa, you can edit it elsewhere, in the so-called enabling point.
 
 There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
 
@@ -2807,7 +2807,7 @@ The piece of code you hold in your hands between two seams may be way too big an
 
 ### Sketches
 
-Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a “scratch refactoring”. Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
+Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a “scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans?
 
@@ -3095,7 +3095,7 @@ for i in range(10):
 
 "It’s not a bug; it’s an undocumented feature." - Anonymous
 
-Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the consts are significant.
+Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
 
 I would briefly like to go through the different cases.
 
@@ -3107,7 +3107,7 @@ At the beginning of our programming careers, we were all bothered by the compile
 
 ## Bugs
 
-A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Anything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Everything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
 
 ### Cost of Bugs
 
@@ -3136,7 +3136,8 @@ Copilot is able to find some bugs. Though I expect it to find only minor bugs, t
             number -= key
     return roman
 ```
-Here I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
+
+I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
 
 Once again, there is the question whether this bug was fixed because copilot knows the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
 
@@ -3144,38 +3145,41 @@ Once again, there is the question whether this bug was fixed because copilot kno
 
 // throw exceptions only for the exceptional case. Exceptions are expensive as they do stack unwinding, etc. Only throw exceptions for the really exceptional cases. In C++ they have soon std::expected instead.
 
-Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Or if the software knows that it shouldn’t do something. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet they have to be taken care of. The user has to be noticed to fix the problem.
+Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
 
-User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. Check the sensitive values and return a useful message instead. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible.
+User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. The user should know which of these variables caused the exception. Check the sensitive values and return a useful message. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible. Check if there is enough disk space before you start writing a file. Check if a division by zero can occure before you start your calculation.
 
-In case of connection problems or missing disk space, the user needs a corresponding error message to be able to resolve the issue. “no network connection available”, “not enough disk space”, etc.
+In case of problems with the internet connection or missing disk space, the user needs a corresponding error message to be able to resolve the issue. "no network connection available", "not enough disk space", etc.
 
 ### Wrapping exceptions
 
-You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it possibly should be terminated anyway. But in serious software development you cannot allow this to happen. It is recommended to define your own error types. Put a try catch block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong. Add another try catch block around the whole program in order to catch all exceptions. These are unexpected errors, bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
+You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this corner case to happen. Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
 
-Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state. This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
+Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, also known as walking wounded. This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
+
+The code how to deal with exceptions should look roughly like this:
 
 ```Python
-if __name__ == “__main__”:
+if __name__ == "__main__":
 	try:
 		main()
-	except CustomException:
-		# You defined this exception, so you know what went wrong.
-		# Return some error message how to resolve the issue
-	except:
-		# You don't know what went wrong. The user should send in a bug report.
+	except CustomException as e:
+		print("Unable to process user input:")
+		print(e.what())
+	except Exception as e:
+		print("Unknown issue. Please contact our customer support.")
+		print(e.what())
 ```
 
-Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be only one line of code within each option, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
+Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
 
-One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it.
+One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
 
 Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We go into more details in the section on dependency injection. 
 
 ### Exceptions and goto
 
-By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edgar Dijkstra wrote the famous paper “Goto considered harmful” which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not all that bad. They were only used in a bad manner as you can write terrible spaghetti code using goto statements.
+By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edgar Dijkstra wrote the famous paper "Goto considered harmful" which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
 
 
 # 18. Programming Paradigms
@@ -4018,7 +4022,7 @@ Enums are something many software developers don’t know. You don’t need it. 
 is_blue = True
 
 # 2. string:
-favorite_color = “blue”
+favorite_color = “blue"
 
 # 3. integer:
 favorite_color = 7
@@ -4041,9 +4045,9 @@ The first four options all have some severe drawbacks.
 
 The first one is dead ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Use booleans cautiously.
 
-The second one looks reasonable but it’s easy to introduce bugs. If you write `“blu”` instead of `“blue”` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
+The second one looks reasonable but it’s easy to introduce bugs. If you write `“blu"` instead of `“blue"` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
 
-Sometimes such kind of objects are also called “string typed”. Strings are being abused for storing all kind of different data that it shouldn’t be used for.
+Sometimes such kind of objects are also called “string typed". Strings are being abused for storing all kind of different data that it shouldn’t be used for.
 
 Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard. For example the RGB standard, `blue = [0,0,255]`.
 
@@ -4057,11 +4061,11 @@ Enums can only be used if you know all possible options when writing the code. I
 
 // stay pragmatic. Once in a while an if statement is not too bad. This is more of a general advice.
 
-“Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. But it has to be said: Booleans are evil.”
+“Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. But it has to be said: Booleans are evil."
 
-“What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?”
+“What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?"
 
-“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil. There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil, but dangerous.”
+“Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil. There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil, but dangerous."
 
 I may be exaggerating slightly. But it’s true. Humans cannot deal with Booleans and if statements. Accept your faith and learn dealing with it.
 -	Good code design leads to few if statements.
@@ -4081,9 +4085,9 @@ This is how the code should not look like. Even though it's short and looks neat
 ```py
 def get_post_code(town_name)
 	match town_name:
-		case “Zurich”:
+		case “Zurich":
 			return 8000
-		case “Bern”:
+		case “Bern":
 			return 3000
 
 get_post_code("Zurich")
@@ -4101,12 +4105,12 @@ class Bern:
 
 def cerate_town(town_name):
 	match town_name:
-		case “Zurich”:
+		case “Zurich":
 			return Zurich
-		case “Bern”:
+		case “Bern":
 			return Bern
 
-town = create_town(“Zurich”)
+town = create_town(“Zurich")
 town.postcode()
 ```
 
@@ -4116,7 +4120,7 @@ A small side remark: In this case, it would be worth having a dict instead of th
 
 ## Strings
 
-“You should never use two different languages in a single file. English is also a language” // ?
+“You should never use two different languages in a single file. English is also a language" // ?
 
 After pointers and Booleans, strings are probably the third most dangerous data type. Many programmers check 2 strings for equality. One of them is written in plain text in the code. A twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
 
@@ -4126,7 +4130,7 @@ Some people even start to encode all kind of logic into strings. This is dreadfu
 
 This example I found in book Clean Code on p.128 where Robert C. Martin (aka. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code like that. 
 
-He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl”`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h”` is even used twice. Like this the code becomes extra brittle.
+He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `“hbCHl"`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `“h"` is even used twice. Like this the code becomes extra brittle.
 
 The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is not possible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary.
 
@@ -4176,7 +4180,7 @@ The code using this dataclass is super simple. Opposite to the string solution t
 
 ```py
 if water_state.high_temp_alert == State.On:
-	print(“Attention: the water is too hot”)
+	print(“Attention: the water is too hot")
 ```
 
 ### Natural Language
@@ -4350,7 +4354,7 @@ Now this is just a little example in between how constantly considering how func
 
 # 26. Naming
 
-"And you will know, my name is the Lord!” – Samel L. Jackson, Pulp fiction
+"And you will know, my name is the Lord!" – Samel L. Jackson, Pulp fiction
 
 How long does a football game take? This is a very innocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
 
@@ -4362,7 +4366,7 @@ Choosing good names is paramount in programming. You certainly don’t want to r
 
 Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
 
-“When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect.” Feathers p.340 
+“When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." Feathers p.340 
 
 Here are some rules to follow when naming things:
 
@@ -4376,7 +4380,7 @@ Here are some rules to follow when naming things:
 8.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
 9.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
 10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way.
-11.	Avoid “if”, “and” or “or” in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
+11.	Avoid “if", “and" or “or" in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
@@ -4419,7 +4423,7 @@ Try to find better names for the following code:
 
 # 28. Complexity
 
-“I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it.” – Bill Gates
+“I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
 
 ## Complexity of code
 
@@ -4473,7 +4477,7 @@ Now this is still one of the more readable inline list initializations. But it i
 
 ## Back magic code
 
-Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this.”
+Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: “I hope I’ll never have to touch this."
 
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
@@ -4763,7 +4767,7 @@ Figure out what kind of hidden files (starting with a `.`) your toools support a
 
 # 31. Performance Optimization
 
-“Premature optimization is the root of all evil” - Donald Knuth
+“Premature optimization is the root of all evil" - Donald Knuth
 
 One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years while the prices dropped as well. Modern programming languages like python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
@@ -4795,9 +4799,9 @@ Comments are a very double-edged sword. While they may be useful at times, they 
 
 ## Bad comments
 
-“Comments? Don’t.”
+“Comments? Don’t."
 
-“Why?”
+“Why?"
 
 ```py
 def add(a,b):
@@ -4809,9 +4813,9 @@ Of course, I exaggerated in this example. I just wanted to make a point. But the
 
 I do not share this opinion at all. In my opinion this comment is just useless. Read the function name. It explains exactly what the function does. And if you are not sure take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
 
-“Yes, but it’s only one line of comment. It can’t hurt us.”, you might say. 
+“Yes, but it’s only one line of comment. It can’t hurt us.", you might say. 
 
-“NO!”
+“NO!"
 
 Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough before. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions, you can’t enforce that a comment stays at its correct location. You will end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cause bugs.
 
@@ -4984,7 +4988,7 @@ Personally, I don’t care too much about the formatting style. If I have a choi
 
 There are different programs available that check your code on the most common quality issues. I don’t know too much about them but it’s certainly worth a try. One example is the test coverage tool. Tough this metric shouldn’t be abused as a business metric. Use it to check that you have (almost) all code covered by your unit tests.
 
-If you use C++ or another compiled language, your most important quality checker tool is the compiler. Enable the “treat warnings as errors” setting for all different groups of warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. Because why should you search for bugs yourself if the compiler can do the job?
+If you use C++ or another compiled language, your most important quality checker tool is the compiler. Enable the “treat warnings as errors" setting for all different groups of warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. Because why should you search for bugs yourself if the compiler can do the job?
 
 ## Pip, cmake
 
@@ -5049,13 +5053,13 @@ Get acquainted with Git and some other tools mentioned here.
 
 // https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/
 
-This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the “Ubiquitous language” (Evans) it forms the heart of that book and will be explained in this chapter here.
+This chapter is highly influenced by Eric Evans book Domain-Driven Design (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the “Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here.
 
 ## Ubiquitous Language
 
 There are very few topics that are described mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
 
-It takes a lot of effort to understand the topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named “Ubiquitous language” by Eric Evans.
+It takes a lot of effort to understand the topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named “Ubiquitous language" by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
 
@@ -5341,7 +5345,7 @@ Functions asking for more information than they need. They ask for a complicated
 
 # 37. 3rd party software
 
-“Prefer visa over power shell” – some YouTube video 
+“Prefer visa over power shell" – some YouTube video 
 
 // where to write about integration?
 // In the google book they write a whole chapter about the problems on how to deal with 3rd party libraries. This really seems to be an issue.
@@ -5556,7 +5560,7 @@ In case you do pair programming, you may skip the code review phase all together
 
 # 41. Working with existing projects
 
-Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project.” Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?” Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
+Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. “One beer please! Just before I am forced to tell you how to wiggle around in an existing project." Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself “Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
 You might be motivated to suggest a complete rewrite of the code. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. It’s worth millions. You are not going to fix it in a few months.
 
@@ -5578,7 +5582,7 @@ If you work on an existing project, there might be no or only an insufficient nu
 
 TODO: read through again. Is there duplication with the agile section?
 
-“We take the most experienced engineer. He spends 2 days making various attempts to estimate the amount of work required. In the end he takes the highest estimate and multiplies it by two.” – unknown
+“We take the most experienced engineer. He spends 2 days making various attempts to estimate the amount of work required. In the end he takes the highest estimate and multiplies it by two." – unknown
 
 Planning major projects is extremely hard, not only in software engineering. Architects and civil engineers plan houses and streets all the time so they’ve become fairly good at it. But as soon as there is something much bigger they never did before, they start struggling. Frequently they are quite good but there are always cases where things go haywire. Not only at the Berlin airport.
 
@@ -5614,7 +5618,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 # 43. Agile
 
-“Intelligence is the ability to adapt to change.” – Stephen Hawking, among others
+“Intelligence is the ability to adapt to change." – Stephen Hawking, among others
 
 All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner. - Fundamentals of Software Architecture
 
@@ -5656,7 +5660,7 @@ The ticket size is estimated at the sprint planning. For each ticket, the number
 
 Tickets all have business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
 
-At the same time, one can write acceptance tests for every ticket. “… if the user clicks x, then the window closes.” This is also the acceptance criterion of the ticket: does the acceptance test pass?
+At the same time, one can write acceptance tests for every ticket. “… if the user clicks x, then the window closes." This is also the acceptance criterion of the ticket: does the acceptance test pass?
 
 ## QA
 
@@ -5735,7 +5739,7 @@ It takes a little bit of courage to work as a software engineer. If you are alwa
 
 Instead you need something to keep your courage up. Something that takes you the fear of breaking stuff. That allows you to refactor code even though you are not exactly sure whether your refactoring really works or not. You need good test coverage. Good test coverage is the only thing that allows you to keep your courage and refactor code as you go. It is the only thing that can prevent your code from rotting. It is the only thing that can keep your productivity up.
 
-You also need courage to be honest. The very first thing is you have to be able to say “No.” Your manager will ask you many questions throughout your career and he hopes you to say yes. But if the real answer is no, you have to tell him so. Lying to him and saying that you will be able to do something that you are not will not do you any good, nor will it to you manager. He’ll be making plans based on wrong assumptions that will not work out.
+You also need courage to be honest. The very first thing is you have to be able to say “No." Your manager will ask you many questions throughout your career and he hopes you to say yes. But if the real answer is no, you have to tell him so. Lying to him and saying that you will be able to do something that you are not will not do you any good, nor will it to you manager. He’ll be making plans based on wrong assumptions that will not work out.
 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
@@ -5816,7 +5820,7 @@ In acceptance_tests/test_dinner.py
 ```
 python dinner.py
 // how to get the printed value?
-Assert(expression.contains(“I’m so happy.”))
+Assert(expression.contains(“I’m so happy."))
 ```
 That’s it. We won’t have to touch the acceptance test anymore until the ticket is done. Note that I used the function contains to make the test a little more flexible. Your dad might say other things as well that we don’t care about.
 
@@ -5830,7 +5834,7 @@ And we see that it fails. That was to be expected, we didn’t implement anythin
 
 Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
 ```
-Apple_pie = create(“apple_pie”)
+Apple_pie = create(“apple_pie")
 Dad Dad
 Dad.eat(apple_pie)
 ```
@@ -5838,8 +5842,8 @@ Next we implement dad and then the create function.
 ```
 Class Dad:
     Def Eat(food):
-       If food.name == “apple_pie” and food.flavour == very_creamy
-          Print(“I’m so happy”)
+       If food.name == “apple_pie" and food.flavour == very_creamy
+          Print(“I’m so happy")
 ```
 
 ## Paint
