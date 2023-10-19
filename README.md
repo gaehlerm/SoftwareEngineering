@@ -3245,7 +3245,7 @@ a = [i for i in range(10)]
 
 "An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, https://youtu.be/YMAwgRwjEOQ
 
-// not sure yet what I should write about design patterns.
+// not sure yet what I should write about design patterns. And about which design patterns.
 
 // visit the youtube videos of Derek Banas, https://youtu.be/vNHpsC5ng_E
 
@@ -3678,13 +3678,15 @@ Perhaps we should take more care when making software decisions just as we do wh
 
 # 22. Software Architecture
 
+// This chapter is proabably one of the biggest constructions in this book.
+
 Architecture: "the decisions you wish you could get right early" - Ralph Johnson
 
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
 // where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
 
-// DDD p. 61: Every technical employee working on the model also has to write code. For large projects, however, there still have to be some persons responsible for making higher level design choices.
+// DDD p. 61: Every technical employee working on the model also has to write code. For large projects, however, there still has to be some person responsible for making higher level design choices.
 
 // should I eplain the different architecture types? horizontal, hexagonal, onion layers?
 
