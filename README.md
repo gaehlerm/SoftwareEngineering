@@ -3184,15 +3184,15 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 # 18. Programming Paradigms
 
-There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python where you can mix these 3 different programming paradigms.
+There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python, or even C++, where you can mix these 3 different programming paradigms.
 
 ## Object Oriented programming
 
-Object Oriented (OO) programming started in the 80ies. It peaked with the still very wide spread languages C++ and Java. Somehow the whole software developer community became absolutely ecstatic about it. OO programming is great. It makes everything so easy. It is the natural representation of things. It will save the world!!!
+Object Oriented (OO) programming started in the 70ies. It peaked with the still very wide spread languages C++ and Java. Somehow the whole software developer community became absolutely ecstatic about it. OO programming is great. It makes everything so easy. It is the natural representation of things. It will save the world!!!
 
-It still amazes me how some half-baked promises can cause such dynamics in a group of highly intelligent people. Come up with some buzz words and the crowd does the rest. Even in times before social media. The only explanation I have is that the software engineers were all sitting in their basement and missed everything else out there. They had to create their own hype instead.
+It still amazes me how some half-baked promises can create such dynamics in a group of highly intelligent people. Come up with some buzz words and the crowd does the rest. Already in times before social media. The only explanation I have is that the software engineers were all sitting in their basement and missed everything else out there. They had to create their own hype instead.
 
-Well, now let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And most things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
+Well, now let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
 
 Don’t use any other OO feature than plain classes and abstract base classes or interfaces.
 
@@ -3200,9 +3200,13 @@ Don’t use any other OO feature than plain classes and abstract base classes or
 
 ## Procedural programming
 
+// look at the wikipedia article about procedural programming
+
 While OO programming is mostly based on classes, class instances and methods, procedural programming depends mostly on functions and logical operations. In procedural programming, functions are more important than data types. Though, contrary to functional programming, you are allowed to have hidden states and use output arguments. This simplifies writing code at times but the code created this way is harder to understand due to the additional complexity.
 
 ## Functional programming
+
+// It this correct what I'm writing here? No classes? Not even structs?
 
 Functional programming is the way to program using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
 
