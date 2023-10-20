@@ -282,9 +282,9 @@ Things to write:
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [25. Variable Properties](#25-variable-properties)
+- [25. Additional Properties of Variables](#25-additional-properties-of-variables)
 	- [Compile-time constant](#compile-time-constant)
-	- [Constant](#constant)
+	- [Runtime Constant](#runtime-constant)
 	- [Mutable](#mutable)
 	- [Member variables](#member-variables)
 	- [Static Variables](#static-variables)
@@ -4336,31 +4336,33 @@ C++ used pointers everywhere. Pointers were used to point to a certain location 
 
 The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care about pointers at all.
 
-# 25. Variable Properties
+# 25. Additional Properties of Variables
+
+// find a better title?
 
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
-The most common way to structure data is having nested classes where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
+The most common way to structure data is having nested classes and lists, where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
 
-// add reference, …? 
+// add reference, ...?
 
 Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
 
 ## Compile-time constant
 
-Compile-time constants are the least powerful. They are known at the time you write the code and will never change their value. In python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t clutter your code. Otherwise there is nothing you can do wrong with them.
+Compile-time constant is the least powerful variable type. They are known at the time you write the code and will never change their value. In python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t let them clutter your code. Otherwise there is nothing you can do wrong about them.
 
-In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time.
+In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time. This allows the compiler to do all kind of optimization as many expressions can be evaluated at compile time.
 
-## Constant
+## Runtime Constant
 
-Compared to compile-time constants, constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
+Compared to compile-time constants, runtime constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
 
-Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the correct object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead.
+Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead. If it's global it will be acting as a hiddeng state, making it much harder to write tests.
 
 ## Mutable
 
-In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
+In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is, little surprising, the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
 
 One option is to work more with immutable objects. For example you can replace the following code,
 
@@ -4376,15 +4378,15 @@ prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
 
-It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates partially the SRP. This is partially the case here as the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
+It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates slightly the SRP. This would speak in favour for the second solution creating a new variable for the sorted list. In the first case, the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
 
-On the other hand, the second solution may be a performance bottleneck as it needs more memory. This may be a problem for large lists.
+On the other hand, the second solution may be a performance bottleneck as it needs more memory. This could be a problem for large lists.
 
 ## Member variables
 
 Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
 
-Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. This is one reason why classes have to be small. 
+Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables.
 
 Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be.
 
@@ -4392,7 +4394,7 @@ Passing output arguments to functions makes the code obscure as well. The best s
 
 Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
 
-If a static variable is const, one could also create a free const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
+If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
 
 If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
 
@@ -4400,13 +4402,15 @@ And if you don't believe me, try to write unit tests for a class containing stat
 
 ## Dynamic Variables
 
+// it's one of the main reasons, yet I write that little about it?
+
 Dynamic variables are the main reason why I was writing this chapter. With dynamic variables I mean mostly entries of dictionaries. Pseudo variables that can be created at run time. An extremely powerful tool, yet one, that requires some understanding about when to use it. Read chapter Datatypes for more information about dicts.
 
 ## Global Variables
 
 You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
 
-Let’s say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
+Let's say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of a public square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
 
 Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
 
@@ -4414,31 +4418,31 @@ Now as you already realized, global variables are bad because everyone can chang
 
 ## Variable comparison
 
-// call it differently than effects? Rewrite this section. It's confusing.
+The different variables we looked are different with regards to how easy they can be changed. Starting with a local constant that cannot be changed and accessed only locally to a global variable that everyone can access and change. This amount of accessability has to be chosen correctly for every variable you work with. You can barely write code with only compile time constants and if you use only global variables you'll soon end up with spaghetti code. Generally it’s best to choose variables with the least possible effects that let's you still implement what you want. Prefer too little accessability over too much. You can still change it later on.
 
-I’d like to briefly sort different kind of variables by the amount of effects they may have, starting with the least side effects. Having many effects of course makes it easier to program as you can do pretty much whatever you want, but at the same time makes it extremely hard to keep everything under control. It’s best to choose variables with the least possible effects that let's you still implement what you want.
+Here is a rough list how variable types are sorted by the accessability they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
 
-Here is a rough list how variable types are sorted by the amount of effects they have, starting with the least.
+Constant < Immutable object < mutable object < class variable < inherited variable < singleton <= global variable
 
-Immutable object < mutable object < class variable < inherited variable < singleton < global variable
+There is certainly nothing wrong with constants. It's just that they can't do much. They are just there and do nothing.
 
-There is certainly nothing wrong with immutable objects. We just can’t do it without them. It's just that they can't do much. They are just there and do nothing. They can only be used within the current scope and when passed as a function argument their value can't be changed. If you like working only with immutable objects, I can recommend you functional programming.
+Immutable objects can only be used within the current scope and when passed as a function argument their value can't be changed. If you like working only with immutable objects, I can recommend you functional programming.
 
-With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure you only change the first argument of a function call, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
+With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
 
-Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big.
+Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise the class has too much hidden state.
 
-Inherited variables are even worse than class variables. You don’t see at first sight where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor where they belong to. Compared to composition giving you one ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is certainly one of the reasons why it's better not to use inheritance at all.
+Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. Compared to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the reasons why it's better not to use inheritance at all.
 
 // why not to use the singleton: 97-things-every-programmer-should-know chapter 73
 
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. However singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is generally discouraged to use singletons. // performance??
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one.
 
 Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
 
 With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
 
-Immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
+Constants and immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
 
 
 
@@ -4456,7 +4460,7 @@ void writeField(Outputstream outputStream, Sting field){
 }
 ```
 
-where outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
+where Outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
 
 Here Feathers could have modified the string within its own function and keep the code much more readable.
 
