@@ -308,13 +308,13 @@ Things to write:
 	- [HDF5](#hdf5)
 		- [Copilot](#copilot-16)
 	- [Databases](#databases)
+		- [Copilot](#copilot-17)
 	- [Custom file format](#custom-file-format)
-	- [Exercise](#exercise)
 - [30. Setting up a project](#30-setting-up-a-project)
 	- [Project folder](#project-folder)
-	- [Exercise](#exercise-1)
+	- [Exercise](#exercise)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [Exercise](#exercise-2)
+	- [Exercise](#exercise-1)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -322,16 +322,16 @@ Things to write:
 	- [Useful comments](#useful-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-4)
-	- [Copilot](#copilot-17)
+	- [Copilot](#copilot-18)
 	- [Exercises](#exercises-1)
 - [33. Logging](#33-logging)
 	- [Exercises](#exercises-2)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
-		- [Copilot](#copilot-18)
-	- [Command line](#command-line)
 		- [Copilot](#copilot-19)
+	- [Command line](#command-line)
+		- [Copilot](#copilot-20)
 	- [IDE](#ide)
 	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
@@ -4603,17 +4603,17 @@ It is much better to be honest. The problem is complex and we break down the com
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 
-The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't go into those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
+The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't explain those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
 
 ## CSV
 
-Comma Separated Values (CSV) is probably the simplest file format. You save numbers and separate them by commas or whatever other character you feel like. But this is also one of the weaknesses of CSV. In some (natural) languages, the comma character is used for the floating point separator (exact name??). Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems.
+Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
 
 CSV is no file standard so you can do anything you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
 
-Long story short: CSV is the file format everyone uses who doesn’t know anything better.
+Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
 
-Here is some example code how to read a CSV file:
+Here is some example code how to read a CSV file having to columns separated by commas and lines starting with `#` are comments:
 
 ```py
 def read_csv(filename):
@@ -4632,29 +4632,35 @@ def read_csv(filename):
 ### Copilot
 
 Copilot seems to be getting along with csv files quite well. Though I would have expected the data to be saved in columns instead of rows. But as I already said, there is no real standard for CSV files, thus such things have to be specified to Copilot.
+
 ```py
 x = [1,2,3,4]
 y = [5,6,7,8]
 # write x and y to a csv file called 'data.csv'
 ```
+
 This prompts the following code:
+
 ```py
-import csv
-with open('data.csv', 'w') as f:
-    writer = csv.writer(f)
-    writer.writerow(x)
-    writer.writerow(y)
+with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['x', 'y'])
+    for i in range(len(x)):
+        writer.writerow([x[i], y[i]])
 ```
+
+Besides the forgotten `import csv`, the code does pretty much what it should.
 
 ## Json
 
-The JavaScript Object Notation (json) file format is clearly the best file format for everyday purposes. It is very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
+The JavaScript Object Notation (json) file format is probably one of the best file format for everyday purposes. Its libraries are very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
 
-Once you use json on a more serious project, you might want to use a schema to check the files for correctness. You may use different schema for different versions of your interface. And before I let you write schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
+Once you use json on a more serious project, you might want to use a schema to check your files for correctness. You may use different schema for different versions of your interface. And before you write a schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
 
 Thanks to schema, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
 
 The following code creates a json file:
+
 ```py
 import json
 
@@ -4668,6 +4674,7 @@ if __name__ == "__main__":
 ```
 
 Meanwhile this code here reads out the data.
+
 ```py
 import json
 
@@ -4680,25 +4687,32 @@ if __name__ == "__main__":
     print(data['x']) # prints [1,2,3]
     print(data['y']) # prints [4,5,6]
 ```
+
 As you can see, working with json files is much easier and less error prone than working with CSV files. The underlying data structure is a dict, which is a pretty bullet proof way to work with data. There is hardly a way to introduce unnoticed bugs.
 
 ### Copilot
 Reading and writing json files using Copilot works out pretty well. Upon writing the following code
+
 ```py
 a = [1,2,3]
 b = [4,5,6]
 # write a and b to a json file called 'data.json'
 ```
+
 Copilot makes the following suggestion:
+
 ```py
 import json
 with open('data.json', 'w') as f:
     json.dump({'a':a, 'b':b}, f)
 ```
+
 Also when reading a json file, the suggestion of Copilot is quite sound. Following the comment
+
 ```py
 # read the json file into a and b
 ```
+
 Copilot makes the following suggestion:
 ```py
 with open('data.json', 'r') as f:
@@ -4706,15 +4720,17 @@ with open('data.json', 'r') as f:
     a = data['a']
     b = data['b']
 ```
-Thus one can say that Copilot allows us to save some time writing code and saving brain memory when working with json files.
+
+Thus one can say that Copilot allows us to save some time writing code and saving some brain memory cells when working with json files.
 
 ## XML
 
-The eXtensible Markup Language (XML) is very similar to json. It’s a bit older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
+The eXtensible Markup Language (XML) is very similar to json. It’s slightly older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily human readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
 
 Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
 
 The following code converts an XML file into a json object:
+
 ```py
 import json
 import xmltodict
@@ -4723,7 +4739,9 @@ with open("data.xml") as xml_file:
     data_dict = xmltodict.parse(xml_file.read())
     json_data = json.dumps(data_dict)
 ```
+
 Writing XML files is rather tedious as well. Here I recommend as well to work with json data and convert it to XML just before writing.
+
 ```py
 import json
 import xmltodict
@@ -4735,13 +4753,16 @@ with open("person.xml", 'w') as file:
 ```
 
 ### Copilot
-Copilot struggles a lot when dealing with XML files. It seems as if it didn't know the xml libraries that would simplify it's life. Instead it assembles strings into an XML file by itself which results in very brittle code that is very hard to read.
+Copilot somehow struggles a lot when dealing with XML files. It seems as if it didn't know the xml libraries that would simplify it's life. Instead it assembles strings into an XML file by itself which results in very brittle code that is very hard to read.
+
 ```py
 x = [1,2,3]
 y = [4,5,6]
 # write x and y to an xml file called 'data.xml'
 ```
-This code worked out without any problems for json files, but for XML the result at the time of writing was unsatisfactory. The suggestion of Copilot is:
+
+The first version of Copilot I used wasn't able to write proper XML files. Instead of using a library it was creating the string from scratch:
+
 ```py
 with open('data.xml', 'w') as f:
     f.write('<data>\n')
@@ -4750,13 +4771,17 @@ with open('data.xml', 'w') as f:
         f.write(f'\t<y>{y[i]}</y>\n')
     f.write('</data>')
 ```
+
 Now this does the job, but this is certainly not how an XML file is supposed to be created. Reading XML files is even worse.
+
 ```py
 x = []
 y = []
 # read the xml file into x and y
+
 ```
 The code Copilot suggests is extremely brittle and doesn't even work in my case. Somehow Copilot doesn't seem to know about XML libraries that would simplify its life a lot.
+
 ```py
 with open('data.xml', 'r') as f:
     for line in f:
@@ -4764,6 +4789,25 @@ with open('data.xml', 'r') as f:
             x.append(int(line[3:-5]))
         elif '<y>' in line:
             y.append(int(line[3:-5]))
+```
+
+But during the last few months, Copilot improved and now writing XML files is done with an ElementTree. This is certainly a much better approach.
+
+```py
+import xml.etree.ElementTree as ET
+x = [1,2,3]
+y = [4,5,6]
+
+root = ET.Element("data")
+
+x_elem = ET.SubElement(root, "x")
+x_elem.text = ",".join(str(i) for i in x)
+
+y_elem = ET.SubElement(root, "y")
+y_elem.text = ",".join(str(i) for i in y)
+
+tree = ET.ElementTree(root)
+tree.write("data.xml")
 ```
 
 ## HDF5
@@ -4782,13 +4826,13 @@ with h5py.File("temp.hdf5", "w") as f:
 ```
 
 Reading a file returns an HDF5 file object. It may be a little intimidating at first, but it is fairly easy to work with. With many respects, it behaves similar to a dictionary.
+
 ```py
 import h5py
 
 with h5py.File('temp.hdf5', 'r') as f:
     print(list(f.keys()))
     print(list(f['x']))
-
 ```
 
 As HDF5 is a binary format you cannot look at the data using a text editor. Instead you have to use the HDFview software, https://www.hdfgroup.org/downloads/hdfview/
@@ -4796,20 +4840,23 @@ As HDF5 is a binary format you cannot look at the data using a text editor. Inst
 ### Copilot
 
 Copilot seems to be getting along quite well with HDF5. On the following code snippet:
+
 ```py
 x = [1,2,3,4]
 # write x to an hdf5 file called 'data.hdf5'
 ```
+
 Copilot correctly complements it to
+
 ```py
 with h5py.File('data.hdf5', 'w') as f:
     f.create_dataset('x', data=x)
 ```
+
 Also reading out data from an HDF5 file is no problem.
+
 ```py
 # read the hdf5 file into x
-```
-```py
 with h5py.File('data.hdf5', 'r') as f:
     x = list(f['x'])
 ```
@@ -4820,13 +4867,58 @@ Databases (DB) are used for big amount of data that you want to analyze but does
 
 I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
 
+Also make sure a database is not the heart of your software. It's just a place to save data. It can be replaced by a text file if needed!
+
+sqlite is probably the easiest to use database. That's why I make a short example here. Compared to other databases, creating or migrating an sqlite database is trivial.
+
+Here is the code to create a database and add some movie objects.
+
+```py
+import sqlite3
+con = sqlite3.connect("tutorial.db")
+cur = con.cursor()
+cur.execute("CREATE TABLE movie(title, year, score)")
+cur.execute("""
+    INSERT INTO movie VALUES
+        ('Monty Python and the Holy Grail', 1975, 8.2)
+""")
+con.commit()
+```
+
+### Copilot
+
+The database can also be created by Copilot. Let's define a movie object.
+```py
+import sqlite3
+
+class Movie():
+    def __init__(self, title, year, score) -> None:
+        self.title = title
+        self.year = year
+        self.score = score
+
+indiana_jones = Movie('Indy', 1981, 8.5)
+```
+
+Copilot 
+
+```py
+# create a SQLite database containing the indiana_jones movie
+conn = sqlite3.connect('movies.db')
+c = conn.cursor()
+
+c.execute('''CREATE TABLE movies
+             (title text, year integer, score real)''')
+
+c.execute("INSERT INTO movies VALUES (?, ?, ?)", (indiana_jones.title, indiana_jones.year, indiana_jones.score))
+
+conn.commit()
+conn.close()
+```
+
 ## Custom file format
 
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything in your like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
-
-## Exercise
-
-// Create an exercise where the user has to save some data by himself and remove the examples in the code? But somehow I don't like removing the examples in the code.
 
 # 30. Setting up a project
 
