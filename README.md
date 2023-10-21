@@ -340,7 +340,6 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-1)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -5079,35 +5078,35 @@ def roman_number(number):
 
 The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
 
-The most obvious drawback is that logging needs time to be implemented. It’s not a huge amount, yet it may add up.
-
-Logging is usually not needed. Most code is deterministic. You run the same code twice it will do the exact same thing, down to some rounding errors. You don’t need the logs. Run the code with the same settings as the user did and inspect your code using a debugger.
-
-If you struggle finding your bugs, you should rather improve the quality of your code. Simplify its structure and write unit tests. You will have less bugs and they are easier to find.
+- The most obvious drawback is that logging needs time to be implemented. It’s not a huge amount, yet it may add up.
+- Logging is usually not needed. Most code is deterministic. You run the same code twice it will do the exact same thing, down to some rounding errors. You don’t need the logs. Run the code with the same settings as the user did and inspect your code using a debugger.
+- If you struggle finding your bugs, you should rather improve the quality of your code. Simplify its structure and write unit tests. You will have less bugs and they are easier to find.
 
 At the same time there are some cases where you can consider using a logger.
 
-For non-deterministic software it may be useful. For example, if you have several programs that communicate asynchronously with each other, as in microservices. All kind of conditions may occur that you didn’t think of. Depending on the temporal order of the messages being sent. A logger may help you to trace back the source of a bug.
-
-In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
-
-And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
+- For non-deterministic software it may be useful. For example, if you have several programs that communicate asynchronously with each other, as in microservices. All kind of conditions may occur that you didn’t think of. Depending on the temporal order of the messages being sent. A logger may help you to trace back the source of a bug.
+- In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
+- And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
 # 34. Tools
 
+"I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
+
+// I think this chapter needs some reworking
+
 There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important classes of tools I worked with so far:
 
-Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, pip (python), build tools, docstring, docker and possibly many more.
+Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, package manager, build tools, docstring, container applications, container orchestration, databases and many more.
 
-I have to admit that the list is pretty scrambled. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
+I have to admit that the list is pretty scrambled and random. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
 
 ## Version control software 
 
 Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs or licencins issues // citation Wikipedia?. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard.
 
-The original Git software is a console application but there is also proprietary software with a GUI.
+The original Git software is a console application but there are also proprietary software products with a GUI.
 
-I recommend learning the classic (command line) git. Start learning it as soon as possible. Every programmer has to be able to work with it. The only difference between companies is the way how they use git exactly.
+I recommend learning the classic (command line) git. Start learning it as soon as possible. Every programmer has to be able to work with it. The only difference between companies is the way how they use git exactly. For example there are different ways how to deal with branches when merging them into master.
 
 ### Git, everywhere git
 
@@ -5115,21 +5114,23 @@ Git should not only be used for bare code. Git can also be used on any text file
 
 Or if you write a book like this one. It is written in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
 
-I won't go further into details about git. There are plenty of tutorials in the web that teach you how to use git. They will teach you how to make commits, use branches and do merges. And remember as I told you in the chapter ot unit tests: unit test are great if you have merge conflicts. The unit tests will tell you immediately if you resolved them correctly.
+I won't go further into details about git. There are plenty of tutorials in the web that teach you how to use git. They will teach you how to make commits, use branches and do merges. And remember as I told you in the chapter on unit tests: unit test are great if you have merge conflicts. The unit tests will tell you immediately if you resolved them correctly.
 
 ### Copilot
 
-// is here the location to write about Merge (Pull) Requests? Seems like Copilot can help here as well, https://youtu.be/8_0DJ9FOlOM?t=559
+Copilot can convert human readable commands into git commands. For example it converts `git create a branch named "hello branch"` into `git branch hello_branch`. Just start the command with `git` and you will get a git command.
 
 ## Command line
 
-The most common command line software is the shell used on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used.
+The most common command line software is Bash (The Bourne-again shell, or just shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used as well.
 
-The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
+The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools like the file browser are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
-The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. I it certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
+The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. It is certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
 
 ### Copilot
+
+// figure out something else to ask copilot. git questions have already been answered before.
 
 // Copilot for CLI might change how we use the command line (and all its programs with it). Now you no longer have to use google to find the syntax, but you can use Copilot CLI instead. https://youtu.be/8_0DJ9FOlOM?t=787 https://youtu.be/pw0SH7AHIFI -> how does this work exactly?
 
@@ -5140,40 +5141,41 @@ This returns the command `git commit --amend` along with a detailed explanation.
 
 ## IDE
 
-The Integrated Development Environment (IDE) is a class of software used for writing code. Like Microsoft Word adapted for programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me. I don’t think it’s worth spending too much time here by yourself so I recommend you to do the same as I did.
+The Integrated Development Environment (IDE) is a class of software used for writing code. Like Microsoft Word adapted for programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me. I don’t think it’s worth spending too much time here by yourself figuring out the details of one specific IDE. So I recommend you to do the same as I did. Just ask your friends.
 
-In all up to date IDEs, there are plug ins for most of the tools mentioned above. Ask your work colleague which ones you need. Spend a few hours with him to get an idea what they are used for. This is not wasted time. You also learn something about the code during that time.
+In all up to date IDEs, there are plug ins for most of the tools mentioned above. Ask your work colleague which ones you need. Spend a few hours with watching your colleague to get an idea what the plug ins are used for. This is not wasted time. You also learn something about the code during that time.
 
 It is worthwhile learning some of the shortcuts in your IDE that allow you to modify code in different files faster. This is useful as it improves your work flow. But don’t overdo it at the beginning, you may be wasting too much time here. You can still learn more once you know how your personal work flow looks like. And if you really like to push the shortcuts to the limit, you’ll have to learn the VIM text editor which is operated by keyboard only.
 
 ## Continuous Integration
 
 "Continuous integration (CI) is the practice of merging all developers' working copies to a shared mainline several times a day." // https://en.wikipedia.org/wiki/Continuous_integration
+
 This typically means checking in the latest changes of the code, compiling it if required, running all the tests and building the final artifact.
 
 There are several different suppliers for Continuous Integration (CI) software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
 
-At the time of writing, Jenkins is the most commonly used CI software.
+At the time of writing, Jenkins and Gitlab are the most commonly used CI software.
 
 ## Debugger
 
 Probably everybody knows what debugging is. Because it is about the first thing you learn at programming: The code doesn't work and I don't understand what it does. Let's walk through it and see what my variables do. For example using print statements. But there is a better way than using print statements. The Debugger.
 
-Every programming language has its own debuggers and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger. Mostly setting break points, navigating through the code and looking at the stack trace. But generally, it’s a sign of bad code if you have to use a debugger too often. Write small classes and functions where you can tell exactly what they should do. Along with plenty of unit tests. Depending on the error you should be able to pin point the source to a certain class or area of the code without using a debugger. Anyway. Feel free to use a debugger, for example if you work with legacy code. But always keep the code quality high and make sure you don’t need the debugger at all.
+Every programming language has its own debuggers and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger. Mostly setting break points, navigating through the code and looking at the stack trace. But generally, it’s a sign of bad code if you have to use a debugger too often. Write small classes and functions where you can tell exactly what they should do. Along with plenty of unit tests. Depending on the error you should be able to pin point the source to a certain class or area of the code without using a debugger. Anyway. Feel free to use a debugger, for example if you work with legacy code. But always keep the code quality high and make sure you don’t need the debugger as little as possible.
 
 ## Profiler
 
-A profiler lets you check the time required for executing each part of the code. Depending what kind of programming you do, chances are high you will never need one. Only run the profiler if the program is slower than it should be. Thus, this is not a software you have to get acquainted with at the very beginning of your programming career.
+A profiler lets you check the time required for executing each part of the code. Depending what kind of programming you do, chances are high you will never need one. Only run the profiler if the program is slower than it should be, which is probably not too often. Thus, the profiler is not a software you have to get acquainted with at the very beginning of your programming career.
 
 ## Formatter
 
-Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. But don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about it. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for. Making an MR becomes impossible.
+Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. In most cases this consists of copying some config file. And don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about them. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for. Judging such an MR becomes impossible.
 
 If you work with old code that was formatted with an out dated ruleset, you have to run the formatter and create an MR before you start writing code. Or at least the formatting needs to be in a separate commit, though a separate, dedicated MR is to be preferred. If you change the formatting rule set, run the formatter on all code and create a dedicated MR.
 
-There are also some companies using custom formatting where every employee can use any formatting style he wants. Once he creates an MR, the official formatter runs on the code before merging it into master.
+There are also some companies where every employee can use any formatting style he likes. Once an employee creates an MR, the official formatter runs on the code as a first step of the merge request. This offers the best of both worlds: the users are free to use whatever formatter they like but there is still some default formatting that won't affect the merge requests. This only goes at the cost of the DevOps developer who has to implement this feature.
 
-Personally, I don’t care too much about the formatting style. If I have a choice, I use the default formatting with a tab width of 4 and a line length of 100. This is a reasonable compromise. Linus Thorwalds (the guy from Git) has a very strict opinion on that topic. It you write code for the Linux kernel you have to use a tab width of 8 and a line length of 80. Try writing code like that. You have to write extremely well to make all the code fit reasonably into this pattern. That’s exactly why he’s come up with this rule.
+Personally, I don’t care too much about the formatting style. If I have a choice, I use the default formatting with a tab width of 4 and a line length of 100. This is a reasonable compromise. Linus Thorwalds (the guy from Git) has a very strict opinion on that topic. It you write code for the Linux kernel you have to use a tab width of 8 and a line length of 80. Try writing code like that. You have to write extremely well to make all the code fit reasonably into this pattern. That’s exactly why he’s come up with this rule. The google style guide recommends also a line length of 80 characters.
 
 ## Code quality checker
 
@@ -5207,10 +5209,6 @@ Again, there are free alternatives around, though you are unlikely to see any al
 The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation. Instead it should be used only to document external APIs.
 
 Every programming language has one docstring tool. For python it’s Sphynx, for C++ it’s doxygen.
-
-## Exercises
-
-Get acquainted with Git and some other tools mentioned here.
 
 # Software Engineering principles
 
