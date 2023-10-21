@@ -324,7 +324,6 @@ Things to write:
 	- [Summary](#summary-4)
 	- [Copilot](#copilot-18)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-1)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -341,7 +340,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-2)
+	- [Exercises](#exercises-1)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -5093,10 +5092,6 @@ For non-deterministic software it may be useful. For example, if you have severa
 In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
 
 And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
-
-## Exercises
-
-
 
 # 34. Tools
 
