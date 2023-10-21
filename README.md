@@ -1657,7 +1657,7 @@ The following class is too big. Refactor it such that you get several smaller cl
 This class is a mixture of a delegating class and a worker class. Convert it into a delegating class by moving the complex code into a dedicated function. 
 // create such a class
 
-# Inheritance
+# 10. Inheritance
 
 "Favor composition over inheritance" - Basic rule of class design
 
@@ -1749,7 +1749,7 @@ You don’t gain much by using inheritance. Using composition is in most cases a
 There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. In most cases it results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. // cite https://google.github.io/styleguide/cppguide.html#Friends . Write your code in the most common way possible and only consider something else if it really improves your code.
 
 
-# 10. Testing
+# 11. Testing
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
@@ -2050,7 +2050,7 @@ Generally it is recommended to use Dependency Injection (DI) instead of mocking.
 As software engineers, we want to automate everything, tests included. However, this is not always possible. There are still things that we can barely automate. One example are image processing algorithms. How much can you compress an image such that it still looks good? This is very hard to tell with an automated test and is better judged by humans. Also if you run some complex simulation, like the aerodynamics of an airplane, you cannot write a test to check that your simulation yields the correct result. Simply because you don't know the correct result. You can only judge from your experience that the result makes sense. There are still things that are better tested by humans than computers.
 
 
-# 11. Types of tests
+# 12. Types of tests
 
 There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 4 different types.
 1. Unit tests test the behavior of individual functions and classes.
@@ -2229,7 +2229,7 @@ E2E tests are the least common. They are very valuable to check that a program r
 <img src=images/testing_pyramid.jpg width="300">
 
 
-# 12. Writing better Code with Tests
+# 13. Writing better Code with Tests
 
 // This chapter needs improvement...
 
@@ -2573,7 +2573,7 @@ def print_name(person=Person('John', 30)):
 
 // write something about CI/CD?
 
-# DevOps
+# 14. DevOps
 
 Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build to the release. But in order to understand more precisely, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
@@ -2602,7 +2602,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 
 // what else to write?
 
-# 13. Refactoring
+# 15. Refactoring
 "If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
 Refactoring is the art of changing existing code without altering its functionality. 
@@ -2887,7 +2887,7 @@ As always, Copilot works best if you give it some step by step instructions.
 // how does Copilot do with refactoring some more difficult problems?
 
 
-# 14. Understandable code
+# 16. Understandable code
 
 // I somehow like this chapter, yet I feel like there is room for improvement
 
@@ -2921,7 +2921,7 @@ You should never underestimate the complexity you can create with bad code. If y
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
 
-# 15. Programming languages
+# 17. Programming languages
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers // Working Effectively with Legacy Code, p.311
 
@@ -3092,7 +3092,7 @@ for i in range(10):
     print(i)
 ```
 
-# 16. Bugs, Errors, Exceptions
+# 18. Bugs, Errors, Exceptions
 
 "It’s not a bug; it’s an undocumented feature." - Anonymous
 
@@ -3183,7 +3183,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edgar Dijkstra wrote the famous paper "Goto considered harmful" which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
 
 
-# 18. Programming Paradigms
+# 19. Programming Paradigms
 
 There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python, or even C++, where you can mix these 3 different programming paradigms.
 
@@ -3243,7 +3243,7 @@ When explicitly asking for a list comprehension, it works out.
 a = [i for i in range(10)]
 ```
 
-# 19. Design patterns
+# 20. Design patterns
 
 "An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, https://youtu.be/YMAwgRwjEOQ
 
@@ -3595,7 +3595,7 @@ class SeaLogistics(Logistics):
         print('Plan sea delivery')
 ```
 
-# 20. Decoupling
+# 21. Decoupling
 // Maybe look at Fowlers book refactoring again. There might be some advice.
 
 // add some more text from the pragmatic programmer
@@ -3646,7 +3646,7 @@ This would be a perfect example for a delegating class, as we have discussed in 
 
 Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
 
-# 21. Physical laws of code
+# 22. Physical laws of code
 
 "You should always bear in mind that entropy is not on your side." - Elon Musk
 
@@ -3678,7 +3678,7 @@ In software engineering we have a similar phenomenon. You have a problem and you
 
 Perhaps we should take more care when making software decisions just as we do when buying a new car. It may pay off on the long term.
 
-# 22. Software Architecture
+# 23. Software Architecture
 
 // This chapter is proabably one of the biggest constructions in this book.
 
@@ -3757,7 +3757,7 @@ These advantages for either sides lead to trade offs in library sizes. Generally
 
 Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
-# 23. Solid principles 
+# 24. Solid principles 
 
 // Quote from uncle bob?
 
@@ -4021,7 +4021,7 @@ In case you've ever heard of the pimpl (pointer to implementation) idiom, it has
 
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
-# 24. Data types
+# 25. Data types
 
 // what is the definition of data types and variable types?
 
@@ -4334,7 +4334,7 @@ C++ used pointers everywhere. Pointers were used to point to a certain location 
 
 The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care about pointers at all.
 
-# 25. Additional Properties of Variables
+# 26. Additional Properties of Variables
 
 // find a better title?
 
@@ -4474,7 +4474,7 @@ string field(body){
 Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
 
 
-# 26. Naming
+# 27. Naming
 
 "And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
 
@@ -5212,7 +5212,7 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For python it’s Sphynx, for C++ it’s doxygen.
 
-# Software Engineering principles
+# 35. Software Engineering principles
 
 // https://youtu.be/XQzEo1qag4A
 
@@ -5239,7 +5239,7 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 ## Design Defensively
 
 
-# 35. Domain Driven Design
+# 36. Domain Driven Design
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
 
@@ -5485,7 +5485,7 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 // write some examples here?
 
-# 36. Good code
+# 37. Good code
 
 This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
@@ -5535,7 +5535,7 @@ Make the code self-commenting. Only use comments for things the code can’t exp
 
 Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
-# 37. 3rd party software
+# 38. 3rd party software
 
 "Prefer visa over power shell" – some YouTube video 
 
@@ -5562,7 +5562,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
-# 38. Dependencies
+# 39. Dependencies
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -5629,7 +5629,7 @@ def a(counter):
 As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code even more readable.
 
 
-# 39. Working in teams
+# 40. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 
@@ -5716,7 +5716,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 40. Code review
+# 41. Code review
 
 // see chapter code review in SEG (software engineering at google)
 
@@ -5750,7 +5750,7 @@ One thing I can highly recommend is looking at the code together. In theory, the
 
 In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
 
-# 41. Working with existing projects
+# 42. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. I could tell you whatever I wanted. "One beer please! Just before I am forced to tell you how to wiggle around in an existing project." Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
@@ -5770,7 +5770,7 @@ Extremely long functions. Let’s be honest. A function, or even worse a class f
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And as the last person to touch the code is responsible, it becomes yours to fix. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
 
-# 42. Planning
+# 43. Planning
 
 TODO: read through again. Is there duplication with the agile section?
 
@@ -5808,7 +5808,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 #where to add a chapter with errors?
 
-# 43. Agile
+# 44. Agile
 
 "Intelligence is the ability to adapt to change." – Stephen Hawking, among others
 
@@ -5935,7 +5935,7 @@ You also need courage to be honest. The very first thing is you have to be able 
 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
 
-# 44. Continuous integration
+# 45. Continuous integration
 
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
@@ -5951,7 +5951,7 @@ As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t 
 
 The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...?
 
-# 45. Hiring and getting hired
+# 46. Hiring and getting hired
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
@@ -5981,7 +5981,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 46. Work ethics
+# 47. Work ethics
 
 // see Clean Craftsmanship
 
@@ -5995,7 +5995,7 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 
 //keep learning
 
-# 47. Examples
+# 48. Examples
 So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
@@ -6117,7 +6117,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# More Copilot
+# 49. More Copilot
 
 The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
 
@@ -6137,7 +6137,7 @@ def parse_line(book):
 print(parse_line(books[0]))
 ```
 
-# 48. Further reading
+# 50. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -6174,7 +6174,7 @@ google style guide, https://google.github.io/styleguide/
 And several youtube channels,
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim
 
-# 49. Outlook
+# 51. Outlook
 
 "Programming is learned by writing programs." ― Brian Kernighan
 
@@ -6190,7 +6190,7 @@ Marco
 
 
 
-# Abbreviations
+# 52. Abbreviations
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
 DB	Database
@@ -6201,6 +6201,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
