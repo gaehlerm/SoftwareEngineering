@@ -323,9 +323,8 @@ Things to write:
 		- [Docstring](#docstring)
 	- [Summary](#summary-4)
 	- [Copilot](#copilot-18)
-	- [Exercises](#exercises-1)
 - [33. Logging](#33-logging)
-	- [Exercises](#exercises-2)
+	- [Exercises](#exercises-1)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
@@ -342,7 +341,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-	- [Exercises](#exercises-3)
+	- [Exercises](#exercises-2)
 - [Software Engineering principles](#software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
@@ -5013,19 +5012,19 @@ def add(a,b):
 
 Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers who think that this comment here is justified. 
 
-I do not share this opinion at all. In my opinion this comment is just useless. Read the function name. It explains exactly what the function does. And if you are not sure take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
+I do not share this opinion at all. In my opinion this comment is just a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
 
 "Yes, but it’s only one line of comment. It can’t hurt us.", you might say. 
 
 "NO!"
 
-Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough before. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions, you can’t enforce that a comment stays at its correct location. You will end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cause bugs.
+Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions, you can’t enforce that a comment stays at its correct location. You will end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cause bugs.
 
 Not convinced? You think you won’t have these issues because you work carefully? 
 
 "Ha ha. NO!"
 
-Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make only few mistakes. Removing useless comments is a must. They are an unnecessary source for bugs.
+Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this whole book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make as few mistakes as possible. Removing useless comments is a must. They are an unnecessary source for bugs.
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
@@ -5039,7 +5038,7 @@ Never use comments (or dead code) for that purpose. You have my permission to de
 
 ### TODO comments
 
-Another bad habit is TODO comments. When you implement a feature, you are responsible that the implementation is ready to be merged into master. It’s ready to be merged when there is nothing important to be done anymore that would justify a TODO comment. Make sure you never merge any TODOs into master. They only cause confusion and there is never time to do them. You will never implement a feature without ticket and for refactoring you don’t need a TODO as a justification. Therefore again: make sure you never merge any TODO comments into master.
+Another bad habit is TODO comments. When you implement a feature, you are responsible that the implementation is ready to be merged into master. It’s ready to be merged when there is nothing important to be done anymore that would justify a TODO comment. Make sure you never merge any TODOs into master. They only cause confusion and there is never time to do them. You will never implement a feature without a ticket and for refactoring the code you don’t need a TODO comment. Therefore again: make sure you never merge any TODO comments into master.
 
 At the same time it is fine if you use TODO comments during the development of a feature. It might help you to organize your work. Just make sure to remove all the TODO comments before merging your changes into master.
 
@@ -5076,11 +5075,6 @@ def roman_number(number):
             number -= key
     return roman
 ```
-
-## Exercises
-
-// Create some code with comments and ask the user how to improve it.
-// take them from clean code?
 
 # 33. Logging
 
