@@ -4,9 +4,11 @@ Copyright Marco Gähler, all rights reserved.
 
 Please give me feedback on the book. Either as a merge request or by email, marco.gaehler@gmx.ch
 
-If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with VS code. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
+If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with VS code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
 
-This is a book about software engineering, similar to Clean Code by Robert Martin. So far it is only a rough draft. There is still a lot to write. Especially some chapters feel like they were too short. Anyone who feels like it may help improving this book. Just create an MR. And my English could be better...
+This is a book about software engineering, similar to Clean Code by Robert Martin or the pragmatic programmer. So far it is only a rough draft, though it's getting somewhere. Especially some chapters feel like they were too short or not written too well. Anyone who feels like it may help improving this book. Just create an MR. 
+
+Oh yeah, and my English could be better...
 
 The first half of the books seems more or less OK, the second half needs some serious reworking.
 
@@ -14,13 +16,13 @@ Things to write:
 -	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
 -	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like distillation? DDD distilled may help to get the essence.
--	Write some more about everything. Some chapters are really short.
 -	Restructure and sort the chapters somehow.
--	Some simple example on refactoring (what technique exactly? Converting a function into a class?)
+-	Some more examples on refactoring (what technique exactly? Converting a function into a class?)
 -	Design patterns -> write short explanations to all of them? Or leave this chapter away completely.
 -	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
 -	How to organize software projects
 -	Mention combination explosion somewhere?
+-	And some more chapters towards the end of the book that need to be improved.
 
 
 # 2. Table of content
@@ -5220,6 +5222,7 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 // physical law of code?
 
 ## Reduce coupling
+// is also covered else where?
 
 ## Increase abstraction
 
