@@ -312,9 +312,8 @@ Things to write:
 	- [Custom file format](#custom-file-format)
 - [30. Setting up a project](#30-setting-up-a-project)
 	- [Project folder](#project-folder)
-	- [Exercise](#exercise)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [Exercise](#exercise-1)
+	- [Exercise](#exercise)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -4922,17 +4921,17 @@ Similar to the CSV file you can also define your own file format for other thing
 
 # 30. Setting up a project
 
-"If it's your job to eat a frog, it's best to do it in the morning. And If it's your job to eat two frogs, it's best to eat the biggest one first.", Mark Twain
+"If it's your job to eat a frog, it's best to do it in the morning. And If it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
 
 // https://youtu.be/LfIPVIsH4ZU
 
-Many students start with writing code when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
+Many software developers start with writing code when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
 
 Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
 
-For small projects, setting up git and a proper build tool need barely any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. Same for the build process. Typing in a long command not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior.
+For small projects, setting up git and a proper build tool need hardly any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. Same for the build process. Typing in a long command not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior. And especially once you have to cooporate with another developer there is no way around a proper version control software and a build tool.
 
-Similarly for CI. It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests) always run. The code committed to master has been compiled and the tests pass without any errors.
+Similarly for CI. It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests, otherwise I recommend you read the chapter on testing) always run. The code committed to master has been compiled and the tests pass without any errors.
 
 So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
 - You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
@@ -4946,33 +4945,26 @@ Code is a collection of text files. One question is: how do you deal with them?
 
 The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should usually be much smaller than this.
 
-The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside of the src folder. Or at least make sure they all get cleaned up immediately. Auto generated files should never make it into the master branch!
+The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside of the src folder. Or at least make sure they all get cleaned up immediately. Auto generated files should never make it into the version control. They just polute it!
 
-Generated files generally belong into the build folder. Like this cleaning up the build is quite simple. Just delete the folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
+Generated files belong into the build folder. Like this cleaning up the build is quite simple. Just delete the build folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
 
-Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
+End to end or acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
+
+// is this true that in python tests are written right along the source code? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
 
 The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as python for example, the unit tests are written right next to the corresponding source file. This is necessary as in python it's very tedious to import files from a parent folder.
 
-3rd party libraries belong into the lib folder. They are not part of the git project. They are too big and none of your business. You need some other way to manage them. If you use few libraries just manage them manually. In python use pip and the requirements.txt file.
+3rd party libraries belong into the lib folder. They are not part of the git project, therefore the lib folder should be on the .gitignore file. You need some other way to manage them. If you use few libraries just manage them manually. In python you can use the package management software pip. Togheter with the requirements.txt file this makes managing libraries quite simple. In other programming languages like C++ this is a much harder task as you have to do this by yourself somehow.
 
 There are some additional files in a project.
 
-1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building it and running the tests should all require only one single command.
+1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building the project and running the tests should all require only one single command.
 1.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project.
 1.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files too big to be managed by git.
-1.	Some formatting, code quality checking and other files.
+1.	Some formatting, code quality checking or other files.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
-
-## Exercise
-
-Figure out what kind of hidden files (starting with a `.`) your toools support and what is their purpose.
-
-// git: .gitinore
-// various .env
-// ...
-
 
 # 31. Performance Optimization
 
