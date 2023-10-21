@@ -4545,49 +4545,49 @@ def add(b,c):
 
 ## Complexity of code
 
-As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers.
+As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers. The complexity to implement a feature is much higher than the actual complexity.
 
-The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. It should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
+The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
 
 I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
 
-As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation of the experts in the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design book]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
+As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model //Domain-driven design book//. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
 
 Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details at the beginning of the development.
 
 ## Estimating complexity
 
-Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management.
+Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management. Frequently the estimation of a feature goes as follows:
 
-Project Manager: Can you give me an estimate of the time necessary to develop feature xyz?
+Project Manager: "Can you give me an estimate of the time necessary to develop feature xyz?"
 
-Programmer: One month.
+Programmer: "One month."
 
-Project Manager: That's far too long! We've only got one week.
+Project Manager: "That's far too long! We've only got one week."
 
-Programmer: I need at least three.
+Programmer: "I need at least three."
 
-Project Manager: I can give you two at most.
+Project Manager: "I can give you two at most."
 
-Programmer: Deal!
+Programmer: "Deal!"
 
 // source https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
 
-In many cases the complexity of a task is extremely hard to estimate. Some developers might have an idea what to do, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. Yes, the conditions for this case were deliberately chosen to be rough. Such that you are forced to rethink everything you did so far. 
+Estimating the complexity of a task is generally extremely hard. Some developers might have an idea what has to be done, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. And even if, there is still some uncertainty around which makes estimating the amount of work a very difficult task.
 
-Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything was already implemented in the code, but nobody saw it. For many tickets it is very clear where and how to write the code. But in the other cases you really have to take your problem and the code into pieces and consider if these things can be sorted differently. Sometimes you find a very simple solution. // rewrite this section, it doesn’t make sense. add example?
+Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing the code. 
 
-Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or their complexity underestimated.
+On the other hand, there are cases where you find a very simple solution and implementing the task takes way less time than expected. But unfortunately this case is quite rare.
 
-The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left.
+Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or the total complexity is usually underestimated.
+
+The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left. Furthermore it is not that often the case that you already completed a similar task. Therefore, estimating the amount of work required for a certain task is still quite tricky to estimate.
 
 ## Single line complexity
 
 A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
 
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. And it's thus banned by the google style guide. // https://google.github.io/styleguide/pyguide.html section 2.7
-
-Now this is still one of the more readable inline list initializations. But it is banned by the google style guide as it contains two variables.
+On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. // https://google.github.io/styleguide/pyguide.html section 2.7, https://google.github.io/styleguide/cppguide.html#Line_Length // Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
 
 ```py
 [[[0] * (i + j) for i in range(2)] for j in range(3)]
@@ -4598,7 +4598,6 @@ Now this is still one of the more readable inline list initializations. But it i
 Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
 
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
-
 
 # 29. Data files
 
