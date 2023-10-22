@@ -112,7 +112,7 @@ Things to write:
 	- [Conclusions](#conclusions)
 	- [Copilot](#copilot-4)
 	- [Exercises](#exercises)
-- [Inheritance](#inheritance-1)
+- [10. Inheritance](#10-inheritance)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
 		- [Error prone](#error-prone)
@@ -123,7 +123,7 @@ Things to write:
 		- [Code reuse](#code-reuse)
 	- [Interfaces](#interfaces)
 	- [Conclusions](#conclusions-1)
-- [10. Testing](#10-testing)
+- [11. Testing](#11-testing)
 	- [A short story about tests](#a-short-story-about-tests)
 	- [Test examples](#test-examples)
 		- [When, what and how](#when-what-and-how)
@@ -147,7 +147,7 @@ Things to write:
 		- [The Beyonce rule](#the-beyonce-rule)
 		- [Mocking and Stubs](#mocking-and-stubs)
 	- [Untestable behavior](#untestable-behavior)
-- [11. Types of tests](#11-types-of-tests)
+- [12. Types of tests](#12-types-of-tests)
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
@@ -158,7 +158,7 @@ Things to write:
 	- [Performance tests](#performance-tests)
 	- [Who should write tests](#who-should-write-tests)
 	- [The testing pyramid](#the-testing-pyramid)
-- [12. Writing better Code with Tests](#12-writing-better-code-with-tests)
+- [13. Writing better Code with Tests](#13-writing-better-code-with-tests)
 	- [Unit tests](#unit-tests-1)
 	- [Integration and E2E tests](#integration-and-e2e-tests)
 	- [Testing existing code](#testing-existing-code)
@@ -173,10 +173,10 @@ Things to write:
 		- [Dependency injection](#dependency-injection)
 	- [Summary](#summary-2)
 		- [Copilot](#copilot-6)
-- [DevOps](#devops)
+- [14. DevOps](#14-devops)
 	- [The early 2000s](#the-early-2000s)
 		- [Getting a project](#getting-a-project)
-- [13. Refactoring](#13-refactoring)
+- [15. Refactoring](#15-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
 		- [Refactoring and automated tests](#refactoring-and-automated-tests)
@@ -194,10 +194,10 @@ Things to write:
 		- [Seams](#seams)
 		- [Sketches](#sketches)
 	- [Copilot](#copilot-7)
-- [14. Understandable code](#14-understandable-code)
+- [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
 	- [Writing understandable code](#writing-understandable-code)
-- [15. Programming languages](#15-programming-languages)
+- [17. Programming languages](#17-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
 	- [Python](#python)
@@ -212,7 +212,7 @@ Things to write:
 		- [Classes](#classes)
 		- [Structs](#structs)
 	- [Copilot](#copilot-8)
-- [16. Bugs, Errors, Exceptions](#16-bugs-errors-exceptions)
+- [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs-1)
 		- [Cost of Bugs](#cost-of-bugs)
@@ -221,13 +221,13 @@ Things to write:
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
-- [18. Programming Paradigms](#18-programming-paradigms)
+- [19. Programming Paradigms](#19-programming-paradigms)
 	- [Object Oriented programming](#object-oriented-programming)
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 	- [Conclusions](#conclusions-2)
 	- [Copilot](#copilot-10)
-- [19. Design patterns](#19-design-patterns)
+- [20. Design patterns](#20-design-patterns)
 	- [Creational Patterns](#creational-patterns)
 		- [Factory](#factory)
 		- [Builder](#builder)
@@ -251,15 +251,15 @@ Things to write:
 	- [Flyweight](#flyweight)
 	- [Observer](#observer-1)
 	- [Copilot](#copilot-11)
-- [20. Decoupling](#20-decoupling)
-- [21. Physical laws of code](#21-physical-laws-of-code)
+- [21. Decoupling](#21-decoupling)
+- [22. Physical laws of code](#22-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
 	- [Requirements](#requirements)
-- [22. Software Architecture](#22-software-architecture)
+- [23. Software Architecture](#23-software-architecture)
 	- [About Architecture](#about-architecture)
 		- [Coupling](#coupling)
-- [23. Solid principles](#23-solid-principles)
+- [24. Solid principles](#24-solid-principles)
 	- [Single Responsibility Principle](#single-responsibility-principle)
 	- [Open Closed Principle](#open-closed-principle)
 	- [Liskov Substitution Principle](#liskov-substitution-principle)
@@ -268,7 +268,7 @@ Things to write:
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
 	- [Summary](#summary-3)
-- [24. Data types](#24-data-types)
+- [25. Data types](#25-data-types)
 	- [Lists](#lists)
 	- [Enums](#enums)
 		- [Booleans](#booleans)
@@ -284,7 +284,7 @@ Things to write:
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [25. Additional Properties of Variables](#25-additional-properties-of-variables)
+- [26. Additional Properties of Variables](#26-additional-properties-of-variables)
 	- [Compile-time constant](#compile-time-constant)
 	- [Runtime Constant](#runtime-constant)
 	- [Mutable](#mutable)
@@ -293,7 +293,7 @@ Things to write:
 	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
-- [26. Naming](#26-naming)
+- [27. Naming](#27-naming)
 	- [Copilot](#copilot-12)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
@@ -342,7 +342,7 @@ Things to write:
 	- [Ticketing system](#ticketing-system)
 	- [Wiki](#wiki)
 	- [Docstring](#docstring-1)
-- [Software Engineering principles](#software-engineering-principles)
+- [35. Software Engineering principles](#35-software-engineering-principles)
 	- [Divide and Conquer](#divide-and-conquer)
 	- [Increase Cohesion](#increase-cohesion)
 	- [Reduce coupling](#reduce-coupling)
@@ -353,7 +353,7 @@ Things to write:
 	- [Design for Portability](#design-for-portability)
 	- [Design for Testability](#design-for-testability)
 	- [Design Defensively](#design-defensively)
-- [35. Domain Driven Design](#35-domain-driven-design)
+- [36. Domain Driven Design](#36-domain-driven-design)
 	- [Ubiquitous Language](#ubiquitous-language)
 	- [The Domain Model](#the-domain-model)
 		- [Documentation and planning](#documentation-and-planning)
@@ -376,24 +376,24 @@ Things to write:
 		- [Aggregates](#aggregates)
 		- [Organizing aggregates](#organizing-aggregates)
 	- [Domain level, old text](#domain-level-old-text)
-- [36. Good code](#36-good-code)
-- [37. 3rd party software](#37-3rd-party-software)
-- [38. Dependencies](#38-dependencies)
+- [37. Good code](#37-good-code)
+- [38. 3rd party software](#38-3rd-party-software)
+- [39. Dependencies](#39-dependencies)
 	- [Circular dependencies](#circular-dependencies)
 		- [Example](#example-4)
-- [39. Working in teams](#39-working-in-teams)
+- [40. Working in teams](#40-working-in-teams)
 	- [Team structure](#team-structure)
 		- [The bus factor](#the-bus-factor)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
 	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
-- [40. Code review](#40-code-review)
+- [41. Code review](#41-code-review)
 	- [Drawbacks](#drawbacks)
-- [41. Working with existing projects](#41-working-with-existing-projects)
-- [42. Planning](#42-planning)
+- [42. Working with existing projects](#42-working-with-existing-projects)
+- [43. Planning](#43-planning)
 	- [Planning code # move elsewhere? Rename section?](#planning-code--move-elsewhere-rename-section)
-- [43. Agile](#43-agile)
+- [44. Agile](#44-agile)
 	- [Agile values](#agile-values)
 	- [Work planning](#work-planning)
 	- [QA](#qa)
@@ -407,20 +407,20 @@ Things to write:
 	- [Becoming agile](#becoming-agile)
 	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
 		- [Courage](#courage)
-- [44. Continuous integration](#44-continuous-integration)
-- [45. Hiring and getting hired](#45-hiring-and-getting-hired)
+- [45. Continuous integration](#45-continuous-integration)
+- [46. Hiring and getting hired](#46-hiring-and-getting-hired)
 	- [Hiring](#hiring)
 	- [Getting hired](#getting-hired)
-- [46. Work ethics](#46-work-ethics)
-- [47. Examples](#47-examples)
+- [47. Work ethics](#47-work-ethics)
+- [48. Examples](#48-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
 		- [Implementation](#implementation-1)
 	- [Paint](#paint)
-- [More Copilot](#more-copilot)
-- [48. Further reading](#48-further-reading)
-- [49. Outlook](#49-outlook)
-- [Abbreviations](#abbreviations)
+- [49. More Copilot](#49-more-copilot)
+- [50. Further reading](#50-further-reading)
+- [51. Outlook](#51-outlook)
+- [52. Abbreviations](#52-abbreviations)
 
 
 # 3. Preface
@@ -1510,6 +1510,8 @@ Generally I don't regard this reason as sufficient to write setter and getter fu
 
 
 ## Coupling and Cohesion
+
+// is my definition of cohesion correct? https://youtu.be/XQzEo1qag4A
 
 A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." (Robert C. Martin) If you don’t understand these expressions, we could rewrite it to: "There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
@@ -5216,7 +5218,11 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 
 // https://youtu.be/XQzEo1qag4A
 
+// Are these topics covered elsewhere?
+
 ## Divide and Conquer
+
+If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together.
 
 ## Increase Cohesion
 // physical law of code?
@@ -5226,15 +5232,29 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 
 ## Increase abstraction
 
+Abstraction is about leaving away unnecessary details and instead focusing on the absolute necessities. You have to design interfaces that are slim and very generic. For example take (once again) a car. You want to make the parts as generic as possible. You want to fit any engine into any car. This can only be achieved by unifying the interface of the engine, the brakes, etc. All the details of the engine are abstracted away and hidden inside the engine such that the outside does not interact with it.
+
+If you didn't abstract all the details away, you may be left with several different functions how to take care of all the different engines because you have to take care of all the paritcularities. On the other hand, if you abstracted them all away, you can replace the engine with another one if you please.
+
 ## Increase reusability
+
+Reuseability comes hand in hand with abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. 
 
 ## Design for flexibility
 
+Your code will change. It's inevitable. So start living with this fact. Requirements will change and you'd better make sure that your code can adapt. Therefore it's important that your code follows the rules that are explained in this book. You need tests to be able to change your code. You have to follow the best practice in order to prevent your code becoming solid as a rock. You want your code to be fluffy and easy to change.
+
 ## Anticipate Obsolesence
+
+Code you use will become obsolete. Version change, bugs and security issues are not fixed, licence fees are getting too high, you name it. There are plenty of reasons why you have to adapt and change third party libraries or at least adapt to new syntax. So you better anticipate that you'll have to replace some library by adding an adapter between that library and your code. This will simplify reacting to changes. You can then just write an adapter for the new library and you don't have to change all the existing code.
 
 ## Design for Portability
 
 ## Design for Testability
+
+I think this is the most obvious point in this chapter. I explained plenty of times that you have to write tests. Because if it's easy to write tests for your code it's also easy to write code using the interfaces of your code. Or even better, use Test Driven Development (TDD). TDD forces you to write code that is easy to test. Thus it forces you to write good code.
+
+Hand in hand with testing comes Dependency Injection (DI). There are many things where writing tests for will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all things that should be solved with DI. Inject a mock file or a fake timestamp to the function and your tests will be much more stable.
 
 ## Design Defensively
 
@@ -5487,15 +5507,15 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 # 37. Good code
 
-This is an attempt to distill a list of rules that allow you to judge the quality of code.
+“A computer once beat me at chess, but it was no match for me at kick boxing.” — Emo Philips
 
-Here are some signs for good code:
+This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
 By definition good code is easy to understand. Also, for new software developers in the team. Even marketing people may understand some of your technical discussions as you use the same domain language.
 
 Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
 
-Pretty much all your code follows the single responsibility principle. Functions, classes, modules. Everything. This makes the code much easier to understand and also naming becomes simpler, names should be short, yet concise.
+Pretty much all your code follows the single responsibility principle. Functions, classes, modules. Everything. Even the build is automated. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
 
 Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
 
@@ -5503,7 +5523,7 @@ Classes should have high internal cohesion. They should have strong coupling bet
 
 It feels easy to add features and change code. Thanks to the test coverage you have a safety net and well-structured code makes it apparent where new features belong.
 
-A function name tells you what it does, there is no surprising behavior. The same holds for classes and variables. Functions have no side effects.
+A function name tells you what the function does. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects.
 
 There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand.
 
