@@ -375,7 +375,6 @@ Things to write:
 		- [Services](#services)
 		- [Aggregates](#aggregates)
 		- [Organizing aggregates](#organizing-aggregates)
-	- [Domain level, old text](#domain-level-old-text)
 - [37. Good code](#37-good-code)
 - [38. 3rd party software](#38-3rd-party-software)
 - [39. Dependencies](#39-dependencies)
@@ -5461,7 +5460,7 @@ The class `Car` might have the following invariants. It needs:
 - 4 tires (entities) with `distance_remaining >= 0`
 These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires with positive `distance_remaining` after the replacement and driving some distance.
 
-An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a subdomain of your code.
+An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a domain of your code.
 
 As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
 
@@ -5473,41 +5472,7 @@ Aggregate instances are frequently created by a factory or another of the creati
 
 Is there some general rule how to organize the aggregates? Or just throw all the pieces on the table and see how they fit toegther?
 
-
-
-## Domain level, old text
-
-// remove this text here (?)
-
-// get some more from the DDD book? It feels incomplete.
-The Domain Level is an expression used by Eric Evans in his book Domain-Driven Design. The Domain Level and especially the Domain Core are the heart of the software. It represents the central part of your code. That part that you actually make money with. It may be fairly small, yet it covers much of the overall complexity of your code. The complexity of the business it represents. Frequently, the domain level is unique, you cannot buy this part of the software anywhere else. You have to develop it yourself for your business. Exactly this makes it so special and valuable.
-
-While the UI and all the infrastructure code are usually fairly generic, the domain level consists of highly specialized code. Both, from the complexity and from the business rules point of view. It thus requires the best and most experienced programmers to implement and improve the domain level. This is an apparent contradiction to the rule that any programmer should be able to implement any open ticket around. Apparently, this means that extra care has to be taken with the team. The domain level developers have to stay and work on the domain level and not wander off, dealing with some database nuisances.
-
-The domain level is the heart of your software. Its architecture influences all the other levels of the code. This means, that extra care has to be taken here as well. It takes the most experienced and capable programmers in the team to make design decisions here. Bad decisions here can be costly.
-
-The domain level tends to grow over time. This should be prevented as code in the domain level needs to fulfill extra stringent requirements and is more costly. One of the reasons is that more and more peripheral code creeps into the domain level. Make sure that at all times, the domain level remains slim.
-
-// example stolen from DDD p.68
-
-You might be a little confused now about the domain level. Let me make a brief example (stolen from Domain-Driven Design).
-
-Let’s assume you have a shipping company. You make money by transporting cargo from one harbor to another. Your software can do the following things:
-1.	Draw a widget on the screen.
-1.	Query the database for all the possible cities.
-1.	Interpret the user’s input and validate it.
-1.	Associate the selected harbor with the cargo.
-1.	Commit the change to the database.
-
-These are all more or less important commands, yet only one of them is in the domain level. 1 is in the GUI level. 2 and 5 deal with the database. This is infrastructure level. 3 is in the application level. Only 4 is located in the domain level as it deals with the heart of the business.
-
-#The domain model is the interface between programmers and the domain experts. Both have to understand what is going on. The domain model connects code and the real world. A domain model doesn’t have to be as realistic as possible. It has to fit the purpose.
-
-A project faces serious issues when its language is fractured. Programmers won’t be able to talk to the domain experts anymore as misunderstandings will pop up everywhere. Learn the language like toddlers.
-
-High level concepts follow the domain language, low level concepts follow the general programming patterns. On the intermediate level you have to manage to make a connection between the two.
-
-Coding is research. Figure out how to implement the domain knowledge of the experts. Draw diagrams if needed to understand the problem and convert the knowledge into code. But don’t plan too much ahead. Diagrams tend to get outdated.
+// some old text
 
 Make code explicit
 
