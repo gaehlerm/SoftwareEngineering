@@ -255,6 +255,7 @@ Things to write:
 - [22. Physical laws of code](#22-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
+	- [Quality](#quality)
 	- [Requirements](#requirements)
 - [23. Software Architecture](#23-software-architecture)
 	- [About Architecture](#about-architecture)
@@ -378,6 +379,9 @@ Things to write:
 - [37. Good code](#37-good-code)
 - [38. 3rd party software](#38-3rd-party-software)
 - [39. Dependencies](#39-dependencies)
+	- [The early days](#the-early-days)
+	- [The dependency graph](#the-dependency-graph)
+	- [Breaking up dependencies](#breaking-up-dependencies)
 	- [Circular dependencies](#circular-dependencies)
 		- [Example](#example-4)
 - [40. Working in teams](#40-working-in-teams)
@@ -3669,6 +3673,9 @@ Also bugs tend to cluster inside your code. Did you find a bug in some very comp
 
 Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better. And you will find your bugs faster as you check the complex parts of the code earlier on.
 
+## Quality
+
+// Write about the broken windows. And about good enough code. These two things are opposing each other... See The pragmatic programmer.
 
 ## Requirements
 // Does this go into the physical laws of code?
@@ -5484,7 +5491,7 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 # 37. Good code
 
-“A computer once beat me at chess, but it was no match for me at kick boxing.” — Emo Philips
+"A computer once beat me at chess, but it was no match for me at kick boxing." — Emo Philips
 
 This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
@@ -5558,11 +5565,17 @@ To put it brief: Third party software and services are generally great. They may
 // remove this paragraph?
 The very big question is always when you really need such an interface. Most of the time I’m too lazy as well for writing one. But you certainly need one when dealing with databases. Call all the database specific queries only within this thin layer. The whole rest of the code is database syntax free zone. This makes it very simple to change the database. You only have to add or replace the wrapper. You might have to change some of the implementation as well as the functionality between databases differs slightly. But this is a small price to pay compared to the millions Oracle got so far.
 
-You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer there as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
+You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
 // add here the supplier-client dependency level? Or mention them in the dependencies?
 
 # 39. Dependencies
+
+"If you automate a mess, you get an automated mess." — Rod Michael
+
+In this chapter we are discussing files depending on each other. An inevitable evil.
+
+## The early days
 
 In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
 
@@ -5572,25 +5585,25 @@ In C++ the whole problem becomes even worse due to the compiler requiring the he
 
 What all programming languages have in common are the import or include statements at the beginning of the files. Even with the build tools of C++ you still need those. They might bother you but at times they are quite handy. They are an indicator for some very bad patterns in your code.
 
-If you draw a plot with all the files as circles and how they import each other as arrows you get a directed acyclic graph. The trunk of this graph is the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
+## The dependency graph
 
-Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. Apparently, there is no clear distinction between the levels of abstraction. It’s just a mess.
+If you draw a plot with all the files as circles and how they import each other as arrows you should get a directed acyclic graph. The trunk of this graph is the file containing the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
+
+Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It’s just a mess.
 
 The simplest solution is fusing these files. However, this is only a superficial fix. You really have to find out the relationships between the function and classes in the files. Maybe you can reorder them, maybe you have to rewrite the corresponding code from scratch.
 
-Circular imports are not common as they are easy to spot and experienced programmers don’t have such issues anyway. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little and it should be reconsidered if it almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
+## Breaking up dependencies
 
-How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you refactored a class into two classes.
+Circular imports are not common as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies because of this file increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
 
-The most important step towards lower dependencies is working on your code and maybe also the whole structure of it. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class. Afterwards you can pass around this data object and there is no need to think about the database anymore. And just like that you get rid of many dependencies by improving your code.
+How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you broke up a class into two classes.
 
-The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky and even if I could, explaining here would be barely possible.
+The most important step towards lower dependencies is working on your code and maybe also the whole structure of it. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class. Afterwards you can pass around this data object and there is no need to think about the database anymore. And just like that you got rid of many dependencies by improving your code.
 
-Summary: Write your code to have few dependencies. This is generally a good sign. You may never have circular dependencies.
+The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky to achieve and even if I could, explaining it here would be barely possible.
 
 ## Circular dependencies
-
-Circular dependencies are easily created. But with the right technique, one can get rid of them again. In some cases, one has to merge both classes into one. But this should be the exception as it’s more of a hack than a proper solution.
 
 Usually, circular dependencies occur as two classes exchange data between each other. Class A needs data from class B which needs some data from class A in return. You should be able to tell whether class A or class B corresponds to the higher level of abstraction. Let’s assume class A is the higher-level class calling class B at some point. Now class B should never ever have to call class A. B is low level and knows nothing of the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data class B needs to return the final result. 
 
@@ -5598,7 +5611,7 @@ Long story short: The high-level object calls the low-level object and hands ove
 
 ### Example
 
-This example here is deliberately made simple. No one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted than it had to be.
+This example here is deliberately simple. I hope no one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted and harder to understand than it had to be.
 
 ```py
 def a(counter):
@@ -5611,7 +5624,9 @@ def b(counter):
 
 a(5)
 ```
-We could simplify it by inserting the definition of b into the function call,
+
+We could simplify it by inserting the definition of `b` into the function call inside `a`.
+
 ```py
 def a(counter):
 	if counter > 0:
@@ -5620,13 +5635,16 @@ def a(counter):
 
 a(5)
 ```
-This is already much simpler. Of course it could be simplified even further by removing the recursion all together.
+
+This is already much simpler. Of course it could be simplified even further by removing the recursion all together. But this is only a side remark.
+
 ```py
 def a(counter):
 	for i in range(counter-1, 0):
 		print(i)
 ```
-As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code even more readable.
+
+As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard if you have proper levels of abstractions and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code more readable.
 
 
 # 40. Working in teams
@@ -5650,29 +5668,25 @@ Don't just say, "this is bad". Come up with some reasons.
 Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
 A good manager considers how things are done. A great manager considers what is to be done and leaves the rest to his employees. He has faith in them. This is much more motivating than someone yelling around.
 
-Humans are mostly a collection of intermittent bugs. - Brian Fitzpatrick, google
+"Humans are mostly a collection of intermittent bugs." - Brian Fitzpatrick
 
-You will probably spend most of your career working in teams. The story of the lone programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
+You will probably spend most of your career working in teams. The story of the lone prodigy programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
 
-Cooperating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parliament with a dictator. A parliament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
+Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parliament with a dictator. A parliament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
 
 At the same time scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parliament.
 
 ## Team structure
 
-In most projects a team consists of roughly 4-12 software engineers, one project owner and one project manager. The software engineers are working their ass off writing awesome code while everyone else is just slacking off. The project owner is the only one who has an idea how to implement the tickets and wonders why everyone else is so stupid. And the product manager starts wondering why he has to scratch every bit of information how the software is used out of the nose of the customers. While at the same time his team of highly paid developers needs weeks to finish a tiny ticket. Yes, this will be your somewhat exaggerated future in a software development team.
+In most projects a team consists of roughly 4-12 software engineers, one project owner and one project manager. The software engineers are doing the real work. They work their ass off writing awesome code while everyone else is just slacking off. Just kidding. All other employees have work to do as well, it even if it might not be that apparent to the developers.
 
-There are different ways to organize a software team. There is usually a product manager. As you can guess he’s a manager and not an engineer. He talks to customers about their needs. He knows what they are doing. He has to know his product and figure out what feature should be developed next.
-
-The product owner is, you could guess, responsible for the code. He is the link between the product manager and the software developers. He works together with the product manager to write the tickets.
-
-You always have a few software developers. Each one draws a ticket and starts implementing. They implement until all requirements are met.
+The project owner (PO) takes care of the tickets. He is at the interface between the project manager and the developers. The project manager (PM) is ... managing the whole project. He has to talk to customers and get an idea what they want. Or rather, what they need. These are not always the same thing. Nobody wanted an iPhone before it was released, yet still everybody needed one. And it's the PM's job to figure out such things.
 
 It is important that everybody in the team talks to each other. Software engineers talk a lot about their code. But quite frequently they have questions about the ticket that the PM has to answer. Vice versa the PM wants to know the state of each feature for estimating the progress of the software.
 
 ### The bus factor
 
-https://en.wikipedia.org/wiki/Bus_factor
+// https://en.wikipedia.org/wiki/Bus_factor
 
 The bus factor says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
 
@@ -5680,15 +5694,15 @@ Make sure the bus factor in your project is as high as possible. Ensure that the
 
 ## Developers work
 
-The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job.
+The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job. That's at least their point of view. Now let's get a little bit more serious.
 
-Software engineers have several tasks. The most obvious one is, of course, talking to each other. You have to go through the tickets, you have to discuss how the fundamental structure of the code should look like and you have to talk during pair programming or code review sessions. The talking during code reviews is not absolutely necessary. Smaller MRs can be done by writing comments, but when in doubt, it’s better to talk to each other. Especially during times like Corona, the human touch got lost and things sometimes got hairy.
+Software engineers have several tasks. The most obvious one is, of course, talking to each other. You have to go through the tickets, you have to discuss how the fundamental structure of the code should look like and you have to talk during pair programming or code review sessions. Though the talking during code reviews is not absolutely necessary. Smaller MRs can be done by writing comments, but when in doubt, it’s better to talk to each other. Especially during times like Corona, the human touch got lost and things sometimes got hairy.
 
-You also have to talk during pair programming. One person works at the computer as usual, while the other person knows everything better. Erm no. Seriously. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it.
+You also have to talk during pair programming. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it.
 
-Another fairly big job is going through merge requests (MRs). Everyone has to do it, no one really likes it. But it has to be done. Nobody likes to wait a day until his code is approved and merged. It has to be done quickly. So, get up, open the browser and select the first MR. And now… doing code review is a tricky business. You can somehow tell that the code is not good but it’s so elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be solved by writing comments.
+Another fairly big job is going through merge requests (MRs). Everyone has to do it, no one really likes it. But it has to be done. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be solved by writing comments.
 
-Once this is all done you may finally write code. Grab yourself a ticket and get started. Dig yourself through the code down to a place that seems appropriate. Neighboring classes have about the same abstraction level and all the required data is around. So, you start… by writing an acceptance test. Then refactor a little the area where the function will be called, write unit tests. Finally, you write the class and all the tests pass. One more small refactoring and you’re ready to create an MR.
+Once all this work is done you may finally write code. Grab yourself a ticket and get started. Dig yourself through the code down to a place that seems appropriate. Neighboring classes have about the same abstraction level and all the required data is around. So, you start... by writing an acceptance test. You do TDD, don't you? Then refactor a little the area where your code will be called, write unit tests. Finally, you write the class and all the tests pass. One more small refactoring and you’re ready to create an MR.
 
 ## Communication
 
@@ -5697,10 +5711,13 @@ Once this is all done you may finally write code. Grab yourself a ticket and get
 In a team, the most important language is not Java but English (or German in the projects I worked on). Use this language to communicate with other team members. And if you think communicating with a computer is hard, think twice. For a computer you can just google what to do and most of the time it works. But with other humans it may take significantly more efforts for a good communication.
 -	Make sure you know what you are talking about and know how to talk to the specific audience.
 -	Keep communicating. Ask questions. Let the other person talk. Once you don’t get replies anymore you have an issue.
+-	Make sure the other person really understood what you were talking about.
 
-There are probably hundreds of other rules, but these two here are the ones I know. Even though I’m not that good at applying them. As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
+There are probably hundreds of other rules, but these few here are the ones I know. Even though I’m not that good at applying them. As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
 
 ## Working with humans
+
+// merge this with Communication?
 
 Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be criticized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to criticize each other in a constructive way.
 
@@ -5728,27 +5745,29 @@ After some mediocre attempts to fix this issue there was our savior. Linus Thorw
 
 Unfortunately, git was not yet the final solution. It was still possible to write crappy code and merge it into the master. There was no other solution than firing this malicious developer.
 
-But now comes the real solution: Merge Requests (MR) and code reviews. No user is able anymore to make changes on master all by himself. Before he can merge his changes into master, he needs to create a public request and wait for someone else to accept it. And thus, allows the changes to be merged into master.
+But now comes the real solution: Merge Requests (MR) and code reviews. No user is able anymore to make changes on master all by himself. Before he can merge his changes into master, he needs to create a public request and wait for someone else to accept it. And thus the other developer allows the changes to be merged into master.
 
 Now there are a few things to consider regarding code reviews. First of all, code reviews are great not only to keep the code quality up to date, but it also helps improving the programming skills of all developers. They are a great opportunity for knowledge exchange. Developers are obliged to look at each-others code and thereby learn a lot.
 
 ## Drawbacks
 
-However, there are some downsides as well. They can be severe enough that teams even stopped using MRs altogether. Most importantly, everyone has to stick to the rules. There is no way to prevent foul play by the developers and sabotaging the system will render it useless or even counterproductive.
+However, there are some downsides as well. They can be severe enough that teams even stopped using MRs altogether. Most importantly, everyone has to stick to the rules. There is no way to prevent foul play by the developers sabotaging the system in a way that will render the MRs useless or even counterproductive.
 
-The first problem is people just accepting merge requests without any comments. Either because they don’t understand it, because they are lazy, or to make the author of the MR a favor. One could also just stop using MRs at all.
+The first problem is people just accepting merge requests without commenting anything, maybe even without looking at the MR. Either because they don’t understand it, because they are lazy, they don't have time, or to make the author of the MR a favor. One would be better off not using MRs at all.
 
-The second problem is speed. It is of utmost importance to check MRs as quickly as possible. Too long idle times for MRs lead to a very significant drop in the developers’ output. Additionally, it is highly frustrating waiting for a MR to be looked at and not being able to continue working.
+The second problem is speed. It is of utmost importance to check MRs as quickly as possible. Too long idle times for MRs lead to a very significant drop in the developers’ productivity. Additionally, it is highly frustrating waiting for a MR to be looked at and not being able to continue working.
 
 Another very serious problem are too long MRs. It is impossible to judge the quality of a change of a thousand lines of code. You should keep the tickets small. You should keep the commits small. And you should keep the MRs small. Huge MRs are a waste of time as no one understands what’s going on. If a ticket turns out to be too long, split up the code in several MRs and make sure the tickets become smaller in the future.
 
-There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in most cases absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove it. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
+There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in most cases absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove that it most certainly free of bugs. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
 
 Always be polite. An MR is like criticizing someone by email. This is a highly delicate thing to do. Stay professional and make sure you only comment the code and not its author. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
 
-One thing I can highly recommend is looking at the code together. In theory, the referee is supposed to understand the code all by himself (at least that’s my understanding of an MR). However, discussing the code with the other author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
+One thing I can highly recommend is looking at the code together, kind of a pair reviewing. In theory, the referee is supposed to understand the code all by himself, at least that’s my understanding of an MR. However, discussing the code with the author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
 In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
+
+Now despite all these drawbacks, I think it's still very important to make merge requests. The advantages outweigh the drawbacks by a lot. However only if everyone plays by the rules.
 
 # 42. Working with existing projects
 
