@@ -5976,6 +5976,8 @@ For the very same reason you have to be honest when estimating the time required
 
 # 45. Continuous integration
 
+// redundancy with chapter on DevOps???
+
 Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
 
 Now the idea of Continuous Integration (CI) is to automate this whole process, allowing you to publish a nightly build if needed. You automate the whole build process. You write automated tests, both unit and acceptance tests. You automate absolutely everything you need in order to be sure you have a stable release.
