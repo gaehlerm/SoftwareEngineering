@@ -6000,15 +6000,15 @@ That’s the moment you’ve all been looking for your whole life. Your first re
 
 ## Hiring
 
-Let's say it frankly. Unfortunately, quite some job application processes suck. There’s no other way to put it. And the problem behind it is very simple. The application process is being led by a manager who likes numbers. He thinks that 5 years of professional Java development is a reasonable qualification. Even though there are developers with more than 10 years of experience who don’t manage to write reasonable code. They just never made the effort to learn anything by themselves. They keep writing the same old crap code they did 10 years ago. Meanwhile someone working for 3 different companies 1 year each probably has improved his programming skill significantly in the meantime.
+Let's say it frankly. Unfortunately, quite some job application processes suck. There’s no other way to put it. And the problem behind it is very simple. The application process is being led by a manager who likes numbers. He thinks that 5 years of professional Java development is a reasonable qualification. Even though there are developers with more than 10 years of experience who don’t manage to write reasonable code. They just never made the effort to learn anything by themselves. They keep writing the same old crappy code they did 10 years ago. Meanwhile someone working for 3 different companies 1 year each probably has improved his programming skill significantly in the meantime.
 
 Instead of the bulleted point lists of requirements, a company should rather describe in whole sentences what they are doing and who they are looking for.
 
-Similar for the interviews. It’s about getting to know each other personally. This is a very hard task, but there’s no way around it. This is why many companies hire psychologists to support the HR processes. So, ask personal questions. What did you do at your previous job? What were the challenges? How did you get along with the previous work colleagues? There are hundreds such questions and to none of them you will find an answer on the CV. Make sure you don’t waste your time asking the standard Java questions. How can I create a memory leak? Etc. And if you do, make sure the Java version used for the questions is at least up to date.
+Similarly for the interviews. It’s about getting to know each other personally. This is a very hard task, but there’s no way around it. This is why many companies hire psychologists to support the HR processes. So, ask personal questions. What did you do at your previous job? What were the challenges? How did you get along with the previous work colleagues? There are hundreds such questions and to none of them you will find an answer on the CV. Make sure you don’t waste your time asking the standard Java questions. How can I create a memory leak? Etc. And if you do, make sure the Java version used for the questions is at least up to date.
 
 Instead do some pair programming during the interview. Let the applicant bring his own laptop and give him internet access. He should be working on his laptop the way he’s used to. It’s not about testing his knowledge on the latest IDE or testing framework. It’s about finding out whether he’s smart and sharing the same coding values as you do. About having fruitful discussions on the code, you are just writing. It’s about simulating some real pair programming, as you will also do together if the applicant gets the job.
 
-Search for applicants with that something extra. Developers who are working on some open source project in their free time. There’s hardly any better sign that someone is a very motivated and possibly also skilled programmer. Join one of these software development groups, possibly sponsor an even. This is a great opportunity to get to know other software developers and hire them without the tedious application process.
+Search for applicants with that something extra. Developers who are working on some open source project in their free time. There’s hardly any better sign that someone is a very motivated and possibly also a skilled programmer. Join one of these software development groups, possibly sponsor an even. This is a great opportunity to get to know other software developers and hire them without the tedious application process.
 
 Keep recruiting all the time. This is a difficult task as the number of proficient programmers is too small to cover all the open positions. Thus, you can’t be too picky about when you are hiring your new team mate. If you have to hire someone under pressure, you’ll end up hiring someone who is not quite up to the task.
 
@@ -6037,46 +6037,85 @@ Software engineers have a lot of responsibility. In the best case a bug is merel
 //keep learning
 
 # 48. Examples
-So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real-world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
+So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
 
 ###  User story
 
 Your father comes for dinner next Sunday and you want to make him happy. Creamy apple pie makes him happy, for example.
+
 Acceptance criteria: your father is happy
 
-Now let’s first write the acceptance test. If we invite our dad, he has to be happy.
+Now let’s first write the acceptance test. If we invite our dad, he has to say that he's happy.
 
-In acceptance_tests/test_dinner.py
+```py
+# inside acceptance_tests/test_dinner.py
+import subprocess
 
+def test_dinner_makes_dad_happy():
+    p = serve_dinner_as_subprocess()
+    assert(contains_happy(p.stdout))
+
+def serve_dinner_as_subprocess():
+	return subprocess.Popen(['python', 'dinner.py'],
+                    		stdout=subprocess.PIPE,
+                    		stderr=subprocess.STDOUT,
+                    		)
+
+def contains_happy(lines):
+	for line in lines:
+        if "happy" in str(line):
+            return True
+	return False
 ```
-python dinner.py
-// how to get the printed value?
-Assert(expression.contains("I’m so happy."))
-```
+
 That’s it. We won’t have to touch the acceptance test anymore until the ticket is done. Note that I used the function contains to make the test a little more flexible. Your dad might say other things as well that we don’t care about.
 
 The very first thing we do is running the test.
 
-Pytest acceptance_tests
+```sh
+pytest acceptance_tests
+```
 
 And we see that it fails. That was to be expected, we didn’t implement anything so far. But it was still worth the few milliseconds we spent here. There are better places where you can save time.
 
 ### Implementation
 
 Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
+
+```py
+apple_pie = create("apple_pie")
+dad  = Dad()
+dad.eat(apple_pie)
 ```
-Apple_pie = create("apple_pie")
-Dad Dad
-Dad.eat(apple_pie)
-```
+
 Next we implement dad and then the create function.
+
+```py
+from enum import Enum
+
+class Flavor(Enum):
+	VERY_CREAMY = 1
+
+class Dad():
+    def eat(food):
+       if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
+          print("I’m so happy")
 ```
-Class Dad:
-    Def Eat(food):
-       If food.name == "apple_pie" and food.flavour == very_creamy
-          Print("I’m so happy")
+
+```py
+class ApplePie():
+	def __init__(self):
+		self.flavor = Flavor.VERY_CREAMY
+		self.name = "apple_pie"
+
+def create(food_name):
+	food_dict = {"apple_pie" : bake_apple_pie()}
+	return food_dict[food_name]
+
+def bake_apple_pie():
+	return ApplePie()
 ```
 
 ## Paint
@@ -6085,7 +6124,7 @@ Evans p.259
 
 Idea: We want to define paint of certain color that we can mix with each other and change its color accordingly. I would like to make some comments to the implementation in the book mentioned above.
 The code starts with a simple class paint and its variables.
-```
+```py
 class Paint:
 	V: float
 	R: int
@@ -6093,7 +6132,7 @@ class Paint:
 	B: int
 ```
 These member variables don’t have expressive names at all. They are renamed to
-```
+```py
 class Paint:
 	Volume: float
 	Red: int
@@ -6102,7 +6141,7 @@ class Paint:
 ```
 
 This can be further improved. The red, yellow and blue values all represent a color. They are all the same, while the volume has a clearly different meaning. Thus we can refactor the RYB colors into a dedicated object to fulfill the single responsibility principle.
-```
+```py
 class Paint:
 	volume
 	color
@@ -6112,23 +6151,23 @@ class Color:
 	Blue
 ```
 So far so good. We made some smaller refactoring and the basic data structure looks good to go. Now comes the very tricky question: how should the syntax of mixing two colors look like?
-```
-Paint a, b, c
-C = add(a,b)
+```py
+# paint a, b, c
+c = add(a,b)
 c.add(a)
 ```
 The first is the procedural #? Way, the second is the object-oriented approach. Besides this fundamental question, we also have to figure out what kind of values a and b should have after this operation. Additionally, we also might want to find another name than add.
 
 First, I would like to answer the conceptual question. What happens with a and b? This is a somewhat philosophical question and without knowing the actual problem we’d like to solve there is no clear answer. We can only reason about it.
-```
-Def add(paint1, paint2):
+```py
+def add(paint1, paint2):
 	Paint paint3
 	volume = paint1.volume + paint2.volume
 	Paint3.volume = volume
 	Paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
-Paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
-Paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
-Return paint3
+paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
+paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
+return paint3
 ```
 Now I see 3 different possibilities:
 1.	We leave paint1 and paint2 as is. We used a copy of the actual paints and didn’t change the original paints.
@@ -6140,17 +6179,19 @@ As I said, all of them are perfectly reasonable choices. It is up to us to choos
 For the first option, we don’t change neither paint1 nor paint2. Here it makes sense to call the function add or even define the + operator if possible, in your programming language of choice. This is a legitimate choice as we don’t expect add to change any of its function arguments.
 
 Let’s assume that we choose option 2 and we’re left with 2 empty canisters of paint. Calling this function add is no longer an option. Instead we could call it mix or mix_in. Additionally, we have to deal with the question if we want to be more or less object oriented. We do have the following options:
-```
-Paint3 = mix(paint1, paint2)
-Paint1.mix_in(paint2)
+```py
+paint3 = mix(paint1, paint2)
+paint1.mix_in(paint2)
 ```
 Now this is a matter of choice. A whole generation of programmers grew up hearing that the later option is the better one. It would be more natural. But honestly, I don’t see why this is supposed to be so super natural. As already seen, for case number 1 I clearly prefer the non-OO solution, simply because we are used to the add function not changing any function arguments while with the mix function, we have to take a look at the definition in order to be sure. Even here, I still opt for the first option. It just feels more natural to me as the function is symmetric, while the OO solution is asymmetric for no apparent reason.
 
 The solution
-`
-Paint3 = mix(paint1, paint2)
-`
-Has one drawback. It creates a new object and it changes both function arguments. Now this is a very unfortunate solution. Changing one function argument is already bad enough and changing two is even worse. Now one solution would be passing a list of paints, `Paint3 = mix([paint1, paint2])`
+
+```py
+paint3 = mix(paint1, paint2)
+```
+
+Has one drawback. It creates a new object and it changes both function arguments. Now this is a very unfortunate solution. Changing one function argument is already bad enough and changing two is even worse. Now one solution would be passing a list of paints, `paint3 = mix([paint1, paint2])`
 
 Reasonable programming dictates that all list elements are treated equally and thus they are either all altered together or none at all. Furthermore, we can implement a mix function for any number of paints.
 
