@@ -411,8 +411,12 @@ Things to write:
 	- [Sprints](#sprints)
 	- [The end of the project](#the-end-of-the-project)
 	- [Becoming agile](#becoming-agile)
+		- [Agile coaches](#agile-coaches)
 	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
 		- [Courage](#courage)
+		- [Feedback](#feedback)
+		- [Simplicity](#simplicity)
+		- [Communication](#communication-1)
 - [45. Continuous integration](#45-continuous-integration)
 - [46. Hiring and getting hired](#46-hiring-and-getting-hired)
 	- [Hiring](#hiring)
@@ -5840,7 +5844,7 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 "Intelligence is the ability to adapt to change." – Stephen Hawking, among others
 
-All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner. - Fundamentals of Software Architecture
+"All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards, Fundamentals of Software Architecture
 
 // How much of this chapter is explained in Working in teams
 
@@ -5848,15 +5852,15 @@ All architectures become iterative because of unknown unknowns. Agile just recog
 
 // add the INVENT points from clean agile
 
-Until the year 2001, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
+Until the year 2001, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan all the complexity top down and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
 
 The first problem of waterfall was missing feedback. The whole project was just one big pile of work and it was impossible to get a reasonable estimate on the time it takes to get all the work is done. Many projects failed spectacularly as at the deadline there was still a significant fraction of this pile left but no one informed the management beforehand.
 
-The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. And worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
+The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. It is simply not possible to plan a house down to the very last detail. And worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
 
 ## Agile values
 
-In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto, a brief guide line how software development should be done.
+In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto, a brief guide line how software development should be done. Some of the points were:
 -	Individuals and interactions over processes and tools.
 -	Working software over comprehensive documentation.
 -	Customer collaboration over contract negotiation.
@@ -5864,9 +5868,7 @@ In 2001, a group of software engineers met for two days in the Rocky Mountains i
 
 // write something about these values?
 
-Bill of rights
-
-The bill of rights states what kind of rights each individual in an agile process has.
+While the Agile Manifesto was about how a project should be run, there is also a Bill of Rights for the developers. The Bill of Rights states what kind of rights each individual in an agile process has.
 
 // add them here or should we leave it away?
 
@@ -5876,11 +5878,11 @@ The product owner has a set of requirements that the code should fulfill. This p
 
 Every ticket is estimated for how much work it will take. The ticket size is quantified by the number of story points it gets. This is an artificial number to give the tickets a measurable size. Yet at the same time, the story points are vague enough to indicate that this value is only a vague estimation. In most projects, a story point is between one half and one day of work.
 
-The ticket size is estimated at the sprint planning. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the actual number of story points. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers overestimated the task.
+The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task.
 
-Tickets all have business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
+Tickets all have some business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on in a single ticket. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
 
-At the same time, one can write acceptance tests for every ticket. "… if the user clicks x, then the window closes." This is also the acceptance criterion of the ticket: does the acceptance test pass?
+At the same time, one can write acceptance tests for every ticket. "... if the user clicks x, then the window closes." This is also the acceptance criterion of the ticket: does the acceptance test pass?
 
 ## QA
 
@@ -5914,19 +5916,19 @@ One thing the management tends to do is throwing more developers at the problem.
 
 ### Done
 
-Changing the schedule helps a lot and is frequently the only option. As it was already the case in waterfall times. On the other hand, there are also plenty of projects where the scope of work is tuned in order to get the work done. It is quite amazing how often the core requirements of a project were overestimated.
+Changing the schedule helps a lot and is frequently the only option. As it was already the case in waterfall times. On the other hand, there are also plenty of projects where the scope of work is tuned in order to get the work done. It is quite amazing how often the core requirements of a project were overestimated. There are projects where some of the first requirements were in the end not implemented because it turned out that these requirements were not really needed.
 
 ## Sprints
 
-In Agile, the whole project is split up into sprints of one- or two-weeks length, called sprints. This results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough estimates on how long it will take up to the next mile stone. This biweekly progress can also be used as a monitoring tool how well the development team is doing.
+In Agile, the whole project is split up into pieces of one- or two-weeks, called sprints. During each sprint, there is a sprint planning, some time for implementing the features and a sprint presentation meeting in the end where the outcomet of the sprint is being discussed. This structure results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough a estimate on how long it will take until the next mile stone. This (bi)weekly progress can also be used as a monitoring tool how well the development team is doing.
 
-The first meeting of a spring is the sprint planning. It takes the whole team to discuss the tickets and which ones to scope into the sprint. The sprint planning for a two-week sprint may take a whole afternoon.
+The first meeting of a spring is the sprint planning. It takes the whole team to discuss the tickets and which ones to scope into the sprint. The sprint planning for a two-week sprint may take a half a day.
 
-Part of the meeting is the planning game, where the story points for each ticket are estimated. This is required to plan the scope of the next sprint.
+Part of the meeting is the planning game (see Work Planning), where the story points for each ticket are estimated. This is required to plan the scope of the next sprint.
 
-Next is the daily meeting. This one is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what he’s doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
+Next is the daily meeting. This meeting is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what he’s doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
 
-Toward the end of the sprint, the software developers present their work done in the sprint presentation meeting. The idea of this meeting is for the stake holders to get an idea what the status of the software is. And hopefully, the developers are proud to present their work done.
+Toward the end of the sprint, the software developers present their work done in the sprint presentation meeting. The idea of this meeting is for all the stake holders to get an idea what the status of the software is. And hopefully, the developers are proud to present their work done.
 
 The last meeting is the retro perspective. Here the team meets to discuss anything that could improve the productivity of the development. Issues why the ticket size was estimated wrongly, blockers that were not resolved for too long, unresolved MRs, etc.
 
@@ -5938,13 +5940,15 @@ However, it’s not that simple. Frequently all tickets are done but the develop
 
 ## Becoming agile
 
-What I tried to explain in this chapter was supposed to be something like a manual how to become Agile. The real effort, however, lies before you. There is no Agile a manual. It is more like a schema. And you can stretch this schema in many possible directions, whether it makes sense or not.
+What I tried to explain in this chapter so far was supposed to be something like a manual how to become Agile. The real effort, however, lies before you. There is no Agile a manual. It is more like a schema. And you can stretch this schema in many possible directions, whether it makes sense or not.
 
-The most important point from Agile is that you should figure out by yourself what works best. And be honest with yourself. It may be more convenient to work all by yourself for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. But you lack knowledge how you are progressing. And not only you, also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
+The most important point from Agile is that you should figure out by yourself what works best. And be honest with yourself. It may be more convenient to work alone for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. You don't know how your colleagues are doing. You lack knowledge how you are progressing. And not only you, also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
 
-Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. Your code would have to be flexible also in Waterfall, but that’s another story.
+Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. Your code would have to be flexible also in waterfall, but that’s just in theory. 
 
 In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task as you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
+
+### Agile coaches
 
 One quite controversial topic is the role of Agile coaches. Along with the advent of Agile, there was a demand from the industry for people with Agile experience or even Agile consulting, as no one knew how Agile really works out. But as always, there are many courses offering a certificate on Agile development after a two-day course. This is not really helpful.
 
@@ -5952,7 +5956,6 @@ On the other hand, there are also serious courses, including some project manage
 
 ## Agile = Courage + Feedback + Simplicity + Communication
 
-// write also something about the other topics or leave this section away
 ### Courage
 
 It takes a little bit of courage to work as a software engineer. If you are always afraid that your work could introduce bugs, that you could make mistakes. It is hard to keep up that courage. This has severe consequences. You’ll only make the changes you are absolutely sure they don’t introduce bugs. You’ll only add features and fix bugs that are absolutely necessary. You won’t touch a single line of code you don’t have to. This is absolutely dreadful! You will not refactor code because you are afraid you might break something. No one in the whole team will. No one will refactor your code. It will just keep rotting. Your project is doomed.
@@ -5962,6 +5965,14 @@ Instead you need something to keep your courage up. Something that takes you the
 You also need courage to be honest. The very first thing is you have to be able to say "No." Your manager will ask you many questions throughout your career and he hopes you to say yes. But if the real answer is no, you have to tell him so. Lying to him and saying that you will be able to do something that you are not will not do you any good, nor will it to you manager. He’ll be making plans based on wrong assumptions that will not work out.
 
 For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
+
+### Feedback
+
+// write also something about the other topics or leave this section away. See Clean Agile?
+
+### Simplicity
+
+### Communication
 
 # 45. Continuous integration
 
