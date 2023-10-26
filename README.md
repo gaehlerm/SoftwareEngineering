@@ -2,28 +2,28 @@
 
 Copyright Marco Gähler, all rights reserved.
 
-Please give me feedback on the book. Either as a merge request or by email, marco.gaehler@gmx.ch
+This book is still work in progress. Feedback is highly welcome. Either as a merge request (I have to give you access rights) or directly by email, marco.gaehler@gmx.ch Many small MRs are prefered over one big MR. Feedback can be either about concrete improvements or just some general thoughts. Oh yeah, and my English could be better... but that will be fixed later on.
 
 If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with VS code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
 
-This is a book about software engineering, similar to Clean Code by Robert Martin or the pragmatic programmer. So far it is only a rough draft, though it's getting somewhere. Especially some chapters feel like they were too short or not written too well. Anyone who feels like it may help improving this book. Just create an MR. 
-
-Oh yeah, and my English could be better...
-
-The first half of the books seems more or less OK, the second half needs some serious reworking.
+This is a book about software engineering, similar to Clean Code by Robert Martin or the pragmatic programmer by Thomas & Hunt. So far it is only a rough draft, though it's making progress. The first few chapters feel already quite good, the second half of the book still needs some serious rework. 
 
 Things to write:
 -	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
--	Domain driven design -> reread the book. What in the book is about DDD and what are other topics like distillation? DDD distilled may help to get the essence.
+-	Domain driven design -> what is the idea behind entities, aggregates and value objects?
 -	Restructure and sort the chapters somehow.
 -	Some more examples on refactoring (what technique exactly? Converting a function into a class?)
--	Design patterns -> write short explanations to all of them? Or leave this chapter away completely.
--	How to work with existing code? If the code is not as nice as explained here. Read WELC again.
+-	Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
+-	How to work with existing code? If the code is not as nicely written as explained here. Read WELC again.
 -	How to organize software projects
--	Mention combination explosion somewhere?
--	And some more chapters towards the end of the book that need to be improved.
+-	Mention combinatorial explosion somewhere?
+-	And some more chapters towards the end of the book need to be improved.
 
+Chapters that still need improvement:
+- 14. DevOps: There is some part missing. I don't know what exactly. Maybe some more details about the different tools. (Suggestion Copilot)
+- 16. Again: I think there is something missing, but I don't know yet what exactly.
+- 
 
 # 2. Table of content
 
@@ -1864,6 +1864,48 @@ Apparently I made a mistake in the implementation. The correct implementation of
 
 Now the test passes.
 
+In case you find the error message returned by the test not informative enough, you can can add an error message either separately or directly to the assert.
+
+There are different ways to change the error message of a faling test. In python I know of 3 different ways to add a message to a failing test. The easiest is adding a message to the `assert`.
+
+```py
+def test_function():
+	a = 1
+	b = 2
+	assert a == b, f"should = {b}, is = {a}"
+```
+
+For verbose error messages, you can define a function printing to stderr. This will be displayed in the captured stderr call.
+
+```py
+import sys
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def test_function():
+    a = 1
+    b = 2
+    if (a != b):
+        eprint("should = 2")
+        eprint("is  = 1")
+    assert a == b
+```
+
+The 3rd option is deriving from `unittest` and using the `assertEqual` function.
+
+```py
+import unittest
+
+class MyTestCase(unittest.TestCase):
+    def testFunction(self):
+        a = 1
+        b = 2
+        self.assertEqual(a, b)
+```
+
+There are many ways to make the error message expressive enough, just play around with it. This is different in every programming language and I cannt explain all of them here.
+
 As you can see it’s pretty simple to write a test. Not only in python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
 
 Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
@@ -2587,7 +2629,7 @@ def print_name(person=Person('John', 30)):
 
 # 14. DevOps
 
-Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build to the release. But in order to understand more precisely, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
+Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
 ## The early 2000s
 
@@ -2600,7 +2642,7 @@ Most teams were not writing tests for their code. It just wasn't fashion back th
 - Building all the tests works
 - All the tests pass
 
-Even though there are companies that don't care about the formatting anymore. They just let the formatter being run in any merge request and locally the developers can use whatever format he likes.
+Even though there are companies that don't care about the formatting anymore. They just let the formatter run in any merge request on the server and locally the developers can use whatever format he likes. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
 
 Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
 
@@ -2608,16 +2650,15 @@ We have the development (Dev) and the IT operations (Ops) Bundled all together, 
 
 ### Getting a project
 
-Furthermore getting started with an existing project was frequently a pain. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
+Furthermore getting started to work witn an existing project was frequently a pain. There were so many things that could have gone wrong. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
 
 It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
 
 // what else to write?
 
 # 15. Refactoring
-"If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
-Refactoring is the art of changing existing code without altering its functionality. 
+"If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
 ## There will be change
 
@@ -2932,6 +2973,314 @@ So far, every programmer that told me he was working on a really complex problem
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
+
+
+// The code and text here is copied from The Art of Readable Code. It has to be rewritten.
+
+// https://learning.oreilly.com/library/view/the-art-of/9781449318482/ch02.html#naming_id250561
+
+// These comments here are more about naming than about readable code.
+
+class BinaryTree {
+    int Size();
+    ...
+};
+
+What would you expect the Size() method to return? The height of the tree, the number of nodes, or the memory footprint of the tree?
+
+The problem is that Size() doesn’t convey much information. A more specific name would be Height(), NumNodes(), or MemoryBytes().
+
+Word	Alternatives
+send	deliver, dispatch, announce, distribute, route
+find	search, extract, locate, recover
+start	launch, create, begin, open
+make	create, set up, build, generate, compose, add, new
+
+Names like tmp, retval, and foo are usually cop-outs that mean “I can’t think of a name.” Instead of using an empty name like this, pick a name that describes the entity’s value or purpose
+
+Prefer explicit names over implicit names. (Prefer "hammer" over "nail smashing rod")
+
+d, days, or days_since_last_update?
+
+So our rule of thumb is: would a new teammate understand what the name means? If so, then it’s probably okay.
+
+Sometimes words inside a name can be removed without losing any information at all. For instance, instead of ConvertToString(), the name ToString() is smaller and doesn’t lose any real information. Similarly, instead of DoServeLoop(), the name ServeLoop() is just as clear.
+
+Use specific words—for example, instead of Get, words like Fetch or Download might be better, depending on the context.
+
+Avoid generic names like tmp and retval, unless there’s a specific reason to use them.
+
+Use concrete names that describe things in more detail—the name ServerCanStart() is vague compared to CanListenOnPort().
+
+Attach important details to variable names—for example, append _ms to a variable whose value is in milliseconds or prepend raw_ to an unprocessed variable that needs escaping.
+
+Use longer names for larger scopes—don’t use cryptic one- or two-letter names for variables that span multiple screens; shorter names are better for variables that span only a few lines.
+
+Use capitalization, underscores, and so on in a meaningful way—for example, you can append “_” to class members to distinguish them from local variables.
+
+Avoid negated terms (and possibly avoid booleans all together)
+
+It should be apparent how a function scales. A function `size()` should not be O(n). The latest C++ standard mandates `size()` to be O(1). If you want to have a function that is O(n), you should call it `compute_size()`.
+
+```
+public static final TcpConnectionSimulator wifi =
+	new TcpConnectionSimulator(
+		500,   /* Kbps */
+		80,    /* millisecs latency */
+		200,   /* jitter */
+		1      /* packet loss % */);
+```
+Figure out a way to make this code more readable.
+
+```
+class FrontendServer {
+  public:
+    FrontendServer();
+    void ViewProfile(HttpRequest* request);
+    void OpenDatabase(string location, string user);
+    void SaveProfile(HttpRequest* request);
+    string ExtractQueryParam(HttpRequest* request, string param);
+    void ReplyOK(HttpRequest* request, string html);
+    void FindFriends(HttpRequest* request);
+    void ReplyNotFound(HttpRequest* request, string error);
+    void CloseDatabase(string location);
+    ~FrontendServer();
+};
+```
+By formatting the code a little it became this:
+```
+class FrontendServer {
+  public:
+    FrontendServer();
+    ~FrontendServer();
+
+    // Handlers
+    void ViewProfile(HttpRequest* request);
+    void SaveProfile(HttpRequest* request);
+    void FindFriends(HttpRequest* request);
+
+    // Request/Reply Utilities
+    string ExtractQueryParam(HttpRequest* request, string param);
+    void ReplyOK(HttpRequest* request, string html);
+    void ReplyNotFound(HttpRequest* request, string error);
+
+    // Database Helpers
+    void OpenDatabase(string location, string user);
+    void CloseDatabase(string location);
+};
+```
+But this doesn't solve the fundamental issue: One could break down the class into pieces and make it a delegating class.
+
+```
+class FrontendServer {
+  public:
+	Profile profile(request);
+	RequestHandler handler(request);
+	DatabaseHandler db(location, user);
+};
+```
+There was no need for a constructor and destructor. And all the methods we can put into a few class instances.
+
+```py
+# Import the user's email contacts, and match them to users in our system.
+# Then display a list of those users that he/she isn't already friends with.
+def suggest_new_friends(user, email_password):
+    friends = user.friends()
+    friend_emails = set(f.email for f in friends)
+    contacts = import_contacts(user.email, email_password)
+    contact_emails = set(c.email for c in contacts)
+    non_friend_emails = contact_emails - friend_emails
+    suggested_friends = User.objects.select(email__in=non_friend_emails)
+    display['user'] = user
+    display['friends'] = friends
+    display['suggested_friends'] = suggested_friends
+    return render("suggested_friends.html", display)
+```
+
+```py
+def suggest_new_friends(user, email_password):
+    # Get the user's friends' email addresses.
+    friends = user.friends()
+    friend_emails = set(f.email for f in friends)
+
+    # Import all email addresses from this user's email account.
+    contacts = import_contacts(user.email, email_password)
+    contact_emails = set(c.email for c in contacts)
+
+    # Find matching users that they aren't already friends with.
+    non_friend_emails = contact_emails - friend_emails
+    suggested_friends = User.objects.select(email__in=non_friend_emails)
+
+    # Display these lists on the page.
+    display['user'] = user
+    display['friends'] = friends
+    display['suggested_friends'] = suggested_friends
+
+    return render("suggested_friends.html", display)
+```
+
+```py
+def suggest_new_friends(user, email_password):
+	friend_emails = get_friends_emails_of(user)
+	contact_emails= import_email_addresses_from(user, email_password)
+
+	non_friend_emails = contact_emails - friend_emails
+	suggested_friends = find_suggested_friends(non_friend_emails)
+
+	display(user, friends, suggested_friends)
+	return render("suggested_friends.html", display)
+```
+
+In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. It is called the "type problem". The solution is to use a class instead of a tuple. This way, the arguments are named and the order doesn't matter anymore.
+
+```C++
+void SendEmail(string to, string subject, string body);
+```
+
+What does "it" in the following sentence mean? Don't write such ambiguous sentences.
+
+```C++
+// Insert the data into the cache, but check if it's too big first
+better:
+// If the data is small enough, insert it into the cache.
+```
+
+```C++
+// Rearrange 'v' so that elements < pivot come before those >= pivot;
+// Then return the largest 'i' for which v[i] < pivot (or -1 if none are < pivot)
+int Partition(vector<int>* v, int pivot);
+```
+This comment is hard to understand. However, the solution is not a comment, but a unit test!
+
+```C++
+Connect(10, false);
+// The suggested improvement is:
+Connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
+```
+
+However this is a hack. There are 2 solutions to this problem. In Python, C++20 and most modern programming language, keyword arguments are supported. The other solution is creating intermediate variables. The function arguments used here are magic numbers.
+
+```C++
+int timeout_ms = 10;
+bool use_encryption = false;
+Connect(timeout_ms, use_encryption);
+```
+Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
+
+Don't make assignments within if statements. It's hard to read and easy to make mistakes.
+
+```C++
+if (a = 0) ...
+```
+
+Sort `if else` blocks such that the trivial case comes first. This way, the reader can skip the trivial case and focus on the interesting part. // I think there is already such an example.
+
+Return early from a function if possible. This way, the reader doesn't have to read the whole function to understand what it does.
+
+```C++
+if (user_result == SUCCESS) {
+    if (permission_result != SUCCESS) {
+       reply.WriteErrors("error reading permissions");
+       reply.Done();
+       return;
+    }
+    reply.WriteErrors("");
+	// ...
+}
+```
+
+This can be rewritten to something like
+
+```C++
+if (user_result != SUCCESS) {
+    reply.WriteErrors(user_result);
+    reply.Done();
+    return;
+}
+
+if (permission_result != SUCCESS) {
+    reply.WriteErrors(permission_result);
+    reply.Done();
+    return;
+}
+
+reply.WriteErrors("");
+reply.Done();
+```
+
+Avoid `do while` statements.
+
+Variables: Specifically, there are three problems to contend with:
+-    The more variables there are, the harder it is to keep track of them all.
+-    The bigger a variable’s scope, the longer you have to keep track of it.
+-    The more often a variable changes, the harder it is to keep track of its current value.
+
+Eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables.
+
+Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
+
+Introducing all these tiny functions actually hurts readability, because the reader has more to keep track of, and following the path of execution requires jumping around. There is a small (but tangible) readability cost of adding a new function to your code.
+
+Converting thoughts into code:
+- Describe what code needs to do, in plain English, as you would to a colleague.
+- Pay attention to the key words and phrases used in this description.
+  Write your code to match this description.
+
+
+Chapter 12 at the end, Turning thoughts into code:
+```
+def AdvanceToMatchingTime(stock_iter, price_iter, num_shares_iter):
+    # Iterate through all the rows of the 3 tables in parallel.
+    while stock_iter and price_iter and num_shares_iter:
+        stock_time = stock_iter.time
+        price_time = price_iter.time
+        num_shares_time = num_shares_iter.time
+
+        # If all 3 rows don't have the same time, skip over the oldest row
+        if stock_time != price_time or stock_time != num_shares_time:
+            if stock_time <= price_time and stock_time <= num_shares_time:
+                stock_iter.NextRow()
+            elif price_time <= stock_time and price_time <= num_shares_time:
+                price_iter.NextRow()
+            elif num_shares_time <= stock_time and num_shares_time <= price_time:
+                num_shares_iter.NextRow()
+            else:
+                assert False  # impossible
+            continue
+```
+
+- Look at the times of each current row: if they're aligned, we're done.
+- Otherwise, advance any rows that are "behind."
+- Keep doing this until the rows are aligned (or one of the iterators has ended).
+
+```
+def AdvanceToMatchingTime(row_iter1, row_iter2, row_iter3):
+    while row_iter1 and row_iter2 and row_iter3:    
+        t1 = row_iter1.time
+        t2 = row_iter2.time
+        t3 = row_iter3.time
+
+        if t1 == t2 == t3:
+            return t1
+
+        tmax = max(t1, t2, t3)
+
+        # If any row is "behind," advance it.
+        # Eventually, this while loop will align them all.
+        if t1 < tmax: row_iter1.NextRow()
+        if t2 < tmax: row_iter2.NextRow()
+        if t3 < tmax: row_iter3.NextRow()
+
+    return None  # no alignment could be found
+```
+
+if you can’t describe the problem or your design in words, something is probably missing or undefined. Getting a program (or any idea) into words can really force it into shape.
+
+Written by me: Approximate programming: Find the nearest restaurant. You have longitude and latitude of every restaurant. You won't have to calculate the distance on a sphere. We don't care about the Northpole and Southpole. Additionally the distances are pretty small compared to the radius of the earth, so we can make some approximate calculation. If your app runs only in Germany, the requirement is only to find the closest restaurant in Germany.
+
+
+Good inputs should thoroughly test the code. But they should also be simple so that they’re easy to read.
+
 
 # 17. Programming languages
 
@@ -5996,6 +6345,8 @@ The most commonly used tool at the time of writing for CI is Jenkins. It is web 
 
 // most of the recommendations here are from the book The Software Craftsman (by Sandro Mancuso)
 
+// Add some more by Cracking the Coding interview
+
 That’s the moment you’ve all been looking for your whole life. Your first real job. The first position as a software engineer. But how do you get there? What is the process behind getting hired? Or rather, what should the process behind getting hired look like?
 
 ## Hiring
@@ -6100,8 +6451,8 @@ class Flavor(Enum):
 
 class Dad():
     def eat(food):
-       if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
-          print("I’m so happy")
+        if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
+        	print("I’m so happy")
 ```
 
 ```py
@@ -6219,6 +6570,10 @@ def parse_line(book):
 print(parse_line(books[0]))
 ```
 
+Copilot was also a help when writing this book, though for writing text I like it way less than for coding. A lot of suggestions were "simply wrong. But it was still a help to get some inspiration." (The quoted text was suggested by Copilot, the rest of the suggestion was not useful at all.) When writing text it becomes even more obvious that Copilot does not understand some things. For example it claimed to have suggested a quote I would use at the beginning of the book, but that was plain wrong. I didn't use the quote at the beginning of the book nor was it Copilot who came up with the quote.
+
+Furthermore Copilot makes a lot of boilerplate suggestions. For exmaple it frequently suggests text like "This makes it easier to understand." which might be right, but it does not help the reader of this book.
+
 # 50. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
@@ -6229,9 +6584,13 @@ Clean architecture (Robert C Martin) ?
 
 Clean Agile (Robert C Martin) It’s a fairly brief explanation how agile software development is supposed to work.
 
+The Art or Readable Code (Boswell, Foucher)
+
 Software Engineering at Google (Winters et al.) They write extensively about testing at google. What else?
 
 97 things every programmer should know (Kevlin Henney et al.)
+
+Cracking the Coding Interview (Laakmann McDowell)
 
 Design patterns (Gamma et. Al) Probably one of the most influential software engineering books ever. It explains how classes can be combined to create some whole new functionality. Alternatively, you can also watch some youtube videos about the topic.
 
@@ -6275,6 +6634,8 @@ Marco
 # 52. Abbreviations
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
+CD 	Continuous Delivery
+CI 	Continuous Integration
 DB	Database
 DI	Dependency injection
 GUI	Graphical User Interface 
