@@ -201,6 +201,8 @@ Chapters that still need improvement:
 		- [Commenting magic numbers](#commenting-magic-numbers)
 		- [Generic names](#generic-names)
 		- [Structuring function arguments](#structuring-function-arguments)
+		- [Assigning variables in conditions](#assigning-variables-in-conditions)
+		- [Scope of variables](#scope-of-variables)
 - [17. Programming languages](#17-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -326,7 +328,10 @@ Chapters that still need improvement:
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
 		- [TODO comments](#todo-comments)
+		- [Comments replacing code](#comments-replacing-code)
 	- [Useful comments](#useful-comments)
+		- [Requirements](#requirements-1)
+		- [How to write comments](#how-to-write-comments)
 		- [Docstring](#docstring)
 	- [Summary](#summary-4)
 	- [Copilot](#copilot-18)
@@ -1902,7 +1907,10 @@ Next, we define the test case. Every test case gets a name. This name will show 
 Inside the test we start with the setup part. In order to test the `distance_to` function we need two vector objects `v1` and `v2`. In the next line we calculate the distance between `v1` and `v2`.
 
 Now comes the execution of the test. We check if the result of the test is correct.
+
 // wirte something more?
+
+Good inputs should thoroughly test the code. But they should also be simple so that they’re easy to read.
 
 ## General thoughts about tests
 
@@ -2960,29 +2968,36 @@ This whole book is about how to write low complexity code. The sections on the S
 
 // Move the following example to the chapter on comments?
 
-Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code". The authors correctly state that this code is hard to understand. But they fail to explain why. 
+Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code". The authors correctly state that this code is hard to understand. But they fail to explain why. Note that this example is in C++ because the suggested solution does not work in Python.
 
 ```C++
-Connect(10, false); 
+connect(10, false); 
 ```
 
 Copilot wants to improve the code by adding a comment at the end of the line.
 ```C++
-Connect(10, false);  // timeout_ms = 10, use_encryption = false
+connect(10, false);  // timeout_ms = 10, use_encryption = false
 ```
 
 The suggestion in the book was adding the comments inside the function call. This is possible in C++ but it's not a good solution. It's an attempt to make bad code better by commenting it.
+
 ```C++
-// The suggested improvement is:
-Connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
+connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
 ```
 
-There are 2 solutions to this problem. In Python, C++20 and most modern programming language, keyword arguments are supported. The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
+In my opinion, this solution is far from optimal. There are 2 solutions to this problem. In Python, C++20 and most other modern programming language, keyword arguments are supported.
+
+```C++
+// check that this code really works!
+connect{ .timeout_ms = 10, .use_encryption = false};
+```
+
+The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
 
 ```C++
 int timeout_ms = 10;
 bool use_encryption = false;
-Connect(timeout_ms, use_encryption);
+connect(timeout_ms, use_encryption);
 ```
 
 Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
@@ -3030,141 +3045,26 @@ void SendEmail(Email email);
 
 In python (and C++ 20), this problem is less prevalent as keyword arguments are supported. Though it is still generally recommended to use a class instead of a tuple as it orders the arguments in a more logical way.
 
+### Assigning variables in conditions
 
-
-
-// The code and text here is copied from The Art of Readable Code. It has to be rewritten. Or cited
-
-// https://learning.oreilly.com/library/view/the-art-of/9781449318482/ch02.html#naming_id250561
-
-
-
-What does "it" in the following sentence mean? Don't write such ambiguous sentences.
+Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in python such code isn't even possible.
 
 ```C++
-// Insert the data into the cache, but check if it's too big first
-```
-better:
-
-```C++
-// If the data is small enough, insert it into the cache.
+if (int t = time_elapsed()) ...
 ```
 
+### Scope of variables
 
-Don't make assignments within if statements. It's hard to read and easy to make mistakes.
+Avoid `do while` statements. Again, this is something that isn't supported in python. The problem is that you have to keep track of the conditional variable over the whole range of the loop. This is extremely error prone as keeping track of a variable over such a long time is hard. It is much better to use a `while` loop and initialize the variable before the loop.
 
-```C++
-if (a = 0) ...
-```
-
-Sort `if else` blocks such that the trivial case comes first. This way, the reader can skip the trivial case and focus on the interesting part. // I think there is already such an example.
-
-Return early from a function if possible. This way, the reader doesn't have to read the whole function to understand what it does.
-
-```C++
-if (user_result == SUCCESS) {
-    if (permission_result != SUCCESS) {
-       reply.WriteErrors("error reading permissions");
-       reply.Done();
-       return;
-    }
-    reply.WriteErrors("");
-	// ...
-}
-```
-
-This can be rewritten to something like
-
-```C++
-if (user_result != SUCCESS) {
-    reply.WriteErrors(user_result);
-    reply.Done();
-    return;
-}
-
-if (permission_result != SUCCESS) {
-    reply.WriteErrors(permission_result);
-    reply.Done();
-    return;
-}
-
-reply.WriteErrors("");
-reply.Done();
-```
-
-Avoid `do while` statements.
-
-Variables: Specifically, there are three problems to contend with:
--    The more variables there are, the harder it is to keep track of them all.
--    The bigger a variable’s scope, the longer you have to keep track of it.
--    The more often a variable changes, the harder it is to keep track of its current value.
-
-Eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables.
+It is generally good to have as few variables as possible. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long time, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables wherever possible.
 
 Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
 
-Introducing all these tiny functions actually hurts readability, because the reader has more to keep track of, and following the path of execution requires jumping around. There is a small (but tangible) readability cost of adding a new function to your code.
+// move this where?
+Approximate programming: Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
 
-Converting thoughts into code:
-- Describe what code needs to do, in plain English, as you would to a colleague.
-- Pay attention to the key words and phrases used in this description.
-- Write your code to match this description.
-
-
-Chapter 12 at the end, Turning thoughts into code:
-```py
-def AdvanceToMatchingTime(stock_iter, price_iter, num_shares_iter):
-    # Iterate through all the rows of the 3 tables in parallel.
-    while stock_iter and price_iter and num_shares_iter:
-        stock_time = stock_iter.time
-        price_time = price_iter.time
-        num_shares_time = num_shares_iter.time
-
-        # If all 3 rows don't have the same time, skip over the oldest row
-        if stock_time != price_time or stock_time != num_shares_time:
-            if stock_time <= price_time and stock_time <= num_shares_time:
-                stock_iter.NextRow()
-            elif price_time <= stock_time and price_time <= num_shares_time:
-                price_iter.NextRow()
-            elif num_shares_time <= stock_time and num_shares_time <= price_time:
-                num_shares_iter.NextRow()
-            else:
-                assert False  # impossible
-            continue
-```
-
-- Look at the times of each current row: if they're aligned, we're done.
-- Otherwise, advance any rows that are "behind."
-- Keep doing this until the rows are aligned (or one of the iterators has ended).
-
-```py
-def AdvanceToMatchingTime(row_iter1, row_iter2, row_iter3):
-    while row_iter1 and row_iter2 and row_iter3:    
-        t1 = row_iter1.time
-        t2 = row_iter2.time
-        t3 = row_iter3.time
-
-        if t1 == t2 == t3:
-            return t1
-
-        tmax = max(t1, t2, t3)
-
-        # If any row is "behind," advance it.
-        # Eventually, this while loop will align them all.
-        if t1 < tmax: row_iter1.NextRow()
-        if t2 < tmax: row_iter2.NextRow()
-        if t3 < tmax: row_iter3.NextRow()
-
-    return None  # no alignment could be found
-```
-
-if you can’t describe the problem or your design in words, something is probably missing or undefined. Getting a program (or any idea) into words can really force it into shape.
-
-Written by me: Approximate programming: Find the nearest restaurant. You have longitude and latitude of every restaurant. You won't have to calculate the distance on a sphere. We don't care about the Northpole and Southpole. Additionally the distances are pretty small compared to the radius of the earth, so we can make some approximate calculation. If your app runs only in Germany, the requirement is only to find the closest restaurant in Germany.
-
-
-Good inputs should thoroughly test the code. But they should also be simple so that they’re easy to read.
-
+But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
 
 # 17. Programming languages
 
@@ -5346,6 +5246,7 @@ class DatabaseHandler:
 	open_database(location, user)
 	close_database(location)
 
+# example usage of this code:
 server = FrontendServer()
 server.profile.view_profile(request)
 ```
@@ -5457,11 +5358,37 @@ Another bad habit is TODO comments. When you implement a feature, you are respon
 
 At the same time it is fine if you use TODO comments during the development of a feature. It might help you to organize your work. Just make sure to remove all the TODO comments before merging your changes into master.
 
+### Comments replacing code
+
+Introducing a lot of tiny functions hurts readability to some degree. It takes keeping track of and jumping around the function calls. Though this cost is very low if the functions are named properly. If all the functions do what they say, you can just read the function names and you know what the code does. This is what makes code readable. Not the comments.
+
+As a summary I can say: yes, all the small functions have a price to pay. But adding comments to explain the code is not the solution.
+
+
 ## Useful comments
 
 So much about why not to use comments. Now let’s talk about the cases where using comments is fully legitimate.
 
 I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa this means that comments are allowed to explain things you cannot express in code. For example, you can add links to the source of a code fragment, library or the explanation of an algorithm. It may also be useful to use comments on the interface of a library or API used be the documentation software. And of course comments are used at the beginning of the file for the boilerplate copyright statement.
+
+### Requirements
+
+A very legitimate use of comments are requirements. Requirements are something you cannot express in code. They are usually written in natural language. Yet they are still highly important for the software. At times, the requirements are the only thing that can explain why a certain piece of code looks the way it does. And the only way to explain this is by using comments. Add the ticket number to the comment, or even better, copy the requirement text into the comment as the ticket may be edited later on.
+
+Usually the requirements are also expressed in an acceptance test. And I hope you do write acceptance tests. But acceptance tests are not enough. They are not visible in the code. You have to search for them. And you don't know which acceptance test belongs exactly to which line of code. Therefore, comments are the only thing I could think of that can link the code to the requirements.
+
+### How to write comments
+
+Just as code, comments should be as short and pregnant as possible. In the following example we have the opposite. What does "it" in the following sentence mean? Don't write such ambiguous sentences. // example from "The Art of Readable Code"
+
+```py
+# Insert the data into the cache, but check if it's too big first
+```
+better:
+
+```py
+# If the data is small enough, insert it into the cache.
+```
 
 ### Docstring
 
@@ -5689,6 +5616,13 @@ In software engineering, there are very few topics that are described purely mat
 It takes a lot of effort to understand the topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
+
+Thinking about the code in the English language also helps even if you don't do much DDD. The following explanation from the book "The Art of Readable Code" can help you improve your coding skills by a lot:
+1. Describe what code needs to do, in plain English, as you would to a colleague.
+2. Pay attention to the key words and phrases used in this description.
+3. Write your code to match this description.
+
+Especially if you're stuck getting your thoughts into code, these steps may help you to order your thoughts and then writing the code becomes much easier. If you can’t describe the problem or your design in words, something is probably missing or undefined.
 
 ## The Domain Model
 
