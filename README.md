@@ -197,6 +197,10 @@ Chapters that still need improvement:
 - [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
 	- [Writing understandable code](#writing-understandable-code)
+	- [Examples](#examples)
+		- [Commenting magic numbers](#commenting-magic-numbers)
+		- [Generic names](#generic-names)
+		- [Structuring function arguments](#structuring-function-arguments)
 - [17. Programming languages](#17-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -1765,6 +1769,8 @@ There are also some more esoteric things, for example friend classes. At first s
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
+// This chapter is too long. Figure out how to break it into pieces.
+
 Software Engineering:
 
 "Data structures + algorithms = software" Adapted from Bertrand Mayer
@@ -1866,7 +1872,7 @@ Now the test passes.
 
 In case you find the error message returned by the test not informative enough, you can can add an error message either separately or directly to the assert.
 
-There are different ways to change the error message of a faling test. In python I know of 3 different ways to add a message to a failing test. The easiest is adding a message to the `assert`.
+There are different ways to change the error message of a faling test. In python there are different ways to add a message to a failing test. The easiest is adding a message to the `assert` as follows:
 
 ```py
 def test_function():
@@ -1875,36 +1881,10 @@ def test_function():
 	assert a == b, f"should = {b}, is = {a}"
 ```
 
-For verbose error messages, you can define a function printing to stderr. This will be displayed in the captured stderr call.
-
-```py
-import sys
-
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-def test_function():
-    a = 1
-    b = 2
-    if (a != b):
-        eprint("should = 2")
-        eprint("is  = 1")
-    assert a == b
+This returns the following error message:
+```sh
+AssertionError: should = 2, is = 1
 ```
-
-The 3rd option is deriving from `unittest` and using the `assertEqual` function.
-
-```py
-import unittest
-
-class MyTestCase(unittest.TestCase):
-    def testFunction(self):
-        a = 1
-        b = 2
-        self.assertEqual(a, b)
-```
-
-There are many ways to make the error message expressive enough, just play around with it. This is different in every programming language and I cannt explain all of them here.
 
 As you can see it’s pretty simple to write a test. Not only in python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
 
@@ -2974,21 +2954,53 @@ You should never underestimate the complexity you can create with bad code. If y
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
 
+## Examples
 
-// The code and text here is copied from The Art of Readable Code. It has to be rewritten.
+### Commenting magic numbers
 
-// https://learning.oreilly.com/library/view/the-art-of/9781449318482/ch02.html#naming_id250561
+// Move the following example to the chapter on comments?
 
-// These comments here are more about naming than about readable code.
+Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code". The authors correctly state that this code is hard to understand. But they fail to explain why. 
 
-class BinaryTree {
-    int Size();
-    ...
-};
+```C++
+Connect(10, false); 
+```
 
-What would you expect the Size() method to return? The height of the tree, the number of nodes, or the memory footprint of the tree?
+Copilot wants to improve the code by adding a comment at the end of the line.
+```C++
+Connect(10, false);  // timeout_ms = 10, use_encryption = false
+```
 
-The problem is that Size() doesn’t convey much information. A more specific name would be Height(), NumNodes(), or MemoryBytes().
+The suggestion in the book was adding the comments inside the function call. This is possible in C++ but it's not a good solution. It's an attempt to make bad code better by commenting it.
+```C++
+// The suggested improvement is:
+Connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
+```
+
+There are 2 solutions to this problem. In Python, C++20 and most modern programming language, keyword arguments are supported. The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
+
+```C++
+int timeout_ms = 10;
+bool use_encryption = false;
+Connect(timeout_ms, use_encryption);
+```
+
+Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
+
+### Generic names
+
+// Move this to the chapter on names?
+
+```py
+class Rectangle {
+    def size():
+	    # ...
+}
+```
+
+What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
+
+Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
 
 Word	Alternatives
 send	deliver, dispatch, announce, distribute, route
@@ -2996,176 +3008,48 @@ find	search, extract, locate, recover
 start	launch, create, begin, open
 make	create, set up, build, generate, compose, add, new
 
-Names like tmp, retval, and foo are usually cop-outs that mean “I can’t think of a name.” Instead of using an empty name like this, pick a name that describes the entity’s value or purpose
+It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
 
-Prefer explicit names over implicit names. (Prefer "hammer" over "nail smashing rod")
+### Structuring function arguments
 
-d, days, or days_since_last_update?
-
-So our rule of thumb is: would a new teammate understand what the name means? If so, then it’s probably okay.
-
-Sometimes words inside a name can be removed without losing any information at all. For instance, instead of ConvertToString(), the name ToString() is smaller and doesn’t lose any real information. Similarly, instead of DoServeLoop(), the name ServeLoop() is just as clear.
-
-Use specific words—for example, instead of Get, words like Fetch or Download might be better, depending on the context.
-
-Avoid generic names like tmp and retval, unless there’s a specific reason to use them.
-
-Use concrete names that describe things in more detail—the name ServerCanStart() is vague compared to CanListenOnPort().
-
-Attach important details to variable names—for example, append _ms to a variable whose value is in milliseconds or prepend raw_ to an unprocessed variable that needs escaping.
-
-Use longer names for larger scopes—don’t use cryptic one- or two-letter names for variables that span multiple screens; shorter names are better for variables that span only a few lines.
-
-Use capitalization, underscores, and so on in a meaningful way—for example, you can append “_” to class members to distinguish them from local variables.
-
-Avoid negated terms (and possibly avoid booleans all together)
-
-It should be apparent how a function scales. A function `size()` should not be O(n). The latest C++ standard mandates `size()` to be O(1). If you want to have a function that is O(n), you should call it `compute_size()`.
-
-```
-public static final TcpConnectionSimulator wifi =
-	new TcpConnectionSimulator(
-		500,   /* Kbps */
-		80,    /* millisecs latency */
-		200,   /* jitter */
-		1      /* packet loss % */);
-```
-Figure out a way to make this code more readable.
-
-```
-class FrontendServer {
-  public:
-    FrontendServer();
-    void ViewProfile(HttpRequest* request);
-    void OpenDatabase(string location, string user);
-    void SaveProfile(HttpRequest* request);
-    string ExtractQueryParam(HttpRequest* request, string param);
-    void ReplyOK(HttpRequest* request, string html);
-    void FindFriends(HttpRequest* request);
-    void ReplyNotFound(HttpRequest* request, string error);
-    void CloseDatabase(string location);
-    ~FrontendServer();
-};
-```
-By formatting the code a little it became this:
-```
-class FrontendServer {
-  public:
-    FrontendServer();
-    ~FrontendServer();
-
-    // Handlers
-    void ViewProfile(HttpRequest* request);
-    void SaveProfile(HttpRequest* request);
-    void FindFriends(HttpRequest* request);
-
-    // Request/Reply Utilities
-    string ExtractQueryParam(HttpRequest* request, string param);
-    void ReplyOK(HttpRequest* request, string html);
-    void ReplyNotFound(HttpRequest* request, string error);
-
-    // Database Helpers
-    void OpenDatabase(string location, string user);
-    void CloseDatabase(string location);
-};
-```
-But this doesn't solve the fundamental issue: One could break down the class into pieces and make it a delegating class.
-
-```
-class FrontendServer {
-  public:
-	Profile profile(request);
-	RequestHandler handler(request);
-	DatabaseHandler db(location, user);
-};
-```
-There was no need for a constructor and destructor. And all the methods we can put into a few class instances.
-
-```py
-# Import the user's email contacts, and match them to users in our system.
-# Then display a list of those users that he/she isn't already friends with.
-def suggest_new_friends(user, email_password):
-    friends = user.friends()
-    friend_emails = set(f.email for f in friends)
-    contacts = import_contacts(user.email, email_password)
-    contact_emails = set(c.email for c in contacts)
-    non_friend_emails = contact_emails - friend_emails
-    suggested_friends = User.objects.select(email__in=non_friend_emails)
-    display['user'] = user
-    display['friends'] = friends
-    display['suggested_friends'] = suggested_friends
-    return render("suggested_friends.html", display)
-```
-
-```py
-def suggest_new_friends(user, email_password):
-    # Get the user's friends' email addresses.
-    friends = user.friends()
-    friend_emails = set(f.email for f in friends)
-
-    # Import all email addresses from this user's email account.
-    contacts = import_contacts(user.email, email_password)
-    contact_emails = set(c.email for c in contacts)
-
-    # Find matching users that they aren't already friends with.
-    non_friend_emails = contact_emails - friend_emails
-    suggested_friends = User.objects.select(email__in=non_friend_emails)
-
-    # Display these lists on the page.
-    display['user'] = user
-    display['friends'] = friends
-    display['suggested_friends'] = suggested_friends
-
-    return render("suggested_friends.html", display)
-```
-
-```py
-def suggest_new_friends(user, email_password):
-	friend_emails = get_friends_emails_of(user)
-	contact_emails= import_email_addresses_from(user, email_password)
-
-	non_friend_emails = contact_emails - friend_emails
-	suggested_friends = find_suggested_friends(non_friend_emails)
-
-	display(user, friends, suggested_friends)
-	return render("suggested_friends.html", display)
-```
-
-In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. It is called the "type problem". The solution is to use a class instead of a tuple. This way, the arguments are named and the order doesn't matter anymore.
+In the following C++ code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. It is called the "type problem". The solution is to use a class instead of a tuple. 
 
 ```C++
 void SendEmail(string to, string subject, string body);
 ```
 
+```C++
+struct Email {
+	string to;
+	string subject;
+	string body;
+}
+
+void SendEmail(Email email);
+```
+
+In python (and C++ 20), this problem is less prevalent as keyword arguments are supported. Though it is still generally recommended to use a class instead of a tuple as it orders the arguments in a more logical way.
+
+
+
+
+// The code and text here is copied from The Art of Readable Code. It has to be rewritten. Or cited
+
+// https://learning.oreilly.com/library/view/the-art-of/9781449318482/ch02.html#naming_id250561
+
+
+
 What does "it" in the following sentence mean? Don't write such ambiguous sentences.
 
 ```C++
 // Insert the data into the cache, but check if it's too big first
+```
 better:
+
+```C++
 // If the data is small enough, insert it into the cache.
 ```
 
-```C++
-// Rearrange 'v' so that elements < pivot come before those >= pivot;
-// Then return the largest 'i' for which v[i] < pivot (or -1 if none are < pivot)
-int Partition(vector<int>* v, int pivot);
-```
-This comment is hard to understand. However, the solution is not a comment, but a unit test!
-
-```C++
-Connect(10, false);
-// The suggested improvement is:
-Connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
-```
-
-However this is a hack. There are 2 solutions to this problem. In Python, C++20 and most modern programming language, keyword arguments are supported. The other solution is creating intermediate variables. The function arguments used here are magic numbers.
-
-```C++
-int timeout_ms = 10;
-bool use_encryption = false;
-Connect(timeout_ms, use_encryption);
-```
-Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
 
 Don't make assignments within if statements. It's hard to read and easy to make mistakes.
 
@@ -3224,11 +3108,11 @@ Introducing all these tiny functions actually hurts readability, because the rea
 Converting thoughts into code:
 - Describe what code needs to do, in plain English, as you would to a colleague.
 - Pay attention to the key words and phrases used in this description.
-  Write your code to match this description.
+- Write your code to match this description.
 
 
 Chapter 12 at the end, Turning thoughts into code:
-```
+```py
 def AdvanceToMatchingTime(stock_iter, price_iter, num_shares_iter):
     # Iterate through all the rows of the 3 tables in parallel.
     while stock_iter and price_iter and num_shares_iter:
@@ -3253,7 +3137,7 @@ def AdvanceToMatchingTime(stock_iter, price_iter, num_shares_iter):
 - Otherwise, advance any rows that are "behind."
 - Keep doing this until the rows are aligned (or one of the iterators has ended).
 
-```
+```py
 def AdvanceToMatchingTime(row_iter1, row_iter2, row_iter3):
     while row_iter1 and row_iter2 and row_iter3:    
         t1 = row_iter1.time
@@ -4854,11 +4738,18 @@ Coming up with your own names is everything but easy. Especially new programmers
 
 "When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." // WELC p.340 
 
+// Figure out how to include these lines into the text
+
+How verbose should a name be? `d`, `days`, or `days_per_week`? If a new team member understands the variable it is long enough.
+
+Sometimes words inside a name can be removed without losing any information at all. For instance, instead of ConvertToString(), the name ToString() is smaller and doesn’t lose any real information. Similarly, instead of DoServeLoop(), the name ServeLoop() is just as clear.
+
 Here are some rules to follow when naming things:
 
-1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name.
+1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `d`, `days` or `days_since_last_update`? The answer is: it depends. If a new work colleague understands the variable it is long enough.
+
 2.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
-3.	Never use plain values in your code. Always create a variable instead. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. For example `set_color(7)`. What does `7` mean?
+3.	Never use plain values in your code. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Always create a variable instead. For example `set_color(7)`. What does `7` mean?
 4.	A rule of thumb: high level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
 5.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding a name. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
 6.	Name collisions may happen once in a while. Consider refactoring one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
@@ -4871,6 +4762,12 @@ Here are some rules to follow when naming things:
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
 15. Classes and operations should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the Ubiquitous language.
+16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data" or "info". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
+17. Attach units to a variable name if existing. For example `timeout_duration_ms`.
+18. Avoid negated terms (and preferably avoid booleans all together). `is_not_empty` is harder to read than `is_empty`.
+19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
+20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big.
+
 
 ## Copilot
 
@@ -5391,6 +5288,160 @@ Not convinced? You think you won’t have these issues because you work carefull
 Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this whole book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make as few mistakes as possible. Removing useless comments is a must. They are an unnecessary source for bugs.
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
+
+Here is an example from the book "The Art of Readable Code". The original code was written in C++, I translated it to python. 
+
+```py
+class FrontendServer:
+    view_profile(request)
+    open_database(location, user)
+    save_profile(request)
+    extract_query_param(request, param)
+    reply_OK(request, html)
+    find_friends(request)
+    reply_not_found(request, error)
+    close_database(location)
+```
+
+The authors of this book formated the code a little and ended up with something like this:
+
+```py
+class FrontendServer:
+    # Handlers
+    view_profile(request)
+    save_profile(request)
+    find_friends(request)
+    
+	# Request/Reply Utilities
+    extract_query_param(request, param)
+    reply_OK(request, html)
+    reply_not_found(request, error)
+    
+	# Database Helpers
+    open_database(location, user)
+    close_database(location)
+```
+The code certainyl became much more readable. But adding these comments doesn't solve the fundamental issue: One should break down the class into pieces and make it a data class. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class FrontendServer:
+    profile: Profile = Profile()
+    handler: RequestHandler = RequestHandler()
+    database_handler: DatabaseHandler = DatabaseHandler()
+
+class Profile:
+    view_profile(request)
+    save_profile(request)
+    find_friends(request)	
+
+class RequestHandler:
+	extract_query_param(request, param)
+	reply_OK(request, html)
+	reply_not_found(request, error)
+
+class DatabaseHandler:
+	open_database(location, user)
+	close_database(location)
+
+server = FrontendServer()
+server.profile.view_profile(request)
+```
+
+The resulting code is once again longer than the initial version, but it is much better structured and there is no need for any comments.
+
+Here is another example from the same book. It suffers from a similar problem: The authors tried to improve the code by adding comments instead of improving the code itself.
+
+This is the original code. Needless to say that it is not very readable. It lacks any visible structure.
+
+```py
+# Import the user's email contacts, and match them to users in our system.
+# Then display a list of those users that he/she isn't already friends with.
+def suggest_new_friends(user, email_password):
+    friends = user.friends()
+    friend_emails = set(f.email for f in friends)
+    contacts = import_contacts(user.email, email_password)
+    contact_emails = set(c.email for c in contacts)
+    non_friend_emails = contact_emails - friend_emails
+    suggested_friends = User.objects.select(email__in=non_friend_emails)
+    display['user'] = user
+    display['friends'] = friends
+    display['suggested_friends'] = suggested_friends
+    return render("suggested_friends.html", display)
+```
+
+After the refactoring suggested in the book, the code is already much more readable. But once again, the code should not be commented but refactored.
+
+```py
+def suggest_new_friends(user, email_password):
+    # Get the user's friends' email addresses.
+    friends = user.friends()
+    friend_emails = set(f.email for f in friends)
+
+    # Import all email addresses from this user's email account.
+    contacts = import_contacts(user.email, email_password)
+    contact_emails = set(c.email for c in contacts)
+
+    # Find matching users that they aren't already friends with.
+    non_friend_emails = contact_emails - friend_emails
+    suggested_friends = User.objects.select(email__in=non_friend_emails)
+
+    # Display these lists on the page.
+    display['user'] = user
+    display['friends'] = friends
+    display['suggested_friends'] = suggested_friends
+
+    return render("suggested_friends.html", display)
+```
+
+Here is my suggestion.
+
+```py
+def suggest_new_friends(user, email_password):
+	friend_emails = get_friends_emails_of(user)
+	contact_emails = import_email_addresses_from(user, email_password)
+	non_friend_emails = contact_emails - friend_emails
+
+	suggested_friends = find_suggested_friends(non_friend_emails)
+
+	display(user, friends, suggested_friends)
+	return render("suggested_friends.html", display)
+
+def get_friends_emails_of(user):
+	friends = user.friends()
+    return set(f.email for f in friends)
+
+def import_email_addresses_from(user, email_password):
+	contacts = import_contacts(user.email, email_password)
+    return set(c.email for c in contacts)
+
+def find_suggested_friends(non_friend_emails):
+	suggested_friends = User.objects.select(non_friend_emails)
+
+def display(user, friends, suggested_friends):
+	display = {}
+	display['user'] = user
+    display['friends'] = friends
+    display['suggested_friends'] = suggested_friends
+	return display
+```
+
+Now once again, the code became much longer by refactoring it. But it is much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
+
+At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code":
+
+```C++
+// Rearrange 'v' so that elements < pivot come before those >= pivot;
+// Then return the largest 'i' for which v[i] < pivot (or -1 if none are < pivot)
+int Partition(vector<int>* v, int pivot);
+```
+
+I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is always suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. This is a violation of the SRP. The function should be split into two parts.
+
+Additionally there is something else that can explain code: unit tests. The test cases act as examples how the code is supposed to be used. This is frequently a better help than some comment.
+
 
 ### Commented out code
 
