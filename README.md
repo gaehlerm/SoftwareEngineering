@@ -22,7 +22,6 @@ Things to write:
 
 Chapters that still need improvement:
 - 14. DevOps: There is some part missing. I don't know what exactly. Maybe some more details about the different tools. (Suggestion Copilot)
-- 16. Again: I think there is something missing, but I don't know yet what exactly.
 - 
 
 # 2. Table of content
@@ -42,16 +41,16 @@ Chapters that still need improvement:
 		- [Understanding](#understanding)
 		- [Naming](#naming)
 		- [No Duplication](#no-duplication)
-		- [Testing](#testing)
-		- [Bugs](#bugs)
+		- [Easy Testing](#easy-testing)
+		- [Less Bugs](#less-bugs)
 		- [Bug fixing](#bug-fixing)
 	- [Example](#example)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
-	- [Copilot](#copilot)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
+	- [Summary](#summary)
 	- [The abstraction layers](#the-abstraction-layers)
 		- [3rd party libraries](#3rd-party-libraries)
 		- [Infrastructure code](#infrastructure-code)
@@ -59,7 +58,7 @@ Chapters that still need improvement:
 		- [The application level](#the-application-level)
 		- [API](#api)
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
-		- [Summary](#summary)
+		- [Summary](#summary-1)
 	- [Dependency tree](#dependency-tree)
 - [7. Interfaces](#7-interfaces)
 	- [Real world interfaces](#real-world-interfaces)
@@ -67,7 +66,7 @@ Chapters that still need improvement:
 	- [APIs](#apis)
 		- [Adding more functionality](#adding-more-functionality)
 		- [Semantic Versioning](#semantic-versioning)
-	- [Copilot](#copilot-1)
+	- [Copilot](#copilot)
 	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
@@ -75,15 +74,14 @@ Chapters that still need improvement:
 		- [Naming](#naming-1)
 	- [Temporal coupling](#temporal-coupling)
 	- [Number of arguments](#number-of-arguments)
-		- [Copilot](#copilot-2)
+		- [Copilot](#copilot-1)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
-	- [Summary](#summary-1)
-	- [Copilot](#copilot-3)
+	- [Summary](#summary-2)
+	- [Copilot](#copilot-2)
 - [9. Classes](#9-classes)
 	- [Data classes and structs](#data-classes-and-structs)
 	- [Private or Public](#private-or-public)
-	- [Functions and Methods](#functions-and-methods)
 	- [Different kind of classes](#different-kind-of-classes)
 		- [Data class](#data-class)
 		- [Pure method classes](#pure-method-classes)
@@ -93,15 +91,12 @@ Chapters that still need improvement:
 		- [Implementation class](#implementation-class)
 		- [Inheritance classes](#inheritance-classes)
 		- [General recommendations](#general-recommendations)
-	- [Constant Class instances](#constant-class-instances)
-		- [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
-	- [Function vs. Method](#function-vs-method)
+	- [Functions vs. Methods](#functions-vs-methods)
 	- [Constructors](#constructors)
 	- [Getter and setter functions](#getter-and-setter-functions)
 		- [Data classes](#data-classes)
 		- [Worker classes](#worker-classes)
 		- [Delegating classes](#delegating-classes)
-		- [Other points of consideration](#other-points-of-consideration)
 	- [Coupling and Cohesion](#coupling-and-cohesion)
 		- [Worker classes](#worker-classes-1)
 		- [Other class types](#other-class-types)
@@ -110,7 +105,7 @@ Chapters that still need improvement:
 	- [Drawbacks of classes](#drawbacks-of-classes)
 	- [Example](#example-1)
 	- [Conclusions](#conclusions)
-	- [Copilot](#copilot-4)
+	- [Copilot](#copilot-3)
 	- [Exercises](#exercises)
 - [10. Inheritance](#10-inheritance)
 	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
@@ -151,7 +146,7 @@ Chapters that still need improvement:
 	- [Unit tests](#unit-tests)
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
-		- [Copilot](#copilot-5)
+		- [Copilot](#copilot-4)
 	- [Functional tests](#functional-tests)
 	- [Integration tests](#integration-tests)
 	- [End-to-End tests](#end-to-end-tests)
@@ -171,8 +166,8 @@ Chapters that still need improvement:
 		- [Mocking](#mocking)
 		- [Faking](#faking)
 		- [Dependency injection](#dependency-injection)
-	- [Summary](#summary-2)
-		- [Copilot](#copilot-6)
+	- [Summary](#summary-3)
+		- [Copilot](#copilot-5)
 - [14. DevOps](#14-devops)
 	- [The early 2000s](#the-early-2000s)
 		- [Getting a project](#getting-a-project)
@@ -193,7 +188,7 @@ Chapters that still need improvement:
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
-	- [Copilot](#copilot-7)
+	- [Copilot](#copilot-6)
 - [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
 	- [Writing understandable code](#writing-understandable-code)
@@ -217,13 +212,13 @@ Chapters that still need improvement:
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs)
-	- [Copilot](#copilot-8)
+	- [Copilot](#copilot-7)
 - [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
 	- [Syntax Errors](#syntax-errors)
-	- [Bugs](#bugs-1)
+	- [Bugs](#bugs)
 		- [Cost of Bugs](#cost-of-bugs)
 		- [Debugging](#debugging)
-		- [Copilot](#copilot-9)
+		- [Copilot](#copilot-8)
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
 		- [Exceptions and goto](#exceptions-and-goto)
@@ -232,7 +227,7 @@ Chapters that still need improvement:
 	- [Procedural programming](#procedural-programming)
 	- [Functional programming](#functional-programming)
 	- [Conclusions](#conclusions-2)
-	- [Copilot](#copilot-10)
+	- [Copilot](#copilot-9)
 - [20. Design patterns](#20-design-patterns)
 	- [Creational Patterns](#creational-patterns)
 		- [Factory](#factory)
@@ -256,7 +251,7 @@ Chapters that still need improvement:
 	- [Template](#template)
 	- [Flyweight](#flyweight)
 	- [Observer](#observer-1)
-	- [Copilot](#copilot-11)
+	- [Copilot](#copilot-10)
 - [21. Decoupling](#21-decoupling)
 - [22. Physical laws of code](#22-physical-laws-of-code)
 	- [Entropy](#entropy)
@@ -274,7 +269,7 @@ Chapters that still need improvement:
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
 		- [Example](#example-3)
 		- [Pimpl](#pimpl)
-	- [Summary](#summary-3)
+	- [Summary](#summary-4)
 - [25. Data types](#25-data-types)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -294,6 +289,8 @@ Chapters that still need improvement:
 - [26. Additional Properties of Variables](#26-additional-properties-of-variables)
 	- [Compile-time constant](#compile-time-constant)
 	- [Runtime Constant](#runtime-constant)
+		- [Constant Class instances](#constant-class-instances)
+		- [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
 	- [Mutable](#mutable)
 	- [Member variables](#member-variables)
 	- [Static Variables](#static-variables)
@@ -301,7 +298,7 @@ Chapters that still need improvement:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [27. Naming](#27-naming)
-	- [Copilot](#copilot-12)
+	- [Copilot](#copilot-11)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
 	- [Estimating complexity](#estimating-complexity)
@@ -309,15 +306,15 @@ Chapters that still need improvement:
 	- [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
 	- [CSV](#csv)
-		- [Copilot](#copilot-13)
+		- [Copilot](#copilot-12)
 	- [Json](#json)
-		- [Copilot](#copilot-14)
+		- [Copilot](#copilot-13)
 	- [XML](#xml)
-		- [Copilot](#copilot-15)
+		- [Copilot](#copilot-14)
 	- [HDF5](#hdf5)
-		- [Copilot](#copilot-16)
+		- [Copilot](#copilot-15)
 	- [Databases](#databases)
-		- [Copilot](#copilot-17)
+		- [Copilot](#copilot-16)
 	- [Custom file format](#custom-file-format)
 - [30. Setting up a project](#30-setting-up-a-project)
 	- [Project folder](#project-folder)
@@ -333,15 +330,15 @@ Chapters that still need improvement:
 		- [Requirements](#requirements-1)
 		- [How to write comments](#how-to-write-comments)
 		- [Docstring](#docstring)
-	- [Summary](#summary-4)
-	- [Copilot](#copilot-18)
+	- [Summary](#summary-5)
+	- [Copilot](#copilot-17)
 - [33. Logging](#33-logging)
 - [34. Tools](#34-tools)
 	- [Version control software](#version-control-software)
 		- [Git, everywhere git](#git-everywhere-git)
-		- [Copilot](#copilot-19)
+		- [Copilot](#copilot-18)
 	- [Command line](#command-line)
-		- [Copilot](#copilot-20)
+		- [Copilot](#copilot-19)
 	- [IDE](#ide)
 	- [Continuous Integration](#continuous-integration)
 	- [Debugger](#debugger)
@@ -447,11 +444,11 @@ Chapters that still need improvement:
 
 In 2007 I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, the const expression, etc. I somehow struggled understanding these things. They just felt wrong. There were so many open questions about how to write the code properly and I didn’t know where to get good advice. I passed the exam, but I was somehow dissatisfied.
 
-Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare to look at this code ever since. Already thinking about it makes me shudder.
+Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare looking at this code ever since. Already thinking about it makes me shudder.
 
-After my studies I wanted to improve my programming skills and bout the book "Effective modern C++" by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background.
+After my studies I wanted to improve my programming skills and bout the book "Effective modern C++" by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background. The book was too advanced for me.
 
-Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them thanks to the books I read. I got the job.
+Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them thanks to the book I read. I got the job.
 
 In the beginning a struggled a little. I was overwhelmed by the amount of code, I didn’t know what IDE to use and the make build I used was flawed. You name it. Still, I good some very good feedback by my boss. A few months later I had my first big feature implemented. It also had automated tests and the code was much cleaner than comparable features. Another month later I implemented my second feature. Everyone in the company expected this to be very difficult, but I found a neat way to implement it.
 
@@ -463,9 +460,9 @@ There is so much I learned in the few years since my friend fell into the shit h
 
 I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I think.
 
-I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and criticize some parts of it, even better. 
+I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and criticize some parts of it, then go ahead. 
 
-This book is only a step in your career. Now you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
+This book is only a step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 
 Enjoy this book and good luck with your career.
 
@@ -477,9 +474,9 @@ In this chapter we want to look at how code should look like. What kind of rules
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code independently. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics which are highly important but are frequently neglected in books on software development.
 
-This book contains very little code. It’s more about concepts or software engineering, rather than difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. This book teaches you some basic principles for software development. These principles are valid for pretty much any programming language you could work with. 
+This book contains comparably little code. It’s more about concepts or software engineering, rather than difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose 2 programming languages as there are some things you can explain only with one of them. This book teaches you some basic principles for software development. These principles are valid for pretty much any programming language you could work with. 
 
-This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to solve them all by yourself.
+This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
 
 This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book, thus I mention what book I was reading as a foundation for the corresponding chapter.
 
@@ -507,25 +504,23 @@ The first rule of software engineering:
 
 **We write code that is easy to understand.**
 
-Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired, they like listening to you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
+Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired, they like listening to you. They don't have to focus in order to understand you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
 
-Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks some programming languages offer.
+Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks modern programming languages offer.
 
-// somehow I'm not happy with the transition here. Is there some other way to change the topic?
-
-Of course, we are not politicians. We are software engineers. What we write has to be absolutely correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
+Now it's not only important to make the code work, we also have to make sure that it is correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
 
 Urm... let me rephrase that as well... 
 
-Unlike politicians, we have honor. We don’t want to be responsible for people to die. We want to write code that is impeccable. We want to be absolutely certain that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
+Unlike some politicians, we have honor. We don’t want to be responsible for people to die. We want to write code that is impeccable. We want to be absolutely certain that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
 
-The second rule of software engineering
+The second rule of software engineering:
 
 **We write automated tests that cover all our code.**
 
-Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. The importance of refactoring cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide.
+Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring and its importance cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide.
 
-The third rule of software engineering
+The third rule of software engineering:
 
 **We constantly clean up our code.**
 
@@ -533,7 +528,7 @@ Now you know what the life of a programmer will look like. Now you know what to 
 
 You might be already working in a company, or at least you soon will be. Your boss is not going to let you write code for a month just for the sake of writing code. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
 
-The fourth rule of software engineering
+The fourth rule of software engineering:
 
 **We write code in order to create value for our customers.**
 
@@ -542,18 +537,21 @@ If you don’t like meetings nor customers you can stay at home and write whatev
 These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
-
+- We write code that is easy to understand.
+- We write automated tests that cover all our code.
+- We constantly clean up our code.
+- We write code in order to create value for our customers.
 
 ## About this book
 // move to preface?
 
-Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are at most some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
 
 # 5. Single responsibility principle 
 
-Every object does exactly one thing. Everything is done by exactly one object.
+**Every object does exactly one thing. Everything is done by exactly one object.**
 
-There are different definitions of the Single Responsibility Principle (SRP). I don’t think the differences between them really matter. It is much more important that you get the idea behind it.
+There are different definitions of the Single Responsibility Principle (SRP) [citation Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
 
 The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation to write readable code.
 
@@ -561,14 +559,11 @@ The SRP is probably one of the most important topics in this book and in all of 
 
 // DRY does not always have to be obeyed that strictly. Repeat yourself until it is clear what the acronym should be.
 
-You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle, unless you immediately remove the duplication. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
+You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer], unless you immediately remove the duplication again. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
 
-The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. 
-//97-things-every-programmer-should-know chapter 63
+The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
-// See 97-things-every-programmer-should-know chapter 42. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. -> where did I write something similar before? -> chapter automation?
-
-The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. This kind of duplication has the problem that it is hard to detect. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. At the cost that if the social security numbers ever change, there will be a lot of work finding all the parsers and adapting them. This might be a serious source of bugs.
+The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. This kind of duplication has the problem that it is hard to detect. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, there will be a lot of work finding all the parsers and adapting them. This might be a serious source of bugs.
 
 As I said, it is hard to keep track of these kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
 
@@ -576,6 +571,7 @@ One common source of repetition are switch case or if statements. They looks som
 ```py
 if job == "president":
 	residency = "White house"
+# ...
 if job == "president":
 	security_standards = "very high"
 ```
@@ -603,14 +599,14 @@ A function or class that implements exactly one thing will always be compareably
 Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
 
 ### No Duplication
-Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should immediately start refactoring. 
+Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should generally start refactoring. 
 
 Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparably easy as you have to change code only in one location.
 
-### Testing
+### Easy Testing
 Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, initializing class instances is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
 
-### Bugs
+### Less Bugs
 As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up as it is immediately apparent which part of the code is responsible for the behavior of the bug.
 
 ### Bug fixing
@@ -619,6 +615,7 @@ Tracking down bugs will be much easier. You can understand fairly well what each
 ## Example
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
 
+// I don't think this example belongs here. We haven't talked about levels of abstractions yet.
 ```py
 def print_body():
 	# print something
@@ -684,10 +681,6 @@ Working in an orthogonal system has many advantages:
 
 // figure out what else to write. Maybe add some examples.
 
-## Copilot
-
-// Is there some way to refactor code towards the SRP using Copilot? I don't think it understands the meaning of the single responsability principle...
-
 # 6. Levels of abstraction
 
 // somehow I'm not happy with this chapter. The real world example and the programming example are fine. But the rest is ... not up to the point. Should I just remove the rest?
@@ -700,9 +693,9 @@ Levels of abstraction is an extremely important concept in software engineering.
 
 ## Real world example
 
-You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
+You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects that the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
 
-One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to do something with it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
+One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to see it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
 
 Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hierarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
 
@@ -714,7 +707,9 @@ Creating good levels of abstraction is probably the most important task in softw
 
 C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
-C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous `new` and `delete` commands in order to allocate memory on the heap. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
+C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory and you had to restart it every few days or so.
+
+Here is an example how to use `new` and `delete`.
 
 ```C++
 int * arr = new int[10];
@@ -729,8 +724,8 @@ Though it turns out there exists also a solution to the memory allocation proble
 
 Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
+[https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/]
 ```C++
-// basic idea from https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/
 class VectorClass {
 private:
     int* arr;
@@ -739,6 +734,7 @@ private:
 public:
     VectorClass()
     {
+		// allocate memory inside the constructor
         arr = new int[1];
 		capacity = 1;
         current = 0;
@@ -749,24 +745,30 @@ public:
     }
 	void push(int data)
     {
-		// at some point the size of the array is smaller than the size required. Then it's time to allocate more space
+		// if the array is full, allocate more memory
         if (current == capacity) {
             int* temp = new int[2 * capacity];
+			capacity *= 2;
 		}
+		current++;
 		// etc.
 	}
 }
 ```
 
-This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called Resource Acquisition Is Initialization (RAII) by Scott Myers //see Effective Modern C++
+This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers. [Effective Modern C++]
 
 If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability very significant.
 
 Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
 
+## Summary
+
+As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code.
+
 ## The abstraction layers
 
-// is this part of the architecture chapter? What should I write here or in the chapter on architecture?
+// is this part of the architecture chapter? What should I write here or in the chapter on architecture? Probably in the architecture chapter.
 
 //create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application level – API – acceptance tests/GUI
 
@@ -830,7 +832,7 @@ Between classes as well as between files there are dependencies. The high-level 
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
-In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface millions of times. Thus it pays off to design an interface properly.
+In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface millions of times. Therefore it pays off to design an interface properly.
 
 ## Real world interfaces
 
@@ -838,7 +840,7 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 "Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 cable. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. USB 3 has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved it is a very convenient solution for the users.
+An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. USB 3 has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved, it is a very convenient solution for the users.
 
 Another example are water tabs for showers, as already explained in the section on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
 
@@ -848,7 +850,7 @@ Notice how both solutions have 2 degrees of freedom. A mathematician would call 
 
 I hope these simple examples gave you an idea what good interfaces are about. If you design an interface, you should always know your customers. What do they do? How do they think? How are they going to use your product? This is of utmost importance. A good interface is user centric. It represents the way the user thinks and hides all the technical details.
 
-Car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running it faster makes it inefficient. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities.
+Car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running them faster makes them inefficient. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities.
 
 Now there used to be a minor problem about the gear boxes. They were not user friendly. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to set the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
 
@@ -860,7 +862,7 @@ Once again, understanding interfaces in general will allow you to write much bet
 
 Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
-An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have and lack the visions of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality is mostly given by the engineers. The designers were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use.
+An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have. They lack the visions of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality was mostly given by the engineers. The designers were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use.
 
 Interfaces are everywhere. Every function or class has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
 
@@ -874,9 +876,9 @@ Interfaces are everywhere. Every function or class has an external interface and
 
 "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
 
-The Application Programmable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
+The Application Programmable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees and uses from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
-That was no joke by the way. Apple once had an important security fix in their latest update. They add new emojis to the update as emojis are the better motivation to install an update than a security fix.
+That was no joke by the way. Apple once had an important security fix in their latest update. They added new emojis to the update as emojis are the better motivation to install an update than a security fix.
 
 APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! Now you might think this is doable. But I can promise, you will get nightmares.
 
@@ -892,7 +894,7 @@ Removing functionality on the other hand is really hard. This inevitably changes
 
 ### Semantic Versioning
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2", the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The last is used only in bigger projects. 
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2", the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The trace is used only in bigger projects. 
 
 Every time you make a new release you increase the version number. 
 - For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to change to a software with a higher or lower trace version without any issues.
@@ -919,11 +921,11 @@ Defining interfaces should generally not be done by Copilot. Rather this is a ta
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
 
-// Further Reading: Clean Code, chapter 3, Robert C. Martin
+[Clean Code, chapter 3]
 
 Functions are, along with classes, the backbone of modern OO software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well. We'll learn that functions have to follow the SRP and that they shouldn't have any side effects.
 
-Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as mutable output arguments. Therefore, I generally won’t mention the differences between functions and methods.
+Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as output arguments. I hope it's generally clear from the context if some explanation is true for functions, methods or both.
 
 ## Do one thing only
 
@@ -931,12 +933,14 @@ Due to the single responsibility principle, functions may cover only one level o
 
 ### Levels of indentation
 
+"If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
+
 The easiest way to judge the complexity of a function is the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This means that there is hardly any complex logic hiding inside a single function. Having nested `if/else`, `while` or `for` loops would violate the SRP because the function has two jobs: resolving the logical operator and doing some other work. Having few levels of indentation in a function automatically makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
 A frequent problem are deeply nested `if/else` clauses.
 
+[https://youtu.be/rHRbBXWT3Kc]
 ```py
-# https://youtu.be/rHRbBXWT3Kc
 button = input("")
 if button != "":
 	if not is_sleeping():
@@ -978,6 +982,8 @@ if is_eating():
 attack()
 ```
 
+Assuming that this code is written inside a function, we have 2 levels of indentation, so we are compliant with Linus Thorwalds rule.
+
 With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depinding on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
 
 ```py
@@ -1006,6 +1012,8 @@ def log_in(email_address):
 ```
 
 This function clearly has a side effect. It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
+
+A better name for this function would be `log_in_and_increase_counter`, though that would make it apparent that the function does more than one thing and thus violates the SRP.
 
 Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because of the temporal coupling.
 
@@ -1044,7 +1052,7 @@ Now you go shopping before creating a shopping list. In fact, the call of `creat
 
 This is one of the drawbacks of OO code. Methods change the state of the object. Thus it is very hard to enforce that the methods get called in the correct order. 
 
-It is one of the advantages of procedural code that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes other paradigms yield better code.
+It is one of the advantages of procedural code that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes other paradigms yield better code. Let's look at the procedural version of this code.
 
 ```Py
 money = get_money(50)
@@ -1077,17 +1085,17 @@ In classes the number of arguments issue becomes even worse. Methods can access 
 
 `Total variables = method arguments + class variables`
 
-Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables.
+Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables. This is the main reason why I don't recommend using classes too much, but rather use procedural programming instead.
 
-A method might access only a few of the class variables. However, one does not know until one has read all of the methods and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ const expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
+A method might access only a few of the class variables. However, one does not know until one has read all of the methods and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ `const` expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
-Following the SRP, functions can only be either a query or a command //https://en.wikipedia.org/wiki/Command%E2%80%93query_separation, but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
+Following the SRP, functions can only be either a query or a command [https://en.wikipedia.org/wiki/Command%E2%80%93query_separation], but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
 
 ```py
 if set_node("money", 50):
 	go_shopping(); 
 ```
-Here the `set_node` function does two things at a time which certainly doesn't help with understanding the code.
+Here the `set_node` function does two things at a time. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
 
 ### Copilot
 
@@ -1123,7 +1131,7 @@ As always, output arguments give you a lot of power if used wisely. But at the s
 
 Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instances. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first function argument. Or: this method might change a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value or an output argument but never both at the same time.
 
-Return values are very central in functional programming. There you are not allowed to change existing objects. So you don't have the issue of function arguments changing their values. The work around are return values. They have the advantage that it's obviously a new object with new properties. Each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique. After every step of your computation, you create a new variable so you'll never store different information inside a single variable. You just create a new one.
+Return values are very central in functional programming. In functional programming, you are not allowed to change existing objects. So you don't have the issue of function arguments changing their values. The work around are return values. They have the advantage that it's obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique. After every step of your computation, you create a new variable so you'll never store different information inside a single variable. You just create a new one.
 
 All together there is really nothing wrong with return values. Use them if it's not a performance critical task where reusing the existing data structure is required.
 
@@ -1157,7 +1165,7 @@ print_books_where(author_is('Paulo Coelho'))
 
 # 9. Classes
 
-"Q: What did the Java code say to the C code? A: You’ve got no class." - HampusMa on devrant.com
+"I think it’s a new feature.  Don’t tell anyone it was an accident." — Larry Wall
 
 // Break up this chapter? It's quite long... even after breaking out the chapter on inheritance.
 
@@ -1167,7 +1175,7 @@ This book is not about explaining what classes are exactly. Such basics you have
 
 ## Data classes and structs
 
-The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes, but it has something very similar: structs. It is about the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. In theory you may also store functions within a struct, though this is generally not done, at least not in C++. For storing variables and functions at the same time, we have classes.
+The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes, but it has something similar: structs. It is about the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. In theory you may also store functions within a struct, though this is generally not done, at least not in C++. For storing variables and functions at the same time, we have classes.
 
 An example of a dataclass:
 ```py
@@ -1182,41 +1190,48 @@ class Person:
 p = Person('John', 30, 'New York')
 ```
 
-Nowadays structs or dataclasses are not that much used anymore. Especially the java community seems to avoid such kind of objects at all cost. Though there is absolutely nothing wrong about structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It helps you sort your stuff.
+Nowadays structs or dataclasses are not that much used anymore. Especially the java community seems to avoid such kind of objects at all cost. Though there is absolutely nothing wrong about structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It's pretty helpless.
 
 Classes are pretty much the same as structs. Besides some technical details, the only real difference are the encapsulation of variables and functions and the introduction of inheritance. You can decide for each one of the variables or method to be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs. 
 
-But more powerful is not always better. A gun is more powerful than a knife, but at the same time it is also more dangerous. You can easily shoot yourself into the foot. So actually, it’s not the best idea to own a gun because the danger may be bigger than the advantages. With great power comes great responsibility!
+But more powerful is not always better. A gun is more powerful than a knife, but at the same time it is also more dangerous. You can easily shoot yourself into the foot. So actually, it might not the best idea to own a gun because the danger may be bigger than the advantages. With great power comes great responsibility!
 
 ## Private or Public
 
 If you are not so used to working with classes, this may be very confusing. Why would you like to make anything private at all? Isn’t it easier to make everything public?
 
-Indeed, this is a very important question. Even extremely important. Once you are able to create a class and decide right away which members should be private or public you are already a fairly good programmer. To make it short, it has to do with power once more. Never give the users more power than necessary.
+Indeed, this is a very important question. Even extremely important. Once you are able to create a class and decide right away which members should be private or public you are already a fairly good programmer. To make it short, it has to do with power once more. Making a variable private takes away some power from the user. Never give the users more power than necessary.
 
 Let’s figure out why there should be private variables and functions at all. We need something where you face only the surface of it and you only have very few ways to interact with it. It’s not hard to find an example. This description holds for almost everything around you. For example your car. It is a highly complex object. It contains an engine, brakes and tons of other parts. You don’t even want to know. You only want it to drive. You need the speed bar, the brake pedal and the steering wheel. 
 
-You have this absolutely massive object and you can essentially do only three things with it: increase the velocity, reduce the velocity and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
+You have this absolutely massive object and you can essentially do only three things with it: increase the velocity, reduce the velocity and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically as it should. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
 
 There is one very simple rule of thumb which parts of a class should be public or private. If a class has no functions, it’s a struct and all variables should be public. Otherwise as few functions as possible should be public and all variables are private. But we’ll look at this rule in more detail in the next sections.
 
-## Functions and Methods
-
-Functions inside classes are also referred to as methods. Mostly by the Java people. Usually the notation of a function in this book is meant for both, functions outside of classes and methods. The difference between them is fairly small and it will be noticed if it really makes a difference. In C++ you can define functions and static methods in a way that you cannot even tell the difference when calling them. Static methods and functions inside a namespace are indistinguishable in C++. Methods are essentially the same as functions with some hidden additional variables.
 
 ## Different kind of classes
 
-// make some examples
-
 I like to broadly categorize classes by the number of variables and the complexity of the functions they contain. Making sure that your classes are fitting into one of these categories is helpful for fulfilling the SRP.
+
+Some of the follwoing class names, namely the worker class, delegating class and the pure method class are not commonly used names. I made them up by myself because I find it important to distinguish between different types of classes.
 
 ### Data class
 
 The data class has no member functions and therefore all variables are public. It has no functionality by itself but it’s great for storing data. As mentioned in the previous section, it’s like a tool box and the variables are tools in there. If a data class has too many (at most around eight) variables, split up the data class into sub-classes. This improves the general overview in the toolbox.
 
+```py
+from dataclasses import dataclass
+
+@dataclass
+class InventoryItem:
+    name: str
+    unit_price: float
+    quantity_on_hand: int = 0
+```
+
 ### Pure method classes
 
-A class may have no member variables at all. It contains only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and python you can define the corresponding functions free standing instead.
+A class may have no member variables at all. It consists only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and python you can define the corresponding functions free standing instead.
 
 ```py
 class Math:
@@ -1248,7 +1263,7 @@ class Car:
 
 ### Worker class
 
-Worker classes are doing the hard work in your code and they are the most commonly used. Some people may say these are the only real classes. At least most of the design rules for classes apply only to worker classes. Worker classes have very few private variables, some rather complicated private methods and a few public methods. Worker classes are the only type of classes with private methods. Other classes don't have complicated methods to hide, other classes hide only variables. 
+Worker classes are implementing the difficult algorithms in your code. Some people may say these are the only real classes. At least most of the design rules for classes apply only to worker classes. Worker classes have very few private variables, some rather complicated private methods and few public methods. Worker classes are the only type of classes with private methods. Other classes don't have complicated methods to hide, other classes hide only variables. 
 
 This means that worker classes are the only classes that do really complicated things that have to be hidden from the other programmers or users. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class, such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Therefore a worker class shouldn’t have more than 3 member variables and about 100 lines of code, depending on the general complexity of the class. Consider also using a few functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand and test.
 
@@ -1269,7 +1284,7 @@ class Animal(ABC):
         pass
 ```
 
-An alternative to abstract base classes in Python are protocols. // Differences protocols <-> ABC? I need to look at it again... https://youtu.be/EVa5Wdcgl94
+An alternative to abstract base classes in Python are protocols, though we cannot go into these differences here. // https://youtu.be/EVa5Wdcgl94
 
 ### Implementation class
 
@@ -1330,74 +1345,22 @@ It is recommended sticking to the class types mentioned above. It may be conveni
 
 The most common error is mixing the worker class and the delegating class. You can easily end up with a fairly complex function within a delegation class using a lot of member variables. This is bad by design as the delegation class is fairly high level of abstraction, meanwhile the worker class is by design a low-level object. Mixing different levels of abstraction is a really bad thing to do. Refactor the complex part into a separate class or function and call it from the delegating class. This should do the job.
 
-## Constant Class instances
+## Functions vs. Methods
 
-// Does this belong into the class chapter?
-// move const part of the description elsewhere?
-
-In C++ you can enforce an object to remain the same for as long as it exists, using the const keyword at the time of creation. In Python you cannot enforce it, you can only use the all uppercase notation to hint that a variable should not be changed. The usage of const is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
-
-But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
-
-We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant.
+There are two ways to change the value of an object by a function. Either pass a mutable object as an output argument or the object is a class instance and the function is a method acting on it. The two cases look like this:
 
 ```py
-from dataclasses import dataclass
-
-@dataclass
-class Bottle:
-	color: str
-	size: float
-	material: str
-
-if __name__ == "__main__":
-	BOTTLE = Bottle()
+a.b() # method
+b(a)  # function
 ```
 
-Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity.
-
-### Mixing const and non-const objects
-
-So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
-
-The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
-
-We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained further below.
-
-A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class WaterBottle:
-	BOTTLE: Bottle
-	amount_of_water: float
-
-@dataclass
-class Bottle:
-	color: str
-	size: float
-	material: str
-```
-
-This is just one example how one can deal with const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
-
-## Function vs. Method
-
-// This text here is redundant (where? output arguments?), tough I quite like it. What to do…?
-
-There are two ways to change the value of an object by a function. Either pass a mutable object as an output argument or the object is a class instance and the function a method acting on it. The two cases look like this:
-
-```py
-a.b() vs. b(a)
-```
+Both lines of code have in common that the method/function `b` can change the value of `a`.
 
 It turns out for most criteria, these two function or method calls are pretty much equal:
 - In `b(a)` it is assumed that `a` is not changed, unless the name of `b` states otherwise. Though the same holds for `a.b()`.
 - `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. `b(a)` is decoulping the code better than `a.b()`, though this is not crucial difference.
 - If `a` has a public variable `c`, we can rewrite `b` to `b(a.c)`, or `a.c.b()`, respectively.
-- In C++, const'ness can be enabled for both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method.
+- In C++, const'ness can be enabled for both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method. Though there is no way I know of to highlight that a method is `const` in python. This is a big advantage of C++ over python.
 
 To sum it up, there are no big differences. `b(a)` offers somewhat better decoupling and should thus be slightly preferred. But ultimately, it all comes down to readability. What is easier to understand? The function or the method? Let's look at the following code:
 
@@ -1410,7 +1373,7 @@ if names.contains("Barak"):
    print("Yes we can")
 ```
 
-In this case I certainly prefer the second option from the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage to make the right decision, you are a great programmer.
+In this case I certainly prefer the second option due to the readability point of view. It’s so much clearer. It reads like an English sentence. From code point of view, I prefer the first option using the function. This is one of the cases where the principles explained in this book will not give you a definite answer how to deal with this problem. It can only give you some arguments for one solution or the other. You’ll eventually have to make a judgment call by yourself. If you find some good arguments for and against both solutions, you are a good programmer. Once you manage to make the right decision, you are a great programmer.
 
 In software engineering there are always so many things to consider. This was just another example. Probably there are more arguments for one or the other solution that I missed. They might make the whole discussion obsolete. Let me know if you found such a solution, I’d be curious.
 
@@ -1422,7 +1385,7 @@ Constructors are very special methods. The constructor is called once every time
 
 Thus, make sure the usage of a constructor is always fool proof. A constructor should be as simple as possible. Everything a constructor does, for example allocating memory or opening a file, has to be undone by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you shouldn't define a counter in the constructor.
 
-The following code creates a counter for the class instances. It looks neat. However, it will be barely possible to test this counter. Every time you add an additional test case, the counter values will change. And once you change the order in which the tests are executed, your tests will break.
+The following code creates a counter for the class instances. It looks neat and it might be useful to have such a counter at times. However, it will be barely possible to test this counter. Every time you add an additional test case or you change the order of the tests, the counter values will change. And once you change the order in which the tests are executed, your tests will break.
 
 ```py
 from itertools import count
@@ -1433,20 +1396,20 @@ class Obj(object):
 	def __init__(self):
 		self.id = next(self._ids)
 
-o = Obj()
-print(o.id) # 0
-p = Obj()
-print(p.id) # 1
+obj0 = Obj()
+print(obj0.id) # 0
+obj1 = Obj()
+print(obj1.id) # 1
 ```
 
-You will witness what I said here once you write a complicated constructor and try to write unit tests for it.
+You will witness what I said here once you write a complicated constructor and try to write unit tests for it. It already becomes apparent that in some random test case, you will have to define a variable `obj` with a fairly arbitrary value `24`. This is a clear indication that something is wrong.
 
 ```py
 # somewhere in your tests
-if o.id == 24:
+if obj.id == 24:
 	# ...
 ```
-Now if you add one more instance before this line, the counter will be different and the test will break. If you have a good intuition for code you might also have realized that this `24` is a very strange number showing up out of the blue. There has to be something wrong about it.
+Now if you add one more class instance before this line, the counter will be different and the test will break. If you have a good intuition for code you might also have realized that this `24` is a very strange number showing up out of the blue. There has to be something wrong about it.
 
 ## Getter and setter functions
 
@@ -1456,9 +1419,10 @@ Here we distinguish here between two relevant types of classes.
 
 ### Data classes
 
-In data classes all variables are public. Everyone can work with the variables directly. There is no need for setter or getter functions. The Java people claim that this was bad because you had to decouple everything. They were decoupling the implementation of the class (the variable) from the interface (the getter and setter). Well, yes, they do decouple them. But they might have never really thought about the outcome. They decouple in a strictly worse manner than just giving raw access to the class variables.
+In data classes all variables are public. Everyone can work with the variables directly. There is no need for setter or getter functions. Just access the variables. The Java people claim that this was bad because you had to decouple everything. They were decoupling the implementation of the class (the variable) from the interface (the getter and setter). Well, yes, they do decouple them. But they might have never really thought about the outcome. They decouple in a strictly worse manner than just giving raw access to the class variables.
 
-Let me make an example. We have again the class bottle:
+Let me make an example. We have again the class bottle. We look only at the variable `_size`, for this discussion we don't need more than one variable. Now first of all, it's worth mentioning that in the normal data class, `size` is a public variable while in the version with getters and setters, it becomes a private variable `_size`. Accessing it should be done only through the getter and setter function, that's the whole idea behind it.
+
 ```Py
 class Bottle
    def get_size(self):
@@ -1467,18 +1431,14 @@ class Bottle
        self._size = size
 ```
 
-This time it has getter and setter functions for the size. This is perfectly viable code. But this fails due to the real-world restrictions. You cannot change the size of a bottle. Once a bottle is created in the factory the size is fixed. And it can never be changed again. This is equivalent to setting the size in the constructor. There cannot be any `set_size` function to change the size of an existing bottle. Never. It is physically impossible. Vice versa there is no need to create a bottle if you don’t know it’s size. This doesn't make sense. Once the bottle is created by its constructor, it immediately becomes a constant object where no variables may, or can, be changed anymore. There is no more need for a getter function. Just access the class variable directly. You can’t make any mistakes now.
+[https://www.w3schools.com/java/java_encapsulation.asp]
 
-```Py
-class Bottle
-	def __init__(self, size):
-		self.SIZE = size
+- Better control of class attributes and methods: ??
+- Class attributes can be made read-only (if you only use the get method), or write-only (if you only use the set method): If you want to make a variable read-only, you can make it constant instead. This prevents changing the variable as well. For write only (a very rare case), I aggree that writting a setter is the only solution. But this is exactly my point, there is never any reason to write setter and getter functions at the same time.
+- Flexibility, the programmer can change one part of the code without affecting other parts: Now this is just wrong as I'll show below.
+- Increased security of data: Well I don't know what they mean exactly with this point. One advantage is that you can track a variable with the debugger. In fact, this is the only advantage I see for writing getters and setters. But having to do this is a clear indication that your code is bad.
 
-BOTTLE = Bottle()
-print(BOTTLE.SIZE)
-```
-
-Another point of using getters and setters was decoupling. You want to rename `size` into `volume`. It’s easy to do, there are only 3 places where `size` is used. Replace them with `volume` and you’re done.
+Let's look at decoupling. You want to rename `size` into `volume`. It’s easy to do, there are only 3 places where `size` is used. Replace them with `volume` and you’re done.
 
 ```Py
 class Bottle
@@ -1521,24 +1481,19 @@ This might be only one example, but there aren’t any other variables in the ca
 
 I hope I managed to convince you not to write bare getter and setter functions to member variables. Especially not to all of them.
 
-### Other points of consideration
-
-One of the few advantages a getter and setter function have compared to dealing with a raw member variable is tracking the value and access points of the variable. While this can easily be done in the debugger with getter and setter functions, it is almost impossible to do something similar for a plain variable. On the other hand, using a debugger is a strong sign that the code is bad and not covered well with unit tests. 
-
-Generally I don't regard this reason as sufficient to write setter and getter functions. As I hope I don’t have to get to use a debugger at all, I omit writing getters and setters in structs and work with the plain variable.
-
 
 ## Coupling and Cohesion
 
 // is my definition of cohesion correct? https://youtu.be/XQzEo1qag4A
 
-A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." (Robert C. Martin) If you don’t understand these expressions, we could rewrite it to: "There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
+A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." [Robert C. Martin] If you don’t understand these expressions, we could rewrite it to: "There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
 ### Worker classes
 
 The rule above defined by Robert C. Martin was meant for the worker classes. Worker classes are a very common source for bad code as they tend to become way too complex. When breaking them into smaller pieces, this rule is very useful. It gives you a hint how to break them into pieces preferably. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. Possibly you also have to rewrite a few methods before breaking the class into pieces. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand. And you have become a much better software engineer.
 
-// create such a plot. There is a similar one in one of the books, but I don't remember where.
+// get a better image without copy right
+<img src=images/CouplingVsCohesion.svg.png width="400">
 
 // see fundamentals of software architecture p. 43, LCOM metric.
 
@@ -1560,7 +1515,7 @@ Coupling is one of the reasons why I recommend not to use inheritance. Inheritan
 
 ## Static expression
 
-Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
+Static methods are another thing that I discourage using. It’s not super bad, yet it’s another of these misguided object-oriented things. Let's first look at static methods. Isn’t it strange: you write a class with all kind of member variables, then there is one static method that doesn’t need any of these variables but it is still within the class? Didn’t we say, we wanted to keep classes small? It should have high cohesion? A static method has about as little cohesion as the variable in a data class. Zero.
 
 I fully understand that there are programming languages where functions have to remain within a class and static functions are the only way to write "free" functions. But in all other languages I recommend not to use static methods as it doesn’t add any additional functionality nor does it improve the code. In C++ you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time you can split up a namespace over many files, as done for the `std::` namespace.
 
@@ -1568,9 +1523,9 @@ As we are talking about static, we can also discuss static variables as used for
 
 ## Drawbacks of classes
 
-Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables! The whole code becomes a big ball of mud. // https://de.wikipedia.org/wiki/Big_Ball_of_Mud
+Classes are very often abused for writing bad code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too big. It’s just too convenient to write everything inside a single class. You have all the member variables around and it’s so easy to work this way. In some cases, I had the feeling that the authors of some code wanted to write all code inside a single class. This is extremely problematic. If a single class covers the whole code, then the member variables become ... global variables! The whole code becomes a big ball of mud. [https://de.wikipedia.org/wiki/Big_Ball_of_Mud]
 
-// where did we explain global variables?
+// where did we explain global variables? -> .see chapter 26
 
 But also for slightly smaller classes, member variables are an issue. If a global variable is like placing a bag on a public square, a class variable is like a bag in the entrance of a huge building. Here you have some ways to protect the bag, like installing surveillance cameras. But it’s still a dangerous game to play. Be careful with class variables. Or even worse, inherited variables. Keep your classes small in order to limit the scope of your class variables.
 
@@ -3150,13 +3105,11 @@ Slots fixes the available member variables. In this case, there are only the var
 
 Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
 
-An alternative to abstract baseclasses are protocols. They are mostly equivalent, so I won't go into further details here.
-
-// should I add an example never the less?
+An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. But this is a highly advanced topic and I don't want to go into details here. 
 
 ## C++
 
-C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages tac.
+C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
 
 C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
 
@@ -3167,12 +3120,11 @@ Pointers point to an address on the heap. The place where the dynamically alloca
 Along with pointers go arrays. They are a continuous piece of memory that the user has to manage on his own. He has to allocate them manually and delete the memory at the end of its life time.
 
 ```C++
-#include <iostream>
 // create an array with length defined at runtime
 int length;
 std::cin >> length;
 // allocate memory with new[]
-int * dice_rolled = new data_type[length];
+int* dice_rolled = new data_type[length];
 // do something with the array
 // delete the memory with delete[]
 delete[] dice_rolled;
@@ -4505,6 +4457,59 @@ In C++ there is also the `constexpr` key word to indicate that an expression can
 Compared to compile-time constants, runtime constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
 
 Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead. If it's global it will be acting as a hiddeng state, making it much harder to write tests.
+
+### Constant Class instances
+
+// move const part of the description elsewhere?
+
+In C++ you can enforce an object to remain the same for as long as it exists, using the const keyword at the time of creation. In Python you cannot enforce it, you can only use the all uppercase notation to hint that a variable should not be changed. The usage of const is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
+
+But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
+
+We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In python constant objects are defined by using all uppercase letters.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Bottle:
+	color: str
+	size: float
+	material: str
+
+if __name__ == "__main__":
+	BOTTLE = Bottle()
+```
+
+Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity.
+
+### Mixing const and non-const objects
+
+So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
+
+The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
+
+We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained further below.
+
+A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterBottle:
+	BOTTLE: Bottle
+	amount_of_water: float
+
+@dataclass
+class Bottle:
+	color: str
+	size: float
+	material: str
+```
+
+This is just one example how one can deal with const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
+
 
 ## Mutable
 
