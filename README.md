@@ -171,6 +171,7 @@ Chapters that still need improvement:
 - [14. DevOps](#14-devops)
 	- [The early 2000s](#the-early-2000s)
 		- [Getting a project](#getting-a-project)
+	- [Benefits of DevOps](#benefits-of-devops)
 - [15. Refactoring](#15-refactoring)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
@@ -191,10 +192,8 @@ Chapters that still need improvement:
 	- [Copilot](#copilot-6)
 - [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
-	- [Writing understandable code](#writing-understandable-code)
+	- [Spaghetti code](#spaghetti-code)
 	- [Examples](#examples-1)
-		- [Commenting magic numbers](#commenting-magic-numbers)
-		- [Generic names](#generic-names)
 		- [Structuring function arguments](#structuring-function-arguments)
 		- [Assigning variables in conditions](#assigning-variables-in-conditions)
 		- [Scope of variables](#scope-of-variables)
@@ -298,6 +297,7 @@ Chapters that still need improvement:
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [27. Naming](#27-naming)
+		- [Generic names](#generic-names)
 	- [Copilot](#copilot-11)
 - [28. Complexity](#28-complexity)
 	- [Complexity of code](#complexity-of-code)
@@ -330,6 +330,7 @@ Chapters that still need improvement:
 		- [Requirements](#requirements-1)
 		- [How to write comments](#how-to-write-comments)
 		- [Docstring](#docstring)
+	- [Commenting magic numbers](#commenting-magic-numbers)
 	- [Summary](#summary-5)
 	- [Copilot](#copilot-17)
 - [33. Logging](#33-logging)
@@ -435,6 +436,8 @@ Chapters that still need improvement:
 	- [Paint](#paint)
 - [49. More Copilot](#49-more-copilot)
 	- [Copilot and this book](#copilot-and-this-book)
+	- [Issues](#issues)
+	- [Copilot and the future](#copilot-and-the-future)
 - [50. Further reading](#50-further-reading)
 - [51. Outlook](#51-outlook)
 - [52. Abbreviations](#52-abbreviations)
@@ -906,7 +909,7 @@ Usually companies support many API versions simultaneously. They know their user
 
 ## Copilot
 
-Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let copilot fill in the gaps.
+Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps.
 
 ## Conclusion
 
@@ -1105,7 +1108,7 @@ Copilot can help out with reducing the number of arguments by using dataclasses.
 def do_something(a, b):
     return a + b
 ```
-With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of copilot is not always an improvement. Wheter such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
+With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of Copilot is not always an improvement. Wheter such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
 
 ```py
 @dataclass
@@ -1604,7 +1607,7 @@ Prefer functions over methods. It improves clarity which variables may be change
 
 ## Copilot
 
-Just as with functions, Copilot can write classes from scratch as well. Here I wrote only the first half of the comments, the rest is a suggestion by copilot. Though admittedly, the code is not that brilliant.
+Just as with functions, Copilot can write classes from scratch as well. Here I wrote only the first half of the comments, the rest is a suggestion by Copilot. Though admittedly, the code is not that brilliant.
 
 ```py
 # wirte a class Person with attributes name and age
@@ -2639,44 +2642,29 @@ DI is very similar to the strategy design pattern. The main difference being wha
 
 ## Summary
 
-Now don’t worry if you haven’t understood everything. I just explained very briefly dependency injection, faking, mocking etc., which are all fairly advanced topics. I just hope you got some of the basic ideas I tried to explain here. They can be useful and the ideas behind them are very important. In fact, these ideas are so important that you’re going to see the DI again in the section on the strategy design pattern. // or should I remove the design patterns?
+Now don’t worry if you haven’t understood everything. I just explained very briefly dependency injection, faking, mocking etc., which are all fairly advanced topics. I just hope you got some of the basic ideas I tried to explain here. They can be useful and the ideas behind them are very important. Especially TDD and DI were really important topics in this chapter. If you want to have an in depth look at some of the things we discussed here, I recommend looking at these two topics.
 
-As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection or the strategy pattern. You can also pass different function objects as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection with classes instead of injecting function objects. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything additional right now.
+As always, many books only focus on OO programming. They only explain dependency injection for classes. However, having classes is not a strict requirement for dependency injection or the strategy pattern. You can also pass different function objects as function arguments in those programming languages supporting function pointers or duck typing. This has the advantage that you don’t have to deal with base classes and so on. It’s just not used that often because usually you want to inject complicated objects and function pointers can only be used for simple objects. Though generally I would recommend using dependency injection with classes instead of injecting function objects. Simply because it can be used in all major programming languages the same way and you don’t have to learn anything new.
 
 So far for the technical implementation and the introduction to mocking. But the real problem is only to come once again. The question is how and what to test. Apparently, it’s no solution to write a complete database simulation every time it is needed. This is not only a hell lot of work. It also makes the code rigid. // why so...?
 
 
 ### Copilot
 
-Copilot knows about dependency injection as well. Again I had to write only about half of the comment in order to get a reasonable suggestion.
+Copilot knows about dependency injection as well as seen in the Copilot example in the chapter on functions [chapter functions]. The difficult part is rather how to make Copilot use DI.
 
-```py
-# write a class person with attributes name and age
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+// Make a DI example!
 
-def print_name():
-    person = Person('John', 30)
-    print(person.name)
-
-# use dependency injection to print the name of the person
-def print_name(person=Person('John', 30)):
-    print(person.name)
-```
-
-// write something about CI/CD?
 
 # 14. DevOps
 
-Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
+Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
 ## The early 2000s
 
-Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something like the main branch) and no one knew whether the code was really working. Possibly even without a merge request. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
-Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and definitely with the Agile Manifesto in 2001, testing really took up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one test, but several different kind of tests it becomes apparent that doing all the builds by hand won't scale. You have unit tests, integration tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
 - The code is formated according to specification
 - The static code analysis passes
 - The build passes
@@ -2687,7 +2675,7 @@ Even though there are companies that don't care about the formatting anymore. Th
 
 Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
 
-We have the development (Dev) and the IT operations (Ops) Bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building and testing of the new software.
+We have the development (Dev) and the IT operations (Ops) Bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building, testing and releasing of the new software.
 
 ### Getting a project
 
@@ -2695,7 +2683,16 @@ Furthermore getting started to work witn an existing project was frequently a pa
 
 It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
 
-// what else to write?
+## Benefits of DevOps
+
+// Is it worth writing this chapter? Or should I skip it and maybe wirte something else?
+
+[https://www.atlassian.com/devops]
+
+- Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
+- Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
+- Rapid deployment:
+
 
 # 15. Refactoring
 
@@ -2703,13 +2700,15 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 
 ## There will be change
 
-If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database might change, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
+If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database changes, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
 
 ## Keeping code in shape
 
 // first refactor the core, refactor subsidiary code only when needed. It is important to focus on some parts. Refactoring the whole code is a tremendous amount of work. Make supporting code to be generic.
 
-Even without external changes it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder //Thomas & Hunt//. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy.
+Even without external changes it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder [The Pragmatic Programmer]. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy  [Chapter Physical Laws of code].
+
+// this text here is redundant. Certainly with Entropy in Physical Laws of code. Also with some other chapter?
 
 Refactoring is just like cleaning up your kitchen. Every time you cook something you have dirty dishes. But unlike for the kitchen you cannot hire a cleaning lady to clean up your code. She wouldn’t know what to do. You have to clean up your code by yourself. You have to refactor it. Continuously. You will be spending more time refactoring than writing new code. And as the code becomes older it only gets worse. That’s the faith of a software engineer.
 
@@ -2717,23 +2716,23 @@ I guess everybody reading (or writing) this book knows some of the problems why 
 
 ### Refactoring and automated tests
 
-Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would change functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging feeling that something is wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but now they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
+Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would change functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging doubt that something was wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but in the end, they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
 
-I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... you need... automated tests! Unit tests, end-to-end tests, whatever. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
+I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... you need... automated tests! Unit tests, acceptance tests, performance tests, etc. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
 
 If you are confident about the test coverage you can do pretty much anything you want. Whatever code you don’t like, just throw it out and rewrite it from scratch. Or even better, use a third-party library if available. As long as the tests pass you are quite certainly fine.
 
 ### Keep refactorings small
 
-Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly.
+Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. Rewrites of complete features are comparably rare. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly.
 
-Probably you do some smaller refactoring quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the chapter on Test Driven Development. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
+Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the section on Test Driven Development [chapter Writing better Code with tests]. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you cannot multitask. You cannot develop code and make it perfect at the same time. You’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
 
-Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development. You never write perfect code to start with. It always takes some refactoring in order to end up with good code.
+Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development process. You never write perfect code to start with. It always takes some refactoring in order to end up with good code.
 
 Finally, you refactor. You look at all the code that you wrote since you refactored the last time. Possibly also at code that existed for a long time and could be merged with your new code because it’s very similar. The code will probably look more complicated than you would expect it to be. You try to rethink the logic of the problem you just solved. Can you change the algorithm somehow that you can drop all the `if` statements for the corner cases? Or do you have to sort the data differently to make the code better?
 
-There are hundreds of things you could do for improving the quality of the code. Look at the code and figure out what the most important things are you want to change. Try to write good code and follow your gut feeling. But make sure you also get some real work done between the refactoring sessions. The code will never be perfect. But it will be good enough. Move on once this is the case. Don't be stuck with endless discussions on the name of a variable. Go and write some code again.
+There are hundreds of things you could do for improving the quality of the code. Look at the code and figure out what the most important things are you want to change. Try to write good code and follow your gut feeling. But make sure you also get some real work done between the refactoring sessions. The code will never be perfect. But it will be good enough. Move on once this is the case. Don't be stuck with endless discussions on the name of a variable. Go on and write some new code again.
 
 ## Levels of Refactoring
 
@@ -2743,7 +2742,7 @@ Let me make another small example. You are going to build a house and you like c
 
 Yet dishes get dirty you still have to clean up the kitchen every day. Otherwise you’d be in no time left with a huge mess. This corresponds to the everyday refactoring of a software engineer. Make sure you remove code duplications, name all variables properly and clean up everything along the way you don’t like.
 
-Once in a while you buy an additional kitchen device and over time you start running out of space. You have to sort out all the old devices you don’t need anymore, and make use of your Tetris skills to fit everything back into the shelves in an ordered fashion. Such that you still find your belongings. This is an intermediate refactoring.
+Once in a while you buy an additional kitchen device and over time, you start running out of space. You have to sort out all the old devices you don’t need anymore, and make use of your Tetris skills to fit everything back into the shelves in an ordered fashion. Such that you still find your belongings. This is an intermediate refactoring.
 
 At some point you buy another device and you realize there is not enough space for your equipment anymore. There is only one solution. You need a bigger kitchen. You have to plan how much additional space you need for the next few years and either tear out some walls or expand your house. Now this will be a very demanding and expensive refactoring.
 
@@ -2751,7 +2750,7 @@ I hope you got the memo. Small refactoring should be done all the time. Every fe
 
 ### Refactoring is dynamic
 
-Waterfall refactoring is bound to fail the same as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. And software engineering is concrete. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
+Waterfall refactoring is bound to fail the same as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
 
 You have to face the facts. Waterfall refactoring is not working out. Instead you have to follow the actual dynamics of making changes, learning more about your code and adapting your future changes. These three steps are the only way how refactoring is done. 
 
@@ -2761,17 +2760,15 @@ A refactoring certainly has the highest impact if you have some new understandin
 
 ### The circle of doom
 
-There is something very mean about refactoring. Refactoring good code is easier than refactoring bad code. For instance, working with code containing global variables, many dependencies, etc. is always a pain, no matter if you are writing new code, tests or doing some refactoring. In all cases you have to understand what the code really does. For writing new code and tests, this is bad enough. But with refactoring is becomes a nightmare because you have a circle of doom. You start postponing your refactoring because it’s hard to understand bad code. But over time, this will only make it worse and worse and worse. Until you reach the point where refactoring is essentially impossible and you are paralyzed. You’d have to refactor your code because it’s bad, but you can't because it's gotten too bad to make it better.
+There is something very mean about refactoring. Refactoring good code is easier than refactoring bad code. For instance, working with code containing global variables, many dependencies, etc. is always a pain, no matter if you are writing new code, tests or doing some refactoring. In all cases you have to understand what the code really does. For writing new code and tests, this is bad enough. But with refactoring is becomes a nightmare because you have a circle of doom. You start postponing your refactoring because it’s hard to understand bad code. But over time, this will only make it worse and worse and worse. Until you reach the point where refactoring is essentially impossible and you are paralyzed. You’d have to refactor your code because it’s bad, but you can't because it's gotten too bad to make it any better.
 
 Don’t slack off refactoring. You’d pay the price rather sooner than later. Make sure you always keep the code in shape, this makes your life much easier.
 
 // The behavior of the software may not be changed. Even if it’s a bug, you should rethink fixing it as the users may rely on that bug.
 
-// section on text book refactoring -> write something about Michael Feathers book. Or the few pages of Uncle Bob.
+// section on text book refactoring -> write something about Michael Feathers book. Or the few pages of Uncle Bob. (where?) Or the book of Martin Fowler.
 
 ## When to Refactor
-
-// some parts of the text here are redundant.
 
 It is generally a good idea to do refactoring. Most developers do rather too little refactoring than too much. Still, there are some general recommendations when to refactor or not.
 
@@ -2785,9 +2782,7 @@ If you add a feature, it may not really fit into the code. Most likely, because 
 
 Also, during code review you can do refactoring. Team up with the author of the code and do some pair programming. This is much more motivating than a normal review as there is better knowledge exchange and the output of the review is significantly increased.
 
-Generally, you should refactor code that you work with. In some cases, you may refactor code that you just walked by, but this should not be the rule. If there is no reason for you to touch that code at the time being, you shouldn’t refactor it. It is important in software engineering to know when to postpone some work and this is one of the cases. If no one works with some piece of code at the moment, then there is no need to refactor it right now.
-
-// Is this text here redundant? It feels like I read it before.
+Generally, you should refactor code that you work with. In some cases, you may refactor code that you just walked by, but this should not be the rule. If there is no reason for you to touch that code at the time being, you shouldn’t refactor it. It is important in software engineering to know when to postpone some work. And this is one of the cases. If no one works with some piece of code at the moment, then there is no need to refactor it right now.
 
 Once in a while, you have to do a bigger refactoring. One that you don’t just do between writing a few lines of code, but it will take considerable efforts to get it done. You should probably discuss this topic with your work colleagues, opposite to the smaller refactorings that you just do by yourself.
 
@@ -2795,9 +2790,9 @@ Most important of all, it is your code. You are responsible. You are the one to 
 
 ## Refactoring process
 
-Refactoring follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: "By refactoring I move the understanding from my head into the code."
+Refactoring follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Some ideas I had for a long time, others I got while reading other books. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts, moving chapters around and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: "By refactoring I move the understanding from my head into the code."
 
-// add the graph from p.193, DDD. Refactoring is no linear process.
+// add the graph from p.193, DDD. Refactoring is a non-linear process.
 
 Refactoring, just as writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come out of the blue. All of a sudden you understand the problem much better and the code can be improved accordingly.
 
@@ -2805,15 +2800,17 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier than for interpreted languages as the compiler does valuable checking of names, functions, types, etc.
 
-There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler //Refactoring, Addison Wesley, 2019.
+There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler [Refactoring, Addison Wesley, 2019].
 
-// add or remove some techniques? From WELC?
+// add or remove some techniques? Also from WELC?
 
 ### Renaming
 
 Even though renaming hardly changes the shape of the code, it should be done extremely often. Finding good names is one of the hardest tasks in programming as judging the quality of names is very difficult. There are some general rules how naming should be done, yet still it’s not easy at all. This leads to the fact, that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something you just happen to know a better name. Then rename this object. This is the only way names get better over time. Don’t assume the author of the code knew it better. You have much more information now at hand that simplifies finding a good name.
 
 Though you have to pay attention. People get used to names. If a name for an object has gotten accustomed to the whole development team you shouldn't change it, even if you have a better name. Renaming it would cause too much confusion. For this reason it is better to name central elements of your code in the beginning of the development and not change them anymore later on.
+
+One possibility is to use only mediocre names to beginn with and search better names only at the end of programming a few lines. Then also Copilot can help you find better names.
 
 ### Extract function
 
@@ -2846,13 +2843,15 @@ def print_content():
 
 For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway.
 
+You can also use Copilot to extract this function. Just write the command "move the print statements into a dedicated function" and Copilot will do the rest for you. Though as always, you should pay attention that the solution is correct. In this case it happened to me that Copilot suggested an incorrect solution.
+
 There is really not that much more to know about extracting functions than what I just showed here. It is really a simple refactoring technique, yet it is very important. This is probably the most used refactoring technique. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. You may extract methods from this class later on if needed.
 
 Inlining functions is the opposite process of what we just saw and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function.
 
 ### Scratch refactoring [Feathers p. 212] 
 
-In chess there is a rule of thumb that you should talk (quietly) to your own pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. I like this concept very much as it gives you an idea how the code could look like instead.
+In chess there is a rule of thumb that you should talk (quietly) with your own pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. I like this concept very much as it gives you an idea how the code could look like instead.
 
 Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
 
@@ -2878,13 +2877,13 @@ Let’s say you want to break a class into pieces, but it's really big. It has n
 
 ### Seams
 
-Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." //WELC// Vice versa, you can edit it elsewhere, in the so-called enabling point.
+Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
 
 There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
 
-Some of the seams explained in //WELC// change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say, that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
+Some of the seams explained in Working Effectively with Legacy Code change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say, that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
 
-The most common seam is simply function arguments. It is not mentioned in WELC and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
+The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
 
 ```py
 def f(debug):
@@ -2904,7 +2903,7 @@ The piece of code you hold in your hands between two seams may be way too big an
 
 Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
-// Add the temporal graph from Evans?
+// Add the temporal graph from Evans? which one? nonlinear growth?
 
 ## Copilot
 
@@ -2983,100 +2982,38 @@ As always, Copilot works best if you give it some step by step instructions.
 
 # 16. Understandable code
 
-// I somehow like this chapter, yet I feel like there is room for improvement
-
 "Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
 
 ## How humans think
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything, he doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves, when does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything, he doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
 Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts and approximate thinking.
 
-You can play terrible tricks with humans as we all follow the same laws of psychology. Even experts fall for such tricks. We can only mitigate our weaknesses by accepting them.
+You can play terrible tricks with humans as we all follow the same laws of psychology. Even experts fall for such tricks. We can only mitigate our weaknesses by accepting them. 
 
-On the other hand, we are amazing at understanding complex processes by creating an abstract model of a process and analyzing different parts of it. We know a lot of different things and we can have an abstract imagination what would happen if we combine many of them. 
+We are also limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can handle. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
 
-We are also pretty good in communicating with others using the natural language. We are able to explain fairly difficult things and others understand us. Just as you hopefully understand what I write here. In your imagination you have some image of what I am writing about. There are so many ways to communicate. There are so many ways I can explain something in this book here.
+// Is it the best to just leave the following 2 paragraphs out? They are not really necessary.
+<!-- We are also pretty good in communicating with others using the natural language. We are able to explain fairly difficult things and others understand us. Just as you hopefully understand what I write here. In your imagination you have some image of what I am writing about. There are so many ways to communicate. There are so many ways I can explain something in this book here.
 
-We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does.
+We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. -->
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
 Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke.
 
-## Writing understandable code
+## Spaghetti code
 
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as someone can explain to you in words how something works, you can also write understandable code.
+So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write understandable code.
 
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
 
 ## Examples
-
-### Commenting magic numbers
-
-// Move the following example to the chapter on comments?
-
-Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code". The authors correctly state that this code is hard to understand. But they fail to explain why. Note that this example is in C++ because the suggested solution does not work in Python.
-
-```C++
-connect(10, false); 
-```
-
-Copilot wants to improve the code by adding a comment at the end of the line.
-```C++
-connect(10, false);  // timeout_ms = 10, use_encryption = false
-```
-
-The suggestion in the book was adding the comments inside the function call. This is possible in C++ but it's not a good solution. It's an attempt to make bad code better by commenting it.
-
-```C++
-connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
-```
-
-In my opinion, this solution is far from optimal. There are 2 solutions to this problem. In Python, C++20 and most other modern programming language, keyword arguments are supported.
-
-```C++
-// check that this code really works!
-connect{ .timeout_ms = 10, .use_encryption = false};
-```
-
-The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
-
-```C++
-int timeout_ms = 10;
-bool use_encryption = false;
-connect(timeout_ms, use_encryption);
-```
-
-Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
-
-### Generic names
-
-// Move this to the chapter on names?
-
-```py
-class Rectangle {
-    def size():
-	    # ...
-}
-```
-
-What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
-
-Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
-
-Word	Alternatives
-send	deliver, dispatch, announce, distribute, route
-find	search, extract, locate, recover
-start	launch, create, begin, open
-make	create, set up, build, generate, compose, add, new
-
-It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
 
 ### Structuring function arguments
 
@@ -3105,6 +3042,8 @@ Don't make assignments within if statements. It's hard to read and easy to make 
 ```C++
 if (int t = time_elapsed()) ...
 ```
+
+The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
 
 ### Scope of variables
 
@@ -3272,7 +3211,7 @@ For more information about C++ I can recommend the google C++ style guide, // ht
 
 ## Copilot
 
-Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of copilot. Though I don't know how difficult code snippets copilot can translate.
+Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of Copilot. Though I don't know how difficult code snippets Copilot can translate.
 
 ```C++
 #include <iostream>
@@ -3319,7 +3258,7 @@ In order to find out what some existing, badly tested piece of code is doing, I 
 
 ### Copilot
 
-// copilot is able to detect at least some beyond the array size errors
+// Copilot is able to detect at least some beyond the array size errors
 
 Copilot is able to find some bugs. Though I expect it to find only minor bugs, this is already a real feat. For example take the following code snippet,
 
@@ -3335,7 +3274,7 @@ Copilot is able to find some bugs. Though I expect it to find only minor bugs, t
 
 I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
 
-Once again, there is the question whether this bug was fixed because copilot knows the code pattern or because it really "understands" what it does. The code has already been created by copilot itself.
+Once again, there is the question whether this bug was fixed because Copilot knows the code pattern or because it really "understands" what it does. The code has already been created by Copilot itself.
 
 ## Exceptions
 
@@ -3371,7 +3310,7 @@ Try except blocks have some similarity to if else or switch case blocks. They ar
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
 
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We go into more details in the section on dependency injection. 
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
 
 ### Exceptions and goto
 
@@ -3417,7 +3356,7 @@ In many programming languages you can mimic functional programming to some degre
 All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible, you can write better code.
 
 ## Copilot
-Here is an example where copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
+Here is an example where Copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
 
 ```py
 a = []
@@ -3766,7 +3705,7 @@ class Subscriber():
 
 ## Copilot
 
-Copilot knows quite well about design patterns. The bigger challenge is explaining to copilot what you actually want to do. Here is the example of a factory created by a single comment and very little help to get the code started.
+Copilot knows quite well about design patterns. The bigger challenge is explaining to Copilot what you actually want to do. Here is the example of a factory created by a single comment and very little help to get the code started.
 ```py
 # write a factory that creates a logistics object that implements a road logistics or sea logistics
 def create_logistics(type):
@@ -4750,7 +4689,6 @@ Sometimes words inside a name can be removed without losing any information at a
 Here are some rules to follow when naming things:
 
 1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `d`, `days` or `days_since_last_update`? The answer is: it depends. If a new work colleague understands the variable it is long enough.
-
 2.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
 3.	Never use plain values in your code. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Always create a variable instead. For example `set_color(7)`. What does `7` mean?
 4.	A rule of thumb: high level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
@@ -4771,16 +4709,39 @@ Here are some rules to follow when naming things:
 19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
 20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big.
 
+### Generic names
+
+// Move this to the chapter on names?
+
+```py
+class Rectangle {
+    def size():
+	    # ...
+}
+```
+
+What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
+
+Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
+
+Word	Alternatives
+send	deliver, dispatch, announce, distribute, route
+find	search, extract, locate, recover
+start	launch, create, begin, open
+make	create, set up, build, generate, compose, add, new
+
+It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
+
 
 ## Copilot
 
-Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let copilot find appropriate names for you.
+Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let Copilot find appropriate names for you.
 ```py
 def print_states(states): 
     for a in states:
         print(a)
 ```
-Here `a` is clearly not an appropriate name. Writing a comment to copilot to search for a better name works out pretty well.
+Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
 ```py
 	for a in states:
     # find a better name for this variable
@@ -5499,6 +5460,51 @@ You may use docstring tools, like sphynx in python, for automatically generated 
 
 #should I add some more points when comments are allowed?
 
+
+## Commenting magic numbers
+
+// Move the following example to the chapter on comments?
+
+Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code" [The Art of Readable Code]. The authors correctly state that this code is hard to understand. But unfortunately they failed to explain why exactly. Note that this example is in C++ because the suggested solution does not work in Python.
+
+```C++
+connect(10, false); 
+```
+
+This code is obviously bad as it is very hard to understand what `10` and `false` exactly mean. You'd have to look up the function definition to understand it.
+
+Copilot suggests to improve the code by adding a comment at the end of the line. Honestly, this is a pretty bad solution.
+
+```C++
+connect(10, false);  // timeout_ms = 10, use_encryption = false
+```
+
+The suggestion in the book was adding the comments inside the function call. This is possible in C++ but it's not a good solution. It's an attempt to make bad code better by commenting it.
+
+```C++
+connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
+```
+
+In my opinion, this solution is still far from optimal. 
+
+There are two better solutions to this problem. In Python, C++20 and most other modern programming language, keyword arguments are supported.
+
+```C++
+// check that this code really works!
+connect{.timeout_ms=10, .use_encryption=false};
+```
+
+The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
+
+```C++
+int timeout_ms = 10;
+bool use_encryption = false;
+connect(timeout_ms, use_encryption);
+```
+
+Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
+
+
 ## Summary
 
 Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
@@ -5577,7 +5583,7 @@ The shell is an extremely powerful and versatile tool for executing other progra
 
 ### Copilot
 
-// figure out something else to ask copilot. git questions have already been answered before.
+// figure out something else to ask Copilot. git questions have already been answered before.
 
 // Copilot for CLI might change how we use the command line (and all its programs with it). Now you no longer have to use google to find the syntax, but you can use Copilot CLI instead. https://youtu.be/8_0DJ9FOlOM?t=787 https://youtu.be/pw0SH7AHIFI -> how does this work exactly?
 
@@ -6665,6 +6671,47 @@ Furthermore Copilot makes a lot of boilerplate suggestions. For exmaple it frequ
 ## Copilot and this book
 
 I used Copilot to write parts of this book. At times it was a help to get some inspiration. For example I would have used the word help instead of inspiration here (Copilot seems to like the word "inspiration" when writing about itself). On the other hand, Copilot also suggested a lot of nonsense. So it's not like Copilot would make the job of an author obsolete any time soon. But it's a great tool to improve your writing.
+
+## Issues
+
+Copilot is just some artificial neural network. It is not perfect, it is no compiler and I even don't know if it is deterministic. Sometimes Copilot produces quite some nonsense. For example, Copilot seems to have analyzed my text and found a lot of "\`\`\`py" text snippets. Therefore it suggested to write this "\`\`\`py" quite frequently at the end of a sentence. And just now Copilot is telling me that it learned not to do this anymore. But I doubt it.
+
+Some of the errors of Copilot & co. are very subtle. Chat GPT came up with some fake suggestion containin wrong citations when it was used in a legal case [https://www.legaldive.com/news/chatgpt-fake-legal-cases-generative-ai-hallucinations/651557/]. 
+
+Also when I was playing around, the code produced by Copilot was sometimes wrong. Here is an example where I asked Copilot to refactor some fairly trivial code.
+
+```py
+def print_content():
+	print("********************")
+	print("hello")
+      
+# command to Copilot: move the print statements into a dedicated function
+if __name__ == "__main__":
+    print("author: Marco Gähler")
+    print("********************")
+    print_content()
+
+# new code:
+def print_header():
+    print("********************")
+    print("author: Marco Gähler")
+    print("********************")
+
+def print_content():
+    print("hello")
+
+if __name__ == "__main__":
+    print_header()
+    print_content()
+```
+
+Here Copilot changed the order of the first two `print` statements. Of course the order suggested by Copilot makes perfectly sense, but it is still wrong as it changed the output.
+
+And as I'm writing these lines, I also get the feeling that Copilot has some narcistic traits. It wants me to write here that it is a great tool.
+
+## Copilot and the future
+
+Copilot is indeed a great tool. It was a great help writing this book and the code examples. But it is far from perfect. I doubt that it will completely replace software engineers and authors any time soon. Though it changes the way we work. It is a great source of inspiration (again: suggestion by Copilot) when you don't know what to write. And at times its suggestions are just hillarious. What it can't do is reading your mind. You first have to give it some input. And even then it is sometimes hard to tell it what you want to do. This is why you are still better off reading this book and understanding the patterns explained here. Copilot is not a replacement for your brain.
 
 # 50. Further reading
 
