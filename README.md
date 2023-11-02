@@ -252,6 +252,7 @@ Chapters that still need improvement:
 	- [Observer](#observer-1)
 	- [Copilot](#copilot-10)
 - [21. Decoupling](#21-decoupling)
+	- [Law of demeter](#law-of-demeter)
 - [22. Physical laws of code](#22-physical-laws-of-code)
 	- [Entropy](#entropy)
 	- [Correlation](#correlation)
@@ -267,7 +268,6 @@ Chapters that still need improvement:
 	- [Interface Segregation Principle](#interface-segregation-principle)
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
 		- [Example](#example-3)
-		- [Pimpl](#pimpl)
 	- [Summary](#summary-4)
 - [25. Data types](#25-data-types)
 	- [Lists](#lists)
@@ -1631,6 +1631,8 @@ Generally it's better to start writing some code that you want instead of writin
 "Favor composition over inheritance" - Basic rule of class design
 
 Or my version of this rule: "Use composition, not inheritance"
+
+[https://youtu.be/da_Rvn0au-g]
 
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
@@ -3043,7 +3045,7 @@ Don't make assignments within if statements. It's hard to read and easy to make 
 if (int t = time_elapsed()) ...
 ```
 
-The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
+The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. Python returns an error accordingly.
 
 ### Scope of variables
 
@@ -3053,7 +3055,7 @@ It is generally good to have as few variables as possible. And they should have 
 
 Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
 
-// move this where?
+// move this where? 
 Approximate programming: Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
 
 But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
@@ -3062,11 +3064,13 @@ But in reality, such accuracy may not be required. You can simply take the coord
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers // Working Effectively with Legacy Code, p.311
 
-A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. A lot of the low level C++ features for instance can be wrapped into a higher level object, making it an intermediate level language. However it's still not quite such a high level language as Python.
+A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book. 
 
-I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax you can easily look up, meanwhile concepts you have to understand.
+A lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python. And a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab.
+I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to understand.
+
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python. And a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
 
 As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
@@ -3076,7 +3080,7 @@ C++ and Java are static typed, have to be compiled, use inheritance to define in
 
 ## Existing programming languages
 
-Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language. And he is certainly right. But there are millions of programmers that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because there are a few new features that make the code a little bit shinier or more performant. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is treated as a bit wise array which makes it annoying to work with). And he is certainly right. But there are millions of programmers that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
 For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
@@ -3090,7 +3094,7 @@ Even though Python is a fairly easy programming language to learn, there are som
 
 ### Type hints
 
-// https://youtu.be/dgBCEB2jVU0
+[https://youtu.be/dgBCEB2jVU0]
 
 Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
 
@@ -3105,11 +3109,11 @@ def digits_of(number: str) -> list[int]:
 
 But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
 
-I generally recommend using type hints as it makes the code much more readable. Even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
+I generally recommend using type hints as it makes the code much more readable. Even if I'm sometimes too lazy. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
 
 ### Slots
 
-// https://youtu.be/Fot3_9eDmOs
+[https://youtu.be/Fot3_9eDmOs]
 
 Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class as such:
 
@@ -3123,7 +3127,7 @@ apple = Apple(1.0, 0.5)
 apple.hi = "hi"
 ```
 
-Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It's generally not good coding practice to do such things. For example you could accidentally misspell something like `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
+Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
 
 This issue can be prevented by using slots. 
 
@@ -3150,11 +3154,13 @@ C++ has some particularities like pointers, arrays, a preprocessor and header fi
 
 C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
 
+For more information about C++ I can recommend the google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
+
 ### Pointers and arrays
 
 Pointers point to an address on the heap. The place where the dynamically allocated variables live. Pointers are used to access complex objects that should not be passed around as a whole due to performance issues. However, dealing with raw pointers can lead to all kind of errors, memory leaks, and even worse, undefined behavior.
 
-Along with pointers go arrays. They are a continuous piece of memory that the user has to manage on his own. He has to allocate them manually and delete the memory at the end of its life time.
+Along with pointers go arrays. They are a continuous piece of memory that the user has to manage on his own. He has to allocate them manually and delete the memory at the end of its life time. This is done with the `new` and `delete` commands, which are notoriously error prone. It can easily happen to create a memory leak or to delete the memory twice. Both are undefined behavior and can lead to all kind of errors.
 
 ```C++
 // create an array with length defined at runtime
@@ -3167,11 +3173,11 @@ int* dice_rolled = new data_type[length];
 delete[] dice_rolled;
 ```
 
-Pointers and arrays are barely used anymore on a daily basis. In most cases, they are taken care off by the modern C++ data formats like vectors. Vectors are a high-level object that offer about the same functionality as arrays, but it is much more user friendly as it’s almost impossible to introduce any errors. More details about vectors and arrays are given in the chapter on Levels of Abstraction.
+Pointers and arrays are barely used anymore on a daily basis. In most cases, they are taken care off by the modern C++ data formats like vectors [chapter Levels of Abstraction]. Vectors are a high-level object that offer about the same functionality as arrays, but it is much more user friendly as it’s almost impossible to introduce any errors. More details about vectors and arrays are given in the chapter on Levels of Abstraction.
 
 ### Smart pointers
 
-Smart pointers, `std::unique_ptr` and `std::shared_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like for example weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+Smart pointers, `std::unique_ptr` and `std::shared_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
 
 There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers all throughout the code. Instead you can convert the smart pointer into a pointer using the `get()` function.
 
@@ -3180,34 +3186,38 @@ auto foo = std::make_unique<Foo>();
 some_old_C_library(foo.get());
 ```
 
+This prevents you from having to deal with old school pointers until the very end.
+
 ### Vectors
 
-Similar to the issue with smart pointer, there are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` function as needed.
+Similar to the issue with smart pointer, there are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
 
 ```C++
 std::vector<int> vec {1,2,3,4};
 some_old_C_library(vec.data(), vec.size());
 ```
 
+Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
+
 ### Pass by reference
 
 In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. If it is passed by const reference it cannot be modified. Passing by const reference is very frequently required. Passing an object by value creates a copy of the object and requires a lot of memory.
 
-Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. At the same time, this is also one point for critisism as passing by const reference should have been the default. The compiler won't complain if you forgot a `const` even though you should have used it. On the other hand, it would be much safer to use the programming language if `const` was the default value and you had to specify an argument `mutable`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
+Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. In fact, the compiler will lock this object and it won't be possible to change it. 
+
+At the same time, this is also one point for critisism as passing by const reference should have been the default. The compiler won't complain if you forgot a `const` even though you should have used it. It would be much safer to use the programming language if `const` was the default value and you had to specify an argument `mutable`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
 
 ### Classes
 
-C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance. //source?// But as I told you not to use inheritance, you don’t have to worry about such details.
+C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I told you not to use inheritance, you don’t have to worry about such details.
 
-There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or python one has to define an "abstract base class". This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule.
+There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or python one has to define an "abstract base class". This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use abstract base classes or interfaces.
 
 ### Structs
 
-Structs are essentially the same as dataclasses in python. They are classes where all members are public. In general, structs are used to store different data types, though in theory they could also contain functions. The last is only forbidden by general agreement.
+Structs are essentially the same as dataclasses in python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The last is only forbidden by general agreement.
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not done too often.
-
-For more information about C++ I can recommend the google C++ style guide, // https://google.github.io/styleguide/cppguide.html
 
 ## Copilot
 
@@ -3228,9 +3238,9 @@ for i in range(10):
 
 # 18. Bugs, Errors, Exceptions
 
-"It’s not a bug; it’s an undocumented feature." - Anonymous
+"If you don’t handle exceptions, we shut your application down.  That dramatically increases the reliability of the system." — Anders Hejlsberg
 
-Even if you write absolutely amazing code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
+Even if you write absolutely pristine code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
 
 I would briefly like to go through the different cases.
 
@@ -3246,39 +3256,33 @@ A lot of people underestimate the problem of bugs. They are easy to ignore becau
 
 ### Cost of Bugs
 
-The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code. // SE at google, p.207
+The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code [SE at google, p.207]. Do not let the bugs linger around. The more you wait, the more expensive it gets.
 
-I hope you got the memo. In a small project, you can do pretty much anything you want. But you still have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
+I hope you got the memo. You always have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
 
 ### Debugging
 
-Debugging is the process of finding bugs. If you spend too much time debugging it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where a bug is trying to hide.
+Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide.
 
-In order to find out what some existing, badly tested piece of code is doing, I generally recommend using the debugger. Even though the knowledge gain has to be taken with a grain of salt. The results of the debugger are only a snapshot from which you try to extrapolate general behavior. Debuggers are by now quite simple to use and in most cases clearly superior to print statements. Writing tests or refactoring the code would of course be better options, but these take a lot of time.
+For debugging you generally have the debugger. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule.
 
 ### Copilot
-
-// Copilot is able to detect at least some beyond the array size errors
 
 Copilot is able to find some bugs. Though I expect it to find only minor bugs, this is already a real feat. For example take the following code snippet,
 
 ```py
-    roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
-    roman = ''
-    for key in sorted(roman_map.keys(), reverse=True):
-        while number > key:
-            roman += roman_map[key]
-            number -= key
-    return roman
+roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
+roman = ''
+for key in sorted(roman_map.keys(), reverse=True):
+	while number > key:
+		roman += roman_map[key]
+		number -= key
+return roman
 ```
 
-I introduced a bug as the code should be `while number >= key:`. The bug was easily found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". 
-
-Once again, there is the question whether this bug was fixed because Copilot knows the code pattern or because it really "understands" what it does. The code has already been created by Copilot itself.
+I introduced a bug as the code should be `while number >= key:`. The bug was found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". Though as with text suggestions by Copilot, there is the question how difficult problems it can solve. The text suggestions are usually fairly simple and so are the code suggestions and probably also the bug fixes.
 
 ## Exceptions
-
-// throw exceptions only for the exceptional case. Exceptions are expensive as they do stack unwinding, etc. Only throw exceptions for the really exceptional cases. In C++ they have soon std::expected instead.
 
 Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
 
@@ -3288,9 +3292,11 @@ In case of problems with the internet connection or missing disk space, the user
 
 ### Wrapping exceptions
 
-You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this corner case to happen. Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
+You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this faulty behavior to happen. 
 
-Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state, also known as walking wounded. This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
+Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
+
+Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state (also known as walking wounded). This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
 
 The code how to deal with exceptions should look roughly like this:
 
@@ -3300,26 +3306,25 @@ if __name__ == "__main__":
 		main()
 	except CustomException as e:
 		print("Unable to process user input:")
-		print(e.what())
+		print(str(e))
 	except Exception as e:
 		print("Unknown issue. Please contact our customer support.")
-		print(e.what())
+		print(str(e))
 ```
 
 Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
 
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependency injection to inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
 
 ### Exceptions and goto
 
-By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edgar Dijkstra wrote the famous paper "Goto considered harmful" which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
-
+By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edsger Dijkstra wrote the famous paper "Goto considered harmful" which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
 
 # 19. Programming Paradigms
 
-There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python, or even C++, where you can mix these 3 different programming paradigms.
+There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python, or even the good old C++, where you can mix these 3 different programming paradigms.
 
 ## Object Oriented programming
 
@@ -3327,23 +3332,23 @@ Object Oriented (OO) programming started in the 70ies. It peaked with the still 
 
 It still amazes me how some half-baked promises can create such dynamics in a group of highly intelligent people. Come up with some buzz words and the crowd does the rest. Already in times before social media. The only explanation I have is that the software engineers were all sitting in their basement and missed everything else out there. They had to create their own hype instead.
 
-Well, now let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
+Well, let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
 
-Don’t use any other OO feature than plain classes and abstract base classes or interfaces.
-
-//write more about OO programming? And how does the linux kernel keep the compilation times under control? Libraries and pimpl?
+Don’t use any other OO feature than plain classes and abstract base classes or interfaces. And don't forget to make everything private that should be.
 
 ## Procedural programming
 
-// look at the wikipedia article about procedural programming
+[https://en.wikipedia.org/wiki/Procedural_programming]
 
 While OO programming is mostly based on classes, class instances and methods, procedural programming depends mostly on functions and logical operations. In procedural programming, functions are more important than data types. Though, contrary to functional programming, you are allowed to have hidden states and use output arguments. This simplifies writing code at times but the code created this way is harder to understand due to the additional complexity.
 
 ## Functional programming
 
-// It this correct what I'm writing here? No classes? Not even structs?
+// This needs to be rewritten. What does functional programming exactly have?
 
-Functional programming is the way to program using only functions. No classes, no mutable variables. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+Functional programming is a very different programming paradigm. it is about functions, not about classes.
+
+Functional programming is the way to program using only functions. No classe instances, no mutable variables. Only datastructures. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
 
 Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier.
 
@@ -3371,25 +3376,30 @@ for i in range(10):
     if i % 2 == 0:
         a.append(i)
 ```
+
 When explicitly asking for a list comprehension, it works out.
 ```py
 # rewrite the code above using list comprehension
 a = [i for i in range(10)]
 ```
 
+// General comment about copilot: Don't use comment based code generation.
+// Write the core logic by yourself. Copilot can't help you there.
+// [https://youtu.be/RDd71IUIgpg]
+
 # 20. Design patterns
 
-"An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, https://youtu.be/YMAwgRwjEOQ
+"An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, [https://youtu.be/YMAwgRwjEOQ]
 
-// not sure yet what I should write about design patterns. And about which design patterns.
+// not sure yet what I should write about design patterns. Or about which ones.
 
-// visit the youtube videos of Derek Banas, https://youtu.be/vNHpsC5ng_E
+// visit the youtube videos of Derek Banas, [https://youtu.be/vNHpsC5ng_E]
 
-// https://refactoring.guru/design-patterns
+// [https://refactoring.guru/design-patterns]
 
 There is a famous book called "Design Patterns" [Gamma et al., 1995]. It describes ways how classes can be used to interact with each other and form new patterns. It certainly is a tremendously important book in the history of software engineering, though it is a bit theoretical. In this chapter, I’d like to give a brief overview over the most important design patterns. Some more design patterns are explained scattered throughout the rest of the book.
 
-One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 80-20 phenomenon where 20% of all the design patterns cover 80% of all the code. //https://youtu.be/BPSuWUXyA58// Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
+One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 20-80 phenomenon where 20% of all the design patterns cover 80% of all the code. [https://youtu.be/BPSuWUXyA58] Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
 
 I tried to keep the descriptions and the code examples to the point to teach you only the basic idea of each design pattern. I'm not writing any UML diagramms, but show you a complete code example instead. If you don't understand one of the patterns, play around with the code, watch some youtube video or get one of the more extensive books on design patterns.
 
@@ -3604,33 +3614,6 @@ Instead one can use the visitor pattern. This allows to add functionality to an 
 
 That being said, the visitor pattern is not something that is used too often. It is really just useful if you have a tree of different nodes. One could of course also implement it for a single class, but that would be missing the point.
 
-// Is this code here correct??? I don't think so.
-```py
-from abc import ABC
-
-for node in nodes:
-    node.accept(visitor)
-
-class City:
-    def accept(visitor):
-        visitor.do_something_for_city(this)
-
-class Visitor(ABC):
-	def do_something_for_city(city):
-		pass
-
-class Tourist(Visitor):
-	def do_something_for_city(city):
-		print("visiting city")
-
-class SalesPerson(Visitor):
-	def do_something_for_city(city):
-		print("Meeting clients")
-```
-
-
-
-
 ## Old text
 
 ## Factories
@@ -3645,7 +3628,7 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 
 ```py
 from abc import ABC
-// get a better example than animals
+
 class Vechicle(ABC):
 	def travel():
 		pass
@@ -3730,29 +3713,27 @@ class SeaLogistics(Logistics):
 ```
 
 # 21. Decoupling
-// Maybe look at Fowlers book refactoring again. There might be some advice.
+"Before software should be reusable, it should be usable." — Ralph Johnson
 
-// add some more text from the pragmatic programmer
+[Refactoring, Martin Fowler], [The Pragmatic Programmer]
 
-Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible.
+Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible. It is the ultimate goal to have comepletely decoupled code. This makes is easy to work with. It makes it reusable.
 
 This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
 
-// Are Micro serives the same? They can probably have inner states...
-
-Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. The only major difference being that the glue code in between micro services is much more dynamic than in functional programming. // https://youtu.be/4GnjjocWGOE
+Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. [https://youtu.be/4GnjjocWGOE]
 
 // A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
 
-// instead of asking what you want, you go to the service locator and reach through the service locator. https://youtu.be/RlfLCWKxHJ0 video on service locators
+// instead of asking what you want, you go to the service locator and reach through the service locator. [https://youtu.be/RlfLCWKxHJ0] video on service locators
 
-Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around.
+Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around. This is the strength of functional programming.
 
-// Null paranoia: You don't have to check everything for not being null. Only check this if needed. There are cases where null is a perfectly viable option.
+## Law of demeter
 
-One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" // Refactoring p.192//. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: // https://en.wikipedia.org/wiki/Law_of_Demeter, https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf
+One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" [Refactoring p.192]. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: [https://en.wikipedia.org/wiki/Law_of_Demeter], [https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf]
 - `o` itself;
 - `m`'s parameters;
 - any objects instantiated within `m`;
@@ -3776,11 +3757,13 @@ class Car:
 		self._engine.turn_on()
 ```
 
-This would be a perfect example for a delegating class, as we have discussed in the chapter on classes.
+This is a perfect example for a delegating class, as we have discussed in the chapter on classes.
 
 Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
 
 # 22. Physical laws of code
+
+// break up this chapter merge it with other?
 
 "You should always bear in mind that entropy is not on your side." - Elon Musk
 
@@ -3792,11 +3775,11 @@ In software engineering we have a very similar phenomenon and it has very severe
 
 ## Correlation
 
-// don't mix good and bad stuff. Then everything becomes bad.
-
 Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty much any aspect in programming. Not only code objects, but also abstract concepts. 
 
-There is a market for food and further down the road there is a store selling electronics. Each kind of store has its own domain. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. The same holds true for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+There is a market for food and further down the road there is a store selling electronics. Each kind of store is in its own area. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. 
+
+The same holds true for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
 
 Also bugs tend to cluster inside your code. Did you find a bug in some very complicated part of the code? Chances are you will find more bugs in the same area of the code.
 
@@ -3805,6 +3788,14 @@ Once you start thinking about this rule, you will automatically structure your c
 ## Quality
 
 // Write about the broken windows. And about good enough code. These two things are opposing each other... See The pragmatic programmer.
+
+There were studies what must happen that an area starts to decay [The pragmatic programmer]. They came to the remarkable conclusion that one broken window is sufficient sign for other people to start breaking windows as well and within no time, the whole area looks ruined and abandoned.
+
+When writing code, it is therefore important to keep the quality high. Don't write bad code or it will feel abandoned as well. Others may start to become careless as well and start writing bad code.
+
+On the other end of the quality spectrum you have the issue that some developers just keep on writing and improving their code for all eternity. This is of course also an issue. There is always something that you feel like could be improved. But at some point you have to come to the conclusion that your code is good enough.
+
+These two things, broken windows and good enough code, are another example for opposing rules. It is your task to find the right balance between them, as it is in many things I teach throughout this book.
 
 ## Requirements
 // Does this go into the physical laws of code?
@@ -3817,7 +3808,7 @@ Perhaps we should take more care when making software decisions just as we do wh
 
 # 23. Software Architecture
 
-// This chapter is proabably one of the biggest constructions in this book.
+// Either get this chapter right, or delete it as some point.
 
 Architecture: "the decisions you wish you could get right early" - Ralph Johnson
 
@@ -3898,7 +3889,7 @@ Interestingly, all the explanations made here about coupling and cohesion are al
 
 // Quote from uncle bob?
 
-// Source: https://youtu.be/pTB30aXS77U, https://youtu.be/9ch7tZN4jeI and Clean Architecture
+[https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clean Architecture]
 
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
 1.	Single Responsibility Principle (SRP)
@@ -3907,7 +3898,7 @@ The solid principles were named by Robert C. Martin. SOLID is named after 5 gene
 4.	Interface segregation 
 5.	Dependency Inversion
 
-These 5 very general rules describe mostly how classes should be structured and interacting with each other. Obeying them helps a lot with the design of the code. 
+These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps a lot with the design of the code. 
 
 Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly. In my opinion, these principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but they are not as important as in compiled languages. We'll see why in a minute.
 
@@ -3917,9 +3908,7 @@ The SRP has already been explained at the very beginning of this book due to its
 
 ## Open Closed Principle
 
-// I'm not yet too happy with this text here.
-
-The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. This is an unfortunate choice. Robert C. Martin and others suggest using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
+The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
 
 Our code should be stable with respect to extensions later on, but not to changes. If the requirements change, we have to change our code as well. This is inevitable. But we shouldn't have to change our code if someone else wants to change his code. Thus the solution is to use abstractions at potential abstraction points. This allows the user of our code to extend it without us having to change anything in our code.
 
@@ -3928,21 +3917,21 @@ Let's make a small example. We have a class containing some postal codes of Swis
 // use some US postal codes?
 
 ```py
-class City:
+class Cities:
 	def zurich_postal_code(self):
 		return 8000
 	def bern_postal_code(self):
 		return 3000
 
 def print_all_postal_codes():
-	city = City()
-	print(city.zurich_postal_code())
-	print(city.bern_postal_code())
+	cities = Cities()
+	print(cities.zurich_postal_code())
+	print(cities.bern_postal_code())
 ```
 
-If the user of this code wants to add another city, we have to do this within our own code inside the class `City`. This is the opposite of what the OCP says.
+If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
 
-Instead we can create an interface `City` and implement it for every city we are interested in. If we are interested in adding an additional city, we don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. Like this it follows the open closed principle.
+Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. The code below obeys the OCP.
 
 ```py
 from abc import ABC, abstractmethod
@@ -4013,30 +4002,40 @@ Here the file A does not follow the ISP. It does 2 independent things. Most othe
 
 Now in Python this is not such a big deal as you can import each function individually and even if you import the whole file A it's not a big deal. It's not becomming slow. In C++ on the other hand, adding unrelated functions into the same file is really a no no. In C++ you always include a whole header file at once and you'll have to compile everything that comes with it. There might be a hefty price to pay if the file A would be too big.
 
-```py
-# file A
-def function_1():
-	return 1
+```C++
+// C++
+// file A.h
+int function_1(){
+	return 1;
+}
 
-def function_2():
-	return 2
+int function_2(){
+	return 2;
+}
+
+// and many more functions
 ```
 
 // add graphs on the file dependencies below
 
-The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. The amount of code that they import is reduced roughly by half. This can be repeated until it is no longer possible to reduce the amount of code imported. At this point you finished the segregation of the file A.
+The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. A1 and A2 should have high cohesion within themselves but there should be low coupling between them. Idealy, the amount of code that you'll have to import is reduced roughly by half. 
 
-```py
-# file A1
-def function_1():
-	return 1
+This process of breaking up files can be repeated until it is no longer possible to reduce the amount of code imported, or the number of imports would be growing unreasonably fast. At this point you finished the segregation of the file A.
 
-# file A2
-def function_2():
-	return 2
+```C++
+// C++
+// file A1
+int function_1(){
+	return 1;
+}
+
+// file A2
+int function_2(){
+	return 2;
+}
 ```
 
-A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace, but it is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compliation times too much.
+A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace, but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
 
 Another common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code imports much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
 
@@ -4079,6 +4078,8 @@ from ImportantStuff import Color
 color = Color.BLUE
 ```
 
+Like this you segregated the interface and you don't have to import the `BigClass`.
+
 ## Dependency Inversion Principle
 
 Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree. The so-called dependency tree. The main function is at its root. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
@@ -4087,7 +4088,7 @@ Dependency Inversion Principle (DIP) is a technique used in languages as C++ and
 
 For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist in interpreted languages. Though it's still good to know this principle as a python user as it is very fundamental.
 
-The first time you compile your code, the whole code base (the whole tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
+The first time you compile your code, the whole code base (the whole dependency tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
 
 We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well as main directly or indirectly includes all other files of the project. Therefore, the main file has to be recompiled as well. It’s like a hard link.
 
@@ -4106,7 +4107,7 @@ class Nothing{
 };
 
 int main(){
-	auto nothing = Nothing()
+	auto nothing = Nothing();
 	nothing.do_nothing();
 }
 ```
@@ -4147,12 +4148,6 @@ int main(){
 Now `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing the implementation of `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker. The linker will make sure the main function calls the correct implementation of this library.
 
 // dependency tree graphs
-
-### Pimpl
-
-// reference to meyers book. or skip this part?
-
-In case you've ever heard of the pimpl (pointer to implementation) idiom, it has the same goal. It achieves it by using pointers instead of abstract base classes or interfaces. There’s no need to use it. Defining interfaces is the strictly better option than using pimpl.
 
 ## Summary
 
@@ -4781,6 +4776,8 @@ Having a domain model is a great asset. It forces you to understand the problem 
 
 ## Estimating complexity
 
+[Does this go into the agile section?]
+
 Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management. Frequently the estimation of a feature goes as follows:
 
 Project Manager: "Can you give me an estimate of the time necessary to develop feature xyz?"
@@ -4811,7 +4808,7 @@ The second method to estimate the amount of work is based on a comparison with s
 
 A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
 
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. // https://google.github.io/styleguide/pyguide.html section 2.7, https://google.github.io/styleguide/cppguide.html#Line_Length // Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
+On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 2.7], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
 
 ```py
 [[[0] * (i + j) for i in range(2)] for j in range(3)]
