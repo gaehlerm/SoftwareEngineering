@@ -285,15 +285,14 @@ Chapters that still need improvement:
 	- [Dicts](#dicts)
 	- [Trees](#trees)
 	- [Pointers](#pointers)
-- [26. Additional Properties of Variables](#26-additional-properties-of-variables)
+- [26. Properties of Variables](#26-properties-of-variables)
 	- [Compile-time constant](#compile-time-constant)
 	- [Runtime Constant](#runtime-constant)
 		- [Constant Class instances](#constant-class-instances)
 		- [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
-	- [Mutable](#mutable)
-	- [Member variables](#member-variables)
+	- [Mutable Variables](#mutable-variables)
+	- [Member Variables](#member-variables)
 	- [Static Variables](#static-variables)
-	- [Dynamic Variables](#dynamic-variables)
 	- [Global Variables](#global-variables)
 	- [Variable comparison](#variable-comparison)
 - [27. Naming](#27-naming)
@@ -321,6 +320,7 @@ Chapters that still need improvement:
 - [31. Performance Optimization](#31-performance-optimization)
 	- [No optimization needed](#no-optimization-needed)
 	- [Optimization might be needed](#optimization-might-be-needed)
+	- [Optimizing from scratch](#optimizing-from-scratch)
 - [32. Comments](#32-comments)
 	- [Bad comments](#bad-comments)
 		- [Commented out code](#commented-out-code)
@@ -936,8 +936,6 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short (at most twenty lines, less is better) and therefore they cover only a single level of abstraction.
 
 ### Levels of indentation
-
-"If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
 
 The easiest way to judge the complexity of a function is the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This means that there is hardly any complex logic hiding inside a single function. Having nested `if/else`, `while` or `for` loops would violate the SRP because the function has two jobs: resolving the logical operator and doing some other work. Having few levels of indentation in a function automatically makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
@@ -4157,17 +4155,17 @@ I think this was the longest section in this book where I explain technical deta
 
 // what is the definition of data types and variable types?
 
-// primitive obsession -> David Sackstein Cppcon 2022
+[primitive obsession: https://refactoring.guru/smells/primitive-obsession]
 
-There are hundreds of built-in data types. But again, I recommend not to use too many of them. Types by themselves are not improving your code. Only use more different built-in types than mentioned here if you think it does so.
+There are hundreds of built-in data types. But again, using too many of them is also called "Primitive Obsession". You shouldn't use too many built-in data types. Instead you should use custom types (classes) as much as possible. This makes the code more readable and easier to write.
 
-At the same time it has to be said that using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
+Using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
 
-"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." //David Sackstein Cppcon 2022// This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
+"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." [David Sackstein Cppcon 2022] This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
 
 Here is a list of data types that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
 
-I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints, except that I never use unsigned ints, as recommended by the google style guide. Classes are discussed in their own section.
+I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints, except that I never use unsigned ints, as recommended by the google style guide. Classes are discussed in their own section because of their importance.
 
 ## Lists
 
@@ -4193,7 +4191,7 @@ A first improvement would be using a list of lists,
 fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
 ```
 
-This gives some structure to the list and it becomes a little bit less likely that this data structure is used in a wrong way. This list is still far from optimal.
+This gives some structure to the list and it becomes a little bit less likely that this data structure is used in a wrong way. This inner list is still far from optimal.
 
 The code should be rewritten to something like this:
 
@@ -4216,7 +4214,7 @@ We can summarize: Lists are very common. They should always contain objects of e
 
 ## Enums
 
-Enums are something many software developers don’t know. You don’t need it. But they should know it as enums make your code much better. There are several different ways to write code without using enums. They are all bad.
+Enums are something many software developers don’t know. You don’t really need it. But they should know it as enums make your code much better. There are several different ways to write code without using enums. They are all bad.
 
 ```py
 # 1. boolean:
@@ -4248,11 +4246,11 @@ The first one is dead ugly. What does `is_blue = False` mean? Is it red? Invisib
 
 ### Strings
 
-The second one looks reasonable. Just write `"red"` and you have another color. But at the same time it’s easy to introduce bugs. If you write `"blu"` instead of `"blue"` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
+The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time it’s easy to introduce bugs. If you write `"blu"` instead of `"blue"` you have a bug. Without you noticing neither that you have a bug nor where the error comes from. Do never make string comparisons except when parsing a string.
 
-Sometimes such kind of objects are also called "stringly typed" //citation?//. Strings are being abused for storing all kind of different data that it shouldn’t be used for. Here are some examples:
+Sometimes such kind of objects are also called "stringly typed". Strings are being abused for storing all kind of different data that it shouldn’t be used for. Here are some examples:
 
-// from https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed //
+[https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]
 ```py
 robot.move("1","2") # Should be int like 1 and 2
 getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. Dog.Bark()
@@ -4269,7 +4267,7 @@ Fourth option: For once using types is not the best option. It can be checked us
 
 ### Enums
 
-Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums look slightly odd at first sight because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::BLU` you will get an error because you quite certainly didn’t define a color `BLU` inside the enum. You get a compile time error in C++ and a runtime error in python. Both is infinitely better than having a bug. Furthermore most IDEs and programming languages support auto completion for enums. Gone are the times when you had to look up some magic values in the manual. Enums are great. Use them where ever you define a selection from a limited amount of options.
+Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums look slightly odd at first sight because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::BLU` you will get an error because you quite certainly didn’t define a color `BLU` inside the enum. You'll get an error message. This is infinitely better than having a bug. Furthermore, most IDEs and programming languages support auto completion for enums. Gone are the times when you had to look up some magic values in the manual. Enums are great. Use them where ever you define a selection from a limited amount of options.
 
 Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare. It is rarely the case that you get a random string and call some function depending on its content. The only thing you have to do with random strings is usually just to pass them on without touching them.
 
@@ -4295,7 +4293,7 @@ I may be exaggerating slightly. But it’s true. Humans cannot deal with Boolean
 
 // This section really needs some thinking: When is a switch/match 
 
-In case you have a `match case` statement (in other languages called switch statement), you should encapsulate it inside a function or use a dictionary. The only place where `match case` statements (or nested `if else`) are allowed is encapsulated inside a function.
+In case you have a `match case` statement (in other languages called `switch` statement), you should encapsulate it inside a function or use a dictionary. The only place where `match case` statements (or nested `if else`) are allowed is encapsulated inside a function.
 
 This is how the code should not look like.
 ```py
@@ -4310,17 +4308,9 @@ match city_name:
 	# case ...
 ```
 
-This code is bad for a very simple reason: it probably violates the SRP. Chances are high that this `match case` statement will be repeated several times in your code base. Instead the `match case` statement should be refactored out into its own function. 
+This code is bad for a very simple reason: it quite certainly violates the SRP. Chances are high that this `match case` statement will be repeated several times in your code base. Instead the `match case` statement should be refactored out into its own function. 
 
 ```py
-# // return the city or the post code right away?
-# class Zurich:
-# 	def postcode():
-# 		return 8000
-# class Bern:
-# 	def postcode():
-# 		return 3000
-
 def post_code(city_name):
 	match city_name:
 		case "Zurich":
@@ -4329,8 +4319,6 @@ def post_code(city_name):
 			return 3000
 
 post_code_Zurich = post_code("Zurich")
-# city = create_city("Zurich")
-# city.postcode()
 ```
 
 The best solution, in my opinion, is using a dict and ditching `match case` statements all together. This is shorter and easier to read. If desired you can still wrap the dict in a function.
@@ -4364,13 +4352,13 @@ zurich = cities("Zurich")
 print(zurich.postcode())
 ```
 
-A little side remark: `match case` statements were only introduced with python 3.10. This is because they are not supposed to simply replace the switch case statements of for example C++ or shown in the examples here. // for the whole story see https://youtu.be/ASRqxDGutpA
+A little side remark: `match case` statements were only introduced with python 3.10. This is because they are not supposed to simply replace the switch case statements of for example C++ or shown in the examples here. [for the whole story see https://youtu.be/ASRqxDGutpA]
 
 As a summary one can say that `match case` statements are not that bad at all. Though they could easily be replaced by dictionaries and they should be wrapped inside a function to make them reusable and obey the SRP. Additionally they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
 
 ## Strings
 
-"You should never use two different languages in a single file. English is also a language" // ?
+"You should never use two different languages in a single file. English is also a language" - ?
 
 After pointers and Booleans, strings are probably the third most dangerous data type. Many programmers check two strings for equality. One of them is written in plain text in the code. A possibly twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. String comparison is a possible source for errors and we should avoid them whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
 
@@ -4378,13 +4366,13 @@ After pointers and Booleans, strings are probably the third most dangerous data 
 
 Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings. // see also "primitive obsession"
 
-This example I found in book Clean Code on p.128 where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained the code, all made sense, but he somehow missed that one should never write code the way he did. 
+This example I found in book Clean Code on p.128 where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did. 
 
 He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other king of value. To make matters worse, the letter `"h"` is even used twice. Like this the code becomes extra brittle because the state depends on the order of the characters.
 
 The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is impossible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary, yet they have to be in the correct order.
 
-Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is better than the string logic, but it still needs some serious reworking. Elements in an array should all be treated equally and accessed at the same time. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. This `[0]` is a clear indication that we should not use an array.
+Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is better than the string logic, but it still needs some serious reworking. Elements in a list should all be treated equally and accessed at the same time. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list.
 
 A better solution is using a dataclass that stores 5 different variables. One Boolean replacing each character in the string above.
 
@@ -4408,7 +4396,7 @@ from enum import Enum
 from dataclasses import dataclass
 
 class State(Enum):
-	on = True # // use 1 and 2 instead of True and False?
+	on = True # use 1 and 2 instead of True and False?
 	off = False
 
 @dataclass
@@ -4433,13 +4421,13 @@ if water_state.high_temp_alert == State.on:
 
 ### Natural Language
 
-Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write his translations into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file such that he knows what to translate. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should read all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now, of course, this is in theory.
+Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write his translations into your code nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file such that he knows exactly what to translate. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should read all the human readable text from this file. On start-up you read the text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file. Now, of course, this is in theory.
 
 Ultimately you are left with barely any strings at all. You replaced them with enums, proper logic and a file with human readable text. Only when reading or writing text a file you briefly have to deal with strings. Then you immediately convret it into data. At least in theory. For small projects it is not always worth the effort to convert all strings into objects or dedicated text files.
 
 ## Dicts
 
-You run your code and check the values of your variables. In one case you have the first line, in another case you have the second line. When should you use which one?
+When defining your variable you have 2 different choices how to proceed. You may either use normal variables or you can use a dict (map in C++).
 
 ```py
 a = 0
@@ -4450,33 +4438,29 @@ b = 1
 vars = {"a" : 0, "b" : 1}
 ```
 
-These two lines do something very similar. They both assign the value `0` to `a` and value `1` to `b`. Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be `"a"` and `"b"` used as keys. Maybe he didn’t and these dict entries were generated by some user input the programmer had no control over.
+These lines do something very similar. They both assign the value `0` to `a` and value `1` to `b`. Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be `"a"` and `"b"` used as keys. Maybe he didn’t and these dict entries were generated by some user input the programmer had no control over.
 
-If the developer knows all the variables that he needs, he should use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure.
+If the developer knows all the variables that he needs, he should generally use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure.
 
-Dict are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might further convert into nested class instances.
+Dicts are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might further convert into nested class instances.
 
 ## Trees
 
-It is not too often that I had to create a tree myself, yet I was working on a tree structure for a good part of my programming life. Trees are an extremely important data structure. As soon as you work with a recursive data structure you absolutely have to use a tree. This allows you to use many standard algorithms that are very efficient, typically `N log(N)`. If you implement your own algorithms, make sure they are recursive and write automated tests for the corner cases.
+It is not too often that I had to create a tree myself, yet I was working on a tree structure for a good part of my programming life. Trees are an extremely important data structure. As soon as you work with a recursive data structure you absolutely have to use a tree. This allows you to use many standard algorithms that are very efficient, typically `O(N log(N))`. If you implement your own algorithms, make sure they are recursive and write automated tests for the corner cases.
 
 ## Pointers
 
-C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and other modern features have pretty much all functionality implemented that pointers were used for. Vectors for example use pointers as well, but it is hidden deep inside the implementation.
+C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented pretty much all functionality that pointers were used for. Vectors for example use pointers as well, but it is hidden deep inside its implementation.
 
-The only remnant are interfaces where pointers are still needed for technical reasons. Use pointers only there and use the modern smart pointers (unique pointer, shared pointer) and you will be fine. Be happy if you use python and you don’t have to care about pointers at all.
+The only remnant where pointers are still needed for technical reasons are interfaces. Use pointers only there and use the modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use python and you don’t have to care about pointers at all.
 
-# 26. Additional Properties of Variables
-
-// find a better title?
+# 26. Properties of Variables
 
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
 The most common way to structure data is having nested classes and lists, where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
 
-// add reference, ...?
-
-Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
+Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code because it is coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
 
 ## Compile-time constant
 
@@ -4494,9 +4478,11 @@ Once created you can pass and copy them around as much as you please. You are al
 
 // move const part of the description elsewhere?
 
-In C++ you can enforce an object to remain the same for as long as it exists, using the const keyword at the time of creation. In Python you cannot enforce it, you can only use the all uppercase notation to hint that a variable should not be changed. The usage of const is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
+In C++ you can enforce an object to remain the same for as long as it exists, using the `const` keyword at the time of creation. In Python you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
 
 But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
+
+// remove this example completely?
 
 We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In python constant objects are defined by using all uppercase letters.
 
@@ -4521,7 +4507,7 @@ So far so good. We created a bottle that is contsant. But having an empty bottle
 
 The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
 
-We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained further below.
+We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
 
 A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
 
@@ -4540,10 +4526,11 @@ class Bottle:
 	material: str
 ```
 
-This is just one example how one can deal with const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
+This is just one example how to combine const and non-const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
 
+## Mutable Variables
 
-## Mutable
+"immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
 
 In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is, little surprising, the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
 
@@ -4561,15 +4548,17 @@ prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
 
-It is hard to give a general recommendation to one of these solutions, though the second one does have its merits. There is the rule of thumb that objects should not be reused because it violates slightly the SRP. This would speak in favour for the second solution creating a new variable for the sorted list. In the first case, the `prime_numbers` list changes its properties. Additionally working with mutable objects is a common source of bugs. Using the second version of the code does not mutate anything. It resembles rather functional programming.
+At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. 
 
-On the other hand, the second solution may be a performance bottleneck as it needs more memory. This could be a problem for large lists.
+Returning a new variable as done in the second code snippet is the much saver option and to be prefered.
 
-## Member variables
+On the other hand, the second solution may be a performance bottleneck as it needs more memory if the initial value does not go out of scope. This could be a problem for large lists, especially inside loops.
 
-Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
+## Member Variables
 
-Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables.
+Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes [9. Classes]. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects), you are mostly fine with using member variables. Though you have to be carefull with them.
+
+Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables. They are just around. You can access them all the time.
 
 Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be.
 
@@ -4579,15 +4568,9 @@ Static variables are member variables that share the same value over all class i
 
 If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
 
-If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
+If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is a side effect. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
 
 And if you don't believe me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is absolutely brittle.
-
-## Dynamic Variables
-
-// it's one of the main reasons, yet I write that little about it?
-
-Dynamic variables are the main reason why I was writing this chapter. With dynamic variables I mean mostly entries of dictionaries. Pseudo variables that can be created at run time. An extremely powerful tool, yet one, that requires some understanding about when to use it. Read chapter Datatypes for more information about dicts.
 
 ## Global Variables
 
@@ -4611,24 +4594,23 @@ There is certainly nothing wrong with constants. It's just that they can't do mu
 
 Immutable objects can only be used within the current scope and when passed as a function argument their value can't be changed. If you like working only with immutable objects, I can recommend you functional programming.
 
-With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided.
+With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided. If possible, return a new object instead of changing an existing one.
 
 Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes, what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise the class has too much hidden state.
 
-Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. Compared to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the reasons why it's better not to use inheritance at all.
+Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. Compared to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the reasons why it's better not to use inheritance at all [10. Inheritance].
 
-// why not to use the singleton: 97-things-every-programmer-should-know chapter 73
+// why not to use the singleton: [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73]
 
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one.
-
-Long story short: Never use global variables, not even global constants. Use singletons only for connections if setting up a new connection may be costly. And I recommend not to use inherited variables.
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have few communication calls and few relatively big data sets, this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one.
 
 With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
 
 Constants and immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
 
 
-
+<!-- 
+// I'm getting the feeling that this section here is not needed.
 //where to move this text here? Somewhere to class functions? Or remove it completely?
 
 Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following Java code //example from working effectively with legacy code, p. 273
@@ -4656,57 +4638,53 @@ string field(body){
 }
 ```
 
-Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object.
+Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object. -->
 
 
 # 27. Naming
 
 "And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
 
-How long does a football game take? This is a very innocent looking question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This might cause some confusion.
+How long does a football game take? This is a very innocent question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This can cause some confusion.
 
-The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are people around who have the same name as you do it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
+The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong end of your country it gets painful. For the police and health care system it becomes even worse. As soon as there are people around who have the same name, it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it.
 
 All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name. Every programming construct has a name. And you use this name to search it with google or Stackoverflow. If you don't know the name you're screwed.
 
-Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
+Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties do they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
 
 Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
 
-"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." // WELC p.340 
+"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." [WELC p.340]
 
 // Figure out how to include these lines into the text
 
-How verbose should a name be? `d`, `days`, or `days_per_week`? If a new team member understands the variable it is long enough.
+Sometimes words inside a name can be removed without losing any information at all. For instance, instead of `convert_to_string()`, the name `to_string()` is smaller and doesn’t lose any real information. Similarly, instead of `do_serve_loop()`, the name `serve_loop()` is just as clear. Similar words line `manager` don't add anything to the name of a variable and can therefore be omited.
 
-Sometimes words inside a name can be removed without losing any information at all. For instance, instead of ConvertToString(), the name ToString() is smaller and doesn’t lose any real information. Similarly, instead of DoServeLoop(), the name ServeLoop() is just as clear.
+Here is a pretty long list of rules to follow when naming things:
 
-Here are some rules to follow when naming things:
-
-1.	Names should be short yet clear. There is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. It should possibly be reworked. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `d`, `days` or `days_since_last_update`? The answer is: it depends. If a new work colleague understands the variable it is long enough.
-2.	Classes and functions obeying the single responsibility principle are comparably easy to name. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and consider rewriting it accordingly.
+1.	Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends. As a rule of thumb a name is fine if a new work colleague understands the variable.
+2.	Classes and functions obeying the single responsibility principle are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
 3.	Never use plain values in your code. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Always create a variable instead. For example `set_color(7)`. What does `7` mean?
-4.	A rule of thumb: high level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
-5.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding a name. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
+4.	High level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
+5.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding  names. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
 6.	Name collisions may happen once in a while. Consider refactoring one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
 7.	Name collisions between different libraries are common and nothing to worry about. Use the namespace prefixes to distinguish them.
-8.	Use names from the domain model if possible. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
+8.	Use names from the domain model. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about the code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality.
 9.	Objects have names that are simple to distinguish. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language. Differences in the names should be as early as possible.
-10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishs or fishes to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following code is perfectly viable in python: `for fish in fishs`.
+10.	You may tweak the language a little and ignore grammar rules at times. If you have many fish, you may call them fishes or fishes to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following code is perfectly viable in python: `for fish in fishes`.
 11.	Avoid "if", "and" or "or" in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 12.	If a variable is used all over the code, name it carefully. Possibly use a name from the domain level. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
 14.	snake_case notation is easier to read than camelCase. Use snake_case notation for variables and functions, camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
-15. Classes and operations should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the Ubiquitous language.
-16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data" or "info". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
+15. Classes and functions should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the domain language.
+16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data", "info" or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
 17. Attach units to a variable name if existing. For example `timeout_duration_ms`.
 18. Avoid negated terms (and preferably avoid booleans all together). `is_not_empty` is harder to read than `is_empty`.
 19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
 20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big.
 
 ### Generic names
-
-// Move this to the chapter on names?
 
 ```py
 class Rectangle {
@@ -4719,11 +4697,12 @@ What does `size()` exactly mean? It is a very generic name. Is is the area or th
 
 Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
 
-Word	Alternatives
-send	deliver, dispatch, announce, distribute, route
-find	search, extract, locate, recover
-start	launch, create, begin, open
-make	create, set up, build, generate, compose, add, new
+|Word	|Alternatives |
+|-------|-------------|
+|send	|deliver, dispatch, announce, distribute, route|
+|find	|search, extract, locate, recover|
+|start	|launch, create, begin, open|
+|make	|create, set up, build, generate, compose, add, new|
 
 It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
 
@@ -4766,11 +4745,11 @@ def add(b,c):
 
 As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers. The complexity to implement a feature is much higher than the actual complexity.
 
-The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but there is also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
+The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
 
 I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity.
 
-As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model //Domain-driven design book//. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
+As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
 
 Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details at the beginning of the development.
 
@@ -4792,11 +4771,11 @@ Project Manager: "I can give you two at most."
 
 Programmer: "Deal!"
 
-// source https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50
+[https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50]
 
 Estimating the complexity of a task is generally extremely hard. Some developers might have an idea what has to be done, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. And even if, there is still some uncertainty around which makes estimating the amount of work a very difficult task.
 
-Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing the code. 
+Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing this code. 
 
 On the other hand, there are cases where you find a very simple solution and implementing the task takes way less time than expected. But unfortunately this case is quite rare.
 
@@ -4806,17 +4785,34 @@ The second method to estimate the amount of work is based on a comparison with s
 
 ## Single line complexity
 
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel the maximum line length is 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
+"If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
 
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 2.7], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
+A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
+
+On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 3.2], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
 
 ```py
 [[[0] * (i + j) for i in range(2)] for j in range(3)]
 ```
 
+You'd have to do it the old way:
+
+```py
+def create_matrix():
+	matrix = []
+	for j in range(3):
+		row = []
+		for i in range(2):
+			row.append([0] * (i + j))
+		matrix.append(row)
+	return matrix
+```
+
+When in doubt resist the temptation and split up the code in 2 lines (or more).
+
 ## Back magic code
 
-Your code will contain some complexity. There’s no doubt about it. The only question is how to deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
+Your code will contain some complexity. There’s no doubt about it. The only question is how you deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
 
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
@@ -4830,7 +4826,7 @@ The file formats that I used so far are CSV, json, XML, hdf5 and databases. Alon
 
 Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
 
-CSV is no file standard so you can do anything you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
+CSV is no file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
 
 Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
 
@@ -5143,11 +5139,11 @@ Similar to the CSV file you can also define your own file format for other thing
 
 # 30. Setting up a project
 
-"If it's your job to eat a frog, it's best to do it in the morning. And If it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
+"If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
 
-// https://youtu.be/LfIPVIsH4ZU
+[https://youtu.be/LfIPVIsH4ZU]
 
-Many software developers start with writing code when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
+Many software developers start with writing code right away when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
 
 Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
 
@@ -5171,20 +5167,20 @@ The way to arrange the files in folders depends on the programming language. The
 
 Generated files belong into the build folder. Like this cleaning up the build is quite simple. Just delete the build folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
 
-End to end or acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
+Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
 
-// is this true that in python tests are written right along the source code? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
+<!-- // is this true that in python tests are written right along the source code in python? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
 
-The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as python for example, the unit tests are written right next to the corresponding source file. This is necessary as in python it's very tedious to import files from a parent folder.
+The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as //???// for example, the unit tests are written right next to the corresponding source file. This is necessary as in //???// it's very tedious to import files from a parent folder. -->
 
 3rd party libraries belong into the lib folder. They are not part of the git project, therefore the lib folder should be on the .gitignore file. You need some other way to manage them. If you use few libraries just manage them manually. In python you can use the package management software pip. Togheter with the requirements.txt file this makes managing libraries quite simple. In other programming languages like C++ this is a much harder task as you have to do this by yourself somehow.
 
 There are some additional files in a project.
 
 1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building the project and running the tests should all require only one single command.
-1.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project.
-1.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files too big to be managed by git.
-1.	Some formatting, code quality checking or other files.
+2.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project.
+3.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files too big to be managed by git.
+4.	Some formatting, code quality checking or other files.
 
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language.
 
@@ -5196,21 +5192,23 @@ There are a few pitfalls how to arrange the files and folder of your project. Bu
 
 One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years while the price per computer dropped considerably. Modern programming languages like python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
-As we have learned the main goals of a software engineer are creating value for the customer, writing code that is easy to understand, correct and well covered with tests. Performance is not a main goal. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore. The computers are more than fast enough to make all those standard apps run at a reasonable frame rate without optimizing them.
+As we have learned the main goals of a software engineer are creating value for the customer, writing code that is easy to understand, correct and well covered with tests. Performance is not a main goal. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore. The computers are more than fast enough to make all those standard apps run at a reasonable response time without optimizing them.
 
-Also note that the way I recommended to write code does not result in fast code. But I didn't care about speed so far, instead I was coding for readability. The problem is that all this polymorphism that I recommended requires look ups at the so called v-table and this is slow. There are youtube videos // https://youtu.be/tD5NrevFtbU // that explain these things in great detail. So yes, the code I recommend you to write is slow. But it does not matter. When do you need millions of function calls to this slow code? Probably never. It is highly unlikely that the code I recommend you to write will ever be the bottleneck of your software.
+I'd like to remark that the way I recommended to write code does not result in fast code. But I didn't care about speed so far, instead I was coding for readability. The problem is that all this polymorphism that I recommended requires look ups at the so called v-table and this is slow. There are youtube videos [https://youtu.be/tD5NrevFtbU] that explain these things in great detail. So yes, the code I recommend you to write is comparably slow. But it does not matter. When do you need millions of function calls to this slow polymorphic code? Probably never. It is unlikely that the code I recommend you to write will ever be the bottleneck of your software.
 
 ## Optimization might be needed
 
 Still, let’s say you start writing one of the few applications that you assume needs performance. You’re a bit lost at which point in time you should start optimizing the code. Right from the beginning? Should you plan your algorithms such that they will be faster? How should you proceed?
 
-First of all, it is not recommended to optimize the code at all. In fact, it is best to ignore the performance topic for the time being. Write your code with the usual test – code – refactor work cycles. The result will be code that is, at least in theory, modular, stable, easy to understand and well tested. Code that meets all your requirements, except for performance. 
+First of all, it is not recommended to optimize the code at all. In fact, it is best to ignore the performance topic for the time being. Write your code with the usual test – code – refactor work cycles. When done well, the result will be code that is, modular, stable, easy to understand and well tested. Code that meets all your requirements, except for performance. 
 
 Is this really the case, that performance was an issue? You had this feeling that you had to write highly optimized code. But you didn’t know for sure. And now is the time to test your assumption. If you have to run your code only once and it takes 2 days, run it over the weekend. Spending hours for optimization would be wasted time.
 
-If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottlenecks of your code. Pretty much all code that you’ll ever see has very few bottlenecks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottleneck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with N\*log(N). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
+If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottlenecks of your code. Pretty much all code that you’ll ever see has very few bottlenecks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)). This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottleneck using a profiler. For example, it turns out to be custom written Fourier transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with N^2. Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with O(N\*log(N)). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. 
 
-Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be working in a team where every single team member knows way more about parallel programming than I do.
+## Optimizing from scratch
+
+Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized, it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be likely working in a team where every single team member knows way more about parallel programming than I do.
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
@@ -5232,7 +5230,7 @@ def add(a,b):
 	return a + b
 ```
 
-Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers who think that this comment here is justified. 
+Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers out there who think that this comment here is justified. 
 
 I do not share this opinion at all. In my opinion this comment is just a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
 
@@ -5263,6 +5261,8 @@ class FrontendServer:
     reply_not_found(request, error)
     close_database(location)
 ```
+
+Undoubtadly, this code is bad. It is very hard to read this code. There is too much code without any structure.
 
 The authors of this book formated the code a little and ended up with something like this:
 
@@ -5400,10 +5400,9 @@ At times it is very difficult to explain code with code alone. So there is of co
 int Partition(vector<int>* v, int pivot);
 ```
 
-I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is always suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. This is a violation of the SRP. The function should be split into two parts.
+I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is always suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value at the same time. This is a violation of the SRP. The function should be split into two parts.
 
 Additionally there is something else that can explain code: unit tests. The test cases act as examples how the code is supposed to be used. This is frequently a better help than some comment.
-
 
 ### Commented out code
 
