@@ -37,6 +37,8 @@ Chapters that still need improvement:
 - [5. Single responsibility principle](#5-single-responsibility-principle)
 	- [Do not Repeat Yourself](#do-not-repeat-yourself)
 		- [Exceptions of DRY](#exceptions-of-dry)
+	- [Orthogonality](#orthogonality)
+		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
 	- [Advantages of the SRP](#advantages-of-the-srp)
 		- [Understanding](#understanding)
 		- [Naming](#naming)
@@ -44,9 +46,8 @@ Chapters that still need improvement:
 		- [Easy Testing](#easy-testing)
 		- [Less Bugs](#less-bugs)
 		- [Bug fixing](#bug-fixing)
+	- [Drawbacks of the SRP](#drawbacks-of-the-srp)
 	- [Example](#example)
-	- [Orthogonality](#orthogonality)
-		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
@@ -396,7 +397,6 @@ Chapters that still need improvement:
 		- [The bus factor](#the-bus-factor)
 	- [Developers work](#developers-work)
 	- [Communication](#communication)
-	- [Working with humans](#working-with-humans)
 	- [Working with customers](#working-with-customers)
 - [41. Code review](#41-code-review)
 	- [Drawbacks](#drawbacks)
@@ -555,9 +555,11 @@ Writing a book about software development is hard. Harder than writing a book ab
 
 **Every object does exactly one thing. Everything is done by exactly one object.**
 
-There are different definitions of the Single Responsibility Principle (SRP) [citation Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
+There are different definitions of the Single Responsibility Principle (SRP) [Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
 
 The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation to write readable code.
+
+Please note that the SRP does not say that every software developer is responsible for his own piece of code.
 
 ## Do not Repeat Yourself
 
@@ -592,6 +594,36 @@ Now you only have to create a `president` object once and there is no more need 
 
 The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. This is also in agreement with the test driven design (TDD) where you only have to refactor if there is a three-fold duplication of the code.
 
+## Orthogonality
+
+Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
+
+// TODO search images without copy right
+<div class="row">
+    <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
+    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
+</div> 
+
+On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
+
+In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
+
+It may not always be that obvious how the downstream would like the interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure there are no implementation details leak into the interface, even tough this is easier said than done. This has the highest chances to be orthogonal from the user point of view.
+
+Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
+
+A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
+
+### Advantages of orthogonal systems
+
+Working in an orthogonal system has many advantages:
+-	Errors just propagate straight through the system and are easy to find. They don’t spread out.
+-	Fixing these bugs is easier as the system is less fragile.
+-	It is easier to write tests for an orthogonal system.
+-	It decouples the code as the transformation acts as an adapter.
+
+// figure out what else to write. Maybe add some examples.
+
 ## Advantages of the SRP
 
 The importance of the SRP cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case. Here are the most important ones.
@@ -615,6 +647,10 @@ As the purpose of each class becomes clearer, it will be easier to structure the
 
 ### Bug fixing
 Tracking down bugs will be much easier. You can understand fairly well what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add an if statement in your code. This would violate the SRP and lead to bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all.
+
+## Drawbacks of the SRP
+
+There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it may be ok to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm.
 
 ## Example
 Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
@@ -653,37 +689,7 @@ def print_page():
 
 Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
 
-Admittedly I was a little bit picky here. But I can't write much more convoluted examples in a book.
-
-## Orthogonality
-
-Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
-
-// TODO search images without copy right
-<div class="row">
-    <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
-    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
-</div> 
-
-On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
-
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
-
-It may not always be that obvious how the downstream would like the interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure there are no implementation details leak into the interface, even tough this is easier said than done. This has the highest chances to be orthogonal from the user point of view.
-
-Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
-
-A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
-
-### Advantages of orthogonal systems
-
-Working in an orthogonal system has many advantages:
--	Errors just propagate straight through the system and are easy to find. They don’t spread out.
--	Fixing these bugs is easier as the system is less fragile.
--	It is easier to write tests for an orthogonal system.
--	It decouples the code as the transformation acts as an adapter.
-
-// figure out what else to write. Maybe add some examples.
+Admittedly I was a little bit picky here. It was not necessarily worth to refactor this code here as mentioned in the section on drawbacks. But I can't write much more convoluted examples in this book without them getting out of hand.
 
 # 6. Levels of abstraction
 
@@ -5392,7 +5398,7 @@ def display(user, friends, suggested_friends):
 
 Now once again, the code became much longer by refactoring it. But it is much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
 
-At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code":
+At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code" (I would like to mention that I really like the book, but I don't agree with all the examples they use):
 
 ```C++
 // Rearrange 'v' so that elements < pivot come before those >= pivot;
@@ -5422,8 +5428,7 @@ At the same time it is fine if you use TODO comments during the development of a
 
 Introducing a lot of tiny functions hurts readability to some degree. It takes keeping track of and jumping around the function calls. Though this cost is very low if the functions are named properly. If all the functions do what they say, you can just read the function names and you know what the code does. This is what makes code readable. Not the comments.
 
-As a summary I can say: yes, all the small functions have a price to pay. But adding comments to explain the code is not the solution.
-
+As a summary I can say: yes, all the small functions have a price to pay. But adding comments to explain the code is not the best solution.
 
 ## Useful comments
 
@@ -5433,13 +5438,13 @@ I have explained that you should not use comments for anything that could (or sh
 
 ### Requirements
 
-A very legitimate use of comments are requirements. Requirements are something you cannot express in code. They are usually written in natural language. Yet they are still highly important for the software. At times, the requirements are the only thing that can explain why a certain piece of code looks the way it does. And the only way to explain this is by using comments. Add the ticket number to the comment, or even better, copy the requirement text into the comment as the ticket may be edited later on.
+A very legitimate use of comments are requirements. A comment that the code has to be this way because of some requirement. Requirements are something you cannot explain in code. They are usually written in a natural language. Yet they are still highly important for the software. At times, the requirements are the only thing that can explain why a certain piece of code looks the way it does. And the only way to explain this is by using comments. Add the ticket number to the comment, or even better, copy the requirement text into the comment as the ticket may be edited later on.
 
 Usually the requirements are also expressed in an acceptance test. And I hope you do write acceptance tests. But acceptance tests are not enough. They are not visible in the code. You have to search for them. And you don't know which acceptance test belongs exactly to which line of code. Therefore, comments are the only thing I could think of that can link the code to the requirements.
 
 ### How to write comments
 
-Just as code, comments should be as short and pregnant as possible. In the following example we have the opposite. What does "it" in the following sentence mean? Don't write such ambiguous sentences. // example from "The Art of Readable Code"
+Just as code, comments should be as short and pregnant as possible. In the following example we have the opposite. What does "it" in the following sentence mean? Don't write such ambiguous sentences. ["The Art of Readable Code"]
 
 ```py
 # Insert the data into the cache, but check if it's too big first
@@ -5454,7 +5459,7 @@ better:
 
 You may use docstring tools, like sphynx in python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
 
-#should I add some more points when comments are allowed?
+// should I add some more points when comments are allowed?
 
 
 ## Commenting magic numbers
@@ -5507,7 +5512,7 @@ Use comments only for things that cannot be made apparent by the code itself, ye
 
 ## Copilot
 
-Copilot is not yet able to write really useful comments. The following comment was created by the document function of Copilot Labs.
+Copilot is not yet able to write more than boilerplate comments. The following comment was created by the document function of Copilot Labs.
 
 ```py
 def roman_number(number):
@@ -5525,6 +5530,8 @@ def roman_number(number):
 
 # 33. Logging
 
+// this chapter is very short. merge it with another chapter?
+
 The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
 
 - The most obvious drawback is that logging needs time to be implemented. It’s not a huge amount, yet it may add up.
@@ -5533,7 +5540,7 @@ The basic idea of logging is to have a feedback what kind of steps your software
 
 At the same time there are some cases where you can consider using a logger.
 
-- For non-deterministic software it may be useful. For example, if you have several programs that communicate asynchronously with each other, as in microservices. All kind of conditions may occur that you didn’t think of. Depending on the temporal order of the messages being sent. A logger may help you to trace back the source of a bug.
+- For non-deterministic software it may be useful. For example, if you have several programs that communicate asynchronously with each other, as in microservices. All kind of race conditions may occur that you didn’t think of. Depending on the temporal order of the messages being sent. A logger may help you to trace back the source of a bug.
 - In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
 - And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
@@ -5541,17 +5548,17 @@ At the same time there are some cases where you can consider using a logger.
 
 "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
 
-// I think this chapter needs some reworking
+// I think this chapter needs some reworking. Or remove it completely?
 
-There is a fair amount of software that is supposed to help you writing more or better software. Here is a short list of the most important classes of tools I worked with so far:
+There is a fair amount of software that is supposed to help you writing more or better software. Here is a  list of the most important classes of tools I worked with so far:
 
 Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, package manager, build tools, docstring, container applications, container orchestration, databases and many more.
 
-I have to admit that the list is pretty scrambled and random. We have some specific software products but also software types. This is because for some problems almost all software companies use the same product while for other tasks you can choose between a broad range of products. In most cases it is best to use what your work colleagues use as well. Then they can help you out if you are stuck somewhere.
+For all these classes of software, there are several different vendors and open source solutions.
 
 ## Version control software 
 
-Git is certainly the very first program to mention here. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like bugs or licencins issues // citation Wikipedia?. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard.
+Git is certainly the very first program to mention in this chapter. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like licencing issues [https://en.wikipedia.org/wiki/Git]. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard. Only Mercurial is a viable alternative, but it is not as widely used as git.
 
 The original Git software is a console application but there are also proprietary software products with a GUI.
 
@@ -5567,11 +5574,11 @@ I won't go further into details about git. There are plenty of tutorials in the 
 
 ### Copilot
 
-Copilot can convert human readable commands into git commands. For example it converts `git create a branch named "hello branch"` into `git branch hello_branch`. Just start the command with `git` and you will get a git command.
+Copilot chat can convert human readable commands into git commands. For example it converts `git create a branch named "hello branch"` into `git branch hello_branch`. Just start the command with `git` and you will get a git command.
 
 ## Command line
 
-The most common command line software is Bash (The Bourne-again shell, or just shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used as well.
+The most common command line software is Bash (The Bourne-again shell, a.k.a. shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used as well.
 
 The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools like the file browser are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
@@ -5665,6 +5672,8 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 
 // Are these topics covered elsewhere?
 
+// rethink this chapter and maybe delete it.
+
 ## Divide and Conquer
 
 If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together.
@@ -5710,7 +5719,7 @@ Hand in hand with testing comes Dependency Injection (DI). There are many things
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
 
-// https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/
+[https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
 
 This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here.
 
@@ -5718,7 +5727,7 @@ This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD
 
 In software engineering, there are very few topics that are described purely mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
 
-It takes a lot of effort to understand the topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
+It takes a lot of effort to understand a topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
 
 Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
 
@@ -5731,7 +5740,7 @@ Especially if you're stuck getting your thoughts into code, these steps may help
 
 ## The Domain Model
 
-A model is a simplification of something real. A computer game for instance is always a model of some kind of reality. Interesstingly enough, a computer game does not necessarily become better if the model is more accurate. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
+A model is a simplification of something real. A computer game for instance is always a model of some kind of reality. Interesstingly enough, a computer game does not necessarily become better if the model is more realistic. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
 
 When writing code, we implement a model of the reality. A model that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
 
@@ -5757,7 +5766,7 @@ There are cases where you can’t implement a model you've developed. It would b
 
 In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding, modeling and refactoring until you have a breakthrough when you suddenly realize how the optimal model should look like.
 
-Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would also be a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
+Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would be also a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
 
 ### Domain Levels
 
@@ -5765,7 +5774,7 @@ Not every part of the software can be treated with equal priority. You'll have t
 
 // make some examples of domains? Are the exmaples fine?
 
-Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. For example an infrastructure domain taking care of the database, or the math library. Keeping the different domains appart is important as it prevents you from writing a Big Ball of Mud.
+Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. For example an infrastructure domain taking care of the database, or the math library. Keeping the different domains appart is important as it prevents you from writing a Big Ball of Mud [https://de.wikipedia.org/wiki/Big_Ball_of_Mud].
 
 Each domain corresponds to a piece of code, for example a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise there doesn't have to be that much resemblances between the different domains. For example the ubiquitous language does not have to be the same between different models. Rather the opposite. The ubiquitous language is expected to change between different models and at the interface there is an adapter that functions as a translator between the different languages.
 
@@ -5780,7 +5789,7 @@ As one example a flight may be the time between take off and landing. But there 
 -	Important concepts are implicit in the design, though they should be explicit
 -	Important parts of the design can be made suppler
 
-However, all the time you have to stay in close contact with a domain expert. Under no circumstances you should make changes that contradict what he says.
+However, all the time you have to stay in close contact with a domain expert. Under no circumstances should you make changes that contradict what he says.
 
 Deep domain models cannot be planned in a waterfall manner. They have to evolve over time. They only emerge from deeper insight that is gained over time. It has to be refactored toward deeper insight.
 
@@ -5790,7 +5799,7 @@ As your code base grows, it becomes more and more difficult to keep working with
 
 ### Bounded Context
 
-A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the math library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context. These expressions are not to be reused within the math library. On the other hand, the expressions `sin` and `cos` may be used in other bounded contexts.
+A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the math library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context. These expressions are not to be reused within the math library. On the other hand, the expressions `sin` and `cos` may be used in other bounded contexts and have a completely different meaning.
 
 Typically domain models consists of one bounded contexts. All the problems mentioned so far for the domain models are true for the bounded contexts as well. 
 
@@ -5798,9 +5807,11 @@ Typically domain models consists of one bounded contexts. All the problems menti
 
 The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is Continuous Integration (CI). CI forces the team to merge often and early and therefore differences between the model and the actual code become apparent early. The automated tests enforce the behavior of the model and warn the developers if they are inadvertedly changing it. 
 
-On the other hand working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprise scale software it is simply not possible to work in a single model. The different requirements to the code become too big. In a single model, the `user` object for instance becomes too complex as it just keeps growing over time. At some point it is easier to deal with several different `user` objects where each one of them is smaller, making it easier to work with. 
+On the other hand, working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprise scale software, it is simply not possible to work in a single model. The different requirements to the code become too big. In a single model, the `user` object for instance becomes too complex as it just keeps growing over time. At some point it is easier to deal with several different `user` objects where each one of them is smaller, making it easier to work with. 
 
 ### Context map
+
+// this is really short. look at it again? Add a figure?
 
 A context map is important when a model is split up in two parts. Both parts are now bounded contexts. They are individual domain models with a clearly defined boundary. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one inteface the other one.
 
@@ -5808,13 +5819,13 @@ A context map is important when a model is split up in two parts. Both parts are
 
 Two bounded contexts may share a common sub-context. This is usually the domain core that is used by several different domain models. Having a shared domain core means that all involved models have to pay attention that the domain core is always in sync. This can be done by the CI. Additionally it takes quite some communication between the teams or else the core domain may get fragmented.
 
-The models involved with a shared context may be seen as 
+// The models involved with a shared kernel may be seen as ...?
 
 ### Anticorruption layer
 
 ### Separate ways
 
-Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal. If you need a feature from the other model, just reimplement it. Having a little bit of redundancy between two models is still better than coupling them together. Of course it would probably be the best solution to break out the commonly used parts of the models into a third model that supplies infrastructure code for all other models.
+Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal. If you need a feature from the other model, just reimplement it. Having a little bit of redundancy between two models is still better than coupling them together. Of course it would probably be the best solution to break out the commonly used parts of the models into a third model that supplies infrastructure code for all other models. But maybe that's not worth it.
 
 ### Conformist
 
@@ -5824,11 +5835,13 @@ The model is split into two parts and one development team is relying on the mod
 
 ## Building blocks of DDD
 
-// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. https://youtu.be/jnutb5Z4wyg
+// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. [https://youtu.be/jnutb5Z4wyg], see my question on stackoverflow: [https://stackoverflow.com/questions/77425208/when-do-you-use-entities-value-objects-and-aggregates-ddd]
 
 // what are entities, etc. used for?
 
-In the book Domain-Driven Design, Eric Evans also introduced terms as entities, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
+In the book Domain-Driven Design, Eric Evans also introduced terms as entities, services, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
+
+I'd like to remark that you don't have to implement everything with entities, value objects, etc. the way it is explained here. It should be just regarded as some different way to think about how to structure your code.
 
 ### Entities
 
@@ -5845,6 +5858,8 @@ A tricky question is how to create a unique identifier for each entity. For exam
 When creating an entity it is important to stripe it down to the absolutely essential properties. // and ... ?
 
 ### Value Object
+
+// https://youtu.be/P5CRea21R2E
 
 Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have a unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. You can only change the properties of a value object at its creation. Thus if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change its properties.
 
@@ -5883,6 +5898,9 @@ class Car():
 
 	def drive(self, distance):
 		drive(self._tires)
+	
+	def __eq__(self, other):
+		return self.ID == other.ID
 
 def drive(tires)
 	for tire in tires:
@@ -5945,7 +5963,7 @@ By definition good code is easy to understand. Also, for new software developers
 
 Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
 
-Pretty much all your code follows the single responsibility principle. Functions, classes, modules. Everything. Even the build is automated. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
+Pretty much all your code follows the single responsibility principle. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
 
 Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
 
@@ -6000,20 +6018,17 @@ Of course, in software engineering there are not so many products around to fit 
 
 Possibly you somehow have a bad feeling about this approach. You want to do everything by yourself. You don’t want to pay other companies for some small libraries. I can assure you that your feeling is natural. But you have to get over it. It’s just not worth it. You didn’t write your own operating system. You earn a good amount of money every year. And if you can save some time by outsourcing parts of the code, this is great. You also save the maintenance which is usually even more expensive than the actual development of the software.
 
-Using 3rd party libraries or software is great. Most of the times. Sometimes it also has its issues. There are some companies who didn’t write their code up to the standards and now they are in trouble. And there are many more sources for trouble. Most famously all the customers using Oracle databases who didn't decouple the database from the rest of the code. They use Oracle database querries all over the code and are unable to change to a different database vendor. These companies now pay hefty licensing fees and don’t get away.
+Using 3rd party libraries or software is great. Most of the times. But sometimes it also has its issues. There are some companies who didn’t write their code up to the standards and now they are in trouble. And there are many more sources for trouble. Most famously all the customers using Oracle databases who didn't decouple the database from the rest of the code. They use Oracle database querries all over the code and are unable to change to a different database vendor. These companies now pay hefty licensing fees and don’t get away.
 
-Another problem are libraries with comparably few contributors. At some point there might be no one left to maintain the code. In most areas you can still use such a library for a while but you should look out for a different solution. A lot of problems can pop up when using software that is not anymore supported.
+Another problem are libraries with comparably few contributors. At some point there might be no one left to maintain the code. In most areas you can still use such a library for a while but you should look out for a different solution. A lot of problems can pop up when using software that is not anymore supported. Though if you really need this software, you might consider becoming a contributor yourself.
 
-Everything explained here is also true for IT services and infrastructure (GitLab, Amazon Web Services (AWS), github, google maps, ...). These services are great, but you should always be able to change your supplier. For example there are medium sized companies that need a lot of computing power. They started the company using AWS as everyone else does as well. It's just too convenient. But as soon as the company got bigger, the bill from AWS was reaching millions, so the company was migrating to their own server infrastructure. // https://youtu.be/XAbX62m4fhI
+Everything explained here is also true for IT services and infrastructure (GitLab, Amazon Web Services (AWS), github, google maps, ...). These services are great, but you should always be able to change your supplier. For example there are medium sized companies that need a lot of computing power. They started the company using AWS as everyone else does as well. It's just too convenient. But as soon as the company got bigger, the bill from AWS was reaching millions, so the company was migrating to their own server infrastructure. [https://youtu.be/XAbX62m4fhI]
 
 To put it brief: Third party software and services are generally great. They may save you a lot of work and money. But you have to make sure you don’t get stuck with it. You have to stay flexible. Decouple the 3rd party library from your code. Write a thin interface between your code and the library. And if you don't, make sure that you really want to stick to this specific thrird party code for a long time. As always, if you can write tests using dependency injection and similar techniques you are probably fine. In order to mock the database, you need an interface that you can possibly use to support other databases as well. So you are flexible.
 
-// remove this paragraph?
-The very big question is always when you really need such an interface. Most of the time I’m too lazy as well for writing one. But you certainly need one when dealing with databases. Call all the database specific queries only within this thin layer. The whole rest of the code is database syntax free zone. This makes it very simple to change the database. You only have to add or replace the wrapper. You might have to change some of the implementation as well as the functionality between databases differs slightly. But this is a small price to pay compared to the millions Oracle got so far.
+The very big question is always when you really need such an interface. Most of the time I’m too lazy as well for writing one. But you certainly need one when dealing with databases. Call all the database specific queries only within this thin layer. The whole rest of the code is database-syntax-free-zone. This makes it very simple to exchange the database. You only have to replace the wrapper. You might have to change some of the implementation as well as the functionality between databases differs slightly. But this is a small price to pay compared to the millions you payed to Oracle so far.
 
 You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
-
-// add here the supplier-client dependency level? Or mention them in the dependencies?
 
 # 39. Dependencies
 
@@ -6035,17 +6050,19 @@ What all programming languages have in common are the import or include statemen
 
 If you draw a plot with all the files as circles and how they import each other as arrows you should get a directed acyclic graph. The trunk of this graph is the file containing the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
 
+// create a figure of this graph
+
 Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It’s just a mess.
 
 The simplest solution is fusing these files. However, this is only a superficial fix. You really have to find out the relationships between the function and classes in the files. Maybe you can reorder them, maybe you have to rewrite the corresponding code from scratch.
 
 ## Breaking up dependencies
 
-Circular imports are not common as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies because of this file increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
+Circular imports are not a common problem as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
 
 How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you broke up a class into two classes.
 
-The most important step towards lower dependencies is working on your code and maybe also the whole structure of it. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class. Afterwards you can pass around this data object and there is no need to think about the database anymore. And just like that you got rid of many dependencies by improving your code.
+The most important step towards lower dependencies is focusing your code. Make sure that similar code fragments are located at the same location. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class instance. Afterwards you can pass around this class instance and there is no need to think about the database anymore. And just like that you got rid of many dependencies and at the same time you improved your code.
 
 The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky to achieve and even if I could, explaining it here would be barely possible.
 
@@ -6053,7 +6070,7 @@ The hardest part is reducing the dependencies by improving the general structure
 
 Usually, circular dependencies occur as two classes exchange data between each other. Class A needs data from class B which needs some data from class A in return. You should be able to tell whether class A or class B corresponds to the higher level of abstraction. Let’s assume class A is the higher-level class calling class B at some point. Now class B should never ever have to call class A. B is low level and knows nothing of the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data class B needs to return the final result. 
 
-Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction.
+Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction. The only tricky part is that the high level object does not know exactly what the low level object needs.
 
 ### Example
 
@@ -6071,7 +6088,7 @@ def b(counter):
 a(5)
 ```
 
-We could simplify it by inserting the definition of `b` into the function call inside `a`.
+Now the first thing to note is that there is no clear level of abstraction. `a` calls `b` and `b` calls `a`. They are somehow both on the same level of abstraction. This is bad. We could simplify it by inserting the definition of `b` into the function call inside `a`.
 
 ```py
 def a(counter):
@@ -6096,31 +6113,17 @@ As a summary one can say that circular dependencies should be avoided all togeth
 # 40. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
-
-// see chapter 2 in SWE at google: 
-people are insecure and don't want to be criticized.
-Great things are hardly ever achieved by a single person
-Most work doesn't need a genius. But all work requires a minimal amount of social skills.
-Talk to people, don't hide your work.
-Fail early, fail fast, fail often. get feedback as early as possible
-How well is the knowledge distributed? It is better to be one part of a successful project than a critical part of a failed project.
-When working in teams you learn much more than when working alone.
-Constructive critisism vs. flat out assault
-psychological safety is the most important part of an effective team
-Social interactions need humility, respect and trust
-keep asking questions. there is always something to learn
-You always have something to teach
-Don't just say, "this is bad". Come up with some reasons.
-Bus factor: The number of people that need to get hit by a bus before your project is completely doomed.
-A good manager considers how things are done. A great manager considers what is to be done and leaves the rest to his employees. He has faith in them. This is much more motivating than someone yelling around.
+[Software Engineering at Google, chapter 2]
 
 "Humans are mostly a collection of intermittent bugs." - Brian Fitzpatrick
 
-You will probably spend most of your career working in teams. The story of the lone prodigy programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
+A good manager considers how things are done. A great manager considers what is to be done and leaves the rest to his employees. He has faith in them. This is much more motivating than someone yelling around.
+
+The times of the lone wolf programmers is over. Instead, you will spend most of your career working in teams. The story of the lone prodigy programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
 
 Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parliament with a dictator. A parliament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
 
-At the same time scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parliament.
+At the same time, scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parliament.
 
 ## Team structure
 
@@ -6132,7 +6135,7 @@ It is important that everybody in the team talks to each other. Software enginee
 
 ### The bus factor
 
-// https://en.wikipedia.org/wiki/Bus_factor
+[https://en.wikipedia.org/wiki/Bus_factor]
 
 The bus factor says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
 
@@ -6142,33 +6145,30 @@ Make sure the bus factor in your project is as high as possible. Ensure that the
 
 The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job. That's at least their point of view. Now let's get a little bit more serious.
 
-Software engineers have several tasks. The most obvious one is, of course, talking to each other. You have to go through the tickets, you have to discuss how the fundamental structure of the code should look like and you have to talk during pair programming or code review sessions. Though the talking during code reviews is not absolutely necessary. Smaller MRs can be done by writing comments, but when in doubt, it’s better to talk to each other. Especially during times like Corona, the human touch got lost and things sometimes got hairy.
+Software engineers have several tasks. The most obvious one is, of course, talking to each other. This is why any modern software company has a coffee machine with free coffee. You also have to discuss the tickets, you have to discuss how the fundamental structure of the code should look like and you have to talk during pair programming or code review sessions. Though the talking during code reviews is not absolutely necessary. Smaller MRs can be done with written comments, but when in doubt, it’s always better to talk to each other. Especially during times like Corona, the human touch got lost and things sometimes got hairy.
 
-You also have to talk during pair programming. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it.
+You also have to talk during pair programming. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it. Because remember: the most important resource in your company isn't code, but knowledge. And knowledge is gained by talking to each other.
 
-Another fairly big job is going through merge requests (MRs). Everyone has to do it, no one really likes it. But it has to be done. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be solved by writing comments.
-
-Once all this work is done you may finally write code. Grab yourself a ticket and get started. Dig yourself through the code down to a place that seems appropriate. Neighboring classes have about the same abstraction level and all the required data is around. So, you start... by writing an acceptance test. You do TDD, don't you? Then refactor a little the area where your code will be called, write unit tests. Finally, you write the class and all the tests pass. One more small refactoring and you’re ready to create an MR.
+Another fairly big job is going through merge requests (MRs). Everyone has to do it, no one really likes it. But it has to be. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so... elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be resolved by writing comments.
 
 ## Communication
 
-// This needs some reworking or it can be removed as well.
+As mentioned above, teamwork is a key element in modern software engineering. Without good communication skills, team work is not possible. So it is important to learn how to talk to other people. To learn about the flaws of humans and how to deal with them.
 
-In a team, the most important language is not Java but English (or German in the projects I worked on). Use this language to communicate with other team members. And if you think communicating with a computer is hard, think twice. For a computer you can just google what to do and most of the time it works. But with other humans it may take significantly more efforts for a good communication.
+In a team, the most important language is not Java but English (or German in some of the projects I worked on). Use this language to communicate with other team members. And if you think communicating with a computer is hard, think twice. For a computer you can just google what to do and most of the time it works. But with other humans it may take significantly more efforts for a good communication.
 -	Make sure you know what you are talking about and know how to talk to the specific audience.
 -	Keep communicating. Ask questions. Let the other person talk. Once you don’t get replies anymore you have an issue.
 -	Make sure the other person really understood what you were talking about.
 
 There are probably hundreds of other rules, but these few here are the ones I know. Even though I’m not that good at applying them. As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
 
-## Working with humans
-
-// merge this with Communication?
-
 Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be criticized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to criticize each other in a constructive way.
 
-In order to excel, humans need psychological safety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
+It is ok to fail. Fail early, fail fast, fail often. Get feedback as early as possible and improve. This is the only way to make progress. Vice versa, you always have something to teach. Discuss with your colleagues and you can learn from each other. Don't be affraid, no body is perfect.
 
+Don't come up with claims like "this is bad". Critisism is has to be constructive or else it is useless. Even worse, it can be regarded as a flat out assault. You have to be able to explain why something is bad such that the original author has a chance to improve.
+
+In order to excel, humans need psychological safety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
 
 ## Working with customers
 
@@ -6176,7 +6176,7 @@ In order to excel, humans need psychological safety. This requires 3 things: hum
 
 Customers are only humans. Quite frequently they don't say what they mean because they don't know it any better. Keep your vocabulary changing to figure out what certain words actually mean in the view of the customer. At times this reveals some misguided view. For instance if customer and client have some completely different meaning. Do not expect the discussion on requirements to be over after one meeting with the customer. You have to stay in touch in order to get constant feedback to make sure you implement what the customer wants and not what he says.
 
-Also frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the GUI was really badly designed. You really have to come up with some significant improvement that your version will be accepted.
+Frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was really badly designed, the customer refuses to adapt. You really have to come up with some significant improvement that your version will be accepted.
 
 
 # 41. Code review
