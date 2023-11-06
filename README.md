@@ -416,25 +416,17 @@ Chapters that still need improvement:
 		- [Cheap](#cheap)
 		- [Done](#done)
 	- [Sprints](#sprints)
-	- [The end of the project](#the-end-of-the-project)
 	- [Becoming agile](#becoming-agile)
-		- [Agile coaches](#agile-coaches)
-	- [Agile = Courage + Feedback + Simplicity + Communication](#agile--courage--feedback--simplicity--communication)
-		- [Courage](#courage)
-		- [Feedback](#feedback)
-		- [Simplicity](#simplicity)
-		- [Communication](#communication-1)
-- [45. Continuous integration](#45-continuous-integration)
 - [46. Hiring and getting hired](#46-hiring-and-getting-hired)
 	- [Hiring](#hiring)
 	- [Getting hired](#getting-hired)
-- [47. Work ethics](#47-work-ethics)
 - [48. Examples](#48-examples)
 	- [Apple pie](#apple-pie)
 		- [User story](#user-story)
+		- [Acceptance test](#acceptance-test)
 		- [Implementation](#implementation-1)
 	- [Paint](#paint)
-- [49. More Copilot](#49-more-copilot)
+- [49. About Copilot](#49-about-copilot)
 	- [Copilot and this book](#copilot-and-this-book)
 	- [Issues](#issues)
 	- [Copilot and the future](#copilot-and-the-future)
@@ -2698,6 +2690,24 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 - Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
 - Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
 - Rapid deployment:
+
+<!-- 
+// Continuous integration, old text
+
+Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
+
+Now the idea of Continuous Integration (CI) is to automate this whole process, allowing you to publish a nightly build if needed. You automate the whole build process. You write automated tests, both unit and acceptance tests. You automate absolutely everything you need in order to be sure you have a stable release.
+
+CI is of paramount importance. Not only because of the daily release. It also creates a very short feedback loop. You get to your desk in the morning and you know right away whether all the code works fine or if the busy employee added a hack late at night and introduced a bug that his local unit tests did not catch. You might not be completely convinced, but I cannot overstate how important CI is for bigger projects.
+
+It might have come apparent to you that automating things means using scripts everywhere. This is indeed the case. It might be a pain to you. It sounds like a lot of work. It would be much simpler to build everything with a few clicks instead and let everyone run their own tests. 
+
+This is a perfectly fine argument, but it is missing the point. On the long term, this manual working style is eating up so much time. Spending a few days on a properly set up CI with build process, automated tests, etc. outweighs the initial costs by a lot. Explaining the setup to a new employee becomes straight forward. A build is just a single command away, same for testing, etc. The overhead for a new employee to get started becomes negligible.
+
+As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t get it right so far. Keep working on it until you get it right. Then it will feel super smooth. And you learned a great deal along the way.
+
+The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...? -->
+
 
 
 # 15. Refactoring
@@ -6181,9 +6191,11 @@ Frequently customers don't know what is important. Or at least things are import
 
 # 41. Code review
 
-// see chapter code review in SEG (software engineering at google)
+"The computer was born to solve problems that did not exist before." — Bill Gates
 
-Code reviews are important to improve the quality of the code. This does not work without some criticism.
+[software engineering at google]
+
+Code reviews are important for spreading knowledge and to improve the quality of the code. This does not work without some criticism, so it needs a little bit of intuition to know how to criticize the code without insulting the author. Most important of all, you have to critisize the code, rather than the author of it. But let's first have a look at how the whole code review process got started.
 
 A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
 
@@ -6201,15 +6213,15 @@ However, there are some downsides as well. They can be severe enough that teams 
 
 The first problem is people just accepting merge requests without commenting anything, maybe even without looking at the MR. Either because they don’t understand it, because they are lazy, they don't have time, or to make the author of the MR a favor. One would be better off not using MRs at all.
 
-The second problem is speed. It is of utmost importance to check MRs as quickly as possible. Too long idle times for MRs lead to a very significant drop in the developers’ productivity. Additionally, it is highly frustrating waiting for a MR to be looked at and not being able to continue working.
+The second problem is speed. Speed is crucial. It is of utmost importance to check MRs as quickly as possible. Too long idle times for MRs lead to a very significant drop in the developers’ productivity. Additionally, it is highly frustrating waiting for an MR to be looked at and not being able to continue working.
 
-Another very serious problem are too long MRs. It is impossible to judge the quality of a change of a thousand lines of code. You should keep the tickets small. You should keep the commits small. And you should keep the MRs small. Huge MRs are a waste of time as no one understands what’s going on. If a ticket turns out to be too long, split up the code in several MRs and make sure the tickets become smaller in the future.
+Another very serious problem are too long MRs. It is impossible to judge the quality of a change of a thousand, even a hundred lines of code. You should keep the tickets small. You should keep the commits small. And you should keep the MRs small. Huge MRs are a waste of time as no one understands what’s going on. If a ticket turns out to be too long, split up the code in several MRs and make sure the tickets become smaller in the future.
 
-There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in most cases absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove that it most certainly free of bugs. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
+There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove that it most certainly free of bugs. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
 
-Always be polite. An MR is like criticizing someone by email. This is a highly delicate thing to do. Stay professional and make sure you only comment the code and not its author. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
+Always be polite. An MR is like criticizing someones code by email. This is a highly delicate thing to do. Stay professional and make sure you only comment the code and not its author. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
 
-One thing I can highly recommend is looking at the code together, kind of a pair reviewing. In theory, the referee is supposed to understand the code all by himself, at least that’s my understanding of an MR. However, discussing the code with the author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
+One thing I can highly recommend is looking at the code together, kind of a pair reviewing. In theory, the referee is supposed to understand the code all by himself, or at least that’s my understanding of an MR. However, discussing the code with the author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
 In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
 
@@ -6217,11 +6229,11 @@ Now despite all these drawbacks, I think it's still very important to make merge
 
 # 42. Working with existing projects
 
-Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Just before I am forced to tell you how to wiggle around in an existing project." Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
+Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
+
+Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
 You might be motivated to suggest a complete rewrite of the code. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. It’s worth millions. You are not going to fix it in a few months.
-
-// move text to refactoring?
 
 There are some different stages of how bad the code can be. I’m trying to give you a short overview.
 
@@ -6237,7 +6249,7 @@ If you work on an existing project, there might be no or only an insufficient nu
 
 ## Extremely long functions
 
-Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not changing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
+Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
 
 # 43. Planning
 
@@ -6249,16 +6261,17 @@ Planning major projects is extremely hard, not only in software engineering. Arc
 
 With software development it is even worse. There are no small houses and streets that we can get some practice with. Unless you do very basic web or app development. Most software is simply way too complex and fairly unique. It’s impossible to understand all the details. Even the fundamental logic of the problem is not always apparent. Somehow plans on writing software are always too optimistic and failed deadlines are standard.
 
-This sound very logical. We are all motivated and want to get things done. But our working speed is limited. It’s slower than we want it to be. We need more time to understand problems and code, we have to change more code than intended and we also spend a lot of time with MRs and meetings. If your boss asks you when the software is going to be ready, try hard not to be too optimistic. It is very hard but making too optimistic guesses won’t help anyone. You put yourself under pressure and ultimately you still miss the deadline.
+This sounds very logical. We are all motivated and want to get things done. But our working speed is limited. It’s slower than we want it to be. We need more time to understand problems and code, we have to change more code than intended and we also spend a lot of time with MRs and meetings. If your boss asks you when the software is going to be ready, try hard not to be too optimistic. It is very hard but making too optimistic guesses won’t help anyone. You put yourself under pressure and ultimately you still miss the deadline.
 
 Planning code in detail is a similar topic. But at least there is now a solution that seems to work in most cases.
 
 For a very long time, software projects were developed using the waterfall approach. There is a team of developers who try to understand the topic and develop a model on the white board how the structure of the code should look like. Another team, or maybe even the same one, takes these ideas and implements them. Do I have to tell you how this ended? Let me give you some hints. People tend to underestimate complexity; people miss features and furthermore there are changing requirements. The result is a team of software engineers trying hard to implement what they were supposed to. At the same time, it doesn’t work as the planning team missed important details and over the time new requirements showed up. I heard of cases where this approach worked. A few. As well as a lot of disaster. Software projects are simply too complex as if the waterfall approach would work.
 
-Now let’s go back to the civil engineer and his houses. It makes sense that the civil engineer plans and the construction workers build the house. That’s what they do. That’s their job. Over the time a construction worker gets an idea how the structure of a house has to look like. But still he is never going to plan one. He wouldn’t know how. Vice versa, the civil engineer could maybe build a house, but it’s financially not interesting. It makes sense to have two different groups taking care of planning and construction. And even here the civil engineer has to check the progress of the construction frequently and improvise in case of unexpected events.
+Now let’s go back to the civil engineer and his houses. It makes sense that the civil engineer plans and the construction workers build the house. That’s what they do. That’s their job. Over the time a construction worker gets an idea how the structure of a house has to look like. But still, he is never going to plan one. He wouldn’t know how. Vice versa, the civil engineer could maybe build a house, but it’s financially not interesting. It makes sense to have two different groups of workers taking care of planning and construction. And even here the civil engineer has to check the progress of the construction frequently and improvise in case of unexpected events.
 
 In software engineering the planning and the development team both have the same education. The planning team might have a little more experience than the development team, but that’s negligible. Then why do you separate the two tasks? This creates only overhead and frustration. If the planning team is smart enough to plan the whole software on their head, they should also have enough experience to write the whole thing down in code. There's barely and overhead between planning the software and writing it down. When writing the code down, they will be able to see if everything really works out as plannned. Ultimately the planning team can make the whole job on their own.
 
+<!-- 
 // here is some redundancy with the agile chapter
 
 This doesn’t mean that there is no planning needed at all. It’s just different. Smaller and faster. 
@@ -6267,13 +6280,13 @@ We need more feedback and to be able to adapt. In one word: Agile. You still nee
 
 As a conclusion I would say that Agile is generally the better approach than waterfall. But it only works if you first build a solid basement for your code, you write well tested code and you refactor frequently.
 
-In an Agile project it is important to cut the tickets as small as possible. This clarifies the task and minimizes the risk of a ticket to fail within a sprint. Small tickets are much easier to estimate. Figuring out the number of small tickets up to a certain point in development is the really tricky part.
+In an Agile project it is important to cut the tickets as small as possible. This clarifies the task and minimizes the risk of a ticket to fail within a sprint. Small tickets are much easier to estimate. Figuring out the number of small tickets up to a certain point in development is the really tricky part. -->
 
 ## Planning code 
 
 // move elsewhere? Rename section? Most of it is about UML diagramms.
 
-A widely used tool to display interactions between classes are UML diagrams. To put it up front, I don’t like UML. It's generally a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same. Just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming sucks, it is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
+A widely used tool to display interactions between classes are UML diagrams. To put it up front, I don’t like UML. It's generally a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same, just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming is terrible. It is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
 
 One also has to consider the limitations of UML diagrams. The only represent classes and their relationships. This covers only a tiny fraction of a program. Quite frequently you have to understand the logic behind a problem where UMLs won’t help you. You need something different. Try out whatever you feel like. Some different sketch, a plot, a coffee break, a walk in the forest, ... As long as it helps you understanding the problem it does the job. 
 
@@ -6281,13 +6294,9 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 # 44. Agile
 
-"Intelligence is the ability to adapt to change." – Stephen Hawking, among others
+"All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
-"All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards, Fundamentals of Software Architecture
-
-// How much of this chapter is explained in Working in teams
-
-// citation Clean agile, Agile manifesto
+[Clean agile], [Agile manifesto]
 
 // add the INVENT points from clean agile
 
@@ -6308,8 +6317,14 @@ In 2001, a group of software engineers met for two days in the Rocky Mountains i
 // write something about these values?
 
 While the Agile Manifesto was about how a project should be run, there is also a Bill of Rights for the developers. The Bill of Rights states what kind of rights each individual in an agile process has.
+// add the bill of rights for the customers??
+- You have the right to know what is needed with clear declarations of priority.
+- You have the right to produce high-quality work at all times.
+- You have the right to ask for and receive help from peers, managers, and customers.
+- You have the right to make and update your own estimates.
+- You have the right to accept your responsibilities instead of having them assigned to you.
 
-// add them here or should we leave it away?
+Write something about the bill of rights?
 
 ## Work planning
 
@@ -6317,15 +6332,15 @@ The product owner has a set of requirements that the code should fulfill. This p
 
 Every ticket is estimated for how much work it will take. The ticket size is quantified by the number of story points it gets. This is an artificial number to give the tickets a measurable size. Yet at the same time, the story points are vague enough to indicate that this value is only a vague estimation. In most projects, a story point is between one half and one day of work.
 
-The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task.
+The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task. Unfortunately this estimation of tickets does not always work too well. It takes really good planning such that all developers know what has to be done in the ticket. Otherwise the estimations are way off. This is especially the case when the ticket is not well defined. In this case, the ticket probably has to be split up into smaller tickets.
 
 Tickets all have some business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on in a single ticket. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
 
-At the same time, one can write acceptance tests for every ticket. "... if the user clicks x, then the window closes." This is also the acceptance criterion of the ticket: does the acceptance test pass?
+At the same time, one can write acceptance tests for every ticket. "... if the user clicks x, then the window closes." This test is also the acceptance criterion of the ticket. The ticket is accepted if the acceptance test passes.
 
 ## QA
 
-In waterfall projects, the Quality Assurance (QA) was manually trying to find bugs in the existing software. This certainly does not fit anymore with agile. Instead, the QA should write the acceptance tests of every ticket. These tests should preferably be written before the developers finished working on the same ticket. This is quite similar to TDD and is called Behavior Driven Development (BDD).
+In waterfall projects, the Quality Assurance (QA) was manually trying to find bugs in the existing software. This certainly does not fit anymore with agile. Instead, the QA should write the acceptance tests of every ticket. These tests should preferably be written before the developers finished working on the same ticket. This is quite similar to TDD and is called Behavior Driven Development (BDD) or at times Acceptance Test Driven Development (ATDD).
 
 Finishing the acceptance tests before the developers finish the actual ticket is a hard task. One way to mitigate this issue is working ahead. The QA team can always try to be half a sprint ahead. This is not so easy as the sprint planning was not yet done. On the other hand, the PM should know quite well one sprint ahead what is going to follow next.
 
@@ -6335,9 +6350,7 @@ Finishing the acceptance tests before the developers finish the actual ticket is
 
 As in most other domains, there is frequent problem of projects not being done in time. There is of course always the solution of reducing quality far enough to make it in time. 
 
-In Software engineering, we have the rule of the Iron Cross: Good, fast, cheap, done. Choose three.
-
-Here are some options how the management can deal with these issues.
+In Software engineering, we have the rule of the Iron Cross: Good, fast, cheap, done. Choose three. Here are some options how the management can deal with these issues.
 
 ### Good
 
@@ -6359,7 +6372,7 @@ Changing the schedule helps a lot and is frequently the only option. As it was a
 
 ## Sprints
 
-In Agile, the whole project is split up into pieces of one- or two-weeks, called sprints. During each sprint, there is a sprint planning, some time for implementing the features and a sprint presentation meeting in the end where the outcomet of the sprint is being discussed. This structure results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough a estimate on how long it will take until the next mile stone. This (bi)weekly progress can also be used as a monitoring tool how well the development team is doing.
+In Agile, the whole project is split up into pieces of one to four weeks, called sprints. During each sprint, there is a sprint planning, some time for implementing the features and a sprint presentation meeting in the end where the outcome of the sprint is being discussed. This structure results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough a estimate on how long it will take until the next mile stone. This progress can also be used as a monitoring tool how well the development team is doing.
 
 The first meeting of a spring is the sprint planning. It takes the whole team to discuss the tickets and which ones to scope into the sprint. The sprint planning for a two-week sprint may take a half a day.
 
@@ -6371,65 +6384,16 @@ Toward the end of the sprint, the software developers present their work done in
 
 The last meeting is the retro perspective. Here the team meets to discuss anything that could improve the productivity of the development. Issues why the ticket size was estimated wrongly, blockers that were not resolved for too long, unresolved MRs, etc.
 
-## The end of the project
-
-The project is apparently done, when all the work is done. Meaning when there are no more tickets around worth doing.
-
-However, it’s not that simple. Frequently all tickets are done but the development team still finds work to do. Some missing test coverage or an obvious refactoring. This is to be praised. Yet at the same time one should not do too much work on a program that’s theoretically over. Go and have a beer instead. Enjoy the end of the project.
-
 ## Becoming agile
 
 What I tried to explain in this chapter so far was supposed to be something like a manual how to become Agile. The real effort, however, lies before you. There is no Agile a manual. It is more like a schema. And you can stretch this schema in many possible directions, whether it makes sense or not.
 
 The most important point from Agile is that you should figure out by yourself what works best. And be honest with yourself. It may be more convenient to work alone for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. You don't know how your colleagues are doing. You lack knowledge how you are progressing. And not only you, also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
 
-Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. Your code would have to be flexible also in waterfall, but that’s just in theory. 
+Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. What most people don't understand is that they would have to remain flexible also in waterfall mode as plaining everything from scratch isn't working out. 
 
-In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task as you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
+In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task and you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
 
-### Agile coaches
-
-One quite controversial topic is the role of Agile coaches. Along with the advent of Agile, there was a demand from the industry for people with Agile experience or even Agile consulting, as no one knew how Agile really works out. But as always, there are many courses offering a certificate on Agile development after a two-day course. This is not really helpful.
-
-On the other hand, there are also serious courses, including some project management. The idea that the development team is organizing itself independently may be too optimistic and some external help may be useful. In politics, independent organization frequently led to anarchy. Even though I hope that a team of software developers should do better.
-
-## Agile = Courage + Feedback + Simplicity + Communication
-
-### Courage
-
-It takes a little bit of courage to work as a software engineer. If you are always afraid that your work could introduce bugs, that you could make mistakes. It is hard to keep up that courage. This has severe consequences. You’ll only make the changes you are absolutely sure they don’t introduce bugs. You’ll only add features and fix bugs that are absolutely necessary. You won’t touch a single line of code you don’t have to. This is absolutely dreadful! You will not refactor code because you are afraid you might break something. No one in the whole team will. No one will refactor your code. It will just keep rotting. Your project is doomed.
-
-Instead you need something to keep your courage up. Something that takes you the fear of breaking stuff. That allows you to refactor code even though you are not exactly sure whether your refactoring really works or not. You need good test coverage. Good test coverage is the only thing that allows you to keep your courage and refactor code as you go. It is the only thing that can prevent your code from rotting. It is the only thing that can keep your productivity up.
-
-You also need courage to be honest. The very first thing is you have to be able to say "No." Your manager will ask you many questions throughout your career and he hopes you to say yes. But if the real answer is no, you have to tell him so. Lying to him and saying that you will be able to do something that you are not will not do you any good, nor will it to you manager. He’ll be making plans based on wrong assumptions that will not work out.
-
-For the very same reason you have to be honest when estimating the time required for a certain problem. There is no worth giving your boss an estimate that is way too optimistic. This just won’t cut it. Try to be realistic. Multiply your estimate by 2 to make it even more realistic. Or give him the most honest answer there is: tell him that you don’t know how long it will take. 
-
-### Feedback
-
-// write also something about the other topics or leave this section away. See Clean Agile?
-
-### Simplicity
-
-### Communication
-
-# 45. Continuous integration
-
-// redundancy with chapter on DevOps???
-
-Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
-
-Now the idea of Continuous Integration (CI) is to automate this whole process, allowing you to publish a nightly build if needed. You automate the whole build process. You write automated tests, both unit and acceptance tests. You automate absolutely everything you need in order to be sure you have a stable release.
-
-CI is of paramount importance. Not only because of the daily release. It also creates a very short feedback loop. You get to your desk in the morning and you know right away whether all the code works fine or if the busy employee added a hack late at night and introduced a bug that his local unit tests did not catch. You might not be completely convinced, but I cannot overstate how important CI is for bigger projects.
-
-It might have come apparent to you that automating things means using scripts everywhere. This is indeed the case. It might be a pain to you. It sounds like a lot of work. It would be much simpler to build everything with a few clicks instead and let everyone run their own tests. 
-
-This is a perfectly fine argument, but it is missing the point. On the long term, this manual working style is eating up so much time. Spending a few days on a properly set up CI with build process, automated tests, etc. outweighs the initial costs by a lot. Explaining the setup to a new employee becomes straight forward. A build is just a single command away, same for testing, etc. The overhead for a new employee to get started becomes negligible.
-
-As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t get it right so far. Keep working on it until you get it right. Then it will feel super smooth. And you learned a great deal along the way.
-
-The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...?
 
 # 46. Hiring and getting hired
 
@@ -6463,22 +6427,8 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 47. Work ethics
-
-// see Clean Craftsmanship
-
-Software engineers have a lot of responsibility. In the best case a bug is merely a nuisance, in the worst-case people may die. This responsibility is comparable to the one of doctors or accountants. Two highly regulated jobs, exactly for this reason. There are only few areas where software development is regulated. I know of aviation, cars, military and healthcare where very strict rules to the development of software apply. In other areas, the developer is free to do what his employer deems ok. Sometimes with fatal, or at least very costly consequences.
-
-// list with software bugs that were expensive or fatal -> clean … ?
-
-// we shall do no harm, etc.
-
-// Working hours
-
-//keep learning
-
 # 48. Examples
-So far, there was very little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
+So far, there was fairly little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
 
 ## Apple pie
 
@@ -6488,7 +6438,9 @@ Your father comes for dinner next Sunday and you want to make him happy. Creamy 
 
 Acceptance criteria: your father is happy
 
-Now let’s first write the acceptance test. If we invite our dad, he has to say that he's happy.
+### Acceptance test
+
+Now let’s first write the acceptance test. If we invite our dad, he has to say that he's happy. We assume that he prints out his feelings on the console. Thus, we can just check the console output.
 
 ```py
 # inside acceptance_tests/test_dinner.py
@@ -6525,9 +6477,13 @@ And we see that it fails. That was to be expected, we didn’t implement anythin
 
 Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
 
+Also note that the easiest solution would probably be buying an apple pie from the next bakery. This would be a perfectly viable solution to this task here. But let's assume that we have to bake the pie ourselves.
+
+Or course we have to make several assumptions on how the apple pie is to be implemented. Let's start with the high level code.
+
 ```py
 apple_pie = create("apple_pie")
-dad  = Dad()
+dad = Dad()
 dad.eat(apple_pie)
 ```
 
@@ -6536,27 +6492,27 @@ Next we implement dad and then the create function.
 ```py
 from enum import Enum
 
-class Flavor(Enum):
-	VERY_CREAMY = 1
-
 class Dad():
     def eat(food):
         if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
         	print("I’m so happy")
+
+class Flavor(Enum):
+	VERY_CREAMY = 1
+	SALTY = 2
 ```
 
+Note that the `Flavor` is neither inside the `Dad`, nor inside the `ApplePie` class, as we have learned in the chapter on the solid principles (ISP).
+
 ```py
+def create(food_name):
+	food_dict = {"apple_pie" : ApplePie()}
+	return food_dict[food_name]
+
 class ApplePie():
 	def __init__(self):
 		self.flavor = Flavor.VERY_CREAMY
 		self.name = "apple_pie"
-
-def create(food_name):
-	food_dict = {"apple_pie" : bake_apple_pie()}
-	return food_dict[food_name]
-
-def bake_apple_pie():
-	return ApplePie()
 ```
 
 ## Paint
@@ -6640,7 +6596,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 49. More Copilot
+# 49. About Copilot
 
 The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
 
@@ -6670,7 +6626,7 @@ I used Copilot to write parts of this book. At times it was a help to get some i
 
 ## Issues
 
-Copilot is just some artificial neural network. It is not perfect, it is no compiler and I even don't know if it is deterministic. Sometimes Copilot produces quite some nonsense. For example, Copilot seems to have analyzed my text and found a lot of "\`\`\`py" text snippets. Therefore it suggested to write this "\`\`\`py" quite frequently at the end of a sentence. And just now Copilot is telling me that it learned not to do this anymore. But I doubt it.
+Copilot is just some artificial neural network. It is not perfect, it is no compiler and it doesn't even know correct syntax. It's "only" really good with guessing code. Sometimes Copilot produces quite some nonsense. For example, Copilot seems to have analyzed my text and found a lot of "\`\`\`py" text snippets. Therefore it suggested to write this "\`\`\`py" quite frequently at the end of a sentence. And just now Copilot is telling me that it learned not to do this anymore. But this turned out to be wrong.
 
 Some of the errors of Copilot & co. are very subtle. Chat GPT came up with some fake suggestion containin wrong citations when it was used in a legal case [https://www.legaldive.com/news/chatgpt-fake-legal-cases-generative-ai-hallucinations/651557/]. 
 
@@ -6707,11 +6663,13 @@ And as I'm writing these lines, I also get the feeling that Copilot has some nar
 
 ## Copilot and the future
 
-Copilot is indeed a great tool. It was a great help writing this book and the code examples. But it is far from perfect. I doubt that it will completely replace software engineers and authors any time soon. Though it changes the way we work. It is a great source of inspiration (again: suggestion by Copilot) when you don't know what to write. And at times its suggestions are just hillarious. What it can't do is reading your mind. You first have to give it some input. And even then it is sometimes hard to tell it what you want to do. This is why you are still better off reading this book and understanding the patterns explained here. Copilot is not a replacement for your brain.
+Copilot is indeed a great tool. It was a great help writing this book and the code examples. But it is far from perfect. I doubt that it will completely replace software engineers and authors any time soon. Though it may change the way we work. It is a great source of "inspiration" (again: suggestion by Copilot) when you don't know what to write. And at times its suggestions are just hillarious. What it can't do is reading your mind. You first have to give it some input. And even then it is sometimes hard to tell it what you want to do. This is why you are still better off reading this book and understanding the patterns explained here. Copilot is not a replacement for your brain.
 
 # 50. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
+
+The Pragmatic Programmer 2nd edition (Thomas, Hunt) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book.
 
 Clean code (Robert C Martin) The best seller. Uncle Bob explains how good code should look like. I followed many of his rules, quite some of them are in a similar way in this book.
 
@@ -6736,8 +6694,6 @@ Effective C++ (Scott Meyers) If you want to work with C++ this book is certainly
 Effective modern C++ (Scott Meyers) Scott explains the ideas behind C++11 and 14. This is at the time of writing probably the more useful book. But only for advanced C++ programmers.
 
 Working with legacy code (Michael Feathers) This book is about working with code that doesn’t have any tests and probably needs some refactoring.
-
-The Pragmatic Programmer 2nd edition (Thomas, Hunt) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book here.
 
 Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The introductory example is simply amazing. Martin takes an innocent looking function and applies some of his refactoring steps. In the end there is some code that is super smooth. It has barely any indentations!
 
