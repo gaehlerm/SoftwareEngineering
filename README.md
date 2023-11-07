@@ -66,8 +66,6 @@ Chapters that still need improvement:
 		- [The application level](#the-application-level)
 		- [API](#api)
 		- [GUI and acceptance tests](#gui-and-acceptance-tests)
-		- [Summary](#summary-1)
-	- [Dependency tree](#dependency-tree)
 - [7. Interfaces](#7-interfaces)
 	- [Real world interfaces](#real-world-interfaces)
 	- [Code interfaces](#code-interfaces)
@@ -85,7 +83,7 @@ Chapters that still need improvement:
 		- [Copilot](#copilot-1)
 	- [Output arguments](#output-arguments)
 	- [Return values](#return-values)
-	- [Summary](#summary-2)
+	- [Summary](#summary-1)
 	- [Copilot](#copilot-2)
 - [9. Classes](#9-classes)
 	- [Data classes and structs](#data-classes-and-structs)
@@ -174,7 +172,7 @@ Chapters that still need improvement:
 		- [Mocking](#mocking)
 		- [Faking](#faking)
 		- [Dependency injection](#dependency-injection)
-	- [Summary](#summary-3)
+	- [Summary](#summary-2)
 		- [Copilot](#copilot-5)
 - [14. DevOps](#14-devops)
 	- [The early 2000s](#the-early-2000s)
@@ -276,7 +274,7 @@ Chapters that still need improvement:
 	- [Interface Segregation Principle](#interface-segregation-principle)
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
 		- [Example](#example-3)
-	- [Summary](#summary-4)
+	- [Summary](#summary-3)
 - [25. Data types](#25-data-types)
 	- [Lists](#lists)
 	- [Enums](#enums)
@@ -339,7 +337,7 @@ Chapters that still need improvement:
 		- [How to write comments](#how-to-write-comments)
 		- [Docstring](#docstring)
 	- [Commenting magic numbers](#commenting-magic-numbers)
-	- [Summary](#summary-5)
+	- [Summary](#summary-4)
 	- [Copilot](#copilot-17)
 - [33. Logging](#33-logging)
 - [34. Tools](#34-tools)
@@ -715,7 +713,7 @@ Creating good levels of abstraction is probably the most important task in softw
 
 C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
-C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the famous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason.
+C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the infamous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason.
 
 Here is an example how to use `new` and `delete`.
 
@@ -730,7 +728,7 @@ One of the main reasons Java got so popular was the garbage collector. It took c
 
 Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
 
-Note that C++ also needs the smart pointers introduced in C++11 in order to fully write memory save code. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
+Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory save code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
 
 Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
@@ -766,7 +764,7 @@ public:
 }
 ```
 
-This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers. [Effective Modern C++]
+This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers [Effective C++].
 
 If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability very significant.
 
@@ -778,19 +776,11 @@ As a summary I want to emphasize again the tremendous importance of abstraction 
 
 ## The abstraction layers
 
-// is this part of the architecture chapter? What should I write here or in the chapter on architecture? Probably in the architecture chapter.
+In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher, but only on lower levels. The code can be divided into different layers. I personally like to break it up into 5 layers. Though it has to be remarked, that this is by far not the only way to sort the code. There are many different ways to do it. It can also be separated in onion layers. If you like this approach better, you can find a detailed explanation in [Clean Architecture].
 
-//create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application level – API – acceptance tests/GUI
+//create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application layer – API – acceptance tests/GUI. See DDD p.68 what the layers are used for there.
 
-// where did I get these layers from? And I think I have to look at this again. Most graphics I found have the domain level in the center.
-
-// some layers are in DDD p.70. 
-
-// this has to be rewritten. parts here are still using the onion layers while I want to use the horizontal layers.
-
-In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. A layer never depends on higher levels.
-
-The lowest layer is the infrastructure layer. It manages the access to Input/Output (IO) and wraps all kind of low level functionality. It is followed by the Domain layer. The domain layer is the heart of your software. The Domain Model cannot be bought anywhere, it is unique to your problem. It solves the complexity of your business. It doesn't know anything about the outer layers. 
+No matter if you are looking at horizontal layers as done here, or at onion layers, there is always one rule: dependencies go only downward or inward. The higher levels always depend on the lower levels, but never the opposite way. Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handled directly to the domain layer.
 
 ### 3rd party libraries
 
@@ -822,19 +812,6 @@ One level higher is the API. This defines the interface between our code and the
 
 On the highest level are the GUI and the acceptance tests, both at the same level. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a clear indication of very bad sign.
 
-### Summary
-
-As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Good luck!
-
-## Dependency tree
-
-// I think this is somehow redundant with the explanation of the DIP?
-
-Between classes as well as between files there are dependencies. The high-level object always depends on objects in the same level or on lower-level objects. In math we call this kind of structure a tree, or more accurately a directed acyclic graph. This graph has the additional property that there should never be any bidirectional connections, i.e., there should never be any cyclic dependencies. Diamond like shapes are fine as long as there is a unique direction of the dependencies.
-
-//add a graph with dependencies, explain the levels of abstraction better
-
-// abstract vs concrete code -> see Clean Architecture?
 
 # 7. Interfaces
 
