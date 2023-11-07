@@ -1522,24 +1522,20 @@ Prefer functions over methods. Though sometimes methods may make the code more i
 
 ## Copilot
 
-Just as with functions, Copilot can write classes from scratch as well. Here I wrote only the first half of the comments, the rest is a suggestion by Copilot. Though admittedly, the code is not that brilliant.
+Just as with functions, Copilot can write classes from scratch as well. It is generally recommended to write the name and maybe some properties of the class and let Copilot take care of the rest. In this example I only wrote `class Car` and Copilot wrote the rest.
 
 ```py
-# wirte a class Person with attributes name and age
-# and a method get_name that returns the name
-# and a method get_age that returns the age
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def get_name(self):
-        return self.name
-    def get_age(self):
-        return self.age
+class Car():
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+    def get_descriptive_name(self):
+        long_name = str(self.year) + ' ' + self.make + ' ' + self.model
+        return long_name.title()
 ```
-The code is, though very simple, correct. It only misses the pythonic notation with the leading underscore to make `name` and `age` private. However, I generally don't like the code here as I explained in the section on getters and setters. Instead of this class here, we could also write a dataclass.
 
-Generally it's better to start writing some code that you want instead of writing comments.  Here I started writing `class` as I was not satisfied with the suggestion. The result is a suggestion for a class without getter and setters.
+The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the `__str__` method.
 
 # 10. Inheritance
 
@@ -1557,7 +1553,7 @@ Inheritance comes along with quite some issues and should thus be avoided if pos
 
 ### Tight Coupling
 
-The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes or to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
+The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes nor to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
 
 One of the main problems here is that all inheritance levels have access to the base level variables. The variables and methods are not sorted. They are just there. Meanwhile with composition, you only have to consider the variables inside the class. This makes it much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
 
@@ -1565,9 +1561,9 @@ Furthermore, I regard the common usage of inheritance as an old dogma. It is you
 
 ### Error prone
 
-There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book Working Effectively with Legacy Code several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables or overridden methods. It’s just so easy to create bugs with inheritance. One misspelled function will not override the base class function and thus creating a bug. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
+There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book Working Effectively with Legacy Code several examples that he wanted to refactor. In about half of them there were problems with inherited or global variables, or overridden methods. It’s just so easy to create bugs with inheritance. One misspelled function will not override the base class function and thus creating a bug. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error.
 
-Though it has to be said, that with the `override` keyword or attribute, this problem has been resolved in some programming languages as C++ and Java. Still, I would recommend not to use inheritance and always use `override` in case you do have to use inheritance to prevent nasty bugs.
+Though it has to be said, that with the `override` keyword or attribute, this problem has been resolved in some programming languages like C++ and Java. Still, I would recommend not to use inheritance and always use `override` in case you do have to use inheritance to prevent nasty bugs.
 
 ### Obscure code
 
@@ -1580,7 +1576,7 @@ The implementation of inheritance can be complex task, depending on the programm
 // get a better image without copy right
 <img src=images/diamond.jpg width="400">
 
-When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use?
+When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use? The one from `B` or the one from `C`?
 
 This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languages like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
 
