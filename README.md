@@ -73,7 +73,6 @@ Chapters that still need improvement:
 		- [Adding more functionality](#adding-more-functionality)
 		- [Semantic Versioning](#semantic-versioning)
 	- [Copilot](#copilot)
-	- [Conclusion](#conclusion)
 - [8. Functions](#8-functions)
 	- [Do one thing only](#do-one-thing-only)
 		- [Levels of indentation](#levels-of-indentation)
@@ -819,7 +818,7 @@ On the highest level are the GUI and the acceptance tests, both at the same leve
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
-In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface millions of times. Therefore it pays off to design an interface properly.
+In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface thousands of times. Therefore it pays off to design an interface properly.
 
 ## Real world interfaces
 
@@ -827,7 +826,7 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 "Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB stick looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. USB 3 has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved, it is a very convenient solution for the users.
+An example of bad design is the USB 2 port. The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB 3 port has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved, it is a very convenient solution for the users.
 
 Another example are water tabs for showers, as already explained in the section on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. 
 
@@ -839,13 +838,13 @@ I hope these simple examples gave you an idea what good interfaces are about. If
 
 Car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running them faster makes them inefficient. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities.
 
-Now there used to be a minor problem about the gear boxes. They were not user friendly. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to set the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
+Now there used to be a minor problem about the gear boxes. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
 
 Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suitable gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. Now we only have to wait for self-driving cars in order to remove the steering wheel and the speed bar all together.
 
 ## Code interfaces
 
-Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
+Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the real world examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot.
 
 Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
@@ -853,13 +852,7 @@ An interface that is designed from the engineers point of view is usually no goo
 
 Interfaces are everywhere. Every function or class has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
 
-// Big data structures take more time to build up but at the same time they are used longer. Having small data structures around for a long time is a sign for bad code. -> bundle your data into some bigger objects.
-
-// is there something else left to write here? It feels very short. Figure out a good example?
-
 ## APIs
-
-// write something about REST, SOAP, etc.?
 
 "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
 
@@ -892,17 +885,7 @@ Usually companies support many API versions simultaneously. They know their user
 
 ## Copilot
 
-Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps.
-
-## Conclusion
-
-// remove conclusions?
-
-Interfaces should always be designed from a user point of view. This makes them much better as user friendlines is the main goal of any interface.
-
-APIs are extremely delicate. You have to get it right on the first attempt. You really have to reconsider every change you make several times. And don’t make any breaking changes unless it’s absolutely necessary.
-
-Defining interfaces should generally not be done by Copilot. Rather this is a task that should be done by the programmer. Copilot is better with writing the implementation of a function or class, depending on the interface provided.
+Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps. This is generally also the better approach than writing some comments and let Copilot define code based on these comments.
 
 # 8. Functions
 
@@ -912,13 +895,15 @@ Defining interfaces should generally not be done by Copilot. Rather this is a ta
 
 Functions are, along with classes, the backbone of modern OO software. People just don’t care about functions too much as they are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well. We'll learn that functions have to follow the SRP and that they shouldn't have any side effects.
 
-Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are in many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as output arguments. I hope it's generally clear from the context if some explanation is true for functions, methods or both.
+Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are with many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as output arguments. I hope it's generally clear from the context if some explanation is true for functions, methods or both.
 
 ## Do one thing only
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short (at most twenty lines, less is better) and therefore they cover only a single level of abstraction.
+Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short. At most about twenty lines, though less than 10 lines would be better.
 
 ### Levels of indentation
+
+"If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
 
 The easiest way to judge the complexity of a function is the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This means that there is hardly any complex logic hiding inside a single function. Having nested `if/else`, `while` or `for` loops would violate the SRP because the function has two jobs: resolving the logical operator and doing some other work. Having few levels of indentation in a function automatically makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
 
@@ -937,7 +922,7 @@ if button != "":
 		print("Cannot fight while sleeping")
 ```
 
-This code is very hard to understand. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
+This code is very hard to understand. It has too many negations. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
 
 ```py
 button = input("")
@@ -969,7 +954,7 @@ attack()
 
 Assuming that this code is written inside a function, we have 2 levels of indentation, so we are compliant with Linus Thorwalds rule.
 
-With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depinding on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
+With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depending on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
 
 ```py
 def can_fight(button):
@@ -983,11 +968,19 @@ def can_fight(button):
 		return false
 	return true
 ```
+
 Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frquently no perfect solution, but at least we can improve it compared to the initial code.
 
 ### Naming
 
-Naming becomes comparably easy if you follow these rules. The function body is one level of abstraction lower than the function name. The name is a summary of what is going on inside the function. There should never be any unexpected behavior inside a function that could confuse the reader of the code. There should not be any hidden behavior inside a function.
+Naming becomes less hard if you follow the following rules: 
+- The function body is one level of abstraction lower than the function name. 
+- The name is a summary of what is going on inside the function. 
+- There should never be any unexpected behavior inside a function that could confuse the reader of the code. 
+- There should not be any hidden behavior inside a function.
+
+
+The following function clearly has a side effect:
 
 ```py
 counter = 0
@@ -996,11 +989,11 @@ def log_in(email_address):
 	check(email_address)
 ```
 
-This function clearly has a side effect. It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
+It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
 
-A better name for this function would be `log_in_and_increase_counter`, though that would make it apparent that the function does more than one thing and thus violates the SRP.
+A better name for this function would be `log_in_and_increase_counter`, though that would make it apparent that the function does more than one thing and thus violates the SRP. A function name shouldn't contain an `and` as this indicates a violation of the SRP.
 
-Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because of the temporal coupling.
+Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because of the temporal coupling. And as we'll learn in the chapter on testing [Testing/Writing better Code with Tests], brittle tests are a strong indication of bad code.
 
 ## Temporal coupling
 
@@ -1055,22 +1048,22 @@ shopping_list = create_shopping_list(["apple", "banana"])
 
 After swapping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
 
-Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments.
+Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments. If possible, enforce temporal coupling.
 
 ## Number of arguments
 As for the length of the function, the number of arguments should be as small as possible as well. This simplifies the function a lot. Here I try to give you a rough estimate on how many variables a function or method may have. But this ultimately depends on the general complexity of the code, etc.
 
 Now there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments using class variables as a replacement for function arguments). These functions are the easiest, they always behave the same way. There’s not much to test, but at the same time there isn't much such a function can do.
 
-As a function has more arguments, it can contain more functionality. Yet at the same time the more complex it will become. Functions with one or two arguments are usually fairly easy to handle and they should cover most of the code. Try using functions with 3 arguments as rarely as possible.
+As a function has more arguments, it can contain more functionality. Yet at the same time the more complex it will become. Functions with one or two arguments are usually fairly easy to handle and they should cover most of the code. Functions with three arguments are already quite complex. They are hard to understand and hard to test.
 
-Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++). If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider the function design.
+Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++) [Classes]. If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider your function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
 `Total variables = method arguments + class variables`
 
-Global variables should not be used, so we neglected those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables. This is the main reason why I don't recommend using classes too much, but rather use procedural programming instead.
+Global variables should not be used, so we neglect those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables. This is the main reason why I don't recommend using classes too much, but rather use procedural programming instead.
 
 A method might access only a few of the class variables. However, one does not know until one has read all of the methods and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ `const` expression. It is recommended to use methods with only one or maybe two arguments to keep the complexity as low as possible.
 
@@ -1089,7 +1082,7 @@ Copilot can help out with reducing the number of arguments by using dataclasses.
 def do_something(a, b):
     return a + b
 ```
-With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of Copilot is not always an improvement. Wheter such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
+With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of Copilot is not always an improvement. Wether such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
 
 ```py
 @dataclass
@@ -1101,12 +1094,11 @@ def do_something(numbers: Numbers):
     return numbers.a + numbers.b
 ```
 
-
 ## Output arguments
 
 A very irritaging thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable or by const to make it unmodifiable. However, in other languages, this has to be clear from the context of the function.
 
-Unexpected changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter its arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
+Changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter its arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
 
 Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values. Just that the class instance is obviously a very special variable. The function acting on those variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
 
@@ -1114,7 +1106,7 @@ As always, output arguments give you a lot of power if used wisely. But at the s
 
 ## Return values
 
-Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work only with their class methods which only manipulate the existing class instances. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first function argument. Or: this method might change a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value or an output argument but never both at the same time.
+Return values are in my opinion very normal, yet many OO programmers tend to dislike them. They work with their class methods which manipulate the existing class instances. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This function may or may not change the first function argument. Or: this method might change a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value or an output argument or change a class instance. But never two of them at the same time.
 
 Return values are very central in functional programming. In functional programming, you are not allowed to change existing objects. So you don't have the issue of function arguments changing their values. The work around are return values. They have the advantage that it's obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because it is unique. After every step of your computation, you create a new variable so you'll never store different information inside a single variable. You just create a new one.
 
@@ -4785,8 +4777,6 @@ Generally there are two different methods to estimate the amount of work require
 The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left. Furthermore it is not that often the case that you already completed a similar task. Therefore, estimating the amount of work required for a certain task is still quite tricky to estimate.
 
 ## Single line complexity
-
-"If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
 
 A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters, using the C programming language. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
 
