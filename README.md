@@ -2,13 +2,18 @@
 
 Copyright Marco Gähler, all rights reserved.
 
-This book is still work in progress. Feedback is highly welcome. Either as a merge request (I have to give you access rights) or directly by email, marco.gaehler@gmx.ch Many small MRs are prefered over one big MR. Feedback can be either about concrete improvements or just some general thoughts. Oh yeah, and my English could be better... but that will be fixed later on.
+This book is still work in progress. Feedback is highly welcome. Either as a merge request (I have to give you access rights) or directly by email, marco.gaehler@gmx.ch Many small MRs are prefered over one big MR. Feedback can be either about concrete improvements or just some general thoughts. As the book has not yet progressed very far, I'm happy about more general feedback. Tipos can be fixed later on.
 
-If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with VS code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
+Oh yeah, and my English could be better... but that will be fixed later on.
 
-This is a book about software engineering, similar to Clean Code by Robert Martin or the pragmatic programmer by Thomas & Hunt. So far it is only a rough draft, though it's making progress. The first few chapters feel already quite good, the second half of the book still needs some serious rework. 
+## Getting started
 
-Things to write:
+If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
+
+This is a book about software engineering, similar to Clean Code by Robert Martin or The Pragmatic Programmer by Thomas & Hunt. So far it is only a rough draft, though it's making progress. The first few chapters feel already quite good, the second half of the book still needs some serious rework. 
+
+## Things to write
+
 -	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 -	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
 -	Domain driven design -> what is the idea behind entities, aggregates and value objects?
@@ -29,6 +34,8 @@ Chapters that still need improvement:
 // figure out how to sort the different chapters and sections
 
 - [1. Introduction to software engineering](#1-introduction-to-software-engineering)
+	- [Getting started](#getting-started)
+	- [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
 - [3. Preface](#3-preface)
 - [4. Introduction](#4-introduction)
@@ -539,7 +546,6 @@ These four rules will accompany us throughout our book.
 - We write code in order to create value for our customers.
 
 ## About this book
-// move to preface?
 
 Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are at most some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
 
@@ -1486,9 +1492,9 @@ I hope I managed to convince you not to write bare getter and setter functions t
 
 ## Coupling and Cohesion
 
-// is my definition of cohesion correct? https://youtu.be/XQzEo1qag4A
+[https://youtu.be/XQzEo1qag4A]
 
-A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." [Robert C. Martin] If you don’t understand these expressions, we could rewrite it to: "There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
+A well-known rule says: "Classes should have high cohesion within themselves and low coupling between each other." [Robert C. Martin] If you don’t understand these expressions, we could rewrite it roughly to: "There should be a lot of interaction between methods and variables within a class and little interaction between classes." This is indeed a very important rule. However, as most rules in software engineering, it has to be taken with a grain of salt.
 
 ### Worker classes
 
