@@ -15,8 +15,11 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 ## Things to write
 
 -	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
--	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"?
--	Domain driven design -> what is the idea behind entities, aggregates and value objects?
+-	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
+-   What is mocking and stubs? (chapter Testing)
+-	Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
+-   Which design patterns are important? (chapter Design patterns)
+-   Do I need the chapter logging?
 -	Restructure and sort the chapters somehow.
 -	Some more examples on refactoring (what technique exactly? Converting a function into a class?)
 -	Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
@@ -144,7 +147,6 @@ Chapters that still need improvement:
 		- [Britle tests](#britle-tests)
 		- [Random numbers](#random-numbers)
 	- [The Beyonce rule](#the-beyonce-rule)
-	- [Mocking and Stubs](#mocking-and-stubs)
 	- [Untestable behavior](#untestable-behavior)
 - [12. Types of tests](#12-types-of-tests)
 	- [Unit tests](#unit-tests)
@@ -1605,9 +1607,9 @@ if __name__ == "__main__":
 
 Is the lion now eating grass or meat? Of course it's eating meat. But using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem [https://en.wikipedia.org/wiki/Yo-yo_problem] where the programmer has switch between reading code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is so confusing, it is dreadful. Please don't write such code.
 
-Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, in my opinion there is just too much that can go wrong with inheritance.
+Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, in my opinion there is just too much that can go wrong with inheritance. Inheritance should only be possible if it is explicitly allowed.
 
-In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad as it violates the Interface Segregation Principle, see chapter on SOLID principles. Having to write tests for unused functions in the interface is only the most obvious problem.
+In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad as it violates the Interface Segregation Principle, [chapter SOLID principles]. Having to write tests for unused functions in the interface is only the most obvious problem.
 
 ## Advantages of Inheritance
 
@@ -1615,7 +1617,7 @@ There are quite few advantages and none of them justify using inheritance.
 
 ### Code reuse
 
-The biggest advantage of inheritance is certainly code reuse. You may define a function in a base class and reues it in several derived classes. This saves you from repeating yourself. 
+The biggest advantage of inheritance is certainly code reuse. You may define a function in a base class and reuses it in several derived classes. This saves you from repeating yourself. 
 
 On the other hand, you can usually also use composition or write functions with the corresponding functionality and reuse them. In most cases this works out just fine as well. Additionally you are forced to reuse all of the code in the base class. This is frequently undesired behavior as you don't want to inherit everything the base class has to offer. You would like to inherit only a fraction of it.
 
@@ -1627,7 +1629,7 @@ Similarly in Python, you can use abstract base classes to define the interface o
 
 ## Difference between inheritance and composition
 
-// https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/inheritance-in-oops/
+[https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/inheritance-in-oops/]
 
 To finish this chapter, let me briefly make an example to show you the differences between inheritance and composition. In the class `Lion`, the `lion` can directly access the `food` object from the base class.
 
@@ -1640,7 +1642,7 @@ class Lion(Animal):
 	def __init__(self):
 		super().__init__("meat")
 
-lion Lion()
+lion = Lion()
 print(lion.food)
 ```
 
@@ -1655,11 +1657,11 @@ class Car():
 	def __init__(self):
 		self.engine = Engine(322)
 
-car = Car()
-print(car.engine.power)
+taxi = Car()
+print(taxi.engine.power)
 ```
 
-Now there may be many programmers that prefer the code used for the `lion`. But in my opinion, this is bad code. The code used with the `taxi` is clearly to be prefered. You have to write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it tells you where the `power` variable comes from. It is a variable inside the `engine`. This is the ultimate reason why I recommend using composition instead of inheritance. It makes the code much clearer.
+Now there may be many programmers that prefer the code used for the `lion`, for example because it is less code. But in my opinion, this is bad code. The `lion` code is implicit and implicit code is genereally to be avoided because it is not as clear as it could be. The code used with the `taxi` is clearly to be prefered as it is explicit. You have to write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it tells you where the `power` variable comes from. It is a variable inside the `engine`. This is the ultimate reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
 
 ## Conclusions
 
@@ -1670,8 +1672,6 @@ There are also some more esoteric things, for example friend classes. At first s
 # 11. Testing
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
-
-// This chapter is too long. Figure out how to break it into pieces.
 
 "Data structures + algorithms = software" Adapted from Bertrand Mayer
 
@@ -1691,7 +1691,7 @@ But that's not the end of it. Of course, the company wants to make more money. T
 
 Obviously, this is highly frustrating. Every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Every release you waste 2 weeks of your time to do the same boring repetitive task. Every release, the company spends millions to test things that were already tested several times before. And even worse, as the software grows, the number of bugs increases. Some of them even slip through the expensive testing. And the release gets delayed as the bugs become harder and harder to fix. It's a nightmare.
 
-After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says "Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you a hundred Millions."
+After another terrible release, the company is at the verge of collapsing. The CEO comes to the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says "Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you one hundred Millions."
 
 Silence in the room. One hundred Millions??? You may laugh. But there are more than enough companies that would actually pay this amount. It’s an enormous amount, but at the same time the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It’s hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working and chances are the company will be bankrupt before you finish.
 
@@ -1772,7 +1772,7 @@ Now the test passes.
 
 In case you find the error message returned by the test not informative enough, you can can add an error message either separately or directly to the assert.
 
-There are different ways to change the error message of a faling test. The easiest is adding a message to the `assert` as follows:
+There are different ways to change the error message of a failing test. The easiest is adding a message to the `assert` as follows:
 
 ```py
 def test_function():
@@ -1791,14 +1791,14 @@ As you can see it’s pretty simple to write a test. Not only in python. There a
 Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
 
 ### When
-// rename this section? The title is redundant with another section, ## When what and how
 
 Our class vector contains the member function `distance_to`. It is part of the interface of the class and therefore has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible. Private functions give you much more degrees of freedom as you are allowed to change them at will. For pubilc functions you have to make sure that the interface stays the same. Making a function public means that you guarantee that the function will stay the same. Avoid changing existing interfaces, it's a lot of work.
 
 ### How
+
 Inside the test_vector.py file we write the test case. Before you miss it, I’d like the emphasize the very first line. We want to test the `Vector` class. We have to import the corresponding file.
 
-Next, we define the test case. Every test case gets a name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
+Next, we define the test case. Every test case gets a unique name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
 
 Inside the test we start with the setup part. In order to test the `distance_to` function we need two vector objects `v1` and `v2`. In the next line we calculate the distance between `v1` and `v2`.
 
@@ -1832,7 +1832,7 @@ There are also some things to watch out for in the execution part of the test. T
 
 Then it is common to miss some of the if-else branches. These are very important to test as most bugs usually hide in conditional statements. Make sure that you cover all cases, if necessary using a code coverage tool.
 
-Similarly you have to make sure your tests cover all the corner cases. This is one of the reasons why the tests should be written by the same person as the actual code was. The developer knows what the corner cases are, opposite to some other tester.
+Similarly you have to make sure your tests cover all the corner cases. This is one of the reasons why the tests should be written by the same person as the actual code was. The developer knows what the corner cases are, unlike to some other tester.
 
 You should make sure that you always change only either the code or the tests if you refactor code. This is the only way you can be sure that the changes are correct. If code and tests have to be changed at once, the changes should be straight forward.
 
@@ -1846,21 +1846,29 @@ Still, you should value the SRP. The code in tests should be clear to the reader
 
 ### Examples
 
+// Add an example where we refactor the test code.
+
 ## Number of test cases
 
-Probably the hardest decision is what values you want to do in your tests. Writing one test case for a function is much better than nothing. But maybe you just got lucky and your code works exactly for this one number? For a single argument function, I recommend testing all possible corner cases and about two other values. As you wrote the function, you will know the corner cases. Division by zero, passing an empty array as a function argument, the file used does not exist, etc. This is one of the reasons why a person writing the code should also write the unit tests.
+Probably the hardest decision is what values you want to use in your tests. Writing one test case for a function is much better than nothing. But maybe you just got lucky and your code works exactly for this one number? 
+
+For a single argument function, I recommend testing all possible corner cases and about two random values. As you wrote the function, you will know the corner cases. Division by zero, passing an empty array as a function argument, the file used does not exist, etc. This is one of the reasons why a person writing the code should also write the unit tests. Only this person knows the corner cases.
 
 For functions with many arguments it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with `3^3 = 27` test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. There might be cases where the variables don’t interact with each other. They are independent. This gives you the following options.
 
 Now if you see that they are all independent, you may test them independently. The number of tests reduces to about 3 for each variable, thus `3*3 = 9` test cases. This sounds much more reasonable. 
 
-Usually the function arguments are not independent, or at least it's not so clear how they interact. Otherwise they wouldn't be in the same function. And it’s genrally not feasible to write 27 test cases, that's just too much. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number and complexity of the function arguments low.
+Usually the function arguments are not independent, or at least it's not so clear how they interact. Otherwise they wouldn't be in the same function. And it’s genrally not feasible to write 27 test cases, that's just too many. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number and complexity of the function arguments low.
 
 I'd like to state again that it is important to really know what a function does. As I already wrote several times you have to test the corner cases. And you only know them if you know the code. You won’t find them by chance. Nor can you figure out if some variables are independent of each other or not. This is just one of the reasons why you have to write tests right along with the actual code. If someone else has to write the tests for your code, he’s missing this very crucial information and either has to read and understand all the code or just guess what it does. Both cases are sub optimal.
 
 You may also have structured objects as an input or output of a function. This can become worse than having three variables by orders of magnitude. The structured objects may have a thousand fields, for example elements in a list. Everything we discussed so far becomes peanuts. But we can still achieve reasonable test coverage if we try. First of all, all elements in a list have to be treated equally in your code. Never use a single list to store different elements! This is a fundamental rule when dealing with lists. It allows you to write tests for a fairly short list and deal with only one element of it. All the other elements will behave the same. The only corner case you'll have to take care of is the empty list.
 
-But also in large structured objects the complexity is usually manageable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function as the object is fairly generic. Again, it all comes down to the programmer knowing the relationship between different objects. Which parts of the object are really used inside the function? Write one generic test with default values for every part of the object. Then write also tests for some specific values of the object. Though again, here you'll have to figure out which the important values are. 
+But also in large structured objects the complexity is usually manageable. Most of the entries are usually fairly independent and can be tested accordingly. Most of the entries from a large structured object are probably not even needed inside a function as the object is fairly generic. If you have a nested struct as a function argument, only pass the substructs that are actually used inside the function. This way you can reduce the number of test cases significantly.
+
+Again, it all comes down to the programmer knowing the relationship between different objects. Which parts of the object are really used inside the function? Write one generic test with default values for every part of the object. Then write also tests for some specific values of the object. Though again, here you'll have to figure out which the important values are. 
+
+As you can see, the most complexity in tests originates from sub optimal code. If you write good code, the tests will be easy to write. In good code, there are few arguments with little nested structure and all elements in a list are treated equally. Therefore the number of test cases is low.
 
 ## Parts of a test
 
@@ -1878,7 +1886,7 @@ Setup and teardown are the functions automatically called at the beginning and t
 
 In most cases and especially in unit tests, there is no need for a teardown function. However, if your tests use text files, databases or something else that is presistant, things become tricky. Your tests might need temporary files, change values in databases, have network connections, etc. It becomes messy. You need a fool proof way that your file handling always works. This is where setup and teardown really come into play.
 
-For the file creation there is not that much that can go wrong. You create it from code or copy it from another location. This is to be implemented in the setup part of the test or using some function. If you copy files make sure the original file is write protected. 
+For the file creation there is not that much that can go wrong. You create it from code or copy it from another location. This is to be implemented in the setup part of the test or using some function. If you copy files make sure the original file is write protected. Otherwise you might change it by accident.
 
 The tricky part is deleting the files at the end of the test. And yes, it has to be at the end of the test rather than the beginning of the next test because you'll probably change the order of the tests at some point. Cleaning up at the beginning of a test is a fairly desperate measure. 
 
@@ -1889,7 +1897,7 @@ This problem can be solved by implementing the teardown function that is guarant
 Anyway, try to write tests that don’t need files or IO. It makes things much easier. Especially with unit tests you won't have to deal with setup and teardown functions.
 
 Here is an example of a test with setup and teardown functions. [https://code-maven.com/slides/python/pytest-class]
-// is there a better way to define setup and teardown? It's not so clear.
+
 ```py
 class TestClass():
     def setup_class(self):
@@ -1898,7 +1906,6 @@ class TestClass():
     def teardown_class(self):
         print("teardown_class called once for the class")
 
-
     def setup_method(self):
         print("  setup_method called for every method")
 
@@ -1906,16 +1913,30 @@ class TestClass():
         print("  teardown_method called for every method")
 
     def test_one(self):
-        print("    one")
+        print("    before")
         assert False
-        print("    one after")
+        print("    after")
 ```
+
+The captured output is this:
+```sh
+------------------------------------- Captured stdout setup ------------------------------------- 
+setup_class called once for the class
+  setup_method called for every method
+------------------------------------- Captured stdout call ------------------------------------- 
+    before
+------------------------------------- Captured stdout teardown ------------------------------------- 
+  teardown_method called for every method
+teardown_class called once for the class
+```
+
+It is showing that the teardown functions are called even if the test fails.
 
 ### Helper functions
 
 A test is also a programming object. Accordingly, it has to follow the basic rules, for example the SRP. Though you don't have to follow the SRP as strictly as in normal code. As written above, in tests DAMP is more important than DRY.
 
-Each test has exactly one purpose. It tests exactly one function or method. Testing many functions inside a single test is bad practice. Write helper functions for the setup of a test and then writing an additional test cases will be simple. You may even use copy paste in tests if it makes the code more readable! Having many smaller tests forces you to structure them better and improves the overall overview.
+Each test has exactly one purpose. It tests exactly one function or method. Testing many functions inside a single test is bad practice. Write helper functions for the setup of a test and then writing an additional test cases will be simple. You may even use a little bit of copy paste code in tests if it makes the code more readable! Having many smaller tests forces you to structure them better and improves the overall overview.
 
 Let's make an example how helper functions can make a test case easier to read.
 
@@ -1966,9 +1987,13 @@ Just as with normal code, the design of tests can be problematic.
 
 It will happen frequently that you have a test that can only pass if another test passes. They are coupled. For example, you have a function that creates a file and wirtes a number to it. You write a test that calls this function and checks the existence of the file. 
 
-Next you write a function that reads the contents of this file. In the test you will first call the function to create the file and then call the function to read it. Now there is a problem: These two tests are related. If the first test fails, the second test inevetably fails as well. If the code fails to create a file it won't be possible to read it. This kind of dependency is bad design and violates the SRP. For one failing feature only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying as it's not obvious why the tests fail.  
+Next you write a function that reads the contents of this file. In the test you will first call the function to create the file and then call the function to read it. Now there is a problem: These two tests are related. If the first test fails, the second test inevetably fails as well. If the code fails to create a file it won't be possible to read it. This kind of dependency is bad design and violates the SRP. For one failing feature, only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying as it's not obvious why the tests fail. Is it for a single reason or do they all fail for a different reason?
 
 Unfortunately having all the tests completely separated is a very hard, if not an impossible task. There is always some correlation between failing tests. But there is a technical solution that helps to some degree. In python you can skip tests if a requirement for the test is not met. Tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that might fail as another test already failed.
+
+```sh
+pip install pytest-dependency
+```
 
 ```py
 import pytest
@@ -1981,11 +2006,14 @@ def test_a():
 @pytest.mark.dependency(depends=["test_a"])
 def test_b():
     print("This will never be printed.")
+	assert False
 ```
 
-As in this example `test_a` is always going to fail, `test_b` will never be executed. The execution of `test_b` depends on the fact that `test_a` passed.
+As in this example `test_a` is always going to fail, `test_b` will be skipped as it depends on `test_a`. 
 
-// The code above didn't work due to an import problem with pytest on Windows. I'll have to fix this later and write down the actual error message.
+The output will be `1 failed, 1 skipped` as the second test was skipped. And in the short test summary info, only `test_a` is listed as failed. Only once `test_a` will be fixed, `test_b` will be executed.
+
+For unit tests, dependent tests are generally not a problem. Each test covers only one unit which shoudln't depend on any other units. Thus the tests are independent. For integration or acceptance tests [chapter Types of tests], this is a different story. They can easily become dependent on each other. This is why it is important to keep track of the dependencies of the different tests.
 
 ### Flaky tests
 
@@ -1999,9 +2027,7 @@ Especially unit tests should never be flaky. A test only becomes flaky if some p
 
 Tests that are over specified are called brittle. They break when changing the code in seemingly unrelated places. One example is testing a json file for formatting, even though the contents of the json file does not depend on the formatting. The formatting does not matter. It does not change any of the values in the file. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Something the result does not depend on. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interested in. Never use any string operations when reading a json file. This is the very definition of brittle code!
 
-// This text here is redundant with the next chapter. Should I remove it? Or should I keep it? 
-
-Another example of brittle tests are tests for methods that should be private but are made public in order to test them. This prevents you from refactoring this function as it is part of the public interface. Changing it will break the tests, even if the actual public interface is not changed. This is why private methods should not be made public in order to test them. If you really have the urge to test a private method, you should refactor it into a separate class.
+Another example of brittle tests are tests for methods that should be private but are made public in order to test them. This prevents you from refactoring this function as it is part of the public interface. Changing it will break the tests, even if the real public interface is not changed. This is why private methods should not be made public in order to test them. If you really have the urge to test a private method, you should refactor it into a separate class.
 
 ### Random numbers
 
@@ -2009,41 +2035,7 @@ If you ever use random numbers in your code, you might get stuck with your tests
 
 ## The Beyonce rule
 
-A common question is "what to test?". A very simple answer is: everything. This is certainly a correct answer, though you cannot always test everything equally extensively. Instead, at google they came up with the Beyonce rule. // Software Engineering at google // She sings in her song "If you like it should have put a ~~ring~~ *test* on it."
-
-## Mocking and Stubs
-
-// See chapter 13 of Software Engineering at google. Mocking seems great at first sight until it isn't.
-
-// this chapter is (partially) redundant with chapter 13, section Fakes and Mocks. Should I remove it?
-
-// is using DI and faking better?
-
-Mocking is commonly used in integration tests if you don't want to test the interaction of the object under test with another object. For instance if the other object is a physical device, is a database, it connects to the internet, etc. All kind of things that are slow or could fail. Things you don't want to test because they are flaky, slow or both. And they might be out of your reach to fix. In short: IO. Instead you want to simulate the device under test, the internet connection or the database. You want to mock it.
-
-At first, mocking sounds great. Just simulate the database and everything is great. However mocking turned out to have severe drawbacks. Most of all, mocking makes the tests rigid. You will spend a lot of time writing a mock for a database, but you will never reach the complete behavior. Thus if you add more functionality to your code, you always have to update your mock as well. This takes significant efforts.
-
-Generally it is recommended to use Dependency Injection (DI, explained in chapter 13) instead of mocking. This forces you to write interfaces instead of just mocking a few functions. Anything you want to mock might be changed in the future. And if you want to change it in the future it is good to stay flexible using a slim interface. This is what DI forces you to do.
-
-Here is a short example how DI can be used to mock an internet connection.
-```py
-class InternetConnection():
-	def __init__(self, url):
-		self._url = url
-
-	def get(self):
-		return requests.get(self._url)
-
-class InternetConnectionMock():
-	def get(self):
-		return "mocked response"
-
-def connect_to_google(connection):
-	internet_connection = connection("https://www.google.com")
-	return internet_connection.get()
-
-print(connect_to_google(InternetConnectionMock()))
-```
+A common question is "what to test?". A very simple answer is: everything. This is certainly a correct answer, though you cannot always test everything equally extensively. Instead, at google they came up with the Beyonce rule. [Software Engineering at google] She sings in her song "If you like it then you should have put a ~~ring~~ *test* on it."
 
 ## Untestable behavior
 
@@ -6640,6 +6632,7 @@ API	Application Programmable Interface
 BDD	Behavior Driven Development
 CD 	Continuous Delivery
 CI 	Continuous Integration
+DAMP Descriptive And Meaningful Phrases
 DB	Database
 DI	Dependency injection
 GUI	Graphical User Interface 
