@@ -14,23 +14,23 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 
 ## Things to write
 
--	If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
--	What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
--   What is mocking and stubs? (chapter Testing)
--	Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
--   Which design patterns are important? (chapter Design patterns)
--   Do I need the chapter logging?
--	Restructure and sort the chapters somehow.
--	Some more examples on refactoring (what technique exactly? Converting a function into a class?)
--	Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
--	How to work with existing code? If the code is not as nicely written as explained here. Read WELC again.
--	How to organize software projects
--	Mention combinatorial explosion somewhere?
--	And some more chapters towards the end of the book need to be improved.
+- If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
+- What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
+- What is mocking and stubs? (chapter Testing)
+- Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
+- Which design patterns are important? (chapter Design patterns)
+- Do I need the chapter logging?
+- Restructure and sort the chapters somehow.
+- Some more examples on refactoring (what technique exactly? Converting a function into a class?)
+- Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
+- How to work with existing code? If the code is not as nicely written as explained here. Read WELC again.
+- How to organize software projects
+- Mention combinatorial explosion somewhere?
+- And some more chapters towards the end of the book need to be improved.
 
 Chapters that still need improvement:
-- 14. DevOps: There is some part missing. I don't know what exactly. Maybe some more details about the different tools. (Suggestion Copilot)
-- 
+
+- DevOps: There is some part missing. I don't know what exactly. Maybe some more details about the different tools. (Suggestion Copilot)
 
 # 2. Table of content
 
@@ -153,9 +153,12 @@ Chapters that still need improvement:
 		- [Testing files](#testing-files)
 		- [Testing classes](#testing-classes)
 		- [Copilot](#copilot-4)
-	- [Integration tests](#integration-tests)
+	- [Component tests](#component-tests)
+		- [Fakes](#fakes)
+		- [Mocks](#mocks)
 	- [Acceptance tests](#acceptance-tests)
 	- [Performance tests](#performance-tests)
+	- [Explorative tests](#explorative-tests)
 	- [When to run tests](#when-to-run-tests)
 	- [Who should write tests](#who-should-write-tests)
 	- [The testing pyramid](#the-testing-pyramid)
@@ -1874,7 +1877,7 @@ As you can see, the most complexity in tests originates from sub optimal code. I
 
 As we have seen, a test generally consists of 3 stages. 
 
-The first stage is the setup. It creates all the required objects for the test. Usually these are all the variables. For components and integration tests, this may also be copying or creating files or even databases.
+The first stage is the setup. It creates all the required objects for the test. Usually these are all the variables. For components and component tests, this may also be copying or creating files or even databases.
 
 The second stage is the execution of the test. Here you run the function you want to test and check that the result is as expected.
 
@@ -2043,12 +2046,12 @@ As software engineers, we want to automate everything, tests included. However, 
 
 # 12. Types of tests
 
-There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 4 different types.
+There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types.
 1. Unit tests test the behavior of individual functions and classes.
 2. Integration tests test the components (libraries, modules) and the interaction between them.
 3. Acceptance tests test the behavior of the complete software.
 
-As we will see, each of these categories has its own right to exist as they cover different parts of the code. They are all important and should be used in combination. There are also other types of tests and some of them we will go into more details later on, while others we just ignore. Also the naming of the different types of tests is not standardized. There are different names for the same type of test. For example acceptance tests are also called end-to-end tests (E2E tests).
+As we will see, each of these categories has its own right of existance as they each cover different parts of the code. They are all important and should be used in combination. There are also other types of tests and some of them we will go into more details later on, while others we just ignore. Also the naming of the different types of tests is not standardized. There are different names for the same type of test. For example acceptance tests are also called end-to-end (E2E) tests.
 
 The small unit tests are the foundation of the testing infrastructure. They can be executed quickly. Meanwhile going towards bigger tests, they take longer to execute and are testing the interaction of components, rather than individual components themselves. Thus bigger tests are more likely to find bugs, but at the same time they are not appropriate for locating them. 
 
@@ -2067,7 +2070,7 @@ print(square(2))
 print(square(5))
 ```
 
-This works. They will find the bug in this case. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is actually supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of a procedural DRY violation that should be optimized away. And the solution are unit tests.
+This works. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is actually supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of a procedural DRY violation that should be optimized away. And the solution are unit tests.
 
 Unit tests cover small pieces of code. Usually they test a public method or a standalone function. In the example above, they would check everything that is checked using print statements. The unit tests for the `square` function would look something like this:
 
@@ -2088,22 +2091,28 @@ Most of the time, unit tests only need a setup and an execution phase. There is 
 
 "Why...? How? No files? No database?"
 
-// Not sure, I might have to rewrite the following section. It's not so clear.
+Yes, good point. According to the SRP, a function or class should do only one thing. Therefore it should not read a text file and do some complicated calculation. Reading a text file should be done in a dedicated function. This function will not have a unit test. But it is not necessary as reading a file and returning it as a string is no difficult task that needs to be tested automatically. And it will be covered by acceptance test.
 
-Yes, good point. Somewhere in the code you will probably have to interact with the file system. Reading a file takes 1 line of code. You read it into a string and you can forget about the file. The following function does the job. Instead of writing tests for `share_values()` we can write tests for `extract_share_values()` and pass it a string that looks like the content of the file. Such that we don’t have to deal with the filesystem anymore.
+Let's say we have the following code.
 
 ```Py
 def share_values(filename):
-	share_value_file = read_share_values(filename)
-	share_values = extract_share_values(share_value_file)
+	share_value_string = read_share_string(filename)
+	share_values = extract_share_values(share_value_string)
 	return share_values
+
+def read_share_string(filename)
+with open(filename,'r') as f:
+    return f.read()
 ```
 
-This is similar to the GUI case for acceptance tests. You pack everything you don’t want to test into a small layer that is unlikely to fail and the remaining test becomes much smoother. In this case here this small layer is the function `read_share_values` which reads the file into a string.
+First of all, the function `share_values` does 2 things. It calls the function to read the file and then processes the string with `extract_share_values`. But this is ok, at some point the code has to do several things. But it separates these two things nicely. Now it is not possible to write a unit test for `share_values` because it reads a file. But instead you can write a unit test for `extract_share_values`. This function contains the actual logic. It is the function that is supposed to be tested.
+
+This is similar to the GUI layer for acceptance tests. You pack everything you don’t want to test into a thin layer that is unlikely to fail and the remaining test becomes much smoother. In this case here this small layer is the function `read_share_values` which reads the file into a string. Uncle Bob calls this a "Humble Object" [Clean Craftsman]. It is a small layer that is unlikely to fail and therefore does not need to be tested. It is just a thin wrapper around the file reading function.
 
 The same holds for database access. You put all the code that requires DB access into a few simple functions that you are not going to write unit tests for but you make sure you test everything else.
 
-An even better approach is using Dependency Injection (DI) as explained in the next chapter but for the moment we’ll leave it with the small wrapper function.
+When writing component or acceptance tests, an even better solution is writing Dependency Injection (DI) as explained in the next chapter. But for the moment we’ll leave it with the small wrapper function.
 
 ### Testing classes
 
@@ -2111,17 +2120,16 @@ Writing unit tests for classes is probably the most important part of this chapt
 
 First of all, classes tend to become too big. They have too many member variables and complicated private methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do. They increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design.
 
-// This text here is redundant
+Furthermore, there is the issue of how to deal with private methods in big classes. Apparently, the testing framework doesn’t have access to private methods. No one has, except for the class itself and maybe some friends classes. A first attempt is making the private methods public. This, however, is not recommended. You should not make methods public, only in order to test them. This will lead to crippled code with too many public methods, which is the exact opposite of encapsulation. For the same reason you should resist the temptation of making the test a friend class of the class under test. Therefore, unit tests should only test the public interface of a class. It should test the class as a whole. If you are tempted to test also some private methods, you should resist. This is a clear sign that your private methods are too complex. Make these private methods a class on their own with a public interface that you can test.
 
-Furthermore, there is the issue of how to deal with private methods in big classes. Apparently, the testing framework doesn’t have access to private functions. No one has, except for the class itself. A first attempt is making the private functions public. This, however, is not recommended. You should not make functions public, only in order to test them. This will lead to crippled code with too many public functions, which is the exact opposite of encapsulation. For the same reason you should resist the temptation of making the test a friend class of the class under test. Therefore, unit tests should only test the public interface of a class. If you are tempted to test also some private functions, you should resist. This is a clear sign that your private functions are too complex. Make this private function a class on its own with a public interface that you can test.
+Classes that are hard to instantiate are another problem. For example, if the constructor has side effects that are not guaranteed to be undone by the destructor, as opening a file, incrementing a counter, etc. In the real code, it may be guaranteed that all the required conditions are met such that you never run into troubles. For instance that you are instantiating a class only once. When running unit tests however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
 
-Classes that are hard to instantiate are another problem. For example, if the constructor has side effects that are not guaranteed to be undone by the destructor, as opening a file, incrementing a counter, etc. In the real code, it may be guaranteed that all the required conditions are met to never run into troubles, such as instantiating a class only once. When running unit tests however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
+As a summary one can say the following things about classes and tests:
+- Classes should be small and contain few member variables
+- If you feel like testing private methods, you should refactor them into separate classes
+- The constructors should be simple and not rely on any fancy logic
 
-As a summary one can say two things about classes and tests:
--	Classes should be small and contain few member variables
--	The constructors should be simple and not rely on any fancy logic
-
-Both these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+All these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
 
 ### Copilot
 
@@ -2137,7 +2145,7 @@ def test_roman_number():
 	# ... and tests up to number 42
 ```
 
-However there are two minor things that I'd like to have improved. First of all there should be preferably only one assert per test. Here we have 42 of them.
+However there are two minor things that I'd like to have improved. First of all there should be preferably only one, or at least very few, asserts per test. Here we have 42 of them.
 
 Second the test is testing things that were not even implemented in the code. The roman number function was only implemented for values up to a value of 3. So it seems as if Copilot somehow guessed what kind of tests were needed but did not check what is actually implemented.
 
@@ -2152,31 +2160,39 @@ The code above can be refactored using a dict,
 
 Even if I wanted this change, when looking at the code it is not quite clear if this is an improvement over the original code. We have removed some redundancy and use only one assert. On the other hand the redundancy was not that bad and the old code was very easy to understand, which is maybe even more important than removing the repeating code. This is a decision that takes human judgment and I'm still not sure which one is the better solution.
 
-// Person example from https://youtu.be/IavOJI5OV7g?t=588 ?
+## Component tests
 
-// where to mention that you should have few (at best 1) asserts per test?
+Component tests lie in between unit and acceptance tests with respect to both, size and execution time. Component tests only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested alone, without creating an end-to-end test.
 
-## Integration tests
+Component tests, at its own right, are just at least as important as acceptance tests. Component tests are different from acceptance tests as they use fakes and stubs to mimic the behavior of collaborating objects, while acceptance tests use the real objects.
 
-Integration tests lie in between unit and acceptance tests with respect to both, size and execution time. Integration tests only test one part of the whole software. A single library for instance. The public interface of the library under test is not connected to other libraries, but rather to fake or mock objects. [See section on Mocking and Stubs in the previous chapter on testing.] Mocks allow a library to be tested alone, without creating an end-to-end test.
+### Fakes
 
-Integration tests, at its own right, are just at least as important as acceptance tests. Integration tests are different from acceptance tests as they use fakes and stubs to mimic the behavior of collaborating objects, while acceptance tests use the real objects.
+A fake is a working implementation of the real object. It simulates the real behavior, though it does take some short cuts. For example a fake is an in-memory database instead of a real database. This is a very common use case for fakes. They are used to replace slow or expensive objects.
+
+### Mocks
+
+Unlike fakes, mocks don't have a working implementation of the real object. Opposite to a fake, a mock does not implement the real behavior. Instead it is a dummy object that has some predefined behavior, depending on the input arguments. For example a mock can be used to simulate a network connection. It will always return the same result, no matter what the input is.
+
+Of course, in theory fakes and mocks are not so difficult to understand. The problem lies once again in the reality. When should you use a fake or a mock? Or something completely different? Of course it would always be desirable to have a perfect fake that imitates the behavior of the real object. This, however, would take a huge amount of time to implement. Having a mock, on the other hand, is very easy to implement, but it is not as useful as a fake. Therefore you always have to make a tradeoff, what you actually need.
 
 ## Acceptance tests
 
-Acceptance tests do what most people would intuitively expect from a test. Some marketing person orders a new feature. He tells you (more or less) exactly what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story in the previous chapter with the desperate manager, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was working on the underlying code. So there is one thing you'll always do: for every new ticket you write an acceptance test.
+Acceptance tests do what most people would intuitively expect from a test. Some marketing person, e.g. the Product Manager (PM), orders a new feature. He tells you, more or less exactly, what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story in the previous chapter [chapter Testing] with the desperate manager, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was changing the underlying code. So there is one thing you'll always do: for every new ticket you write an acceptance test.
 
 If you publish some code examples as a documentation of your API, you should write an acceptance test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
 
-Acceptance tests are user centered. The user doesn’t know anything about the internals of the code. He has only the interfaces you give him: GUI, API, joystick, microphone, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed to control the whole server farm.
+Acceptance tests are user centered. The user doesn’t know anything about the internals of the code. He has only the interfaces you give him: GUI, API, joystick, microphone, etc. And this is all he cares about. He wants to watch a YouTube video. He wants high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed to control all the server farms.
 
 Sounds good. But at the same time, it seems extremely difficult to write these tests? Testing a GUI or the input of a microphone sounds pretty hard. 
 
-True. But when making a few simplifications, the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure [layers of software...?] the GUI is an abstraction level higher than the API. Don't mix the two! The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. Every mouse click corresponds to a function call to the underlying API. If the GUI looks fine, it is quite certainly fine. It is a thin layer that doesn't contain any logic and it's not able to hide bugs. // use the expression used by Robert C Martin?? in what book was it again? //
+True. But when making a few simplifications, the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure [layers of software...?] the GUI is an abstraction level higher than the API. Don't mix the two! The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. As mentioned before, this is called a Humble Object by Robert C. Martin [Clean Craftsman]. This layer is hard to test, but unlikely to fail. Every mouse click corresponds to a function call to the underlying API. If the GUI looks fine, it is quite certainly fine. It is a thin layer that doesn't contain any logic and it's not able to hide bugs.
 
 Writing tests on the GUI level is quite hard. Though there are tools, for example Selenium, that automate the clicks on the GUI and translate them into function calls. There are just too many programs that are not structured as recommended here. They cannot be tested otherwise. Meanwhile there is considerable demand for testing them. Needless to say that using these testing tools adds significant overhead to your testing efforts.
 
-Testing on the API level is in comparably easy. You can translate the button clicks from the GUI examples directly into API function calls. Write a test that checks the result and you’re done. However, there is one problem with acceptance tests. In practice you have to deal with potentially huge files, databases and slow network connections. This may slow down your tests considerably. Additionally, the files or databases first have to be created. This can be done either with some script or by copying them from another location. The output of the tests may be potentially huge files as well. Comparing the results of these big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files.
+Testing on the API level is in comparably easy. You can translate the button clicks from the GUI examples directly into API function calls. Write a test that makes the API calls, checks the result and you’re done. However, there is one problem with acceptance tests. In practice you have to deal with potentially huge files, databases and slow network connections. This may slow down your tests considerably. Additionally, the files or databases first have to be created. This can be done either with some script or by copying them from another location. 
+
+The output of the tests may be potentially huge files as well. Comparing the results of these big files may also be not too helpful. One option for improving the performance is comparing hash values instead of comparing complete files.
 
 Acceptance tests are important, but they cannot tell you where an error comes from. Acceptance tests are quite frequently highly correlated. A single bug in your infrastructure code can cause many tests to fail. Therefore it is important to combine them with unit tests in order to locate the source of the bug.
 
@@ -2184,21 +2200,27 @@ Acceptance tests are important, but they cannot tell you where an error comes fr
 
 One test class that frequently gets forgotten are performance tests. Acceptance tests frequently are created for as small databases as possible in order to reduce the execution time. But this leads to the problem that executing the code with normal sized databases is not tested and chances are that this would be unacceptably slow. For this reason it is important to write performance tests that are running with realistic parameters to prevent bad user experience due to slow response times.
 
+## Explorative tests
+
+Explorative tests are written for finding bugs that the developer might not have thought about. They are usually executed by the testing or quality assurance team. They are not automated and are not part of the test suite. They are just executed and if a bug is found it is reported to the developer. Otherwise it is just ignored. Explorative tests are not a replacement for unit or acceptance tests. They are just an additional tool to find bugs.
+
+Executing explorative tests takes some experience about what could go wrong. What corner cases might have been missed, etc. 
+
 ## When to run tests
 
 It is very important that tests are run automatically. This is the only way to ensure that they are always run when necessarily. When they are run exactly, however, depends on the kind of test.
 
 Unit tests are fasts. Each one of them takes only a few milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all. It is important that unit tests are fast as they are run very frequently.
 
-Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) [see chapter devops (?)] the same way as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
+Code is only allowed to be merged into master if the unit tests all pass. This means that every programmer has to run the unit tests before creating a merge request (MR) [chapter devops (?)] the same way as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
 
-Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) [see chapter devops (?)] accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
+Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) [chapter devops (?)] accordingly. It should check the unit tests just the same as it checks the formating of the code and the compilation. This is just another mandatory requirement inside the MR. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
 
-With acceptance tests it becomes a little bit trickier. Acceptance tests are slow and can't be run before every MR. Therefore you can't guarantee that all acceptance tests pass all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. Usually it is fairly obvious why the tests failed and it won't take much time to figure out who broke the test and how. But it is important that the problem gets resolved as soon as possible.
+With acceptance tests it becomes a little bit trickier. Acceptance tests are slow and can't be run before every MR. Therefore you can't guarantee that all acceptance tests to be run all the time. Instead you have to set up the CI to run the acceptance tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. Usually it is fairly obvious why the tests failed and it won't take much time to figure out who broke the test and how. But it is important that the problem gets resolved as soon as possible.
 
 ## Who should write tests
 
-With unit and integration tests, it's quite clear that the corresponding developer has to write the tests. He knows the code best and he knows what the code is supposed to do. Unless you work in the automotive or aerospace industry, where the tests are written by a dedicated tester.
+With unit and component tests, it's quite clear that the corresponding developer has to write the tests. He knows the code best and he knows what the code is supposed to do. Unless you work in the automotive or aerospace industry, where the tests are written by a dedicated tester.
 
 With acceptance and performance tests, there is the situation is not that clear. Should the tests be written by someone from the development team, from the marketing side or by an independent tester? As always in software engineering, such questions have no easy answer. There are just some trade offs to be made between the different solutions.
 
@@ -2217,11 +2239,11 @@ Unit tests are the foundation of the testing pyramid. They are generally the mos
 // get an image without copy right
 <img src=images/testing_pyramid.jpg width="300">
 
-Integration tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still useful to check the functionality of the radio. About 15% of all tests are integration tests.
+Component tests are the second level of the pyramid. They are like assembling the radio with the already controlled parts. Component tests are coarser than unit tests and can't locate errors as precisely. But they are still useful to check the functionality of the radio. About 15% of all tests are component tests.
 
 The acceptance tests should only check that the installation of the radio in the car worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
 
-Acceptance tests are the least common. They are very valuable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you get from an acceptance test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing acceptance tests. Once you know that the engine, the gear box and the brakes of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are end-to-end tests.
+Acceptance tests are the least common. They are very valuable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you get from an acceptance test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many E2E tests. If you have good test coverage with your unit and component tests, chances are low that you'll have a lot of failing acceptance tests. Once you know that the engine, the gear box and the brakes of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are end-to-end tests.
 
 # 13. Writing better Code with Tests
 
@@ -2249,7 +2271,7 @@ Finally, I would like to emphasize once again the importance of this chapter. Le
 
 At first, it sounds great to write integration, or even Acceptance tests. With comparably short tests you cover a fair amount of the code base. But this comes at a price.
 
-There is much more code covered by a single integration test than by many unit tests. This has its advantages, but also some drawbacks at the same time. It makes integration tests much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or acceptance tests is much harder than fixing bugs found by unit tests. At the same time, integration tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately these tests are expensive to run. They are huge and slow.
+There is much more code covered by a single component test than by many unit tests. This has its advantages, but also some drawbacks at the same time. It makes component tests much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or acceptance tests is much harder than fixing bugs found by unit tests. At the same time, component tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately these tests are expensive to run. They are huge and slow.
 
 Despite these drawbacks, integration and acceptance tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early. Acceptance tests for example are important to prove that the user stories are really working. To prove that the software really works. Or to write a test case if a bug was found.
 
@@ -2569,7 +2591,7 @@ Development and Operations, short DevOps, is the combination of Continuous Integ
 
 Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
-Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, component tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
 - The code is formated according to specification
 - The static code analysis passes
 - The build passes
