@@ -2662,7 +2662,7 @@ Development and Operations, short DevOps, is the combination of Continuous Integ
 
 ## The early 2000s
 
-Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
 Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, component tests, system tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
 - The code is formated according to specification
@@ -2671,7 +2671,7 @@ Most teams were not writing tests for their code. It just wasn't fashion back th
 - Building all the tests works
 - All the tests pass
 
-Even though there are companies that don't care about the formatting anymore. They just let the formatter run in any merge request on the server and locally the developers can use whatever format he likes. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
+Even though there are companies that don't care about the formatting anymore. They just let the formatter run in any merge request on the server and locally the developers can use whatever format they like. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
 
 Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
 
@@ -2679,37 +2679,18 @@ We have the development (Dev) and the IT operations (Ops) Bundled all together, 
 
 ### Getting a project
 
-Furthermore getting started to work witn an existing project was frequently a pain. There were so many things that could have gone wrong. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
+Furthermore getting started to work with an existing project was frequently a pain. There were so many things that could have gone wrong. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
 
 It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
 
 ## Benefits of DevOps
 
-// Is it worth writing this chapter? Or should I skip it and maybe wirte something else?
-
 [https://www.atlassian.com/devops]
 
 - Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
 - Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
-- Rapid deployment:
-
-<!-- 
-// Continuous integration, old text
-
-Software teams used to release a new version of their software every few months, sometimes even years, as I explained in the chapter on testing. The reason was the tremendous overhead required to make a release. All the sub projects had to be built, linked and packaged. Even worse, all the code had to be tested before every release. It was simply not possible to release more often with this amount of overhead every time.
-
-Now the idea of Continuous Integration (CI) is to automate this whole process, allowing you to publish a nightly build if needed. You automate the whole build process. You write automated tests, both unit and acceptance tests. You automate absolutely everything you need in order to be sure you have a stable release.
-
-CI is of paramount importance. Not only because of the daily release. It also creates a very short feedback loop. You get to your desk in the morning and you know right away whether all the code works fine or if the busy employee added a hack late at night and introduced a bug that his local unit tests did not catch. You might not be completely convinced, but I cannot overstate how important CI is for bigger projects.
-
-It might have come apparent to you that automating things means using scripts everywhere. This is indeed the case. It might be a pain to you. It sounds like a lot of work. It would be much simpler to build everything with a few clicks instead and let everyone run their own tests. 
-
-This is a perfectly fine argument, but it is missing the point. On the long term, this manual working style is eating up so much time. Spending a few days on a properly set up CI with build process, automated tests, etc. outweighs the initial costs by a lot. Explaining the setup to a new employee becomes straight forward. A build is just a single command away, same for testing, etc. The overhead for a new employee to get started becomes negligible.
-
-As a rule of thumb: if your CI, build, testing, etc. is hard, you just didn’t get it right so far. Keep working on it until you get it right. Then it will feel super smooth. And you learned a great deal along the way.
-
-The most commonly used tool at the time of writing for CI is Jenkins. It is web based ...? -->
-
+- Rapid deployment: DevOps allows for rapid deployment. This has become more and more important in the last years.
+- Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
 
 
 # 15. Refactoring
