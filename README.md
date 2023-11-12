@@ -195,6 +195,7 @@ Chapters that still need improvement:
 		- [Renaming](#renaming)
 		- [Extract function](#extract-function)
 		- [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
+		- [Sprout class \[Feathers p. 62\]](#sprout-class-feathers-p-62)
 	- [Real life refactoring](#real-life-refactoring)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
@@ -2046,7 +2047,7 @@ As software engineers, we want to automate everything, tests included. However, 
 
 # 12. Types of tests
 
-There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types.
+There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a mixture of two different types. But in general, the following 3 categories are sufficient.
 1. Unit tests test the behavior of individual functions and classes.
 2. Integration tests test the components (libraries, modules) and the interaction between them.
 3. Acceptance tests test the behavior of the complete software.
@@ -2105,6 +2106,8 @@ def read_share_string(filename)
 with open(filename,'r') as f:
     return f.read()
 ```
+
+// this is called Wrap Method by Michael Feathers, [WELC p. 70]
 
 First of all, the function `share_values` does 2 things. It calls the function to read the file and then processes the string with `extract_share_values`. But this is ok, at some point the code has to do several things. But it separates these two things nicely. Now it is not possible to write a unit test for `share_values` because it reads a file. But instead you can write a unit test for `extract_share_values`. This function contains the actual logic. It is the function that is supposed to be tested.
 
@@ -2699,23 +2702,19 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 
 ## There will be change
 
-If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database changes, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or you write mobile apps that are guaranteed to last only 1 or 2 years. Thus you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
+If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database changes, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or if you write mobile apps that are guaranteed to last only 1 or 2 years. In all other cases, you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
 
 ## Keeping code in shape
 
 // first refactor the core, refactor subsidiary code only when needed. It is important to focus on some parts. Refactoring the whole code is a tremendous amount of work. Make supporting code to be generic.
 
-Even without external changes it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder [The Pragmatic Programmer]. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy  [Chapter Physical Laws of code].
+Even without external changes it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder [The Pragmatic Programmer]. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy [chapter Physical Laws of Code].
 
-// this text here is redundant. Certainly with Entropy in Physical Laws of code. Also with some other chapter?
-
-Refactoring is just like cleaning up your kitchen. Every time you cook something you have dirty dishes. But unlike for the kitchen you cannot hire a cleaning lady to clean up your code. She wouldn’t know what to do. You have to clean up your code by yourself. You have to refactor it. Continuously. You will be spending more time refactoring than writing new code. And as the code becomes older it only gets worse. That’s the faith of a software engineer.
-
-I guess everybody reading (or writing) this book knows some of the problems why code rots. The very first example is copy paste code. This should be banned altogether. Instead of rewriting a function to fit its new needs, one just copies it and changes a line or two in its new location. Another issue is adding more and more features to an existing class. Also the features that you add are in hindsight at the wrong place in your code and have to be moved to the correct location. These are some of the reasons why code rots and needs regular refactoring.
+I guess everybody reading (or writing) this book knows some of the problems why code rots. The very first example is copy paste code. Copy paste code should be banned altogether. Instead of rewriting a function to fit its new needs, one just copies it and changes a line or two in its new location. Another issue is adding more and more features to an existing class. Also the features that you add are in hindsight at the wrong place in your code and have to be moved to the correct location. These are some of the reasons why code rots and needs regular refactoring.
 
 ### Refactoring and automated tests
 
-Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would change functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging doubt that something was wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but in the end, they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
+Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would break existing functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging doubt that something was wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but in the end, they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
 
 I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... you need... automated tests! Unit tests, acceptance tests, performance tests, etc. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
 
@@ -2755,7 +2754,7 @@ You have to face the facts. Waterfall refactoring is not working out. Instead yo
 
 // Make circle graphic: changes to be made, make changes, more changes to be made
 
-A refactoring certainly has the highest impact if you have some new understanding of the problem you try to solve. This allows you to rewrite a complete piece of code at once and make significant progress with your code quality.
+A refactoring certainly has the highest impact if you have some new understanding of the problem you try to solve. This allows you to rewrite a complete piece of code at once and make significant progress with your code quality. Eric Evans calls this "Refactoring towards deeper insight", [Domain-Driven Design]. 
 
 ### The circle of doom
 
@@ -2763,9 +2762,7 @@ There is something very mean about refactoring. Refactoring good code is easier 
 
 Don’t slack off refactoring. You’d pay the price rather sooner than later. Make sure you always keep the code in shape, this makes your life much easier.
 
-// The behavior of the software may not be changed. Even if it’s a bug, you should rethink fixing it as the users may rely on that bug.
-
-// section on text book refactoring -> write something about Michael Feathers book. Or the few pages of Uncle Bob. (where?) Or the book of Martin Fowler.
+You should always consider: even if you don't like the behavior of your code as you are refactoring, you should not change it. The behavior of the software may not be changed. Even if it’s a bug, you should rethink fixing it as the users may rely on that bug.
 
 ## When to Refactor
 
@@ -2789,7 +2786,7 @@ Most important of all, it is your code. You are responsible. You are the one to 
 
 ## Refactoring process
 
-Refactoring follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Some ideas I had for a long time, others I got while reading other books. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts, moving chapters around and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: "By refactoring I move the understanding from my head into the code."
+Writing code follows a similar process that I also use when writing this book here. I first started with writing down the basic ideas. Some rough drafts of what I wanted to have in this book. Some ideas I had for a long time, others I got while reading other books. Then I was reading the text over and over again and reworked it several times, clarifying something here and there, removing redundant parts, moving chapters around and adding some more explanations where needed. Every time I started to understand my text better and could further improve it. Until I was roughly at the point where the text said what I wanted it to. Until I had put all my knowledge from my head into the text and sorted it out into a human readable piece of text. Or as Ward Cunningham had put it: "By refactoring I move the understanding from my head into the code."
 
 // add the graph from p.193, DDD. Refactoring is a non-linear process.
 
@@ -2844,7 +2841,7 @@ For once you are allowed to use copy paste in order to create the new function a
 
 You can also use Copilot to extract this function. Just write the command "move the print statements into a dedicated function" and Copilot will do the rest for you. Though as always, you should pay attention that the solution is correct. In this case it happened to me that Copilot suggested an incorrect solution.
 
-There is really not that much more to know about extracting functions than what I just showed here. It is really a simple refactoring technique, yet it is very important. This is probably the most used refactoring technique. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. You may extract methods from this class later on if needed.
+There is not that much more to know about extracting functions than what I just showed here. It is a really simple refactoring technique, yet it is very important. This is probably the most used refactoring technique. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. You may extract methods from this class later on if needed.
 
 Inlining functions is the opposite process of what we just saw and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function.
 
@@ -2854,9 +2851,18 @@ In chess there is a rule of thumb that you should talk (quietly) with your own p
 
 Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
 
+### Sprout class [Feathers p. 62]
+
+If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. Otherwise you should maybe reconsider your class design and rewrite it such that it has less coupling.
+
+// I think there is still quite something to write here. Maybe add some more examples?
+
+// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC]
+
 ## Real life refactoring
 
 // Stuff here is from Feathers book. Read it again and add some more stuff here.
+// It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
 
 In real life, your start getting afraid of the code changes you make in a refactoring. There’s just too much that can break without any test telling you. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
 
@@ -2880,7 +2886,7 @@ Writing tests would be a very noble thing to do, but it is not always that easy.
 
 There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
 
-Some of the seams explained in Working Effectively with Legacy Code change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say, that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
+Some of the seams explained in Working Effectively with Legacy Code change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
 
 The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
 
@@ -2896,7 +2902,7 @@ However, passing a boolean as done in the code above is generally considered bad
 
 Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
 
-The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are system tests. And if you don’t have any useful API you can write your tests in, you might be completely screwed. I'm sorry, there's no other way to say it.
+The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are acceptance tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
 
 ### Sketches
 
@@ -2974,10 +2980,7 @@ This code can be further refactored with the following command:
 	return roman
 ```
 
-As always, Copilot works best if you give it some step by step instructions.
-
-// how does Copilot do with refactoring some more difficult problems?
-
+As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
 # 16. Understandable code
 
