@@ -730,7 +730,7 @@ One of the main reasons Java got so popular was the garbage collector. It took c
 
 Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
 
-Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory save code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
+Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
 
 Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
@@ -812,7 +812,7 @@ One level higher is the API. This defines the interface between our code and the
 
 ### GUI and acceptance tests
 
-On the highest level are the GUI and the acceptance tests, both at the same level. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a clear indication of very bad sign.
+On the highest level are the GUI and the acceptance tests, both at the same level. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. It is so much easier writing on the API than testing a GUI. You should only test GUIs if you absolutely have to because, for whatever reason, they contain too much logic. Tough this is a clear indication of very bad design.
 
 
 # 7. Interfaces
@@ -827,7 +827,7 @@ In this chapter we learn that interfaces exist not only in software but also in 
 
 Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot but the basic principles are very similar.
 
-"Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European plug and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-save. Though pretty much all devices can deal with both voltages by now.
+"Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European socket and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting your American 110V device into a European 230V plug causing damage. It’s fail-safe. Though pretty many devices can deal with both voltages by now.
 
 An example of bad design is the USB 2 port. The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB 3 port has a much more user-friendly design. You can plug it in either way. The lanes can be either symetrical or asymetrical. The technicians implemented a solution that enabled both connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers, but once solved, it is a very convenient solution for the users.
 
@@ -972,7 +972,7 @@ def can_fight(button):
 	return true
 ```
 
-Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frquently no perfect solution, but at least we can improve it compared to the initial code.
+Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frequently no perfect solution, but at least we can improve it compared to the initial code.
 
 ### Naming
 
@@ -1099,7 +1099,7 @@ def do_something(numbers: Numbers):
 
 ## Output arguments
 
-A very irritaging thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable or by const to make it unmodifiable. However, in other languages, this has to be clear from the context of the function.
+A very irritating thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable or by const to make it unmodifiable. However, in other languages, this has to be clear from the context of the function.
 
 Changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter its arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
 
@@ -1184,7 +1184,7 @@ Indeed, this is a very important question. Even extremely important. Once you ar
 
 Let’s figure out why there should be private variables and functions at all. We need something where you face only the surface of it and you only have very few ways to interact with it. It’s not hard to find an example. This description holds for almost everything around you. For example your car. It is a highly complex object. It contains an engine, brakes and tons of other parts. You don’t even want to know. You only want it to drive. You need the speed bar, the brake pedal and the steering wheel. 
 
-You have this absolutely massive object and you can essentially do only three things with it: increase the velocity, reduce the velocity and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically as it should. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
+You have this absolutely massive object and you can essentially do only three things with it: increase the speed, reduce the speed and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically as it should. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the steering wheel servo control. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
 
 There is one very simple rule of thumb which parts of a class should be public or private. If a class has no functions, it’s a struct and all variables should be public. Otherwise as few functions as possible should be public and all variables are private. But we’ll look at this rule in more detail in the next sections.
 
@@ -1193,7 +1193,7 @@ There is one very simple rule of thumb which parts of a class should be public o
 
 I like to broadly categorize classes by the number of variables and the complexity of the functions they contain. Making sure that your classes are fitting into one of these categories is helpful for fulfilling the SRP.
 
-Some of the follwoing class names, namely the worker class, delegating class and the pure method class are not commonly used names. I made them up by myself because I find it important to distinguish between different types of classes, depending on the amount of variables and functions they have.
+Some of the followoing class names, namely the worker class, delegating class and the pure method class are not commonly used names. I made them up by myself because I find it important to distinguish between different types of classes, depending on the amount of variables and functions they have.
 
 ### Data class
 
@@ -1266,7 +1266,7 @@ class Animal(ABC):
         pass
 ```
 
-An alternative to abstract base classes in Python are protocols, though we cannot go into these differences here. [https://youtu.be/EVa5Wdcgl94]
+An alternative to abstract base classes in Python are protocols. If you want to understand the differences, I recommend watching the following video. [https://youtu.be/EVa5Wdcgl94]
 
 ### Implementation class
 
@@ -1340,7 +1340,7 @@ Both lines of code have in common that the method/function `b` can change the va
 
 It turns out for most criteria, these two function or method calls are pretty much equal:
 - In `b(a)` it is assumed that `a` is not changed, unless the name of `b` states otherwise. Though the same holds for `a.b()`.
-- `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. Thus, `b(a)` is decoulping the code better than `a.b()`. Though this is not crucial difference.
+- `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. Thus, `b(a)` is decoupling the code better than `a.b()`. Though this is not crucial difference.
 - In C++, const'ness can be enabled for both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method. In python, there is no built-in way to make a function constant. Though with some black magic, one can define a decorator that makes a function or method constant. [https://stackoverflow.com/questions/71394120/python-equivalent-for-const-methods-with-type-hints]
 
 To sum it up, there are no big differences. `b(a)` offers somewhat better decoupling and should thus be somewhat preferred. But ultimately, it all comes down to readability. What is easier to understand? The function or the method? Let's look at the following code:
@@ -1458,7 +1458,7 @@ class Car:
 
 The car class is only delegating the `set_temperature` function call to the `air_conditioning`. And also, the `air_conditioning` does not have a temperature variable. It has only a temperature sensor that measures the temperature along with its possibility to change the temperature.
 
-This might be only one example, but there aren’t any other variables in the car where you can use a get or set call directly. It doesn’t improve the code if you write a `get_air_conditioing` function.
+This might be only one example, but there aren’t any other variables in the car where you can use a get or set call directly. It doesn’t improve the code if you write a `get_air_conditioning` function.
 
 I hope I managed to convince you not to write bare getter and setter functions to member variables. Especially not to all of them.
 
@@ -1480,7 +1480,7 @@ The rule above defined by Robert C. Martin was meant for the worker classes. Wor
 
 Unfortunately it is very difficult to make an example here of such a complicated class. Thus I can only explain here in rough terms how you could break such a complicated class into pieces.
 
-Two classes have low coupling if the number of interaction points between them is comparably low. Ideally, every class does its work and then hands it over to the next one, like in a relay race. The interface of every class would consist of only one function. High coupling on the other hand is like two classes playing ping-pong. The classes all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock.
+Two classes have low coupling if the number of interaction points between them is comparably low. Ideally, every class does its work and then hands it over to the next one, like in a relay race. The interface of every class would consist of only one function. High coupling on the other hand is like two classes playing ping-pong. The classes all have a big interface containing many functions and which call each other several times in a specific order. This quickly becomes terribly complex. The absolutely worst case is two classes calling each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is. Neither of the two classes can be changed without changing the other one as well. Such code is solid as a rock. You will never be able to change them again.
 
 I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn’t any better. It becomes increasingly hard to make any changes. Implementing new features will take a long time and fixing bugs is hard because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
@@ -1518,7 +1518,7 @@ I think we can agree on the fact that OO programming is important and everyone s
 
 Follow the rule "use composition, not inheritance" and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
 
-Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it a perfectly viable object.
+Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it is a perfectly viable object.
 
 Don't write getter and setter functions for your classes. They don't improve anything. 
 
@@ -2685,16 +2685,16 @@ Development and Operations, short DevOps, is the combination of Continuous Integ
 
 ## The early 2000s
 
-Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead, the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
-Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants of the code were met:
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
 - The code is formated according to specification
 - The static code analysis passes
 - The build passes
 - Building all the tests works
 - All the tests pass
 
-Even though there are companies that don't care about the formatting anymore. They just let the formatter run in any merge request on the server and locally the developers can use whatever format they like. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
+Even though there are companies that don't care about the formatting anymore. They just let the formatter run for every merge request on the server. Locally the developers can use whatever format they like. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
 
 Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
 
@@ -2702,7 +2702,7 @@ We have the development (Dev) and the IT operations (Ops) Bundled all together, 
 
 ### Getting a project
 
-Furthermore getting started to work with an existing project was frequently a pain. There were so many things that could have gone wrong. Where do I get the source code from? What libraries do I have to install? Why does the build not work? Ah, I have to use that specific version of this library? 
+Furthermore getting started to work with an existing project was frequently a pain. There were so many things that could have gone wrong. "Where do I get the source code from?", "What libraries do I have to install?", "Why does the build not work?", "Ah, I have to use that specific version of this library?"
 
 It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
 
