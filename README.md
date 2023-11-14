@@ -3278,7 +3278,7 @@ for i in range(10):
 
 # 18. Bugs, Errors, Exceptions
 
-"If you don’t handle exceptions, we shut your application down.  That dramatically increases the reliability of the system." — Anders Hejlsberg
+"If you don’t handle exceptions, we shut your application down. That dramatically increases the reliability of the system." — Anders Hejlsberg
 
 Even if you write absolutely pristine code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
 
@@ -3288,7 +3288,7 @@ I would briefly like to go through the different cases.
 
 Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the correctness of the syntax.
 
-At the beginning of our programming careers, we were all bothered by the compiler errors. We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us. It is a good thing we got compiler errors because this might have saved us from creating serious bugs.
+At the beginning of our programming careers, we were all bothered by the compiler errors. We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us. It is a good thing we got compiler errors because this might have saved us from creating serious bugs. Even though we still managed to create some of those.
 
 ## Bugs
 
