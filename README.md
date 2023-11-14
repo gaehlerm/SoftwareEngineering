@@ -208,6 +208,7 @@ Chapters that still need improvement:
 		- [Structuring function arguments](#structuring-function-arguments)
 		- [Assigning variables inside conditions](#assigning-variables-inside-conditions)
 		- [Scope of variables](#scope-of-variables)
+		- [Approximate programming](#approximate-programming)
 - [17. Programming languages](#17-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
 	- [Code examples](#code-examples)
@@ -216,9 +217,8 @@ Chapters that still need improvement:
 		- [Slots](#slots)
 		- [Abstract base classes and protocols](#abstract-base-classes-and-protocols)
 	- [C++](#c)
-		- [Pointers and arrays](#pointers-and-arrays)
-		- [Smart pointers](#smart-pointers)
 		- [Vectors](#vectors)
+		- [Smart pointers](#smart-pointers)
 		- [Pass by reference](#pass-by-reference)
 		- [Classes](#classes)
 		- [Structs](#structs)
@@ -3110,42 +3110,43 @@ It is generally good to have as few variables as possible. And they should have 
 
 Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
 
-// move this where? 
-Approximate programming: Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
+### Approximate programming
+
+Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
 
 But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
 
 # 17. Programming languages
 
-"I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers // Working Effectively with Legacy Code, p.311
+"I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
 
-A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book. 
+A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book. I hope.
 
 A lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
 
-I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to understand.
+I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to understand.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python. And a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
 
 As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
 
-I would not recommend learning Java or C++ as a first programming language, even though I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
 
-C++ and Java are static typed, have to be compiled, use inheritance to define interfaces and in C++ you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing you need to know when you just start programming.
+C++ and Java are static typed, have to be compiled, use inheritance to define interfaces and in C++ you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
 
 ## Existing programming languages
 
 Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is treated as a bit wise array which makes it annoying to work with). And he is certainly right. But there are millions of programmers that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and has a high-quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and has a high quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
 ## Code examples
 
-There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. In some cases I will still use code examples, but the code should be really simple. The code examples are mostly written in Python and sometimes in C++ if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, it’s just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
+There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. In some cases I will still use code examples, but the code should be really simple. The code examples are mostly written in Python and sometimes in C++ if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
 
 ## Python
 
-Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning.
+Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning. For more advanced topics, there is the google style guide [https://google.github.io/styleguide/pyguide.html].
 
 ### Type hints
 
@@ -3153,7 +3154,7 @@ Even though Python is a fairly easy programming language to learn, there are som
 
 Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
 
-While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not pythonic, it is possible to write type hints. A simple `: int` following a function argument to indicate that it should be an integer.
+While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not pythonic, it is possible to write type hints. A simple `: str` following a function argument to indicate that it should be a string.
 
 Here is an example using type hints:
 
@@ -3164,7 +3165,7 @@ def digits_of(number: str) -> list[int]:
 
 But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
 
-I generally recommend using type hints as it makes the code much more readable. Even if I'm sometimes too lazy. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
+I generally recommend using type hints as it makes the code more readable. Even if I'm sometimes too lazy to do it myself. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
 
 ### Slots
 
@@ -3195,7 +3196,7 @@ class Apple:
 		self.weight = weight
 ```
 
-Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible.
+Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
 
 ### Abstract base classes and protocols
 
@@ -3211,28 +3212,22 @@ C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took 
 
 For more information about C++ I can recommend the google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
 
-### Pointers and arrays
+### Vectors
 
-Pointers point to an address on the heap. The place where the dynamically allocated variables live. Pointers are used to access complex objects that should not be passed around as a whole due to performance issues. However, dealing with raw pointers can lead to all kind of errors, memory leaks, and even worse, undefined behavior.
+In C++, people used to work with pointers and arrays. But these times are long gone. Nowadays, we have vectors, which are a higher level version of the array, as explained in the chapter on levels of abstraction. There is no more reason to use arrays in C++.
 
-Along with pointers go arrays. They are a continuous piece of memory that the user has to manage on his own. He has to allocate them manually and delete the memory at the end of its life time. This is done with the `new` and `delete` commands, which are notoriously error prone. It can easily happen to create a memory leak or to delete the memory twice. Both are undefined behavior and can lead to all kind of errors.
+There are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
 
 ```C++
-// create an array with length defined at runtime
-int length;
-std::cin >> length;
-// allocate memory with new[]
-int* dice_rolled = new data_type[length];
-// do something with the array
-// delete the memory with delete[]
-delete[] dice_rolled;
+std::vector<int> vec {1,2,3,4};
+some_old_C_library(vec.data(), vec.size());
 ```
 
-Pointers and arrays are barely used anymore on a daily basis. In most cases, they are taken care off by the modern C++ data formats like vectors [chapter Levels of Abstraction]. Vectors are a high-level object that offer about the same functionality as arrays, but it is much more user friendly as it’s almost impossible to introduce any errors. More details about vectors and arrays are given in the chapter on Levels of Abstraction.
+Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
 
 ### Smart pointers
 
-Smart pointers, `std::unique_ptr` and `std::shared_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+Smart pointers, `std::unique_ptr`, `std::shared_ptr` and `std::weak_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
 
 There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers all throughout the code. Instead you can convert the smart pointer into a pointer using the `get()` function.
 
@@ -3243,16 +3238,6 @@ some_old_C_library(foo.get());
 
 This prevents you from having to deal with old school pointers until the very end.
 
-### Vectors
-
-Similar to the issue with smart pointer, there are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
-
-```C++
-std::vector<int> vec {1,2,3,4};
-some_old_C_library(vec.data(), vec.size());
-```
-
-Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
 
 ### Pass by reference
 
@@ -3272,7 +3257,7 @@ There is one thing however that was done better in other languages, in Java for 
 
 Structs are essentially the same as dataclasses in python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The last is only forbidden by general agreement.
 
-Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Though as far as I know, this is not done too often.
+Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Or since Java 14, one can use a record which is roughly the same as a struct.
 
 ## Copilot
 
