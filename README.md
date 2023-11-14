@@ -206,7 +206,7 @@ Chapters that still need improvement:
 	- [Spaghetti code](#spaghetti-code)
 	- [Examples](#examples-1)
 		- [Structuring function arguments](#structuring-function-arguments)
-		- [Assigning variables in conditions](#assigning-variables-in-conditions)
+		- [Assigning variables inside conditions](#assigning-variables-inside-conditions)
 		- [Scope of variables](#scope-of-variables)
 - [17. Programming languages](#17-programming-languages)
 	- [Existing programming languages](#existing-programming-languages)
@@ -2961,6 +2961,7 @@ The piece of code you hold in your hands between two seams may be way too big an
 Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans? which one? nonlinear growth?
+
 [WELC p.200(?)]
 
 
@@ -3057,18 +3058,13 @@ You can play terrible tricks with humans as we all follow the same laws of psych
 
 We are also limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can handle. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
 
-// Is it the best to just leave the following 2 paragraphs out? They are not really necessary.
-<!-- We are also pretty good in communicating with others using the natural language. We are able to explain fairly difficult things and others understand us. Just as you hopefully understand what I write here. In your imagination you have some image of what I am writing about. There are so many ways to communicate. There are so many ways I can explain something in this book here.
-
-We are terrible at math and we can be extremely easily fooled. On the other hand, we are fairly good at understanding general objects, behavior and language. As long as they are not too complex. We can explain these things in English or any other language you wish. We can combine some of these semi complex objects into a new object, which... is still only semi complex. You can still describe what it does. -->
-
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
 Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke.
 
 ## Spaghetti code
 
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write understandable code.
+So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write understandable code by breaking it down into pieces.
 
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
@@ -3094,9 +3090,9 @@ struct Email {
 void SendEmail(Email email);
 ```
 
-In python (and C++ 20), this problem is less prevalent as keyword arguments are supported. Though it is still generally recommended to use a class instead of a tuple as it orders the arguments in a more logical way.
+In python (and C++ 20), this problem is less prevalent as keyword arguments are supported. Though it is still generally recommended to use a class instead of a tuple. It orders the arguments in a more logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code.
 
-### Assigning variables in conditions
+### Assigning variables inside conditions
 
 Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in python such code isn't even possible.
 
@@ -3104,7 +3100,7 @@ Don't make assignments within if statements. It's hard to read and easy to make 
 if (int t = time_elapsed()) ...
 ```
 
-The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. Python returns an error accordingly.
+The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. Python returns an error message if you try to write such code.
 
 ### Scope of variables
 
