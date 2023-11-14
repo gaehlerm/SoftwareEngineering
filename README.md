@@ -179,7 +179,7 @@ Chapters that still need improvement:
 	- [The early 2000s](#the-early-2000s)
 		- [Getting a project](#getting-a-project)
 	- [Benefits of DevOps](#benefits-of-devops)
-- [15. Refactoring](#15-refactoring)
+- [15. Refactoring Fundamentals](#15-refactoring-fundamentals)
 	- [There will be change](#there-will-be-change)
 	- [Keeping code in shape](#keeping-code-in-shape)
 		- [Refactoring and automated tests](#refactoring-and-automated-tests)
@@ -189,14 +189,17 @@ Chapters that still need improvement:
 		- [The circle of doom](#the-circle-of-doom)
 	- [When to Refactor](#when-to-refactor)
 	- [Refactoring process](#refactoring-process)
-	- [Refactoring techniques](#refactoring-techniques)
+- [Refactoring techniques](#refactoring-techniques)
+	- [Refactoring good code](#refactoring-good-code)
 		- [Renaming](#renaming)
 		- [Extract function](#extract-function)
 		- [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
 		- [Sprout class \[Feathers p. 62\]](#sprout-class-feathers-p-62)
-	- [Real life refactoring](#real-life-refactoring)
+	- [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
+		- [How do I get the code under test?](#how-do-i-get-the-code-under-test)
+		- [What tests should I write?](#what-tests-should-i-write)
 	- [Copilot](#copilot-6)
 - [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
@@ -691,8 +694,6 @@ Admittedly I was a little bit picky here. It was not necessarily worth to refact
 
 # 6. Levels of abstraction
 
-// somehow I'm not happy with this chapter. The real world example and the programming example are fine. But the rest is ... not up to the point. Should I just remove the rest?
-
 "You can solve every problem with another level of indirection." – Andrew Konig
 
 "Except for the problem of too many levels of indirection." – my hero
@@ -728,7 +729,7 @@ delete[] arr;
 
 One of the main reasons Java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
 
-Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete as the correct time. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
+Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete in pairs. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
 
 Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
 
@@ -2716,13 +2717,13 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 - Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
 
 
-# 15. Refactoring
+# 15. Refactoring Fundamentals
 
 "If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
 ## There will be change
 
-If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database changes, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be save. Or if you write mobile apps that are guaranteed to last only 1 or 2 years. In all other cases, you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
+If code lives long enough (which is usually sooner rather than later), it will have to adapt to change. The build system might change, the database changes, and you'll have to adapt your code to the new environment. This is almost inevitable. Only if you write extremely low level code with hardly any dependencies you might be safe. Or if you write mobile apps that are guaranteed to last only 1 or 2 years. In all other cases, you have no choice but to adapt to the changing environment. Your code has to stay flexible. You have to keep it in shape. Make sure you can react to change.
 
 ## Keeping code in shape
 
@@ -2742,7 +2743,7 @@ If you are confident about the test coverage you can do pretty much anything you
 
 ### Keep refactorings small
 
-Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. Rewrites of complete features are comparably rare. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly.
+Most refactoring is fairly small. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. Rewrites of complete features are comparably rare. The biggest mistake one can make with refactoring is waiting for too long. If you have the gut feeling your fundamental data structure could be an obstacle you should act right away. Discuss with your work colleagues whether this is really the correct choice and what other options you would have. Peripheral code can still be refactored later on. But if the core of your code is rotten you will have a big issue fixing it. And it will only get worse if you don't act quickly. As always, the core of your code needs the highest priority.
 
 Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the section on Test Driven Development [chapter Writing better Code with tests]. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you cannot multitask. You cannot develop code and make it perfect at the same time. You’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
 
@@ -2756,7 +2757,7 @@ There are hundreds of things you could do for improving the quality of the code.
 
 Maybe you came up with a simple question: On what level should you refactor? Should you refactor only the small things, or should you dig down to the core of your software?
 
-Let me make another small example. You are going to build a house and you like cooking. So you make sure in the kitchen is ample space for all your equipment. You are very pleased. This is the equivalent to a first draft of your code. 
+Let me make another small example. Let's say you are going to build a house and you like cooking. So you make sure in the kitchen is ample space for all your equipment. You are very pleased. This is the equivalent to a first draft of your code. Everything looks perfect.
 
 Yet dishes get dirty you still have to clean up the kitchen every day. Otherwise you’d be in no time left with a huge mess. This corresponds to the everyday refactoring of a software engineer. Make sure you remove code duplications, name all variables properly and clean up everything along the way you don’t like.
 
@@ -2802,7 +2803,7 @@ Generally, you should refactor code that you work with. In some cases, you may r
 
 Once in a while, you have to do a bigger refactoring. One that you don’t just do between writing a few lines of code, but it will take considerable efforts to get it done. You should probably discuss this topic with your work colleagues, opposite to the smaller refactorings that you just do by yourself.
 
-Most important of all, it is your code. You are responsible. You are the one to decide it’s time for a refactoring. Don’t ask your boss for permission to refactor. Just do it.
+Last but not least it is your code. You are responsible. You are the one to decide it’s time for a refactoring. Don’t ask your boss for permission to refactor. Just do it.
 
 ## Refactoring process
 
@@ -2812,17 +2813,25 @@ Writing code follows a similar process that I also use when writing this book he
 
 Refactoring, just as writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come out of the blue. All of a sudden you understand the problem much better and the code can be improved accordingly.
 
-## Refactoring techniques
+# Refactoring techniques
+
+"To me, legacy Code is code without tests" - Michael Feathers [WELC]
+
+// WIP: This needs some more work. Read WELC and Refactoring and add some more examples.
 
 The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests, though in most cases, it is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overriden functions it becomes tricky. Refactoring code in compiled languages is a little bit easier than for interpreted languages as the compiler does valuable checking of names, functions, types, etc.
 
-There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler [Refactoring, Addison Wesley, 2019].
+There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler [Refactoring, Addison Wesley, 2019]. In the following I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code and the one categoriy from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests etc. 
 
-// add or remove some techniques? Also from WELC?
+Note that some of the techniques explained in the section on good code, for example renaming, can also be applied for legacy code. Meanwhile the techniques explained for legacy code don't make much sense for good code.
+
+## Refactoring good code
+
+When following the rules taught in this book, you should be writing good code. It is well tested, contains clear interfaces, no global variables, no side effects, etc. Still, you have to refactor once in a while. But it's comparably easy because you can focus on the refactoring part. The tests are already in place. In this section, you will learn some techniques that you can apply.
 
 ### Renaming
 
-Even though renaming hardly changes the shape of the code, it should be done extremely often. Finding good names is one of the hardest tasks in programming as judging the quality of names is very difficult. There are some general rules how naming should be done, yet still it’s not easy at all. This leads to the fact, that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something you just happen to know a better name. Then rename this object. This is the only way names get better over time. Don’t assume the author of the code knew it better. You have much more information now at hand that simplifies finding a good name.
+Even though renaming hardly changes the shape of the code, it should be done extremely often. Not only for good, but also for legacy code. Finding good names is one of the hardest tasks in programming as judging the quality of names is very difficult. There are some general rules how naming should be done, yet still it’s not easy at all. This leads to the fact, that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something you just happen to know a better name. Then rename this object. This is the only way names get better over time. Don’t assume the author of the code knew it better. You have much more information now at hand that simplifies finding a good name.
 
 Though you have to pay attention. People get used to names. If a name for an object has gotten accustomed to the whole development team you shouldn't change it, even if you have a better name. Renaming it would cause too much confusion. For this reason it is better to name central elements of your code in the beginning of the development and not change them anymore later on.
 
@@ -2867,24 +2876,35 @@ Inlining functions is the opposite process of what we just saw and used rarely. 
 
 ### Scratch refactoring [Feathers p. 212] 
 
-In chess there is a rule of thumb that you should talk (quietly) with your own pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. I like this concept very much as it gives you an idea how the code could look like instead.
+In chess there is a rule of thumb that you should quietly talk with your pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. But also try to implement some of the edge cases that will make your life harder to get a feel for the drawbacks of your dream implementation. I like this concept of scratch refactoring very much as it gives you an idea how the code could look like instead.
 
 Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
 
 ### Sprout class [Feathers p. 62]
 
+// WIP
+
 If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. Otherwise you should maybe reconsider your class design and rewrite it such that it has less coupling.
 
 // I think there is still quite something to write here. Maybe add some more examples?
 
-// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC]
+// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
 
-## Real life refactoring
+// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
+
+1. Write a test around the buggy area—expiration date validation—and watch it fail
+2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
+3. Fix the bug and watch our test pass
+
+
+## Refactoring legacy code [WELC ]
+
+// WIP
 
 // Stuff here is from Feathers book. Read it again and add some more stuff here.
 // It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
 
-In real life, your start getting afraid of the code changes you make in a refactoring. There’s just too much that can break without any test telling you. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
+So far we only refactored code covered with tests. Refactoring code without tests would be too dangerous. But unfortunately, this is exactly the problem with so many projects. There are so many of projects out there without tests. And because of global variables, functions with side effects, complicated constructors, etc. it is very hard to write tests for them. In these cases you start getting afraid to changes the code as you are supposed to do in a refactoring. There’s just too much that can break without test. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
 
 Refactoring untested code is usually a very hard task, there are whole books about it. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are
 1.	No tests
@@ -2900,13 +2920,25 @@ And on the micro level we have a few more indications that things will get tough
 
 Let’s say you want to break a class into pieces, but it's really big. It has no tests and you are uncertain of the side effects it might have. This is bad as functional changes introduced are bugs. The only way to prevent these changes is having plenty of regression tests.
 
+How do you refactor legacy code? 
+
+First of all, you have to change as little code as possible to get tests in place.
+
+1. Identify change points (Seams)
+2. Break dependencies
+3. Write the tests
+4. Make your changes
+5. Refactor
+
+The difficult points are number 1 and 2. The rest is text book refactoring.
+
 ### Seams
 
 Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
 
 There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
 
-Some of the seams explained in Working Effectively with Legacy Code change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
+Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
 
 The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
 
@@ -2922,13 +2954,20 @@ However, passing a boolean as done in the code above is generally considered bad
 
 Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
 
-The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are acceptance tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
+The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
 
 ### Sketches
 
 Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans? which one? nonlinear growth?
+[WELC p.200(?)]
+
+
+### How do I get the code under test?
+
+### What tests should I write?
+
 
 ## Copilot
 
