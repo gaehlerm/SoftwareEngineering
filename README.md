@@ -194,12 +194,13 @@ Chapters that still need improvement:
 		- [Renaming](#renaming)
 		- [Extract function](#extract-function)
 		- [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
-		- [Sprout class \[Feathers p. 62\]](#sprout-class-feathers-p-62)
 	- [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
 		- [Seams](#seams)
 		- [Sketches](#sketches)
 		- [How do I get the code under test?](#how-do-i-get-the-code-under-test)
 		- [What tests should I write?](#what-tests-should-i-write)
+		- [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
+		- [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
 	- [Copilot](#copilot-6)
 - [16. Understandable code](#16-understandable-code)
 	- [How humans think](#how-humans-think)
@@ -2880,23 +2881,6 @@ In chess there is a rule of thumb that you should quietly talk with your pieces 
 
 Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
 
-### Sprout class [Feathers p. 62]
-
-// WIP
-
-If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. Otherwise you should maybe reconsider your class design and rewrite it such that it has less coupling.
-
-// I think there is still quite something to write here. Maybe add some more examples?
-
-// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
-
-// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
-
-1. Write a test around the buggy area—expiration date validation—and watch it fail
-2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
-3. Fix the bug and watch our test pass
-
-
 ## Refactoring legacy code [WELC ]
 
 // WIP
@@ -2969,6 +2953,71 @@ Making sketches and diagrams may help you finding ways to refactor your code. Th
 
 ### What tests should I write?
 
+### Sprout method [WELC p. 58]
+
+Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function).
+
+Assume we have the following code that we can't test for whatever reason. And in reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
+
+```py
+def post_entries(transactions, entries):
+	for entry in entries:
+		entry.post()
+	transactions.get_current().add(entries)
+```
+
+Now we only want to add the valid entries to the transactions and execute the `post` function. It seems as if we'd have to create a temporary list and add an if statement. 
+```py
+def post_entries(transactions, entries):
+	valid_entries = []
+	for entry in entries:
+		if entry.is_valid():
+			entry.post()
+			valid_entries.append(entry)
+	transactions.get_current().add(valid_entries)
+```
+This, however, makes the untestable code even more complex. Instead we can create a new function that extracts the new functionality. This new function can be tested, so you can apply TDD.
+
+```py
+def test_get_valid_entries():
+	entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
+	valid_entries = get_valid_entries(entries)
+	assert len(valid_entries) == 2
+```
+
+```py
+def get_valid_entries(entries):
+	valid_entries = []
+	for entry in entries:
+		if entry.is_valid():
+			valid_entries.append(entry)
+	return valid_entries
+
+def post_entries(transactions, entries):
+	valid_entries = get_valid_entries(entries)
+	for entry in valid_entries:
+		entry.post()
+	transactions.get_current().add(valid_entries)
+```
+
+So we managed to add only one additional line of code to the original function. All the other code went into the `get_valid_entries` function. This new function is now also unit tested.
+
+### Sprout class [WELC p. 62]
+
+// WIP
+
+If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. Otherwise you should maybe reconsider your class design and rewrite it such that it has less coupling.
+
+// I think there is still quite something to write here. Maybe add some more examples?
+
+// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
+
+// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
+
+1. Write a test around the buggy area—expiration date validation—and watch it fail
+2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
+3. Fix the bug and watch our test pass
+
 
 ## Copilot
 
@@ -2989,7 +3038,7 @@ def roman_number(number):
     #     return 'V'
 ```
 
-Having only the first 3 cases and asking Copilot to refactor this code, it makes the following suggestion:
+I commented out the last two cases that were suggested by Copilot. Having only the first 3 cases and asking Copilot to refactor this code, it makes the following suggestion:
 
 ```py
     # refactor this code to use a dictionary instead of if/elif/else
@@ -3029,6 +3078,7 @@ This is almost what I wanted, except that one could use a dict with number-roman
 ```
 
 This code can be further refactored with the following command:
+
 ```py
     # refactor this code using a for loop
     roman = ''
@@ -3356,7 +3406,7 @@ Try except blocks have some similarity to if else or switch case blocks. They ar
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
 
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should use dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
 
 ### Exceptions and goto
 
@@ -3848,9 +3898,11 @@ Perhaps we should take more care when making software decisions just as we do wh
 
 # 23. Software Architecture
 
+Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+
 // Either get this chapter right, or delete it as some point.
 
-Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+// https://youtu.be/KqWNtCpjUi8 It doesn't really matter what kind of architecture you use. They all have in common that the arrows point only in one direction.
 
 // Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
@@ -4195,7 +4247,7 @@ I think this was the longest section in this book where I explain technical deta
 
 # 25. Data types
 
-// what is the definition of data types and variable types?
+"Make everything as simple as possible, but not simpler." — Albert Einstein
 
 [primitive obsession: https://refactoring.guru/smells/primitive-obsession]
 
@@ -4203,7 +4255,7 @@ There are hundreds of built-in data types. But again, using too many of them is 
 
 Using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
 
-"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." [David Sackstein Cppcon 2022] This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
+"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." [David Sackstein, Cppcon 2022] This is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
 
 Here is a list of data types that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
 
@@ -4294,8 +4346,8 @@ Sometimes such kind of objects are also called "stringly typed". Strings are bei
 
 [https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]
 ```py
-robot.move("1","2") # Should be int like 1 and 2
-getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. Dog.Bark()
+robot.move("1","2") # Should be int like 1 and 2, and maybe better a point
+getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. dog.Bark()
 message.push("transaction_completed") # Could be an enum
 ```
 
@@ -4630,7 +4682,7 @@ The different variables we looked are different with regards to how easy they ca
 
 Here is a rough list how variable types are sorted by the accessability they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
 
-Constant < Immutable object < mutable object < class variable < inherited variable < singleton <= global variable
+Constant < Immutable object < mutable object < class variable < inherited variable < singleton = global variable
 
 There is certainly nothing wrong with constants. It's just that they can't do much. They are just there and do nothing.
 
@@ -4649,38 +4701,6 @@ A Singleton is a class that can have at most one instance. If you create objects
 With mutable and class variables one has to always pay attention. Especially with bad code these variables may further add to the general confusion.
 
 Constants and immutable variables are always safe to use, yet at the same time they are not always that useful as their capabilities are fairly limited.
-
-
-<!-- 
-// I'm getting the feeling that this section here is not needed.
-//where to move this text here? Somewhere to class functions? Or remove it completely?
-
-Sometimes the member function thoughts even work in unexpected places. Let’s say you have the following Java code //example from working effectively with legacy code, p. 273
-
-```Java
-outputstream.write("header"); 
-writeField(outputstream, body);
-
-void writeField(Outputstream outputStream, Sting field){
-    outputstream.write(field.getBytes());
-    outputstream.write(0x00);
-}
-```
-
-where Outputstream is a built-in object in Java, thus we can’t add any member functions. Write takes a string and writes it to the output. For the bodies, the string has to be modified.
-
-Here Feathers could have modified the string within its own function and keep the code much more readable.
-
-```Java
-outputstream.write("header"); 
-outputstream.write(field(body))
-
-string field(body){
-    return (body + '0').getBytes();
-}
-```
-
-Now this is just a little example in between how constantly considering how functions can be defined in different ways might make the code smoother. It is more readable and we don’t have to pass the mutable outputstream object. -->
 
 
 # 27. Naming
@@ -4707,7 +4727,7 @@ Here is a pretty long list of rules to follow when naming things:
 
 1.	Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends. As a rule of thumb a name is fine if a new work colleague understands the variable.
 2.	Classes and functions obeying the single responsibility principle are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
-3.	Never use plain values in your code. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Always create a variable instead. For example `set_color(7)`. What does `7` mean?
+3. `set_color(7)`. What does `7` mean? Never use plain values in your code. Plain values are called magic numbers because no one can tell what its meaning is. And magic is having a negative meaning here. Always create a variable instead. Better use `set_color(RED)`, where RED is a constant or an enum. Both are much clearer.
 4.	High level objects have short names as they describe very general things. Low level objects have long names as they are very specific.
 5.	Well defined levels of abstraction result in clearly defined and unique properties. This helps finding  names. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP.
 6.	Name collisions may happen once in a while. Consider refactoring one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
@@ -4848,7 +4868,7 @@ def create_matrix():
 	return matrix
 ```
 
-When in doubt resist the temptation and split up the code in 2 lines (or more).
+When in doubt resist the temptation, split up the code and don't use a single line initialization.
 
 ## Back magic code
 
