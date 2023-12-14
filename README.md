@@ -41,6 +41,7 @@ Chapters that still need improvement:
 	- [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
 - [3. Preface](#3-preface)
+	- [Who this book is for](#who-this-book-is-for)
 - [4. Introduction](#4-introduction)
 	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
 	- [About this book](#about-this-book)
@@ -114,7 +115,8 @@ Chapters that still need improvement:
 	- [Conclusions](#conclusions)
 	- [Copilot](#copilot-3)
 - [10. Inheritance](#10-inheritance)
-	- [Drawbacks of Inheritance](#drawbacks-of-inheritance)
+	- [Two types of Inheritance](#two-types-of-inheritance)
+	- [Drawbacks of inheritance](#drawbacks-of-inheritance)
 		- [Tight Coupling](#tight-coupling)
 		- [Error prone](#error-prone)
 		- [Obscure code](#obscure-code)
@@ -207,6 +209,7 @@ Chapters that still need improvement:
 	- [Spaghetti code](#spaghetti-code)
 	- [Examples](#examples-1)
 		- [Structuring function arguments](#structuring-function-arguments)
+		- [Complicated code](#complicated-code)
 		- [Assigning variables inside conditions](#assigning-variables-inside-conditions)
 		- [Scope of variables](#scope-of-variables)
 		- [Approximate programming](#approximate-programming)
@@ -473,6 +476,12 @@ This book is only a step in your career. Next you have to get out into the real 
 
 Enjoy this book and good luck with your career.
 
+## Who this book is for
+
+This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But they never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'd like to emphasize in this book.
+
+Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to write good code. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about here. But I hope there are still some novel ideas in this book that you can use to improve your code.
+
 # 4. Introduction
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
@@ -556,6 +565,8 @@ Writing a book about software development is hard. Harder than writing a book ab
 # 5. Single responsibility principle 
 
 **Every object does exactly one thing. Everything is done by exactly one object.**
+
+The Single Responsability principle advises to separate concerns, to isolate and simplify change. - Klaus Iglberger [https://youtu.be/motLOioLJfg?t=1003]
 
 There are different definitions of the Single Responsibility Principle (SRP) [Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
 
@@ -860,6 +871,8 @@ Interfaces are everywhere. Every function or class has an external interface and
 ## APIs
 
 "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
+
+If you are expecting a complete chapter explaining all the ins and outs of APIs, I'll have to disappoint you. This is a huge topic and I can only scratch the surface here. I will only explain some of the most important aspects of APIs that I could think of.
 
 The Application Programmable Interface (API) is an extremely important part of your software. It is the public interface of your software. It is what everyone sees and uses from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
@@ -1366,7 +1379,7 @@ In software engineering there are always so many things to consider. This was ju
 
 Constructors are very special methods. The constructor is called once every time an object is created. This has severe consequences that many software developers are not aware of. Most notably, writing tests can become nearly impossible if the constructor contains too much logic or has side effects. The author of some code might have assumed that there will be only one class instance and planned accordingly. This might be true in his particular part of the code he wrote. However, his assumption might break down when writing unit tests. There you have to be able to create many objects without any interactions between them, otherwise your tests become very fragile.
 
-Thus, make sure the usage of a constructor is always fool proof. A constructor should be as simple as possible. Everything a constructor does, for example allocating memory or opening a file, has to be undone by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you shouldn't define a counter in the constructor, unless the effect is undone in the destructor.
+Thus, make sure the usage of a constructor is always fool proof. A constructor should be as simple as possible. Everything a constructor does, for example allocating memory or opening a file, has to be undone by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you shouldn't define a counter in the constructor, unless the effect is undone in the destructor. Preferably your code follows the rule of 0: no constructors and no destructor. Leave this to the compiler. It will make your code so much easier. [https://youtu.be/9BM5LAvNtus?t=2438]
 
 The following code creates a counter for the class instances. It looks neat and it might be useful to have such a counter at times. However, it will be barely possible to test this counter. Every time you add an additional test case or you change the order of the tests, the counter values will change. And once you change the order in which the tests are executed, your tests will break.
 
@@ -1396,9 +1409,9 @@ Now if you add one more class instance before this line, the counter will be dif
 
 ## Getter and setter functions
 
-In Java, it is common practice to define a class and make all its variables private. The developer clicks a button in the IDE and public getter and setter methods are automatically generated. For each private variable, it creates a setter and getter method to access and change the variable. This is extremely wide spread and in my opinion a very bad habit.
+In Java, it is common practice to define a class and make all its variables private. The developer clicks a button in the IDE and public getter and setter methods are automatically generated. For each private variable, it creates a setter and getter method to access and change the variable. This is extremely wide spread and in my opinion a very bad habit. There's also a point in the C++ core guidelines that says that supports my claim. You should "Avoid trivial getter and setter functions". [C.131 Cpp guidelines, C++ Core Guidelines explained (Rainer Grimm)]
 
-Here we distinguish here between two relevant types of classes. 
+Here we distinguish here between the different types of classes.
 
 ### Data classes
 
@@ -1518,7 +1531,7 @@ It’s a good rule of thumb to say that the class design is probably ok as long 
 
 I think we can agree on the fact that OO programming is important and everyone should know about it. It has advantages, but at the same time classes are a very common source for bad code. Classes have a tendency of growing and becoming a Big Ball of Mud. Many people simply don't know that this is an issue. As a rule of thumb we can say that your class design is fine as long as writing tests is not an issue.
 
-Follow the rule "use composition, not inheritance" and don’t use friend classes and other curious OO constructs if these exist in your programming language. Inheritance introduces very strong coupling which should be avoided at all cost.
+Follow the rule "use composition, not inheritance". And don’t use friend classes and other curious OO constructs lightly if these exist in your programming language. Unless you absolutely need them for your code design. Inheritance introduces very strong coupling which should be avoided at all cost and the same can be said for friend classes, albeit on a somewhat weaker level.
 
 Many guidelines on how to write classes are defined for worker classes. For example the rule that classes should have high cohesion. It seems like most people overlooked the other kind of classes. A data class has no cohesion at all but it is a perfectly viable object.
 
@@ -1549,17 +1562,51 @@ The only drawback is that Copilot suggests the function `get_descriptive_name` i
 
 Or my version of this rule: "Use composition, not inheritance"
 
+"Inheritance is the base class of evil", [https://youtu.be/2bLkxj6EVoM?list=PLM5v5JsFsgP21eB4z2mIL8upkvT00Tw9B]
+
 [https://youtu.be/da_Rvn0au-g]
 
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
-## Drawbacks of Inheritance
+## Two types of Inheritance
 
-Inheritance comes along with quite some issues and should thus be avoided if possible. Modern languages like Go and Rust don't even support inheritance anymore.
+There are two kinds of inheritance: implementation inheritance and interface inheritance. Interface inheritance is used to define and implement interfaces. In C++ these base classes consists of only pure virtual functions which will be implemented in the derived classes. This kind of inheritance is not problematic.
+
+```py
+import abc
+
+class Base(abc.ABC):
+    @abc.abstractmethod
+    def print_a(self):
+        pass
+
+class Derived(Base):
+    def print_a(self):
+        print("a derived")
+```
+
+Implementation inheritance inherits the implementation of the base class. Here all kind of different problems may occure that we'll look at in this section. Thus, if I write about inheritance in this section, I always mean implementation inheritance.
+
+```py
+class Base:
+    def print_a(self):
+        print("base a")
+
+    def print_b(self):
+        print("base b")
+
+class Derived(Base):
+    def print_a(self):
+        print("derived a")
+```
+
+## Drawbacks of inheritance
+
+Inheritance comes along with quite some issues and should thus be avoided if possible. In the C++ Core Guidelines there is at least a dozen of points to consider when working with implementation inheritance [C++ Core Guidelines, C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support inheritance anymore. [https://golangbot.com/inheritance/]
 
 ### Tight Coupling
 
-The most obvious problem here is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes nor to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
+The most obvious problem with implementation inheritance is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes nor to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
 
 One of the main problems here is that all inheritance levels have access to the base level variables. The variables and methods are not sorted. They are just there. Meanwhile with composition, you only have to consider the variables inside the class. This makes it much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
 
@@ -1677,11 +1724,11 @@ There are also some more esoteric things, for example friend classes. At first s
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
-"Data structures + algorithms = software" Adapted from Bertrand Mayer
+"Algorithms + data structures  = software" Adapted from Niklaus Wirth
 
 Abstractions + testing = engineering
 
--> software engineering = data structures + algorithms + abstractions + testing
+-> software engineering = algorithms + data structures + abstractions + testing
 
 It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It forces you to write better code. In fact, this was the first chapter that I wrote for this book, exactly for this reason.
 
@@ -3102,19 +3149,24 @@ As we have discussed, good code is easy to understand. But what makes code easy 
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
-Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. We are guided by instincts and approximate thinking.
+Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result.
 
-You can play terrible tricks with humans as we all follow the same laws of psychology. Even experts fall for such tricks. We can only mitigate our weaknesses by accepting them. 
+```py
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
+``` 
+[https://www.quora.com/What-are-some-prime-examples-of-bad-python-code]
 
-We are also limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can handle. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
+The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle so much because we can't keep all the variables in our heads.
+
+We are limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
-Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke.
+Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic.
 
 ## Spaghetti code
 
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write understandable code by breaking it down into pieces.
+So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write it in understandable code.
 
 You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
 
@@ -3126,31 +3178,69 @@ This whole book is about how to write low complexity code. The sections on the S
 
 In the following C++ code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. It is called the "type problem". The solution is to use a class instead of a tuple. 
 
-```C++
-void SendEmail(string to, string subject, string body);
+```py
+def send_email(to, subject, body):
+	pass
 ```
 
-```C++
-struct Email {
-	string to;
-	string subject;
-	string body;
-}
+```py
+from dataclasses import dataclass
 
-void SendEmail(Email email);
+@dataclass
+class Email:
+	to: str
+	subject: str
+	body: str
+
+def send_email(email: Email):
+	pass
 ```
 
-In python (and C++ 20), this problem is less prevalent as keyword arguments are supported. Though it is still generally recommended to use a class instead of a tuple. It orders the arguments in a more logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code.
+In python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
+
+```py
+def send_email(to: str, subject: str, body: str):
+    pass
+
+send_email(to="to", subject="subject", body="body")
+```
+
+Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a more logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code.
+
+### Complicated code
+
+Let's look at the FizzBuzz code from above again.
+
+```py
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
+```
+
+This example is very hard to understand as there is too much logic concentrated on a single line. It is very hard to keep track of all the logic that is going on here. Instead it is much easier to understand the code if you break it into smaller pieces as done in the following code.
+
+```py
+output = []
+for i in range(1, 101):
+	if i % 3 == 0 and i % 5 == 0:
+		output.append("fizzbuzz")
+	elif i % 3 == 0:
+		output.append("fizz")
+	elif i % 5 == 0:
+		output.append("buzz")
+	else:
+		output.append(i)
+```
+
+This is, at least in my eyes, much easier to understand.
 
 ### Assigning variables inside conditions
 
-Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in python such code isn't even possible.
+Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in python such code isn't even possible. It returns an error message if you make an assignment inside an if statement.
 
 ```C++
 if (int t = time_elapsed()) ...
 ```
 
-The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. Python returns an error message if you try to write such code.
+The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
 
 ### Scope of variables
 
@@ -3172,27 +3262,29 @@ But in reality, such accuracy may not be required. You can simply take the coord
 
 A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book. I hope.
 
-A lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
+For example, a lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
 
 I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to understand.
 
 But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
 
-As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use duck typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days.
+As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. 
+
+Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments.
 
 I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
 
-C++ and Java are static typed, have to be compiled, use inheritance to define interfaces and in C++ you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
+C++ and Java are static typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
 
 ## Existing programming languages
 
-Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is treated as a bit wise array which makes it annoying to work with). And he is certainly right. But there are millions of programmers that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is treated as a bit wise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and has a high quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and known for its high quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
 ## Code examples
 
-There are quite few code examples in this book. Most concepts that I explain here can be explained with real world examples. And I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. In some cases I will still use code examples, but the code should be really simple. The code examples are mostly written in Python and sometimes in C++ if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
+There are quite some code examples in this book. Most concepts that I explain here can be explained with real world examples. The syntax I used is held as easy as possible as I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. The code examples are mostly written in Python and sometimes in C++, if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
 
 ## Python
 
@@ -3233,7 +3325,7 @@ apple = Apple(1.0, 0.5)
 apple.hi = "hi"
 ```
 
-Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
+Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It might seem tempting to add such a new variable at any point in time.  But it's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
 
 This issue can be prevented by using slots. 
 
@@ -3256,7 +3348,7 @@ An alternative to abstract baseclasses are protocols. They are mostly equivalent
 
 ## C++
 
-C++ has some particularities like pointers, arrays, a preprocessor and header files that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
+C++ has some particularities like a preprocessor, header files, pointers and arrays that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
 
 C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
 
@@ -3330,6 +3422,8 @@ for i in range(10):
 
 "If you don’t handle exceptions, we shut your application down. That dramatically increases the reliability of the system." — Anders Hejlsberg
 
+"One in a million is always next Tuesday." - Gordon Letwin
+
 Even if you write absolutely pristine code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
 
 I would briefly like to go through the different cases.
@@ -3388,7 +3482,9 @@ Add another except block at the end of the program in order to catch all other k
 
 Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state (also known as walking wounded). This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
 
-The code how to deal with exceptions should look roughly like this:
+As the C++ Core Guideline E.31 states: "Properly order your catch clauses" [C++ Core Guidelines explained]. Meaning that you should always first catch specific exceptions and then more general ones. This is because specific exceptions allow you to give the user more specific information about the problem. Meanwhile a general exception is more likely a bug than wrong behavior of the user.
+
+The try catch block around the main function should make sure that no exceptions leave the program. Following the above rule it should look something like this:
 
 ```Python
 if __name__ == "__main__":
@@ -3481,6 +3577,8 @@ a = [i for i in range(10)]
 
 "An algorithm is like baking a cake. You just follow the recipe. A design pattern is like organizing a birthday party, where you know only roughly how it will look like." - Adapted from @alexhyettdev on youtube, [https://youtu.be/YMAwgRwjEOQ]
 
+// Good explanation on design patterns [https://youtu.be/OvO2NR7pXjg?t=1144] Design patterns can be cut into two pieces: a low level (volatile) part and a high level (stable) one.
+
 // not sure yet what I should write about design patterns. Or about which ones.
 
 // visit the youtube videos of Derek Banas, [https://youtu.be/vNHpsC5ng_E]
@@ -3492,6 +3590,8 @@ There is a famous book called "Design Patterns" [Gamma et al., 1995]. It describ
 One drawback is that you might start over engineering your code when using too many design pattern. You don't need a design pattern to cover every corner case. You don't have to make everything generic. It's more of an 20-80 phenomenon where 20% of all the design patterns cover 80% of all the code. [https://youtu.be/BPSuWUXyA58] Making things more abstract may be useful at times, but it complicates the code unnecessarily. Only use design patterns if they say something about the problem you are trying to solve.
 
 I tried to keep the descriptions and the code examples to the point to teach you only the basic idea of each design pattern. I'm not writing any UML diagramms, but show you a complete code example instead. If you don't understand one of the patterns, play around with the code, watch some youtube video or get one of the more extensive books on design patterns.
+
+// external polymorphism design pattern: [https://youtu.be/4eeESJQk-mw?t=1887]
 
 ## Creational Patterns
 
@@ -3709,7 +3809,7 @@ That being said, the visitor pattern is not something that is used too often. It
 ## Factories
 
 ## Visitor
-
+[https://youtu.be/G9MxNwUoSt0?t=297]
 
 ## Strategy pattern
 //need to add some more text
@@ -3999,6 +4099,8 @@ Interestingly enough, most people agree on the fact that these principles are ve
 The SRP has already been explained at the very beginning of this book due to its high importance.
 
 ## Open Closed Principle
+
+// OCP is always a tradeoff what it is closed and open for. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
 
 The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
 
@@ -4595,6 +4697,8 @@ if __name__ == "__main__":
 
 Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity.
 
+// classes should not have const members, they should rather be private. [https://youtu.be/O65lEiYkkbc?t=3072]
+
 ### Mixing const and non-const objects
 
 So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
@@ -4642,7 +4746,7 @@ prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
 
-At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. 
+At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133] 
 
 Returning a new variable as done in the second code snippet is the much saver option and to be prefered.
 
@@ -4706,6 +4810,8 @@ Constants and immutable variables are always safe to use, yet at the same time t
 # 27. Naming
 
 "And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
+
+[https://youtu.be/MBRoCdtZOYg]
 
 How long does a football game take? This is a very innocent question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This can cause some confusion.
 
@@ -5772,6 +5878,8 @@ Hand in hand with testing comes Dependency Injection (DI). There are many things
 // reread and rewrite this chapter?
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
+
+"The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
 
 [https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
 
