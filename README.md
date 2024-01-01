@@ -470,23 +470,25 @@ There is so much I learned in the few years since my friend fell into the shit h
 
 I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I think.
 
-I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you regard this book as important enough to make a youtube video about it and criticize some parts of it, then go ahead. 
+I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you don't aggree with some of my recommendations, that's fine. Feel free to make a youtube video and explain your point. I think this is one of the best ways to improve our software development skills.
 
-This book is only a step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
+Reading this book is only one step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 
 Enjoy this book and good luck with your career.
 
 ## Who this book is for
 
-This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But they never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'd like to emphasize in this book.
+This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But they never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'd like to emphasize throughout book.
 
-Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to write good code. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about here. But I hope there are still some novel ideas in this book that you can use to improve your code.
+Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to do proper software engineering. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about here. But I hope there are still some novel ideas in this book that you can use to improve your code.
+
+At the same time I'd like to mention what this book isn't. It doesn't teach you how to develop artificial intelligence, high performance computing, web development, databases, nor any other modern topic. I simply lack the scope to cover all these topics. Though I'm confident that the principles thought throughout this book will help you with these topics as they all require good software engineering skills.
 
 # 4. Introduction
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
-In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming that are only used due to historic reasons. In reality they are only leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes should be taken with care in OO programming.
+In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be taken with care in OO programming.
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code independently. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics which are highly important but are frequently neglected in books on software development.
 
