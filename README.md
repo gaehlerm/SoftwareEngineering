@@ -14,6 +14,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 
 ## Things to write
 
+- If you have some suggestions for improvement, wirte them inside a `//...//` comment. This is easier to find than a few characters changed in a long line in git.
 - If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
 - What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
 - What is mocking and stubs? (chapter Testing)
