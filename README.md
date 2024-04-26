@@ -28,6 +28,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 - How to organize software projects
 - Mention combinatorial explosion somewhere?
 - And some more chapters towards the end of the book need to be improved.
+- Debugging, see https://github.com/gaehlerm/SoftwareEngineering/issues/6
 
 Chapters that still need improvement:
 
@@ -232,7 +233,10 @@ Chapters that still need improvement:
 	- [Syntax Errors](#syntax-errors)
 	- [Bugs](#bugs)
 		- [Cost of Bugs](#cost-of-bugs)
-		- [Debugging](#debugging)
+		- [Is it a bug or a feature?](#is-it-a-bug-or-a-feature)
+		- [Bug Reports](#bug-reports)
+		- [Tracking down bugs](#tracking-down-bugs)
+		- [Fixing a bug](#fixing-a-bug)
 		- [Copilot](#copilot-8)
 	- [Exceptions](#exceptions)
 		- [Wrapping exceptions](#wrapping-exceptions)
@@ -3447,11 +3451,41 @@ The cost of bugs is gigantic. It may take hours, if not days to track down a bug
 
 I hope you got the memo. You always have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
 
-### Debugging
+### Is it a bug or a feature?
+
+In theory, it's very simple. Either some behavior is docummented, or it's a bug. But in practice, it's not always that easy. First of all, not all behavior is docummented. And secondly, not all undesired behavior is a bug, or at least it is not always advisable to fix it. The users of your software may have gotten used to the faulty behavior of your software and implemented a work around. So fixing the bug would in fact introduce a new bug in the code of your clients.
+
+Bugs can be clasified by their severity. A bug resulting in a crash of an air plane is pretty much the worst case and has to be fixed, no matter how unlikely it is to happen. Meanwhile if you write an Android game, a bug that causes the game to crash every thousand hours or so may be acceptable. The possible nuisance of the user may not be worth the effort to fix the bug. For bigger projects it is very common, that only critical bugs get fixed. All other bugs may get docummented along with a work around, but they will not be fixed due to economic reasons.
+
+### Bug Reports
+
+Depining on the software, writing good bug reports may be anything from straight forward to nearly impossible.
+
+Good bug reports explain the problem in a very unambiguous way. They follow the simple pattern: "If you do A, then B happens, but it would be expected that C happens." Unfortunately, describing A may be very difficult, depending on the software. If your software has an API that can be used to trigger the bug, you are usually in a good position as it is very simple to reproduce the bug. Just hand over all the files involved. 
+
+If it is a game that crashes under very specific circumstances, it may be extremely hard to reproduce the bug. Maybe some log files may help, but even that is not always sufficient to track down the bug.
+
+Writing good bug reports is hard. A bug report should be written with scientific accuracy, such that anyone can reproduce the bug. Anything that may cause the bug has to be reported, including things like the version number of the software and possibly even the version numbers of third party libraries. The more information you provide, the easier it is to track down the bug. 
+
+### Tracking down bugs
 
 Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide.
 
 For debugging you generally have the debugger. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule.
+
+There are many different ways to track down bugs. Most important of all, you need to have an idea, what part of the code may have caused the bug under investigation. If you have some code example using the API of your code, you can try to simplify it while checking, wheather the bug still exists. This usually gives you a good idea what the bug depends on. For example the user may have used some option that is rarely used and you expect it to be buggy for some reason. Then there are roughly two ways to track it down:
+1. You can set a breakpoint where the value of a variable is set. If you already broke down the code from the bug report into the smallest possible case, you shouldn't have to iterate over the break point too often.
+2. You can bisect the bug. You set a breakpoint somewhere in the middle of the code and check if the bug already exists. If it does, you bisect the first half of the code, otherwise you bisect the second half of the code. This is a very powerful technique as you can track down the bug in log(n) steps.
+
+Now as I already said, the most important thing is that you have as much information about the bug as possible. You need to have a fair idea, about what part of the code may have caused the bug. If your code is badly structured and you have no idea wheather some value returned by the debugger is correct or not, you will have a very hard time bedugging it. You'll have no choice but to guess. And guessing is an extremenly tedious process.
+
+### Fixing a bug
+
+As already mentioned above, you should never fix a bug that you just found. Users may rely on this faulty behavior and fixing the bug may interfere with their workarounds. Consistency may be more important than corectnes.
+
+If you have a bug ticket, the first thing to do is writing an automated test using the minimal code causing the faulty behavior. This helps a lot to track down the bug and it prevents future changes of the code to reintroduce the bug. Bugs that appeared once are very likely to appear again in the future.
+
+Next you have to track down the source of the bug, as mentioned above. Once you have found the bug, you can start fixing it. However, there are still some things to be considered. You should not just add a random hack that solves the problem somewhere in the code. You have to find the faulty logic in your code! This is the only place where a bug can really be fixed once and for all. When looking at the code, you should have no idea, that this bug was fixed later on. It should mend into the code as if it was always there.
 
 ### Copilot
 
