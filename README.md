@@ -4,7 +4,7 @@ Copyright Marco Gähler, all rights reserved.
 
 This book is still work in progress. Feedback is highly welcome. Either as a merge request (I have to give you access rights) or directly by email, marco.gaehler@gmx.ch Many small MRs are prefered over one big MR. Feedback can be either about concrete improvements or just some general thoughts. As the book has not yet progressed very far, I'm happy about more general feedback. Tipos can be fixed later on.
 
-Oh yeah, and my English could be better... but that will be fixed later on.
+Oh yeah, and my English could be better... but that will be fixed later on. Pearson Germany is interested in publishing this book, unfortunately that would be in German. I hope it will at least be published as an ebook in English as well.
 
 ## Getting started
 
@@ -14,25 +14,20 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 
 ## Things to write
 
-- If you have some suggestions for improvement, wirte them inside a `//...//` comment. This is easier to find than a few characters changed in a long line in git.
-- If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know.
+- If you have some smaller suggestions for improvement, wirte them inside a `//...//` comment. This is easier to find than a few characters changed in a long line in git. For bigger changes, create a new issue or write me an email.
+- If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know. The responsible person from the publisher would like to have some tips on Copilot, but I'm not an expert on this topic.
 - What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
 - What is mocking and stubs? (chapter Testing)
 - Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
 - Which design patterns are important? (chapter Design patterns)
 - Do I need the chapter logging?
-- Restructure and sort the chapters somehow.
+- Restructure and sort the chapters somehow. Similar levels of abstractions should be close to each other. 
 - Some more examples on refactoring (what technique exactly? Converting a function into a class?)
 - Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
-- How to work with existing code? If the code is not as nicely written as explained here. Read WELC again.
-- How to organize software projects
-- Mention combinatorial explosion somewhere?
+- How to work with existing code? If the code is not as nicely written as explained here. Reread WELC again.
+- How to organize software projects -> Felix
 - And some more chapters towards the end of the book need to be improved.
-- Debugging, see https://github.com/gaehlerm/SoftwareEngineering/issues/6
 
-Chapters that still need improvement:
-
-- DevOps: There is some part missing. I don't know what exactly. Maybe some more details about the different tools. (Suggestion Copilot)
 
 # 2. Table of content
 
@@ -455,27 +450,27 @@ Chapters that still need improvement:
 
 
 # 3. Preface
-"I have been consistently disappointed by the quality of CS graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
+"I have been consistently disappointed by the quality of CS [computer science] graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
 
 In 2007 I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, the const expression, etc. I somehow struggled understanding these things. They just felt wrong. There were so many open questions about how to write the code properly and I didn’t know where to get good advice. I passed the exam, but I was somehow dissatisfied.
 
-Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare looking at this code ever since. Already thinking about it makes me shudder.
+Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it any better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare looking at this code ever since. Already thinking about it makes me shudder.
 
-After my studies I wanted to improve my programming skills and bout the book "Effective modern C++" by Scott Meyers. A good book. But not for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background. The book was too advanced for me.
+After my studies I wanted to improve my programming skills and bout the book "Effective modern C++" by Scott Meyers. A great book. But it wasn't made for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background. The book was too advanced for me.
 
-Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight fairly useless) C++ questions and I could answer most of them thanks to the book I read. I got the job.
+Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight not particularly useful) C++ questions and I could answer most of them thanks to the book I read. I got the job.
 
 In the beginning a struggled a little. I was overwhelmed by the amount of code, I didn’t know what IDE to use and the make build I used was flawed. You name it. Still, I good some very good feedback by my boss. A few months later I had my first big feature implemented. It also had automated tests and the code was much cleaner than comparable features. Another month later I implemented my second feature. Everyone in the company expected this to be very difficult, but I found a neat way to implement it.
 
-My boss wrote most of the code and the success of the company was based to a fair amount on his efforts. He knew everything, but I hardly ever understood what he was talking about. It was all too difficult. 
+My boss wrote most of the code and the success of the company was based to a fair amount on his efforts. He knew everything, but I hardly ever understood what he was talking about. In many topics, I was missing the background. 
 
-Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the comment "I fell into a shit hole". He opened my eyes. He made me realize the way he works was so much better. So much more structured. This was engineering. Software engineering.
+Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the remark: "I fell into a shit hole". He broke down this huge and widespread problem into small chunks. He opened my eyes. He made me realize the way he worked was so much better. So much more structured. This was proper engineering. Real software engineering.
 
-There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. This book is what this book is about. No fancy code. But fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by all the possibilities a programmer has. It also contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other engineering jobs. Therefore, a car or a computer are frequently better examples than some fancy code you struggle understanding.
+There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, but fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by the infinite amount of decisions a programmer has to make. This book contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other fields of engineering. Therefore, a car is frequently a better example to explain my point than some fancy piece of code you struggle understanding.
 
-I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I think.
+I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I hope.
 
-I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you don't aggree with some of my recommendations, that's fine. Feel free to make a youtube video and explain your point. I think this is one of the best ways to improve our software development skills.
+I'm not god and this is not the holy bible. This book tries to help you with your programming problems, but it doesn't contain the absolute truth. Probably there are hardly any absolute truths in programming, there are only trade offs. I hope that the recommendations I give in this book help you write better code. And if you don't aggree with some of my recommendations, that's fine. You will certainly be able to find examples where my general recommendations will not hold. Feel free to make a youtube video and explain your point. I think this is one of the best ways to improve our software development skills.
 
 Reading this book is only one step in your career. Next you have to get out into the real world. Get a job. Write code and learn how to apply the principles you learned here. It is hard, this will take your whole life. Others have the same problems. Talk to them, improve your solutions, get smarter. Become a real software engineer.
 
@@ -483,21 +478,21 @@ Enjoy this book and good luck with your career.
 
 ## Who this book is for
 
-This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But they never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'd like to emphasize throughout book.
+This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But it was dreadful. They never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'm going to explain throughout book.
 
-Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to do proper software engineering. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about here. But I hope there are still some novel ideas in this book that you can use to improve your code.
+Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to do proper software engineering. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about. But I think there are still some novel ideas in this book that you can use to improve your code.
 
-At the same time I'd like to mention what this book isn't. It doesn't teach you how to develop artificial intelligence, high performance computing, web development, databases, nor any other modern topic. I simply lack the scope to cover all these topics. Though I'm confident that the principles thought throughout this book will help you with these topics as they all require good software engineering skills.
+At the same time I'd like to mention what this book isn't. It doesn't teach you fancy modern topics in computer science. It doesn't teach you how to develop artificial intelligence, high performance computing, web development, databases, distributed systems, etc. I simply lack the scope and knowledge to cover all these topics. Though I'm confident that the principles tought throughout this book will help you with these topics as they all require good software engineering skills as well.
 
 # 4. Introduction
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
-In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be taken with care in OO programming.
+In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming, that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be taken with care in OO programming.
 
-But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code independently. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics which are highly important but are frequently neglected in books on software development.
+But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
-This book contains comparably little code. It’s more about concepts or software engineering, rather than difficult examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose 2 programming languages as there are some things you can explain only with one of them. This book teaches you some basic principles for software development. These principles are valid for pretty much any programming language you could work with. 
+This book contains comparably little code. It’s more about general concepts or software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
 
 This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
 
@@ -515,7 +510,7 @@ Let me start with a very blunt question: What do you think does a software engin
 
 Indeed, these answers contain some truth. But writing code covers only a tiny fraction of your future working day. One thing you will do is the same as we do right now: you analyze a problem and try to figure out what to do next. 
 
-You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up code or discussing things with your colleagues. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
+You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up or discussing things. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
 
 <img src=images/programmerActivity.png width="400">
 
@@ -527,9 +522,9 @@ The first rule of software engineering:
 
 **We write code that is easy to understand.**
 
-Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired, they like listening to you. They don't have to focus in order to understand you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
+Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired or uneducated, they like listening to you. They don't have to focus in order to understand you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language skills may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
 
-Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks modern programming languages offer.
+Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks modern programming languages have to offer.
 
 Now it's not only important to make the code work, we also have to make sure that it is correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
 
@@ -541,7 +536,7 @@ The second rule of software engineering:
 
 **We write automated tests that cover all our code.**
 
-Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring and its importance cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide.
+Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring and its importance cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide. Though changing code always has the inherent danger, that you might break it. This is one of the reasons why we need good tests. If we have a good test coverage, we can change the code with confidence that we don't break it.
 
 The third rule of software engineering:
 
@@ -549,7 +544,7 @@ The third rule of software engineering:
 
 Now you know what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to half an hour ago. I can explain to you the fundamental principles how to write good code.
 
-You might be already working in a company, or at least you soon will be. Your boss is not going to let you write code for a month just for the sake of writing code. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
+You might be already working in a company, or at least you soon will be. Your boss is not going to let you write code for a month just because you like it. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
 
 The fourth rule of software engineering:
 
@@ -577,21 +572,21 @@ The Single Responsability principle advises to separate concerns, to isolate and
 
 There are different definitions of the Single Responsibility Principle (SRP) [Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
 
-The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation to write readable code.
+The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation of readable and reusable code.
 
-Please note that the SRP does not say that every software developer is responsible for his own piece of code.
+Please note that the SRP does not state that every software developer is responsible for his own piece of code. The SRP is about code fragments, not about code ownership.
 
 ## Do not Repeat Yourself
 
 // DRY does not always have to be obeyed that strictly. Repeat yourself until it is clear what the acronym should be.
 
-You should not copy paste code. This violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer], unless you immediately remove the duplication again. As you have duplicated code, something is not done by exactly one object but rather by two. Instead write a function and use the function from now on. This covers most cases violating the SRP.
+You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer]. And if you do, you should refactor out the duplication immediately and write it for instance into a function. If you have duplicated code, something is not done by one object but rather by two. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
 
-The DRY principle also applies to processes like building your project. If you have to repeat your steps there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
+The DRY principle also applies to processes like building your project. If you have to execute many steps for building your project, there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
-The other cases are code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. This kind of duplication has the problem that it is hard to detect. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, there will be a lot of work finding all the parsers and adapting them. This might be a serious source of bugs.
+The other case is code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. It is very hard to detect this kind of duplication as it grows over time. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, it will be nearly impossible to find all the bits and pieces of code dealing with them. This might become a serious source of bugs.
 
-As I said, it is hard to keep track of these kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
+As I said, it is hard to keep track of this kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
 
 One common source of repetition are switch case or if statements. They looks something like this:
 ```py
@@ -601,7 +596,7 @@ if job == "president":
 if job == "president":
 	security_standards = "very high"
 ```
-etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them by using polymorphism. Create a `president` object with the corresponding properties.
+etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the corresponding properties.
 ```py
 class President:
 	def __init__(self):
@@ -609,10 +604,14 @@ class President:
 		self.security_standards = "very high"
 ```
 Now you only have to create a `president` object once and there is no more need for any if statements.
+```py
+president = President()
+location = president.residency
+```
 
 ### Exceptions of DRY
 
-The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. This is also in agreement with the test driven design (TDD) where you only have to refactor if there is a three-fold duplication of the code.
+The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. This is also in agreement with the test driven design (TDD) where you only have to refactor if there is a three-fold duplication of the code. But for three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately.
 
 ## Orthogonality
 
@@ -626,13 +625,11 @@ Orthogonality is a mathematical definition. It states that two objects are under
 
 On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
 
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over.
+In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over. This also makes sense from an economic point of view: there is only one developer (upstream person), but many users (downstream persons). So if the developer makes the coordinate transformation, only one person (or team) has to do it, compared to all the users if the developers don't do this job by themselves. 
 
-It may not always be that obvious how the downstream would like the interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure there are no implementation details leak into the interface, even tough this is easier said than done. This has the highest chances to be orthogonal from the user point of view.
+It may not always be that obvious how the downstream would like an interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure that no implementation details leak into the interface, even tough this is sometimes easier said than done. This general interface has the highest chances to be orthogonal from the user point of view. And try to cut down the interface as much as possible. Less is more.
 
-Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. 
-
-A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the single responsibility principle.
+Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the SRP.
 
 ### Advantages of orthogonal systems
 
