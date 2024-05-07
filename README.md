@@ -47,6 +47,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 		- [Exceptions of DRY](#exceptions-of-dry)
 	- [Orthogonality](#orthogonality)
 		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+		- [Example of an adapter](#example-of-an-adapter)
 	- [Advantages of the SRP](#advantages-of-the-srp)
 		- [Understanding](#understanding)
 		- [Naming](#naming)
@@ -55,7 +56,6 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 		- [Less Bugs](#less-bugs)
 		- [Bug fixing](#bug-fixing)
 	- [Drawbacks of the SRP](#drawbacks-of-the-srp)
-	- [Example](#example)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
 	- [Real world example](#real-world-example)
 	- [Programming Example](#programming-example)
@@ -167,7 +167,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 	- [Test Driven Development](#test-driven-development)
 		- [How TDD works](#how-tdd-works)
 		- [Importance of TDD](#importance-of-tdd)
-		- [Example](#example-1)
+		- [Example](#example)
 	- [Fakes and Mocks](#fakes-and-mocks)
 		- [Mocking](#mocking)
 		- [Faking](#faking)
@@ -282,7 +282,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 	- [Liskov Substitution Principle](#liskov-substitution-principle)
 	- [Interface Segregation Principle](#interface-segregation-principle)
 	- [Dependency Inversion Principle](#dependency-inversion-principle)
-		- [Example](#example-2)
+		- [Example](#example-1)
 	- [Summary](#summary-3)
 - [25. Data types](#25-data-types)
 	- [Lists](#lists)
@@ -405,7 +405,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 	- [The dependency graph](#the-dependency-graph)
 	- [Breaking up dependencies](#breaking-up-dependencies)
 	- [Circular dependencies](#circular-dependencies)
-		- [Example](#example-3)
+		- [Example](#example-2)
 - [40. Working in teams](#40-working-in-teams)
 	- [Team structure](#team-structure)
 		- [The bus factor](#the-bus-factor)
@@ -639,7 +639,9 @@ Working in an orthogonal system has many advantages:
 -	It is easier to write tests for an orthogonal system.
 -	It decouples the code as the transformation acts as an adapter.
 
-// figure out what else to write. Maybe add some examples.
+### Example of an adapter
+
+A common example of an adapter is the gas pedal controler of a car. It converts the position of the gas pedal into fuel injection, the rotation speed of the engine and in case of an automatic gear also the gear of the gearbox. It controls all these parts of a car depending on only one parameter controlled by the driver. 
 
 ## Advantages of the SRP
 
@@ -649,64 +651,27 @@ The importance of the SRP cannot be overstated. It alone makes your code an orde
 A function or class that implements exactly one thing will always be compareably easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
 
 ### Naming
-Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard.
+Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard. If you choose a name containing an "and", chances are high that you violated the SRP.
 
 ### No Duplication
-Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. Every time you see redundant code you should generally start refactoring. 
+Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. If you see redundant code you should probably start refactoring. 
 
-Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparably easy as you have to change code only in one location.
+Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparably easy as you have to change code only in one location. Your payment system has to be updated? Go to the `PaymentSystem` class and update it. Done.
 
 ### Easy Testing
 Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, initializing class instances is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
 
 ### Less Bugs
-As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you know right away why a bug showed up as it is immediately apparent which part of the code is responsible for the behavior of the bug.
+As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you'll know right away why a bug showed up as it is immediately apparent which part of the code is responsible for the behavior of the bug.
+
+Again, let me make a real world example: You are dressed in an orange T-shirt, even though you should be dressed in a white shirt. If the only time you have access to a wardrobe is in the morning after having a shower, you know that it was at that time that you made the mistake. Meanwhile if you have access to the wardrobe all the time, you never know when you incorectly decided to get an orange shirt. This example nicely shows why it is important to restrict accsess to objects as much as possible and do things only in one location.
 
 ### Bug fixing
-Tracking down bugs will be much easier. You can understand fairly well what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add an if statement in your code. This would violate the SRP and lead to bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all.
+Tracking down bugs will be much easier. You can understand fairly well what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add an if statement in your code. This would violate the SRP and lead to bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all. All together, we can conclude that fixing a bug becomes harder, but fixing it properly becomes much easier if you obey the SRP.
 
 ## Drawbacks of the SRP
 
 There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it may be ok to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm.
-
-## Example
-Let's have a look at a very short example. Even though it is only 5 lines long, it violates the SRP. Can you figure out why?
-
-// I don't think this example belongs here. We haven't talked about levels of abstractions yet.
-```py
-def print_body():
-	# print something
-
-def print_page():
-	print("author: Marco")
-	print("*************")
-	print_body()
-	print("copyright my company")
-	print("page number 1/1")
-```
-The problem are the different levels of abstraction. Printing a string is clearly a lower level of abstraction than calling a function which probably prints a string as well. There should either be only print statements or function calls within a piece of code. Thus there are 2 possibilities. We can either unroll the `print_body` function if it's fairly short or write functions for the other print statements. The later is probably the preferred solution as it's fairly easy to create these functions.
-
-```py
-def print_header():
-	print("author: Marco")
-	print("*************")
-	
-def print_body():
-	# print something
-
-def print_footer():
-	print("copyright my company")
-	print("page number 1/1")
-
-def print_page():
-	print_header()
-	print_body()
-	print_footer()
-```
-
-Now all of the code looks very uniform. This is an indication that the SRP is now fulfilled.
-
-Admittedly I was a little bit picky here. It was not necessarily worth to refactor this code here as mentioned in the section on drawbacks. But I can't write much more convoluted examples in this book without them getting out of hand.
 
 # 6. Levels of abstraction
 
@@ -720,17 +685,17 @@ Levels of abstraction is an extremely important concept in software engineering.
 
 You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects that the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
 
-One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to see it. The OS supplies an interface on which the text processing software is running, but the OS doesn't care too much about the text processing software.
+One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to see it. The OS supplies an interface, which the text processing software is running on, but the OS doesn't care about the text processing software.
 
 Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hierarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
 
-You create a level of abstraction every time you combine some existing objects. The new level has a higher level than the previous ones. It may have completely different properties than the lower levels. In theory the higher level combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average and make very accurate predictions on a combustion engine or the aerodynamics of an airplane.
+You create a level of abstraction every time you combine some existing objects. The new object has a higher level of abstraction than the previous ones. It may have completely different properties than the lower levels. In theory the higher level object combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average of billions of molecules and make very accurate predictions on the behavior of a combustion engine or the aerodynamics of an airplane.
 
 Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have to break them up into smaller and smaller blocks that you can understand.
 
 ## Programming Example
 
-C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always. The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
+C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always: The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
 C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the infamous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason.
 
@@ -743,11 +708,13 @@ arr[0] = 42;
 delete[] arr;
 ```
 
-One of the main reasons Java got so popular was the garbage collector. It took care of all the deleting. Without a doubt a tremendous improvement at the time.
+If you use `delete arr` instead of `delete[] arr`, you create a memory leak. Apparently it is very simple to make mistakes when using new and delete such that one shouldn't use them at all.
+
+One of the main reasons Java got so popular in the 90ies was the introduction of the garbage collector. It took care of all the deleting. Meanwhile there are still ways to create memory leaks in Java, most problems with memory management were gone. Without a doubt a tremendous improvement at the time.
 
 Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete in pairs. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
 
-Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [Effective Modern C++].
+Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [citation: Effective Modern C++].
 
 Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
@@ -785,15 +752,17 @@ public:
 
 This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers [Effective C++].
 
-If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability very significant.
+If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability is very significant.
 
-Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays. Don’t ever bother using old school arrays. Don’t waste time learning more about arrays. I told you everything you have to know.
+Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays in every aspect. Don’t ever bother using old school arrays. Don’t even waste time learning more about arrays. I told you everything you have to know.
 
 ## Summary
 
 As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code.
 
 ## The abstraction layers
+
+// I don't like that this text follows a summary...
 
 In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher, but only on lower levels. The code can be divided into different layers. I personally like to break it up into 5 layers. Though it has to be remarked, that this is by far not the only way to sort the code. There are many different ways to do it. It can also be separated in onion layers. If you like this approach better, you can find a detailed explanation in [Clean Architecture].
 
