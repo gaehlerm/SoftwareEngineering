@@ -591,17 +591,17 @@ As I said, it is hard to keep track of this kind of redundancies. There is no ea
 One common source of repetition are switch case or if statements. They looks something like this:
 ```py
 if job == "president":
-	residency = "White house"
+    residency = "White house"
 # ...
 if job == "president":
-	security_standards = "very high"
+    security_standards = "very high"
 ```
 etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the corresponding properties.
 ```py
 class President:
-	def __init__(self):
-		self.residency = "White house"
-		self.security_standards = "very high"
+    def __init__(self):
+        self.residency = "White house"
+        self.security_standards = "very high"
 ```
 Now you only have to create a `president` object once and there is no more need for any if statements.
 ```py
@@ -723,30 +723,30 @@ Here is a very simplified version how the fundamental idea of the vector class l
 class VectorClass {
 private:
     int* arr;
-	int capacity;
+    int capacity;
     int current;
 public:
     VectorClass()
     {
-		// allocate memory inside the constructor
+        // allocate memory inside the constructor
         arr = new int[1];
-		capacity = 1;
+        capacity = 1;
         current = 0;
-	}
-	~VectorClass()
+    }
+    ~VectorClass()
     {
         delete [] arr;
     }
-	void push(int data)
+    void push(int data)
     {
-		// if the array is full, allocate more memory
+        // if the array is full, allocate more memory
         if (current == capacity) {
             int* temp = new int[2 * capacity];
-			capacity *= 2;
-		}
-		current++;
-		// etc.
-	}
+            capacity *= 2;
+        }
+        current++;
+        // etc.
+    }
 }
 ```
 
@@ -901,13 +901,13 @@ A frequent problem are deeply nested `if/else` clauses.
 ```py
 button = input("")
 if button != "":
-	if not is_sleeping():
-		if not is_eating():
-			fight()
-		else:
-			print("Cannot fight while eating")
-	else:
-		print("Cannot fight while sleeping")
+    if not is_sleeping():
+        if not is_eating():
+            fight()
+        else:
+            print("Cannot fight while eating")
+    else:
+        print("Cannot fight while sleeping")
 ```
 
 This code is very hard to understand. It has too many negations. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
@@ -915,14 +915,14 @@ This code is very hard to understand. It has too many negations. And as I wrote 
 ```py
 button = input("")
 if button == "":
-	return
+    return
 if not is_sleeping():
-	if not is_eating():
-		attack()
-	else:
-		print("Cannot fight while eating")
+    if not is_eating():
+        attack()
+    else:
+        print("Cannot fight while eating")
 else:
-	print("Cannot fight while sleeping")
+    print("Cannot fight while sleeping")
 ```
 
 We can return this technique also for the other `if` clauses. The resulting code will look as follows:
@@ -930,13 +930,13 @@ We can return this technique also for the other `if` clauses. The resulting code
 ```py
 button = input("")
 if button == "":
-	return
+    return
 if is_sleeping():
-	print("Cannot fight while sleeping")
-	return
+    print("Cannot fight while sleeping")
+    return
 if is_eating():
-	print("Cannot fight while eating")
-	return
+    print("Cannot fight while eating")
+    return
 attack()
 ```
 
@@ -946,15 +946,15 @@ With this technique, the code became much easier to read. Of course, one could a
 
 ```py
 def can_fight(button):
-	if button == "":
-		return false
-	if is_sleeping():
-		print("Cannot fight while sleeping")
-		return false
-	if is_eating():
-		print("Cannot fight while eating")
-		return false
-	return true
+    if button == "":
+        return false
+    if is_sleeping():
+        print("Cannot fight while sleeping")
+        return false
+    if is_eating():
+        print("Cannot fight while eating")
+        return false
+    return true
 ```
 
 Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frequently no perfect solution, but at least we have improved it a lot compared to the initial code.
@@ -973,8 +973,8 @@ The following function clearly has a side effect:
 ```py
 counter = 0
 def log_in(email_address):
-	counter +=1
-	check(email_address)
+    counter +=1
+    check(email_address)
 ```
 
 It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
@@ -989,12 +989,12 @@ Temporal coupling is if you can do things in the wrong order. Sometimes the code
 
 ```Py
 class Shopping():
-	def get_money(self, amount):
-		self.money = amount
-	def create_shopping_list(self, shopping_list):
-		self.shopping_list = shopping_list
-	def go_shopping(self):
-		# use the shopping_list and money
+    def get_money(self, amount):
+        self.money = amount
+    def create_shopping_list(self, shopping_list):
+        self.shopping_list = shopping_list
+    def go_shopping(self):
+        # use the shopping_list and money
 ```
 Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
 
@@ -1059,7 +1059,7 @@ Following the SRP, functions can only be either a query or a command [https://en
 
 ```py
 if set_node("money", 50):
-	go_shopping(); 
+    go_shopping(); 
 ```
 Here the `set_node` function does two things at a time. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
 
@@ -1211,11 +1211,11 @@ A class may have no member variables at all. It consists only of public methods.
 
 ```py
 class Math:
-	def sin(angle):
-		return 0
+    def sin(angle):
+        return 0
 
-	def cos(angle):
-		return 1
+    def cos(angle):
+        return 1
 ```
 
 
@@ -1225,17 +1225,17 @@ The delegating class is a mixture of a data class and a pure method class. All v
 
 ```py
 class Car:
-	def __init__(self, AC, engine):
-		self._AC = AC
-		self._engine = engine
-		# ...
-	
-	def set_temperature(self, temperature):
-		self._AC.set_temperature(temperature)
+    def __init__(self, AC, engine):
+        self._AC = AC
+        self._engine = engine
+        # ...
+    
+    def set_temperature(self, temperature):
+        self._AC.set_temperature(temperature)
 
-	def set_speed(self, speed):
-		self._engine.set_speed(speed)
-	# ...
+    def set_speed(self, speed):
+        self._engine.set_speed(speed)
+    # ...
 ```
 
 ### Worker class
@@ -1309,7 +1309,7 @@ class Animal(ABC):
 
 class Lion(Animal):
     def fed(self):
-		# oops...
+        # oops...
         print("Feeding meat.")
 
 if __name__ == "__main__":
@@ -1370,10 +1370,10 @@ The following code creates a counter for the class instances. It looks neat and 
 from itertools import count
 
 class Obj(object):
-	_ids = count(0)
+    _ids = count(0)
 
-	def __init__(self):
-		self.id = next(self._ids)
+    def __init__(self):
+        self.id = next(self._ids)
 
 obj0 = Obj()
 print(obj0.id) # 0
@@ -1386,7 +1386,7 @@ You will witness what I said here once you write a complicated constructor and t
 ```py
 # somewhere in your tests
 if obj.id == 24:
-	# ...
+    # ...
 ```
 
 Now if you add one more class instance before this line, the counter will be different and the test will break. If you have a good intuition for code you might also have realized that this `24` is a very strange number showing up out of the blue. There has to be something wrong about it.
@@ -1423,9 +1423,9 @@ Let's look at decoupling. You want to rename `size` into `volume`. It’s easy t
 ```Py
 class Bottle
     def get_size(self):
-		return self.volume
+        return self.volume
     def set_size(self, size):
-		self.volume = size
+        self.volume = size
 ```
 
 See the problem? You didn’t improve anything at all. Everyone still uses the get_size function which returns a volume. This will cause a hell lot of confusion. You would have to rename the getter and setter function as well. It decoupled the code only in theory. Writing getters and setters is only useful if the value returned by the getter is the result of a calculation, lifting the code on a higher level of abstraction. But then it’s not a pure getter function anymore...
@@ -1448,11 +1448,11 @@ One example of a delegating class is, as we have already seen previously, a car.
 
 ```Py
 class Car:
-	def __init__(self, air_conditioning):
-		self.air_conditioning = air_conditioning
+    def __init__(self, air_conditioning):
+        self.air_conditioning = air_conditioning
 
-	def set_temperature(self, temperature):
-		self.air_conditioning.set_temperature(temperature)
+    def set_temperature(self, temperature):
+        self.air_conditioning.set_temperature(temperature)
 ```
 
 The car class is only delegating the `set_temperature` function call to the `air_conditioning`. And also, the `air_conditioning` does not have a temperature variable. It has only a temperature sensor that measures the temperature along with its possibility to change the temperature.
@@ -1673,12 +1673,12 @@ To finish this chapter, let me briefly make an example to show you the differenc
 
 ```py
 class Animal():
-	def __init__(self, food):
-		self.food = food
+    def __init__(self, food):
+        self.food = food
 
 class Lion(Animal):
-	def __init__(self):
-		super().__init__(food="meat")
+    def __init__(self):
+        super().__init__(food="meat")
 
 lion = Lion()
 print(lion.food)
@@ -1688,12 +1688,12 @@ In the class `Car`, the `taxi` has to access the `power` object through the `eng
 
 ```py
 class Engine():
-	def __init__(self, power):
-		self.power = power
+    def __init__(self, power):
+        self.power = power
 
 class Car():
-	def __init__(self):
-		self.engine = Engine(power=322)
+    def __init__(self):
+        self.engine = Engine(power=322)
 
 taxi = Car()
 print(taxi.engine.power)
@@ -1772,11 +1772,11 @@ Here is a small example of a class we want to test:
 ```Py
 # inside vector.py
 class Vector:
-	def __init__(self, x, y):
-		self.x = x
-		self.y = y
-	def distance_to(self, other):
-		return ((self.x-other.x)**2)**0.5
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def distance_to(self, other):
+        return ((self.x-other.x)**2)**0.5
 ```
 
 The corresponding test looks as follows:
@@ -1787,9 +1787,9 @@ from vector import Vector
 import math
 
 def test_distance(self):
-	v1 = Vector(0,0)
-	v2 = Vector(1,1)
-	assert math.isclose(v1.distance_to(v2), 2**0.5)
+    v1 = Vector(0,0)
+    v2 = Vector(1,1)
+    assert math.isclose(v1.distance_to(v2), 2**0.5)
 ```
 
 We can run the test in the command line with
@@ -1806,8 +1806,8 @@ E     +  where False = <built-in function isclose>(1.0, (2 ** 0.5))
 Apparently I made a mistake in the implementation. I forgot to take the y-component into account. The correct implementation of the `distance_to` function would be
 
 ```py
-	def distance_to(self, other):
-		return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
+    def distance_to(self, other):
+        return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
 ```
 
 Now the test passes.
@@ -1818,9 +1818,9 @@ There are different ways to change the error message of a failing test. The easi
 
 ```py
 def test_function():
-	a = 1
-	b = 2
-	assert a == b, f"should = {b}, is = {a}"
+    a = 1
+    b = 2
+    assert a == b, f"should = {b}, is = {a}"
 ```
 
 This returns the following error message:
@@ -1982,31 +1982,31 @@ Let's make an example how helper functions can make a test case easier to read.
 
 ```py
 def test_car_accelerates_if_gas_pedal_is_pushed():
-	engine = Engine()
-	wheels = [Wheel() for _ in range(4)]
-	board_electronics = Samsung_TV()
-	initial_speed = 0
-	car = Car(engine, wheels, board_electronics, initial_speed)
+    engine = Engine()
+    wheels = [Wheel() for _ in range(4)]
+    board_electronics = Samsung_TV()
+    initial_speed = 0
+    car = Car(engine, wheels, board_electronics, initial_speed)
 
-	car.push_gas_pedal()
+    car.push_gas_pedal()
 
-	assert car.speed == 1
+    assert car.speed == 1
 ```
 
 This test has the problem that the setup takes much more than just one line. Thus we should create a helper function that takes care of the creation of the car.
 
 ```py
 def create_standing_car():
-	engine = Engine()
-	wheels = [Wheel() for _ in range(4)]
-	board_electronics = Samsung_TV()
-	initial_speed = 0
-	return Car(engine, wheels, board_electronics, initial_speed)
+    engine = Engine()
+    wheels = [Wheel() for _ in range(4)]
+    board_electronics = Samsung_TV()
+    initial_speed = 0
+    return Car(engine, wheels, board_electronics, initial_speed)
 
 def test_car_accelerates_if_gas_pedal_is_pushed():
-	car = create_standing_car()
-	car.push_gas_pedal()
-	assert car.speed == 1
+    car = create_standing_car()
+    car.push_gas_pedal()
+    assert car.speed == 1
 ```
 
 Now the test case looks much better. There is only one line for the setup, one line for the action we want to test and one line for the assertion. Of course we could also create the `car` object in a single line, but this is not the point here. The point is that the test case is much easier to read and understand. 
@@ -2046,7 +2046,7 @@ def test_a():
 @pytest.mark.dependency(depends=["test_a"])
 def test_b():
     print("This will never be printed.")
-	assert False
+    assert False
 ```
 
 As in this example `test_a` is always going to fail, `test_b` will be skipped as it depends on `test_a`. 
@@ -2102,7 +2102,7 @@ First we have to figure out, why unit tests are acutally needed. A lot of progra
 
 ```Py
 def square(x):
-	return x**2
+    return x**2
 
 print(square(1))
 print(square(2))
@@ -2138,37 +2138,37 @@ Let's say we have the following code.
 
 ```Py
 def share_values(filename):
-	with open(filename,'r') as f:
-     	file_content = f.read()
-	share_values = parse_share_values(file_content)
-	# ... and much more code
-	return share_values
+    with open(filename,'r') as f:
+         file_content = f.read()
+    share_values = parse_share_values(file_content)
+    # ... and much more code
+    return share_values
 ```
 
 The section of this code reading the file is very simple. It is not necessary to test it. Instead, it can be easily exctracted into a separate function. This is called the "Wrap Method" by Michael Feathers [WELC, p.70]
 
 ```py
 def share_values(filename):
-	file_content = read_file(filename)
-	share_values = parse_share_values(file_content)
-	return share_values
+    file_content = read_file(filename)
+    share_values = parse_share_values(file_content)
+    return share_values
 
 def read_file(filename):
-	with open(filename,'r') as f:
-		return f.read()
+    with open(filename,'r') as f:
+        return f.read()
 
 def parse_share_values(file_content):
-	share_values = do_something_with(file_content)
-	# ... and much more code
-	return share_values
+    share_values = do_something_with(file_content)
+    # ... and much more code
+    return share_values
 ```
 
 Here we wraped the code reading out the file into a separate function. The rest of the code is written into a dedicated function. For this function one can easily write a unit test because it doesn't depend on the file system. A test might look as follows:
 
 ```py
 def test_parse_share_values():
-	file_content = "Apple, 150.3"
-	assert parse_share_values(file_content) == {"Apple": 150.3}
+    file_content = "Apple, 150.3"
+    assert parse_share_values(file_content) == {"Apple": 150.3}
 ```
 
 This is similar to the GUI layer for functional tests. You pack everything you don’t want to test into a thin layer that is unlikely to fail and the remaining test becomes much smoother. In this case here this small layer is the function `read_share_values` which reads the file into a string. Uncle Bob calls this a "Humble Object" [Clean Craftsman p.157]. It is a small layer that is unlikely to fail and therefore does not need to be tested. It is just a thin wrapper around the function reading the file.
@@ -2205,7 +2205,7 @@ def test_roman_number():
     assert roman_number(1) == 'I'
     assert roman_number(2) == 'II'
     assert roman_number(3) == 'III'
-	# ... and tests up to number 42
+    # ... and tests up to number 42
 ```
 
 However there are two minor things that I'd like to have improved. First of all there should be preferably only very few asserts per test. Here we have 42 of them.
@@ -2433,7 +2433,7 @@ If we run the test, it fails as expected. But we can make it pass easily.
 ```py
 # inside roman_numbers.py
 def roman_numbers(_):
-	return "I"
+    return "I"
 ```
 
 This code may look odd at first sight, but it is perfectly viable code in TDD. There is no duplication and it does everything required to make the test pass, even if the function argument just gets ignored. As there is nothing to refactor, we can continue with the second test.
@@ -2445,10 +2445,10 @@ def test_two():
 
 ```py
 def roman_numbers(n):
-	if n == 1:
-		return "I"
-	else:
-		return "II"
+    if n == 1:
+        return "I"
+    else:
+        return "II"
 ```
 
 The code from the first test is not sufficient anymore. We have to use at least some `if/else` clause. You might feel the urge to refactor this code. But at least for the time being we leave it as is. The need to refactor this code is not yet strong enough.
@@ -2462,19 +2462,19 @@ def test_three():
 
 ```py
 def roman_numbers(n):
-	if n == 1:
-		return "I"
-	elif n == 2:
-		return "II"
-	else:
-		return "III"
+    if n == 1:
+        return "I"
+    elif n == 2:
+        return "II"
+    else:
+        return "III"
 ```
 
 Now the `if/else` statements start to take over. We have 3 possible cases and with a little bit of thinking we find an easy way to refactor them away. The new version of the code might look like this:
 
 ```py
 def roman_numbers(n):
-	return n*"I"
+    return n*"I"
 ```
 
 Let's add a fourth test:
@@ -2488,9 +2488,9 @@ We don't know yet how to deal with `numbers > 4`, so we may return any value we 
 
 ```py
 def roman_numbers(n):
-	if n == 4:
-		return "IV"
-	return n*"I"
+    if n == 4:
+        return "IV"
+    return n*"I"
 ```
 
 For 5 we can just continue with the same pattern.
@@ -2502,41 +2502,41 @@ def test_five():
 
 ```py
 def roman_numbers(n):
-	if n == 5:
-		return "V"
-	elif n == 4:
-		return "IV"
-	return n*"I"
+    if n == 5:
+        return "V"
+    elif n == 4:
+        return "IV"
+    return n*"I"
 ```
 
 Two tests later we are again at the point where we have to refactor. This time we have to think a little harder how the logic of the function really works. One possible outcome of this refactoring is the following code:
 
 ```py
 def roman_numbers(n):
-	num = ""
-	while n >= 5:
-		num += "V"
-		n -= 5
-	while n >= 4:
-		num += "IV"
-		n -= 4
-	while n >= 1:
-		num += "I"
-		n -= 1
-	return num
+    num = ""
+    while n >= 5:
+        num += "V"
+        n -= 5
+    while n >= 4:
+        num += "IV"
+        n -= 4
+    while n >= 1:
+        num += "I"
+        n -= 1
+    return num
 ```
 
 In a second refactoring step we wrap the whole while loops into a single for loop.
 
 ```py
 def roman_numbers(n):
-	roman = ""
-	arabic_to_roman = {5:"V", 4:"IV", 1:"I"}
-	for arabic in arabic_to_roman:
-		while n >= arabic:
-			n -= arabic
-			roman += arabic_to_roman[arabic]
-	return roman
+    roman = ""
+    arabic_to_roman = {5:"V", 4:"IV", 1:"I"}
+    for arabic in arabic_to_roman:
+        while n >= arabic:
+            n -= arabic
+            roman += arabic_to_roman[arabic]
+    return roman
 ```
 
 Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter [chapter Data types] that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for python versions >= 3.7 as only since then, dicts are guaranteed to keep their order. The following solution would probably be the best as it is more solid, even though it is a bit longer:
@@ -2546,17 +2546,17 @@ from dataclasses import dataclass
 
 @dataclass
 class NumberPair:
-	arabic: int
-	roman: str
+    arabic: int
+    roman: str
 
 def roman_numbers(n):
-	roman = ""
-	arabic_roman = [NumberPair(5, "V"), NumberPair(4, "IV"), NumberPair(1, "I")]
-	for number_pair in arabic_roman:
-		while n >= number_pair.arabic:
-			n -= number_pair.arabic
-			roman += number_pair.roman
-	return roman
+    roman = ""
+    arabic_roman = [NumberPair(5, "V"), NumberPair(4, "IV"), NumberPair(1, "I")]
+    for number_pair in arabic_roman:
+        while n >= number_pair.arabic:
+            n -= number_pair.arabic
+            roman += number_pair.roman
+    return roman
 ```
 
 The reamining tests and implementations are straight forward. I'll leave them as an exercise for the reader.
@@ -2581,11 +2581,11 @@ from important_stuff import read_csv
 from unittest.mock import Mock
 
 def read_csv(file_name):
-	# ...
-	# return ...
+    # ...
+    # return ...
 
 def test_mock_important_stuff():
-	# Override the `read_csv` function defined in important_stuff.py and return some values.
+    # Override the `read_csv` function defined in important_stuff.py and return some values.
     read_csv = Mock(return_value=([7], [8], [9]))
     assert read_csv("unexisting_file.csv") == ([7], [8], [9])
 ```
@@ -2617,7 +2617,7 @@ class CSVReader:
         
 class FakeCSVReader:
     def __init__(self, _):
-		pass
+        pass
 
     def write(self, data):
         self._data = data
@@ -2685,7 +2685,7 @@ def main(client):
 
 if __name__ == "__main__":
     main(
-		api_client=ApiClient(
+        api_client=ApiClient(
             api_key=os.getenv("API_KEY"), # <-- here you can change the api_key
         )
     )
@@ -2914,7 +2914,7 @@ print("********************")
 print_content()
 
 def print_content():
-	# print some stuff
+    # print some stuff
 ```
 
 The solution is taking the explicit print statements into a function and call this function instead.
@@ -2924,11 +2924,11 @@ print_header()
 print_content()
 
 def print_header():
-	print("author: Marco Gähler")
-	print("********************")
+    print("author: Marco Gähler")
+    print("********************")
 
 def print_content():
-	# print some stuff
+    # print some stuff
 ```
 
 For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway. Even better is to cut (ctrl-x) and paste the code snippet, but that's a detail.
@@ -2992,20 +2992,20 @@ The most common seam is simply function arguments. It is not mentioned in Workin
 
 ```py
 def f(debug):
-	if(debug):
-		# ...
-	else:
-		# ...
+    if(debug):
+        # ...
+    else:
+        # ...
 ```
 
 However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection. The code above should be used at the highest level and create objects that will be used with dependency injection. For example:
 
 ```py
 def create_reader(debug):
-	if(debug):
-		return DebugReader()
-	else:
-		return Reader()
+    if(debug):
+        return DebugReader()
+    else:
+        return Reader()
 
 def main(debug=False):
     reader = create_reader(debug)
@@ -3039,44 +3039,44 @@ Assume we have the following code that we can't test for whatever reason. In rea
 
 ```py
 def post_entries(transactions, entries):
-	for entry in entries:
-		entry.post()
-	transactions.get_current().add(entries)
+    for entry in entries:
+        entry.post()
+    transactions.get_current().add(entries)
 ```
 
 Now we only want to add the valid entries to the transactions and execute the `post` function. It seems as if we'd have to create a temporary list and add an if statement. 
 
 ```py
 def post_entries(transactions, entries):
-	valid_entries = []
-	for entry in entries:
-		if entry.is_valid():
-			entry.post()
-			valid_entries.append(entry)
-	transactions.get_current().add(valid_entries)
+    valid_entries = []
+    for entry in entries:
+        if entry.is_valid():
+            entry.post()
+            valid_entries.append(entry)
+    transactions.get_current().add(valid_entries)
 ```
 This, however, makes the untestable code even more complex. Instead we can create a new function that extracts the new functionality. This new function can be tested, so you can apply TDD.
 
 ```py
 def test_get_valid_entries():
-	entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
-	valid_entries = get_valid_entries(entries)
-	assert len(valid_entries) == 2
+    entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
+    valid_entries = get_valid_entries(entries)
+    assert len(valid_entries) == 2
 ```
 
 ```py
 def get_valid_entries(entries):
-	valid_entries = []
-	for entry in entries:
-		if entry.is_valid():
-			valid_entries.append(entry)
-	return valid_entries
+    valid_entries = []
+    for entry in entries:
+        if entry.is_valid():
+            valid_entries.append(entry)
+    return valid_entries
 
 def post_entries(transactions, entries):
-	valid_entries = get_valid_entries(entries)
-	for entry in valid_entries:
-		entry.post()
-	transactions.get_current().add(valid_entries)
+    valid_entries = get_valid_entries(entries)
+    for entry in valid_entries:
+        entry.post()
+    transactions.get_current().add(valid_entries)
 ```
 
 So we managed to add only one additional line of code to the original function. All the other code went into the `get_valid_entries` function. This new function is now also unit tested.
@@ -3110,7 +3110,7 @@ def roman_number(number):
         return 'II'
     elif number == 3:
         return 'III'
-	# Code used for later:
+    # Code used for later:
     # elif number == 4:
     #     return 'IV'
     # elif number == 5:
@@ -3121,7 +3121,7 @@ I commented out the last two cases that were suggested by Copilot. Having only t
 
 ```py
     # refactor this code to use a dictionary instead of if/elif/else
-	return {1: 'I', 2: 'II', 3: 'III'}.get(n, 'Invalid number')
+    return {1: 'I', 2: 'II', 3: 'III'}.get(n, 'Invalid number')
 ```
 
 This works out but it's not quite what I wanted. After commenting out the case for 4 and 5 and explicitly asking for a while loop, the code looks as follows:
@@ -3153,7 +3153,7 @@ This is almost what I wanted, except that one could use a dict with number-roman
                 roman += roman_map[key]
                 number -= key
                 break
-	return roman
+    return roman
 ```
 
 This code can be further refactored with the following command:
@@ -3166,7 +3166,7 @@ This code can be further refactored with the following command:
         while number >= key:
             roman += roman_map[key]
             number -= key
-	return roman
+    return roman
 ```
 
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
@@ -3212,7 +3212,7 @@ In the following C++ code, one can easily mix up the different arguments as they
 
 ```py
 def send_email(to, subject, body):
-	pass
+    pass
 ```
 
 ```py
@@ -3220,12 +3220,12 @@ from dataclasses import dataclass
 
 @dataclass
 class Email:
-	to: str
-	subject: str
-	body: str
+    to: str
+    subject: str
+    body: str
 
 def send_email(email: Email):
-	pass
+    pass
 ```
 
 In python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
@@ -3252,14 +3252,14 @@ This example is very hard to understand as there is too much logic concentrated 
 ```py
 output = []
 for i in range(1, 101):
-	if i % 3 == 0 and i % 5 == 0:
-		output.append("fizzbuzz")
-	elif i % 3 == 0:
-		output.append("fizz")
-	elif i % 5 == 0:
-		output.append("buzz")
-	else:
-		output.append(i)
+    if i % 3 == 0 and i % 5 == 0:
+        output.append("fizzbuzz")
+    elif i % 3 == 0:
+        output.append("fizz")
+    elif i % 5 == 0:
+        output.append("buzz")
+    else:
+        output.append(i)
 ```
 
 This is, at least in my eyes, much easier to understand.
@@ -3334,7 +3334,7 @@ Here is an example using type hints:
 
 ```py
 def digits_of(number: str) -> list[int]:
-	return [int(d) for d in number]
+    return [int(d) for d in number]
 ```
 
 But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
@@ -3349,9 +3349,9 @@ Python is a very dynamic language. It allows you to do things that wouldn't be p
 
 ```py
 class Apple:
-	def __init__(self, price: float, weight: float):
-		self.price = price
-		self.weight = weight
+    def __init__(self, price: float, weight: float):
+        self.price = price
+        self.weight = weight
 
 apple = Apple(1.0, 0.5)
 apple.hi = "hi"
@@ -3363,11 +3363,11 @@ This issue can be prevented by using slots.
 
 ```py
 class Apple:
-	__slots__ = "price", "weight"
+    __slots__ = "price", "weight"
 
-	def __init__(self, price: float, weight: float):
-		self.price = price
-		self.weight = weight
+    def __init__(self, price: float, weight: float):
+        self.price = price
+        self.weight = weight
 ```
 
 Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
@@ -3520,9 +3520,9 @@ Copilot is able to find some bugs. Though I expect it to find only minor bugs, t
 roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
 roman = ''
 for key in sorted(roman_map.keys(), reverse=True):
-	while number > key:
-		roman += roman_map[key]
-		number -= key
+    while number > key:
+        roman += roman_map[key]
+        number -= key
 return roman
 ```
 
@@ -3550,14 +3550,14 @@ The try catch block around the main function should make sure that no exceptions
 
 ```Python
 if __name__ == "__main__":
-	try:
-		main()
-	except CustomException as e:
-		print("Unable to process user input:")
-		print(str(e))
-	except Exception as e:
-		print("Unknown issue. Please contact our customer support.")
-		print(str(e))
+    try:
+        main()
+    except CustomException as e:
+        print("Unable to process user input:")
+        print(str(e))
+    except Exception as e:
+        print("Unknown issue. Please contact our customer support.")
+        print(str(e))
 ```
 
 Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
@@ -3666,20 +3666,20 @@ A factory is used if the construction of an object becomes too complex to handle
 Let's say you want to create a car. But it is very complicated to create the car. Depending on the brand and the model you have to choose an engine, an AC and a whole lot of other parts. This leads to a very bloated constructor and many `if/else` clauses.
 ```py
 class Car():
-	def __init__(self, brand, model, has_AC):
-		if brand == "mycar" and model == "123":
-			self.engine = # ...
-		if # ...
+    def __init__(self, brand, model, has_AC):
+        if brand == "mycar" and model == "123":
+            self.engine = # ...
+        if # ...
 ```
 
 // this is not the classical factory. though from the description it would fit.
 ```py
 class CarFactory():
-	def create_car(self, brand, model, has_AC):
-		self.engine = self.create_engine(brand, model)
-		self.AC = self.create_AC(has_AC)
-		# ...
-		return Car(self.engine, self.AC)	
+    def create_car(self, brand, model, has_AC):
+        self.engine = self.create_engine(brand, model)
+        self.AC = self.create_AC(has_AC)
+        # ...
+        return Car(self.engine, self.AC)	
 ```
 
 Here is the "classical" factory. Depending on some input, it return a polymorphic object.
@@ -3882,30 +3882,30 @@ The strategy pattern is basically the same as dependency injection. Once again, 
 from abc import ABC
 
 class Vechicle(ABC):
-	def travel():
-		pass
+    def travel():
+        pass
 
 class Car(Vehicle):
-	def travel():
-		print("driving")
+    def travel():
+        print("driving")
 
 class Airplane(Vehicle):
-	def travel():
-		print("flying")
+    def travel():
+        print("flying")
 
 def create_vehicle(vehicle_type):
-	if vehicle_type == "car":
-		return Car()
-	elif vehicle_type == "airplane":
-		return Airplane()
-	else:
-		raise Exception()
+    if vehicle_type == "car":
+        return Car()
+    elif vehicle_type == "airplane":
+        return Airplane()
+    else:
+        raise Exception()
 
 if __name__ == "__main__":
-	# get the vehicle type of choice
-	# vehicle_type = ...
-	vehicle = create_vehicle(vehicle_type)
-	vehicle.travel()
+    # get the vehicle type of choice
+    # vehicle_type = ...
+    vehicle = create_vehicle(vehicle_type)
+    vehicle.travel()
 ```
 
 ## Façades
@@ -3920,22 +3920,22 @@ if __name__ == "__main__":
 
 ```py
 class Publisher():
-	def __init__(self):
-		self._subscribers = []
+    def __init__(self):
+        self._subscribers = []
 
-	def add_subscriber(self, subscriber):
-		self._subscribers.append(subscriber)
+    def add_subscriber(self, subscriber):
+        self._subscribers.append(subscriber)
 
-	def notify_subscribers(self):
-		for subscriber in self._subscribers:
-			subscriber.notify()
+    def notify_subscribers(self):
+        for subscriber in self._subscribers:
+            subscriber.notify()
 
 class Subscriber():
-	def __init__(self, name):
-		self._name = name
+    def __init__(self, name):
+        self._name = name
 
-	def notify(self):
-		print(f"subscriber {name} got notified")
+    def notify(self):
+        print(f"subscriber {name} got notified")
 ```
 
 ## Copilot
@@ -4004,9 +4004,9 @@ car = Car()
 car.turn_on_engine()
 
 class Car:
-	# define _engine somewhere
-	def turn_on_engine(self):
-		self._engine.turn_on()
+    # define _engine somewhere
+    def turn_on_engine(self):
+        self._engine.turn_on()
 ```
 
 This is a perfect example for a delegating class, as we have discussed in the chapter on classes.
@@ -4174,15 +4174,15 @@ Let's make a small example. We have a class containing some postal codes of Swis
 
 ```py
 class Cities:
-	def zurich_postal_code(self):
-		return 8000
-	def bern_postal_code(self):
-		return 3000
+    def zurich_postal_code(self):
+        return 8000
+    def bern_postal_code(self):
+        return 3000
 
 def print_all_postal_codes():
-	cities = Cities()
-	print(cities.zurich_postal_code())
-	print(cities.bern_postal_code())
+    cities = Cities()
+    print(cities.zurich_postal_code())
+    print(cities.bern_postal_code())
 ```
 
 If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
@@ -4193,21 +4193,21 @@ Instead we can create an interface `City` and implement it for every city we are
 from abc import ABC, abstractmethod
 
 class City(ABC):
-	@abstractmethod
-	def postal_code(self):
-		pass
+    @abstractmethod
+    def postal_code(self):
+        pass
 
 class Zurich(City):
-	def postal_code(self):
-		return 8000
+    def postal_code(self):
+        return 8000
 
 class Bern(City):
-	def postal_code(self):
-		return 3000
+    def postal_code(self):
+        return 3000
 
 cities = [Zurich(), Bern()]
 for city in cities:
-	print(city.postal_code())
+    print(city.postal_code())
 ```
 
 Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
@@ -4226,7 +4226,7 @@ For example credit cards and Paypal should not implement the same payment system
 
 ```py
 class Payment:
-	def make_payment(amount, card_number_or_email_address)
+    def make_payment(amount, card_number_or_email_address)
 ```
 
 This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
@@ -4237,17 +4237,17 @@ Instead the selection of the credit card numer or the email address should be do
 from abc import ABC, abstractmethod
 
 class PaymentSystem(ABC):
-	@abstractmethod
-	def make_payment(self):
-		pass
+    @abstractmethod
+    def make_payment(self):
+        pass
 
 class PayPal(PaymentSystem):
-	def make_payment(amount):
-		# ask the user for the email address
+    def make_payment(amount):
+        # ask the user for the email address
 
 class CreditCard(PaymentSystem):
-	def make_payment(amount):
-		# ask the user for the credit card number
+    def make_payment(amount):
+        # ask the user for the credit card number
 ```
 
 ##  Interface Segregation Principle
@@ -4262,11 +4262,11 @@ Now in Python this is not such a big deal as you can import each function indivi
 // C++
 // file A.h
 int function_1(){
-	return 1;
+    return 1;
 }
 
 int function_2(){
-	return 2;
+    return 2;
 }
 
 // and many more functions
@@ -4282,12 +4282,12 @@ This process of breaking up files can be repeated until it is no longer possible
 // C++
 // file A1
 int function_1(){
-	return 1;
+    return 1;
 }
 
 // file A2
 int function_2(){
-	return 2;
+    return 2;
 }
 ```
 
@@ -4304,7 +4304,7 @@ class BigClass:
         RED = 1
         GREEN = 2
         BLUE = 3
-	# and much more code here
+    # and much more code here
 
 # inside SomeOtherFile.py
 from ImportantStuff import BigClass
@@ -4321,12 +4321,12 @@ The code would be much better as follows:
 from enum import Enum
 
 class Color(Enum):
-	RED = 1
-	GREEN = 2
-	BLUE = 3
+    RED = 1
+    GREEN = 2
+    BLUE = 3
 
 class BigClass:
-	# much more code here
+    # much more code here
 
 # inside SomeOtherFile.py
 from ImportantStuff import Color
@@ -4359,12 +4359,12 @@ Let's say we have a class `Nothing` with a method `do_nothing`. Now we want to c
 
 ```C++
 class Nothing{
-	void do_nothing() {}
+    void do_nothing() {}
 };
 
 int main(){
-	auto nothing = Nothing();
-	nothing.do_nothing();
+    auto nothing = Nothing();
+    nothing.do_nothing();
 }
 ```
 
@@ -4374,7 +4374,7 @@ Now `main` depends on the `Nothing` class and everything that's inside it. Inste
 // inside NothingBase.hpp
 class NothingBase{
 public:
-	virtual void do_nothing() = 0;
+    virtual void do_nothing() = 0;
 };
 
 // inside Nothing.hpp
@@ -4382,7 +4382,7 @@ public:
 
 class Nothing : public NothingBase {
 public:
-	void do_nothing() override;
+    void do_nothing() override;
 };
 
 // inside Nothing.cpp
@@ -4390,14 +4390,14 @@ public:
 #include "Nothing.hpp"
 
 Nothing::do_nothing(){
-	std::cout << "nothing" << std::endl;
+    std::cout << "nothing" << std::endl;
 }
 
 // inside main.cpp
 #include "NothingBase.hpp"
 int main(){
-	auto nothing = std::make_unique<Nothing>();
-	nothing->do_nothing();
+    auto nothing = std::make_unique<Nothing>();
+    nothing->do_nothing();
 }
 ```
 
@@ -4486,13 +4486,13 @@ favorite_color = 7
 
 # 4. class instance:
 class Blue:
-	pass
+    pass
 favorite_color = Blue()
 
 # 5. enum:
 from enum import Enum
 class Color(Enum):
-	BLUE = 1
+    BLUE = 1
 favorite_color = Color::BLUE
 ```
 
@@ -4559,22 +4559,22 @@ This is how the code should not look like.
 # city_name = ...
 # use a match case statement to get the post code
 match city_name:
-	case "Zurich":
-		return 8000
-	case "Bern":
-		return 3000
-	# case ...
+    case "Zurich":
+        return 8000
+    case "Bern":
+        return 3000
+    # case ...
 ```
 
 This code is bad for a very simple reason: it quite certainly violates the SRP. Chances are high that this `match case` statement will be repeated several times in your code base. Instead the `match case` statement should be refactored out into its own function. 
 
 ```py
 def post_code(city_name):
-	match city_name:
-		case "Zurich":
-			return 8000
-		case "Bern":
-			return 3000
+    match city_name:
+        case "Zurich":
+            return 8000
+        case "Bern":
+            return 3000
 
 post_code_Zurich = post_code("Zurich")
 ```
@@ -4583,8 +4583,8 @@ The best solution, in my opinion, is using a dict and ditching `match case` stat
 
 ```py
 post_codes = {
-	"Zurich": 8000,
-	"Bern": 3000,
+    "Zurich": 8000,
+    "Bern": 3000,
 }
 ```
 
@@ -4594,16 +4594,16 @@ Dicts can also be used polymorphically. Depending on the key it creates an objec
 
 ```py
 class Zurich:
-	def postcode():
- 		return 8000
+    def postcode():
+         return 8000
 
 class Bern:
-	def postcode():
-		return 3000
+    def postcode():
+        return 3000
 
 cities = {
-	"Zurich": Zurich,
-	"Bern": Bern,
+    "Zurich": Zurich,
+    "Bern": Bern,
 }
 
 zurich = cities("Zurich")
@@ -4639,11 +4639,11 @@ from dataclasses import dataclass
 
 @dataclass
 class WaterState{
-	heater_state: bool
-	blower_state: bool
-	cooler_state: bool
-	high_temp_alert: bool
-	low_temp_alert: bool
+    heater_state: bool
+    blower_state: bool
+    cooler_state: bool
+    high_temp_alert: bool
+    low_temp_alert: bool
 }
 ```
 
@@ -4654,16 +4654,16 @@ from enum import Enum
 from dataclasses import dataclass
 
 class State(Enum):
-	on = True # use 1 and 2 instead of True and False?
-	off = False
+    on = True # use 1 and 2 instead of True and False?
+    off = False
 
 @dataclass
 class WaterState:
-	heater_state: State
-	blower_state: State
-	cooler_state: State
-	high_temp_alert: State
-	low_temp_alert: State
+    heater_state: State
+    blower_state: State
+    cooler_state: State
+    high_temp_alert: State
+    low_temp_alert: State
 ```
 
 Now the `heater_state` can be `on` or `off`. This is much more intuitive to read.
@@ -4674,7 +4674,7 @@ The code using this dataclass is super simple. Opposite to the string solution t
 
 ```py
 if water_state.high_temp_alert == State.on:
-	print("Attention: the water is too hot")
+    print("Attention: the water is too hot")
 ```
 
 ### Natural Language
@@ -4749,12 +4749,12 @@ from dataclasses import dataclass
 
 @dataclass
 class Bottle:
-	color: str
-	size: float
-	material: str
+    color: str
+    size: float
+    material: str
 
 if __name__ == "__main__":
-	BOTTLE = Bottle()
+    BOTTLE = Bottle()
 ```
 
 Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity.
@@ -4776,14 +4776,14 @@ from dataclasses import dataclass
 
 @dataclass
 class WaterBottle:
-	BOTTLE: Bottle
-	amount_of_water: float
+    BOTTLE: Bottle
+    amount_of_water: float
 
 @dataclass
 class Bottle:
-	color: str
-	size: float
-	material: str
+    color: str
+    size: float
+    material: str
 ```
 
 This is just one example how to combine const and non-const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
@@ -4919,7 +4919,7 @@ Here is a pretty long list of rules to follow when naming things:
 ```py
 class Rectangle {
     def size():
-	    # ...
+        # ...
 }
 ```
 
@@ -4947,13 +4947,13 @@ def print_states(states):
 ```
 Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
 ```py
-	for a in states:
+    for a in states:
     # find a better name for this variable
 ```
 Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
 ```py
-	for state in states:
-    	print(state)
+    for state in states:
+        print(state)
 ```
 This is pretty much what was expected. The same works out for function names as well.
 ```py
@@ -5027,13 +5027,13 @@ You'd have to do it the old way:
 
 ```py
 def create_matrix():
-	matrix = []
-	for j in range(3):
-		row = []
-		for i in range(2):
-			row.append([0] * (i + j))
-		matrix.append(row)
-	return matrix
+    matrix = []
+    for j in range(3):
+        row = []
+        for i in range(2):
+            row.append([0] * (i + j))
+        matrix.append(row)
+    return matrix
 ```
 
 When in doubt resist the temptation, split up the code and don't use a single line initialization.
@@ -5068,7 +5068,7 @@ def read_csv(filename):
         for line in file:
             if line.startswith("#"):
                 continue
-			variables = line.split(",")
+            variables = line.split(",")
             x.append(float(variables[0]))
             y.append(float(variables[1]))
     return (x, y)
@@ -5128,7 +5128,7 @@ def read_json(filename):
         return json.load(f)
 
 if __name__ == "__main__":
-	data = read_json("temp.json")
+    data = read_json("temp.json")
     print(data['x']) # prints [1,2,3]
     print(data['y']) # prints [4,5,6]
 ```
@@ -5194,7 +5194,7 @@ json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "
 """
 python_dict=json.loads(json_string)
 with open("person.xml", 'w') as file:
-	xmltodict.unparse(python_dict, output=file)
+    xmltodict.unparse(python_dict, output=file)
 ```
 
 ### Copilot
@@ -5454,8 +5454,8 @@ Comments are a very double-edged sword. While they may be useful at times, they 
 
 ```py
 def add(a,b):
-	# This function returns the sum of the two arguments
-	return a + b
+    # This function returns the sum of the two arguments
+    return a + b
 ```
 
 Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers out there who think that this comment here is justified. 
@@ -5501,12 +5501,12 @@ class FrontendServer:
     save_profile(request)
     find_friends(request)
     
-	# Request/Reply Utilities
+    # Request/Reply Utilities
     extract_query_param(request, param)
     reply_OK(request, html)
     reply_not_found(request, error)
     
-	# Database Helpers
+    # Database Helpers
     open_database(location, user)
     close_database(location)
 ```
@@ -5527,13 +5527,13 @@ class Profile:
     find_friends(request)	
 
 class RequestHandler:
-	extract_query_param(request, param)
-	reply_OK(request, html)
-	reply_not_found(request, error)
+    extract_query_param(request, param)
+    reply_OK(request, html)
+    reply_not_found(request, error)
 
 class DatabaseHandler:
-	open_database(location, user)
-	close_database(location)
+    open_database(location, user)
+    close_database(location)
 
 # example usage of this code:
 server = FrontendServer()
@@ -5590,32 +5590,32 @@ Here is my suggestion.
 
 ```py
 def suggest_new_friends(user, email_password):
-	friend_emails = get_friends_emails_of(user)
-	contact_emails = import_email_addresses_from(user, email_password)
-	non_friend_emails = contact_emails - friend_emails
+    friend_emails = get_friends_emails_of(user)
+    contact_emails = import_email_addresses_from(user, email_password)
+    non_friend_emails = contact_emails - friend_emails
 
-	suggested_friends = find_suggested_friends(non_friend_emails)
+    suggested_friends = find_suggested_friends(non_friend_emails)
 
-	display(user, friends, suggested_friends)
-	return render("suggested_friends.html", display)
+    display(user, friends, suggested_friends)
+    return render("suggested_friends.html", display)
 
 def get_friends_emails_of(user):
-	friends = user.friends()
+    friends = user.friends()
     return set(f.email for f in friends)
 
 def import_email_addresses_from(user, email_password):
-	contacts = import_contacts(user.email, email_password)
+    contacts = import_contacts(user.email, email_password)
     return set(c.email for c in contacts)
 
 def find_suggested_friends(non_friend_emails):
-	suggested_friends = User.objects.select(non_friend_emails)
+    suggested_friends = User.objects.select(non_friend_emails)
 
 def display(user, friends, suggested_friends):
-	display = {}
-	display['user'] = user
+    display = {}
+    display['user'] = user
     display['friends'] = friends
     display['suggested_friends'] = suggested_friends
-	return display
+    return display
 ```
 
 Now once again, the code became much longer by refactoring it. But it is much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
@@ -6114,36 +6114,36 @@ Here is an example how the car entity could be modeled in code.
 
 ```py
 class Car():
-	def __init__(self):
-		self.ID = "123" # some unique id
-		self._engine = Engine()
-		self._chassis = Chassis()
-		self._tires = [Tire() for _ in range(4)]
+    def __init__(self):
+        self.ID = "123" # some unique id
+        self._engine = Engine()
+        self._chassis = Chassis()
+        self._tires = [Tire() for _ in range(4)]
 
-	def drive(self, distance):
-		drive(self._tires)
-	
-	def __eq__(self, other):
-		return self.ID == other.ID
+    def drive(self, distance):
+        drive(self._tires)
+    
+    def __eq__(self, other):
+        return self.ID == other.ID
 
 def drive(tires)
-	for tire in tires:
-		if tire.distance_remaining < distance:
-			tire = Tire()
-		tire.drive(distance)
+    for tire in tires:
+        if tire.distance_remaining < distance:
+            tire = Tire()
+        tire.drive(distance)
 
 class Engine():
-	pass
+    pass
 
 class Chassis():
-	pass
+    pass
 
 class Tire():
-	def __init__(self):
-		self.distance_remaining = 1000
+    def __init__(self):
+        self.distance_remaining = 1000
 
-	def drive(self, distance):
-		self.distance_remaining -= distance
+    def drive(self, distance):
+        self.distance_remaining -= distance
 ```
 
 You might have realized that `car` is a delegating class. Delegating classes generally fulfill the requirements of an aggregate. A delegating class hides all the functionality within the class such that it's only accessible through the class instance itself, whereas the class instance is accessible over the ID of the car. It is not possible to change the instance of the `car` and its internals in any other way. It is not possible to violate the invariants of the car.
@@ -6316,9 +6316,9 @@ Now the first thing to note is that there is no clear level of abstraction. `a` 
 
 ```py
 def a(counter):
-	if counter > 0:
-		print(counter-1)
-		a(counter-1)
+    if counter > 0:
+        print(counter-1)
+        a(counter-1)
 
 a(5)
 ```
@@ -6327,8 +6327,8 @@ This is already much simpler. Of course it could be simplified even further by r
 
 ```py
 def a(counter):
-	for i in range(counter-1, 0):
-		print(i)
+    for i in range(counter-1, 0):
+        print(i)
 ```
 
 As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard if you have proper levels of abstractions and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code more readable.
@@ -6665,16 +6665,16 @@ def test_dinner_makes_dad_happy():
     assert(contains_happy(p.stdout))
 
 def serve_dinner_as_subprocess():
-	return subprocess.Popen(['python', 'dinner.py'],
-                    		stdout=subprocess.PIPE,
-                    		stderr=subprocess.STDOUT,
-                    		)
+    return subprocess.Popen(['python', 'dinner.py'],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,
+                            )
 
 def contains_happy(lines):
-	for line in lines:
+    for line in lines:
         if "happy" in str(line):
             return True
-	return False
+    return False
 ```
 
 That’s it. We won’t have to touch the acceptance test anymore until the ticket is done. Note that I used the function contains to make the test a little more flexible. Your dad might say other things as well that we don’t care about.
@@ -6709,24 +6709,24 @@ from enum import Enum
 class Dad():
     def eat(food):
         if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
-        	print("I’m so happy")
+            print("I’m so happy")
 
 class Flavor(Enum):
-	VERY_CREAMY = 1
-	SALTY = 2
+    VERY_CREAMY = 1
+    SALTY = 2
 ```
 
 Note that the `Flavor` is neither inside the `Dad`, nor inside the `ApplePie` class, as we have learned in the chapter on the solid principles (ISP).
 
 ```py
 def create(food_name):
-	food_dict = {"apple_pie" : ApplePie()}
-	return food_dict[food_name]
+    food_dict = {"apple_pie" : ApplePie()}
+    return food_dict[food_name]
 
 class ApplePie():
-	def __init__(self):
-		self.flavor = Flavor.VERY_CREAMY
-		self.name = "apple_pie"
+    def __init__(self):
+        self.flavor = Flavor.VERY_CREAMY
+        self.name = "apple_pie"
 ```
 
 ## Paint
@@ -6737,29 +6737,29 @@ Idea: We want to define paint of certain color that we can mix with each other a
 The code starts with a simple class paint and its variables.
 ```py
 class Paint:
-	V: float
-	R: int
-	Y: int
-	B: int
+    V: float
+    R: int
+    Y: int
+    B: int
 ```
 These member variables don’t have expressive names at all. They are renamed to
 ```py
 class Paint:
-	Volume: float
-	Red: int
-	Yellow: int
-	Blue: int
+    Volume: float
+    Red: int
+    Yellow: int
+    Blue: int
 ```
 
 This can be further improved. The red, yellow and blue values all represent a color. They are all the same, while the volume has a clearly different meaning. Thus we can refactor the RYB colors into a dedicated object to fulfill the single responsibility principle.
 ```py
 class Paint:
-	volume
-	color
+    volume
+    color
 class Color:
-	Red
-	Yellow
-	Blue
+    Red
+    Yellow
+    Blue
 ```
 So far so good. We made some smaller refactoring and the basic data structure looks good to go. Now comes the very tricky question: how should the syntax of mixing two colors look like?
 ```py
@@ -6772,10 +6772,10 @@ The first is the procedural #? Way, the second is the object-oriented approach. 
 First, I would like to answer the conceptual question. What happens with a and b? This is a somewhat philosophical question and without knowing the actual problem we’d like to solve there is no clear answer. We can only reason about it.
 ```py
 def add(paint1, paint2):
-	Paint paint3
-	volume = paint1.volume + paint2.volume
-	Paint3.volume = volume
-	Paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
+    Paint paint3
+    volume = paint1.volume + paint2.volume
+    Paint3.volume = volume
+    Paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
 paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
 paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
 return paint3
@@ -6848,8 +6848,8 @@ Also when I was playing around, the code produced by Copilot was sometimes wrong
 
 ```py
 def print_content():
-	print("********************")
-	print("hello")
+    print("********************")
+    print("hello")
       
 # command to Copilot: move the print statements into a dedicated function
 if __name__ == "__main__":
