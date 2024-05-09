@@ -34,416 +34,416 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 // figure out how to sort the different chapters and sections
 
 - [1. Introduction to software engineering](#1-introduction-to-software-engineering)
-	- [Getting started](#getting-started)
-	- [Things to write](#things-to-write)
+  - [Getting started](#getting-started)
+  - [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
 - [3. Preface](#3-preface)
-	- [Who this book is for](#who-this-book-is-for)
+  - [Who this book is for](#who-this-book-is-for)
 - [4. Introduction](#4-introduction)
-	- [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-	- [About this book](#about-this-book)
+  - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+  - [About this book](#about-this-book)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
-	- [Do not Repeat Yourself](#do-not-repeat-yourself)
-		- [Exceptions of DRY](#exceptions-of-dry)
-	- [Orthogonality](#orthogonality)
-		- [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
-		- [Example of an adapter](#example-of-an-adapter)
-	- [Advantages of the SRP](#advantages-of-the-srp)
-		- [Understanding](#understanding)
-		- [Naming](#naming)
-		- [No Duplication](#no-duplication)
-		- [Easy Testing](#easy-testing)
-		- [Less Bugs](#less-bugs)
-		- [Bug fixing](#bug-fixing)
-	- [Drawbacks of the SRP](#drawbacks-of-the-srp)
+  - [Do not Repeat Yourself](#do-not-repeat-yourself)
+    - [Exceptions of DRY](#exceptions-of-dry)
+  - [Orthogonality](#orthogonality)
+    - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+    - [Example of an adapter](#example-of-an-adapter)
+  - [Advantages of the SRP](#advantages-of-the-srp)
+    - [Understanding](#understanding)
+    - [Naming](#naming)
+    - [No Duplication](#no-duplication)
+    - [Easy Testing](#easy-testing)
+    - [Less Bugs](#less-bugs)
+    - [Bug fixing](#bug-fixing)
+  - [Drawbacks of the SRP](#drawbacks-of-the-srp)
 - [6. Levels of abstraction](#6-levels-of-abstraction)
-	- [Real world example](#real-world-example)
-	- [Programming Example](#programming-example)
-	- [The abstraction layers](#the-abstraction-layers)
-		- [3rd party libraries](#3rd-party-libraries)
-		- [Infrastructure code](#infrastructure-code)
-		- [The domain level](#the-domain-level)
-		- [The application level](#the-application-level)
-		- [API](#api)
-		- [GUI and acceptance tests](#gui-and-acceptance-tests)
-	- [Summary](#summary)
+  - [Real world example](#real-world-example)
+  - [Programming Example](#programming-example)
+  - [The abstraction layers](#the-abstraction-layers)
+    - [3rd party libraries](#3rd-party-libraries)
+    - [Infrastructure code](#infrastructure-code)
+    - [The domain level](#the-domain-level)
+    - [The application level](#the-application-level)
+    - [API](#api)
+    - [GUI and acceptance tests](#gui-and-acceptance-tests)
+  - [Summary](#summary)
 - [7. Interfaces](#7-interfaces)
-	- [Real world interfaces](#real-world-interfaces)
-	- [Code interfaces](#code-interfaces)
-	- [APIs](#apis)
-		- [Adding more functionality](#adding-more-functionality)
-		- [Semantic Versioning](#semantic-versioning)
-	- [Copilot](#copilot)
+  - [Real world interfaces](#real-world-interfaces)
+  - [Code interfaces](#code-interfaces)
+  - [APIs](#apis)
+    - [Adding more functionality](#adding-more-functionality)
+    - [Semantic Versioning](#semantic-versioning)
+  - [Copilot](#copilot)
 - [8. Functions](#8-functions)
-	- [Do one thing only](#do-one-thing-only)
-		- [Levels of indentation](#levels-of-indentation)
-		- [Naming](#naming-1)
-	- [Temporal coupling](#temporal-coupling)
-	- [Number of arguments](#number-of-arguments)
-		- [Copilot](#copilot-1)
-	- [Output arguments](#output-arguments)
-	- [Return values](#return-values)
-	- [Summary](#summary-1)
-	- [Copilot](#copilot-2)
+  - [Do one thing only](#do-one-thing-only)
+    - [Levels of indentation](#levels-of-indentation)
+    - [Naming](#naming-1)
+  - [Temporal coupling](#temporal-coupling)
+  - [Number of arguments](#number-of-arguments)
+    - [Copilot](#copilot-1)
+  - [Output arguments](#output-arguments)
+  - [Return values](#return-values)
+  - [Summary](#summary-1)
+  - [Copilot](#copilot-2)
 - [9. Classes](#9-classes)
-	- [Data classes and structs](#data-classes-and-structs)
-	- [Private or Public](#private-or-public)
-	- [Different kind of classes](#different-kind-of-classes)
-		- [Data class](#data-class)
-		- [Pure method classes](#pure-method-classes)
-		- [Delegating class](#delegating-class)
-		- [Worker class](#worker-class)
-		- [Abstract Base Class](#abstract-base-class)
-		- [Implementation class](#implementation-class)
-		- [Inheritance classes](#inheritance-classes)
-		- [General recommendations](#general-recommendations)
-	- [Functions vs. Methods](#functions-vs-methods)
-	- [Constructors](#constructors)
-	- [Getter and setter functions](#getter-and-setter-functions)
-		- [Data classes](#data-classes)
-		- [Worker classes](#worker-classes)
-		- [Delegating classes](#delegating-classes)
-	- [Coupling and Cohesion](#coupling-and-cohesion)
-		- [Worker classes](#worker-classes-1)
-		- [Other class types](#other-class-types)
-		- [Inheritance](#inheritance)
-	- [Static expression](#static-expression)
-	- [Drawbacks of classes](#drawbacks-of-classes)
-	- [Conclusions](#conclusions)
-	- [Copilot](#copilot-3)
+  - [Data classes and structs](#data-classes-and-structs)
+  - [Private or Public](#private-or-public)
+  - [Different kind of classes](#different-kind-of-classes)
+    - [Data class](#data-class)
+    - [Pure method classes](#pure-method-classes)
+    - [Delegating class](#delegating-class)
+    - [Worker class](#worker-class)
+    - [Abstract Base Class](#abstract-base-class)
+    - [Implementation class](#implementation-class)
+    - [Inheritance classes](#inheritance-classes)
+    - [General recommendations](#general-recommendations)
+  - [Functions vs. Methods](#functions-vs-methods)
+  - [Constructors](#constructors)
+  - [Getter and setter functions](#getter-and-setter-functions)
+    - [Data classes](#data-classes)
+    - [Worker classes](#worker-classes)
+    - [Delegating classes](#delegating-classes)
+  - [Coupling and Cohesion](#coupling-and-cohesion)
+    - [Worker classes](#worker-classes-1)
+    - [Other class types](#other-class-types)
+    - [Inheritance](#inheritance)
+  - [Static expression](#static-expression)
+  - [Drawbacks of classes](#drawbacks-of-classes)
+  - [Conclusions](#conclusions)
+  - [Copilot](#copilot-3)
 - [10. Inheritance](#10-inheritance)
-	- [Two types of Inheritance](#two-types-of-inheritance)
-	- [Drawbacks of inheritance](#drawbacks-of-inheritance)
-		- [Tight Coupling](#tight-coupling)
-		- [Error prone](#error-prone)
-		- [Obscure code](#obscure-code)
-		- [Implementation](#implementation)
-		- [Overriden baseclass functions](#overriden-baseclass-functions)
-	- [Advantages of Inheritance](#advantages-of-inheritance)
-		- [Code reuse](#code-reuse)
-	- [Difference between inheritance and composition](#difference-between-inheritance-and-composition)
-	- [Conclusions](#conclusions-1)
+  - [Two types of Inheritance](#two-types-of-inheritance)
+  - [Drawbacks of inheritance](#drawbacks-of-inheritance)
+    - [Tight Coupling](#tight-coupling)
+    - [Error prone](#error-prone)
+    - [Obscure code](#obscure-code)
+    - [Implementation](#implementation)
+    - [Overriden baseclass functions](#overriden-baseclass-functions)
+  - [Advantages of Inheritance](#advantages-of-inheritance)
+    - [Code reuse](#code-reuse)
+  - [Difference between inheritance and composition](#difference-between-inheritance-and-composition)
+  - [Conclusions](#conclusions-1)
 - [11. Testing](#11-testing)
-	- [A short story about tests](#a-short-story-about-tests)
-	- [Test examples](#test-examples)
-		- [Structure of a Software test](#structure-of-a-software-test)
-		- [When](#when)
-		- [How](#how)
-	- [General thoughts about tests](#general-thoughts-about-tests)
-		- [Double Entry Book Keeping](#double-entry-book-keeping)
-		- [Understand what you do](#understand-what-you-do)
-		- [A few tips](#a-few-tips)
-		- [Quality of test code](#quality-of-test-code)
-	- [Number of test cases](#number-of-test-cases)
-	- [Stages of a test](#stages-of-a-test)
-		- [Setup and Teardown](#setup-and-teardown)
-		- [Helper functions](#helper-functions)
-		- [Test body](#test-body)
-	- [Problematic tests](#problematic-tests)
-		- [Dependent tests](#dependent-tests)
-		- [Flaky tests](#flaky-tests)
-		- [Brittle tests](#brittle-tests)
-		- [Random numbers](#random-numbers)
-	- [The Beyonce rule](#the-beyonce-rule)
-	- [Not Automatable Tests](#not-automatable-tests)
+  - [A short story about tests](#a-short-story-about-tests)
+  - [Test examples](#test-examples)
+    - [Structure of a Software test](#structure-of-a-software-test)
+    - [When](#when)
+    - [How](#how)
+  - [General thoughts about tests](#general-thoughts-about-tests)
+    - [Double Entry Book Keeping](#double-entry-book-keeping)
+    - [Understand what you do](#understand-what-you-do)
+    - [A few tips](#a-few-tips)
+    - [Quality of test code](#quality-of-test-code)
+  - [Number of test cases](#number-of-test-cases)
+  - [Stages of a test](#stages-of-a-test)
+    - [Setup and Teardown](#setup-and-teardown)
+    - [Helper functions](#helper-functions)
+    - [Test body](#test-body)
+  - [Problematic tests](#problematic-tests)
+    - [Dependent tests](#dependent-tests)
+    - [Flaky tests](#flaky-tests)
+    - [Brittle tests](#brittle-tests)
+    - [Random numbers](#random-numbers)
+  - [The Beyonce rule](#the-beyonce-rule)
+  - [Not Automatable Tests](#not-automatable-tests)
 - [12. Types of tests](#12-types-of-tests)
-	- [Unit tests](#unit-tests)
-		- [Testing files in unit tests](#testing-files-in-unit-tests)
-		- [Testing classes](#testing-classes)
-		- [Copilot](#copilot-4)
-	- [Integration tests](#integration-tests)
-	- [Functional tests](#functional-tests)
-	- [Other kinds of tests](#other-kinds-of-tests)
-		- [Performance tests](#performance-tests)
-		- [Explorative tests](#explorative-tests)
-	- [When to run tests](#when-to-run-tests)
-	- [Who should write tests](#who-should-write-tests)
-	- [The testing pyramid](#the-testing-pyramid)
+  - [Unit tests](#unit-tests)
+    - [Testing files in unit tests](#testing-files-in-unit-tests)
+    - [Testing classes](#testing-classes)
+    - [Copilot](#copilot-4)
+  - [Integration tests](#integration-tests)
+  - [Functional tests](#functional-tests)
+  - [Other kinds of tests](#other-kinds-of-tests)
+    - [Performance tests](#performance-tests)
+    - [Explorative tests](#explorative-tests)
+  - [When to run tests](#when-to-run-tests)
+  - [Who should write tests](#who-should-write-tests)
+  - [The testing pyramid](#the-testing-pyramid)
 - [13. Writing better Code with Tests](#13-writing-better-code-with-tests)
-	- [Unit tests](#unit-tests-1)
-	- [Integration and Functional tests](#integration-and-functional-tests)
-	- [Testing existing code](#testing-existing-code)
-	- [Asserts](#asserts)
-	- [Test Driven Development](#test-driven-development)
-		- [How TDD works](#how-tdd-works)
-		- [Importance of TDD](#importance-of-tdd)
-		- [Example](#example)
-	- [Fakes and Mocks](#fakes-and-mocks)
-		- [Mocking](#mocking)
-		- [Faking](#faking)
-		- [Dependency injection](#dependency-injection)
-	- [Summary](#summary-2)
-	- [Copilot](#copilot-5)
+  - [Unit tests](#unit-tests-1)
+  - [Integration and Functional Tests](#integration-and-functional-tests)
+  - [Testing existing code](#testing-existing-code)
+  - [Asserts](#asserts)
+  - [Test Driven Development](#test-driven-development)
+    - [How TDD works](#how-tdd-works)
+    - [Importance of TDD](#importance-of-tdd)
+    - [Example of TDD](#example-of-tdd)
+  - [Fakes and Mocks](#fakes-and-mocks)
+    - [Mocking](#mocking)
+    - [Faking](#faking)
+    - [Dependency injection](#dependency-injection)
+  - [Summary](#summary-2)
+  - [Copilot](#copilot-5)
 - [14. DevOps](#14-devops)
-	- [The early 2000s](#the-early-2000s)
-		- [Getting a project](#getting-a-project)
-	- [Benefits of DevOps](#benefits-of-devops)
+  - [The early 2000s](#the-early-2000s)
+    - [Getting a project](#getting-a-project)
+  - [Benefits of DevOps](#benefits-of-devops)
 - [15. Refactoring Fundamentals](#15-refactoring-fundamentals)
-	- [There will be change](#there-will-be-change)
-	- [Keeping code in shape](#keeping-code-in-shape)
-		- [Refactoring and automated tests](#refactoring-and-automated-tests)
-		- [Keep refactorings small](#keep-refactorings-small)
-	- [Levels of Refactoring](#levels-of-refactoring)
-		- [Refactoring is dynamic](#refactoring-is-dynamic)
-		- [The circle of doom](#the-circle-of-doom)
-	- [When to Refactor](#when-to-refactor)
-	- [Refactoring process](#refactoring-process)
+  - [There will be change](#there-will-be-change)
+  - [Keeping code in shape](#keeping-code-in-shape)
+    - [Refactoring and automated tests](#refactoring-and-automated-tests)
+    - [Keep refactorings small](#keep-refactorings-small)
+  - [Levels of Refactoring](#levels-of-refactoring)
+    - [Refactoring is dynamic](#refactoring-is-dynamic)
+    - [The circle of doom](#the-circle-of-doom)
+  - [When to Refactor](#when-to-refactor)
+  - [Refactoring process](#refactoring-process)
 - [Refactoring techniques](#refactoring-techniques)
-	- [Refactoring good code](#refactoring-good-code)
-		- [Renaming](#renaming)
-		- [Extract function](#extract-function)
-		- [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
-	- [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
-		- [Seams](#seams)
-		- [Sketches](#sketches)
-		- [How do I get the code under test?](#how-do-i-get-the-code-under-test)
-		- [What tests should I write?](#what-tests-should-i-write)
-		- [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
-		- [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
-	- [Copilot](#copilot-6)
+  - [Refactoring good code](#refactoring-good-code)
+    - [Renaming](#renaming)
+    - [Extract function](#extract-function)
+    - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
+  - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
+    - [Seams](#seams)
+    - [Sketches](#sketches)
+    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
+    - [What tests should I write?](#what-tests-should-i-write)
+    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
+    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
+  - [Copilot](#copilot-6)
 - [16. Understandable code](#16-understandable-code)
-	- [How humans think](#how-humans-think)
-	- [Spaghetti code](#spaghetti-code)
-	- [Examples](#examples)
-		- [Structuring function arguments](#structuring-function-arguments)
-		- [Complicated code](#complicated-code)
-		- [Assigning variables inside conditions](#assigning-variables-inside-conditions)
-		- [Scope of variables](#scope-of-variables)
-		- [Approximate programming](#approximate-programming)
+  - [How humans think](#how-humans-think)
+  - [Spaghetti code](#spaghetti-code)
+  - [Examples](#examples)
+    - [Structuring function arguments](#structuring-function-arguments)
+    - [Complicated code](#complicated-code)
+    - [Assigning variables inside conditions](#assigning-variables-inside-conditions)
+    - [Scope of variables](#scope-of-variables)
+    - [Approximate programming](#approximate-programming)
 - [17. Programming languages](#17-programming-languages)
-	- [Existing programming languages](#existing-programming-languages)
-	- [Code examples](#code-examples)
-	- [Python](#python)
-		- [Type hints](#type-hints)
-		- [Slots](#slots)
-		- [Abstract base classes and protocols](#abstract-base-classes-and-protocols)
-	- [C++](#c)
-		- [Vectors](#vectors)
-		- [Smart pointers](#smart-pointers)
-		- [Pass by reference](#pass-by-reference)
-		- [Classes](#classes)
-		- [Structs](#structs)
-	- [Copilot](#copilot-7)
+  - [Existing programming languages](#existing-programming-languages)
+  - [Code examples](#code-examples)
+  - [Python](#python)
+    - [Type hints](#type-hints)
+    - [Slots](#slots)
+    - [Abstract base classes and protocols](#abstract-base-classes-and-protocols)
+  - [C++](#c)
+    - [Vectors](#vectors)
+    - [Smart pointers](#smart-pointers)
+    - [Pass by reference](#pass-by-reference)
+    - [Classes](#classes)
+    - [Structs](#structs)
+  - [Copilot](#copilot-7)
 - [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
-	- [Syntax Errors](#syntax-errors)
-	- [Bugs](#bugs)
-		- [Cost of Bugs](#cost-of-bugs)
-		- [Is it a bug or a feature?](#is-it-a-bug-or-a-feature)
-		- [Bug Reports](#bug-reports)
-		- [Tracking down bugs](#tracking-down-bugs)
-		- [Fixing a bug](#fixing-a-bug)
-		- [Copilot](#copilot-8)
-	- [Exceptions](#exceptions)
-		- [Wrapping exceptions](#wrapping-exceptions)
-		- [Exceptions and goto](#exceptions-and-goto)
+  - [Syntax Errors](#syntax-errors)
+  - [Bugs](#bugs)
+    - [Cost of Bugs](#cost-of-bugs)
+    - [Is it a bug or a feature?](#is-it-a-bug-or-a-feature)
+    - [Bug Reports](#bug-reports)
+    - [Tracking down bugs](#tracking-down-bugs)
+    - [Fixing a bug](#fixing-a-bug)
+    - [Copilot](#copilot-8)
+  - [Exceptions](#exceptions)
+    - [Wrapping exceptions](#wrapping-exceptions)
+    - [Exceptions and goto](#exceptions-and-goto)
 - [19. Programming Paradigms](#19-programming-paradigms)
-	- [Object Oriented programming](#object-oriented-programming)
-	- [Procedural programming](#procedural-programming)
-	- [Functional programming](#functional-programming)
-	- [Conclusions](#conclusions-2)
-	- [Copilot](#copilot-9)
+  - [Object Oriented programming](#object-oriented-programming)
+  - [Procedural programming](#procedural-programming)
+  - [Functional programming](#functional-programming)
+  - [Conclusions](#conclusions-2)
+  - [Copilot](#copilot-9)
 - [20. Design patterns](#20-design-patterns)
-	- [Creational Patterns](#creational-patterns)
-		- [Factory](#factory)
-		- [Builder](#builder)
-	- [Structural Patterns](#structural-patterns)
-		- [Adapter](#adapter)
-		- [Bridge](#bridge)
-		- [Composite](#composite)
-		- [Decorator](#decorator)
-		- [Facade](#facade)
-	- [Behavioral Patterns](#behavioral-patterns)
-		- [Observer](#observer)
-		- [Strategy](#strategy)
-		- [Visitor](#visitor)
-	- [Old text](#old-text)
-	- [Factories](#factories)
-	- [Visitor](#visitor-1)
-	- [Strategy pattern](#strategy-pattern)
-	- [Façades](#façades)
-	- [Adapter](#adapter-1)
-	- [Template](#template)
-	- [Flyweight](#flyweight)
-	- [Observer](#observer-1)
-	- [Copilot](#copilot-10)
+  - [Creational Patterns](#creational-patterns)
+    - [Factory](#factory)
+    - [Builder](#builder)
+  - [Structural Patterns](#structural-patterns)
+    - [Adapter](#adapter)
+    - [Bridge](#bridge)
+    - [Composite](#composite)
+    - [Decorator](#decorator)
+    - [Facade](#facade)
+  - [Behavioral Patterns](#behavioral-patterns)
+    - [Observer](#observer)
+    - [Strategy](#strategy)
+    - [Visitor](#visitor)
+  - [Old text](#old-text)
+  - [Factories](#factories)
+  - [Visitor](#visitor-1)
+  - [Strategy pattern](#strategy-pattern)
+  - [Façades](#façades)
+  - [Adapter](#adapter-1)
+  - [Template](#template)
+  - [Flyweight](#flyweight)
+  - [Observer](#observer-1)
+  - [Copilot](#copilot-10)
 - [21. Decoupling](#21-decoupling)
-	- [Law of demeter](#law-of-demeter)
+  - [Law of demeter](#law-of-demeter)
 - [22. Physical laws of code](#22-physical-laws-of-code)
-	- [Entropy](#entropy)
-	- [Correlation](#correlation)
-	- [Quality](#quality)
-	- [Requirements](#requirements)
+  - [Entropy](#entropy)
+  - [Correlation](#correlation)
+  - [Quality](#quality)
+  - [Requirements](#requirements)
 - [23. Software Architecture](#23-software-architecture)
-	- [About Architecture](#about-architecture)
-		- [Coupling](#coupling)
+  - [About Architecture](#about-architecture)
+    - [Coupling](#coupling)
 - [24. Solid principles](#24-solid-principles)
-	- [Single Responsibility Principle](#single-responsibility-principle)
-	- [Open Closed Principle](#open-closed-principle)
-	- [Liskov Substitution Principle](#liskov-substitution-principle)
-	- [Interface Segregation Principle](#interface-segregation-principle)
-	- [Dependency Inversion Principle](#dependency-inversion-principle)
-		- [Example](#example-1)
-	- [Summary](#summary-3)
+  - [Single Responsibility Principle](#single-responsibility-principle)
+  - [Open Closed Principle](#open-closed-principle)
+  - [Liskov Substitution Principle](#liskov-substitution-principle)
+  - [Interface Segregation Principle](#interface-segregation-principle)
+  - [Dependency Inversion Principle](#dependency-inversion-principle)
+    - [Example](#example)
+  - [Summary](#summary-3)
 - [25. Data types](#25-data-types)
-	- [Lists](#lists)
-	- [Enums](#enums)
-		- [Booleans](#booleans)
-		- [Strings](#strings)
-		- [Ints](#ints)
-		- [Classes](#classes-1)
-		- [Enums](#enums-1)
-	- [Booleans](#booleans-1)
-		- [Match case statements](#match-case-statements)
-	- [Strings](#strings-1)
-		- [Stringly typed objects](#stringly-typed-objects)
-		- [Natural Language](#natural-language)
-	- [Dicts](#dicts)
-	- [Trees](#trees)
-	- [Pointers](#pointers)
+  - [Lists](#lists)
+  - [Enums](#enums)
+    - [Booleans](#booleans)
+    - [Strings](#strings)
+    - [Ints](#ints)
+    - [Classes](#classes-1)
+    - [Enums](#enums-1)
+  - [Booleans](#booleans-1)
+    - [Match case statements](#match-case-statements)
+  - [Strings](#strings-1)
+    - [Stringly typed objects](#stringly-typed-objects)
+    - [Natural Language](#natural-language)
+  - [Dicts](#dicts)
+  - [Trees](#trees)
+  - [Pointers](#pointers)
 - [26. Properties of Variables](#26-properties-of-variables)
-	- [Compile-time constant](#compile-time-constant)
-	- [Runtime Constant](#runtime-constant)
-		- [Constant Class instances](#constant-class-instances)
-		- [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
-	- [Mutable Variables](#mutable-variables)
-	- [Member Variables](#member-variables)
-	- [Static Variables](#static-variables)
-	- [Global Variables](#global-variables)
-	- [Variable comparison](#variable-comparison)
+  - [Compile-time constant](#compile-time-constant)
+  - [Runtime Constant](#runtime-constant)
+    - [Constant Class instances](#constant-class-instances)
+    - [Mixing const and non-const objects](#mixing-const-and-non-const-objects)
+  - [Mutable Variables](#mutable-variables)
+  - [Member Variables](#member-variables)
+  - [Static Variables](#static-variables)
+  - [Global Variables](#global-variables)
+  - [Variable comparison](#variable-comparison)
 - [27. Naming](#27-naming)
-		- [Generic names](#generic-names)
-	- [Copilot](#copilot-11)
+    - [Generic names](#generic-names)
+  - [Copilot](#copilot-11)
 - [28. Complexity](#28-complexity)
-	- [Complexity of code](#complexity-of-code)
-	- [Estimating complexity](#estimating-complexity)
-	- [Single line complexity](#single-line-complexity)
-	- [Back magic code](#back-magic-code)
+  - [Complexity of code](#complexity-of-code)
+  - [Estimating complexity](#estimating-complexity)
+  - [Single line complexity](#single-line-complexity)
+  - [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
-	- [CSV](#csv)
-		- [Copilot](#copilot-12)
-	- [Json](#json)
-		- [Copilot](#copilot-13)
-	- [XML](#xml)
-		- [Copilot](#copilot-14)
-	- [HDF5](#hdf5)
-		- [Copilot](#copilot-15)
-	- [Databases](#databases)
-		- [Copilot](#copilot-16)
-	- [Custom file format](#custom-file-format)
+  - [CSV](#csv)
+    - [Copilot](#copilot-12)
+  - [Json](#json)
+    - [Copilot](#copilot-13)
+  - [XML](#xml)
+    - [Copilot](#copilot-14)
+  - [HDF5](#hdf5)
+    - [Copilot](#copilot-15)
+  - [Databases](#databases)
+    - [Copilot](#copilot-16)
+  - [Custom file format](#custom-file-format)
 - [30. Setting up a project](#30-setting-up-a-project)
-	- [Project folder](#project-folder)
+  - [Project folder](#project-folder)
 - [31. Performance Optimization](#31-performance-optimization)
-	- [No optimization needed](#no-optimization-needed)
-	- [Optimization might be needed](#optimization-might-be-needed)
-	- [Optimizing from scratch](#optimizing-from-scratch)
+  - [No optimization needed](#no-optimization-needed)
+  - [Optimization might be needed](#optimization-might-be-needed)
+  - [Optimizing from scratch](#optimizing-from-scratch)
 - [32. Comments](#32-comments)
-	- [Bad comments](#bad-comments)
-		- [Commented out code](#commented-out-code)
-		- [TODO comments](#todo-comments)
-		- [Comments replacing code](#comments-replacing-code)
-	- [Useful comments](#useful-comments)
-		- [Requirements](#requirements-1)
-		- [How to write comments](#how-to-write-comments)
-		- [Docstring](#docstring)
-	- [Commenting magic numbers](#commenting-magic-numbers)
-	- [Summary](#summary-4)
-	- [Copilot](#copilot-17)
+  - [Bad comments](#bad-comments)
+    - [Commented out code](#commented-out-code)
+    - [TODO comments](#todo-comments)
+    - [Comments replacing code](#comments-replacing-code)
+  - [Useful comments](#useful-comments)
+    - [Requirements](#requirements-1)
+    - [How to write comments](#how-to-write-comments)
+    - [Docstring](#docstring)
+  - [Commenting magic numbers](#commenting-magic-numbers)
+  - [Summary](#summary-4)
+  - [Copilot](#copilot-17)
 - [33. Logging](#33-logging)
 - [34. Tools](#34-tools)
-	- [Version control software](#version-control-software)
-		- [Git, everywhere git](#git-everywhere-git)
-		- [Copilot](#copilot-18)
-	- [Command line](#command-line)
-		- [Copilot](#copilot-19)
-	- [IDE](#ide)
-	- [Continuous Integration](#continuous-integration)
-	- [Debugger](#debugger)
-	- [Profiler](#profiler)
-	- [Formatter](#formatter)
-	- [Code quality checker](#code-quality-checker)
-	- [Pip, cmake](#pip-cmake)
-	- [Ticketing system](#ticketing-system)
-	- [Wiki](#wiki)
-	- [Docstring](#docstring-1)
+  - [Version control software](#version-control-software)
+    - [Git, everywhere git](#git-everywhere-git)
+    - [Copilot](#copilot-18)
+  - [Command line](#command-line)
+    - [Copilot](#copilot-19)
+  - [IDE](#ide)
+  - [Continuous Integration](#continuous-integration)
+  - [Debugger](#debugger)
+  - [Profiler](#profiler)
+  - [Formatter](#formatter)
+  - [Code quality checker](#code-quality-checker)
+  - [Pip, cmake](#pip-cmake)
+  - [Ticketing system](#ticketing-system)
+  - [Wiki](#wiki)
+  - [Docstring](#docstring-1)
 - [35. Software Engineering principles](#35-software-engineering-principles)
-	- [Divide and Conquer](#divide-and-conquer)
-	- [Increase Cohesion](#increase-cohesion)
-	- [Reduce coupling](#reduce-coupling)
-	- [Increase abstraction](#increase-abstraction)
-	- [Increase reusability](#increase-reusability)
-	- [Design for flexibility](#design-for-flexibility)
-	- [Anticipate Obsolesence](#anticipate-obsolesence)
-	- [Design for Portability](#design-for-portability)
-	- [Design for Testability](#design-for-testability)
-	- [Design Defensively](#design-defensively)
+  - [Divide and Conquer](#divide-and-conquer)
+  - [Increase Cohesion](#increase-cohesion)
+  - [Reduce coupling](#reduce-coupling)
+  - [Increase abstraction](#increase-abstraction)
+  - [Increase reusability](#increase-reusability)
+  - [Design for flexibility](#design-for-flexibility)
+  - [Anticipate Obsolesence](#anticipate-obsolesence)
+  - [Design for Portability](#design-for-portability)
+  - [Design for Testability](#design-for-testability)
+  - [Design Defensively](#design-defensively)
 - [36. Domain Driven Design](#36-domain-driven-design)
-	- [Ubiquitous Language](#ubiquitous-language)
-	- [The Domain Model](#the-domain-model)
-		- [Documentation and planning](#documentation-and-planning)
-		- [Implementing a Model](#implementing-a-model)
-		- [Domain Levels](#domain-levels)
-	- [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
-	- [Domain boundaries](#domain-boundaries)
-		- [Bounded Context](#bounded-context)
-		- [Unified model](#unified-model)
-		- [Context map](#context-map)
-		- [Shared kernel](#shared-kernel)
-		- [Anticorruption layer](#anticorruption-layer)
-		- [Separate ways](#separate-ways)
-		- [Conformist](#conformist)
-		- [Developer Client relationship](#developer-client-relationship)
-	- [Building blocks of DDD](#building-blocks-of-ddd)
-		- [Entities](#entities)
-		- [Value Object](#value-object)
-		- [Services](#services)
-		- [Aggregates](#aggregates)
-		- [Organizing aggregates](#organizing-aggregates)
+  - [Ubiquitous Language](#ubiquitous-language)
+  - [The Domain Model](#the-domain-model)
+    - [Documentation and planning](#documentation-and-planning)
+    - [Implementing a Model](#implementing-a-model)
+    - [Domain Levels](#domain-levels)
+  - [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
+  - [Domain boundaries](#domain-boundaries)
+    - [Bounded Context](#bounded-context)
+    - [Unified model](#unified-model)
+    - [Context map](#context-map)
+    - [Shared kernel](#shared-kernel)
+    - [Anticorruption layer](#anticorruption-layer)
+    - [Separate ways](#separate-ways)
+    - [Conformist](#conformist)
+    - [Developer Client relationship](#developer-client-relationship)
+  - [Building blocks of DDD](#building-blocks-of-ddd)
+    - [Entities](#entities)
+    - [Value Object](#value-object)
+    - [Services](#services)
+    - [Aggregates](#aggregates)
+    - [Organizing aggregates](#organizing-aggregates)
 - [37. Good code](#37-good-code)
 - [38. 3rd party software](#38-3rd-party-software)
 - [39. Dependencies](#39-dependencies)
-	- [The early days](#the-early-days)
-	- [The dependency graph](#the-dependency-graph)
-	- [Breaking up dependencies](#breaking-up-dependencies)
-	- [Circular dependencies](#circular-dependencies)
-		- [Example](#example-2)
+  - [The early days](#the-early-days)
+  - [The dependency graph](#the-dependency-graph)
+  - [Breaking up dependencies](#breaking-up-dependencies)
+  - [Circular dependencies](#circular-dependencies)
+    - [Example](#example-1)
 - [40. Working in teams](#40-working-in-teams)
-	- [Team structure](#team-structure)
-		- [The bus factor](#the-bus-factor)
-	- [Developers work](#developers-work)
-	- [Communication](#communication)
-	- [Working with customers](#working-with-customers)
+  - [Team structure](#team-structure)
+    - [The bus factor](#the-bus-factor)
+  - [Developers work](#developers-work)
+  - [Communication](#communication)
+  - [Working with customers](#working-with-customers)
 - [41. Code review](#41-code-review)
-	- [Drawbacks](#drawbacks)
+  - [Drawbacks](#drawbacks)
 - [42. Working with existing projects](#42-working-with-existing-projects)
-	- [No Interfaces](#no-interfaces)
-	- [No Tests](#no-tests)
-	- [Extremely long functions](#extremely-long-functions)
+  - [No Interfaces](#no-interfaces)
+  - [No Tests](#no-tests)
+  - [Extremely long functions](#extremely-long-functions)
 - [43. Planning](#43-planning)
-	- [Planning code](#planning-code)
+  - [Planning code](#planning-code)
 - [44. Agile](#44-agile)
-	- [Agile values](#agile-values)
-	- [Work planning](#work-planning)
-	- [QA](#qa)
-	- [The Iron Cross](#the-iron-cross)
-		- [Good](#good)
-		- [Fast](#fast)
-		- [Cheap](#cheap)
-		- [Done](#done)
-	- [Sprints](#sprints)
-	- [Becoming agile](#becoming-agile)
+  - [Agile values](#agile-values)
+  - [Work planning](#work-planning)
+  - [QA](#qa)
+  - [The Iron Cross](#the-iron-cross)
+    - [Good](#good)
+    - [Fast](#fast)
+    - [Cheap](#cheap)
+    - [Done](#done)
+  - [Sprints](#sprints)
+  - [Becoming agile](#becoming-agile)
 - [46. Hiring and getting hired](#46-hiring-and-getting-hired)
-	- [Hiring](#hiring)
-	- [Getting hired](#getting-hired)
+  - [Hiring](#hiring)
+  - [Getting hired](#getting-hired)
 - [48. Examples](#48-examples)
-	- [Apple pie](#apple-pie)
-		- [User story](#user-story)
-		- [Acceptance test](#acceptance-test)
-		- [Implementation](#implementation-1)
-	- [Paint](#paint)
+  - [Apple pie](#apple-pie)
+    - [User story](#user-story)
+    - [Acceptance test](#acceptance-test)
+    - [Implementation](#implementation-1)
+  - [Paint](#paint)
 - [49. About Copilot](#49-about-copilot)
-	- [Copilot and this book](#copilot-and-this-book)
-	- [Issues](#issues)
-	- [Copilot and the future](#copilot-and-the-future)
+  - [Copilot and this book](#copilot-and-this-book)
+  - [Issues](#issues)
+  - [Copilot and the future](#copilot-and-the-future)
 - [50. Further reading](#50-further-reading)
 - [51. Outlook](#51-outlook)
 - [52. Abbreviations](#52-abbreviations)
@@ -2293,7 +2293,7 @@ Having a developer write the tests has the advantage that he knows the code. He 
 
 On the other hand, having an independent tester has some advantages as well. He doesn't know about the weaknesses of the code. Instead he writes more explorative tests. These tests might find bugs that were not expected by the developers as they are in areas of the code they were not expecting to contain bugs. Additionally the developers are usually over confident about the quality of their code. They think the code is better than it actually is. This is why it is good to have an independent tester who is not biased by the code. Furthermore, independent testers are usually closer to the customer and write tests that are closer to the actual use case.
 
-Tests should be written as early as possible. This is not only true for unit tests, but also for functional tests. Writing tests at the end of a project has the drawback that possible issues will be very hard to resolve as the whole software is nearly finished and making changes has become very difficult and possibly expensive. As a general rule of thum, the price of fixing a bug increases exponentially with time.
+Tests should be written as early as possible. This is not only true for unit tests, but also for functional tests. Writing tests at the end of a project has the drawback that possible issues will be very hard to resolve as the whole software is nearly finished and making changes has become very difficult and possibly expensive. As a general rule of thumb, the price of fixing a bug increases exponentially with time.
 
 // get an image without copy right
 <img src=images/costs.png width="300">
@@ -2329,51 +2329,64 @@ Unit tests make sure your code is correct on the small-scale level. Thanks to un
 
 During the setup phase of the test, you have to create all the objects required. If this becomes more tedious than you would expect it to be, your data may be spread in places where it doesn’t belong. This is a very strong indication that the design of your code is bad and should be reworked. When writing a test you are a user of your own code. And your code should be easy to use as we have learned in the chapter on interfaces. Thus, if your code is hard to use, it is bad.
 
-In good code, all the relevant data is easily accessible and constructing it manually for a test case is fairly simple. Preferably you have one big object with fairly static information that you can reuse in all tests and many small dynamic objects that are different in every test.
+In good code, all the relevant data is easily accessible and constructing it manually for a test case is fairly simple. Preferably you have one big object with fairly static information that you can reuse in all tests and few small, dynamic objects that are different in every test.
 
 If you write a test you have to know the expected outcome of the function call. If you struggle for the simplest cases, chances are high your functions are too complex. They should be simplified. Rewrite the code until you can explain to your colleagues what the code actually does. Until you can write a test case. Otherwise you’ll run into huge problems down a bumpy road.
 
-You will be running the unit tests all the time. After every function you defined, after every successful compilation and after every coffee you drink. It gives you a constant feedback whether everything is fine or if you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may not take more than a few milliseconds. You’ll be running hundreds if not thousands of tests all the time, so execution time is crucial.
+You will be running the unit tests all the time. After every function you defined, after every successful compilation, after every coffee you drink and certainly every time you pull code from the repository. It gives you a constant feedback whether everything is fine or if you just broke something. This is invaluable. The only price you pay is the execution time of the unit tests. Keep them small and fast. A single unit test may not take more than a few milliseconds. You’ll be running hundreds if not thousands of tests all the time, so execution time is crucial.
 
 Finally, I would like to emphasize once again the importance of this chapter. Learn how to write proper unit tests. Read this chapter again or, even better, search for more elaborated examples. There are thousands out there. And most importantly, once again, write tests yourself and discuss the design questions with your colleagues. This is how you’ll really make progress.
 
-## Integration and Functional tests
+## Integration and Functional Tests
 
 At first, it sounds great to write integration, or even functional tests. With comparably few tests you cover a fair amount of the code base. But this comes at a price.
 
-There is much more code covered by a single integration test than by many unit tests. This has the advantages that a single test is much more likely to find a bug. But also has its drawbacks. The fact that integration or functional tests cover so much code makes them much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or functional tests is much harder than fixing bugs found by a unit test. At the same time, integration tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately, these tests are expensive to run. They are huge and they are slow.
+There is much more code covered by a single integration test than by many unit tests combined. This has the advantages that a single test is much more likely to find a bug. But also has its drawbacks. The fact that integration or functional tests cover so much code makes them much slower and less precise when it comes down to locating an error. Fixing bugs found by integration or functional tests is much harder than fixing bugs found by a unit test. At the same time, integration tests are also more brittle than unit tests. The interfaces are much bigger and there is much more code underneath that can change. And ultimately, these tests are expensive to run. They are huge and they are slow.
 
-Despite these drawbacks, integration and functional tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early. Acceptance tests for example are important to prove that the user stories are really working. To prove that the software really works. Or to write a test case if a bug was found.
+Despite these drawbacks, integration and functional tests have their own right of existance. They help improving your code as well as they force you to write proper interfaces. It is important to write these tests starting from the beginning of a project to ensure that your components and the API are easy to use and to locate potential bugs early. Functional tests for example are important to prove that the user stories are really working. To prove that the software really works. Or to write a test case if a bug was found.
 
 ## Testing existing code
 
 When working with code, you'll end up writing tests for existing code. I know, in theory this shouldn't happen, yet reality and theory do not always agree. Writing tests for existing code is much harder than writing tests along with new code. It is very hard to figure out the weaknesses and the logic behind existing code. Usually, there are corner cases that are really hard to find if you don't know about them. Additionally it might be hard to set up all the tests as there are no interfaces and objects are hard to create. Writing tests for existing code can be really difficult.
 
-Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. At least if you are not part of the Quality Assurance (QA) team. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior [chapter API]. As Hyrums law [software engineering at google] states: "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, some will certainly rely on buggy behavior of your API. Users are smart and they probably found a way to deal with your buggy code. Fixing the bugs might destroy the user code.
+Many people misunderstand the idea behind testing existing code. It is not so much about finding bugs in the existing code. At least if you are not part of the Quality Assurance (QA) team. Rather it’s about writing an automated documentation of what the code does at the moment. And yes, you read correctly: What it does at the moment. Even if you find some bugs you should not fix them right away as users might rely on this buggy behavior [API]. As Hyrums law [software engineering at google] states: "With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behavior of your system will be depended on by somebody." Or to put it a bluntly: If you have enough users, someone will certainly rely on buggy behavior of your API. Users are smart and they probably found a way to deal with your buggy code. Fixing the bugs might destroy the user code.
 
 As you write tests, always make sure they fail when you expect them to. It already happened to me several times that some tests were unexpectedly passing without writing any code. Such checks prevented me from hours of frustrating bug fixing. The source was some build problems where I tested the wrong binary, but sometimes also because I simply didn’t understand the logic behind the existing code and I didn’t realize the feature was already implemented.
 
-In the previous chapters I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, clean it up and make all methods private again as it should be.
+In the previous chapters I recommended not to test private methods as it breaks the encapsulation. Instead you were supposed to refactor the class and extract the private function into a new class on its own. With existing code you have to be a little bit more pragmatic. You can’t just take any code and refactor it as you like. This will certainly introduce bugs. Making these private methods public is indeed the only way how you can test the class. Once the class is refactored, you should clean it up and make all methods private again as it should be.
 
 Apparently this way of dealing with private methods is a hack that shouldn’t be applied unless necessary. And it also makes apparent how important it is to write tests right away and to keep constantly refactoring before the problem goes out of control.
 
-//more about testing existing code in Refactoring? See Michael Feathers book, WELC. 
+//more about testing existing code? See Michael Feathers book, WELC. 
 
 ## Asserts
 
-// is this all correct?
-
-There were times when people thought using assert commands in to the production code was a good idea. There are also books favoring this approach [citation?]. This is so terribly wrong! 
+There were times when people thought that using assert commands in to the production code was a good replacement for writing tests. There are also books favoring this approach [citation?]. This is so terribly wrong!
 
 The most obvious reason is that using asserts inside production code is a violation of the SRP. You are writing tests inside production code. I guess today everyone agrees that tests and production code should be in different files, possibly even in completely different folders.
 
 Secondly your production code is not made to run automated test cases. Asserts are only executed if you run the software you create. It will highlight you any violations of the assertions along the way, but this is not something that can be automated. It can be used at most like something of an emergency sign. You should rather focus on writing better tests than using asserts in production code.
 
-Asserts are used for debugging purposes. But as I already said before, it is a bad sign if you have to use a debugger. This means that you don't know what your code is doing. So you should rather focus on writing better tests than using asserts in production code.
+Don't get me wrong. There is nothing wrong with asserts in general. You just shouldn't use asserts in production code as a replacement for tests. The following two code snippets are perfectly normal code and pretty much identical:
+
+```py
+def root(x):
+    assert x >= 0, "smaller 0"
+    return x**0.5
+```
+
+```py
+ def root2(x):
+    if x < 0:
+        raise AssertionError("smaller 0")
+    return x**0.5
+```
+
+This is because `assert` throws an `AssertionError` if the required condition is violated. You can even add a message to the `assert` command with the `, "smaller 0"` syntax. The only advantage of the second code snippet is that you can use custom exceptions as we'll learn in chapter [?].
 
 ## Test Driven Development
 
-So far, we wrote tests to check if our code works correctly. We wrote the tests once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD). In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. With TDD you decouple the code as your tests force you to. 
+So far, we wrote tests to check if our code works correctly. We wrote the tests once we were done with the code. But there is nothing wrong with writing the tests upfront. It is called Test Driven Development (TDD) [Test Driven Development: By Example, K. Beck, 2002]. In fact, I recommend using TDD in general. It forces you to think more about what you want to do. You have to figure out how the test should look like beforehand. Once the test is written you need to think about how to implement the feature. The importance of the test cannot be understated. It helps you understand what you really have to do. The test forces you to structure your code accordingly, which is a really good thing. You have to define the interface of a class before writing its implementation. With TDD you decouple the code as your tests force you to. 
 
 In software development it may happen frequently that you have some model in mind that is supposed to solve your problem. But it turns out to be too complex and somehow you don’t manage to get it working. This might be a case of YAGNI (You Aren’t Gonna Need It) [https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it]. Chances are you’ll never need this complex structure. Instead you can write test cases for what you really need and make sure these test cases all pass. Everything else you can take care of later on, once you know it’s really needed. On a code level, YAGNI can be prevented by writing the tests first. If you don't need a piece of code to make the tests pass, just don't write it. Even if you really think that it would be important, beautiful and possibly even fun to write this piece of code. It's not needed now and chances are it will never be needed at all.
 
@@ -2381,11 +2394,11 @@ Maybe you do not fully understand yet how TDD is really going to work. Don’t w
 
 ### How TDD works
 
-You write one test for the feature you want to implement or the bug you want to fix. I repeat, one and only one test. In case you have acceptance and unit tests (I hope so), you may have one open test case for each of them. One test case which fails at the moment. If both, unit and acceptance tests, pass, you can take a day off.
+You write one test for the feature you want to implement or the bug you want to fix. I repeat: one and only one test. In case you have functional and unit tests (I hope so), you may have one open test case for each of them. There should be test case which fails at the moment. If both, unit and functional tests pass, you can take a day off.
 
-Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should. 
+Just kidding. If a test passes for unknown reason this is a serious issue that you have to investigate. Maybe a feature is already implemented, maybe your test is not testing what it should and has to be refined.
 
-Otherwise you start implementing. Figure out why the test fails. For new features it’s usually very obvious. What the test is testing is simply not yet implemented. Write just enough code until the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you find a good enough solution such that the test passes.
+Otherwise you start implementing. Figure out why the test fails. For new features it’s usually obvious. What the test is testing is simply not yet implemented. Now it's your task to write just enough code such that the test passes. No less and no more. You don’t have to write great code in this step. Just make sure you find a good enough solution such that the test passes.
 
 Once the test passes you might have to refactor the code a little to get back into shape. You already wrote all the required test cases as a safety net. And then you are allowed to write the next test case until you are done with the feature and the acceptance test passes as well.
 
@@ -2403,7 +2416,7 @@ Also, with TDD you have to do some bigger refactoring once in a while. This is i
 
 As we learned in the chapter on interfaces, they should always be defined from the user perspective. With TDD you are taking the user perspective of your code. When writing a test, you are a user of the corresponding piece of code. Therefore writing your tests before the code forces the programmer to adapt the code to the test. This is a good thing. It forces the programmer to write code that is adapting to the user and therefore the interface of the code becomes more user friendly.
 
-### Example
+### Example of TDD
 
 TDD is best understood by looking at a short example. Let's write a program that converts Arabic numbers (the one we use) into roman numbers. As we learned just now, we start by writing a first test case.
 
@@ -2526,7 +2539,7 @@ def roman_numbers(n):
 	return roman
 ```
 
-Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter [chapter Data types] that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for python versions >= 3.7 as only since then, dicts are guaranteed to keep their order. The following solution would probably be the best:
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter [chapter Data types] that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for python versions >= 3.7 as only since then, dicts are guaranteed to keep their order. The following solution would probably be the best as it is more solid, even though it is a bit longer:
 
 ```py
 from dataclasses import dataclass
@@ -2569,6 +2582,7 @@ from unittest.mock import Mock
 
 def read_csv(file_name):
 	# ...
+	# return ...
 
 def test_mock_important_stuff():
 	# Override the `read_csv` function defined in important_stuff.py and return some values.
@@ -2585,6 +2599,8 @@ Mocks have some predefined behavior. In this case it simply returns the values d
 [clean craftsmanship, p.118]
 
 A fake is a working version of the object you want to replace, albeit it's a simplified one. For example your fake csv reader in the example below does not read a file from the disk, but just returns a string stored in the code. For running tests this is usually good enough without having the drawback of dealing with the file system, where your original data could easily be deleted or messed with by anyone else.
+
+In the following example, the `FakeCSVReader` does not write the data to a file, but stores it in a local variable. 
 
 ```py
 class CSVReader:
@@ -2653,7 +2669,7 @@ if __name__ == "__main__":
     main("production")
 ```
 
-But this is bad practice. As we'll learn in the chapter on strings [chapter Data types], such selections should not be delayed. Passing around strings is bad practice.
+But this is bad practice. As we'll learn in the chapter on strings [chapter Data types], such selections should not be delayed. Passing around strings is bad practice. And even if you replace the string with an `enum`, you should still avoid delaying this choice.
 
 A better solution is using DI. Here the API key is generated outside the `ApiClient` class. It is passed to it in the constructor as a function argument. This makes it easy to replace the API key with a fake one. It also makes it easy to reuse the API key in other classes.
 
@@ -2665,7 +2681,7 @@ class ApiClient:
         self.api_key = api_key # <-- dependency is injected
 
 def main(client):
-    ...
+    # ...
 
 if __name__ == "__main__":
     main(
@@ -2687,7 +2703,7 @@ It turns out that if you have to make a selection, for example because you want 
 
 DI is very similar to the strategy design pattern. The main difference being what you want to achieve. DI is mostly used for testing, meanwhile the strategy pattern is generally used to allow the user to make a selection at run time.
 
-As a downside for DI one has to mention that it makes the code harder to understand. You have to look through many functions to understand what's going on. For this reason it is recommended to use DI sparingly, mostly for the reasons mentioned above: IO, time, random numbers, etc.
+As a downside for DI one has to mention that it makes the code harder to understand. You have to look through many functions to understand what's going on. For this reason it is recommended to use DI sparingly. It should be mostly used for the reasons mentioned above: IO, time, random numbers, etc.
 
 ## Summary
 
@@ -2731,13 +2747,15 @@ print(process_data(reader))
 
 # 14. DevOps
 
+// move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
+
 Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
 ## The early 2000s
 
 Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
-Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP) and with the Agile Manifesto in 2001, testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP), [Extreme Programming Explained: Embrace Change, K. Beck, 1999] and with the Agile Manifesto in 2001 [http://agilemanifesto.org/], testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
 - The code is formated according to specification
 - The static code analysis passes
 - The build passes
@@ -2748,7 +2766,7 @@ Even though there are companies that don't care about the formatting anymore. Th
 
 Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
 
-We have the development (Dev) and the IT operations (Ops) Bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building, testing and releasing of the new software.
+We have the development (Dev) and the IT operations (Ops) bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building, testing and releasing of the new software.
 
 ### Getting a project
 
@@ -2776,8 +2794,6 @@ If code lives long enough (which is usually sooner rather than later), it will h
 
 ## Keeping code in shape
 
-// first refactor the core, refactor subsidiary code only when needed. It is important to focus on some parts. Refactoring the whole code is a tremendous amount of work. Make supporting code to be generic.
-
 Even without external changes it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a possible source for deteriorating the code quality. You may add duplication, increase the class size or disrupt the order of logic in your code. Brief, the code becomes dirty and you have to clean it up. Sometimes it is also compared to entropy, the physical law of disorder [The Pragmatic Programmer]. Fighting entropy is hard. It takes a lot of efforts as explained in the section on entropy [chapter Physical Laws of Code].
 
 I guess everybody reading (or writing) this book knows some of the problems why code rots. The very first example is copy paste code. Copy paste code should be banned altogether. Instead of rewriting a function to fit its new needs, one just copies it and changes a line or two in its new location. Another issue is adding more and more features to an existing class. Also the features that you add are in hindsight at the wrong place in your code and have to be moved to the correct location. These are some of the reasons why code rots and needs regular refactoring.
@@ -2786,7 +2802,7 @@ I guess everybody reading (or writing) this book knows some of the problems why 
 
 Refactoring means to change the code without changing its functionality. This is what people didn’t do in very old code. They were afraid that they would break existing functionality. They would introduce bugs. It's like they didn’t clean up the kitchen because they were afraid, they might break something. And they didn’t see the reason why they should have cleaned up the kitchen. They only had a nagging doubt that something was wrong, but they couldn’t say what exactly. Long story short, the next person had to cook in a dirty kitchen. And at some point, there were so many dirty dishes in the kitchen they didn’t even see the bugs anymore that could hide underneath each and every dirty plate. People using the kitchen were afraid of introducing bugs when refactoring but in the end, they were left with bugs anyway. They didn’t clean up the kitchen nor refactor the code. They started adding many more bugs further down the road, because the whole code base became a mess.
 
-I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... you need... automated tests! Unit tests, acceptance tests, performance tests, etc. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
+I really hope you understand that not refactoring is not an option. A cook has to clean up the kitchen continuously just as you have to refactor your code. All the time. Refactoring is an integral part of your job, not just an optional feature. You are responsible for refactoring your code. Therefore, we have to take you your fear from refactoring, your fear from introducing bugs. You need a safety net. Something that automatically tells you when you introduced a bug... you need... automated tests! Unit tests, functional tests, performance tests, etc. Just make sure your tests cover pretty much all the functionality of the code you want to refactor. There are tools to highlight the lines of your code covered by tests. Or you can also change one line of code and see whether one of the tests fails, though this is not a very productive solution.
 
 If you are confident about the test coverage you can do pretty much anything you want. Whatever code you don’t like, just throw it out and rewrite it from scratch. Or even better, use a third-party library if available. As long as the tests pass you are quite certainly fine.
 
@@ -2796,7 +2812,7 @@ Most refactoring is fairly small. Renaming a variable. Breaking up a class into 
 
 Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor as soon as there is some code you don’t like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It’s: write code – test – refactor. For every feature you implement you should follow this pattern. Or even better, you can also write the tests before the code, as explained in the section on Test Driven Development [chapter Writing better Code with tests]. This pattern is great because you can really do one thing at the time. You can write mediocre code to start with. Maybe you don’t know yet how a variable should be named or you tend once again to write a class that is too big. Maybe there’s even duplicated code. Certainly, it would be better to write perfect code right from the beginning. But you cannot multitask. You cannot develop code and make it perfect at the same time. You’re not perfect. Learn dealing with your imperfections and refactor your imperfect code.
 
-Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development process. You never write perfect code to start with. It always takes some refactoring in order to end up with good code.
+Then you write the tests. Some tests may fail as your imperfect code might contain bugs. You fix the bugs and the code becomes even more ugly. Even if you had written sublime code to begin with, due to the inevitable bug fixes you would still have to refactor at some point. This is something that was missed by the waterfall development process. You never write perfect code to start with. You always miss some details that you have to fix later on. It always takes some refactoring in order to end up with good code.
 
 Finally, you refactor. You look at all the code that you wrote since you refactored the last time. Possibly also at code that existed for a long time and could be merged with your new code because it’s very similar. The code will probably look more complicated than you would expect it to be. You try to rethink the logic of the problem you just solved. Can you change the algorithm somehow that you can drop all the `if` statements for the corner cases? Or do you have to sort the data differently to make the code better?
 
@@ -2818,7 +2834,7 @@ I hope you got the memo. Small refactoring should be done all the time. Every fe
 
 ### Refactoring is dynamic
 
-Waterfall refactoring is bound to fail the same as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
+Waterfall refactoring is bound to fail the same as most waterfall projects are. Refactoring is concrete. Just as normal coding, it consists of a learning process while you are doing it. It’s a feedback loop. It usually has to be done incrementally and endless planning sessions are a waste of time. Every couple of lines you write you learn so many new things that require you to adapt the refactoring plans. Possibly you even have to drop these grand plans all together because you realize they just won’t work. You can have as many beautiful plans as you want. If they don’t work out, they are worthless.
 
 You have to face the facts. Waterfall refactoring is not working out. Instead you have to follow the actual dynamics of making changes, learning more about your code and adapting your future changes. These three steps are the only way how refactoring is done. 
 
@@ -2828,23 +2844,23 @@ A refactoring certainly has the highest impact if you have some new understandin
 
 ### The circle of doom
 
-There is something very mean about refactoring. Refactoring good code is easier than refactoring bad code. For instance, working with code containing global variables, many dependencies, etc. is always a pain, no matter if you are writing new code, tests or doing some refactoring. In all cases you have to understand what the code really does. For writing new code and tests, this is bad enough. But with refactoring is becomes a nightmare because you have a circle of doom. You start postponing your refactoring because it’s hard to understand bad code. But over time, this will only make it worse and worse and worse. Until you reach the point where refactoring is essentially impossible and you are paralyzed. You’d have to refactor your code because it’s bad, but you can't because it's gotten too bad to make it any better.
+There is something very mean about refactoring. Refactoring good code is easier than refactoring bad code. For instance, working with code containing global variables, many dependencies, huge classes etc. is always a pain, no matter if you are writing new code, tests or doing some refactoring. In all cases you have to understand what the code really does. For writing new code and tests, this is bad enough. But with refactoring, it becomes a nightmare because you have a circle of doom. You start postponing your refactoring because it’s hard to understand bad code. But over time, this will only make it worse and worse and worse. Until you reach the point where refactoring is essentially impossible and you are paralyzed. You’d have to refactor your code because it’s bad, but you can't because it's gotten too bad to make it any better.
 
 Don’t slack off refactoring. You’d pay the price rather sooner than later. Make sure you always keep the code in shape, this makes your life much easier.
 
-You should always consider: even if you don't like the behavior of your code as you are refactoring, you should not change it. The behavior of the software may not be changed. Even if it’s a bug, you should rethink fixing it as the users may rely on that bug.
+However there is one thing you should always consider while refactoring: even if you don't like the behavior of your code as you are refactoring, you should not change it. The behavior of the software may not be changed. Even if it’s a bug, you should rethink fixing it as the users may rely on that bug.
 
 ## When to Refactor
 
 It is generally a good idea to do refactoring. Most developers do rather too little refactoring than too much. Still, there are some general recommendations when to refactor or not.
 
-Every few lines of code you wrote, you should consider refactoring them. It is not always necessary, tough it is by far the best moment. You still know what you just programmed and you might have an idea what there is left to improve. Additionally, you are always working on a tidy workplace which increases your productivity. Code that’s well taken care of is much easier to modify.
+Every few lines of code you wrote, you should consider refactoring them. It is not always necessary, tough it is by far the best moment. You still know what you just programmed and you might have an idea what there is left to improve. Maybe you just introdced some code duplication? Additionally, you are always working on a tidy workplace which increases your productivity. Code that’s well taken care of is much easier to modify.
 
 As already mentioned above, you should always refactor the code you just wrote. This is the number one rule. Furthermore, you should stick to the boy scout rule: Leave the camp ground tidier than you found it. Always refactor a little bit more than you should have. This helps fighting the code entropy.
 
 Refactor when you found a bug. Don’t just add a patch that might resolve the issue superficially. Search for the real source of the problem. Then consider if there is some redundant code that might need fixing, or better refactoring, as well. Find a good fix for the bug, possibly including some refactoring.
 
-If you add a feature, it may not really fit into the code. Most likely, because the code has not been cleaned up, or the other authors simply didn’t know how the code should look in the future. But now, as you’re adding this new feature, you’re smarter. You might have an idea how the code should really look like for the feature to fit in. Now don’t squeeze the feature into the existing code base. Refactor instead and make sure the new feature fits in smoothly. Altogether, this is less work. And especially the code will ultimately be in a much better condition. This was explained in the section on orthogonality. Write an adapter to make the feature fit neatly into the code base.
+If you add a feature, it may not really fit into the code. Most likely, because the code has not been cleaned up, or the other authors simply didn’t know how the code should look in the future. Thus, the code has a different structure than you would need for this new feature. But now, as you’re adding this new feature, you’re smarter. You might have an idea how the code should really look like for the feature to fit in. Now don’t squeeze the feature into the existing code base. Refactor instead and make sure the new feature fits in smoothly. Maybe transform a datastructure as explained in the section on Orthogonality. Altogether, this is less work. And especially the code will ultimately be in a much better condition. This was explained in the section on orthogonality. Write an adapter to make the feature fit neatly into the code base.
 
 Also, during code review you can do refactoring. Team up with the author of the code and do some pair programming. This is much more motivating than a normal review as there is better knowledge exchange and the output of the review is significantly increased.
 
@@ -2852,7 +2868,7 @@ Generally, you should refactor code that you work with. In some cases, you may r
 
 Once in a while, you have to do a bigger refactoring. One that you don’t just do between writing a few lines of code, but it will take considerable efforts to get it done. You should probably discuss this topic with your work colleagues, opposite to the smaller refactorings that you just do by yourself.
 
-Last but not least it is your code. You are responsible. You are the one to decide it’s time for a refactoring. Don’t ask your boss for permission to refactor. Just do it.
+Last but not least it is your code. You are responsible. You are the one to decide it’s time for a refactoring. Don’t ask your boss for permission to refactor. Just do it when you have to.
 
 ## Refactoring process
 
@@ -2915,19 +2931,19 @@ def print_content():
 	# print some stuff
 ```
 
-For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway.
+For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway. Even better is to cut (ctrl-x) and paste the code snippet, but that's a detail.
 
 You can also use Copilot to extract this function. Just write the command "move the print statements into a dedicated function" and Copilot will do the rest for you. Though as always, you should pay attention that the solution is correct. In this case it happened to me that Copilot suggested an incorrect solution.
 
-There is not that much more to know about extracting functions than what I just showed here. It is a really simple refactoring technique, yet it is very important. This is probably the most used refactoring technique. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. You may extract methods from this class later on if needed.
+There is not that much more to know about extracting functions than what I just showed here. It is a really simple refactoring technique, yet it is very important. This is probably the most used refactoring technique besides renaming. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. Though this would be a sign of bad class design because the class has too many member variables [chapter classes]. You may extract methods from this class later on if needed.
 
-Inlining functions is the opposite process of what we just saw and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function.
+Inlining functions is the opposite process of what we just saw and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and you are planning to split up the old function. One advantage of inlining function is that you don't have to come up with a function name. Though usually this isn't a good sign if you don't know how to call a function.
 
 ### Scratch refactoring [Feathers p. 212] 
 
 In chess there is a rule of thumb that you should quietly talk with your pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. But also try to implement some of the edge cases that will make your life harder to get a feel for the drawbacks of your dream implementation. I like this concept of scratch refactoring very much as it gives you an idea how the code could look like instead.
 
-Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details why the solution from the scratch refactoring might not work out the way you did it.
+Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention that you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details and the solution from the scratch refactoring might not work out the way you did it. After all, the scratch refactoring was just a dream...
 
 ## Refactoring legacy code [WELC ]
 
@@ -2956,7 +2972,7 @@ How do you refactor legacy code?
 
 First of all, you have to change as little code as possible to get tests in place.
 
-1. Identify change points (Seams)
+1. Identify change points ("Seams")
 2. Break dependencies
 3. Write the tests
 4. Make your changes
@@ -2982,11 +2998,25 @@ def f(debug):
 		# ...
 ```
 
-However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection.
+However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection. The code above should be used at the highest level and create objects that will be used with dependency injection. For example:
+
+```py
+def create_reader(debug):
+	if(debug):
+		return DebugReader()
+	else:
+		return Reader()
+
+def main(debug=False):
+    reader = create_reader(debug)
+    reader.read()
+```
 
 Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
 
 The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
+
+And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
 
 ### Sketches
 
@@ -3005,7 +3035,7 @@ Making sketches and diagrams may help you finding ways to refactor your code. Th
 
 Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function).
 
-Assume we have the following code that we can't test for whatever reason. And in reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
+Assume we have the following code that we can't test for whatever reason. In reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
 
 ```py
 def post_entries(transactions, entries):
@@ -3015,6 +3045,7 @@ def post_entries(transactions, entries):
 ```
 
 Now we only want to add the valid entries to the transactions and execute the `post` function. It seems as if we'd have to create a temporary list and add an if statement. 
+
 ```py
 def post_entries(transactions, entries):
 	valid_entries = []
@@ -3054,7 +3085,7 @@ So we managed to add only one additional line of code to the original function. 
 
 // WIP
 
-If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. Otherwise you should maybe reconsider your class design and rewrite it such that it has less coupling.
+If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. If there are too many arguments you have to hand over, you should maybe reconsider your class design and rewrite it such that it has less coupling.
 
 // I think there is still quite something to write here. Maybe add some more examples?
 
