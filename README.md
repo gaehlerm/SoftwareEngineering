@@ -3823,6 +3823,8 @@ Interestingly, all the explanations made here about coupling and cohesion are al
 
 # 24. Solid principles 
 
+"It is not enough for code to work." Robert C. Martin
+
 // Quote from uncle bob?
 
 Source: [https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clean Architecture]
@@ -3840,9 +3842,11 @@ Interestingly enough, most people agree on the fact that these principles are ve
 
 ## Single Responsibility Principle
 
-The SRP has already been explained at the very beginning of this book due to its high importance.
+The SRP has already been explained in its own chapter due to its enormous importance. At the time of writing I counted 60 occurances of the abbreviation "SRP" in this book here!
 
 ## Open Closed Principle
+
+"Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." - Bertrand Meyer
 
 // OCP is always a tradeoff what it is closed and open for. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
 
@@ -3867,7 +3871,7 @@ def print_all_postal_codes():
     print(cities.bern_postal_code())
 ```
 
-If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
+If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. We have to *modify* the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
 
 Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. The code below obeys the OCP.
 
@@ -3934,6 +3938,8 @@ class CreditCard(PaymentSystem):
 
 ##  Interface Segregation Principle
 
+"Clients should not be forced to depend upon interfaces that they do not use." — Robert C. Martin
+
 The Interface Segregation Principle (ISP) is like the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need one small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
 
 Here the file A does not follow the ISP. It does 2 independent things. Most other code needs only one of these functions. They are independent. Thus, they should be in different files. 
@@ -3973,7 +3979,7 @@ int function_2(){
 }
 ```
 
-A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace, but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
+A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace (`std::` a namespace, not a class!), but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
 
 Another common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code imports much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
 
@@ -4019,6 +4025,8 @@ color = Color.BLUE
 Like this you segregated the interface and you don't have to import the `BigClass`.
 
 ## Dependency Inversion Principle
+ 
+"High-level modules should not depend on low-level modules" - ?
 
 Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree. The so-called dependency tree. The main function is at its root. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
 
