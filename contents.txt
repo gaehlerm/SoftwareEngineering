@@ -1,0 +1,59 @@
+parts of the book
+
+Design Principles // Die Gruppe mag ich nicht. Das SRP ist wichtig und kommt am Anfang, SOLID möchte ich jedoch später bringen.
+-SRP
+-SOLID
+-Software Engineering Principles
+
+Understanding Complexity
+-Naming
+-Comments
+-Interfaces
+-Levels of abstraction
+
+Parts of code
+-Functions
+-Classes
+-Variables
+-Data types
+
+About code
+-Understandable code
+-Physical laws of code
+-Domain Driven Design
+-Software Architecture
+
+Tests
+-Testing
+-Types of tests
+-Writing better Code with Tests
+
+Programming
+-Programming languages
+-Programming paradigms
+-Errors, Exceptions, Bugs
+
+?
+-Good Code
+-Complexity
+-Decoupling
+
+Existing Code
+-Working with existing Projects
+-Performance Optimization
+-Refactoring Fundamentals
+
+Collaborating
+-Working in teams
+-Code Review
+-Planning
+-Hiring and getting Hired
+-DevOps
+-Agile
+-Requirements Engineering (Felix)
+
+Miscellaneous
+-Setting up a project
+-Logging
+-Tools
+-Data files
