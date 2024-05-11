@@ -3644,13 +3644,16 @@ a = [i for i in range(10)]
 // [https://youtu.be/RDd71IUIgpg]
 
 # 21. Decoupling
+
+// I really have to rework this chapter. 
+
 "Before software should be reusable, it should be usable." — Ralph Johnson
 
 [Refactoring, Martin Fowler], [The Pragmatic Programmer]
 
 Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible. It is the ultimate goal to have comepletely decoupled code. This makes is easy to work with. It makes it reusable.
 
-This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s like importing something everywhere. This is absolutely deadly. Don’t use global variables.
+This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s worse than importing something everywhere. All your code starts depending on each other. This is absolutely deadly. Never use global variables.
 
 Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
 
@@ -3663,6 +3666,8 @@ Micro services on the other hand are very much decoupled. They are chunks of cod
 Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around. This is the strength of functional programming.
 
 ## Law of demeter
+
+// I don't exactly understand this law of demeter yet.
 
 One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" [Refactoring p.192]. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: [https://en.wikipedia.org/wiki/Law_of_Demeter], [https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf]
 - `o` itself;
