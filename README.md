@@ -42,6 +42,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
 - [4. Introduction](#4-introduction)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
   - [About this book](#about-this-book)
+  - [A word about Copilot](#a-word-about-copilot)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
@@ -210,6 +211,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
     - [Assigning variables inside conditions](#assigning-variables-inside-conditions)
     - [Scope of variables](#scope-of-variables)
     - [Approximate programming](#approximate-programming)
+  - [Copilot](#copilot-7)
 - [17. Programming languages](#17-programming-languages)
   - [Existing programming languages](#existing-programming-languages)
   - [Code examples](#code-examples)
@@ -223,7 +225,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
     - [Pass by reference](#pass-by-reference)
     - [Classes](#classes)
     - [Structs](#structs)
-  - [Copilot](#copilot-7)
+  - [Copilot](#copilot-8)
 - [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
   - [Syntax Errors](#syntax-errors)
   - [Bugs](#bugs)
@@ -232,7 +234,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
     - [Bug Reports](#bug-reports)
     - [Tracking down bugs](#tracking-down-bugs)
     - [Fixing a bug](#fixing-a-bug)
-    - [Copilot](#copilot-8)
+    - [Copilot](#copilot-9)
   - [Exceptions](#exceptions)
     - [Wrapping exceptions](#wrapping-exceptions)
     - [Exceptions and goto](#exceptions-and-goto)
@@ -241,7 +243,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
   - [Procedural programming](#procedural-programming)
   - [Functional programming](#functional-programming)
   - [Conclusions](#conclusions-2)
-  - [Copilot](#copilot-9)
+  - [Copilot](#copilot-10)
 - [20. Design patterns](#20-design-patterns)
   - [Creational Patterns](#creational-patterns)
     - [Factory](#factory)
@@ -265,7 +267,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
   - [Template](#template)
   - [Flyweight](#flyweight)
   - [Observer](#observer-1)
-  - [Copilot](#copilot-10)
+  - [Copilot](#copilot-11)
 - [21. Decoupling](#21-decoupling)
   - [Law of demeter](#law-of-demeter)
 - [22. Physical laws of code](#22-physical-laws-of-code)
@@ -312,7 +314,7 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
   - [Variable comparison](#variable-comparison)
 - [27. Naming](#27-naming)
     - [Generic names](#generic-names)
-  - [Copilot](#copilot-11)
+  - [Copilot](#copilot-12)
 - [28. Complexity](#28-complexity)
   - [Complexity of code](#complexity-of-code)
   - [Estimating complexity](#estimating-complexity)
@@ -320,15 +322,15 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
   - [Back magic code](#back-magic-code)
 - [29. Data files](#29-data-files)
   - [CSV](#csv)
-    - [Copilot](#copilot-12)
-  - [Json](#json)
     - [Copilot](#copilot-13)
-  - [XML](#xml)
+  - [Json](#json)
     - [Copilot](#copilot-14)
-  - [HDF5](#hdf5)
+  - [XML](#xml)
     - [Copilot](#copilot-15)
-  - [Databases](#databases)
+  - [HDF5](#hdf5)
     - [Copilot](#copilot-16)
+  - [Databases](#databases)
+    - [Copilot](#copilot-17)
   - [Custom file format](#custom-file-format)
 - [30. Setting up a project](#30-setting-up-a-project)
   - [Project folder](#project-folder)
@@ -347,14 +349,14 @@ This is a book about software engineering, similar to Clean Code by Robert Marti
     - [Docstring](#docstring)
   - [Commenting magic numbers](#commenting-magic-numbers)
   - [Summary](#summary-4)
-  - [Copilot](#copilot-17)
+  - [Copilot](#copilot-18)
 - [33. Logging](#33-logging)
 - [34. Tools](#34-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
-    - [Copilot](#copilot-18)
-  - [Command line](#command-line)
     - [Copilot](#copilot-19)
+  - [Command line](#command-line)
+    - [Copilot](#copilot-20)
   - [IDE](#ide)
   - [Continuous Integration](#continuous-integration)
   - [Debugger](#debugger)
@@ -563,6 +565,12 @@ These four rules will accompany us throughout our book.
 ## About this book
 
 Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are at most some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
+
+## A word about Copilot
+
+My publisher had the idea to include Copilot, one of the new AI code generation tools at the time of writing, into this book. And indeed, there are some cases where Copilot can be useful when writing code. I tried to make some examples that fit to the corresponding chapters. Though I couldn't make examples for every chapter. In many cases the content of the chapters were too generic as if code examples would be helping a lot. Though in these chapters where I was giving code examples, Copilot was usually able to generate useful code. Though sometimes I had to play around a little in order to give me reasonable results and I didn't always get the code I wanted. There still has to be done a lot of research on how to use Copilot in the best way.
+
+In general it can be said that, already at the time of writing, AI code generation is a very useful tool that can help you improve your productivity and the quality of your code significantly if used correctly. It also helped me writing this book here. Though you always have to be cautios. Copilot is not perfect and it can generate code that is not correct. It creates just some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer, it's just a tool that assists you with your work. 
 
 # 5. Single responsibility principle 
 
@@ -3156,6 +3164,8 @@ This is almost what I wanted, except that one could use a dict with number-roman
     return roman
 ```
 
+I particularly like the part with `for key in sorted(roman_map.keys(), reverse=True):` where Copilot makes sure that the entries in the dict are sorted, even if the dict itself is not sorted as it was the case before python 3.7. In [chapter Testing] I used a list with class objects to achieve the same result. But I have to admit that the solution here is quite neat.
+
 This code can be further refactored with the following command:
 
 ```py
@@ -3177,9 +3187,9 @@ As always, Copilot works best if you give it some step by step instructions. It 
 
 ## How humans think
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything, he doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
 
-Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
+Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, good imagination to get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
 Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result.
 
@@ -3188,13 +3198,13 @@ Something humans are not good at is very obvious. Math. We are bad at math. It�
 ``` 
 [https://www.quora.com/What-are-some-prime-examples-of-bad-python-code]
 
-The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle so much because we can't keep all the variables in our heads.
+The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with such code because we can't structure it. It is too big to understand it at once and we can't break it down into smaller pieces.
 
 We are limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
 
-Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic.
+Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic. With your own code, it should be the same.
 
 ## Spaghetti code
 
@@ -3208,11 +3218,11 @@ This whole book is about how to write low complexity code. The sections on the S
 
 ### Structuring function arguments
 
-In the following C++ code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. It is called the "type problem". The solution is to use a class instead of a tuple. 
+In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple. 
 
 ```py
 def send_email(to, subject, body):
-    pass
+    # ...
 ```
 
 ```py
@@ -3224,8 +3234,10 @@ class Email:
     subject: str
     body: str
 
-def send_email(email: Email):
-    pass
+email = Email(to="google", subject="new search engine", body="it's awesome")
+
+def send_email(email):
+    # ...
 ```
 
 In python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
@@ -3234,10 +3246,10 @@ In python (and C++ 20), this problem is less prevalent as keyword arguments are 
 def send_email(to: str, subject: str, body: str):
     pass
 
-send_email(to="to", subject="subject", body="body")
+send_email(to="google", subject="new search engine", body="it's awesome")
 ```
 
-Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a more logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code.
+Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or as we have learned, they should have used a tool box.
 
 ### Complicated code
 
@@ -3288,31 +3300,35 @@ Let's say you want to program something similar to Tripadvisor or google maps. Y
 
 But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
 
+## Copilot
+
+Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at.
+
 # 17. Programming languages
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
 
-A very frequent question from beginners is "which programming language should I learn". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book. I hope.
+A very frequent question from beginners is: "Which programming language should I learn?". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book, I hope.
 
 For example, a lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
 
-I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to understand.
+I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to be understood.
 
 But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
 
-As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. 
+As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. These things are outdated, as explained in the chapter [levels of abstraction].
 
-Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments.
+Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments. For instance, there are ways to add type hints in Python, but I'm frequently too lazy to add them.
 
 I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
 
-C++ and Java are static typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
+C++ and Java are both staticly typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
 
 ## Existing programming languages
 
-Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is treated as a bit wise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is optimized and treated as a bitwise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party library and known for its high quality standard. The boost library contains hundreds of very important libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party libraries and known for its high quality standard. The boost library contains hundreds of very important sub-libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
 ## Code examples
 
@@ -3353,7 +3369,7 @@ class Apple:
         self.price = price
         self.weight = weight
 
-apple = Apple(1.0, 0.5)
+apple = Apple(price=1.0, weight=0.5)
 apple.hi = "hi"
 ```
 
@@ -3376,7 +3392,7 @@ Slots fixes the available member variables. In this case, there are only the var
 
 Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
 
-An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. But this is a highly advanced topic and I don't want to go into details here. 
+An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. Tough this is a highly advanced topic and I cannot go into details here. 
 
 ## C++
 
@@ -3394,7 +3410,7 @@ There are libraries that require plain old arrays instead of vectors. This, howe
 
 ```C++
 std::vector<int> vec {1,2,3,4};
-some_old_C_library(vec.data(), vec.size());
+some_old_C_style_library(vec.data(), vec.size());
 ```
 
 Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
@@ -3403,19 +3419,18 @@ Again, this allows you to deal with vectors as long as possible and to convert t
 
 Smart pointers, `std::unique_ptr`, `std::shared_ptr` and `std::weak_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
 
-There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers all throughout the code. Instead you can convert the smart pointer into a pointer using the `get()` function.
+There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers throughout all your code. Instead you can convert the smart pointer into a pointer using the `get()` function.
 
 ```C++
 auto foo = std::make_unique<Foo>();
-some_old_C_library(foo.get());
+some_old_C_style_library(foo.get());
 ```
 
 This prevents you from having to deal with old school pointers until the very end.
 
-
 ### Pass by reference
 
-In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. If it is passed by const reference it cannot be modified. Passing by const reference is very frequently required. Passing an object by value creates a copy of the object and requires a lot of memory.
+In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. Passing an object by reference means that you basically pass the object itself and thus it can be modified. If the object is passed by const reference it cannot be modified. Passing by const reference is done very frequently. Passing an object by value creates a copy of the object and requires a lot of memory.
 
 Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. In fact, the compiler will lock this object and it won't be possible to change it. 
 
@@ -3425,11 +3440,11 @@ At the same time, this is also one point for critisism as passing by const refer
 
 C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I told you not to use inheritance, you don’t have to worry about such details.
 
-There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or python one has to define an "abstract base class". This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use abstract base classes or interfaces.
+There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or Python one has to define an "abstract base class" (though in Python it is not necessary). This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use inheritance with abstract base classes or interfaces.
 
 ### Structs
 
-Structs are essentially the same as dataclasses in python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The last is only forbidden by general agreement.
+Structs are essentially the same as dataclasses in python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The later is only forbidden by general agreement.
 
 Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Or since Java 14, one can use a record which is roughly the same as a struct.
 
@@ -3468,17 +3483,17 @@ At the beginning of our programming careers, we were all bothered by the compile
 
 ## Bugs
 
-A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Everything is possible. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost a million, an airplane crashed. Everything is possible and it all already hapened. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
 
 ### Cost of Bugs
 
-The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code [SE at google, p.207]. Do not let the bugs linger around. The more you wait, the more expensive it gets.
+The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code [SE at google, p.207]. This is why syntax errors are so cheap: you are forced to fix them imediately. However, you should not let the bugs linger around. The more you wait, the more expensive it gets.
 
 I hope you got the memo. You always have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low and stay as far away as possible from the exponential growth of the cost they cause.
 
 ### Is it a bug or a feature?
 
-In theory, it's very simple. Either some behavior is docummented, or it's a bug. But in practice, it's not always that easy. First of all, not all behavior is docummented. And secondly, not all undesired behavior is a bug, or at least it is not always advisable to fix it. The users of your software may have gotten used to the faulty behavior of your software and implemented a work around. So fixing the bug would in fact introduce a new bug in the code of your clients.
+In theory, it's very simple. Either some behavior is docummented, or it's a bug. But in practice, it's not always that easy. First of all, not all behavior is docummented. And secondly, not all undesired behavior is a bug, or at least it is not always advisable to fix it. The users of your software may have gotten used to the faulty behavior of your software and implemented a work around. So fixing the bug would in fact introduce new bugs in the code of your clients.
 
 Bugs can be clasified by their severity. A bug resulting in a crash of an air plane is pretty much the worst case and has to be fixed, no matter how unlikely it is to happen. Meanwhile if you write an Android game, a bug that causes the game to crash every thousand hours or so may be acceptable. The possible nuisance of the user may not be worth the effort to fix the bug. For bigger projects it is very common, that only critical bugs get fixed. All other bugs may get docummented along with a work around, but they will not be fixed due to economic reasons.
 
@@ -3488,17 +3503,17 @@ Depining on the software, writing good bug reports may be anything from straight
 
 Good bug reports explain the problem in a very unambiguous way. They follow the simple pattern: "If you do A, then B happens, but it would be expected that C happens." Unfortunately, describing A may be very difficult, depending on the software. If your software has an API that can be used to trigger the bug, you are usually in a good position as it is very simple to reproduce the bug. Just hand over all the files involved. 
 
-If it is a game that crashes under very specific circumstances, it may be extremely hard to reproduce the bug. Maybe some log files may help, but even that is not always sufficient to track down the bug.
+If it is a game (that doesn't have an API, of course) that crashes under very specific circumstances, it may be extremely hard to reproduce the bug. Maybe some log files may help, but even that is not always sufficient to track down the bug.
 
 Writing good bug reports is hard. A bug report should be written with scientific accuracy, such that anyone can reproduce the bug. Anything that may cause the bug has to be reported, including things like the version number of the software and possibly even the version numbers of third party libraries. The more information you provide, the easier it is to track down the bug. 
 
 ### Tracking down bugs
 
-Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide.
+Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide because they also have to follow the logic of your code.
 
-For debugging you generally have the debugger. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule.
+For debugging you generally have the debugger. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had better structured your code and a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule and otherwise rethink the way you write your code.
 
-There are many different ways to track down bugs. Most important of all, you need to have an idea, what part of the code may have caused the bug under investigation. If you have some code example using the API of your code, you can try to simplify it while checking, wheather the bug still exists. This usually gives you a good idea what the bug depends on. For example the user may have used some option that is rarely used and you expect it to be buggy for some reason. Then there are roughly two ways to track it down:
+There are many different ways to track down bugs. Most important of all, you need to have an idea, what part of the code may have caused the bug under investigation. If you have some code example using the API of your code, you can try to simplify it while checking, wheather the bug still exists. This usually gives you a good idea what the bug depends on. In most cases the bug depends only on one specific setting in your API file. For example the user may have used some option that is rarely used and you expect it to be buggy for some reason. Once you have minimized the number of API calls, there are roughly two ways to track down the bug:
 1. You can set a breakpoint where the value of a variable is set. If you already broke down the code from the bug report into the smallest possible case, you shouldn't have to iterate over the break point too often.
 2. You can bisect the bug. You set a breakpoint somewhere in the middle of the code and check if the bug already exists. If it does, you bisect the first half of the code, otherwise you bisect the second half of the code. This is a very powerful technique as you can track down the bug in log(n) steps.
 
@@ -3506,9 +3521,9 @@ Now as I already said, the most important thing is that you have as much informa
 
 ### Fixing a bug
 
-As already mentioned above, you should never fix a bug that you just found. Users may rely on this faulty behavior and fixing the bug may interfere with their workarounds. Consistency may be more important than corectnes.
+As already mentioned above, you should never fix a bug that you just found. Users may rely on this faulty behavior and fixing the bug may interfere with their workarounds. Consistency may be more important than corectnes. Fixing the bug may break user code!
 
-If you have a bug ticket, the first thing to do is writing an automated test using the minimal code causing the faulty behavior. This helps a lot to track down the bug and it prevents future changes of the code to reintroduce the bug. Bugs that appeared once are very likely to appear again in the future.
+If you have a bug ticket, the first thing to do is writing an automated test using the minimal API code causing the faulty behavior. This helps a lot to track down the bug and it prevents future changes of the code to reintroduce the bug. Bugs that appeared once are very likely to reappear again in the future.
 
 Next you have to track down the source of the bug, as mentioned above. Once you have found the bug, you can start fixing it. However, there are still some things to be considered. You should not just add a random hack that solves the problem somewhere in the code. You have to find the faulty logic in your code! This is the only place where a bug can really be fixed once and for all. When looking at the code, you should have no idea, that this bug was fixed later on. It should mend into the code as if it was always there.
 
@@ -3530,21 +3545,21 @@ I introduced a bug as the code should be `while number >= key:`. The bug was fou
 
 ## Exceptions
 
-Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. There are not too many things in every day programming where an exception might occur. Mostly input/output (IO). Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
+Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. These things may happend and there are not too many things in every day programming where an exception might occur. Mostly input/output (IO) if some connection cannot be established, divisions by zero, but also logical errors in your code. Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
 
-User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. The user should know which of these variables caused the exception. Check the sensitive values and return a useful message. "Invalid input: price cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible. Check if there is enough disk space before you start writing a file. Check if a division by zero can occure before you start your calculation.
+User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use when the input file has 10 variables that are all 0. The user should know which of these variables caused the exception. Check the sensitive values and return a useful message. "Invalid input: number of items cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible. Check if there is enough disk space before you start writing a file. Check if a division by zero can occure before you start your calculation.
 
 In case of problems with the internet connection or missing disk space, the user needs a corresponding error message to be able to resolve the issue. "no network connection available", "not enough disk space", etc.
 
 ### Wrapping exceptions
 
-You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this faulty behavior to happen. 
+You don’t want exceptions to leave your code. This will crash the software. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch all your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this faulty behavior to happen. You should give the user a meaningful error message explaining why the exception occured and what he should do to fix it.
 
-Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a programming error.
+Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a logical issue in your code. Write an error message to contact your customer support in order to fix the code.
 
 Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state (also known as walking wounded). This is not worth the effort, you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
 
-As the C++ Core Guideline E.31 states: "Properly order your catch clauses" [C++ Core Guidelines explained]. Meaning that you should always first catch specific exceptions and then more general ones. This is because specific exceptions allow you to give the user more specific information about the problem. Meanwhile a general exception is more likely a bug than wrong behavior of the user.
+As the C++ Core Guideline E.31 states: "Properly order your catch clauses" [C++ Core Guidelines explained]. Meaning that you should always first catch specific exceptions and then more general ones. This is because specific exceptions allow you to give the user more specific information about the problem such that the user can fix it without your help. General exceptions are an indication that you were not expecting this problem to occure and the customer is not expected to fix it on his own.
 
 The try catch block around the main function should make sure that no exceptions leave the program. Following the above rule it should look something like this:
 
@@ -3554,17 +3569,17 @@ if __name__ == "__main__":
         main()
     except CustomException as e:
         print("Unable to process user input:")
-        print(str(e))
+        print(str(e)) # for example: "Invalid input: length of 'shopping_items' cannot be 0"
     except Exception as e:
         print("Unknown issue. Please contact our customer support.")
-        print(str(e))
+        print(str(e)) # for example: "ZeroDivisionError: division by zero"
 ```
 
 Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
 
 One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
 
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter 13 writing better code with tests] 
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter writing better code with tests] 
 
 ### Exceptions and goto
 
@@ -3572,7 +3587,9 @@ By the way, you might have heard of the goto statement that was widely used unti
 
 # 19. Programming Paradigms
 
-There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like python, or even the good old C++, where you can mix these 3 different programming paradigms.
+// move this closer to programming languages
+
+There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like Python, or even the good old C++, where you can mix these 3 different programming paradigms.
 
 ## Object Oriented programming
 
@@ -3582,7 +3599,7 @@ It still amazes me how some half-baked promises can create such dynamics in a gr
 
 Well, let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
 
-Don’t use any other OO feature than plain classes and abstract base classes or interfaces. And don't forget to make everything private that should be.
+Don’t use any other OO feature than plain classes and abstract base classes or interfaces. Don't forget to make everything private that should be. And always keep the SRP in mind. Classes should be small!!!
 
 ## Procedural programming
 
@@ -3594,11 +3611,11 @@ While OO programming is mostly based on classes, class instances and methods, pr
 
 // This needs to be rewritten. What does functional programming exactly have?
 
-Functional programming is a very different programming paradigm. it is about functions, not about classes.
+Functional programming is a very different programming paradigm. It is mainly about functions, not about classes.
 
-Functional programming is the way to program using only functions. No classe instances, no mutable variables. Only datastructures. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+The main difference of functional progrmming to procedural programming is the fact that there are no mutable variables. Datastructures can't be changed once initialized. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
 
-Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier.
+Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier than that.
 
 Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are always apparent and easy to understand.
 
@@ -3606,7 +3623,7 @@ In many programming languages you can mimic functional programming to some degre
 
 ## Conclusions
 
-All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible, you can write better code.
+All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible and you know the advantages and drawbacks of different programming paradigms, you can write better code.
 
 ## Copilot
 Here is an example where Copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
