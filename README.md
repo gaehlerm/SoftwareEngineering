@@ -5158,13 +5158,13 @@ def add(a,b):
 
 Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers out there who think that this comment here is justified. 
 
-I do not share this opinion at all. In my opinion this comment is just a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
+I do not share this opinion at all. In my opinion this comment is just a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure, take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
 
 "Yes, but it’s only one line of comment. It can’t hurt us.", you might say. 
 
 "NO!"
 
-Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions, you can’t enforce that a comment stays at its correct location. You will end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cause bugs.
+Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions or variable names, you can’t enforce that a comment stays at its correct location. You will eventually end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cost time. It will cause bugs.
 
 Not convinced? You think you won’t have these issues because you work carefully? 
 
@@ -5174,7 +5174,7 @@ Now you’re certainly wrong this time. By now you should know better. This is e
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book "The Art of Readable Code". The original code was written in C++, I translated it to python. 
+Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The original code was written in C++, I translated it to python. 
 
 ```py
 class FrontendServer:
@@ -5208,7 +5208,9 @@ class FrontendServer:
     open_database(location, user)
     close_database(location)
 ```
-The code certainyl became much more readable. But adding these comments doesn't solve the fundamental issue: One should break down the class into pieces and make it a data class. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
+The code certainly became much more readable. But adding these comments doesn't solve the fundamental issue: This class should be broken down into 3 sub classes and one dataclass as a parent containing the class instances. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
+
+Here is my own suggestion how to rewrite the code above:
 
 ```py
 from dataclasses import dataclass
@@ -5216,12 +5218,12 @@ from dataclasses import dataclass
 @dataclass
 class FrontendServer:
     profile: Profile = Profile()
-    handler: RequestHandler = RequestHandler()
+    request_handler: RequestHandler = RequestHandler()
     database_handler: DatabaseHandler = DatabaseHandler()
 
 class Profile:
-    view_profile(request)
-    save_profile(request)
+    view(request)
+    save(request)
     find_friends(request)	
 
 class RequestHandler:
@@ -5230,15 +5232,15 @@ class RequestHandler:
     reply_not_found(request, error)
 
 class DatabaseHandler:
-    open_database(location, user)
-    close_database(location)
+    open_(location, user)
+    close(location)
 
 # example usage of this code:
 server = FrontendServer()
-server.profile.view_profile(request)
+server.profile.view(request)
 ```
 
-The resulting code is once again longer than the initial version, but it is much better structured and there is no need for any comments.
+The resulting code is once again longer than the initial version, including the user code of it. But it is both much better structured and there is no need for any comments. Note how we were also able to simplify some parts of the code. For instance we now write just `view` instead of `view_profile`. The profile part of the function name is now already clear due to the context inside the `Profile` class.
 
 Here is another example from the same book. It suffers from a similar problem: The authors tried to improve the code by adding comments instead of improving the code itself.
 
@@ -5294,29 +5296,28 @@ def suggest_new_friends(user, email_password):
 
     suggested_friends = find_suggested_friends(non_friend_emails)
 
-    display(user, friends, suggested_friends)
-    return render("suggested_friends.html", display)
+    items = create_dict(user, friends, suggested_friends)
+    return render("suggested_friends.html", items)
 
 def get_friends_emails_of(user):
-    friends = user.friends()
-    return set(f.email for f in friends)
+    return set(f.email for f in user.friends())
 
 def import_email_addresses_from(user, email_password):
     contacts = import_contacts(user.email, email_password)
     return set(c.email for c in contacts)
 
 def find_suggested_friends(non_friend_emails):
-    suggested_friends = User.objects.select(non_friend_emails)
+    return User.objects.select(non_friend_emails)
 
-def display(user, friends, suggested_friends):
-    display = {}
-    display['user'] = user
-    display['friends'] = friends
-    display['suggested_friends'] = suggested_friends
-    return display
+def create_dict(user, friends, suggested_friends):
+    items = {}
+    items['user'] = user
+    items['friends'] = friends
+    items['suggested_friends'] = suggested_friends
+    return items
 ```
 
-Now once again, the code became much longer by refactoring it. But it is much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
+This time the code became only quite little longer compared to other refactoring examples. But at the same time it is so much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
 
 At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code" (I would like to mention that I really like the book, but I don't agree with all the examples they use):
 
