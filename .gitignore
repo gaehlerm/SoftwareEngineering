@@ -4,3 +4,7 @@ code_examples/
 *.html
 *.webp
 *.odt*
+
+index.txt
+desired_index.txt
+all_words.txt
