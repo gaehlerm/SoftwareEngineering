@@ -4748,7 +4748,7 @@ The file formats that I used so far are CSV, json, XML, hdf5 and databases. Alon
 
 Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
 
-CSV is no file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
+There is no CSV file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
 
 Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
 
@@ -4796,7 +4796,7 @@ The JavaScript Object Notation (json) file format is probably one of the best fi
 
 Once you use json on a more serious project, you might want to use a schema to check your files for correctness. You may use different schema for different versions of your interface. And before you write a schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
 
-Thanks to schema, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
+Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
 
 The following code creates a json file:
 
@@ -4884,8 +4884,8 @@ Writing XML files is rather tedious as well. Here I recommend as well to work wi
 ```py
 import json
 import xmltodict
-json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "Software Engineer"}}}
-"""
+json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "Software Engineer"}}}"""
+
 python_dict=json.loads(json_string)
 with open("person.xml", 'w') as file:
     xmltodict.unparse(python_dict, output=file)
@@ -4953,7 +4953,7 @@ tree.write("data.xml")
 
 HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the HDF5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
 
-Working with HDF5 is in my opinion a tad less intuitive as working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
+Working with HDF5 is in my opinion a tad less intuitive than working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
 
 The following code saves a list of values inside an HDF5 file.
 
@@ -5006,7 +5006,7 @@ Databases (DB) are used for big amount of data that you want to analyze but does
 
 I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
 
-Also make sure a database is not the heart of your software. It's just a place to save data. It can be replaced by a text file if needed!
+Also make sure a database is not the heart of your software. It's just a place to save and access data. It can be replaced by a text file if needed!
 
 sqlite is probably the easiest to use database. That's why I make a short example here. Compared to other databases, creating or migrating an sqlite database is trivial.
 
