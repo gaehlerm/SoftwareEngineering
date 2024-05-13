@@ -352,10 +352,8 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Increase reusability](#increase-reusability)
   - [Design for flexibility](#design-for-flexibility)
   - [Anticipate Obsolesence](#anticipate-obsolesence)
-  - [Design for Portability](#design-for-portability)
   - [Design for Testability](#design-for-testability)
-  - [Design Defensively](#design-defensively)
-- [36. Domain Driven Design](#36-domain-driven-design)
+- [36. Domain Driven Design ???](#36-domain-driven-design-)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
     - [Documentation and planning](#documentation-and-planning)
@@ -5591,21 +5589,21 @@ Every programming language has one docstring tool. For python it’s Sphynx, for
 
 # 35. Software Engineering principles
 
-// https://youtu.be/XQzEo1qag4A
-
-// Are these topics covered elsewhere?
-
-// rethink this chapter and maybe delete it.
+In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
 
 ## Divide and Conquer
 
-If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together.
+If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together. A common example is the Fast Fourier Transfor (FFT) or the merge sort. Usually a divide and conquer algorithm is applied if a problem scales with O(N^2) or worse, but it can be subdivided into smaller problems. Divide and Conquer algorithms usually scale with O(N log N), which is generally acceptable. Furthermore Divide and Conquer algorithms can easily be parallelized, which may significantly boost the overall performance.
 
 ## Increase Cohesion
-// physical law of code?
+
+Cohesion very much realtes to the section [Correlation] that we already discussed in the chapter on Physical laws of code. Similar things that possibly depend on each othr should belong together. Mathematical functions are stored together in the math library and IO functions are in the IO library. This makes sense as it simplyfies searching for some other functions that you might be looking for. Mixing these two libraries would only cause confusion as it would make it hard to find what you are looking for.
 
 ## Reduce coupling
-// is also covered else where?
+
+Reducing coupling is an important topic in classes [chapter classes]. Make sure that the classes are as independent as possible. You don't want your math library to be depending on the filesystem library. Even if it might make sense from a developer point of view (even though here it would be hard to explain), you should minimize the number of dependencies as far as possible. Only import other libraries for cases where it is absolutely inevitable.
+
+The same holds not only for libraries, but also for all other code that you write. Try to keep them all as indipendent as possible. Make sure that you properly structure the levels of abstractions in your code. Low level code should not depend on high level code, etc. Otherwise, your code may become a big ball of mud [https://en.wikipedia.org/wiki/Anti-pattern#Software_engineering_anti-patterns].
 
 ## Increase abstraction
 
@@ -5615,17 +5613,21 @@ If you didn't abstract all the details away, you may be left with several differ
 
 ## Increase reusability
 
-Reuseability comes hand in hand with abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. 
+Reuseability comes hand in hand with inreased abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. Just take for example all ot the "standard" libraries. They all do exactly one fundamental thing: they deal with the filesystem, do mathematical operations or create random numbers. Of course it would sometimes make sense to combine these, but that would probably not the reusable code anymore because it is too specific. You should only write such specific code if you really have to.
 
 ## Design for flexibility
 
 Your code will change. It's inevitable. So start living with this fact. Requirements will change and you'd better make sure that your code can adapt. Therefore it's important that your code follows the rules that are explained in this book. You need tests to be able to change your code. You have to follow the best practice in order to prevent your code becoming solid as a rock. You want your code to be fluffy and easy to change.
 
+As an example you might use a Fourier transform or a sorting algorithm in your code. Well written code is flexible enough to replace these algorithms without much fuzz. You won't have to change code all over the place. It's more like a chirurchical operation where you change only one thing.
+
 ## Anticipate Obsolesence
 
 Code you use will become obsolete. Version change, bugs and security issues are not fixed, licence fees are getting too high, you name it. There are plenty of reasons why you have to adapt and change third party libraries or at least adapt to new syntax. So you better anticipate that you'll have to replace some library by adding an adapter between that library and your code. This will simplify reacting to changes. You can then just write an adapter for the new library and you don't have to change all the existing code.
 
-## Design for Portability
+You have to anticipate obsolence by keeping your code flexible and reusable. The database code should not be spread throughout the whole code base. This would be the very opposite of what we want. It would take enormous efforts to replace it. Instead you should be able to replace it easily.
+
+There are cases where you might think, you'd never have to place a piece of code. How wrong you are. No matter how important some library might seem to you, at some time you'll have to replace it. There are so many companies out there who wrote their code with an Oracle database in mind. And now they would like to change it because of the high fees. But they can't because Oracle database code is spread all over the code base.
 
 ## Design for Testability
 
@@ -5633,12 +5635,10 @@ I think this is the most obvious point in this chapter. I explained plenty of ti
 
 Hand in hand with testing comes Dependency Injection (DI). There are many things where writing tests for will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all things that should be solved with DI. Inject a mock file or a fake timestamp to the function and your tests will be much more stable.
 
-## Design Defensively
 
+# 36. Domain Driven Design ???
 
-# 36. Domain Driven Design
-
-// reread and rewrite this chapter?
+// reread and rewrite this chapter? Or remove it completely???
 
 "When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
 
