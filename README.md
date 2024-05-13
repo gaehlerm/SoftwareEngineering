@@ -37,6 +37,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Getting started](#getting-started)
   - [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
+- [One sentence summary](#one-sentence-summary)
 - [3. Preface](#3-preface)
   - [Who this book is for](#who-this-book-is-for)
 - [4. Introduction](#4-introduction)
@@ -375,7 +376,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Services](#services)
     - [Aggregates](#aggregates)
     - [Organizing aggregates](#organizing-aggregates)
-- [37. Good code](#37-good-code)
+- [37. Good code, an overview](#37-good-code-an-overview)
 - [38. 3rd party software](#38-3rd-party-software)
 - [39. Dependencies](#39-dependencies)
   - [The early days](#the-early-days)
@@ -425,6 +426,61 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [51. Outlook](#51-outlook)
 - [52. Abbreviations](#52-abbreviations)
 
+
+# One sentence summary
+
+3. Preface: My personal opinion about this book.
+4. Introduction: We destill some basic rules what programming is about.
+5. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
+6. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
+7. Interfaces: What is an interface? And how do I design a good interface?
+8. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
+9. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
+10. Inheritance: Inheritance should not be used as it generally leads to bad code.
+11. Testing: Testing is of utmost importance to keep your code correct over the test of time.
+12. Types of Tests: We discuss unit tests, integration tests and functional tests.
+13. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
+14. DevOps: DevOps is the way to go regarding the organization of your projects.
+15. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
+16. Understandable code: An attempt to explain what we understand and what we don't understand.
+17. Programming languages: A brief overview on the most commonly used programming languages.
+18. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
+19. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
+20. // removed
+21. Decoupling: ? // remove chapter?
+22. Physical laws of code: Surprisingly, code obeys some physical laws as well.
+23. Software Architecture: // ? rewrite chapter?
+24. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
+25. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
+26. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
+27. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
+28. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
+29. Data files: If you store data, there may be better file formats than csv files.
+30. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
+31. Performance Optimization: Don't optimize until the very end of a project.
+32. Comments: Replace comments with code when ever possible.
+33. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
+34. Tools: An overview of the most important tools that you should use, starting with git.
+35. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
+36. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
+37. Good code, an overview: A short list that summarizes the most important points of this book.
+38. 3rd party software: How to deal with 3rd party software.
+39. Dependencies: How do you deal with dependencies between files and code snippets?
+40. Working in teams: Working in teams has some advantages and drawbacks.
+41. Code review: Let your code be reviewed by others.
+42. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
+43. Planning: Before you start coding, you should roughly plan what you are going to do.
+44. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
+45. // removed
+46. Hiring and getting hired: How to get a job as a software engineer.
+47. // removed
+48. Examples: // ? rewrite chapter?
+49. About Copilot: A short overview of Copilot. // move to the introduction?
+50. Outlook: Some personal advice and wishes for your future.
+51. Abbreviations: Abbreviations used in this book.
+52. Index: The index of this book.
+
+.
 
 # 3. Preface
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
@@ -5878,17 +5934,19 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 // write some examples here?
 
-# 37. Good code
+# 37. Good code, an overview
 
-"A computer once beat me at chess, but it was no match for me at kick boxing." — Emo Philips
+// this chapter needs some citations of other chapters.
+
+"Truth can only be found in one place: the code." - Robert C. Martin
 
 This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
-By definition good code is easy to understand. Also, for new software developers in the team. Even marketing people may understand some of your technical discussions as you use the same domain language.
+By definition good code is easy to understand. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language.
 
 Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
 
-Pretty much all your code follows the single responsibility principle. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
+Pretty much all your code follows the SRP. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
 
 Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
 
@@ -5927,6 +5985,7 @@ Don’t do string comparisons, use enums instead. Convert the string into an enu
 Make the code self-commenting. Only use comments for things the code can’t explain by itself.
 
 Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
+
 
 # 38. 3rd party software
 
