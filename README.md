@@ -429,14 +429,16 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 
 # One sentence summary
 
-3. Preface: My personal opinion about this book.
+1. .
+2. .
+3. Preface: My personal story behind this book.
 4. Introduction: We destill some basic rules what programming is about.
 5. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
 6. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
 7. Interfaces: What is an interface? And how do I design a good interface?
 8. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
 9. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
-10. Inheritance: Inheritance should not be used as it generally leads to bad code.
+10. Inheritance: Inheritance should generally not be used as it often leads to bad code.
 11. Testing: Testing is of utmost importance to keep your code correct over the test of time.
 12. Types of Tests: We discuss unit tests, integration tests and functional tests.
 13. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
@@ -480,7 +482,13 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 51. Abbreviations: Abbreviations used in this book.
 52. Index: The index of this book.
 
-.
+Chapters to work on:
+- Decoupling (Remove?)
+- Software Architecture (Ask Volker?)
+- Domain Driven Design (Ask who?)
+- Examples (Rewrite?)
+- About Copilot (who knows anything about Copilot?)
+- Requirements Engineering (Felix)
 
 # 3. Preface
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
