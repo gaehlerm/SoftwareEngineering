@@ -47,9 +47,6 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [5. Single responsibility principle](#5-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
-  - [Orthogonality](#orthogonality)
-    - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
-    - [Example of an adapter](#example-of-an-adapter)
   - [Advantages of the SRP](#advantages-of-the-srp)
     - [Understanding](#understanding)
     - [Naming](#naming)
@@ -75,6 +72,9 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [APIs](#apis)
     - [Adding more functionality](#adding-more-functionality)
     - [Semantic Versioning](#semantic-versioning)
+  - [Orthogonality](#orthogonality)
+    - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+    - [Example of an adapter](#example-of-an-adapter)
   - [Copilot](#copilot)
 - [8. Functions](#8-functions)
   - [Do one thing only](#do-one-thing-only)
@@ -497,7 +497,7 @@ In 2007 I had my first semester at university. It was the first time I learned p
 
 Three years later I took a course on computational physics. There I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful and I knew it. But I didn't know how to make it any better. Changing things was hard and I learned how to use a debugger. I still have all my university files around, but I didn’t dare looking at this code ever since. Already thinking about it makes me shudder.
 
-After my studies I wanted to improve my programming skills and bout the book "Effective modern C++" by Scott Meyers. A great book. But it wasn't made for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background. The book was too advanced for me.
+After my studies I wanted to improve my programming skills and about the book "Effective modern C++" by Scott Meyers. A great book. But it wasn't made for me at the time back then. It deals with a lot of details of C++ and I understood barely a thing because I was missing the background. The book was too advanced for me.
 
 Another few years later I decided to give it another shot with programming. I found a company that was searching for people with programming and physics knowledge. So, I thought I might have a chance, despite my poor programming skills. At the job interview I was asked a few very technical (and in hindsight not particularly useful) C++ questions and I could answer most of them thanks to the book I read. I got the job.
 
@@ -505,7 +505,7 @@ In the beginning a struggled a little. I was overwhelmed by the amount of code, 
 
 My boss wrote most of the code and the success of the company was based to a fair amount on his efforts. He knew everything, but I hardly ever understood what he was talking about. In many topics, I was missing the background. 
 
-Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request and made the remark: "I fell into a shit hole". He broke down this huge and widespread problem into small chunks. He opened my eyes. He made me realize the way he worked was so much better. So much more structured. This was proper engineering. Real software engineering.
+Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request where he tried to refactor some code throughout the whole code base. He broke down this huge and widespread problem into small chunks and wrote tests for the new implementation. He opened my eyes. He made me realize the way he worked was so much better. So much more structured. This was proper engineering. Real software engineering.
 
 There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, but fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by the infinite amount of decisions a programmer has to make. This book contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other fields of engineering. Therefore, a car is frequently a better example to explain my point than some fancy piece of code you struggle understanding.
 
@@ -519,7 +519,7 @@ Enjoy this book and good luck with your career.
 
 ## Who this book is for
 
-This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But it was dreadful. They never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'm going to explain throughout book.
+This book was first intended for PhD students as I know quite some of them who are programming all the time but never really learned how to do it properly. They just learned the basic syntax of a programming language and then started writing code. But it was dreadful. They never learned how to write good code. They never learned that a class has to be small nor about the importance of tests. And there are many more points that I'm going to explain throughout this book.
 
 Of course, this book is not only for PhD students. There are also plenty of other programmers who never learned how to do proper software engineering. Though as you are reading this book here, chances are, that you already read some other books and that you know a lot of the things I'm writing about. But I think there are still some novel ideas in this book that you can use to improve your code.
 
@@ -567,11 +567,9 @@ Good code is not fancy, good code is not complex and it’s not necessarily shor
 
 Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks modern programming languages have to offer.
 
-Now it's not only important to make the code work, we also have to make sure that it is correct. Unlike politicians, we have responsibility. If we make mistakes, air planes may crash. People may die!
+Now it's not only important to make the code work, we also have to make sure that it is correct. The crash of two Boeing air planes in 2018/2019 was not the first time that software bugs caused catastrophic damage. Nor will it be the last time, unfortunately.
 
-Urm... let me rephrase that as well... 
-
-Unlike some politicians, we have honor. We don’t want to be responsible for people to die. We want to write code that is impeccable. We want to be absolutely certain that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
+We don’t want to be responsible for people to die or companies to go bankrupt. We want to write code that is impeccable. We want to be as certain as possible that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
 
 The second rule of software engineering:
 
@@ -627,7 +625,7 @@ Please note that the SRP does not state that every software developer is respons
 
 // DRY does not always have to be obeyed that strictly. Repeat yourself until it is clear what the acronym should be.
 
-You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer]. And if you do, you should refactor out the duplication immediately and write it for instance into a function. If you have duplicated code, something is not done by one object but rather by two. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
+You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer]. Instead you should refactor the code you want to copy into a dedicated function. If you have duplicated code, something is not done by one object but rather by two or more. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
 
 The DRY principle also applies to processes like building your project. If you have to execute many steps for building your project, there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
@@ -635,7 +633,7 @@ The other case is code that emerged as a duplication over time. Frequently, one 
 
 As I said, it is hard to keep track of this kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
 
-One common source of repetition are switch case or if statements. They looks something like this:
+One common source of repetition are switch case or if statements. They look something like this:
 ```py
 if job == "president":
     residency = "White house"
@@ -658,37 +656,9 @@ location = president.residency
 
 ### Exceptions of DRY
 
-The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. This is also in agreement with the test driven design (TDD) where you only have to refactor if there is a three-fold duplication of the code. But for three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately.
 
-## Orthogonality
 
-Orthogonality is a mathematical definition. It states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me show you a brief example that everybody knows.
-
-// TODO search images without copy right
-<div class="row">
-    <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
-    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
-</div> 
-
-On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom. One for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
-
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over. This also makes sense from an economic point of view: there is only one developer (upstream person), but many users (downstream persons). So if the developer makes the coordinate transformation, only one person (or team) has to do it, compared to all the users if the developers don't do this job by themselves. 
-
-It may not always be that obvious how the downstream would like an interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure that no implementation details leak into the interface, even tough this is sometimes easier said than done. This general interface has the highest chances to be orthogonal from the user point of view. And try to cut down the interface as much as possible. Less is more.
-
-Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the SRP.
-
-### Advantages of orthogonal systems
-
-Working in an orthogonal system has many advantages:
--	Errors just propagate straight through the system and are easy to find. They don’t spread out.
--	Fixing these bugs is easier as the system is less fragile.
--	It is easier to write tests for an orthogonal system.
--	It decouples the code as the transformation acts as an adapter.
-
-### Example of an adapter
-
-A common example of an adapter is the gas pedal controler of a car. It converts the position of the gas pedal into fuel injection, the rotation speed of the engine and in case of an automatic gear also the gear of the gearbox. It controls all these parts of a car depending on only one parameter controlled by the driver. 
+The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. Also the overhead of creating a new function might be higher than the gain of refactoring the code. This is also in agreement with the test driven design (TDD) [chapter Writing better code with tests] where you only have to refactor if there is a three-fold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately. 
 
 ## Advantages of the SRP
 
@@ -718,7 +688,7 @@ Tracking down bugs will be much easier. You can understand fairly well what each
 
 ## Drawbacks of the SRP
 
-There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it may be ok to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm.
+There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it is not that bad to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm. When in doubt, you'd better adhere to the SRP and refactor the code.
 
 # 6. Levels of abstraction
 
@@ -863,13 +833,15 @@ Functions, classes, libraries and also complete software or smartphone apps have
 
 "Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European socket and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, causing potentially damage. It’s fail-safe. It is good design that they are not interoperatable. Though most devices can deal with both voltages by now.
 
-An example of bad design is the USB 2 port. The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB 3 port has a much more user-friendly design. You can plug it in either way. The lanes can be connected either symetrically or asymetrically. The technicians implemented a solution that enabled both kind of connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers. But once solved, it is a very convenient solution for the users.
+An example of bad design is the USB port A (used by USB 2 devices). The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB C port (used by USB 3 devices) has a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symetrically or asymetrically. The technicians implemented a solution that enabled both kind of connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers. But once solved, it is a very convenient solution for the users.
 
 Another example are water tabs for showers, as already explained in the section on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. The new handles allow you to choose the amount of water and the temperature separately. This might be technically a little bit more complicated to implement but it’s so much more convenient to use. 
 
 Notice how both solutions have 2 degrees of freedom. A mathematician would call this a coordinate transformation. With the old valve you and all other users had to do this transformation yourselves. With the new valve this is solved mechanically once and for all. 
 
 I hope these simple examples gave you an idea what good interfaces are about. If you design an interface, you should always know your customers. What do they do? How do they think? How are they going to use your product? This is of utmost importance. A good interface is user centric. It represents the way the user thinks and hides all the technical details.
+
+// to the reviewers: remove this example as there are too many of them?
 
 Combustible car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running them faster makes them inefficient and noisy. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities. Now there used to be a minor problem about the gear boxes. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
 
@@ -917,6 +889,36 @@ Every time you make a new release you increase the version number.
 - The really big disaster starts with major version changes. Sometimes this is required. And it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the python 2 code to the major version 3 took 12 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface. Only increase the major version of your software if it is absolutely required.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
+
+## Orthogonality
+
+Orthogonality is a mathematical definition. It has been used in software engineering by Thomas and Hunt in their highly recommendable book The Pragmatic Programmer [The Pragmatic Programmer]. Orthogonality states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me explain code-orthogonality by showing you a brief example that everybody knows.
+
+// TODO search images without copy right
+<div class="row">
+    <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
+    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
+</div> 
+
+On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
+
+In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over. This also makes sense from an economic point of view: there is only one developer (upstream person), but many users (downstream persons). So if the developer makes the coordinate transformation, only one person (or team) has to do it, compared to all the users if the developers don't do this job by themselves. 
+
+It may not always be that obvious how the downstream would like an interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure that no implementation details leak into the interface, even tough this is sometimes easier said than done. This general interface has the highest chances to be orthogonal from the user point of view. And try to cut down the interface as much as possible. Less is more.
+
+Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the SRP.
+
+### Advantages of orthogonal systems
+
+Working in an orthogonal system has many advantages:
+-	Errors just propagate straight through the system and are easy to find. They don’t spread out.
+-	Fixing these bugs is easier as the system is less fragile.
+-	It is easier to write tests for an orthogonal system.
+-	It decouples the code as the transformation acts as an adapter.
+
+### Example of an adapter
+
+A common example of an adapter is the gas pedal controler of a car. It converts the position of the gas pedal into fuel injection, the rotation speed of the engine and in case of an automatic gear also the gear of the gearbox. It controls all these parts of a car depending on only one parameter controlled by the driver. 
 
 ## Copilot
 
