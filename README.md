@@ -877,6 +877,31 @@ You want to add a new option to one of your API functions, but there is a lot of
 
 The answer are default arguments. The current behavior is set to be the default and after the update, the user can select an alternative option inside the function call. This works in all modern programming languages. You don’t even need an if statement.
 
+Let's make a small example. Let's say we have the following function:
+
+```py
+# version 1.0
+def my_super_function(arg1):
+    return arg1
+```
+
+We can easily change this function to the following code. We added a flag (`arg2`) which changes the functionality. The function now only returns the `arg1`, if `arg2` is set to `True`.
+
+```py
+# version 1.1
+def my_super_function(arg1, arg2=True)
+    if arg2:
+        return arg1
+```
+
+However, you can also omit the `arg2` and the functionality is still the same as was before the code was changed.
+
+```py
+my_super_funtion("hello")
+```
+
+still `"hello"`, independently of the version number.
+
 Removing functionality on the other hand is really hard. This inevitably changes the behavior of existing functionality. You are not allowed to do so except under very special circumstances, as explained in the next section.
 
 ### Semantic Versioning
@@ -936,7 +961,33 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 ## Do one thing only
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short. At most about twenty lines, though less than 10 lines would be better.
+Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short. As a rule of thumb, they should be at most about twenty lines (that's what fits on my laptop screen without scrolling), though less than 10 lines is certainly to be prefered because shorter functions are much easier to understand. If fact, there is also absolutely nothing wrong with functions that cover only one line of code. One line functions are really useful to make code more readable, as it elevates all code to a similar level of abstraction. But this is something that many programmers don't think of.
+
+Let's make a small example of a one line function. We have a pandas object (a python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I think this function makes the code that uses it much clearer because it is operating on a higher level of abstraction.
+
+// maybe find another example?
+
+```py
+#example of a one line function
+def filter_data_by_key(data, key, value):
+    return data[data[key] == value]
+
+# example code that uses this function
+data = read_csv("pupils.csv")
+john = filter_data_by_key(data, "name", "John")
+# ...
+```
+
+I think this code is much easier to read than this:
+
+```py
+data = pd.read_csv("pupils.csv")
+john = data[data["name"] == "john"]
+# ...
+```
+
+The reason is that the first version of the code reads much more like normal english. The function describes to you what it does in words. Meanwhile the second version of the code uses cryptic python syntax that exposes details you usually don't need to know. And in those few cases where you need to know, you can still look it up.
+
 
 ### Levels of indentation
 
@@ -1135,7 +1186,7 @@ def do_something(numbers: Numbers):
 
 A very irritating thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable or by const to make it non-modifiable. However, in other languages, this has to be clear from the context of the function.
 
-Changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. I hope it is clear to you what kind of responsibility you have when writing functions that alter its arguments. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
+Changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
 
 Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values. Just that the class instance is obviously a very special variable. The function acting on those variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
 
@@ -1256,16 +1307,37 @@ class InventoryItem:
 
 ### Pure method classes
 
-A class may have no member variables at all. It consists only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and python you can define the corresponding functions free standing instead. In fact, I prefer free standing functions over classes with only public methods, but I guess that's a matter of taste. In fact, in C++ there is no way telling if a function is inside a namespace or a static function inside a class.
+A class may have no member variables at all. It consists only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and python you can define the corresponding functions free standing instead. In fact, I prefer free standing functions over classes with only public methods, but I guess that's a matter of taste. 
+
+In python a lot of functions defined in libraries are not part of classes. This can be seen as follows. If we want to call the `sin` function, we have to wirte the following code:
 
 ```py
+import math
+math.sin(0)
+```
+
+But we can also call it as 
+
+```py
+from math import sin
+sin(0)
+```
+
+If we define the math library ourselves and put the `sin` function inside the `math` class, the code would look as follows:
+```py
+# inside math.py
 class Math:
     def sin(angle):
-        return 0
+        # implementation of the sin function
 
-    def cos(angle):
-        return 1
+# inside the main code
+from math import Math
+Math.sin(0)
 ```
+
+Having the math library containing free functions instead of a class with only public methods isn't much of a difference, but in my opinion dealing with a set of functions is more intuitive than having them inside a class. 
+
+For everyone interessted in C++: In C++ there is no way telling if a function is inside a class or not. A function has exactly the same signature whether it is a static method of a class or a free standing function in a namespace. The standard (`std::`) library for example is a namespace. This has the huge advantage that the standard library can be split up into many small parts. You can import only what you really need.
 
 
 ### Delegating class
