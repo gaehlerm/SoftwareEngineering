@@ -39,6 +39,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [2. Table of content](#2-table-of-content)
 - [One sentence summary](#one-sentence-summary)
 - [The short story behind this book](#the-short-story-behind-this-book)
+  - [Thanks to](#thanks-to)
 - [3. Preface](#3-preface)
   - [Who this book is for](#who-this-book-is-for)
 - [4. Introduction](#4-introduction)
@@ -501,6 +502,14 @@ I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zu
 At the beginning of my time there, I was still a novice in software engineering, but I picked up a lot of things quite quickly. I also read a whole pile of books and watched a lot of youtube videos since. At the same time I was in touch with many PhD students and realized how bad the code was that they were writing. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in industry. Such that every person with a litle bit of knowledege of a programming language can boost his programming skills to a professional level without much further help. That being said, reading this book will of course not be enough. It also takes quite a lot of practice.
 
 I wasn't really sure where this book would take me. I mean my English is fairly lousy and I was never really good at writing essays as school. But the feedback I got was very good. People praised this book for being well structured, written and easy to understand. Even Pearson Germany was interessted in printing it. This motivated me to keep writing and getting it published.
+
+## Thanks to
+
+- Volker Obermeit
+- Rafael Gort
+- Felix Gähler
+- Claudia Gähler
+- you?
 
 # 3. Preface
 
