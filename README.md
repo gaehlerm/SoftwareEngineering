@@ -3907,13 +3907,18 @@ Architecture: "the decisions you wish you could get right early" - Ralph Johnson
 
 ## About software architecture
 
-Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, etc." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
+Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
 
 ## Layering code
 
 // what goes here and what into the section The Abstraction Layers?
 
 There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
+
+Now this is a topic that is not that easy to understand. Why should you exactly write this function that doesn't do anything else than passing on a function?
+
+The reason is coupling. Let's assume there are 3 levels of code. You want only the intermediate level to be coupled to the low level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
+
 
 // Either get this chapter right, or delete it as some point.
 
