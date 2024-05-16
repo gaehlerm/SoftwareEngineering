@@ -38,6 +38,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
 - [One sentence summary](#one-sentence-summary)
+- [The short story behind this book](#the-short-story-behind-this-book)
 - [3. Preface](#3-preface)
   - [Who this book is for](#who-this-book-is-for)
 - [4. Introduction](#4-introduction)
@@ -253,6 +254,8 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Quality](#quality)
   - [Requirements](#requirements)
 - [23. Software Architecture](#23-software-architecture)
+  - [About software architecture](#about-software-architecture)
+  - [Layering code](#layering-code)
   - [About Architecture](#about-architecture)
     - [Coupling](#coupling)
 - [24. Solid principles](#24-solid-principles)
@@ -377,6 +380,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Aggregates](#aggregates)
     - [Organizing aggregates](#organizing-aggregates)
 - [37. Good code, an overview](#37-good-code-an-overview)
+  - [The Zen of Python](#the-zen-of-python)
 - [38. 3rd party software](#38-3rd-party-software)
 - [39. Dependencies](#39-dependencies)
   - [The early days](#the-early-days)
@@ -490,7 +494,16 @@ Chapters to work on:
 - About Copilot (who knows anything about Copilot?)
 - Requirements Engineering (Felix)
 
+# The short story behind this book
+
+I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked for a few years as a teacher, before I decided to switch to software engineering. I worked as a few years as a software engineer for Zurich Instruments, a company developing electronic devices that are used in quantum computing. There I was mostly busy developing software for the Quantum Controller software. 
+
+At the beginning of my time there, I was still a novice in software engineering, but I picked up a lot of things quite quickly. I also read a whole pile of books and watched a lot of youtube videos since. At the same time I was in touch with many PhD students and realized how bad the code was that they were writing. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in industry. Such that every person with a litle bit of knowledege of a programming language can boost his programming skills to a professional level without much further help. That being said, reading this book will of course not be enough. It also takes quite a lot of practice.
+
+I wasn't really sure where this book would take me. I mean my English is fairly lousy and I was never really good at writing essays as school. But the feedback I got was very good. People praised this book for being well structured, written and easy to understand. Even Pearson Germany was interessted in printing it. This motivated me to keep writing and getting it published.
+
 # 3. Preface
+
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
 
 In 2007 I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, the const expression, etc. I somehow struggled understanding these things. They just felt wrong. There were so many open questions about how to write the code properly and I didn’t know where to get good advice. I passed the exam, but I was somehow dissatisfied.
@@ -783,7 +796,7 @@ In your code you will also have different levels of abstraction. The upper level
 
 No matter if you are looking at horizontal layers as done here, or at onion layers, there is always one rule: dependencies go only downward or inward. The higher levels always depend on the lower levels, but never on higher levels. This is the whole magic: my text processing software depends on the OS, but the OS doesn't need to know anything about the text processing software because it's on a higher level. 
 
-Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handled directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example for performance reasons. But this should be the exception rather than the rule.
+Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handled directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example because of performance reasons. But this should be the exception rather than the rule.
 
 ### 3rd party libraries
 
@@ -3879,7 +3892,19 @@ Perhaps we should take more care when making software decisions just as we do wh
 
 # 23. Software Architecture
 
+// This chapter still needs a lot of work!
+
 Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+
+## About software architecture
+
+Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, etc." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
+
+## Layering code
+
+// what goes here and what into the section The Abstraction Layers?
+
+There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
 
 // Either get this chapter right, or delete it as some point.
 
@@ -6068,6 +6093,29 @@ Make the code self-commenting. Only use comments for things the code can’t exp
 
 Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
+## The Zen of Python
+
+The Zen of Python [https://peps.python.org/pep-0020/#the-zen-of-python] is a list of 19 guiding priceples by Tim Peters. I think they are very useful and thus I decided to include some of them to my list, along with some short explanation.
+
+Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will hunt you eventually.
+
+Flat is better than nested: Nested code is hard to understand and error prone.
+
+Readability counts: Of course it does. Readability is the most important metric of good code.
+
+Special cases aren't special enough to break the rules.
+
+Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book here.
+
+Errors should never pass silently: If an error occures, something went wrong and the user should know about it.
+
+There should be one-- and preferably only one --obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
+
+Now is better than never: later = never.
+
+If the implementation is hard to explain, it's a bad idea: This means that the logic behind your solution may be wrong.
+
+Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you to structure your code and make it more readable because you know where some function or other piece of code comes from.
 
 # 38. 3rd party software
 
@@ -6201,9 +6249,7 @@ It is important that everybody in the team talks to each other. Software enginee
 
 ### The bus factor
 
-[https://en.wikipedia.org/wiki/Bus_factor]
-
-The bus factor says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
+The bus factor [https://en.wikipedia.org/wiki/Bus_factor] says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
 
 Make sure the bus factor in your project is as high as possible. Ensure that there is a good amount of knowledge exchange between the team members. Such that everyone knows something about everything. That the whole project does not stall only because a single person is ill.
 
