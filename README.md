@@ -257,6 +257,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [23. Software Architecture](#23-software-architecture)
   - [About software architecture](#about-software-architecture)
   - [Layering code](#layering-code)
+    - [Stability of code](#stability-of-code)
   - [About Architecture](#about-architecture)
     - [Coupling](#coupling)
 - [24. Solid principles](#24-solid-principles)
@@ -509,6 +510,7 @@ I wasn't really sure where this book would take me. I mean my English is fairly 
 - Rafael Gort
 - Felix Gähler
 - Claudia Gähler
+- Linus Gasser
 - you?
 
 # 3. Preface
@@ -3913,18 +3915,23 @@ Software Architecture is the high-level design of a software system. It's what y
 
 // what goes here and what into the section The Abstraction Layers?
 
-There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
+There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction [https://youtu.be/KqWNtCpjUi8]. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
 
 Now this is a topic that is not that easy to understand. Why should you exactly write this function that doesn't do anything else than passing on a function?
 
-The reason is coupling. Let's assume there are 3 levels of code. You want only the intermediate level to be coupled to the low level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
+The reason is coupling. Let's assume there are 3 levels of code. You want the low level to be coupled only to the intermediate level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
+
+### Stability of code
+
+//check this section again.
+
+Let's take the following metric: we have a class A. How many (f_I) other classes have to be comipled in order to compile A? And how many (f_O) other classes depend on A? The stability of A is defined as I = f_O / (f_I + f_O). If the stability is 0, the class is very stable. It doesn't depend on any other class. If the stability close to 1, the class is very instable. It depends on many other classes [97 things every programmer should know, chapter 74]. The goal of refactoring is to increase the stability of the code, thus to decrease the number of classes that class A depends on.
+
 
 
 // Either get this chapter right, or delete it as some point.
 
 // https://youtu.be/KqWNtCpjUi8 It doesn't really matter what kind of architecture you use. They all have in common that the arrows point only in one direction.
-
-// Rethink this chapter. I state that architecture is everything, but at the same time only write about libraries. This chapter somehow needs serious rework to be done.
 
 // where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
 
