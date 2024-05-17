@@ -126,8 +126,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Implementation](#implementation)
     - [Overriden baseclass functions](#overriden-baseclass-functions)
   - [Advantages of Inheritance](#advantages-of-inheritance)
-    - [Code reuse](#code-reuse)
-  - [Difference between inheritance and composition](#difference-between-inheritance-and-composition)
+  - [Inheritance and Composition](#inheritance-and-composition)
   - [Conclusions](#conclusions-1)
 - [11. Testing](#11-testing)
   - [A short story about tests](#a-short-story-about-tests)
@@ -174,7 +173,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [How TDD works](#how-tdd-works)
     - [Importance of TDD](#importance-of-tdd)
     - [Example of TDD](#example-of-tdd)
-  - [Fakes and Mocks](#fakes-and-mocks)
+  - [Stubs, Fakes and Mocks](#stubs-fakes-and-mocks)
     - [Mocking](#mocking)
     - [Faking](#faking)
     - [Dependency injection](#dependency-injection)
@@ -973,7 +972,7 @@ However, you can also omit the `arg2` and the functionality is still the same as
 my_super_funtion("hello")
 ```
 
-still `"hello"`, independently of the version number.
+returns `"hello"`, independently of the version number.
 
 Removing functionality on the other hand is really hard. This inevitably changes the behavior of existing functionality. You are not allowed to do so except under very special circumstances, as explained in the next section.
 
@@ -1016,7 +1015,15 @@ Working in an orthogonal system has many advantages:
 
 ### Example of an adapter
 
-A common example of an adapter is the gas pedal controler of a car. It converts the position of the gas pedal into fuel injection, the rotation speed of the engine and in case of an automatic gear also the gear of the gearbox. It controls all these parts of a car depending on only one parameter controlled by the driver. 
+Let's say you have an electric sensor. It measures the amount of light in the room by measuring a voltage. However this voltage is no the final value you want to work with. Instead, you want to know the density of the light, measured in Watt per square meter (W/m^2). So you need a function that converts the voltage into the desired units.
+
+```py
+def voltage_to_light_density(voltage):
+    # example function that converts voltage to light density
+    return voltage * 10
+```
+
+Now this function returns the orthogonal data for this particular example. Of course, in your code the transformation required will look completely different.
 
 ## Copilot
 
@@ -1234,15 +1241,18 @@ Following the SRP, functions can only be either a query or a command [https://en
 if set_node("money", 50):
     go_shopping(); 
 ```
+
 Here the `set_node` function does two things at a time. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
 
 ### Copilot
 
 Copilot can help out with reducing the number of arguments by using dataclasses. Though the suggested code is not necessarily always better.
+
 ```py
 def do_something(a, b):
     return a + b
 ```
+
 With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of Copilot is not always an improvement. Wether such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
 
 ```py
@@ -1292,7 +1302,7 @@ Return values are completely fine even if some OO programmers dislike them. Use 
 
 ## Copilot
 
-Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. The following code needed only very little guidance. The usage of dependency injection [see where?] with the `condition` argument was also a suggestion by Copilot.
+Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. The following code needed only very little guidance. The usage of dependency injection [section Dependency Injection] with the `condition` argument was also a suggestion by Copilot. I really like Copilot for this part as I always forget how to use lambdas and sometimes it produces really nice code. The only question is, if the code is really doing what you want it to.
 
 ```py
 books = [
@@ -1353,7 +1363,7 @@ Indeed, this is a very important question. Even extremely important. Once you ar
 
 Let’s figure out why there should be private variables and functions at all. We need something where you face only the surface of it and you only have very few ways to interact with it. It’s not hard to find an example. This description holds for almost everything around you. Once again we can take a look at a car. A car is a highly complex object. It contains an engine, brakes and loads of other parts. You don’t even want to know. You only want it to drive. You need the gas pedal, the brake pedal and the steering wheel. 
 
-You have this absolutely massive object and you can essentially do only three things with it: increase the speed, reduce the speed and change the direction of the car. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically as it should. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the servo control of the steering wheel. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
+You have this absolutely massive object and you can essentially do only three things with it: increase the speed, reduce the speed and change the direction. And miraculously that’s all you need. As long as your car is running you don’t care about anything else. I correct myself: you don’t want to know about anything else. Everything else works automatically as it should. It’s like magic. You don’t want to tweak the fuel pump, change some engine settings or fiddle around with the servo control of the steering wheel. It works and it’s fine. You don’t want to deal with the internals of the car. You don’t even want to be able to take care of these parts. These are private parts of the car and are not to be touched by you. Only a mechanic should be able to maintain them.
 
 There is one very simple rule of thumb which parts of a class should be public or private. If a class has no functions, it’s a struct and all variables should be public. Otherwise as few functions as possible should be public and all variables are private. But we’ll look at this rule in more detail in the next sections.
 
@@ -1401,7 +1411,7 @@ If we define the math library ourselves and put the `sin` function inside the `m
 # inside math.py
 class Math:
     def sin(angle):
-        # implementation of the sin function
+        return # implementation of the sin function
 
 # inside the main code
 from math import Math
@@ -1439,6 +1449,25 @@ Worker classes are implementing the difficult algorithms in your code. Some peop
 This means that worker classes are the only classes that do really complicated things that have to be hidden from the other programmers. At the same time, worker classes are extremely dangerous. You can easily hide too much complexity within a single worker class, such that no one will ever be able to understand it. You have to make absolutely sure that your worker classes are small and well tested. In fact, a worker class isn’t that different from a function where the function arguments correspond to the member variables. Therefore a worker class should never have more than 3 member variables and about 100 lines of code, depending on the general complexity of the class. Consider also using a few functions instead of a worker class. Functions have to explicitly pass around the variables which might make the code easier to understand and test, even if the code overall becomes slightly longer.
 
 As a general rule of thumb one can say that a worker class has become too complex if you struggle writing tests for it. This is a clear indication that it's time to break up the class into smaller pieces. For more details see the chapter on testing.
+
+It is somewhat difficult to create a good example for a worker class that doesn't become too complicated for this book here. So I try to make a somewhat artificial one. Instead of this simple recursion used here you have to imagine a very complex algorithm that is hard to understand.
+
+```py
+class Worker:
+    def __init__(self):
+        self._data = [1, 2, 3]
+    
+    def add_entry(self, number):
+        # some complicated logic
+        self._data.append(number)
+        self._data.sort()
+        self.read_out_entries()
+
+    def read_out_entry(self):
+        entry = self._data.pop()
+        print(self._data)
+        self.add_entry(entry)
+```
 
 ### Abstract Base Class
 
@@ -1570,9 +1599,9 @@ class Obj(object):
         self.id = next(self._ids)
 
 obj0 = Obj()
-print(obj0.id) # 0
+print(obj0.id) # prints 0
 obj1 = Obj()
-print(obj1.id) # 1
+print(obj1.id) # prints 1
 ```
 
 You will witness what I said here once you write a complicated constructor and try to write unit tests for it. It already becomes apparent that in some random test case, you will have to define a variable `obj` with a fairly arbitrary value `24`. This is a clear indication that something is wrong.
@@ -1732,7 +1761,7 @@ class Car():
         return long_name.title()
 ```
 
-The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the pythonic `__str__` method.
+The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the pythonic `__str__` method. Furthermore if you already what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only good, if you need some ideas on how to structure your class.
 
 # 10. Inheritance
 
@@ -1845,21 +1874,11 @@ In inheritance, the derived class inherits all the functions defined in the base
 
 ## Advantages of Inheritance
 
-There are quite few advantages and none of them justify using inheritance.
+There are quite few advantages and none of them justify using implementation inheritance. The only one I can think of is code reuse. But it is not worth the drawbacks that come along, as mentioned further above.
 
-### Code reuse
+The only real use case of inheritance is in my opinion the definition of interfaces.
 
-The biggest advantage of inheritance is certainly code reuse. You may define a function in a base class and reuses it in several derived classes. This saves you from repeating yourself. 
-
-On the other hand, you can usually also use composition or write functions with the corresponding functionality and reuse them. In most cases this works out just fine as well. Additionally you are forced to reuse all of the code in the base class. This is frequently undesired behavior as you don't want to inherit everything the base class has to offer. You would like to inherit only a fraction of it. This is one advantage of C++ namespaces over classes. Namespaces you can break down into different files and include only the parts you need. 
-
-<!-- ## Interfaces
-
-In C++, you have to use inheritance for defining interfaces. There’s no way around it. It's an old language. Just make sure the base class is purely abstract, use smart pointers and don’t use inheritance anywhere else. This way you should be save. When I write that you shouldn’t use inheritance, this is the one and only exception.
-
-Similarly in Python, you can use abstract base classes to define the interface of a class. This is quite useful as it makes the code more readable than just implementing an interface without the abstract base class. -->
-
-## Difference between inheritance and composition
+## Inheritance and Composition
 
 [https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/inheritance-in-oops/]
 
@@ -1893,7 +1912,7 @@ taxi = Car()
 print(taxi.engine.power)
 ```
 
-Now there may be many programmers that prefer the code used for the `lion`, for example because it is less code. But in my opinion, this is bad code. The `lion` code is implici. And implicit code is genereally to be avoided because it is not as clear as explicit code. Or as the Zen of Python sais: "Explicit is better than implicit." The code used with the `taxi` is clearly to be prefered as it is explicit. You have to write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it tells you where the `power` variable comes from. It is a variable inside the `engine`. This is the ultimate reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
+Now there may be many programmers that prefer the code used for the `lion`, for example because it is less code. But in my opinion, this is very bad. The `lion` code is implicit. And implicit code is genereally to be avoided because it is not as clear as explicit code. Or as the Zen of Python says: "Explicit is better than implicit." The code used with the `taxi` is clearly to be prefered as it is explicit. You have to write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it tells you where the `power` variable comes from. It is a variable inside the `engine`. This is the ultimate reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
 
 ## Conclusions
 
@@ -1911,7 +1930,7 @@ There are also some more esoteric things, for example friend classes. At first s
 
 => software engineering = algorithms + data structures + abstractions + testing
 
-It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It forces you to write better code. In fact, this was the first chapter that I wrote for this book, exactly for this reason. In the following chapters, we learn why tests are so important, how to write them and what to look out for when writing tests.
+It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It *forces* you to write better code. In fact, this was the first chapter that I wrote for this book, exactly for this reason. In the following chapters, we learn why tests are so important, how to write them and what to look out for when writing tests.
 
 ## A short story about tests
 
@@ -1991,13 +2010,13 @@ We can run the test in the command line with
 pytest
 ```
 
-The output is this:
+The relevant part of the output is this:
 ```sh
 E    assert False
 E     +  where False = <built-in function isclose>(1.0, (2 ** 0.5))
 ```
 
-Apparently I made a mistake in the implementation. I forgot to take the y-component into account. The correct implementation of the `distance_to` function would be
+Apparently I made a mistake in the implementation. The values checked in `isclose` are different. In my calculation I forgot to take the y-component into account. The correct implementation of the `distance_to` function would be
 
 ```py
     def distance_to(self, other):
@@ -2044,9 +2063,9 @@ Good inputs should thoroughly test the code. But they should also be simple so t
 
 ## General thoughts about tests
 
-One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct. Tests can only prove the existance of bugs, not their absence.
+One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct. "Tests can only prove the existance of bugs, not their absence." [Dijkstra]
 
-A lot of people think that the only reason for writing tests is finding bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but the other reason is probably even more important: Tests enable us to fixate the behavior of the code.
+A lot of people think that the only reason for writing tests is finding or preventing bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but another reason is probably even more important: Tests enable us to fixate the behavior of the code.
 
 ### Double Entry Book Keeping
 
@@ -2054,13 +2073,26 @@ Robert C. Martin compared programming with tests to Double Entry Book Keeping [C
 
 Having two absolute truths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break. And if your tests fail for some unknown reason, you can just undo your changes.
 
+Here is a very small example of a function with a test.
+
+```py
+def add(a, b):
+    return a + b
+
+# inside test_add.py
+def test_add():
+    assert add(1, 2) == 3
+```
+
+Now if you want the function `add` to return a different result, you'll also have to change the test as well. Each change has to be applied in both, the code and the test.
+
 ### Understand what you do
 
 There are a lot of things to consider when writing tests. The example above was very simple. In real code you have to deal with much more complex objects. With many more arguments. But all together it comes down to one point: Do you really understand what you want to test? If no, there is no need to start writing a test. It would never work. It would be a waste of time. Rewrite your code to make it simpler or get someone to help you understand the problem you should solve. Don't write anything, unless you understand the problem and you know what you want to do.
 
 ### A few tips
 
-Make sure all the tests pass. Tests that don't pass are worthless. Even worse, they are a nuisance. When you run the tests, failing tests will confuse you. They will confuse you're coworkers. Everyone will waste time trying to fix the failing test. There is only one single solution to prevent this: all tests have to pass. Thus make sure your Continuous Integration (CI) enforces that all tests pass. Tests that don't pass should be deleted.
+Make sure all the tests pass. Tests that don't pass are worthless. Even worse, they are a nuisance. When you run the tests, failing tests will confuse you. They will confuse you're coworkers. Everyone will waste time trying to fix the failing test. There is only one single solution to prevent this: all tests have to pass all the time. Thus make sure your Continuous Integration (CI) enforces that all tests pass. Tests that don't pass should be deleted.
 
 In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that create the desired objects. You might even have a util code file for all the tests. It contains some fairly static objects like functions or class instances that you might need in a lot of different tests.
 
@@ -2086,9 +2118,23 @@ Probably the hardest decision is what values you want to use in your tests. Writ
 
 For a single argument function, I recommend testing all possible corner cases and about two random values. As you wrote the function, you will know the corner cases: Division by zero, passing an empty array as a function argument, the file used does not exist, etc. This is one of the reasons why a person writing the code should also write the unit tests. Only this person knows the corner cases. The acceptance tests on the other hand should be written by an independent person. But we'll come to that later.
 
-For functions with many arguments it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with `3^3 = 27` test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. There might be cases where the variables don’t interact with each other. They are independent. This gives you the following options.
+For functions with many arguments it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with `3^3 = 27` test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. 
 
-Now if you see that they are all independent, you may test them independently. The number of tests reduces to about 3 for each variable, thus `3*3 = 9` test cases. This sounds much more reasonable. 
+Here is an example of a function with three arguments. I have not written down all the test cases, but you can guess how tedious this might become.
+
+```py
+def f(a,b,c):
+    return a+b+c
+
+# my_test.py
+def test_f():
+    assert f(0,0,0) == 0
+    assert f(1,0,0) == 1
+    assert f(0,1,0) == 1
+    # ...
+```
+
+There might be cases where the variables don’t interact with each other. They are independent. You may test them independently. The number of tests reduces to about 3 for each variable, thus `3*3 = 9` test cases. This sounds much more reasonable, though it's still quite a lot.
 
 Usually the function arguments are not independent, or at least it's not so clear how they interact. Otherwise they wouldn't be in the same function. And it’s genrally not feasible to write 27 test cases, that's just too many. Just do your best instead. Try to test all corner cases and add a few random ones. If the function consists of well written code that doesn’t look like hiding bugs deliberately, you should be pretty much fine. And even more important: try to keep the number and complexity of the function arguments low.
 
@@ -2164,7 +2210,7 @@ setup_class called once for the class
 teardown_class called once for the class
 ```
 
-It is showing that the teardown functions are called even if the test fails, while a normal function like this print statement is not executed.
+It is showing that the teardown functions are called even if the test fails, while a normal function like this `print("   after")` statement is not executed.
 
 ### Helper functions
 
@@ -2257,11 +2303,38 @@ The only real solution is writing fail save tests. Write for example a test that
 
 Especially unit tests should never be flaky. A test only becomes flaky if some part of the code under test is flaky but this should never be the case for unit tests. Unit tests should not depend things that can fail, like on the file system nor on network connections. This is one of the reasons why you should avoid testing any input/output (IO) for unit tests and reduce it as much as possible for all other tests.
 
+The following test is flaky and always fails in the morning:
+
+```py
+from datetime import datetime
+
+def test_time():
+    assert datetime.now().hour < 12
+```
+
+Of course this is a pretty dumb example but it's less exoctic than you may think. Tests (and code) have probably already failed for similar reasons.
+
 ### Brittle tests
 
 Tests that are over specified are called brittle. They break when changing the code in seemingly unrelated places. One example is testing a json file for formatting, even though the contents of the json file [chapter data files] does not depend on the formatting. The formatting does not matter. It does not change any of the values in the file. Instead testing the formatting is just a waste. Even worse, it is a needless liability because it tests something that should not be tested. Something the result does not depend on. Instead use a json library to get only the actual values stored in the file and compare those. This is what we are really interested in. Never use any string operations when reading a json file. This is the very definition of brittle code!
 
 Another example of brittle tests are tests for methods that should be private, but are made public in order to test them. This prevents you from refactoring this function as it is now part of the public interface. Changing it will break the tests, even if the real public interface is not changed. This is why private methods should not be made public in order to test them. If you really feel the urge to test a private method, you should refactor it into a separate class.
+
+Here is an example of a brittle test. Again, it is a pretty dumb example. But I'm sure people have already read out json strings character by character. Please always use libraries instead for such purposes.
+
+```py
+import json
+
+def test_json_stable():
+    x = '{"a": 1, "b": 2}'
+    y = json.loads(x)
+    assert y == {'a': 1, 'b': 2}
+
+def test_json_brittle():
+    x = '{"a": 1, "b": 2}'
+    y = {x[2]: int(x[6]), x[10]: int(x[14])}
+    assert y == {'a': 1, 'b': 2}
+```
 
 ### Random numbers
 
@@ -2269,7 +2342,7 @@ If you ever use random numbers in your code, you might get stuck with your tests
 
 ## The Beyonce rule
 
-A common question is "what to test?". A very simple answer is: everything. This is certainly a correct answer, though you cannot always test everything equally extensively. Instead, at google they came up with the Beyonce rule. [Software Engineering at google] She sings in her song "If you like it then you should have put a ~~ring~~ *test* on it." Apparently this holds for most of your code. You do like your code, don't you?
+A common question is "what to test?". A very simple answer is: everything. This is certainly a correct answer, though you cannot always test everything equally extensively. You'll simply lack the capacity for that. Instead, at google they came up with the Beyonce rule. [Software Engineering at google] She sings in her song "If you like it then you should have put a ~~ring~~ *test* on it." Apparently this holds for most of your code. You do like your code, don't you?
 
 ## Not Automatable Tests
 
@@ -2342,27 +2415,26 @@ def share_values(filename):
 The section of this code reading the file is very simple. It is not necessary to test it. Instead, it can be easily exctracted into a separate function. This is called the "Wrap Method" by Michael Feathers [WELC, p.70]
 
 ```py
-def share_values(filename):
-    file_content = read_file(filename)
+def get_share_values(file_content):
     share_values = parse_share_values(file_content)
+    # ... and much more code
     return share_values
 
 def read_file(filename):
     with open(filename,'r') as f:
         return f.read()
 
-def parse_share_values(file_content):
-    share_values = do_something_with(file_content)
-    # ... and much more code
-    return share_values
+def share_values(filename):
+    file_content = read_file(filename)
+    return get_share_values(file_content)
 ```
 
 Here we wraped the code reading out the file into a separate function. The rest of the code is written into a dedicated function. For this function one can easily write a unit test because it doesn't depend on the file system. A test might look as follows:
 
 ```py
-def test_parse_share_values():
+def test_get_share_values():
     file_content = "Apple, 150.3"
-    assert parse_share_values(file_content) == {"Apple": 150.3}
+    assert get_share_values(file_content) == {"Apple": 150.3}
 ```
 
 This is similar to the GUI layer for functional tests. You pack everything you don’t want to test into a thin layer that is unlikely to fail and the remaining test becomes much smoother. In this case here this small layer is the function `read_share_values` which reads the file into a string. Uncle Bob calls this a "Humble Object" [Clean Craftsman p.157]. It is a small layer that is unlikely to fail and therefore does not need to be tested. It is just a thin wrapper around the function reading the file.
@@ -2387,6 +2459,44 @@ As a summary one can say the following things about classes and tests:
 - The constructors should be simple and not rely on any fancy logic
 
 All these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+
+Here's an example how to refactor a complicated private method into a dedicated class.
+
+```py
+class Car:
+    def __init__(self, engine):
+        self.engine = engine
+        self.speed = 0
+
+    def push_gas_pedal(self):
+        self.speed += 1
+        self._increase_rpm()
+
+    def _increase_rpm(self):
+        self.engine.rpm += 1000
+```
+
+Apparently this code is bad because `increase_rpm` should be part of the `engine`. I made this code deliberately this bad in order to fix it now. Let's assume we want to test the `_increase_rpm` method. We can refactor it into a separate class.
+
+```py
+class Engine:
+    def __init__(self):
+        self.rpm = 0
+
+    def increase_rpm(self):
+        self.rpm += 1000
+
+class Car:
+    def __init__(self, engine):
+        self.engine = engine
+        self.speed = 0
+
+    def push_gas_pedal(self):
+        self.speed += 1
+        self.engine.increase_rpm()
+```
+
+Now the code is much better. By moving the method `increase_rpm` into the `Engine` class and making it public, we can now test it. Furthermore this method anyway belongs to the `Engine` class, not into the `Car` class.
 
 ### Copilot
 
@@ -2423,7 +2533,7 @@ Integration tests lie in between unit and functional tests with respect to all: 
 
 Integration tests, at its own right, are just at least as important as functional tests. Integration tests are different from functional tests as they use fakes and stubs to mimic the behavior of collaborating objects, while functional tests use the real objects.
 
-// is there anything else to write here?
+// is there anything else to write here? About fakes, mocks and stubs?
 
 ## Functional tests
 
@@ -2755,7 +2865,7 @@ def roman_numbers(n):
 
 The reamining tests and implementations are straight forward. I'll leave them as an exercise for the reader.
 
-## Fakes and Mocks
+## Stubs, Fakes and Mocks
 
 // chapter 12 Types of tests, Mock and Stubs has some redundancy with this chapter. Maybe merge them?
 
@@ -2776,7 +2886,7 @@ from unittest.mock import Mock
 
 def read_csv(file_name):
     # ...
-    # return ...
+    return # ...
 
 def test_mock_important_stuff():
     # Override the `read_csv` function defined in important_stuff.py and return some values.
