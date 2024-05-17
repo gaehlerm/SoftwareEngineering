@@ -72,6 +72,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [7. Interfaces](#7-interfaces)
   - [Real world interfaces](#real-world-interfaces)
   - [Code interfaces](#code-interfaces)
+    - [Example](#example)
   - [APIs](#apis)
     - [Adding more functionality](#adding-more-functionality)
     - [Semantic Versioning](#semantic-versioning)
@@ -267,7 +268,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Liskov Substitution Principle](#liskov-substitution-principle)
   - [Interface Segregation Principle](#interface-segregation-principle)
   - [Dependency Inversion Principle](#dependency-inversion-principle)
-    - [Example](#example)
+    - [Example](#example-1)
   - [Summary](#summary-3)
 - [25. Data types](#25-data-types)
   - [Lists](#lists)
@@ -390,7 +391,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [The dependency graph](#the-dependency-graph)
   - [Breaking up dependencies](#breaking-up-dependencies)
   - [Circular dependencies](#circular-dependencies)
-    - [Example](#example-1)
+    - [Example](#example-2)
 - [40. Working in teams](#40-working-in-teams)
   - [Team structure](#team-structure)
     - [The bus factor](#the-bus-factor)
@@ -906,6 +907,28 @@ Always define an interface from the user perspective. What is it a user wants? H
 An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality was mostly determined by the engineers preferences. The designers had little to say and were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use. This is how you have to design your interfaces. You need someone with some vision on how your code should be used. Not some engineer who does a great job implementing the code but has no idea how to use it.
 
 Interfaces are everywhere. Every function // cite the chapter? // or class // cite the chapter? // has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
+
+### Example
+
+This is a code example for a car. The car has a current `speed` and a `top_speed`. However the user of this code doesn't know anything about these attributes. He only sees the public interface containing the methods `accelerate`, `brake` and `get_speed`. He doesn't know anything about the implementation of this class.
+
+```py
+class Car:
+    def __init__(self):
+        self._speed = 0
+        self._TOP_SPEED = 200
+
+    def accelerate(self, amount):
+        assert amount >= 0
+        self._speed = min(self._speed + amount, self._TOP_SPEED)
+
+    def brake(self, amount):
+        assert amount >= 0
+        self._speed = max(self._speed - amount, 0)
+
+    def get_speed(self):
+        return self._speed
+```
 
 ## APIs
 
