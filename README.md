@@ -61,6 +61,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Real world example](#real-world-example)
   - [Programming Example](#programming-example)
   - [The abstraction layers](#the-abstraction-layers)
+    - [Example of layered code](#example-of-layered-code)
     - [3rd party libraries](#3rd-party-libraries)
     - [Infrastructure code](#infrastructure-code)
     - [The domain level](#the-domain-level)
@@ -553,9 +554,9 @@ At the same time I'd like to mention what this book isn't. It doesn't teach you 
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
-In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming, that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be taken with care in OO programming.
+In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming, that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be used with care in OO programming.
 
-But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
+But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code irrespectively. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
 This book contains comparably little code. It’s more about general concepts or software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
 
@@ -643,7 +644,7 @@ There are different definitions of the Single Responsibility Principle (SRP) [Cl
 
 The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation of readable and reusable code.
 
-Please note that the SRP does not state that every software developer is responsible for his own piece of code. The SRP is about code fragments, not about code ownership.
+Please note that the SRP does *not* state that every software developer is responsible for his own piece of code. The SRP is about code fragments, not about code ownership.
 
 ## Do not Repeat Yourself
 
@@ -679,8 +680,6 @@ location = president.residency
 ```
 
 ### Exceptions of DRY
-
-
 
 The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. Also the overhead of creating a new function might be higher than the gain of refactoring the code. This is also in agreement with the test driven design (TDD) [chapter Writing better code with tests] where you only have to refactor if there is a three-fold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately. 
 
@@ -809,6 +808,33 @@ No matter if you are looking at horizontal layers as done here, or at onion laye
 
 Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handled directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example because of performance reasons. But this should be the exception rather than the rule.
 
+### Example of layered code
+
+In the following code snippet, not all lines of code are on the same level of abstraction:
+
+```py
+def process_email():
+	open_email()
+	with open('attachment.txt', 'r') as f:
+    	print(f.read())
+	close_email()
+```
+
+`open_email` and `close_email` are clearly functions on a higher level of abstraction than `with open ...`. In order to have all the code on the same level of abstraction, we have to move the `with open ...` into a function. The code should look like this:
+
+```py
+def print_attachment():
+    with open('attachment.txt', 'r') as f:
+    	print(f.read())
+
+def process_email():
+	open_email()
+	print_attachment()
+	close_email()
+```
+
+Now the code looks much better. All lines of code are function calls to higher level functions. Every line of code inside `process_email` reads like an English sentence and not like python syntax. Note that the code now became a little bit longer. This is not an issue. Readability counts, not the length of the code.
+
 ### 3rd party libraries
 
 The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestions implemented. Therefore 3rd party libraries are on the lowest level of abstraction. They do not depend on any of your code.
@@ -841,7 +867,7 @@ On the highest level are the GUI and the acceptance tests, both at the same leve
 
 ## Summary
 
-As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code.
+As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Avoid mixing different levels of abstraction.
 
 # 7. Interfaces
 
