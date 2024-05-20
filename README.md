@@ -42,10 +42,10 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Thanks to](#thanks-to)
 - [3. Preface](#3-preface)
   - [Who this book is for](#who-this-book-is-for)
-- [4. Introduction](#4-introduction)
-  - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-  - [About this book](#about-this-book)
+  - [Writing this book](#writing-this-book)
   - [A word about Copilot](#a-word-about-copilot)
+- [4. Software Engineering](#4-software-engineering)
+  - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
@@ -558,7 +558,17 @@ Of course, this book is not only for PhD students. There are also plenty of othe
 
 At the same time I'd like to mention what this book isn't. It doesn't teach you fancy modern topics in computer science. It doesn't teach you how to develop artificial intelligence, high performance computing, web development, databases, distributed systems, etc. I simply lack the scope and knowledge to cover all these topics. Though I'm confident that the principles tought throughout this book will help you with these topics as they all require good software engineering skills as well.
 
-# 4. Introduction
+## Writing this book
+
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are at most some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
+
+## A word about Copilot
+
+My publisher had the idea to include Copilot, one of the new AI code generation tools at the time of writing, into this book. And indeed, there are quite some cases where Copilot can be useful when writing code. I tried to make some examples that fit to the corresponding chapters. Though I couldn't make examples for every chapter. In many cases the content of the chapters were too generic as if code examples would be helping a lot. Though in these chapters where I was giving code examples, Copilot was usually able to generate useful code. Though sometimes I had to play around a little in order to give me reasonable results and I didn't always get the code I wanted. There still has to be done a lot of research on how to use Copilot in the best way.
+
+In general it can be said that, already at the time of writing, AI code generation is a very useful tool that can help you improve your productivity and the quality of your code significantly if used correctly. It also helped me writing this book here. Though you always have to be cautios. Copilot is not perfect and it can generate code that is not correct. It creates just some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer, it's just a tool that assists you with your work. You still have to guide it into the right direction.
+
+# 4. Software Engineering
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
@@ -566,7 +576,7 @@ In this chapter we want to look at how code should look like. What kind of rules
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code irrespectively. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
-This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
+This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. Therefore I tried to make some code examples, even though it's quite hard to find examples that are short, yet expressive enough to fit into a book. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
 
 This book tries to give clear answers to simple problems. I also try giving answers to hard problems like naming, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
 
@@ -632,15 +642,6 @@ These four rules will accompany us throughout our book.
 - We constantly clean up our code.
 - We write code in order to create value for our customers.
 
-## About this book
-
-Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and math are accurate sciences and you can derive all your formulas. Software engineering on the other hand it not an accurate science. There are at most some best practice rules but it is never really clear whether you may apply one rule or another. The best example is naming of variables, functions and classes. There is no right nor wrong. There are only trade offs. I can only give you some general rules of thumb and you'll have to figure out yourself how to apply them. This will take practice and preferably you'll work together with some more experienced coworker who can help you in case you have any questions. This book tries to be a manual, but ultimately you'll have to learn for yourself how to apply the recommendations written in here.
-
-## A word about Copilot
-
-My publisher had the idea to include Copilot, one of the new AI code generation tools at the time of writing, into this book. And indeed, there are some cases where Copilot can be useful when writing code. I tried to make some examples that fit to the corresponding chapters. Though I couldn't make examples for every chapter. In many cases the content of the chapters were too generic as if code examples would be helping a lot. Though in these chapters where I was giving code examples, Copilot was usually able to generate useful code. Though sometimes I had to play around a little in order to give me reasonable results and I didn't always get the code I wanted. There still has to be done a lot of research on how to use Copilot in the best way.
-
-In general it can be said that, already at the time of writing, AI code generation is a very useful tool that can help you improve your productivity and the quality of your code significantly if used correctly. It also helped me writing this book here. Though you always have to be cautios. Copilot is not perfect and it can generate code that is not correct. It creates just some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer, it's just a tool that assists you with your work. 
 
 # 5. Single responsibility principle 
 
