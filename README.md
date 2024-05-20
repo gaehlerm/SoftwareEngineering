@@ -37,18 +37,18 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Getting started](#getting-started)
   - [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
-- [One sentence summary](#one-sentence-summary)
-- [The short story behind this book](#the-short-story-behind-this-book)
+- [3. One sentence summary](#3-one-sentence-summary)
+- [4. The short story behind this book](#4-the-short-story-behind-this-book)
   - [Thanks to](#thanks-to)
-- [3. Preface](#3-preface)
+- [5. Preface](#5-preface)
   - [Who this book is for](#who-this-book-is-for)
   - [Writing this book](#writing-this-book)
   - [A word about Copilot](#a-word-about-copilot)
-- [4. Software Engineering](#4-software-engineering)
+- [6. Software Engineering](#6-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-- [37. Good code, a list of rules](#37-good-code-a-list-of-rules)
+- [7. Good code, a list of rules](#7-good-code-a-list-of-rules)
   - [The Zen of Python](#the-zen-of-python)
-- [16. Understandable code](#16-understandable-code)
+- [8. Understandable code](#8-understandable-code)
   - [How humans think](#how-humans-think)
   - [Spaghetti code](#spaghetti-code)
   - [Examples](#examples)
@@ -58,7 +58,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Scope of variables](#scope-of-variables)
     - [Approximate programming](#approximate-programming)
   - [Copilot](#copilot)
-- [5. Single responsibility principle](#5-single-responsibility-principle)
+- [9. Single responsibility principle](#9-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
   - [Advantages of the SRP](#advantages-of-the-srp)
@@ -69,7 +69,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Less Bugs](#less-bugs)
     - [Bug fixing](#bug-fixing)
   - [Drawbacks of the SRP](#drawbacks-of-the-srp)
-- [6. Levels of abstraction](#6-levels-of-abstraction)
+- [10. Levels of abstraction](#10-levels-of-abstraction)
   - [Real world example](#real-world-example)
   - [Programming Example](#programming-example)
   - [The abstraction layers](#the-abstraction-layers)
@@ -81,7 +81,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [API](#api)
     - [GUI and acceptance tests](#gui-and-acceptance-tests)
   - [Summary](#summary)
-- [7. Interfaces](#7-interfaces)
+- [11. Interfaces](#11-interfaces)
   - [Real world interfaces](#real-world-interfaces)
   - [Code interfaces](#code-interfaces)
     - [Example](#example)
@@ -92,12 +92,12 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
     - [Example of an adapter](#example-of-an-adapter)
   - [Copilot](#copilot-1)
-- [27. Naming](#27-naming)
+- [12. Naming](#12-naming)
   - [Naming Antipatterns](#naming-antipatterns)
     - [Useles Words](#useles-words)
     - [Generic Names](#generic-names)
   - [Copilot](#copilot-2)
-- [8. Functions](#8-functions)
+- [13. Functions](#13-functions)
   - [Do one thing only](#do-one-thing-only)
     - [Levels of indentation](#levels-of-indentation)
     - [Naming](#naming-1)
@@ -108,7 +108,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Return values](#return-values)
   - [Summary](#summary-1)
   - [Copilot](#copilot-4)
-- [9. Classes](#9-classes)
+- [14. Classes](#14-classes)
   - [Data classes and structs](#data-classes-and-structs)
   - [Private or Public](#private-or-public)
   - [Different kind of classes](#different-kind-of-classes)
@@ -134,7 +134,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Drawbacks of classes](#drawbacks-of-classes)
   - [Conclusions](#conclusions)
   - [Copilot](#copilot-5)
-- [10. Inheritance](#10-inheritance)
+- [15. Inheritance](#15-inheritance)
   - [Two types of Inheritance](#two-types-of-inheritance)
   - [Drawbacks of inheritance](#drawbacks-of-inheritance)
     - [Tight Coupling](#tight-coupling)
@@ -145,7 +145,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Advantages of Inheritance](#advantages-of-inheritance)
   - [Inheritance and Composition](#inheritance-and-composition)
   - [Conclusions](#conclusions-1)
-- [25. Data types](#25-data-types)
+- [16. Data types](#16-data-types)
   - [Lists](#lists)
   - [Enums](#enums)
     - [Booleans](#booleans)
@@ -161,7 +161,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Dicts](#dicts)
   - [Trees](#trees)
   - [Pointers](#pointers)
-- [26. Properties of Variables](#26-properties-of-variables)
+- [17. Properties of Variables](#17-properties-of-variables)
   - [Compile-time constant](#compile-time-constant)
   - [Runtime Constant](#runtime-constant)
     - [Constant Class instances](#constant-class-instances)
@@ -170,7 +170,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Static Variables](#static-variables)
   - [Global Variables](#global-variables)
   - [Comparison of Variable Properties](#comparison-of-variable-properties)
-- [11. Introduction to Testing](#11-introduction-to-testing)
+- [18. Introduction to Testing](#18-introduction-to-testing)
   - [A short story about tests](#a-short-story-about-tests)
   - [Test examples](#test-examples)
     - [Structure of a Software test](#structure-of-a-software-test)
@@ -193,7 +193,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Random numbers](#random-numbers)
   - [The Beyonce rule](#the-beyonce-rule)
   - [Not Automatable Tests](#not-automatable-tests)
-- [12. Types of tests](#12-types-of-tests)
+- [19. Types of tests](#19-types-of-tests)
   - [Unit tests](#unit-tests)
     - [Testing files in unit tests](#testing-files-in-unit-tests)
     - [Testing classes](#testing-classes)
@@ -206,7 +206,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [When to run tests](#when-to-run-tests)
   - [Who should write tests](#who-should-write-tests)
   - [The testing pyramid](#the-testing-pyramid)
-- [13. Writing better Code with Tests](#13-writing-better-code-with-tests)
+- [20. Writing better Code with Tests](#20-writing-better-code-with-tests)
   - [Unit tests](#unit-tests-1)
   - [Integration and Functional Tests](#integration-and-functional-tests)
   - [Testing existing code](#testing-existing-code)
@@ -221,7 +221,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Dependency injection](#dependency-injection)
   - [Summary](#summary-2)
   - [Copilot](#copilot-7)
-- [24. SOLID principles](#24-solid-principles)
+- [21. SOLID principles](#21-solid-principles)
   - [Single Responsibility Principle](#single-responsibility-principle)
   - [Open Closed Principle](#open-closed-principle)
   - [Liskov Substitution Principle](#liskov-substitution-principle)
@@ -229,7 +229,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Dependency Inversion Principle](#dependency-inversion-principle)
     - [Example](#example-1)
   - [Summary](#summary-3)
-- [35. Software Engineering principles](#35-software-engineering-principles)
+- [22. Software Engineering principles](#22-software-engineering-principles)
   - [Divide and Conquer](#divide-and-conquer)
   - [Increase Cohesion](#increase-cohesion)
   - [Reduce coupling](#reduce-coupling)
@@ -238,13 +238,13 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Design for flexibility](#design-for-flexibility)
   - [Anticipate Obsolesence](#anticipate-obsolesence)
   - [Design for Testability](#design-for-testability)
-- [19. Programming Paradigms](#19-programming-paradigms)
+- [23. Programming Paradigms](#23-programming-paradigms)
   - [Object Oriented programming](#object-oriented-programming)
   - [Procedural programming](#procedural-programming)
   - [Functional programming](#functional-programming)
   - [Conclusions](#conclusions-2)
   - [Copilot](#copilot-8)
-- [17. Programming languages](#17-programming-languages)
+- [24. Programming languages](#24-programming-languages)
   - [Existing programming languages](#existing-programming-languages)
   - [Code examples](#code-examples)
   - [Python](#python)
@@ -258,12 +258,12 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Classes](#classes-1)
     - [Structs](#structs)
   - [Copilot](#copilot-9)
-- [22. Physical laws of code](#22-physical-laws-of-code)
+- [25. Physical laws of code](#25-physical-laws-of-code)
   - [Entropy](#entropy)
   - [Correlation](#correlation)
   - [Quality](#quality)
   - [Requirements](#requirements)
-- [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
+- [26. Bugs, Errors, Exceptions](#26-bugs-errors-exceptions)
   - [Syntax Errors](#syntax-errors)
   - [Bugs](#bugs)
     - [Cost of Bugs](#cost-of-bugs)
@@ -275,20 +275,20 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Exceptions](#exceptions)
     - [Wrapping exceptions](#wrapping-exceptions)
     - [Exceptions and goto](#exceptions-and-goto)
-- [28. Complexity](#28-complexity)
+- [27. Complexity](#27-complexity)
   - [Complexity of code](#complexity-of-code)
   - [Estimating complexity](#estimating-complexity)
   - [Single line complexity](#single-line-complexity)
   - [Black magic code](#black-magic-code)
-- [39. Dependencies](#39-dependencies)
+- [28. Dependencies](#28-dependencies)
   - [The early days](#the-early-days)
   - [The dependency graph](#the-dependency-graph)
   - [Breaking up dependencies](#breaking-up-dependencies)
   - [Circular dependencies](#circular-dependencies)
     - [Example](#example-2)
-- [21. Decoupling](#21-decoupling)
+- [29. Decoupling](#29-decoupling)
   - [Law of demeter](#law-of-demeter)
-- [23. Software Architecture](#23-software-architecture)
+- [30. Software Architecture](#30-software-architecture)
   - [About software architecture](#about-software-architecture)
   - [Layering code](#layering-code)
     - [Stability of code](#stability-of-code)
@@ -297,7 +297,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
-- [36. Domain Driven Design ???](#36-domain-driven-design-)
+- [31. Domain Driven Design ???](#31-domain-driven-design-)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
     - [Documentation and planning](#documentation-and-planning)
@@ -319,12 +319,12 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Services](#services)
     - [Aggregates](#aggregates)
     - [Organizing aggregates](#organizing-aggregates)
-- [38. 3rd party software](#38-3rd-party-software)
-- [42. Working with existing projects](#42-working-with-existing-projects)
+- [32. 3rd party software](#32-3rd-party-software)
+- [33. Working with existing projects](#33-working-with-existing-projects)
   - [No Interfaces](#no-interfaces)
   - [No Tests](#no-tests)
   - [Extremely long functions](#extremely-long-functions)
-- [15. Refactoring Fundamentals](#15-refactoring-fundamentals)
+- [34. Refactoring Fundamentals](#34-refactoring-fundamentals)
   - [There will be change](#there-will-be-change)
   - [Keeping code in shape](#keeping-code-in-shape)
     - [Refactoring and automated tests](#refactoring-and-automated-tests)
@@ -334,7 +334,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [The circle of doom](#the-circle-of-doom)
   - [When to Refactor](#when-to-refactor)
   - [Refactoring process](#refactoring-process)
-- [Refactoring techniques](#refactoring-techniques)
+- [35. Refactoring techniques](#35-refactoring-techniques)
   - [Refactoring good code](#refactoring-good-code)
     - [Renaming](#renaming)
     - [Extract function](#extract-function)
@@ -347,11 +347,11 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
     - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
   - [Copilot](#copilot-11)
-- [31. Performance Optimization](#31-performance-optimization)
+- [36. Performance Optimization](#36-performance-optimization)
   - [No optimization needed](#no-optimization-needed)
   - [Optimization might be needed](#optimization-might-be-needed)
   - [Optimizing from scratch](#optimizing-from-scratch)
-- [32. Comments](#32-comments)
+- [37. Comments](#37-comments)
   - [Bad comments](#bad-comments)
     - [Commented out code](#commented-out-code)
     - [TODO comments](#todo-comments)
@@ -363,8 +363,8 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Commenting magic numbers](#commenting-magic-numbers)
   - [Summary](#summary-4)
   - [Copilot](#copilot-12)
-- [33. Logging](#33-logging)
-- [29. Data files](#29-data-files)
+- [38. Logging](#38-logging)
+- [39. Data files](#39-data-files)
   - [CSV](#csv)
     - [Copilot](#copilot-13)
   - [Json](#json)
@@ -376,9 +376,9 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Databases](#databases)
     - [Copilot](#copilot-17)
   - [Custom file format](#custom-file-format)
-- [30. Setting up a project](#30-setting-up-a-project)
+- [40. Setting up a project](#40-setting-up-a-project)
   - [Project folder](#project-folder)
-- [34. Tools](#34-tools)
+- [41. Tools](#41-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
     - [Copilot](#copilot-18)
@@ -394,13 +394,13 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
-- [40. Working in teams](#40-working-in-teams)
+- [42. Working in teams](#42-working-in-teams)
   - [Team structure](#team-structure)
     - [The bus factor](#the-bus-factor)
   - [Developers work](#developers-work)
   - [Communication](#communication)
   - [Working with customers](#working-with-customers)
-- [41. Code review](#41-code-review)
+- [43. Code review](#43-code-review)
   - [Drawbacks](#drawbacks)
 - [44. Agile](#44-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
@@ -414,88 +414,90 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Done](#done)
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
-- [Requirements Engineering](#requirements-engineering)
-- [43. Planning](#43-planning)
+- [45. Requirements Engineering](#45-requirements-engineering)
+- [46. Planning](#46-planning)
   - [Planning code](#planning-code)
-- [14. DevOps](#14-devops)
+- [47. DevOps](#47-devops)
   - [The early 2000s](#the-early-2000s)
     - [Getting a project](#getting-a-project)
   - [Benefits of DevOps](#benefits-of-devops)
-- [Mental health](#mental-health)
-- [46. Hiring and getting hired](#46-hiring-and-getting-hired)
+- [48. Mental health](#48-mental-health)
+- [49. Hiring and getting hired](#49-hiring-and-getting-hired)
   - [Hiring](#hiring)
   - [Getting hired](#getting-hired)
-- [48. Examples](#48-examples)
+- [50. Examples](#50-examples)
   - [Apple pie](#apple-pie)
     - [User story](#user-story)
     - [Acceptance test](#acceptance-test)
     - [Implementation](#implementation-1)
   - [Paint](#paint)
-- [49. About Copilot](#49-about-copilot)
+- [51. About Copilot](#51-about-copilot)
   - [Copilot and this book](#copilot-and-this-book)
   - [Issues](#issues)
   - [Copilot and the future](#copilot-and-the-future)
-- [50. Further reading](#50-further-reading)
-- [51. Outlook](#51-outlook)
-- [52. Abbreviations](#52-abbreviations)
+- [52. Further reading](#52-further-reading)
+- [53. Outlook](#53-outlook)
+- [54. Abbreviations](#54-abbreviations)
 
 
-# One sentence summary
+# 3. One sentence summary
 
 // mention which part some chapters are in??
 
 1. .
 2. .
-3. Preface: My personal story behind this book.
-4. Software Engineering: We destill some basic rules what Softwar Engineering is about.
-5. Good code, an overview: A short list that summarizes the most important points of this book.
-6. Understandable code: An attempt to explain what we understand and what we don't understand.
-7. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
-8. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
-9. Interfaces: What is an interface? And how do I design a good interface?
-10. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
-12. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
-13. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
-14. Inheritance: Inheritance should generally not be used as it often leads to bad code.
-15. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
-16. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
-17. Testing: Testing is of utmost importance to keep your code correct over the test of time.
-18. Types of Tests: We discuss unit tests, integration tests and functional tests.
-19. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
-20. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
-21. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
-22. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
-23. Programming languages: A brief overview on the most commonly used programming languages.
-24. Physical laws of code: Surprisingly, code obeys some physical laws as well.
-25. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
-26. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
-27. Dependencies: How do you deal with dependencies between files and code snippets?
-28. Decoupling: ? // remove chapter?
-29. Software Architecture: // ? rewrite chapter?
-30. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
-31. 3rd party software: How to deal with 3rd party software.
-32. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
-33. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
-34. Refactoring techniques: ...?
-35. Performance Optimization: Don't optimize until the very end of a project.
-36. Comments: Replace comments with code when ever possible.
-37. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
-38. Data files: If you store data, there may be better file formats than csv files.
-39. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
-40. Tools: An overview of the most important tools that you should use, starting with git.
-41. Working in teams: Working in teams has some advantages and drawbacks.
-42. Code review: Let your code be reviewed by others.
-43. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
-44. Requirements Engineering: What should you actually program?
-45. Planning: Before you start coding, you should roughly plan what you are going to do.
-46. DevOps: DevOps is the way to go regarding the organization of your projects.
-47. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
-48. Hiring and getting hired: How to get a job as a software engineer.
-49. Examples: // ? rewrite chapter?
-50. About Copilot: A short overview of Copilot. // move to the introduction?
-51. Outlook: Some personal advice and wishes for your future.
-52. Abbreviations: Abbreviations used in this book.
-53. Index: The index of this book.
+3. .
+4. .
+5. Preface: My personal story behind this book.
+6. Software Engineering: We destill some basic rules what Softwar Engineering is about.
+7. Good code, an overview: A short list that summarizes the most important points of this book.
+8. Understandable code: An attempt to explain what we understand and what we don't understand.
+9. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
+10. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
+11. Interfaces: What is an interface? And how do I design a good interface?
+12. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
+13. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
+14. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
+15. Inheritance: Inheritance should generally not be used as it often leads to bad code.
+16. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
+17. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
+18. Testing: Testing is of utmost importance to keep your code correct over the test of time.
+19. Types of Tests: We discuss unit tests, integration tests and functional tests.
+20. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
+21. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
+22. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
+23. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
+24. Programming languages: A brief overview on the most commonly used programming languages.
+25. Physical laws of code: Surprisingly, code obeys some physical laws as well.
+26. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
+27. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
+28. Dependencies: How do you deal with dependencies between files and code snippets?
+29. Decoupling: ? // remove chapter?
+30. Software Architecture: // ? rewrite chapter?
+31. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
+32. 3rd party software: How to deal with 3rd party software.
+33. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
+34. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
+35. Refactoring techniques: ...?
+36. Performance Optimization: Don't optimize until the very end of a project.
+37. Comments: Replace comments with code when ever possible.
+38. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
+39. Data files: If you store data, there may be better file formats than csv files.
+40. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
+41. Tools: An overview of the most important tools that you should use, starting with git.
+42. Working in teams: Working in teams has some advantages and drawbacks.
+43. Code review: Let your code be reviewed by others.
+44. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
+45. Requirements Engineering: What should you actually program?
+46. Planning: Before you start coding, you should roughly plan what you are going to do.
+47. DevOps: DevOps is the way to go regarding the organization of your projects.
+48. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
+49. Hiring and getting hired: How to get a job as a software engineer.
+50. Examples: // ? rewrite chapter?
+51. About Copilot: A short overview of Copilot. // move to the introduction?
+52. Outlook: Some personal advice and wishes for your future.
+53. Abbreviations: Abbreviations used in this book.
+54. Index: The index of this book.
 
 Chapters to work on:
 - Decoupling (Remove?)
@@ -505,7 +507,7 @@ Chapters to work on:
 - About Copilot (who knows anything about Copilot?)
 - Requirements Engineering (Felix)
 
-# The short story behind this book
+# 4. The short story behind this book
 
 I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked for a few years as a teacher, before I decided to switch to software engineering. I worked as a few years as a software engineer for Zurich Instruments, a company developing electronic devices that are used in quantum computing. There I was mostly busy developing software for the Quantum Controller software. 
 
@@ -522,7 +524,7 @@ I wasn't really sure where this book would take me. I mean my English is fairly 
 - Linus Gasser
 - you?
 
-# 3. Preface
+# 5. Preface
 
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It’s not that the graduates aren’t bright or talented, it’s just that they haven’t been taught what programming is really all about." - Robert C. Martin
 
@@ -572,7 +574,7 @@ In general it can be said that, already at the time of writing, AI code generati
 
 Part 1: First things first
 
-# 4. Software Engineering
+# 6. Software Engineering
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
@@ -647,7 +649,7 @@ These four rules will accompany us throughout our book.
 - We write code in order to create value for our customers.
 
 
-# 37. Good code, a list of rules
+# 7. Good code, a list of rules
 
 // this chapter needs some citations of other chapters.
 
@@ -724,7 +726,7 @@ If the implementation is hard to explain, it's a bad idea: This means that the l
 Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you to structure your code and make it more readable because you know where some function or other piece of code comes from.
 
 
-# 16. Understandable code
+# 8. Understandable code
 
 "Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
 
@@ -848,7 +850,7 @@ But in reality, such accuracy may not be required. You can simply take the coord
 Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at.
 
 
-# 5. Single responsibility principle 
+# 9. Single responsibility principle 
 
 **Every object does exactly one thing. Everything is done by exactly one object.**
 
@@ -927,7 +929,7 @@ Tracking down bugs will be much easier. You can understand fairly well what each
 
 There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it is not that bad to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm. When in doubt, you'd better adhere to the SRP and refactor the code.
 
-# 6. Levels of abstraction
+# 10. Levels of abstraction
 
 "You can solve every problem with another level of indirection." – Andrew Konig
 
@@ -1083,7 +1085,7 @@ On the highest level are the GUI and the acceptance tests, both at the same leve
 
 As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Avoid mixing different levels of abstraction.
 
-# 7. Interfaces
+# 11. Interfaces
 
 "Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers
 
@@ -1244,7 +1246,7 @@ Now this function returns the orthogonal data for this particular example. Of co
 Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps. This is generally also the better approach than writing some comments and let Copilot define code based on these comments.
 
 
-# 27. Naming
+# 12. Naming
 
 "And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
 
@@ -1350,7 +1352,7 @@ def add(b,c):
 
 Part 2: Components of code
 
-# 8. Functions
+# 13. Functions
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
 
@@ -1643,7 +1645,7 @@ def author_is(author):
 print_books_where(author_is('Paulo Coelho'))
 ```
 
-# 9. Classes
+# 14. Classes
 
 "I think it’s a new feature. Don’t tell anyone it was an accident." — Larry Wall
 
@@ -2084,7 +2086,7 @@ class Car():
 
 The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the Pythonic `__str__` method. Furthermore if you already what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only good, if you need some ideas on how to structure your class.
 
-# 10. Inheritance
+# 15. Inheritance
 
 "Favor composition over inheritance" - Basic rule of class design
 
@@ -2242,7 +2244,7 @@ You don’t gain much by using inheritance. Using composition is in most cases a
 There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. In most cases it results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code in the most common way possible and only consider all the fancy language features only if they really improve your code.
 
 
-# 25. Data types
+# 16. Data types
 
 "Primitive obsession is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
 [primitive obsession: https://refactoring.guru/smells/primitive-obsession]
@@ -2545,7 +2547,7 @@ C++ used pointers everywhere. Pointers were used to point to a certain location 
 The only remnant where pointers are still needed for technical reasons are interfaces. Use pointers only there and use the modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use Python and you don’t have to care about pointers at all.
 
 
-# 26. Properties of Variables
+# 17. Properties of Variables
 
 Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
 
@@ -2702,7 +2704,7 @@ A Singleton is a class that can have at most one instance. If you create objects
 
 Part 3: Testing
 
-# 11. Introduction to Testing
+# 18. Introduction to Testing
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
@@ -3130,7 +3132,7 @@ A common question is "what to test?". A very simple answer is: everything. This 
 
 As software engineers, we want to automate everything, tests included. However, this is not always possible. There are still things that we can barely automate. One example are image processing algorithms. How much can you compress an image such that it still looks good? This is very hard to tell with an automated test and is better judged by humans. Also if you run some complex simulation, like the aerodynamics of an airplane, you cannot write a test to check that your simulation yields the correct result. Simply because you don't know the correct result. You can only judge from your experience that the result makes sense. There are still things that are better tested by humans than computers.
 
-# 12. Types of tests
+# 19. Types of tests
 
 There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a mixture of two different types. But in general, the following 3 categories are sufficient.
 1. Unit tests test the behavior of individual functions, classes and modules.
@@ -3399,7 +3401,7 @@ Functional tests are the least common. They are very valuable to check that a pr
 
 Once you know that the engine, the gear box and the brakes of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are functional tests.
 
-# 13. Writing better Code with Tests
+# 20. Writing better Code with Tests
 
 "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
@@ -3832,7 +3834,7 @@ print(process_data(reader))
 Part 4: Design Principles
 
 
-# 24. SOLID principles 
+# 21. SOLID principles 
 
 "It is not enough for code to work." Robert C. Martin
 
@@ -4111,7 +4113,7 @@ Now `main` depends only on the interface of `NothingBase`, not on the implementa
 I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
 
 
-# 35. Software Engineering principles
+# 22. Software Engineering principles
 
 In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
 
@@ -4163,7 +4165,7 @@ Hand in hand with testing comes Dependency Injection (DI). There are many things
 Part 5: Programming 
 
 
-# 19. Programming Paradigms
+# 23. Programming Paradigms
 
 // move this closer to programming languages
 
@@ -4246,7 +4248,7 @@ a = [i for i in range(10)]
 // [https://youtu.be/RDd71IUIgpg]
 
 
-# 17. Programming languages
+# 24. Programming languages
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
 
@@ -4408,7 +4410,7 @@ for i in range(10):
 ```
 
 
-# 22. Physical laws of code
+# 25. Physical laws of code
 
 // break up this chapter merge it with other?
 
@@ -4452,7 +4454,7 @@ In software engineering we have a similar phenomenon. You have a problem and you
 Perhaps we should take more care when making software decisions just as we do when buying a new car. It may pay off on the long term.
 
 
-# 18. Bugs, Errors, Exceptions
+# 26. Bugs, Errors, Exceptions
 
 "If you don’t handle exceptions, we shut your application down. That dramatically increases the reliability of the system." — Anders Hejlsberg
 
@@ -4573,7 +4575,7 @@ Make sure your unit tests check the exceptions as well, exceptions are part of t
 By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edsger Dijkstra wrote the famous paper "Go to statement considered harmful" [https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf] which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
 
 
-# 28. Complexity
+# 27. Complexity
 
 "I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
 
@@ -4651,7 +4653,7 @@ Your code will contain some complexity. There’s no doubt about it. The only qu
 It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
 
 
-# 39. Dependencies
+# 28. Dependencies
 
 "If you automate a mess, you get an automated mess." — Rod Michael
 
@@ -4732,7 +4734,7 @@ As a summary one can say that circular dependencies should be avoided all togeth
 
 
 
-# 21. Decoupling
+# 29. Decoupling
 
 // I really have to rework this chapter. 
 
@@ -4791,7 +4793,7 @@ Though as I already said before, the law of Demeter is only a vague recommendati
 
 Part : High level design
 
-# 23. Software Architecture
+# 30. Software Architecture
 
 // This chapter still needs a lot of work!
 
@@ -4869,7 +4871,7 @@ Interestingly, all the explanations about coupling and cohesion made for classes
 An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 
-# 36. Domain Driven Design ???
+# 31. Domain Driven Design ???
 
 // reread and rewrite this chapter? Or remove it completely???
 
@@ -5111,7 +5113,7 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 // write some examples here?
 
-# 38. 3rd party software
+# 32. 3rd party software
 
 "Prefer visa over power shell" – some YouTube video 
 
@@ -5141,7 +5143,7 @@ You should rethink using a 3rd party library if it has only few developers. If t
 Part ... Existing code
 
 
-# 42. Working with existing projects
+# 33. Working with existing projects
 
 Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
 
@@ -5166,7 +5168,7 @@ If you work on an existing project, there might be no or only an insufficient nu
 Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
 
 
-# 15. Refactoring Fundamentals
+# 34. Refactoring Fundamentals
 
 "If you wait until you can make a complete justification for a change, you’ve waited too long." – Eric Evans
 
@@ -5261,7 +5263,7 @@ Writing code follows a similar process that I also use when writing this book he
 Refactoring, just as writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come out of the blue. All of a sudden you understand the problem much better and the code can be improved accordingly.
 
 
-# Refactoring techniques
+# 35. Refactoring techniques
 
 "To me, legacy code is code without tests" - Michael Feathers [WELC]
 
@@ -5557,7 +5559,7 @@ This code can be further refactored with the following command:
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
 
-# 31. Performance Optimization
+# 36. Performance Optimization
 
 "Premature optimization is the root of all evil" - Donald Knuth
 
@@ -5589,7 +5591,7 @@ Always keep in mind: code that was written with performance in mind, rather than
 
 Part ...: Miscelaneous
 
-# 32. Comments
+# 37. Comments
 
 "Code is like humor. When you have to explain it, it’s bad." – Cory House
 
@@ -5900,7 +5902,7 @@ def roman_number(number):
     return roman
 ```
 
-# 33. Logging
+# 38. Logging
 
 // this chapter is very short. merge it with another chapter?
 
@@ -5918,7 +5920,7 @@ At the same time there are some cases where you can consider using a logger.
 - And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
 
-# 29. Data files
+# 39. Data files
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 
@@ -6241,7 +6243,7 @@ conn.close()
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything you like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
 
 
-# 30. Setting up a project
+# 40. Setting up a project
 
 "If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
 
@@ -6290,7 +6292,7 @@ There are some additional files in a project.
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language of choice.
 
 
-# 34. Tools
+# 41. Tools
 
 "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
 
@@ -6418,7 +6420,7 @@ Every programming language has one docstring tool. For Python it’s Sphynx, for
 
 Part ... Collaborating
 
-# 40. Working in teams
+# 42. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 [Software Engineering at Google, chapter 2]
@@ -6485,7 +6487,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was really badly designed, the customer refuses to adapt. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 41. Code review
+# 43. Code review
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
@@ -6646,13 +6648,13 @@ Furthermore, there are some things that are absolutely mandatory, when working a
 
 In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task and you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
 
-# Requirements Engineering
+# 45. Requirements Engineering
 
 Written together with Felix Gähler
 
 
 
-# 43. Planning
+# 46. Planning
 
 // TODO: read through again. Is there duplication with the agile section?
 
@@ -6694,7 +6696,7 @@ One also has to consider the limitations of UML diagrams. The only represent cla
 I also had such a moment during my master thesis when I was calculating the expected value of the experiment but I was stuck for a long time. One late afternoon a PhD student came by and talked for a little. He just casually mentioned every step of my calculation and within a minute I found my mistake. Talking to other people is usually the best way to solve a problem. 
 
 
-# 14. DevOps
+# 47. DevOps
 
 // move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
 
@@ -6733,7 +6735,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 - Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
 
 
-# Mental health
+# 48. Mental health
 
 I didn't really think about this topic until I watched just another random youtube video about this topic[https://youtu.be/aK_Jq00Hd8E]. It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
 
@@ -6750,7 +6752,7 @@ On the other hand, there are also plenty of things that can make you feel better
 Furthermore a rewarding work is also very important to keep your spirits high. For example if you frequently finish your tickets in time and you are praised for it by your boss. On the other side it is very depressing if your tickets are too big to be finished and you are constantly behind your schedule. This is a common issue in Agile development [section ?]. Your work is only rewarding if your team is realistic about how fast they can work.
 
 
-# 46. Hiring and getting hired
+# 49. Hiring and getting hired
 
 [The Software Craftsman (by Sandro Mancuso)], [Cracking the Coding interview]
 
@@ -6780,7 +6782,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 48. Examples
+# 50. Examples
 
 // remove?  Write a separate book with examples?
 
@@ -6952,7 +6954,7 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
-# 49. About Copilot
+# 51. About Copilot
 
 The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
 
@@ -7021,7 +7023,7 @@ And as I'm writing these lines, I also get the feeling that Copilot has some nar
 
 Copilot is indeed a great tool. It was a great help writing this book and the code examples. But it is far from perfect. I doubt that it will completely replace software engineers and authors any time soon. Though it may change the way we work. It is a great source of "inspiration" (again: suggestion by Copilot) when you don't know what to write. And at times its suggestions are just hillarious. What it can't do is reading your mind. You first have to give it some input. And even then it is sometimes hard to tell it what you want to do. This is why you are still better off reading this book and understanding the patterns explained here. Copilot is not a replacement for your brain.
 
-# 50. Further reading
+# 52. Further reading
 
 I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
 
@@ -7062,7 +7064,7 @@ google style guide, https://google.github.io/styleguide/
 And several youtube channels,
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim
 
-# 51. Outlook
+# 53. Outlook
 
 "Programming is learned by writing programs." ― Brian Kernighan
 
@@ -7078,7 +7080,7 @@ Marco
 
 
 
-# 52. Abbreviations
+# 54. Abbreviations
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
 CD 	Continuous Delivery
@@ -7092,6 +7094,7 @@ OO	Object Oriented
 QA	Quality Assurance 
 TDD	Test Driven Development 
 YAGNI	You Aren’t Going Need It
+
 
 
 
