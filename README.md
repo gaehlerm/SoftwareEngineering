@@ -259,7 +259,10 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [About software architecture](#about-software-architecture)
   - [Layering code](#layering-code)
     - [Stability of code](#stability-of-code)
-  - [About Architecture](#about-architecture)
+  - [Different Architecuter types](#different-architecuter-types)
+  - [The end of Architecture](#the-end-of-architecture)
+  - [Designing Interfaces](#designing-interfaces)
+  - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
 - [24. Solid principles](#24-solid-principles)
   - [Single Responsibility Principle](#single-responsibility-principle)
@@ -4083,71 +4086,42 @@ Now this is a topic that is not that easy to understand. Why should you exactly 
 
 The reason is coupling. Let's assume there are 3 levels of code. You want the low level to be coupled only to the intermediate level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
 
+
 ### Stability of code
 
-//check this section again.
+//this section still needs some work
 
 Let's take the following metric: we have a class A. How many (f_I) other classes have to be comipled in order to compile A? And how many (f_O) other classes depend on A? The stability of A is defined as I = f_O / (f_I + f_O). If the stability is 0, the class is very stable. It doesn't depend on any other class. If the stability close to 1, the class is very instable. It depends on many other classes [97 things every programmer should know, chapter 74]. The goal of refactoring is to increase the stability of the code, thus to decrease the number of classes that class A depends on.
 
 
+## Different Architecuter types
 
-// Either get this chapter right, or delete it as some point.
+// should I eplain the different architecture types? horizontal, hexagonal, onion layers (clean architecture)?
 
-// https://youtu.be/KqWNtCpjUi8 It doesn't really matter what kind of architecture you use. They all have in common that the arrows point only in one direction.
+// Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
 
-// where to write about stability of code? see clean architecture and 97-things-every-programmer-should-know chapter 74
 
-// DDD p. 61: Every technical employee working on the model also has to write code. For large projects, however, there still has to be some person responsible for making higher level design choices.
+## The end of Architecture
 
-// should I eplain the different architecture types? horizontal, hexagonal, onion layers?
+One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. Because if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. Like real architects have to visit the construction site regularly, software architects also have to supervise the development process closely. Because the architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
 
-// https://youtu.be/7ZXW_oWdTk4
 
-// the 4 layers are also called: presentation layer, application layer, business logic layer and data access layer, https://youtu.be/BrT3AO8bVQY?t=57 though there can be more or less layers.
+## Designing Interfaces
 
-when implementing a feature, you have to slice the layers vertically. Like this you break up the big layers into small blocks. It is generally recommended for comparably small apps. It should have performance issues? Seriously?
-
-Model view controller (MVC) pattern is probably the oldest one.
-
-Microservices
-
-Hexagonal architecture
-
-Layered architecture
-
-Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
-
-Monotliths vs. microservices, https://youtu.be/NdeTGlZ__Do?t=83
-
-## About Architecture
-
-An Architect designs a house from the bigger picture down to the tiny details. But designing is not all he does. He also visits the construction site at least once a week to check the progress made, discuss possible issues with the construction workers, etc. An architect is responsible for everything, including all the small details.
-
-In software development, the word architect seems to be used a little carelessly. Frequently people use it only for the high-level designer of an application. The architect designs whatever he feels like and leaves the rest of the work to the development team. Of course, this is bound to end up in trouble.
-
-In the following I’ll follow the notation of Robert C. Martin what architecture should be. Architecture should be everything. From the high-level design all the way down to the tiny details. If you were hoping to get here some general advice how to design the high-level part of your software, I’ll have to disappoint you. It’s more about the general picture.
-
-Good architecture takes time. It takes time to think about the structure of the code, time to clean up leftovers from previous coding attempts and time to write tests. But what if you have to be faster and start sacrificing quality of your architecture? It will take time to understand the code, time to change the code, time to explain your new colleague how everything works. Brief, you don’t gain anything. On the opposite, you will be much slower on the long run. Even under the pressure from the marketing and sales department, don’t let the quality of the architecture down. It will never pay off. Quick and dirty does not exist. There’s only slow and dirty.
-
-One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only partial interfaces, meaning that it’s like an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface.
+One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only "partial interfaces", meaning that it’s an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface which is not exposed to the outside.
 
 A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
 
-It’s the architects’ job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface?
+It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all?
 
 // write something about structuring classes into a library.
 
 // Pretty much anything that holds for classes also holds for modules/libraries. Increase cohesion within a library and reduce coupling between libraries.
 
-// One shouldn’t just cut the code horizontally or vertically. One should do both.
-
-// Should we mention Uncle bob’s principles how modules should be structured?
-
-//I think there is some more to mention from clean Architecture.
-Separate Libraries
+## Separate Libraries
 
 In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
-s
+
 // These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecture.
 
 Reasons favoring bigger libraries are:
@@ -4155,6 +4129,7 @@ Reasons favoring bigger libraries are:
 -	If is easier to understand one coherent model than two distinct ones plus mapping between them
 -	Translation between two models can be difficult
 -	Shared language fosters clear team communication
+
 Reasons favoring smaller libraries are:
 -	Communication overhead between developers is reduced.
 -	Continuous Integration is easier with smaller teams and code bases
@@ -4164,7 +4139,9 @@ These advantages for either sides lead to trade offs in library sizes. Generally
 
 ### Coupling
 
-Interestingly, all the explanations made here about coupling and cohesion are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
+Interestingly, all the explanations about coupling and cohesion made for classes are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! 
+
+An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 # 24. Solid principles 
 
