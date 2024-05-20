@@ -406,9 +406,10 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 - [43. Planning](#43-planning)
   - [Planning code](#planning-code)
 - [44. Agile](#44-agile)
-  - [Agile values](#agile-values)
+  - [Problems of Waterfall](#problems-of-waterfall)
+  - [Agile was born](#agile-was-born)
   - [Work planning](#work-planning)
-  - [QA](#qa)
+  - [Quality Assurance](#quality-assurance)
   - [The Iron Cross](#the-iron-cross)
     - [Good](#good)
     - [Fast](#fast)
@@ -416,6 +417,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Done](#done)
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
+- [Mental health](#mental-health)
 - [46. Hiring and getting hired](#46-hiring-and-getting-hired)
   - [Hiring](#hiring)
   - [Getting hired](#getting-hired)
@@ -532,7 +534,9 @@ My boss wrote most of the code and the success of the company was based to a fai
 
 Around that time the company hired some more software developers. Especially one of them made a huge impression on me. I could ask him almost anything and he was able to give me a simple answer. He knew the concepts that our code was based on which allowed him to understand the fundamental structure in our code and sort out all the rest. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning he came to the office. He opened a gigantic merge request where he tried to refactor some code throughout the whole code base. He broke down this huge and widespread problem into small chunks and wrote tests for the new implementation. He opened my eyes. He made me realize the way he worked was so much better. So much more structured. This was proper engineering. Real software engineering.
 
-There is so much I learned in the few years since my friend fell into the shit hole. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, but fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by the infinite amount of decisions a programmer has to make. This book contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other fields of engineering. Therefore, a car is frequently a better example to explain my point than some fancy piece of code you struggle understanding.
+There is so much I learned in these few years. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, but fundamental principles. It gives you an overview of the most important topics such that you don’t get overwhelmed by the infinite amount of decisions a programmer has to make. This book contains a lot of real-world examples that don’t use any code at all. I want to explain principles that are very general and don’t need any code to explain. In fact, software engineering is with some respects very similar to other fields of engineering. Therefore, a car is frequently a better example to explain my point than some fancy piece of code you struggle understanding.
+
+Of course, I also added some code examples as well. I didn't want this book to be too abstract. Though in order to keep the examples small, I frequently had to make them somewhat dumb.
 
 I’m not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand and I tried to keep all chapters down to the point and easy to understand. It keeps the book short and motivates you to read it all, because everything I wrote is important. At least that's what I hope.
 
@@ -558,11 +562,11 @@ In this chapter we want to look at how code should look like. What kind of rules
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code irrespectively. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
-This book contains comparably little code. It’s more about general concepts or software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
+This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
 
-This book tries to give clear answers to simple problems. I also try giving answers to hard problems, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
+This book tries to give clear answers to simple problems. I also try giving answers to hard problems like naming, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
 
-This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book, thus I mention what book I was reading as a foundation for the corresponding chapter.
+This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book. Thus I mention what book I was reading as a foundation for the corresponding chapter.
 
 ## The Life of a Software Engineer
 
@@ -576,7 +580,7 @@ Let me start with a very blunt question: What do you think does a software engin
 
 Indeed, these answers contain some truth. But writing code covers only a tiny fraction of your future working day. One thing you will do is the same as we do right now: you analyze a problem and try to figure out what to do next. 
 
-You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up or discussing things. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers sums it up nicely.
+You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up or discussing things. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers I found somewhere on the internet sums it up nicely.
 
 <img src=images/programmerActivity.png width="400">
 
@@ -2320,7 +2324,7 @@ Tests that are over specified are called brittle. They break when changing the c
 
 Another example of brittle tests are tests for methods that should be private, but are made public in order to test them. This prevents you from refactoring this function as it is now part of the public interface. Changing it will break the tests, even if the real public interface is not changed. This is why private methods should not be made public in order to test them. If you really feel the urge to test a private method, you should refactor it into a separate class.
 
-Here is an example of a brittle test. Again, it is a pretty dumb example. But I'm sure people have already read out json strings character by character. Please always use libraries instead for such purposes.
+Here is an example of a brittle test. Again, it is a pretty dumb example. But I'm sure people have already read out json strings character by character. Please always use libraries instead for such purposes. Otherwise the code becomes brittle.
 
 ```py
 import json
@@ -2349,8 +2353,6 @@ A common question is "what to test?". A very simple answer is: everything. This 
 As software engineers, we want to automate everything, tests included. However, this is not always possible. There are still things that we can barely automate. One example are image processing algorithms. How much can you compress an image such that it still looks good? This is very hard to tell with an automated test and is better judged by humans. Also if you run some complex simulation, like the aerodynamics of an airplane, you cannot write a test to check that your simulation yields the correct result. Simply because you don't know the correct result. You can only judge from your experience that the result makes sense. There are still things that are better tested by humans than computers.
 
 # 12. Types of tests
-
-// should this go before the previous chapter? I frequently mention unit tests there...
 
 There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a mixture of two different types. But in general, the following 3 categories are sufficient.
 1. Unit tests test the behavior of individual functions, classes and modules.
@@ -3184,7 +3186,7 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 # Refactoring techniques
 
-"To me, legacy Code is code without tests" - Michael Feathers [WELC]
+"To me, legacy code is code without tests" - Michael Feathers [WELC]
 
 // WIP: This needs some more work. Read WELC and Refactoring and add some more examples.
 
@@ -3213,26 +3215,26 @@ If I have a function or method that is too long or not cohesive enough, I can re
 Let's say we have this very simple code here. We already saw that this is violating the SRP as printing a string and calling a function are two different levels of abstraction.
 
 ```py
+def print_content():
+    # print some stuff
+
 print("author: Marco Gähler")
 print("********************")
 print_content()
-
-def print_content():
-    # print some stuff
 ```
 
 The solution is taking the explicit print statements into a function and call this function instead.
 
 ```py
-print_header()
-print_content()
-
 def print_header():
     print("author: Marco Gähler")
     print("********************")
 
 def print_content():
     # print some stuff
+    
+print_header()
+print_content()
 ```
 
 For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway. Even better is to cut (ctrl-x) and paste the code snippet, but that's a detail.
@@ -6578,19 +6580,31 @@ I also had such a moment during my master thesis when I was calculating the expe
 
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
-[Clean agile], [Agile manifesto]
+Agile is the de facto industry standard when it comes to planning of software projects. But it has not always been this way. So how did we get there and what does Agile actually mean?
+
+// Volker: kanban worked much better with real paper. Software has all kind of drawbacks.
+
 
 // add the INVENT points from clean agile
 
-Until the year 2001, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan all the complexity top down and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
+## Problems of Waterfall
+
+Until the the early 2000s, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan all the complexity top down and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
 
 The first problem of waterfall was missing feedback. The whole project was just one big pile of work and it was impossible to get a reasonable estimate on the time it takes to get all the work is done. Many projects failed spectacularly as at the deadline there was still a significant fraction of this pile left but no one informed the management beforehand.
 
-The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. It is simply not possible to plan a house down to the very last detail. And worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
+The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. It is simply not possible to plan a house down to the very last detail. The architect has to visit the construction site weekly, if not daily to fix problems that will show up. But that's not the only issue. Maybe even worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
 
-## Agile values
+## Agile was born
 
-In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto, a brief guide line how software development should be done. Some of the points were:
+When planning a project, there are three simple truths [Zühlke, www.zuehlke.com]:
+1. It is rarely possible to gather all the requirements at the beginning of a project
+2. Users will change their minds
+3. There will always be more to do than time and money will allow
+
+These three truths are the reason why waterfall was never going to work. Instead a somewhat more adaptive approach was needed. A more ... agile one.
+
+In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto [Agile manifesto], [Clean Agile], a brief guide line how software development should be done. Some of the points were:
 -	Individuals and interactions over processes and tools.
 -	Working software over comprehensive documentation.
 -	Customer collaboration over contract negotiation.
@@ -6620,7 +6634,15 @@ Tickets all have some business value. They have a direct effect on the user. Thi
 
 At the same time, one can write acceptance tests for every ticket. "... if the user clicks x, then the window closes." This test is also the acceptance criterion of the ticket. The ticket is accepted if the acceptance test passes.
 
-## QA
+// Write SMART Acceptance ciriteria [Zühlke, www.zuehlke.com] // move this to Requirements Engineering??
+
+Specific: Use examples with values.
+Measurable: You have to be able to test it.
+Achievable: It should not depend on 3rd parties.
+Relevant: It should be important to the user.
+Time-bound: It should be done in a reasonable time frame.
+
+## Quality Assurance
 
 In waterfall projects, the Quality Assurance (QA) was manually trying to find bugs in the existing software. This certainly does not fit anymore with agile. Instead, the QA should write the acceptance tests of every ticket. These tests should preferably be written before the developers finished working on the same ticket. This is quite similar to TDD and is called Behavior Driven Development (BDD) or at times Acceptance Test Driven Development (ATDD).
 
@@ -6675,6 +6697,22 @@ The most important point from Agile is that you should figure out by yourself wh
 Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. What most people don't understand is that they would have to remain flexible also in waterfall mode as plaining everything from scratch isn't working out. 
 
 In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task and you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
+
+# Mental health
+
+I didn't really think about this topic until I watched another youtube video about this topic. It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
+
+First of all, we have to agree to the fact that we are not machines. We are humans. Our brain is just one of our organs and it can be damaged. And the most common cause of brain damage is excessive amounts of adrenalin and cortisone, two stress related hormons. These hormons are great as they allowed us to gain unnatural powers to fight off wild animals. But when exposed to them for a long time, they seriously damage our bodies and our brains. And this frequently happens in software engineering. We are constantly under pressure to deliver and do not have sufficient time to calm down again. On the long term, this is a serious issue as it causes burn-out and depression.
+
+One thing you certainly have to be aware of are your working hours. Working more does not make you more effective. You might work overtime before an important deadline and your adrenalin boost may help you with it. But this is no sustainable working model. You'll need some time to calm down again. Working less might in fact make you more productive. I usually work only 80% (33 hours a week) because of this reason. Of course I'm in this lucky position that I can afford to work less. Furthermore it is important that you don't respond to emails and phone calls in your free time [https://youtu.be/C4GOekfDrOQ]. 
+
+There are several signs that you are at the brink of a burn-out and you should take them seriously. The easiest issue to spot are sleeping problems. This can be caused by too much adrenalin and makes you feel awake all the time. However your body and brain need some rest again to recover. In case you have serious sleeping problems you should definitely visit a doctor and take a step down at work.
+
+Another reason is bad mood and mobbing at the work place. This should also be adressed by your boss right away. And if he doesn't fix it it's time you look for another job. You probably can't fix this on your own and you're only risking your mental health by staying any longer. Even if you like your job, it's not worth it. And chances are that you'll find another job that you like as well. I recommend talking to some of your friends about your problems. Probably they can pinpoint some of your problems and help you solve them. And yeah, I've also been there. I also quit a job before because the mood in the team was so bad and my boss wasn't going to do anything about it.
+
+On the other hand, there are also plenty of things that can make you feel better. Most notably if you have a good mood in your team. This is something that cannot be overstated. People who like working with their coworkers are less likely to suffer from mental problems and won't quit their job easily. It is said that already the old romans figured out that a good moral and motivation is important for their legions and a sense of humor was one of the criteria to be accepted into their legions [?].
+
+Furthermore a rewarding work is also very important to keep your spirits high. For example if you frequently finish your tickets in time and you are praised for it by your boss. On the other side it is very depressing if your tickets are too big to be finished and you are constantly behind your schedule. This is a common issue in Agile development [section ?]. Your work is only rewarding if your team is realistic about how fast they can work.
 
 
 # 46. Hiring and getting hired
