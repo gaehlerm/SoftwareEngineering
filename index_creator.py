@@ -41,18 +41,13 @@ def save_only_desired_words():
     with open(desired_index_file, "r") as desired:
         desired_words = desired.read().splitlines()
 
-    all_words = []
-    with open(all_words_file, "r") as all:
-        all_words = all.read().splitlines()
-
     complete_text = PyPDF2.PdfReader(pdf_file)
 
     with open(index_file, "w") as index:
-        for word in all_words:
-            if word in desired_words:
-                index.write(word + " ")
-                # this search takes a long time for many words!!
-                index.write(str(search_page_numbers(word, complete_text)))
+        for word in desired_words:
+            index.write(word + " ")
+            # this search takes a long time for many words!!
+            index.write(str(search_page_numbers(word, complete_text)))
 
 no_duplicates = []
 
