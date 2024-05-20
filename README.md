@@ -46,6 +46,18 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [A word about Copilot](#a-word-about-copilot)
 - [4. Software Engineering](#4-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+- [37. Good code, a list of rules](#37-good-code-a-list-of-rules)
+  - [The Zen of Python](#the-zen-of-python)
+- [16. Understandable code](#16-understandable-code)
+  - [How humans think](#how-humans-think)
+  - [Spaghetti code](#spaghetti-code)
+  - [Examples](#examples)
+    - [Structuring function arguments](#structuring-function-arguments)
+    - [Complicated code](#complicated-code)
+    - [Assigning variables inside conditions](#assigning-variables-inside-conditions)
+    - [Scope of variables](#scope-of-variables)
+    - [Approximate programming](#approximate-programming)
+  - [Copilot](#copilot)
 - [5. Single responsibility principle](#5-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
@@ -79,18 +91,23 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Orthogonality](#orthogonality)
     - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
     - [Example of an adapter](#example-of-an-adapter)
-  - [Copilot](#copilot)
+  - [Copilot](#copilot-1)
+- [27. Naming](#27-naming)
+  - [Naming Antipatterns](#naming-antipatterns)
+    - [Useles Words](#useles-words)
+    - [Generic Names](#generic-names)
+  - [Copilot](#copilot-2)
 - [8. Functions](#8-functions)
   - [Do one thing only](#do-one-thing-only)
     - [Levels of indentation](#levels-of-indentation)
     - [Naming](#naming-1)
   - [Temporal coupling](#temporal-coupling)
   - [Number of arguments](#number-of-arguments)
-    - [Copilot](#copilot-1)
+    - [Copilot](#copilot-3)
   - [Output arguments](#output-arguments)
   - [Return values](#return-values)
   - [Summary](#summary-1)
-  - [Copilot](#copilot-2)
+  - [Copilot](#copilot-4)
 - [9. Classes](#9-classes)
   - [Data classes and structs](#data-classes-and-structs)
   - [Private or Public](#private-or-public)
@@ -116,7 +133,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Static expression](#static-expression)
   - [Drawbacks of classes](#drawbacks-of-classes)
   - [Conclusions](#conclusions)
-  - [Copilot](#copilot-3)
+  - [Copilot](#copilot-5)
 - [10. Inheritance](#10-inheritance)
   - [Two types of Inheritance](#two-types-of-inheritance)
   - [Drawbacks of inheritance](#drawbacks-of-inheritance)
@@ -128,7 +145,32 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Advantages of Inheritance](#advantages-of-inheritance)
   - [Inheritance and Composition](#inheritance-and-composition)
   - [Conclusions](#conclusions-1)
-- [11. Testing](#11-testing)
+- [25. Data types](#25-data-types)
+  - [Lists](#lists)
+  - [Enums](#enums)
+    - [Booleans](#booleans)
+    - [Strings](#strings)
+    - [Ints](#ints)
+    - [Classes](#classes)
+    - [Enums](#enums-1)
+  - [Booleans](#booleans-1)
+    - [Match case statements](#match-case-statements)
+  - [Strings](#strings-1)
+    - [Stringly typed objects](#stringly-typed-objects)
+    - [Natural Language](#natural-language)
+  - [Dicts](#dicts)
+  - [Trees](#trees)
+  - [Pointers](#pointers)
+- [26. Properties of Variables](#26-properties-of-variables)
+  - [Compile-time constant](#compile-time-constant)
+  - [Runtime Constant](#runtime-constant)
+    - [Constant Class instances](#constant-class-instances)
+  - [Mutable Variables](#mutable-variables)
+  - [Member Variables](#member-variables)
+  - [Static Variables](#static-variables)
+  - [Global Variables](#global-variables)
+  - [Comparison of Variable Properties](#comparison-of-variable-properties)
+- [11. Introduction to Testing](#11-introduction-to-testing)
   - [A short story about tests](#a-short-story-about-tests)
   - [Test examples](#test-examples)
     - [Structure of a Software test](#structure-of-a-software-test)
@@ -155,7 +197,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Unit tests](#unit-tests)
     - [Testing files in unit tests](#testing-files-in-unit-tests)
     - [Testing classes](#testing-classes)
-    - [Copilot](#copilot-4)
+    - [Copilot](#copilot-6)
   - [Integration tests](#integration-tests)
   - [Functional tests](#functional-tests)
   - [Other kinds of tests](#other-kinds-of-tests)
@@ -178,44 +220,30 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Faking](#faking)
     - [Dependency injection](#dependency-injection)
   - [Summary](#summary-2)
-  - [Copilot](#copilot-5)
-- [14. DevOps](#14-devops)
-  - [The early 2000s](#the-early-2000s)
-    - [Getting a project](#getting-a-project)
-  - [Benefits of DevOps](#benefits-of-devops)
-- [15. Refactoring Fundamentals](#15-refactoring-fundamentals)
-  - [There will be change](#there-will-be-change)
-  - [Keeping code in shape](#keeping-code-in-shape)
-    - [Refactoring and automated tests](#refactoring-and-automated-tests)
-    - [Keep refactorings small](#keep-refactorings-small)
-  - [Levels of Refactoring](#levels-of-refactoring)
-    - [Refactoring is dynamic](#refactoring-is-dynamic)
-    - [The circle of doom](#the-circle-of-doom)
-  - [When to Refactor](#when-to-refactor)
-  - [Refactoring process](#refactoring-process)
-- [Refactoring techniques](#refactoring-techniques)
-  - [Refactoring good code](#refactoring-good-code)
-    - [Renaming](#renaming)
-    - [Extract function](#extract-function)
-    - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
-  - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
-    - [Seams](#seams)
-    - [Sketches](#sketches)
-    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
-    - [What tests should I write?](#what-tests-should-i-write)
-    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
-    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
-  - [Copilot](#copilot-6)
-- [16. Understandable code](#16-understandable-code)
-  - [How humans think](#how-humans-think)
-  - [Spaghetti code](#spaghetti-code)
-  - [Examples](#examples)
-    - [Structuring function arguments](#structuring-function-arguments)
-    - [Complicated code](#complicated-code)
-    - [Assigning variables inside conditions](#assigning-variables-inside-conditions)
-    - [Scope of variables](#scope-of-variables)
-    - [Approximate programming](#approximate-programming)
   - [Copilot](#copilot-7)
+- [24. SOLID principles](#24-solid-principles)
+  - [Single Responsibility Principle](#single-responsibility-principle)
+  - [Open Closed Principle](#open-closed-principle)
+  - [Liskov Substitution Principle](#liskov-substitution-principle)
+  - [Interface Segregation Principle](#interface-segregation-principle)
+  - [Dependency Inversion Principle](#dependency-inversion-principle)
+    - [Example](#example-1)
+  - [Summary](#summary-3)
+- [35. Software Engineering principles](#35-software-engineering-principles)
+  - [Divide and Conquer](#divide-and-conquer)
+  - [Increase Cohesion](#increase-cohesion)
+  - [Reduce coupling](#reduce-coupling)
+  - [Increase abstraction](#increase-abstraction)
+  - [Increase reusability](#increase-reusability)
+  - [Design for flexibility](#design-for-flexibility)
+  - [Anticipate Obsolesence](#anticipate-obsolesence)
+  - [Design for Testability](#design-for-testability)
+- [19. Programming Paradigms](#19-programming-paradigms)
+  - [Object Oriented programming](#object-oriented-programming)
+  - [Procedural programming](#procedural-programming)
+  - [Functional programming](#functional-programming)
+  - [Conclusions](#conclusions-2)
+  - [Copilot](#copilot-8)
 - [17. Programming languages](#17-programming-languages)
   - [Existing programming languages](#existing-programming-languages)
   - [Code examples](#code-examples)
@@ -227,9 +255,14 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Vectors](#vectors)
     - [Smart pointers](#smart-pointers)
     - [Pass by reference](#pass-by-reference)
-    - [Classes](#classes)
+    - [Classes](#classes-1)
     - [Structs](#structs)
-  - [Copilot](#copilot-8)
+  - [Copilot](#copilot-9)
+- [22. Physical laws of code](#22-physical-laws-of-code)
+  - [Entropy](#entropy)
+  - [Correlation](#correlation)
+  - [Quality](#quality)
+  - [Requirements](#requirements)
 - [18. Bugs, Errors, Exceptions](#18-bugs-errors-exceptions)
   - [Syntax Errors](#syntax-errors)
   - [Bugs](#bugs)
@@ -238,23 +271,23 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Bug Reports](#bug-reports)
     - [Tracking down bugs](#tracking-down-bugs)
     - [Fixing a bug](#fixing-a-bug)
-    - [Copilot](#copilot-9)
+    - [Copilot](#copilot-10)
   - [Exceptions](#exceptions)
     - [Wrapping exceptions](#wrapping-exceptions)
     - [Exceptions and goto](#exceptions-and-goto)
-- [19. Programming Paradigms](#19-programming-paradigms)
-  - [Object Oriented programming](#object-oriented-programming)
-  - [Procedural programming](#procedural-programming)
-  - [Functional programming](#functional-programming)
-  - [Conclusions](#conclusions-2)
-  - [Copilot](#copilot-10)
+- [28. Complexity](#28-complexity)
+  - [Complexity of code](#complexity-of-code)
+  - [Estimating complexity](#estimating-complexity)
+  - [Single line complexity](#single-line-complexity)
+  - [Black magic code](#black-magic-code)
+- [39. Dependencies](#39-dependencies)
+  - [The early days](#the-early-days)
+  - [The dependency graph](#the-dependency-graph)
+  - [Breaking up dependencies](#breaking-up-dependencies)
+  - [Circular dependencies](#circular-dependencies)
+    - [Example](#example-2)
 - [21. Decoupling](#21-decoupling)
   - [Law of demeter](#law-of-demeter)
-- [22. Physical laws of code](#22-physical-laws-of-code)
-  - [Entropy](#entropy)
-  - [Correlation](#correlation)
-  - [Quality](#quality)
-  - [Requirements](#requirements)
 - [23. Software Architecture](#23-software-architecture)
   - [About software architecture](#about-software-architecture)
   - [Layering code](#layering-code)
@@ -264,105 +297,6 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
-- [24. Solid principles](#24-solid-principles)
-  - [Single Responsibility Principle](#single-responsibility-principle)
-  - [Open Closed Principle](#open-closed-principle)
-  - [Liskov Substitution Principle](#liskov-substitution-principle)
-  - [Interface Segregation Principle](#interface-segregation-principle)
-  - [Dependency Inversion Principle](#dependency-inversion-principle)
-    - [Example](#example-1)
-  - [Summary](#summary-3)
-- [25. Data types](#25-data-types)
-  - [Lists](#lists)
-  - [Enums](#enums)
-    - [Booleans](#booleans)
-    - [Strings](#strings)
-    - [Ints](#ints)
-    - [Classes](#classes-1)
-    - [Enums](#enums-1)
-  - [Booleans](#booleans-1)
-    - [Match case statements](#match-case-statements)
-  - [Strings](#strings-1)
-    - [Stringly typed objects](#stringly-typed-objects)
-    - [Natural Language](#natural-language)
-  - [Dicts](#dicts)
-  - [Trees](#trees)
-  - [Pointers](#pointers)
-- [26. Properties of Variables](#26-properties-of-variables)
-  - [Compile-time constant](#compile-time-constant)
-  - [Runtime Constant](#runtime-constant)
-    - [Constant Class instances](#constant-class-instances)
-  - [Mutable Variables](#mutable-variables)
-  - [Member Variables](#member-variables)
-  - [Static Variables](#static-variables)
-  - [Global Variables](#global-variables)
-  - [Comparison of Variable Properties](#comparison-of-variable-properties)
-- [27. Naming](#27-naming)
-  - [Naming Antipatterns](#naming-antipatterns)
-    - [Useles Words](#useles-words)
-    - [Generic Names](#generic-names)
-  - [Copilot](#copilot-11)
-- [28. Complexity](#28-complexity)
-  - [Complexity of code](#complexity-of-code)
-  - [Estimating complexity](#estimating-complexity)
-  - [Single line complexity](#single-line-complexity)
-  - [Black magic code](#black-magic-code)
-- [29. Data files](#29-data-files)
-  - [CSV](#csv)
-    - [Copilot](#copilot-12)
-  - [Json](#json)
-    - [Copilot](#copilot-13)
-  - [XML](#xml)
-    - [Copilot](#copilot-14)
-  - [HDF5](#hdf5)
-    - [Copilot](#copilot-15)
-  - [Databases](#databases)
-    - [Copilot](#copilot-16)
-  - [Custom file format](#custom-file-format)
-- [30. Setting up a project](#30-setting-up-a-project)
-  - [Project folder](#project-folder)
-- [31. Performance Optimization](#31-performance-optimization)
-  - [No optimization needed](#no-optimization-needed)
-  - [Optimization might be needed](#optimization-might-be-needed)
-  - [Optimizing from scratch](#optimizing-from-scratch)
-- [32. Comments](#32-comments)
-  - [Bad comments](#bad-comments)
-    - [Commented out code](#commented-out-code)
-    - [TODO comments](#todo-comments)
-    - [Comments replacing code](#comments-replacing-code)
-  - [Useful comments](#useful-comments)
-    - [Requirements](#requirements-1)
-    - [How to write comments](#how-to-write-comments)
-    - [Docstring](#docstring)
-  - [Commenting magic numbers](#commenting-magic-numbers)
-  - [Summary](#summary-4)
-  - [Copilot](#copilot-17)
-- [33. Logging](#33-logging)
-- [34. Tools](#34-tools)
-  - [Version control software](#version-control-software)
-    - [Git, everywhere git](#git-everywhere-git)
-    - [Copilot](#copilot-18)
-  - [Command line](#command-line)
-    - [Copilot](#copilot-19)
-  - [IDE](#ide)
-  - [Continuous Integration](#continuous-integration)
-  - [Debugger](#debugger)
-  - [Profiler](#profiler)
-  - [Formatter](#formatter)
-  - [Code quality checker](#code-quality-checker)
-  - [Pip, cmake](#pip-cmake)
-  - [Ticketing system](#ticketing-system)
-  - [Wiki](#wiki)
-  - [Docstring](#docstring-1)
-- [35. Software Engineering principles](#35-software-engineering-principles)
-  - [Divide and Conquer](#divide-and-conquer)
-  - [Increase Cohesion](#increase-cohesion)
-  - [Reduce coupling](#reduce-coupling)
-  - [Increase abstraction](#increase-abstraction)
-  - [Increase reusability](#increase-reusability)
-  - [Design for flexibility](#design-for-flexibility)
-  - [Anticipate Obsolesence](#anticipate-obsolesence)
-  - [Design for Testability](#design-for-testability)
 - [36. Domain Driven Design ???](#36-domain-driven-design-)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
@@ -385,15 +319,81 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
     - [Services](#services)
     - [Aggregates](#aggregates)
     - [Organizing aggregates](#organizing-aggregates)
-- [37. Good code, an overview](#37-good-code-an-overview)
-  - [The Zen of Python](#the-zen-of-python)
 - [38. 3rd party software](#38-3rd-party-software)
-- [39. Dependencies](#39-dependencies)
-  - [The early days](#the-early-days)
-  - [The dependency graph](#the-dependency-graph)
-  - [Breaking up dependencies](#breaking-up-dependencies)
-  - [Circular dependencies](#circular-dependencies)
-    - [Example](#example-2)
+- [42. Working with existing projects](#42-working-with-existing-projects)
+  - [No Interfaces](#no-interfaces)
+  - [No Tests](#no-tests)
+  - [Extremely long functions](#extremely-long-functions)
+- [15. Refactoring Fundamentals](#15-refactoring-fundamentals)
+  - [There will be change](#there-will-be-change)
+  - [Keeping code in shape](#keeping-code-in-shape)
+    - [Refactoring and automated tests](#refactoring-and-automated-tests)
+    - [Keep refactorings small](#keep-refactorings-small)
+  - [Levels of Refactoring](#levels-of-refactoring)
+    - [Refactoring is dynamic](#refactoring-is-dynamic)
+    - [The circle of doom](#the-circle-of-doom)
+  - [When to Refactor](#when-to-refactor)
+  - [Refactoring process](#refactoring-process)
+- [Refactoring techniques](#refactoring-techniques)
+  - [Refactoring good code](#refactoring-good-code)
+    - [Renaming](#renaming)
+    - [Extract function](#extract-function)
+    - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
+  - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
+    - [Seams](#seams)
+    - [Sketches](#sketches)
+    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
+    - [What tests should I write?](#what-tests-should-i-write)
+    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
+    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
+  - [Copilot](#copilot-11)
+- [31. Performance Optimization](#31-performance-optimization)
+  - [No optimization needed](#no-optimization-needed)
+  - [Optimization might be needed](#optimization-might-be-needed)
+  - [Optimizing from scratch](#optimizing-from-scratch)
+- [32. Comments](#32-comments)
+  - [Bad comments](#bad-comments)
+    - [Commented out code](#commented-out-code)
+    - [TODO comments](#todo-comments)
+    - [Comments replacing code](#comments-replacing-code)
+  - [Useful comments](#useful-comments)
+    - [Requirements](#requirements-1)
+    - [How to write comments](#how-to-write-comments)
+    - [Docstring](#docstring)
+  - [Commenting magic numbers](#commenting-magic-numbers)
+  - [Summary](#summary-4)
+  - [Copilot](#copilot-12)
+- [33. Logging](#33-logging)
+- [29. Data files](#29-data-files)
+  - [CSV](#csv)
+    - [Copilot](#copilot-13)
+  - [Json](#json)
+    - [Copilot](#copilot-14)
+  - [XML](#xml)
+    - [Copilot](#copilot-15)
+  - [HDF5](#hdf5)
+    - [Copilot](#copilot-16)
+  - [Databases](#databases)
+    - [Copilot](#copilot-17)
+  - [Custom file format](#custom-file-format)
+- [30. Setting up a project](#30-setting-up-a-project)
+  - [Project folder](#project-folder)
+- [34. Tools](#34-tools)
+  - [Version control software](#version-control-software)
+    - [Git, everywhere git](#git-everywhere-git)
+    - [Copilot](#copilot-18)
+  - [Command line](#command-line)
+    - [Copilot](#copilot-19)
+  - [IDE](#ide)
+  - [Continuous Integration](#continuous-integration)
+  - [Debugger](#debugger)
+  - [Profiler](#profiler)
+  - [Formatter](#formatter)
+  - [Code quality checker](#code-quality-checker)
+  - [Pip, cmake](#pip-cmake)
+  - [Ticketing system](#ticketing-system)
+  - [Wiki](#wiki)
+  - [Docstring](#docstring-1)
 - [40. Working in teams](#40-working-in-teams)
   - [Team structure](#team-structure)
     - [The bus factor](#the-bus-factor)
@@ -402,12 +402,6 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Working with customers](#working-with-customers)
 - [41. Code review](#41-code-review)
   - [Drawbacks](#drawbacks)
-- [42. Working with existing projects](#42-working-with-existing-projects)
-  - [No Interfaces](#no-interfaces)
-  - [No Tests](#no-tests)
-  - [Extremely long functions](#extremely-long-functions)
-- [43. Planning](#43-planning)
-  - [Planning code](#planning-code)
 - [44. Agile](#44-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
@@ -421,6 +415,12 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
 - [Requirements Engineering](#requirements-engineering)
+- [43. Planning](#43-planning)
+  - [Planning code](#planning-code)
+- [14. DevOps](#14-devops)
+  - [The early 2000s](#the-early-2000s)
+    - [Getting a project](#getting-a-project)
+  - [Benefits of DevOps](#benefits-of-devops)
 - [Mental health](#mental-health)
 - [46. Hiring and getting hired](#46-hiring-and-getting-hired)
   - [Hiring](#hiring)
@@ -442,58 +442,60 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 
 # One sentence summary
 
+// mention which part some chapters are in??
+
 1. .
 2. .
 3. Preface: My personal story behind this book.
-4. Introduction: We destill some basic rules what programming is about.
-5. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
-6. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
-7. Interfaces: What is an interface? And how do I design a good interface?
-8. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
-9. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
-10. Inheritance: Inheritance should generally not be used as it often leads to bad code.
-11. Testing: Testing is of utmost importance to keep your code correct over the test of time.
-12. Types of Tests: We discuss unit tests, integration tests and functional tests.
-13. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
-14. DevOps: DevOps is the way to go regarding the organization of your projects.
-15. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
-16. Understandable code: An attempt to explain what we understand and what we don't understand.
-17. Programming languages: A brief overview on the most commonly used programming languages.
-18. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
-19. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
-20. // removed
-21. Decoupling: ? // remove chapter?
-22. Physical laws of code: Surprisingly, code obeys some physical laws as well.
-23. Software Architecture: // ? rewrite chapter?
-24. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
-25. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
-26. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
-27. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
-28. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
-29. Data files: If you store data, there may be better file formats than csv files.
-30. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
-31. Performance Optimization: Don't optimize until the very end of a project.
-32. Comments: Replace comments with code when ever possible.
-33. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
-34. Tools: An overview of the most important tools that you should use, starting with git.
-35. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
-36. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
-37. Good code, an overview: A short list that summarizes the most important points of this book.
-38. 3rd party software: How to deal with 3rd party software.
-39. Dependencies: How do you deal with dependencies between files and code snippets?
-40. Working in teams: Working in teams has some advantages and drawbacks.
-41. Code review: Let your code be reviewed by others.
-42. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
-43. Planning: Before you start coding, you should roughly plan what you are going to do.
-44. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
-45. // removed
-46. Hiring and getting hired: How to get a job as a software engineer.
-47. // removed
-48. Examples: // ? rewrite chapter?
-49. About Copilot: A short overview of Copilot. // move to the introduction?
-50. Outlook: Some personal advice and wishes for your future.
-51. Abbreviations: Abbreviations used in this book.
-52. Index: The index of this book.
+4. Software Engineering: We destill some basic rules what Softwar Engineering is about.
+5. Good code, an overview: A short list that summarizes the most important points of this book.
+6. Understandable code: An attempt to explain what we understand and what we don't understand.
+7. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
+8. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
+9. Interfaces: What is an interface? And how do I design a good interface?
+10. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
+12. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
+13. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
+14. Inheritance: Inheritance should generally not be used as it often leads to bad code.
+15. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
+16. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
+17. Testing: Testing is of utmost importance to keep your code correct over the test of time.
+18. Types of Tests: We discuss unit tests, integration tests and functional tests.
+19. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
+20. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
+21. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
+22. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
+23. Programming languages: A brief overview on the most commonly used programming languages.
+24. Physical laws of code: Surprisingly, code obeys some physical laws as well.
+25. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
+26. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
+27. Dependencies: How do you deal with dependencies between files and code snippets?
+28. Decoupling: ? // remove chapter?
+29. Software Architecture: // ? rewrite chapter?
+30. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
+31. 3rd party software: How to deal with 3rd party software.
+32. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
+33. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
+34. Refactoring techniques: ...?
+35. Performance Optimization: Don't optimize until the very end of a project.
+36. Comments: Replace comments with code when ever possible.
+37. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
+38. Data files: If you store data, there may be better file formats than csv files.
+39. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
+40. Tools: An overview of the most important tools that you should use, starting with git.
+41. Working in teams: Working in teams has some advantages and drawbacks.
+42. Code review: Let your code be reviewed by others.
+43. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
+44. Requirements Engineering: What should you actually program?
+45. Planning: Before you start coding, you should roughly plan what you are going to do.
+46. DevOps: DevOps is the way to go regarding the organization of your projects.
+47. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
+48. Hiring and getting hired: How to get a job as a software engineer.
+49. Examples: // ? rewrite chapter?
+50. About Copilot: A short overview of Copilot. // move to the introduction?
+51. Outlook: Some personal advice and wishes for your future.
+52. Abbreviations: Abbreviations used in this book.
+53. Index: The index of this book.
 
 Chapters to work on:
 - Decoupling (Remove?)
@@ -568,6 +570,8 @@ My publisher had the idea to include Copilot, one of the new AI code generation 
 
 In general it can be said that, already at the time of writing, AI code generation is a very useful tool that can help you improve your productivity and the quality of your code significantly if used correctly. It also helped me writing this book here. Though you always have to be cautios. Copilot is not perfect and it can generate code that is not correct. It creates just some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer, it's just a tool that assists you with your work. You still have to guide it into the right direction.
 
+Part 1: First things first
+
 # 4. Software Engineering
 
 "If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
@@ -576,7 +580,7 @@ In this chapter we want to look at how code should look like. What kind of rules
 
 But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code irrespectively. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
-This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. Therefore I tried to make some code examples, even though it's quite hard to find examples that are short, yet expressive enough to fit into a book. As the programming languages I chose mostly python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
+This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. Therefore I tried to make some code examples. Even though it's quite hard to find examples that are short, yet expressive enough to fit into a book. As the programming languages I chose mostly Python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
 
 This book tries to give clear answers to simple problems. I also try giving answers to hard problems like naming, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
 
@@ -641,6 +645,207 @@ These four rules will accompany us throughout our book.
 - We write automated tests that cover all our code.
 - We constantly clean up our code.
 - We write code in order to create value for our customers.
+
+
+# 37. Good code, a list of rules
+
+// this chapter needs some citations of other chapters.
+
+"Truth can only be found in one place: the code." - Robert C. Martin
+
+This is an attempt to distill a list of rules that allow you to judge the quality of code.
+
+By definition good code is easy to understand. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language.
+
+Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
+
+Pretty much all your code follows the SRP. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
+
+Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
+
+Classes should have high internal cohesion. They should have strong coupling between the variables and methods and weak coupling to other classes. Due to constant refactoring classes tend to lose cohesion. Then they have to be broken up into several smaller classes.
+
+It feels easy to add features and change code. Thanks to the test coverage you have a safety net and well-structured code makes it apparent where new features belong.
+
+A function name tells you what the function does. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects.
+
+There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand.
+
+Define variables right where they are used. Always assign them a value right away.
+
+Create objects always at once. Creating only part of an object because not all required information is around is the code equivalent of a supply chain issue. This can become very confusing. An object should be completely created, or not existing at all. Throw exceptions if objects cannot be created at once.
+
+Write short functions (~< 10 lines) and classes (~< 100 lines). These are very rough estimates and depend on a lot of factors. Usually their length is limited by the SRP and the level of abstraction. Complicated functions and classes have to be short or their complexity might get out of hand.
+
+Keep the dependencies between different parts of the code low. Especially when dealing with 3rd party libraries, you’d better write a wrapper around it. This helps once you want to replace it.
+
+Using a debugger frequently is a strong sign you lost control of the code. Normally, automated tests should cover all the bugs and the debugger remains unused.
+
+YAGNI: You Aren’t Going Need It. Plan ahead the structure of your code but don’t implement anything you don’t need yet. Chances are, you will never need it. Only architects have to speculate what will be used in the future. Developers implement only things that will certainly be used.
+
+The solution representing the natural logic of the problem is usually the best. It has the lowest complexity. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic and you have to bake it into code. Don’t come up with your own logic on a problem you don’t understand too well. 
+
+Use the simplest features of your programming language as possible. Only use more complex features if you really benefit from it. Don’t use features of your programming language that resemble black magic.
+
+Do not nest if loops. Apparently, this violates the SRP and is highly prone to bugs. Avoid nested try catch blocks as well. Preferably avoid nested loops completely.
+
+Avoid Boolean values and logic as much as you can. Due to human deficiencies these are the lines of code which harbor the most errors. Try to avoid them as far as reasonably possible. Make sure every branch of an if statement is covered with tests.
+
+Don’t pass Booleans as function arguments. They are a strong sign of violated SRP. Resolve the consequences immediately.
+
+Don’t do string comparisons, use enums instead. Convert the string into an enum as soon as you have the string object available.
+
+Make the code self-commenting. Only use comments for things the code can’t explain by itself.
+
+Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
+
+## The Zen of Python
+
+The Zen of Python [https://peps.Python.org/pep-0020/#the-zen-of-Python] is a list of 19 guiding priceples by Tim Peters. I think they are very useful and thus I decided to include some of them to my list, along with some short explanation.
+
+Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will hunt you eventually.
+
+Flat is better than nested: Nested code is hard to understand and error prone.
+
+Readability counts: Of course it does. Readability is the most important metric of good code.
+
+Special cases aren't special enough to break the rules.
+
+Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book here.
+
+Errors should never pass silently: If an error occures, something went wrong and the user should know about it.
+
+There should be one-- and preferably only one --obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
+
+Now is better than never: later = never.
+
+If the implementation is hard to explain, it's a bad idea: This means that the logic behind your solution may be wrong.
+
+Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you to structure your code and make it more readable because you know where some function or other piece of code comes from.
+
+
+# 16. Understandable code
+
+"Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
+
+## How humans think
+
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
+
+Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, good imagination to get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
+
+Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result.
+
+```py
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
+``` 
+[https://www.quora.com/What-are-some-prime-examples-of-bad-Python-code]
+
+The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with such code because we can't structure it. It is too big to understand it at once and we can't break it down into smaller pieces.
+
+We are limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
+
+This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
+
+Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic. With your own code, it should be the same.
+
+## Spaghetti code
+
+So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write it in understandable code.
+
+You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
+
+This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
+
+## Examples
+
+### Structuring function arguments
+
+In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple. 
+
+```py
+def send_email(to, subject, body):
+    # ...
+```
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Email:
+    to: str
+    subject: str
+    body: str
+
+email = Email(to="google", subject="new search engine", body="it's awesome")
+
+def send_email(email):
+    # ...
+```
+
+In Python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
+
+```py
+def send_email(to: str, subject: str, body: str):
+    pass
+
+send_email(to="google", subject="new search engine", body="it's awesome")
+```
+
+Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or as we have learned, they should have used a tool box.
+
+### Complicated code
+
+Let's look at the FizzBuzz code from above again.
+
+```py
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
+```
+
+This example is very hard to understand as there is too much logic concentrated on a single line. It is very hard to keep track of all the logic that is going on here. Instead it is much easier to understand the code if you break it into smaller pieces as done in the following code.
+
+```py
+output = []
+for i in range(1, 101):
+    if i % 3 == 0 and i % 5 == 0:
+        output.append("fizzbuzz")
+    elif i % 3 == 0:
+        output.append("fizz")
+    elif i % 5 == 0:
+        output.append("buzz")
+    else:
+        output.append(i)
+```
+
+This is, at least in my eyes, much easier to understand.
+
+### Assigning variables inside conditions
+
+Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in Python such code isn't even possible. It returns an error message if you make an assignment inside an if statement.
+
+```C++
+if (int t = time_elapsed()) ...
+```
+
+The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
+
+### Scope of variables
+
+Avoid `do while` statements. Again, this is something that isn't supported in Python. The problem is that you have to keep track of the conditional variable over the whole range of the loop. This is extremely error prone as keeping track of a variable over such a long time is hard. It is much better to use a `while` loop and initialize the variable before the loop.
+
+It is generally good to have as few variables as possible. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long time, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables wherever possible.
+
+Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
+
+### Approximate programming
+
+Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
+
+But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
+
+## Copilot
+
+Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at.
 
 
 # 5. Single responsibility principle 
@@ -842,7 +1047,7 @@ def process_email():
 	close_email()
 ```
 
-Now the code looks much better. All lines of code are function calls to higher level functions. Every line of code inside `process_email` reads like an English sentence and not like python syntax. Note that the code now became a little bit longer. This is not an issue. Readability counts, not the length of the code.
+Now the code looks much better. All lines of code are function calls to higher level functions. Every line of code inside `process_email` reads like an English sentence and not like Python syntax. Note that the code now became a little bit longer. This is not an issue. Readability counts, not the length of the code.
 
 ### 3rd party libraries
 
@@ -987,12 +1192,12 @@ Removing functionality on the other hand is really hard. This inevitably changes
 
 ### Semantic Versioning
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2" was the latest python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The trace is used only in bigger projects. 
+APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2" was the latest Python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The trace is used only in bigger projects. 
 
 Every time you make a new release you increase the version number. 
 - For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to change to a software with a higher or lower trace version without any issues.
 - The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. 
-- The really big disaster starts with major version changes. Sometimes this is required. And it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the python 2 code to the major version 3 took 12 years and only a few years ago the support of python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface. Only increase the major version of your software if it is absolutely required.
+- The really big disaster starts with major version changes. Sometimes this is required. And it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the Python 2 code to the major version 3 took 12 years and only a few years ago the support of Python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface. Only increase the major version of your software if it is absolutely required.
 
 Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
 
@@ -1038,6 +1243,113 @@ Now this function returns the orthogonal data for this particular example. Of co
 
 Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps. This is generally also the better approach than writing some comments and let Copilot define code based on these comments.
 
+
+# 27. Naming
+
+"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
+
+[https://youtu.be/MBRoCdtZOYg]
+
+How long does a football game take? This is a very innocent question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This can cause some confusion.
+
+The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong city named "Springflied" (this name is used in the Simpsons because this is a very common name in the US) it gets painful. For the police and health care system it becomes even worse. As soon as there are people around who have the same name, it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused and think you could be dangerous. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it. Using the name combined with the birth date works out pretty well, but it is not perfect.
+
+All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name. Every programming construct has a name. And you use this name to search it with google or Stackoverflow. If you don't know the name you're screwed.
+
+Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties do they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
+
+Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
+
+"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." [WELC p.340]
+
+As I already said, naming is one of the most difficult things in programming. I tried to collect and synthesize some rules on properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
+
+1. Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends. As a rule of thumb a name is fine if a new work colleague understands the variable.
+2. Think about how you would express a word in real life. Would you call it `price of an apple` or is the context of your conversation clear enough such that only `price` is sufficient?
+3. Classes and functions obeying the SRP are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
+4. `set_color(7)`. What does `7` mean? Never use plain values in your code. Plain values are called magic numbers because no one can tell what it means. Magic is having a negative meaning here. Your code should be unterstood! Always create a variable instead of using magic numbers. Better use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
+5. Well defined levels of abstraction result in clearly defined and unique properties. This helps finding names. Maybe you created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
+6. Name collisions between different libraries are common and nothing to worry about. Use the namespaces to distinguish them (use the `from math import *` syntax in Python cautiously as this removes this potentially crucial information where a function is defined).
+7. Name collisions within the same library may happen once in a while and have to be fixed. Rename or even refactor one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
+8. Use names that are also used in reality. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about your code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality. You did a great job if a marketing understands your high level code and can give you useful feedback.
+9.  Objects have names that are simple to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` is to be prefered over `price_of_apple` and `price_of_orange`, though this can change if you have different properties of apples.
+10. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language.
+12. You may tweak the language a little and ignore grammar rules at times. If you have many `fish`, you may call them `fishs` or `fishes` to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following is perfectly viable in Python code: `for fish in fishes`.
+13. Avoid "if", "and" or "or" in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
+12.	If a variable is used all over the code, name it carefully. Possibly use a name given by the marketing team or existing theories and literature. If a variable is used only for about 5 lines, even i, j or k are fine.
+13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
+14.	snake_case notation is easier to read than camelCase. This is why I use snake_case notation for variables and functions, and camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
+15. Classes and functions should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the domain language.
+16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data", "info" or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
+17. Attach units to a variable name if existing. For example `timeout_duration_ms`. Though again: consistency is more important.
+18. Avoid negated terms (and preferably avoid booleans all together). `is_not_empty` is harder to read than `is_empty`.
+19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
+20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big. 
+21. Due to Robert C. Martin, high level objects have short names as they describe very general things. Low level objects have long names as they are very specific [clean code?]. This rule is in my opinion quite inaccurate as "high" and "low level" objects are relative terms. If you are the developer of the `math` library, the `sin` function is a high level object, meanwhile for everyone else it is a low level object. I don't think this rule is very helpful. I would rather say that objects used in general literature (at commonly agreed on interfaces) have short names, while everything in between might need longer names to be descriptive enough.
+
+## Naming Antipatterns
+
+### Useles Words
+
+Sometimes words inside a name can be removed without losing any information at all. For instance, instead of `convert_to_string()`, the name `to_string()` is smaller and doesn’t lose any real information. Similarly, instead of `do_serve_loop()`, the name `serve_loop()` is just as clear. Similar words line `manager` don't add anything to the name of a variable and can therefore be omited.
+
+### Generic Names
+
+Another problem are too generic names as in the following example:
+
+```py
+class Rectangle {
+    def size():
+        # ...
+}
+```
+
+What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
+
+Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
+
+|Word	|Alternatives |
+|-------|-------------|
+|send	|deliver, dispatch, announce, distribute, route|
+|find	|search, extract, locate, recover|
+|start	|launch, create, begin, open|
+|make	|create, set up, build, generate, compose, add, new|
+
+It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
+
+
+## Copilot
+
+Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let Copilot find appropriate names for you.
+```py
+def print_states(states): 
+    for a in states:
+        print(a)
+```
+Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
+```py
+    for a in states:
+    # find a better name for this variable
+```
+Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
+```py
+    for state in states:
+        print(state)
+```
+This is pretty much what was expected. The same works out for function names as well.
+```py
+def some_fancy_function_name(b,c):
+    return b+c
+```
+```py
+# suggest a better function name
+def add(b,c):
+    return b+c
+```
+
+
+Part 2: Components of code
+
 # 8. Functions
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
@@ -1052,7 +1364,7 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short. As a rule of thumb, they should be at most about twenty lines (that's what fits on my laptop screen without scrolling), though less than 10 lines is certainly to be prefered because shorter functions are much easier to understand. If fact, there is also absolutely nothing wrong with functions that cover only one line of code. One line functions are really useful to make code more readable, as it elevates all code to a similar level of abstraction. But this is something that many programmers don't think of.
 
-Let's make a small example of a one line function. We have a pandas object (a python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I think this function makes the code that uses it much clearer because it is operating on a higher level of abstraction.
+Let's make a small example of a one line function. We have a pandas object (a Python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I think this function makes the code that uses it much clearer because it is operating on a higher level of abstraction.
 
 // maybe find another example?
 
@@ -1075,7 +1387,7 @@ john = data[data["name"] == "john"]
 # ...
 ```
 
-The reason is that the first version of the code reads much more like normal english. The function describes to you what it does in words. Meanwhile the second version of the code uses cryptic python syntax that exposes details you usually don't need to know. And in those few cases where you need to know, you can still look it up.
+The reason is that the first version of the code reads much more like normal english. The function describes to you what it does in words. Meanwhile the second version of the code uses cryptic Python syntax that exposes details you usually don't need to know. And in those few cases where you need to know, you can still look it up.
 
 
 ### Levels of indentation
@@ -1234,7 +1546,7 @@ Now there are very few functions with zero arguments (though of course there are
 
 As a function has more arguments, it can contain more functionality. Yet at the same time the more complex it will become. Functions with one or two arguments are usually fairly easy to handle and they should cover most of the code. Functions with three arguments are already quite complex. They are hard to understand and hard to test.
 
-Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (python) or struct (C++) [Classes]. If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider your function design.
+Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (Python) or struct (C++) [Classes]. If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider your function design.
 
 In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
 
@@ -1292,7 +1604,7 @@ Return values are very central in functional programming. In functional programm
 
 All together I think there is really nothing wrong with return values. Use them if it's not a performance critical task where reusing an existing data structure is required.
 
-Here is a small example from python. There are two ways to sort elements in a list. Either you use the `sorted` function which returns a new list or you use the `sort` method which changes the list in place. I generally recommend using the `sorted` function as it's clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget, that the elements in the list are now sorted.
+Here is a small example from Python. There are two ways to sort elements in a list. Either you use the `sorted` function which returns a new list or you use the `sort` method which changes the list in place. I generally recommend using the `sorted` function as it's clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget, that the elements in the list are now sorted.
 
 ```py
 L = [1, 6, 4, 3, 3]
@@ -1343,7 +1655,7 @@ This book is not about explaining what classes are exactly. Even though the expl
 
 ## Data classes and structs
 
-The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes, but it has something similar: structs. It is roughly the same as a dataclass in python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. In theory you may also store functions within a struct, though this is generally not done, at least not in C++. For storing variables and functions at the same time, we have classes.
+The C programming language was specified well before object-oriented programming was developed. It doesn’t support classes, but it has something similar: structs. It is roughly the same as a dataclass in Python. A struct is a user defined object that contains all kind of different variables. It is also possible to nest structs into each other. Structs are extremely useful as they allow us to store different data together inside a single object. It’s like a toolbox. In theory you may also store functions within a struct, though this is generally not done, at least not in C++. For storing variables and functions at the same time, we have classes.
 
 An example of a dataclass:
 ```py
@@ -1399,9 +1711,9 @@ class InventoryItem:
 
 ### Pure method classes
 
-A class may have no member variables at all. It consists only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and python you can define the corresponding functions free standing instead. In fact, I prefer free standing functions over classes with only public methods, but I guess that's a matter of taste. 
+A class may have no member variables at all. It consists only of public methods. In java and C#, writing such kind of classes is required as every function has to be implemented within a class. In other programming languages however, there is not much need for pure method classes. In C++ and Python you can define the corresponding functions free standing instead. In fact, I prefer free standing functions over classes with only public methods, but I guess that's a matter of taste. 
 
-In python a lot of functions defined in libraries are not part of classes. This can be seen as follows. If we want to call the `sin` function, we have to wirte the following code:
+In Python a lot of functions defined in libraries are not part of classes. This can be seen as follows. If we want to call the `sin` function, we have to wirte the following code:
 
 ```py
 import math
@@ -1480,9 +1792,9 @@ class Worker:
 
 ### Abstract Base Class
 
-The abstract base class has a different name in every programming language. In Java it's called an interface. This class type defines only the interface (shape) of a class. It doesn't contain an actual implementation nor variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One has to write classes that inherit from this abstract base class in order to implement it. In python and other dynamically typed languages you don’t need any interfaces, but they can make the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compilation time and allow run time polymorphism. We'll go into more details in chapter [Inheritance]
+The abstract base class has a different name in every programming language. In Java it's called an interface. This class type defines only the interface (shape) of a class. It doesn't contain an actual implementation nor variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One has to write classes that inherit from this abstract base class in order to implement it. In Python and other dynamically typed languages you don’t need any interfaces, but they can make the code easier to understand. In C++ and Java, it is very important to use interfaces in order to break the code into pieces, to reduce compilation time and allow run time polymorphism. We'll go into more details in chapter [Inheritance]
 
-In python a class has to inherit from `ABC` in order to be an abstract base class. The methods are all `abstractmethod` and they don't have any implementation.
+In Python a class has to inherit from `ABC` in order to be an abstract base class. The methods are all `abstractmethod` and they don't have any implementation.
 
 ```py
 from abc import ABC, abstractmethod
@@ -1571,7 +1883,7 @@ Both lines of code have in common that the method/function `b` can change the va
 It turns out for most criteria, these two function or method calls are pretty much equal:
 - In `b(a)` it is assumed that `a` is not changed, unless the name of `b` states otherwise. Though the same holds for `a.b()`.
 - `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. Thus, `b(a)` is decoupling the code better than `a.b()`. Though this is not crucial difference.
-- In C++, const'ness can be enabled for `a` in both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method. In python, there is no built-in way to make a function constant. Though with some black magic, one can define a decorator that makes a function or method constant. [https://stackoverflow.com/questions/71394120/python-equivalent-for-const-methods-with-type-hints]
+- In C++, const'ness can be enabled for `a` in both, `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element, in the second case, `b` has to be made a `const` method. In Python, there is no built-in way to make a function constant. Though with some black magic, one can define a decorator that makes a function or method constant. [https://stackoverflow.com/questions/71394120/Python-equivalent-for-const-methods-with-type-hints]
 
 To sum it up, there are no big differences. `b(a)` offers somewhat better decoupling and should thus be somewhat preferred. But ultimately, it all comes down to readability. What is easier to understand? The function or the method? Let's look at the following code:
 
@@ -1770,7 +2082,7 @@ class Car():
         return long_name.title()
 ```
 
-The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the pythonic `__str__` method. Furthermore if you already what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only good, if you need some ideas on how to structure your class.
+The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the Pythonic `__str__` method. Furthermore if you already what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only good, if you need some ideas on how to structure your class.
 
 # 10. Inheritance
 
@@ -1790,7 +2102,7 @@ There are two kinds of inheritance: implementation inheritance and interface inh
 
 ```py
 import abc
-# abc stands for Abstract Base Class, a python thing
+# abc stands for Abstract Base Class, a Python thing
 
 class Base(abc.ABC):
     @abc.abstractmethod
@@ -1854,7 +2166,7 @@ This leads to all kind of nasty ambiguities which functions should be used. For 
 
 ### Overriden baseclass functions
 
-Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritance is simply too error prone. Though this is better in python than in C++.
+Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritance is simply too error prone. Though this is better in Python than in C++.
 
 Sometimes inheritance can be confusing. Let's take the following example:
 
@@ -1929,7 +2241,468 @@ You don’t gain much by using inheritance. Using composition is in most cases a
 
 There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. In most cases it results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code in the most common way possible and only consider all the fancy language features only if they really improve your code.
 
-# 11. Testing
+
+# 25. Data types
+
+"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
+[primitive obsession: https://refactoring.guru/smells/primitive-obsession]
+
+There are hundreds of built-in data types. But again, using too many of them is also called "Primitive Obsession". You shouldn't use too many built-in data types. Instead you should use custom types (classes) as much as possible. This makes the code more readable and easier to write.
+
+Using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
+
+Primitive obsession is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
+
+Here is a list of data types that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
+
+I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints, except that I never use unsigned ints, as recommended by the google style guide. Classes are discussed in their own section because of their importance.
+
+## Lists
+
+Lists are the work horse in programming. Whenever you deal with several values that should all be treated in the same way, they belong into a list. I would like to emphasize: to be treated the same way. If you do something with a list you should always iterate through all elements and do the same thing for all of them. If you somehow need just one value from a list, chances are high you shouldn’t use a list.
+
+Here is an example how not to do it:
+
+```py
+fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
+```
+
+I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible as C++ vectors cannot contain ojects of different types. At least not without visiting a highly advanced course in C++ black magic. In Python on the other hand, this is syntactically correct code and it is frequently tempting to write such a list. Please resist this temptation!
+
+The second problem is that we don’t know what these numbers mean. There is no reasonable name for this list that explains everything. This list violates the single responsibility principle all by itself. 
+
+And third code based on this data structure will inevitably become brittle. It’s screaming for bugs. You can do pretty much everything wrong and I promise you will.
+
+Apparently 3 values inside this list always belong together. In C++ we would create a struct for it, in Python we use a data class.
+
+A first improvement would be using a list of lists,
+
+```py
+fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
+```
+
+This gives some structure to the list and it becomes a little bit less likely that this data structure is used in a wrong way. This inner list is still far from optimal.
+
+The code should be rewritten to something like this:
+
+```py
+@dataclass
+class ShoppingItem:
+    name: str
+    weight: float
+    price: float
+
+apples = ShoppingItem(name='apple', weight=1.5, price=3.1)
+bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
+
+shopping_list = [apples, bananas]
+```
+
+Now the code is much longer, but it is also much better. It is much easier to read and understand. As we learned the only quality measures of code. All the elements inside the list are equal. They are all `ShoppingItems`. If you do something you can, or rather you should, iterate over all elements and treat them all equally. The data structure now is also pretty save. Correlated data is all stored together. It is almost impossible to mix up the weight of the apple and the banana. And it’s also pretty hard now to make an error when creating the list.
+
+We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to make a list with groups of objects you should create a class for these groups and make a list of these class instances. If you want to access only a single object from a list, chances are high that your code is bad. Always iterate over the whole list and treat all elements equally.
+
+## Enums
+
+Enums are something even many experienced software developers don’t know. You don’t really need it. But they should know it as enums make your code much better. There are several different ways to write code without using enums. They are all bad.
+
+```py
+# 1. boolean:
+is_blue = True
+
+# 2. string:
+favorite_color = "blue"
+
+# 3. integer:
+favorite_color = 7
+
+# 4. class instance:
+class Blue:
+    pass
+favorite_color = Blue()
+
+# 5. enum:
+from enum import Enum
+class Color(Enum):
+    BLUE = 1
+favorite_color = Color::BLUE
+```
+
+The first four options all have some severe drawbacks.
+
+### Booleans
+
+The first one is dead ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Avoid using booleans in general.
+
+### Strings
+
+The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time it’s easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might have a bug that could lead to undefined behavior. Without you noticing neither that you have a bug nor where the error comes from. Avoid making string comparisons as they are error prone.
+
+Sometimes such kind of objects are also called "stringly typed". Strings are being abused for storing all kind of different data that it shouldn’t be used for. Here are some examples:
+
+[https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]
+```py
+robot.move("1","2") # Should be int like 1 and 2, and maybe better a point
+getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. dog.Bark()
+message.push("transaction_completed") # Could be an enum
+```
+
+### Ints
+
+Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard. For example the RGB standard, `blue = RGB(0,0,255)`.
+
+### Classes
+
+Fourth option: For once using types is not the best option. It can be checked using `isinstance(blue, Blue)`, but this is tedious and not possible in C++ for example. For once using classes does not offer any advantages, only drawbacks.
+
+### Enums
+
+Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums look slightly odd at first sight because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::BLU` you will get an error because you quite certainly didn’t define a color `BLU` inside the enum. You'll get an error message. This is infinitely better than having a bug. Furthermore, most IDEs and programming languages support auto completion for enums. Gone are the times when you had to look up some magic values in the manual. Enums are great. Use them where ever you define a selection from a limited amount of options.
+
+Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare. It is rarely the case that you get a random string and call some function depending on its content. The only thing you have to do with random strings is usually just to pass them on without touching them.
+
+## Booleans
+
+"Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. But it has to be said: Booleans are evil."
+
+"What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?"
+
+"Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil. There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil, but dangerous."
+
+I may be exaggerating slightly. But it’s true. Humans cannot deal with Booleans and if statements. Accept your faith and learn dealing with it.
+-	Good code design leads to few if statements.
+-	You can use polymorphism to prevent if statements.
+-	Resolve if statements as early as possible on the lowest level of abstraction. 
+-	Never nest if statements. Having too many levels of indentation are a sign for bad code.
+-	Don’t pass Booleans as function arguments.
+-	Consider using enums instead of booleans.
+-	Make sure your unit tests cover all branches of if else statements.
+-	Don’t use old-school C++ or java iterators. Looping over iterators requires comparisons. Range-based loops are much safer and easier to use.
+
+### Match case statements
+
+// This section really needs some thinking: When is a switch/match 
+
+In case you have a `match case` statement (a Pythonic expression, in other languages called `switch` statement), you should encapsulate it inside a function or use a dictionary. The only place where `match case` statements (or nested `if else`) are allowed is encapsulated inside a dedicated function.
+
+This is how the code should not look like.
+```py
+# a lot of code here
+# city_name = ...
+# use a match case statement to get the post code
+match city_name:
+    case "Zurich":
+        return 8000
+    case "Bern":
+        return 3000
+    # case ...
+```
+
+This code is bad for a very simple reason: it quite certainly violates the SRP. Chances are high that this `match case` statement will be repeated several times in your code base. Instead the `match case` statement should be refactored out into its own function. 
+
+```py
+def post_code(city_name):
+    match city_name:
+        case "Zurich":
+            return 8000
+        case "Bern":
+            return 3000
+
+post_code_Zurich = post_code("Zurich")
+```
+
+The best solution, in my opinion, is using a dict and ditching `match case` statements all together. This is shorter and easier to read. If desired you can still wrap the dict in a function.
+
+```py
+post_codes = {
+    "Zurich": 8000,
+    "Bern": 3000,
+}
+```
+
+For bigger dicts, this might still look quite verbose. But this code will be hidden at a low level of abstraction. 
+
+Dicts can also be used polymorphically. Depending on the key it creates an object of different type. This will prevent some if statements in the future as polymorphism generally does.
+
+```py
+class Zurich:
+    def postcode():
+         return 8000
+
+class Bern:
+    def postcode():
+        return 3000
+
+cities = {
+    "Zurich": Zurich,
+    "Bern": Bern,
+}
+
+zurich = cities("Zurich")
+print(zurich.postcode())
+```
+
+A little side remark: `match case` statements were only introduced with Python 3.10. This is because they are not supposed to simply replace the switch case statements of for example C++ or shown in the examples here. [for the whole story see https://youtu.be/ASRqxDGutpA]
+
+As a summary one can say that `match case` statements are not that bad at all. Though they could easily be replaced by dictionaries and they should be wrapped inside a function to make them reusable and obey the SRP. Additionally they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
+
+## Strings
+
+"You should never use two different languages in a single file. English is also a language" - ?
+
+After pointers and Booleans, strings are probably the third most dangerous data type. Many programmers check two strings for equality. One of them is written in plain text in the code. A possibly twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. String comparison is a possible source for errors and we should avoid them whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
+
+### Stringly typed objects
+
+Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings. // see also "primitive obsession"
+
+I found the following example in book Clean Code on p.128 where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did. 
+
+He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other kind of value. To make matters worse, the letter `"h"` is even used twice. Like this the code becomes extra brittle because the state depends on the order of the characters.
+
+The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is impossible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary, yet they have to be in the correct order.
+
+Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is better than the string logic, but it still needs some serious reworking. Elements in a list should all be treated equally and accessed at the same time. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list [section lists].
+
+A better solution is using a dataclass that stores 5 different variables. One Boolean replacing each character in the string above.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterState{
+    heater_state: bool
+    blower_state: bool
+    cooler_state: bool
+    high_temp_alert: bool
+    low_temp_alert: bool
+}
+```
+
+Still, this is not yet optimal. What does `heater_state = true` or `= false` mean? Let's define an enum instead to make the code more readable.
+
+```py
+from enum import Enum
+from dataclasses import dataclass
+
+class State(Enum):
+    on = True
+    off = False
+
+@dataclass
+class WaterState:
+    heater_state: State
+    blower_state: State
+    cooler_state: State
+    high_temp_alert: State
+    low_temp_alert: State
+```
+
+Now the `heater_state` can be `on` or `off`. This is much more intuitive to read.
+
+Once one found this solution it looks so natural. This code is so much more readable than the encoded string that is absolutely worth the additional effort it takes to write this struct and the enum. The code has now become significantly longer, but remember: we always code for readability and not for the fewest lines of code.
+
+The code using this dataclass is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
+
+```py
+if water_state.high_temp_alert == State.on:
+    print("Attention: the water is too hot")
+```
+
+### Natural Language
+
+Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write his translations into your code, nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file such that he knows exactly what to translate. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should read all the human readable text from this dedicated file. On start-up you read this text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file.
+
+Ultimately you are left with barely any strings at all. You replaced them with enums, proper logic and a file with human readable text. Only when reading or writing text a file you briefly have to deal with strings. Then you immediately convret it into data. At least in theory. For small projects it is not always worth the effort to convert all strings into objects or dedicated text files.
+
+## Dicts
+
+When defining your variable you have 2 different choices how to proceed. You may either use normal variables or you can use a dict (map in C++).
+
+```py
+a = 0
+b = 1
+```
+
+```py
+vars = {"a" : 0, "b" : 1}
+```
+
+These lines do something very similar. They both assign the value `0` to `a` and value `1` to `b` (ok, in case of the dict it is rather `"a"`, but you get my point). Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be `"a"` and `"b"` used as keys. Maybe he didn’t and these dict entries were generated by some user input the programmer had no control over.
+
+If the developer knows all the variables that he needs, he should generally use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure as you don't even know what kind of ingredients will be needed.
+
+Dicts are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might further convert into nested class instances.
+
+## Trees
+
+It is not too often that I had to create a tree myself, yet I was working on a tree structure for a good part of my programming life. Trees are an extremely important data structure. As soon as you work with a recursive data structure chances are high that you should work on a tree. This allows you to use many standard algorithms that are very efficient, typically `O(N log(N))`. If you implement your own algorithms, make sure they are recursive and write automated tests for the corner cases.
+
+## Pointers
+
+C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented pretty much all functionality that pointers were used for. Vectors for example use a pointer as well, but it is hidden deep inside its implementation.
+
+The only remnant where pointers are still needed for technical reasons are interfaces. Use pointers only there and use the modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use Python and you don’t have to care about pointers at all.
+
+
+# 26. Properties of Variables
+
+Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
+
+The most common way to structure data is having nested classes and lists, where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
+
+Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these different types of variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code because it is coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
+
+## Compile-time constant
+
+Compile-time constant is the least powerful variable type. They are known at the time you write the code and will never change their value. In Python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t let them clutter your code. Otherwise there is nothing you can do wrong about them.
+
+In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time. This allows the compiler to do all kind of optimization as many expressions can be evaluated at compile time.
+
+## Runtime Constant
+
+Compared to compile-time constants, runtime constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
+
+Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead. If it's global it will be acting as a hiddeng state, making it much harder to write tests.
+
+Note that in functional programming, all variables are constant.
+
+### Constant Class instances
+
+In C++ you can enforce an object to remain the same for as long as it exists, using the `const` keyword at the time of creation. In Python you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
+
+But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
+
+// remove this example completely? Is it useful and "correct"?
+
+We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In Python constant objects are defined by using all uppercase letters.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Bottle:
+    color: str
+    size: float
+    material: str
+
+if __name__ == "__main__":
+    BOTTLE = Bottle()
+```
+
+Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity. 
+
+The member variables of the class are not constant. Instead I decided to make the class instance constant.
+
+// classes should not have const members, they should rather be private. [https://youtu.be/O65lEiYkkbc?t=3072]
+
+So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
+
+The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
+
+We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
+
+A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterBottle:
+    BOTTLE: Bottle
+    amount_of_water: float
+
+@dataclass
+class Bottle:
+    color: str
+    size: float
+    material: str
+```
+
+This is just one example how to combine const and non-const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
+
+## Mutable Variables
+
+"immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
+
+In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is, little surprising, the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
+
+One option is to work more with immutable objects. For example you can replace the following code,
+
+```py
+prime_numbers = [11, 3, 7, 5, 2]
+prime_numbers.sort()
+```
+
+with something that does not change the list. Instead it can return a new list.
+
+```py
+prime_numbers = [11, 3, 7, 5, 2]
+sorted_prime_numbers = sorted(prime_numbers)
+```
+
+At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133] 
+
+Returning a new variable as done in the second code snippet is the much saver option and to be prefered. Furthermore the second version of the code is much clearer as the variable is not reused. This creates a clear distiction between the unsorted and the sorted list.
+
+On the other hand, the second solution may be a performance bottleneck as it needs more memory if the initial value does not go out of scope. This could be a problem for large lists, especially inside loops. Though this is usually not such an issue as the `prime_numbers` go out of scope and the memory will be recycled.
+
+## Member Variables
+
+Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes [9. Classes]. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects, as far as this is possible in a class...), you are mostly fine with using member variables. Though you have to be carefull with them.
+
+Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables: You can access them from anywhere in the code.
+
+Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be. And when in doubt, use unmutable objects.
+
+## Static Variables
+
+Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
+
+If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
+
+If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is a side effect. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
+
+And if you don't believe me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is the very definition of brittle.
+
+## Global Variables
+
+You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
+
+Let's say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of Time Square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
+
+Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
+
+Now as you already realized, global variables are bad because every line of code can change their value. Everywhere. You cannot rely on them. You never know if someone messes with their integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code.
+
+The opposite to global variables are pure functions. Functions that rely only on the function arguments and have no side effects. You'll always know exactly what they do and rely on. They will never change any hidden state.
+
+## Comparison of Variable Properties
+
+The different variables we looked are different with regards to how easy they can be changed. Starting with a local constant that cannot be changed and accessed only locally to a global variable that everyone can access and change. This amount of accessability has to be chosen correctly for every variable you work with. You can barely write code with only compile time constants and if you use only global variables you'll soon end up with spaghetti code. Generally it’s best to choose variables with the least possible effects that let's you still implement what you want. Prefer too little accessability over too much. You can still change it later on.
+
+Here is a rough list how variable types are sorted by the accessability they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
+
+Compile time Constant < Constant < Immutable object < mutable object < class variable < inherited variable < singleton = global variable
+
+There is certainly nothing wrong with constants, especially with compile time constants. It's just that they can't do much. They are just there and do nothing. Or at least not much. They store some fixed value and you are always free to read it out. If you like working with constant objects, I can recommend functional programming. In functional programming everything is constant.
+
+Immutable (non-constant) objects can only be used within the current scope and when passed as a function argument their value can't be changed. If you use immutable objects, you cannot have output arguments, which in my opinion is a good thing. Due to the SRP, a function should change the value of only one variable and in my opinion this should be the return value. So you shouldn't have output arguments anyway.
+
+With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided. If possible, return a new object instead of changing an existing one. The only reason I could think of, why one should use mutable objects is performance.
+
+Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes [chapter classes], what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise the class has too much hidden state.
+
+Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. You don't know what to do if you have to exchange one tool. Compare this to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the main reasons why it's better not to use inheritance at all [chapter Inheritance].
+
+// why not to use the singleton: 
+
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have little communication and few relatively big data sets, this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73].
+
+
+Part 3: Testing
+
+# 11. Introduction to Testing
 
 // if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
@@ -1987,7 +2760,7 @@ Tests consist of three stages that are run on a test bench.
 
 ### Structure of a Software test
 
-In software we do the same as for the coffee machine in the example above. In every programming language, there is a major testing library dedicated for this purpose. They all do pretty much the same, no matter what programming language you use. The python testing library is called pytest.
+In software we do the same as for the coffee machine in the example above. In every programming language, there is a major testing library dedicated for this purpose. They all do pretty much the same, no matter what programming language you use. The Python testing library is called pytest.
 
 Here is a small example of a class we want to test:
 
@@ -2050,7 +2823,7 @@ This returns the following error message:
 AssertionError: should = 2, is = 1
 ```
 
-As you can see it’s pretty simple to write a test. Not only in python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
+As you can see it’s pretty simple to write a test. Not only in Python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
 
 Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
 
@@ -2103,7 +2876,7 @@ There are a lot of things to consider when writing tests. The example above was 
 
 Make sure all the tests pass. Tests that don't pass are worthless. Even worse, they are a nuisance. When you run the tests, failing tests will confuse you. They will confuse you're coworkers. Everyone will waste time trying to fix the failing test. There is only one single solution to prevent this: all tests have to pass all the time. Thus make sure your Continuous Integration (CI) enforces that all tests pass. Tests that don't pass should be deleted.
 
-In the setup part it is very common to have helper functions that create all the objects needed. These are normal python functions that create the desired objects. You might even have a util code file for all the tests. It contains some fairly static objects like functions or class instances that you might need in a lot of different tests.
+In the setup part it is very common to have helper functions that create all the objects needed. These are normal Python functions that create the desired objects. You might even have a util code file for all the tests. It contains some fairly static objects like functions or class instances that you might need in a lot of different tests.
 
 There are also some things to watch out for in the execution part of the test. The first mistake almost everyone made was checking two floating point numbers for equality. Due to rounding errors this will probably fail. There are dedicated approximate checks you should use instead. As the `isclose` function used in the example above.
 
@@ -2185,7 +2958,7 @@ This problem can be solved by implementing the teardown function that is guarant
 
 Anyway, try to write tests that don’t need files or IO. It makes things much easier. Especially with unit tests you won't have to deal with setup and teardown functions.
 
-Here is an example of a test with setup and teardown functions. [https://code-maven.com/slides/python/pytest-class]
+Here is an example of a test with setup and teardown functions. [https://code-maven.com/slides/Python/pytest-class]
 
 ```py
 class TestClass():
@@ -2278,7 +3051,7 @@ It will happen frequently that you have a test that can only pass if another tes
 
 Next you write a function that reads the contents of this file. In the test you will first call the function to create the file and then call the function to read it. Now there is a problem: These two tests are related. If the code fails to create a file it won't be possible to read it. If the first test fails, the second test inevetably fails as well. This kind of dependency is bad design and violates the SRP. For one failing feature, only one test should fail. This makes it much clearer where the error comes from. Having 50 failing tests at once is really annoying as it's not obvious why the tests fail. Is it for a single reason or do they all fail for a different reason?
 
-Unfortunately having all the tests completely separated is a very hard, if not an impossible task. There is always some correlation between the results of tests. But there is a technical solution that helps to some degree. In python you can skip tests if a requirement for the test is not met. Tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that would fail as another test already failed.
+Unfortunately having all the tests completely separated is a very hard, if not an impossible task. There is always some correlation between the results of tests. But there is a technical solution that helps to some degree. In Python you can skip tests if a requirement for the test is not met. Tests can be made depending on each other with the `@pytest.mark.dependency` attribute. This allows us to skip tests that would fail as another test already failed.
 
 ```sh
 pip install pytest-dependency
@@ -2368,7 +3141,7 @@ As we will see, each of these categories has its own right of existance as they 
 
 The small unit tests are the foundation of the testing infrastructure. They can be executed quickly. Meanwhile going towards bigger tests, they may take longer to execute and are testing the interaction of components, rather than individual components themselves. Thus, bigger tests are more likely to find bugs, but at the same time they are not appropriate for locating them. 
 
-Functional tests can also be written in a different programming language and by a different person than the underlying code. They depend for example on the API that might be written in a different language. I wrote functional tests of some C++ software in python as it was easier to process the resulting text files.
+Functional tests can also be written in a different programming language and by a different person than the underlying code. They depend for example on the API that might be written in a different language. I wrote functional tests of some C++ software in Python as it was easier to process the resulting text files.
 
 ## Unit tests
 
@@ -2850,7 +3623,7 @@ def roman_numbers(n):
     return roman
 ```
 
-Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter [chapter Data types] that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for python versions >= 3.7 as only since then, dicts are guaranteed to keep their order. The following solution would probably be the best as it is more solid, even though it is a bit longer:
+Supporting bigger numbers can be done by prepending them to the `arabic_to_roman` dict. Note that I used a dict instead of a list of lists. This is because as I mentioned in chapter [chapter Data types] that list elements should all be treated equally. Thus having a list `[[5, "V"], [4, "IV"], [1, "I"]]` would violate this principle. On the other hand this approach using a dict is a little bit fragile. It is only guaranteed to work for Python versions >= 3.7 as only since then, dicts are guaranteed to keep their order. The following solution would probably be the best as it is more solid, even though it is a bit longer:
 
 ```py
 from dataclasses import dataclass
@@ -2884,7 +3657,7 @@ There are many ways to set up a fake object. We will only look at two of them: F
 
 [clean craftsmanship, p.118]
 
-The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file. In python this is easily done using the Mock library. Most other programming languages have similar mocking libraries as well.
+The first one is to use an existing database and change some of its behavior using a mocking framework. In the following example we mock the result when reading a csv file. In Python this is easily done using the Mock library. Most other programming languages have similar mocking libraries as well.
 
 ```py
 from important_stuff import read_csv
@@ -2943,7 +3716,7 @@ This `FakeCSVReader` has clearly not a complete implementation of the `CSVReader
 
 Faking and mocking are closely related to dependency injection (DI).
 
-When using DI you can create a new object from scratch, for example an object returning an API key. Now let's first look at the code without DI [https://python-dependency-injector.ets-labs.org/introduction/di_in_python.html]. 
+When using DI you can create a new object from scratch, for example an object returning an API key. Now let's first look at the code without DI [https://Python-dependency-injector.ets-labs.org/introduction/di_in_Python.html]. 
 
 ```py
 import os
@@ -3056,43 +3829,1341 @@ def process_data(reader):
 print(process_data(reader)) 
 ```
 
-# 14. DevOps
+Part 4: Design Principles
 
-// move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
 
-Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
+# 24. SOLID principles 
 
-## The early 2000s
+"It is not enough for code to work." Robert C. Martin
 
-Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+// Quote from uncle bob?
 
-Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP), [Extreme Programming Explained: Embrace Change, K. Beck, 1999] and with the Agile Manifesto in 2001 [http://agilemanifesto.org/], testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
-- The code is formated according to specification
-- The static code analysis passes
-- The build passes
-- Building all the tests works
-- All the tests pass
+Source: [https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clean Architecture]
 
-Even though there are companies that don't care about the formatting anymore. They just let the formatter run for every merge request on the server. Locally the developers can use whatever format they like. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
+The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
+1.	Single Responsibility Principle (SRP)
+2.	Open closed principle
+3.	Liskov substitution principle
+4.	Interface segregation 
+5.	Dependency Inversion
 
-Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
+These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps a lot with the design of the code. 
 
-We have the development (Dev) and the IT operations (Ops) bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building, testing and releasing of the new software.
+Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly. In my opinion, these principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but they are not as important as in compiled languages. We'll see why in a minute.
 
-### Getting a project
+## Single Responsibility Principle
 
-Furthermore getting started to work with an existing project was frequently a pain. There were so many things that could have gone wrong. "Where do I get the source code from?", "What libraries do I have to install?", "Why does the build not work?", "Ah, I have to use that specific version of this library?"
+The SRP has already been explained in its own chapter due to its enormous importance. At the time of writing I counted 60 occurances of the abbreviation "SRP" in this book here!
 
-It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
+## Open Closed Principle
 
-## Benefits of DevOps
+"Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." - Bertrand Meyer
 
-[https://www.atlassian.com/devops]
+// OCP is always a tradeoff what it is closed and open for. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
 
-- Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
-- Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
-- Rapid deployment: DevOps allows for rapid deployment. This has become more and more important in the last years.
-- Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
+The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
+
+Our code should be stable with respect to extensions later on, but not to changes. If the requirements change, we have to change our code as well. This is inevitable. But we shouldn't have to change our code if someone else wants to change his code. Thus the solution is to use abstractions at potential abstraction points. This allows the user of our code to extend it without us having to change anything in our code.
+
+Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the OCP.
+
+// use some US postal codes?
+
+```py
+class Cities:
+    def zurich_postal_code(self):
+        return 8000
+    def bern_postal_code(self):
+        return 3000
+
+def print_all_postal_codes():
+    cities = Cities()
+    print(cities.zurich_postal_code())
+    print(cities.bern_postal_code())
+```
+
+If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. We have to *modify* the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
+
+Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. The code below obeys the OCP.
+
+```py
+from abc import ABC, abstractmethod
+
+class City(ABC):
+    @abstractmethod
+    def postal_code(self):
+        pass
+
+class Zurich(City):
+    def postal_code(self):
+        return 8000
+
+class Bern(City):
+    def postal_code(self):
+        return 3000
+
+cities = [Zurich(), Bern()]
+for city in cities:
+    print(city.postal_code())
+```
+
+Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
+
+The example mentioned here is the classical example for the OCP. It is the strategy pattern. However, you might also use the decorator pattern which fulfills the OCP as well.
+
+## Liskov Substitution Principle
+
+// see https://youtu.be/pTB30aXS77U
+
+"If it looks like a duck, it quacks like a duck, and it needs batteries, you probably have the wrong abstraction." - wisdom of the internet
+
+Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
+
+For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
+
+```py
+class Payment:
+    def make_payment(amount, card_number_or_email_address)
+```
+
+This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
+
+Instead the selection of the credit card numer or the email address should be done later on, inside the specific classes.
+
+```py
+from abc import ABC, abstractmethod
+
+class PaymentSystem(ABC):
+    @abstractmethod
+    def make_payment(self):
+        pass
+
+class PayPal(PaymentSystem):
+    def make_payment(amount):
+        # ask the user for the email address
+
+class CreditCard(PaymentSystem):
+    def make_payment(amount):
+        # ask the user for the credit card number
+```
+
+##  Interface Segregation Principle
+
+"Clients should not be forced to depend upon interfaces that they do not use." — Robert C. Martin
+
+The Interface Segregation Principle (ISP) is like the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need one small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
+
+Here the file A does not follow the ISP. It does 2 independent things. Most other code needs only one of these functions. They are independent. Thus, they should be in different files. 
+
+Now in Python this is not such a big deal as you can import each function individually and even if you import the whole file A it's not a big deal. It's not becomming slow. In C++ on the other hand, adding unrelated functions into the same file is really a no no. In C++ you always include a whole header file at once and you'll have to compile everything that comes with it. There might be a hefty price to pay if the file A would be too big.
+
+```C++
+// C++
+// file A.h
+int function_1(){
+    return 1;
+}
+
+int function_2(){
+    return 2;
+}
+
+// and many more functions
+```
+
+// add graphs on the file dependencies below
+
+The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. A1 and A2 should have high cohesion within themselves but there should be low coupling between them. Idealy, the amount of code that you'll have to import is reduced roughly by half. 
+
+This process of breaking up files can be repeated until it is no longer possible to reduce the amount of code imported, or the number of imports would be growing unreasonably fast. At this point you finished the segregation of the file A.
+
+```C++
+// C++
+// file A1
+int function_1(){
+    return 1;
+}
+
+// file A2
+int function_2(){
+    return 2;
+}
+```
+
+A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace (`std::` a namespace, not a class!), but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
+
+Another common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code imports much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
+
+```py
+# inside ImportantStuff.py
+from enum import Enum
+
+class BigClass:
+    class Color(Enum):
+        RED = 1
+        GREEN = 2
+        BLUE = 3
+    # and much more code here
+
+# inside SomeOtherFile.py
+from ImportantStuff import BigClass
+
+color = BigClass().Color.BLUE
+```
+
+Here we first need a class instance of `BigClass` because the enum is hidden inside of the class definition. This could be avoided by moving the enum outside the class. This would reduce the coupling of the code as the user code depended only on the enum and not on the whole class around it.
+
+The code would be much better as follows:
+
+```py
+# inside ImportantStuff.py
+from enum import Enum
+
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+class BigClass:
+    # much more code here
+
+# inside SomeOtherFile.py
+from ImportantStuff import Color
+
+color = Color.BLUE
+```
+
+Like this you segregated the interface and you don't have to import the `BigClass`.
+
+## Dependency Inversion Principle
+ 
+"High-level modules should not depend on low-level modules" - ?
+
+Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree. The so-called dependency tree. The main function is at its root. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
+
+// add a graph for the dependency tree
+
+For interpreted languages like Python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist in interpreted languages. Though it's still good to know this principle as a Python user as it is very fundamental.
+
+The first time you compile your code, the whole code base (the whole dependency tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
+
+We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well as main directly or indirectly includes all other files of the project. Therefore, the main file has to be recompiled as well. It’s like a hard link.
+
+Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code within a library. If I change a file in a library, say the `sin` function inside the math library, I want to recompile only the math library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within the math librarry. Main shouldn't have to recompile if the code within the math library changes. Main should only change if the public interface of math changes.
+
+This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
+
+### Example
+As I said before, the DIP is important for compiled langagues. Therefore the following code example is written in C++.
+
+Let's say we have a class `Nothing` with a method `do_nothing`. Now we want to change the code such that `main` won't recompile if the implementation of `do_nothing` changes.
+
+```C++
+class Nothing{
+    void do_nothing() {}
+};
+
+int main(){
+    auto nothing = Nothing();
+    nothing.do_nothing();
+}
+```
+
+Now `main` depends on the `Nothing` class and everything that's inside it. Instead we can define an interface for `Nothing` and break this dependency.
+
+```C++
+// inside NothingBase.hpp
+class NothingBase{
+public:
+    virtual void do_nothing() = 0;
+};
+
+// inside Nothing.hpp
+#include "NothingBase.hpp"
+
+class Nothing : public NothingBase {
+public:
+    void do_nothing() override;
+};
+
+// inside Nothing.cpp
+#include <iostream>
+#include "Nothing.hpp"
+
+Nothing::do_nothing(){
+    std::cout << "nothing" << std::endl;
+}
+
+// inside main.cpp
+#include "NothingBase.hpp"
+int main(){
+    auto nothing = std::make_unique<Nothing>();
+    nothing->do_nothing();
+}
+```
+
+Now `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing the implementation of `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker. The linker will make sure the main function calls the correct implementation of this library.
+
+// dependency tree graphs
+
+## Summary
+
+I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
+
+
+# 35. Software Engineering principles
+
+In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
+
+## Divide and Conquer
+
+If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together. A common example is the Fast Fourier Transfor (FFT) or the merge sort. Usually a divide and conquer algorithm is applied if a problem scales with O(N^2) or worse, but it can be subdivided into smaller problems. Divide and Conquer algorithms usually scale with O(N log N), which is generally acceptable. Furthermore Divide and Conquer algorithms can easily be parallelized, which may significantly boost the overall performance.
+
+## Increase Cohesion
+
+Cohesion very much realtes to the section [Correlation] that we already discussed in the chapter on Physical laws of code. Similar things that possibly depend on each othr should belong together. Mathematical functions are stored together in the math library and IO functions are in the IO library. This makes sense as it simplyfies searching for some other functions that you might be looking for. Mixing these two libraries would only cause confusion as it would make it hard to find what you are looking for.
+
+## Reduce coupling
+
+Reducing coupling is an important topic in classes [chapter classes]. Make sure that the classes are as independent as possible. You don't want your math library to be depending on the filesystem library. Even if it might make sense from a developer point of view (even though here it would be hard to explain), you should minimize the number of dependencies as far as possible. Only import other libraries for cases where it is absolutely inevitable.
+
+The same holds not only for libraries, but also for all other code that you write. Try to keep them all as indipendent as possible. Make sure that you properly structure the levels of abstractions in your code. Low level code should not depend on high level code, etc. Otherwise, your code may become a big ball of mud [https://en.wikipedia.org/wiki/Anti-pattern#Software_engineering_anti-patterns].
+
+## Increase abstraction
+
+Abstraction is about leaving away unnecessary details and instead focusing on the absolute necessities. You have to design interfaces that are slim and very generic. For example take (once again) a car. You want to make the parts as generic as possible. You want to fit any engine into any car. This can only be achieved by unifying the interface of the engine, the brakes, etc. All the details of the engine are abstracted away and hidden inside the engine such that the outside does not interact with it.
+
+If you didn't abstract all the details away, you may be left with several different functions how to take care of all the different engines because you have to take care of all the paritcularities. On the other hand, if you abstracted them all away, you can replace the engine with another one if you please.
+
+## Increase reusability
+
+Reuseability comes hand in hand with inreased abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. Just take for example all ot the "standard" libraries. They all do exactly one fundamental thing: they deal with the filesystem, do mathematical operations or create random numbers. Of course it would sometimes make sense to combine these, but that would probably not the reusable code anymore because it is too specific. You should only write such specific code if you really have to.
+
+## Design for flexibility
+
+Your code will change. It's inevitable. So start living with this fact. Requirements will change and you'd better make sure that your code can adapt. Therefore it's important that your code follows the rules that are explained in this book. You need tests to be able to change your code. You have to follow the best practice in order to prevent your code becoming solid as a rock. You want your code to be fluffy and easy to change.
+
+As an example you might use a Fourier transform or a sorting algorithm in your code. Well written code is flexible enough to replace these algorithms without much fuzz. You won't have to change code all over the place. It's more like a chirurchical operation where you change only one thing.
+
+## Anticipate Obsolesence
+
+Code you use will become obsolete. Version change, bugs and security issues are not fixed, licence fees are getting too high, you name it. There are plenty of reasons why you have to adapt and change third party libraries or at least adapt to new syntax. So you better anticipate that you'll have to replace some library by adding an adapter between that library and your code. This will simplify reacting to changes. You can then just write an adapter for the new library and you don't have to change all the existing code.
+
+You have to anticipate obsolence by keeping your code flexible and reusable. The database code should not be spread throughout the whole code base. This would be the very opposite of what we want. It would take enormous efforts to replace it. Instead you should be able to replace it easily.
+
+There are cases where you might think, you'd never have to place a piece of code. How wrong you are. No matter how important some library might seem to you, at some time you'll have to replace it. There are so many companies out there who wrote their code with an Oracle database in mind. And now they would like to change it because of the high fees. But they can't because Oracle database code is spread all over the code base.
+
+## Design for Testability
+
+I think this is the most obvious point in this chapter. I explained plenty of times that you have to write tests. Because if it's easy to write tests for your code it's also easy to write code using the interfaces of your code. Or even better, use Test Driven Development (TDD). TDD forces you to write code that is easy to test. Thus it forces you to write good code.
+
+Hand in hand with testing comes Dependency Injection (DI). There are many things where writing tests for will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all things that should be solved with DI. Inject a mock file or a fake timestamp to the function and your tests will be much more stable.
+
+
+Part 5: Programming 
+
+
+# 19. Programming Paradigms
+
+// move this closer to programming languages
+
+There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like Python, or even the good old C++, where you can mix these 3 different programming paradigms.
+
+Here is a very short list, of what the different programming paradigms offer:
+- OO programming: classes, mutable variabels
+- Procedural programming: mutable variables
+- Functional programming: nothing. Yes, nothing.
+
+Functional programming is basically a subset of procedural programming, which in turn is basically a subset of OO programming. But this doesn't mean that functional or procedural programming are necessarily worse than OO programming. Limiting the number of possibilities can make the code easier to understand. For example the fact that functional programming has no mutable variable excludes a lot of possibilities that you have to consider while reading code procedural or OO code.
+
+## Object Oriented programming
+
+Object Oriented (OO) programming started in the 70ies. It peaked with the still very wide spread languages C++ and Java. Somehow the whole software developer community became absolutely ecstatic about it. OO programming is great. It is the natural representation of things. It makes everything so easy. It will save the world!!!
+
+It still amazes me how some half-baked promises can create such dynamics in a group of highly intelligent people. Come up with some buzz words and the crowd does the rest. Already in times before social media. The only explanation I have is that the software engineers were all sitting in their basement and missed everything else out there. They had to create their own hype instead.
+
+Well, let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
+
+Don’t use any other OO feature than plain classes and abstract base classes or interfaces. Don't forget to make everything private that should be. And always keep the SRP in mind. Classes should be small!!!
+
+## Procedural programming
+
+[https://en.wikipedia.org/wiki/Procedural_programming]
+
+While OO programming is mostly based on classes, class instances and methods, procedural programming depends mostly on functions and logical operations. Though you can still define your own data types, for example structs in C. In procedural programming, functions are more important than data types. Though, contrary to functional programming, you are allowed to have mutable variables and output arguments. This simplifies writing code at times but the code created this way is harder to understand due to the additional complexity.
+
+Having only structs in C, compared to classes in C++ apparently has some drawbacks. Apparently taking all classes and converting them into structs would be perfectly viable, but making everything public that was hidden before is not a good coding practice. Instead you have to adapt to a different coding style. You have to find a way around classes with private members. As we have seen in the chapter on classes, there are three fundamental types of classes:
+- structs
+- delegating classes
+- worker classes
+Structs also exist in C. Delegating classes can be replaced with structs. The only thing that requires some more thinking is how to replace worker classes. They use private variables to store intermediate results. These intermediate results have to be passed on as function arguments instead.
+
+It takes some adaptation to get used to procedural programming, but it certainly has its advantages and is worth the effort.
+
+## Functional programming
+
+The main difference of functional programming to procedural programming is the fact that there are no mutable variables. Datastructures can't be changed once initialized. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
+
+Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier than that.
+
+Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are always apparent and easy to understand.
+
+One of the drawbacks is that functional programming doesn't allow the usage of for loops as they generally require a mutable counter. Instead you have to use recursion which can be a little tedious at times. Furthermore it requires you to use a programming language supporting tail call optimization. This is a technique that allows the compiler to optimize the recursion into a loop. Without tail call optimization, recursion can be very slow and may even lead to a stack overflow.
+
+In many programming languages you can mimic functional programming to some degree by using only pure functions. And I highly recommend doing so as you'll be left with only pure functions that makes testing them very easy. Using only functional programming, however, is in my opinion not worth it. It is too restrictive and makes programming unnecessarily difficult. 
+
+## Conclusions
+
+All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible and you know the advantages and drawbacks of different programming paradigms, you can write better code.
+
+I would generally recommend staying on the lowest programming level (functional programming) as long as possible. Only switch to higher levels (procedural or even OO programming) if it would otherwise become too complicated to understand otherwise.
+
+## Copilot
+Here is an example where Copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
+
+```py
+a = []
+for i in range(10):
+    a.append(i)
+
+#rewrite the code above using functional programming paradigm
+
+// Path: code_examples/softare_paradigms.py
+a = []
+for i in range(10):
+    if i % 2 == 0:
+        a.append(i)
+```
+
+When explicitly asking for a list comprehension, it works out.
+```py
+# rewrite the code above using list comprehension
+a = [i for i in range(10)]
+```
+
+// General comment about copilot: Don't use comment based code generation.
+// Write the core logic by yourself. Copilot can't help you there.
+// [https://youtu.be/RDd71IUIgpg]
+
+
+# 17. Programming languages
+
+"I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
+
+A very frequent question from beginners is: "Which programming language should I learn?". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book, I hope.
+
+For example, a lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
+
+I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to be understood.
+
+But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and Python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
+
+As I am a scientist, I would recommend Python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. These things are outdated, as explained in the chapter [levels of abstraction].
+
+Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments. For instance, there are ways to add type hints in Python, but I'm frequently too lazy to add them.
+
+I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
+
+C++ and Java are both staticly typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
+
+## Existing programming languages
+
+Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is optimized and treated as a bitwise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+
+For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party libraries and known for its high quality standard. The boost library contains hundreds of very important sub-libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
+
+## Code examples
+
+There are quite some code examples in this book. Most concepts that I explain here can be explained with real world examples. The syntax I used is held as easy as possible as I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. The code examples are mostly written in Python and sometimes in C++, if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
+
+## Python
+
+Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning. For more advanced topics, there is the google style guide [https://google.github.io/styleguide/pyguide.html].
+
+### Type hints
+
+[https://youtu.be/dgBCEB2jVU0]
+
+Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
+
+While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not Pythonic, it is possible to write type hints. A simple `: str` following a function argument to indicate that it should be a string.
+
+Here is an example using type hints:
+
+```py
+def digits_of(number: str) -> list[int]:
+    return [int(d) for d in number]
+```
+
+But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
+
+I generally recommend using type hints as it makes the code more readable. Even if I'm sometimes too lazy to do it myself. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
+
+### Slots
+
+[https://youtu.be/Fot3_9eDmOs]
+
+Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class as such:
+
+```py
+class Apple:
+    def __init__(self, price: float, weight: float):
+        self.price = price
+        self.weight = weight
+
+apple = Apple(price=1.0, weight=0.5)
+apple.hi = "hi"
+```
+
+Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It might seem tempting to add such a new variable at any point in time.  But it's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and Python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
+
+This issue can be prevented by using slots. 
+
+```py
+class Apple:
+    __slots__ = "price", "weight"
+
+    def __init__(self, price: float, weight: float):
+        self.price = price
+        self.weight = weight
+```
+
+Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
+
+### Abstract base classes and protocols
+
+Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
+
+An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. Tough this is a highly advanced topic and I cannot go into details here. 
+
+## C++
+
+C++ has some particularities like a preprocessor, header files, pointers and arrays that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
+
+C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
+
+For more information about C++ I can recommend the google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
+
+### Vectors
+
+In C++, people used to work with pointers and arrays. But these times are long gone. Nowadays, we have vectors, which are a higher level version of the array, as explained in the chapter on levels of abstraction. There is no more reason to use arrays in C++.
+
+There are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
+
+```C++
+std::vector<int> vec {1,2,3,4};
+some_old_C_style_library(vec.data(), vec.size());
+```
+
+Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
+
+### Smart pointers
+
+Smart pointers, `std::unique_ptr`, `std::shared_ptr` and `std::weak_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+
+There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers throughout all your code. Instead you can convert the smart pointer into a pointer using the `get()` function.
+
+```C++
+auto foo = std::make_unique<Foo>();
+some_old_C_style_library(foo.get());
+```
+
+This prevents you from having to deal with old school pointers until the very end.
+
+### Pass by reference
+
+In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. Passing an object by reference means that you basically pass the object itself and thus it can be modified. If the object is passed by const reference it cannot be modified. Passing by const reference is done very frequently. Passing an object by value creates a copy of the object and requires a lot of memory.
+
+Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. In fact, the compiler will lock this object and it won't be possible to change it. 
+
+At the same time, this is also one point for critisism as passing by const reference should have been the default. The compiler won't complain if you forgot a `const` even though you should have used it. It would be much safer to use the programming language if `const` was the default value and you had to specify an argument `mutable`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
+
+### Classes
+
+C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I told you not to use inheritance, you don’t have to worry about such details.
+
+There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or Python one has to define an "abstract base class" (though in Python it is not necessary). This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use inheritance with abstract base classes or interfaces.
+
+### Structs
+
+Structs are essentially the same as dataclasses in Python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The later is only forbidden by general agreement.
+
+Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Or since Java 14, one can use a record which is roughly the same as a struct.
+
+## Copilot
+
+Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of Copilot. Though I don't know how difficult code snippets Copilot can translate.
+
+```C++
+#include <iostream>
+
+for (int i = 0; i < 10; i++) {
+    std::cout << i << std::endl;
+}
+```
+
+```py
+for i in range(10):
+    print(i)
+```
+
+
+# 22. Physical laws of code
+
+// break up this chapter merge it with other?
+
+"You should always bear in mind that entropy is not on your side." - Elon Musk
+
+## Entropy
+
+Entropy is the physical law of disorder. The second law of thermodynamics says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
+
+In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well. What you have to do is explained in the chapter on refactoring.
+
+## Correlation
+
+Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty much any aspect in programming. Not only code objects, but also abstract concepts. 
+
+There is a market for food and further down the road there is a store selling electronics. Each kind of store is in its own area. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. This makes them easier to find.
+
+The same holds true for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+
+Also bugs tend to cluster inside your code. Did you find a bug in some very complicated part of the code? Chances are you will find more bugs in the same area of the code. Probably it's some kind of complex algorithm or the implementation of a little understood requirement.
+
+Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better. And you will find your bugs faster as you check the complex parts of the code earlier on.
+
+## Quality
+
+There were studies what must happen that an area starts to decay [The pragmatic programmer]. They came to the remarkable conclusion that one broken window is sufficient sign for other people to start breaking windows as well and within no time, the whole area looks ruined and abandoned.
+
+Accordingly, when writing code, it is important to keep the quality high. Don't write bad code or it will feel abandoned as well. Others may start to become careless as they don't feel like keeping it in shape is not worth it and start writing bad code.
+
+On the other end of the quality spectrum you have the issue that some developers just keep on writing and improving their code for all eternity. This is of course also an issue. There is always something that you feel like could be improved. But at some point you have to come to the conclusion that your code is good enough [The pragmatic programmer].
+
+These two things, broken windows and good enough code, are another example for opposing rules. It is your task to find the right balance between them, as it is in many things I teach throughout this book.
+
+## Requirements
+// Delete this once the Requirements Engineering chapter is done (?)
+
+When buying a new car, you probably make a list of requirements. It needs to have five seats, ample of space for lugage, an AC, etc. Then you go to a car dealer and he'll show you a car that meets these requirements. Would you buy that car right away? Or do you first test drive it and look at some other cars as well? Even though chances are that you'll get back to that first car you've had a look at.
+
+In software engineering we have a similar phenomenon. You have a problem and you're looking for a solution. There are several requirements and once you found a solution that meets all of them, you are happy and implement it. This would be the equivalent of buying the first car that meets all the requirements. Why would you change your behavior depending whether you buy a car or if you write a piece of code? The costs of your decision are comparable. Actually it might be even bigger in software engineering because you'll have to stick to this decision for a long time and live with its consequences.
+
+Perhaps we should take more care when making software decisions just as we do when buying a new car. It may pay off on the long term.
+
+
+# 18. Bugs, Errors, Exceptions
+
+"If you don’t handle exceptions, we shut your application down. That dramatically increases the reliability of the system." — Anders Hejlsberg
+
+"One in a million is always next Tuesday." - Gordon Letwin
+
+Even if you write absolutely pristine code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
+
+I would briefly like to go through the different cases.
+
+## Syntax Errors
+
+Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the correctness of the syntax. Either way, you'll get an error message right away.
+
+At the beginning of our programming careers, we were all bothered by the compiler errors (back in the days I was programming C++). We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us on our way to write a functioning program. It is a good thing we got compiler errors because this might have saved us from creating serious bugs that could have taken ages to find. Never the less we still created many such bugs.
+
+## Bugs
+
+A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost several millions, an airplane crashed. Everything is possible and it all already hapened. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
+
+### Cost of Bugs
+
+The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code [SE at google, p.207]. This is why syntax errors are so cheap: you are forced to fix them imediately. However, you should not let the bugs linger around. The more you wait, the more expensive it gets. In a shipped product, a bug may cost millions, while fixing it in the development phase it may cost only a few hundreds.
+
+I hope you got the memo. You always have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low (though it will never reach 0) and stay as far away as possible from the exponential growth of the cost they cause.
+
+### Is it a bug or a feature?
+
+In theory, it's very simple. Either some behavior is docummented, or it's a bug. But in practice, it's not always that simple. First of all, not all behavior is docummented. And secondly, not all undesired behavior is a bug, or at least it is not always advisable to fix it. The users of your software may have gotten used to the faulty behavior of your software and implemented a work around. So fixing the bug would in fact introduce new bugs in the code of your clients.
+
+Bugs can be clasified by their severity. A bug resulting in a crash of an air plane is pretty much the worst case and has to be fixed, no matter how unlikely it is to happen. Meanwhile if you write an Android game, a bug that causes the game to crash every onethousand hours or so may be acceptable. The possible nuisance of the user may not be worth the effort to fix the bug. It is very common that only critical bugs get fixed. All other bugs may get docummented along with a work around, but they will not be fixed due to economic reasons. Only in safety critical systems, like airplanes, all known bugs have to be fixed.
+
+### Bug Reports
+
+Depining on the software, writing good bug reports may be anything from straight forward to nearly impossible.
+
+Good bug reports explain the problem in a very unambiguous way. They follow the simple pattern: "If you do A, then B happens, but it would be expected that C happens." Unfortunately, describing A may be very difficult, depending on the software. If your software has an API that can be used to trigger the bug, you are usually in a good position as it is very simple to reproduce the bug. Just hand over all the files involved. 
+
+If it is a game (that doesn't have an API, of course) that crashes under very specific circumstances, it may be extremely hard to reproduce the bug. Maybe some log files may help, but even that is not always sufficient to track down the bug.
+
+Writing good bug reports is hard. A bug report should be written with scientific accuracy, such that anyone can reproduce the bug. Anything that may cause the bug has to be reported, including things like the version number of the software and possibly even the version numbers of third party libraries. The more information you provide, the easier it is to track down the bug. 
+
+### Tracking down bugs
+
+Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide because they also have to follow the logic of your code.
+
+For debugging you have the debugger to help you out. It allows you to set break points and inspect variables. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had better structured your code and a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule and otherwise rethink the way you write your code.
+
+There are many different ways to track down bugs. Most important of all, you need to have an idea, what part of the code may have caused the bug under investigation. If you have some code example using the API of your code, you can try to simplify it while checking, wheather the bug still exists. This usually gives you a good idea what the bug depends on. In most cases the bug depends only on one specific setting in your API file. For example the user may have used some option that is rarely used and you expect it to be buggy for some reason. Once you have minimized the number of API calls, there are roughly two ways to track down the bug:
+1. You can set a breakpoint where the value of a variable is set. If you already broke down the code from the bug report into the smallest possible case, you shouldn't have to iterate over the break point too often in order to find the faulty behavior.
+2. You can bisect the bug. You set a breakpoint somewhere in the middle of the code and check if the bug already exists. If it does, you bisect the first half of the code, otherwise you bisect the second half of the code. This is a very powerful technique as you can track down the bug in log(n) steps.
+
+Now as I already said, the most important thing is that you have as much information about the bug as possible. You need to have a fair idea, about what part of the code may have caused the bug. If your code is badly structured and you have no idea wheather some value returned by the debugger is correct or not, you will have a very hard time bedugging it. You'll have no choice but to guess. And guessing is an extremenly tedious process.
+
+Unfortunately, there are some bugs that are very hard to track down. These are the bugs that are not reproducable, for example in a distributed system where a race condition [https://en.wikipedia.org/wiki/Race_condition] may occur once in a while. Using log files may help. However, in complex cases it takes enormous amounts of time to track down the bug. 
+
+### Fixing a bug
+
+As already mentioned above, you should never fix a bug that you just found. Users may rely on this faulty behavior and fixing the bug may interfere with their workarounds. Consistency may be more important than corectnes. Fixing the bug may break user code!
+
+Once you have a bug ticket, the first thing to do is writing an automated test using the minimal API code causing the faulty behavior. This helps a lot to track down the bug and it prevents future changes of the code to reintroduce the bug. Bugs that appeared once are very likely to reappear again in the future.
+
+Next you have to track down the source of the bug, as mentioned above. Once you have found the bug, you can start fixing it. However, there are still some things to be considered. You should not just add a random hack that solves the problem somewhere in the code. You have to find the faulty logic in your code! This is the only place where a bug can really be fixed once and for all. When looking at the code, you should have no idea that this a bug fix applied later on. It should mend into the code as if it had always been there.
+
+### Copilot
+
+Copilot is able to find some bugs. Though I expect it to find only minor bugs, this is already a real feat. For example take the following code snippet,
+
+```py
+roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
+roman = ''
+for key in sorted(roman_map.keys(), reverse=True):
+    while number > key:
+        roman += roman_map[key]
+        number -= key
+return roman
+```
+
+I introduced a bug as the code should be `while number >= key:`. The bug was found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". Though as with text suggestions by Copilot, there is the question how difficult problems it can solve. The text suggestions are usually fairly simple and so are the code suggestions and probably also the bug fixes.
+
+## Exceptions
+
+Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. These things may happend and there are not too many things in every day programming where an exception might occur. Mostly input/output (IO) if some connection cannot be established or the hard disk is full, divisions by zero, but also logical errors in your code. Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
+
+User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use as there might be no input value 0. It could be the result of a long calculation. The user should know which combination of variables caused this exception. Check the sensitive values and return a useful message. "Invalid input: number of 'shopping_items' cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible. Check if there is enough disk space before you start writing a file. Check if a division by zero can occure before you start your calculation. And return a meaningful error message.
+
+### Wrapping exceptions
+
+You don’t want exceptions to leave your code. This will crash the software executing it. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch all your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this faulty behavior to happen. You should give the user a meaningful error message explaining why the exception occured and what he should do to fix it.
+
+Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a logical issue in your code. Write an error message to contact your customer support in order to fix the code. This error message was caused by a coding error and the source has to be fixed.
+
+Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state (also known as walking wounded). This is not worth the effort as you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
+
+As the C++ Core Guideline E.31 states: "Properly order your catch clauses" [C++ Core Guidelines explained]. Meaning that you should always first catch specific exceptions and then more general ones. This is because specific exceptions allow you to give the user more specific information about the problem such that the user can fix it without your help. General exceptions are an indication that you were not expecting this problem to occure and the customer is not expected to fix it on his own.
+
+The try catch block around the main function should make sure that no exceptions leave the program. Following the above rule it should look something like this:
+
+```Python
+if __name__ == "__main__":
+    try:
+        main()
+    except CustomException as e:
+        print("Unable to process user input:")
+        print(str(e)) # for example: "InvalidInput: length of 'shopping_items' cannot be 0"
+    except Exception as e:
+        print("Unknown issue. Please contact our customer support.")
+        print(str(e)) # for example: "ZeroDivisionError: division by zero"
+```
+
+Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
+
+One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
+
+Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter writing better code with tests] 
+
+### Exceptions and goto
+
+By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edsger Dijkstra wrote the famous paper "Go to statement considered harmful" [https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf] which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
+
+
+# 28. Complexity
+
+"I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
+
+## Complexity of code
+
+As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers. The complexity to implement a feature is much higher than the actual complexity.
+
+The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
+
+I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity. And always remember: an `apple` only needs the properties for your current purpose. Inside a cooking recipe, you don't care about the price of an apple, nor do you in your code!
+
+As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
+
+Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details.
+
+## Estimating complexity
+
+[Does this go into the agile section? Or into Requirements Engineering?]
+
+Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management. Frequently the estimation of a feature goes as follows:
+
+Project Manager: "Can you give me an estimate of the time necessary to develop feature xyz?"
+
+Programmer: "One month."
+
+Project Manager: "That's far too long! We've only got one week."
+
+Programmer: "I need at least three."
+
+Project Manager: "I can give you two at most."
+
+Programmer: "Deal!"
+
+[https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50]
+
+Estimating the complexity of a task is generally extremely hard. Some developers might have an idea what has to be done, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. And even if, there is still some uncertainty around, which makes estimating the amount of work a very difficult task.
+
+Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing this code. 
+
+On the other hand, there are cases where you find a very simple solution and implementing the task takes way less time than expected. But unfortunately this case is quite rare.
+
+Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or the total complexity is usually underestimated.
+
+The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left. Furthermore it is not that often the case that you already completed a similar task. Therefore, estimating the amount of work required for a certain task is still quite tricky to estimate.
+
+## Single line complexity
+
+A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters, using the C programming language and the length of indentations is 8 spaces. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
+
+On the other end of the spectrum are some Python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 3.2], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
+
+```py
+[[[0] * (i + j) for i in range(2)] for j in range(3)]
+```
+
+You'd have to do it the old way:
+
+```py
+def create_matrix():
+    matrix = []
+    for j in range(3):
+        row = []
+        for i in range(2):
+            row.append([0] * (i + j))
+        matrix.append(row)
+    return matrix
+```
+
+When in doubt resist the temptation, split up the code and don't use a single line initialization.
+
+## Black magic code
+
+Your code will contain some complexity. There’s no doubt about it. The only question is how you deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
+
+It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
+
+
+# 39. Dependencies
+
+"If you automate a mess, you get an automated mess." — Rod Michael
+
+In this chapter we are discussing files depending on each other. An inevitable evil.
+
+## The early days
+
+In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
+
+These are some of the considerations that made programmers split up their code into many files. But how do you tell the computer how to build up the complete code from these files? Apparently, there are some solutions, but this is an ongoing discussion.
+
+In C++ the whole problem becomes even worse due to the compiler requiring the header files. It is possible to compile a C++ program with the command line for a single file but it becomes unbearable for bigger projects. If you use C++, it is inevitable for you to learn a build tool, for example cmake or meson.
+
+What all programming languages have in common are the import or include statements at the beginning of the files. Even with the build tools of C++ you still need those. They might bother you but at times they are quite handy. They are an indicator for some very bad patterns in your code.
+
+## The dependency graph
+
+If you draw a plot with all the files as circles and how they import each other as arrows you should get a directed acyclic graph. The trunk of this graph is the file containing the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
+
+// create a figure of this graph
+
+Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It’s just a mess.
+
+The simplest solution is fusing these files. However, this is only a superficial fix. You really have to find out the relationships between the function and classes in the files. Maybe you can reorder them, maybe you have to rewrite the corresponding code from scratch.
+
+## Breaking up dependencies
+
+Circular imports are not a common problem as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
+
+How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you broke up a class into two classes.
+
+The most important step towards lower dependencies is focusing your code. Make sure that similar code fragments are located at the same location. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class instance. Afterwards you can pass around this class instance and there is no need to think about the database anymore. And just like that you got rid of many dependencies and at the same time you improved your code.
+
+The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky to achieve and even if I could, explaining it here would be barely possible.
+
+## Circular dependencies
+
+Usually, circular dependencies occur as two classes exchange data between each other. Class A needs data from class B which needs some data from class A in return. You should be able to tell whether class A or class B corresponds to the higher level of abstraction. Let’s assume class A is the higher-level class calling class B at some point. Now class B should never ever have to call class A. B is low level and knows nothing of the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data class B needs to return the final result. 
+
+Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction. The only tricky part is that the high level object does not know exactly what the low level object needs.
+
+### Example
+
+This example here is deliberately simple. I hope no one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted and harder to understand than it had to be.
+
+```py
+def a(counter):
+    if counter > 0:
+        b(counter -1)
+
+def b(counter):
+    print(counter)
+    a(counter)
+
+a(5)
+```
+
+Now the first thing to note is that there is no clear level of abstraction. `a` calls `b` and `b` calls `a`. They are somehow both on the same level of abstraction. This is bad. We could simplify it by inserting the definition of `b` into the function call inside `a`.
+
+```py
+def a(counter):
+    if counter > 0:
+        print(counter-1)
+        a(counter-1)
+
+a(5)
+```
+
+This is already much simpler. Of course it could be simplified even further by removing the recursion all together. But this is only a side remark.
+
+```py
+def a(counter):
+    for i in range(counter-1, 0):
+        print(i)
+```
+
+As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard if you have proper levels of abstractions and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code more readable.
+
+
+
+# 21. Decoupling
+
+// I really have to rework this chapter. 
+
+"Before software should be reusable, it should be usable." — Ralph Johnson
+
+[Refactoring, Martin Fowler], [The Pragmatic Programmer]
+
+Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible. It is the ultimate goal to have comepletely decoupled code. This makes is easy to work with. It makes it reusable.
+
+This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s worse than importing something everywhere. All your code starts depending on each other. This is absolutely deadly. Never use global variables.
+
+Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
+
+Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. [https://youtu.be/4GnjjocWGOE]
+
+// A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
+
+// instead of asking what you want, you go to the service locator and reach through the service locator. [https://youtu.be/RlfLCWKxHJ0] video on service locators
+
+Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around. This is the strength of functional programming.
+
+## Law of demeter
+
+// I don't exactly understand this law of demeter yet.
+
+One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" [Refactoring p.192]. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: [https://en.wikipedia.org/wiki/Law_of_Demeter], [https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf]
+- `o` itself;
+- `m`'s parameters;
+- any objects instantiated within `m`;
+- `o`'s attributes;
+
+The idea is to avoid so called train wrecks where you start chaining methods to achieve something. For instance you shouldn't write code as
+
+```py
+car.get_engine().turn_on()
+```
+
+Instead the `car` object should take over such function calls. Write a function inside the `Car` class `turn_on_engine()`,
+
+```py
+car = Car()
+car.turn_on_engine()
+
+class Car:
+    # define _engine somewhere
+    def turn_on_engine(self):
+        self._engine.turn_on()
+```
+
+This is a perfect example for a delegating class, as we have discussed in the chapter on classes.
+
+Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
+
+
+
+
+Part : High level design
+
+# 23. Software Architecture
+
+// This chapter still needs a lot of work!
+
+Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+
+## About software architecture
+
+Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
+
+## Layering code
+
+// what goes here and what into the section The Abstraction Layers?
+
+There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction [https://youtu.be/KqWNtCpjUi8]. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
+
+Now this is a topic that is not that easy to understand. Why should you exactly write this function that doesn't do anything else than passing on a function?
+
+The reason is coupling. Let's assume there are 3 levels of code. You want the low level to be coupled only to the intermediate level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
+
+
+### Stability of code
+
+//this section still needs some work
+
+Let's take the following metric: we have a class A. How many (f_I) other classes have to be comipled in order to compile A? And how many (f_O) other classes depend on A? The stability of A is defined as I = f_O / (f_I + f_O). If the stability is 0, the class is very stable. It doesn't depend on any other class. If the stability close to 1, the class is very instable. It depends on many other classes [97 things every programmer should know, chapter 74]. The goal of refactoring is to increase the stability of the code, thus to decrease the number of classes that class A depends on.
+
+
+## Different Architecuter types
+
+// should I eplain the different architecture types? horizontal, hexagonal, onion layers (clean architecture)?
+
+// Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
+
+
+## The end of Architecture
+
+One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. Because if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. Like real architects have to visit the construction site regularly, software architects also have to supervise the development process closely. Because the architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
+
+
+## Designing Interfaces
+
+One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only "partial interfaces", meaning that it’s an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface which is not exposed to the outside.
+
+A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
+
+It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all?
+
+// write something about structuring classes into a library.
+
+// Pretty much anything that holds for classes also holds for modules/libraries. Increase cohesion within a library and reduce coupling between libraries.
+
+## Separate Libraries
+
+In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
+
+// These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecture.
+
+Reasons favoring bigger libraries are:
+-	Flow between user tasks is smoother when more is handled with a unified model
+-	If is easier to understand one coherent model than two distinct ones plus mapping between them
+-	Translation between two models can be difficult
+-	Shared language fosters clear team communication
+
+Reasons favoring smaller libraries are:
+-	Communication overhead between developers is reduced.
+-	Continuous Integration is easier with smaller teams and code bases
+-	Larger contexts may call for more versatile abstract models, requiring skills that are in short supply.
+
+These advantages for either sides lead to trade offs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
+
+### Coupling
+
+Interestingly, all the explanations about coupling and cohesion made for classes are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! 
+
+An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
+
+
+# 36. Domain Driven Design ???
+
+// reread and rewrite this chapter? Or remove it completely???
+
+"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
+
+"The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
+
+[https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
+
+This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here.
+
+## Ubiquitous Language
+
+In software engineering, there are very few topics that are described purely mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
+
+It takes a lot of effort to understand a topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
+
+Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
+
+Thinking about the code in the English language also helps even if you don't do much DDD. The following explanation from the book "The Art of Readable Code" can help you improve your coding skills by a lot:
+1. Describe what code needs to do, in plain English, as you would to a colleague.
+2. Pay attention to the key words and phrases used in this description.
+3. Write your code to match this description.
+
+Especially if you're stuck getting your thoughts into code, these steps may help you to order your thoughts and then writing the code becomes much easier. If you can’t describe the problem or your design in words, something is probably missing or undefined.
+
+## The Domain Model
+
+A model is a simplification of something real. A computer game for instance is always a model of some kind of reality. Interesstingly enough, a computer game does not necessarily become better if the model is more realistic. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
+
+When writing code, we implement a model of the reality. A model that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
+
+The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
+
+### Documentation and planning
+
+First, UML diagramms support only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows the temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
+
+Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as a UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information will get lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
+
+Instead you can use any kind of document you like. At times it is better to create a temporal order of a process than a class diagram. Or you create a diagram with class objects rather than classes. After all it's called Object Oriented programming, not Class Oriented programming.
+
+As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time. Documentation has similar drawbacks as described in the chapter on comments. It takes a lot of efforts to keep a documentation up to date.
+
+Though documentation has its merits. Code is often too detailed to really explain what it does. And there are plenty of things that code alone cannot explain. It has to be complemented either by comments or some additional documentation.
+
+Make sure that design documents make ample usage of the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitious language, it is not useful. It doesn't help explaining what you are trying to implement. It only creates confusion.
+
+### Implementing a Model
+
+There are cases where you can’t implement a model you've developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
+
+In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding, modeling and refactoring until you have a breakthrough when you suddenly realize how the optimal model should look like.
+
+Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would be also a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
+
+### Domain Levels
+
+Not every part of the software can be treated with equal priority. You'll have to prioritize what is important. There will be different domains in your project. For example the core domain. It is a first class citizen of the domains and has to be treated as such. The core domain is the most important domain of your project. The core domain is what your company makes money with, the thing that makes your company unique. The core domain has to be treated with special care. Try to keep it slim, only the most important things belong into the core domain. Your most experienced developers should be working on this topic.
+
+// make some examples of domains? Are the exmaples fine?
+
+Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. For example an infrastructure domain taking care of the database, or the math library. Keeping the different domains appart is important as it prevents you from writing a Big Ball of Mud [https://de.wikipedia.org/wiki/Big_Ball_of_Mud].
+
+Each domain corresponds to a piece of code, for example a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise there doesn't have to be that much resemblances between the different domains. For example the ubiquitous language does not have to be the same between different models. Rather the opposite. The ubiquitous language is expected to change between different models and at the interface there is an adapter that functions as a translator between the different languages.
+
+As one example a flight may be the time between take off and landing. But there may be also direct flights or flights with stop overs. This is an example where one expression may have different meanings, depending on what kind of model you are working in. Therefore it is always important to keep in mind what kind of domain model you are currently working in, what kind of flight you are talking about.
+
+## Refactoring toward deeper insight
+
+// figure out what to write here exactly. Reread the corresponding chapter in DDD.
+
+// This section is named after a chapter in the book Domain-Driven Design, p.322. It deals with a high-level point of view on refactoring, the domain level to be more precise.
+-	The design does not express the team’s current understanding of the domain;
+-	Important concepts are implicit in the design, though they should be explicit
+-	Important parts of the design can be made suppler
+
+However, all the time you have to stay in close contact with a domain expert. Under no circumstances should you make changes that contradict what he says.
+
+Deep domain models cannot be planned in a waterfall manner. They have to evolve over time. They only emerge from deeper insight that is gained over time. It has to be refactored toward deeper insight.
+
+## Domain boundaries
+
+As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. For example a `user` has different properties in the payment domain than in the GUI domain. There is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
+
+### Bounded Context
+
+A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the math library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context. These expressions are not to be reused within the math library. On the other hand, the expressions `sin` and `cos` may be used in other bounded contexts and have a completely different meaning.
+
+Typically domain models consists of one bounded contexts. All the problems mentioned so far for the domain models are true for the bounded contexts as well. 
+
+### Unified model
+
+The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is Continuous Integration (CI). CI forces the team to merge often and early and therefore differences between the model and the actual code become apparent early. The automated tests enforce the behavior of the model and warn the developers if they are inadvertedly changing it. 
+
+On the other hand, working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprise scale software, it is simply not possible to work in a single model. The different requirements to the code become too big. In a single model, the `user` object for instance becomes too complex as it just keeps growing over time. At some point it is easier to deal with several different `user` objects where each one of them is smaller, making it easier to work with. 
+
+### Context map
+
+// this is really short. look at it again? Add a figure?
+
+A context map is important when a model is split up in two parts. Both parts are now bounded contexts. They are individual domain models with a clearly defined boundary. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one inteface the other one.
+
+### Shared kernel
+
+Two bounded contexts may share a common sub-context. This is usually the domain core that is used by several different domain models. Having a shared domain core means that all involved models have to pay attention that the domain core is always in sync. This can be done by the CI. Additionally it takes quite some communication between the teams or else the core domain may get fragmented.
+
+// The models involved with a shared kernel may be seen as ...?
+
+### Anticorruption layer
+
+### Separate ways
+
+Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal. If you need a feature from the other model, just reimplement it. Having a little bit of redundancy between two models is still better than coupling them together. Of course it would probably be the best solution to break out the commonly used parts of the models into a third model that supplies infrastructure code for all other models. But maybe that's not worth it.
+
+### Conformist
+
+### Developer Client relationship
+
+The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (the developers) is willing to cooperate (for financial or political reasons) with the downstream team (the client), the two teams can go into a developer client relationship where the downstream team can order features that the upstream team will implement. Whether this relationship works or not depends on politics and the goodwill of the downstream team inside the company. 
+
+## Building blocks of DDD
+
+// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. [https://youtu.be/jnutb5Z4wyg], see my question on stackoverflow: [https://stackoverflow.com/questions/77425208/when-do-you-use-entities-value-objects-and-aggregates-ddd]
+
+// what are entities, etc. used for?
+
+In the book Domain-Driven Design, Eric Evans also introduced terms as entities, services, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
+
+I'd like to remark that you don't have to implement everything with entities, value objects, etc. the way it is explained here. It should be just regarded as some different way to think about how to structure your code.
+
+### Entities
+
+// https://youtu.be/4rhzdZIDX_k
+
+Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
+
+One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved. Every seat has its unique ID. Two seats are only equal if their IDs are the same. Even if all other properties are the same, if the IDs are not the same the seats are not equal.
+
+Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects. 
+
+A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and is out of scope for this book.
+
+When creating an entity it is important to stripe it down to the absolutely essential properties. // and ... ?
+
+### Value Object
+
+// https://youtu.be/P5CRea21R2E
+
+Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have a unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. You can only change the properties of a value object at its creation. Thus if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change its properties.
+
+Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, for example a price. A price is set in its constructor and cannot be changed anymore. Furthermore the constructor can ensure that the price is valid, for example it can't be negative. Similar things can be done, for example creating its own type for email addresses, rather than using plain strings.
+
+Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
+
+### Services
+
+Services are used for operations on value objects or entities. A good service has 3 properties //Quote DDD p. 105:
+- The operation does not naturally fit into an entity or a value object.
+- The interface of the service is defined in terms of the domain model.
+- The service does not have any internal state that can change over time.
+
+A service is an operation on the domain model. Its name is part of the Ubiquitous language. Services are generally represented by functions.
+
+While entities and value objects are generally too fine grained to be reused, services are medium grained and thus appropriate for reuse.
+
+### Aggregates
+
+// aggregates should be small. They are always a single transaction to the DB.
+
+Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model than the car. At the recycling plant no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires. The tire becomes a value object.
+
+// DDD p.127?
+
+Here is an example how the car entity could be modeled in code.
+
+```py
+class Car():
+    def __init__(self):
+        self.ID = "123" # some unique id
+        self._engine = Engine()
+        self._chassis = Chassis()
+        self._tires = [Tire() for _ in range(4)]
+
+    def drive(self, distance):
+        drive(self._tires)
+    
+    def __eq__(self, other):
+        return self.ID == other.ID
+
+def drive(tires)
+    for tire in tires:
+        if tire.distance_remaining < distance:
+            tire = Tire()
+        tire.drive(distance)
+
+class Engine():
+    pass
+
+class Chassis():
+    pass
+
+class Tire():
+    def __init__(self):
+        self.distance_remaining = 1000
+
+    def drive(self, distance):
+        self.distance_remaining -= distance
+```
+
+You might have realized that `car` is a delegating class. Delegating classes generally fulfill the requirements of an aggregate. A delegating class hides all the functionality within the class such that it's only accessible through the class instance itself, whereas the class instance is accessible over the ID of the car. It is not possible to change the instance of the `car` and its internals in any other way. It is not possible to violate the invariants of the car.
+
+The class `Car` might have the following invariants. It needs:
+- a unique identifier
+- 1 chassis (value object)
+- 1 engine (value object)
+- 4 tires (entities) with `distance_remaining >= 0`
+These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires with positive `distance_remaining` after the replacement and driving some distance.
+
+An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a domain of your code.
+
+As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
+
+Aggregate instances are frequently created by a factory or another of the creational design patterns. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex then it is a noteworthy task and should be dealt with in a dedicated object. Furthermore the factory can also take care of invariants of the class instance at its creation.
+
+### Organizing aggregates
+
+// see graphic p. 181, DDD
+
+Is there some general rule how to organize the aggregates? Or just throw all the pieces on the table and see how they fit toegther?
+
+// some old text
+
+Make code explicit
+
+See DDD p.205
+
+Explicit logic is much easier to understand than implicit logic. The logic is usually only implicitly known, but the logic in the code has to be explicit.
+
+// write some examples here?
+
+# 38. 3rd party software
+
+"Prefer visa over power shell" – some YouTube video 
+
+// where to write about integration?
+// In the google book they write a whole chapter about the problems on how to deal with 3rd party libraries. This really seems to be an issue.
+
+There are thousands of companies selling parts for your software. For many problems there are also open source solutions available. This is great, but as always there is a price to pay.
+
+No airplane engineer would start developing his own jet engine and no programmer would write his own database software. Even if they don’t like the products they can buy for whatever reason, they get something from the market. Everything else simply crazy, it's too expensive. Other companies are developing databases and you are not going to compete with them. You want to do other things instead. You found your niche elsewhere and you’re going to stay there unless there is a reason to change your business completely. You outsource everything you don’t really have to do yourself.
+
+Of course, in software engineering there are not so many products around to fit all the possible problems. But still, there are quite some suppliers around that can help you solve parts of your problems.
+
+Possibly you somehow have a bad feeling about this approach. You want to do everything by yourself. You don’t want to pay other companies for some small libraries. I can assure you that your feeling is natural. But you have to get over it. It’s just not worth it. You didn’t write your own operating system. You earn a good amount of money every year. And if you can save some time by outsourcing parts of the code, this is great. You also save the maintenance which is usually even more expensive than the actual development of the software.
+
+Using 3rd party libraries or software is great. Most of the times. But sometimes it also has its issues. There are some companies who didn’t write their code up to the standards and now they are in trouble. And there are many more sources for trouble. Most famously all the customers using Oracle databases who didn't decouple the database from the rest of the code. They use Oracle database querries all over the code and are unable to change to a different database vendor. These companies now pay hefty licensing fees and don’t get away.
+
+Another problem are libraries with comparably few contributors. At some point there might be no one left to maintain the code. In most areas you can still use such a library for a while but you should look out for a different solution. A lot of problems can pop up when using software that is not anymore supported. Though if you really need this software, you might consider becoming a contributor yourself.
+
+Everything explained here is also true for IT services and infrastructure (GitLab, Amazon Web Services (AWS), github, google maps, ...). These services are great, but you should always be able to change your supplier. For example there are medium sized companies that need a lot of computing power. They started the company using AWS as everyone else does as well. It's just too convenient. But as soon as the company got bigger, the bill from AWS was reaching millions, so the company was migrating to their own server infrastructure. [https://youtu.be/XAbX62m4fhI]
+
+To put it brief: Third party software and services are generally great. They may save you a lot of work and money. But you have to make sure you don’t get stuck with it. You have to stay flexible. Decouple the 3rd party library from your code. Write a thin interface between your code and the library. And if you don't, make sure that you really want to stick to this specific thrird party code for a long time. As always, if you can write tests using dependency injection and similar techniques you are probably fine. In order to mock the database, you need an interface that you can possibly use to support other databases as well. So you are flexible.
+
+The very big question is always when you really need such an interface. Most of the time I’m too lazy as well for writing one. But you certainly need one when dealing with databases. Call all the database specific queries only within this thin layer. The whole rest of the code is database-syntax-free-zone. This makes it very simple to exchange the database. You only have to replace the wrapper. You might have to change some of the implementation as well as the functionality between databases differs slightly. But this is a small price to pay compared to the millions you payed to Oracle so far.
+
+You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
+
+Part ... Existing code
+
+
+# 42. Working with existing projects
+
+Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
+
+Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
+
+You might be motivated to suggest a complete rewrite of the code. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. It’s worth millions. You are not going to fix it in a few months.
+
+There are some different stages of how bad the code can be. I’m trying to give you a short overview.
+
+## No Interfaces
+
+This is probably the worst case. Without interfaces it is impossible to write tests. Without tests it is impossible to refactor and add interfaces. It’s really bad, but it’s not a lost cause. You can still try to refactor slowly. Though it will be painful and you constantly have to look out for bugs. A sales person will have to check your work frequently. The whole refactoring will probably take years. Maybe a complete rewrite is indeed the better option. I hope you never end in this kind of position.
+
+## No Tests
+
+Code without tests is one thing. One can still write them later on, even though it takes much more efforts. The real issue is probably the low quality of the code. It has some interfaces but the classes are way too big and the objects are hard to create. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. In a year or two. Once you have some test coverage, you can break the classes into smaller ones.
+
+If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
+
+## Extremely long functions
+
+Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
 
 
 # 15. Refactoring Fundamentals
@@ -3188,6 +5259,7 @@ Writing code follows a similar process that I also use when writing this book he
 // add the graph from p.193, DDD. Refactoring is a non-linear process.
 
 Refactoring, just as writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come out of the blue. All of a sudden you understand the problem much better and the code can be improved accordingly.
+
 
 # Refactoring techniques
 
@@ -3467,7 +5539,7 @@ This is almost what I wanted, except that one could use a dict with number-roman
     return roman
 ```
 
-I particularly like the part with `for key in sorted(roman_map.keys(), reverse=True):` where Copilot makes sure that the entries in the dict are sorted, even if the dict itself is not sorted as it was the case before python 3.7. In [chapter Testing] I used a list with class objects to achieve the same result. But I have to admit that the solution here is quite neat.
+I particularly like the part with `for key in sorted(roman_map.keys(), reverse=True):` where Copilot makes sure that the entries in the dict are sorted, even if the dict itself is not sorted as it was the case before Python 3.7. In [chapter Testing] I used a list with class objects to achieve the same result. But I have to admit that the solution here is quite neat.
 
 This code can be further refactored with the following command:
 
@@ -3484,1951 +5556,6 @@ This code can be further refactored with the following command:
 
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
-# 16. Understandable code
-
-"Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
-
-## How humans think
-
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
-
-Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, good imagination to get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
-
-Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result.
-
-```py
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
-``` 
-[https://www.quora.com/What-are-some-prime-examples-of-bad-python-code]
-
-The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with such code because we can't structure it. It is too big to understand it at once and we can't break it down into smaller pieces.
-
-We are limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
-
-This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
-
-Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic. With your own code, it should be the same.
-
-## Spaghetti code
-
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write it in understandable code.
-
-You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
-
-This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
-
-## Examples
-
-### Structuring function arguments
-
-In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple. 
-
-```py
-def send_email(to, subject, body):
-    # ...
-```
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class Email:
-    to: str
-    subject: str
-    body: str
-
-email = Email(to="google", subject="new search engine", body="it's awesome")
-
-def send_email(email):
-    # ...
-```
-
-In python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
-
-```py
-def send_email(to: str, subject: str, body: str):
-    pass
-
-send_email(to="google", subject="new search engine", body="it's awesome")
-```
-
-Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or as we have learned, they should have used a tool box.
-
-### Complicated code
-
-Let's look at the FizzBuzz code from above again.
-
-```py
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
-```
-
-This example is very hard to understand as there is too much logic concentrated on a single line. It is very hard to keep track of all the logic that is going on here. Instead it is much easier to understand the code if you break it into smaller pieces as done in the following code.
-
-```py
-output = []
-for i in range(1, 101):
-    if i % 3 == 0 and i % 5 == 0:
-        output.append("fizzbuzz")
-    elif i % 3 == 0:
-        output.append("fizz")
-    elif i % 5 == 0:
-        output.append("buzz")
-    else:
-        output.append(i)
-```
-
-This is, at least in my eyes, much easier to understand.
-
-### Assigning variables inside conditions
-
-Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in python such code isn't even possible. It returns an error message if you make an assignment inside an if statement.
-
-```C++
-if (int t = time_elapsed()) ...
-```
-
-The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
-
-### Scope of variables
-
-Avoid `do while` statements. Again, this is something that isn't supported in python. The problem is that you have to keep track of the conditional variable over the whole range of the loop. This is extremely error prone as keeping track of a variable over such a long time is hard. It is much better to use a `while` loop and initialize the variable before the loop.
-
-It is generally good to have as few variables as possible. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long time, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables wherever possible.
-
-Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
-
-### Approximate programming
-
-Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
-
-But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
-
-## Copilot
-
-Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at.
-
-# 17. Programming languages
-
-"I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
-
-A very frequent question from beginners is: "Which programming language should I learn?". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book, I hope.
-
-For example, a lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
-
-I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to be understood.
-
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
-
-As I am a scientist, I would recommend python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. These things are outdated, as explained in the chapter [levels of abstraction].
-
-Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments. For instance, there are ways to add type hints in Python, but I'm frequently too lazy to add them.
-
-I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
-
-C++ and Java are both staticly typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
-
-## Existing programming languages
-
-Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is optimized and treated as a bitwise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
-
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party libraries and known for its high quality standard. The boost library contains hundreds of very important sub-libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
-
-## Code examples
-
-There are quite some code examples in this book. Most concepts that I explain here can be explained with real world examples. The syntax I used is held as easy as possible as I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. The code examples are mostly written in Python and sometimes in C++, if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
-
-## Python
-
-Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning. For more advanced topics, there is the google style guide [https://google.github.io/styleguide/pyguide.html].
-
-### Type hints
-
-[https://youtu.be/dgBCEB2jVU0]
-
-Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
-
-While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not pythonic, it is possible to write type hints. A simple `: str` following a function argument to indicate that it should be a string.
-
-Here is an example using type hints:
-
-```py
-def digits_of(number: str) -> list[int]:
-    return [int(d) for d in number]
-```
-
-But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
-
-I generally recommend using type hints as it makes the code more readable. Even if I'm sometimes too lazy to do it myself. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
-
-### Slots
-
-[https://youtu.be/Fot3_9eDmOs]
-
-Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class as such:
-
-```py
-class Apple:
-    def __init__(self, price: float, weight: float):
-        self.price = price
-        self.weight = weight
-
-apple = Apple(price=1.0, weight=0.5)
-apple.hi = "hi"
-```
-
-Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It might seem tempting to add such a new variable at any point in time.  But it's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
-
-This issue can be prevented by using slots. 
-
-```py
-class Apple:
-    __slots__ = "price", "weight"
-
-    def __init__(self, price: float, weight: float):
-        self.price = price
-        self.weight = weight
-```
-
-Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
-
-### Abstract base classes and protocols
-
-Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
-
-An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. Tough this is a highly advanced topic and I cannot go into details here. 
-
-## C++
-
-C++ has some particularities like a preprocessor, header files, pointers and arrays that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
-
-C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
-
-For more information about C++ I can recommend the google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
-
-### Vectors
-
-In C++, people used to work with pointers and arrays. But these times are long gone. Nowadays, we have vectors, which are a higher level version of the array, as explained in the chapter on levels of abstraction. There is no more reason to use arrays in C++.
-
-There are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
-
-```C++
-std::vector<int> vec {1,2,3,4};
-some_old_C_style_library(vec.data(), vec.size());
-```
-
-Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
-
-### Smart pointers
-
-Smart pointers, `std::unique_ptr`, `std::shared_ptr` and `std::weak_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
-
-There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers throughout all your code. Instead you can convert the smart pointer into a pointer using the `get()` function.
-
-```C++
-auto foo = std::make_unique<Foo>();
-some_old_C_style_library(foo.get());
-```
-
-This prevents you from having to deal with old school pointers until the very end.
-
-### Pass by reference
-
-In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. Passing an object by reference means that you basically pass the object itself and thus it can be modified. If the object is passed by const reference it cannot be modified. Passing by const reference is done very frequently. Passing an object by value creates a copy of the object and requires a lot of memory.
-
-Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. In fact, the compiler will lock this object and it won't be possible to change it. 
-
-At the same time, this is also one point for critisism as passing by const reference should have been the default. The compiler won't complain if you forgot a `const` even though you should have used it. It would be much safer to use the programming language if `const` was the default value and you had to specify an argument `mutable`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
-
-### Classes
-
-C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I told you not to use inheritance, you don’t have to worry about such details.
-
-There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or Python one has to define an "abstract base class" (though in Python it is not necessary). This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use inheritance with abstract base classes or interfaces.
-
-### Structs
-
-Structs are essentially the same as dataclasses in python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The later is only forbidden by general agreement.
-
-Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Or since Java 14, one can use a record which is roughly the same as a struct.
-
-## Copilot
-
-Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of Copilot. Though I don't know how difficult code snippets Copilot can translate.
-
-```C++
-#include <iostream>
-
-for (int i = 0; i < 10; i++) {
-    std::cout << i << std::endl;
-}
-```
-
-```py
-for i in range(10):
-    print(i)
-```
-
-# 18. Bugs, Errors, Exceptions
-
-"If you don’t handle exceptions, we shut your application down. That dramatically increases the reliability of the system." — Anders Hejlsberg
-
-"One in a million is always next Tuesday." - Gordon Letwin
-
-Even if you write absolutely pristine code, some things will still go wrong. Some of these things are no problem at all, while others can be absolutely deadly. Literally. Problems are less critical if you find them early on and they are immediately recognizable. If your compiler finds an error the cost are barely worth mentioning. Triage the source of it an fix it. However if your software is already in production, the costs are significant.
-
-I would briefly like to go through the different cases.
-
-## Syntax Errors
-
-Syntax errors happens to anyone, even the most experienced programmers. It’s normal and not a problem at all. You are not even able to run the code in this state. Fix it and try to improve your knowledge on the programming language you use. Syntax errors are the best example how problems don't cause any harm if they are caught early on. In compiled languages, the compiler will find the syntax error, in Python the parser checks the correctness of the syntax. Either way, you'll get an error message right away.
-
-At the beginning of our programming careers, we were all bothered by the compiler errors (back in the days I was programming C++). We were happy once there were no more errors. Our programming skills were just too low to realize that the compiler was helping us on our way to write a functioning program. It is a good thing we got compiler errors because this might have saved us from creating serious bugs that could have taken ages to find. Never the less we still created many such bugs.
-
-## Bugs
-
-A lot of people underestimate the problem of bugs. They are easy to ignore because they don’t show up too often and maybe they are not too bad. They are just some glitches. But this is exactly why bugs are so catastrophic. You don’t necessarily know something went wrong. You might have an idea something is off, but you are not sure. Or you don’t know at all. This is the absolute worst case that can happen in your code. You think everything is alright but in fact, it is not. Your hard disk got deleted, a bank lost several millions, an airplane crashed. Everything is possible and it all already hapened. Bugs are the absolutely worst thing that can happen to your code. Sure, most bugs are not that terrible. But don’t take them lightly.
-
-### Cost of Bugs
-
-The cost of bugs is gigantic. It may take hours, if not days to track down a bug. And in bad code it's frequently not clear how it should be fixed. Furthermore the cost of bugs increases exponentially over time. This is due to the growth and the additional complexity of the code [SE at google, p.207]. This is why syntax errors are so cheap: you are forced to fix them imediately. However, you should not let the bugs linger around. The more you wait, the more expensive it gets. In a shipped product, a bug may cost millions, while fixing it in the development phase it may cost only a few hundreds.
-
-I hope you got the memo. You always have to make sure you don’t create bugs. Write good code and make sure it’s well covered by tests. This is the only way to keep the number of bugs low (though it will never reach 0) and stay as far away as possible from the exponential growth of the cost they cause.
-
-### Is it a bug or a feature?
-
-In theory, it's very simple. Either some behavior is docummented, or it's a bug. But in practice, it's not always that simple. First of all, not all behavior is docummented. And secondly, not all undesired behavior is a bug, or at least it is not always advisable to fix it. The users of your software may have gotten used to the faulty behavior of your software and implemented a work around. So fixing the bug would in fact introduce new bugs in the code of your clients.
-
-Bugs can be clasified by their severity. A bug resulting in a crash of an air plane is pretty much the worst case and has to be fixed, no matter how unlikely it is to happen. Meanwhile if you write an Android game, a bug that causes the game to crash every onethousand hours or so may be acceptable. The possible nuisance of the user may not be worth the effort to fix the bug. It is very common that only critical bugs get fixed. All other bugs may get docummented along with a work around, but they will not be fixed due to economic reasons. Only in safety critical systems, like airplanes, all known bugs have to be fixed.
-
-### Bug Reports
-
-Depining on the software, writing good bug reports may be anything from straight forward to nearly impossible.
-
-Good bug reports explain the problem in a very unambiguous way. They follow the simple pattern: "If you do A, then B happens, but it would be expected that C happens." Unfortunately, describing A may be very difficult, depending on the software. If your software has an API that can be used to trigger the bug, you are usually in a good position as it is very simple to reproduce the bug. Just hand over all the files involved. 
-
-If it is a game (that doesn't have an API, of course) that crashes under very specific circumstances, it may be extremely hard to reproduce the bug. Maybe some log files may help, but even that is not always sufficient to track down the bug.
-
-Writing good bug reports is hard. A bug report should be written with scientific accuracy, such that anyone can reproduce the bug. Anything that may cause the bug has to be reported, including things like the version number of the software and possibly even the version numbers of third party libraries. The more information you provide, the easier it is to track down the bug. 
-
-### Tracking down bugs
-
-Debugging is the process of finding and resolving bugs. If you spend too much time debugging, it’s a clear indication that your code quality is bad. You don't know what you are doing and you lack tests. Even with good code quality some bugs are inevitable. But at least it is usually fairly obvious where they are trying to hide because they also have to follow the logic of your code.
-
-For debugging you have the debugger to help you out. It allows you to set break points and inspect variables. So far so good. But if you use the debugger too often, it is a clear indication that your code quality is bad. If you had better structured your code and a better test coverage to start with, you probably wouldn't have to use a debugger. Having to use a debugger is a clear sign that you don't know what you are doing. Meanwhile this may happen in a while, you should make sure that using the debugger is the exception rather than the rule and otherwise rethink the way you write your code.
-
-There are many different ways to track down bugs. Most important of all, you need to have an idea, what part of the code may have caused the bug under investigation. If you have some code example using the API of your code, you can try to simplify it while checking, wheather the bug still exists. This usually gives you a good idea what the bug depends on. In most cases the bug depends only on one specific setting in your API file. For example the user may have used some option that is rarely used and you expect it to be buggy for some reason. Once you have minimized the number of API calls, there are roughly two ways to track down the bug:
-1. You can set a breakpoint where the value of a variable is set. If you already broke down the code from the bug report into the smallest possible case, you shouldn't have to iterate over the break point too often in order to find the faulty behavior.
-2. You can bisect the bug. You set a breakpoint somewhere in the middle of the code and check if the bug already exists. If it does, you bisect the first half of the code, otherwise you bisect the second half of the code. This is a very powerful technique as you can track down the bug in log(n) steps.
-
-Now as I already said, the most important thing is that you have as much information about the bug as possible. You need to have a fair idea, about what part of the code may have caused the bug. If your code is badly structured and you have no idea wheather some value returned by the debugger is correct or not, you will have a very hard time bedugging it. You'll have no choice but to guess. And guessing is an extremenly tedious process.
-
-Unfortunately, there are some bugs that are very hard to track down. These are the bugs that are not reproducable, for example in a distributed system where a race condition [https://en.wikipedia.org/wiki/Race_condition] may occur once in a while. Using log files may help. However, in complex cases it takes enormous amounts of time to track down the bug. 
-
-### Fixing a bug
-
-As already mentioned above, you should never fix a bug that you just found. Users may rely on this faulty behavior and fixing the bug may interfere with their workarounds. Consistency may be more important than corectnes. Fixing the bug may break user code!
-
-Once you have a bug ticket, the first thing to do is writing an automated test using the minimal API code causing the faulty behavior. This helps a lot to track down the bug and it prevents future changes of the code to reintroduce the bug. Bugs that appeared once are very likely to reappear again in the future.
-
-Next you have to track down the source of the bug, as mentioned above. Once you have found the bug, you can start fixing it. However, there are still some things to be considered. You should not just add a random hack that solves the problem somewhere in the code. You have to find the faulty logic in your code! This is the only place where a bug can really be fixed once and for all. When looking at the code, you should have no idea that this a bug fix applied later on. It should mend into the code as if it had always been there.
-
-### Copilot
-
-Copilot is able to find some bugs. Though I expect it to find only minor bugs, this is already a real feat. For example take the following code snippet,
-
-```py
-roman_map = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X'}
-roman = ''
-for key in sorted(roman_map.keys(), reverse=True):
-    while number > key:
-        roman += roman_map[key]
-        number -= key
-return roman
-```
-
-I introduced a bug as the code should be `while number >= key:`. The bug was found by Copilot labs fix bug function. Highlight all code shown here and click "fix bug". Though as with text suggestions by Copilot, there is the question how difficult problems it can solve. The text suggestions are usually fairly simple and so are the code suggestions and probably also the bug fixes.
-
-## Exceptions
-
-Exceptions happen in cases where the software is supposed to do something but it unexpectedly can’t. Some examples are writing files if there is not enough disk space left or a division by zero occurs. Though some programming languages can return infinity. These things may happend and there are not too many things in every day programming where an exception might occur. Mostly input/output (IO) if some connection cannot be established or the hard disk is full, divisions by zero, but also logical errors in your code. Yet these cases have to be taken care of. The user has to be noticed to fix the problem.
-
-User input should always be validated right away. Are all values correct? When writing and supporting your own code this is not a big deal, but users need human readable feedback. A "division by 0" error message is of no use as there might be no input value 0. It could be the result of a long calculation. The user should know which combination of variables caused this exception. Check the sensitive values and return a useful message. "Invalid input: number of 'shopping_items' cannot be 0", makes it much easier to track down the source of the problem. Check the values that are sensitive and return an appropriate error message right away. If there is some invalid state, you should throw an exception as early as possible. Check if there is enough disk space before you start writing a file. Check if a division by zero can occure before you start your calculation. And return a meaningful error message.
-
-### Wrapping exceptions
-
-You don’t want exceptions to leave your code. This will crash the software executing it. It is not a big deal for a small standalone project as it should probably be terminated anyway. But in serious software development you cannot allow this to happen. Your software has to be able to recover from an exception. It is recommended to define your own error types. Put a try except block around the whole code to catch all your custom exceptions. Custom exceptions mean that the user did something wrong and you were expecting this faulty behavior to happen. You should give the user a meaningful error message explaining why the exception occured and what he should do to fix it.
-
-Add another except block at the end of the program in order to catch all other kind of exceptions. These are errors you didn't foresee. Bugs. Write a different error message and kindly ask the user to contact your support. The cause of this error message is a logical issue in your code. Write an error message to contact your customer support in order to fix the code. This error message was caused by a coding error and the source has to be fixed.
-
-Raise exceptions right away if the program goes into an invalid state and return a message to the user what went wrong. It is not worth trying to deal with a semi invalid state (also known as walking wounded). This is not worth the effort as you won't be able to fix the state. Exceptions originating not from faulty user input should result in a message about the cause what is wrong.
-
-As the C++ Core Guideline E.31 states: "Properly order your catch clauses" [C++ Core Guidelines explained]. Meaning that you should always first catch specific exceptions and then more general ones. This is because specific exceptions allow you to give the user more specific information about the problem such that the user can fix it without your help. General exceptions are an indication that you were not expecting this problem to occure and the customer is not expected to fix it on his own.
-
-The try catch block around the main function should make sure that no exceptions leave the program. Following the above rule it should look something like this:
-
-```Python
-if __name__ == "__main__":
-    try:
-        main()
-    except CustomException as e:
-        print("Unable to process user input:")
-        print(str(e)) # for example: "InvalidInput: length of 'shopping_items' cannot be 0"
-    except Exception as e:
-        print("Unknown issue. Please contact our customer support.")
-        print(str(e)) # for example: "ZeroDivisionError: division by zero"
-```
-
-Try except blocks have some similarity to if else or switch case blocks. They are susceptible to bad code, especially to violating the SRP. Therefore, apply the same rule to try except blocks as to if else blocks. There should be very few lines of code within each case, usually a function call or a simple error message. Furthermore, try except blocks should be the only thing within a function. The single responsibility of this function is managing the try catch block.
-
-One common pattern is catching and reraising exceptions. This allows you to add additional information, depending on the type of exception. This is not worth the effort. This additional information is not really helpful to the user. Instead you should define a custom exception type and print an according message when catching it. With all the information you have at the time when the exception was thrown.
-
-Make sure your unit tests check the exceptions as well, exceptions are part of the code specification. However, in some cases it is impossible to write a unit test. For example, you should never read in a file in a unit test. Instead you should dependenct inject a file object throwing an exception. We go into more details in the section on dependency injection. [chapter writing better code with tests] 
-
-### Exceptions and goto
-
-By the way, you might have heard of the goto statement that was widely used until the 70ies. Then Edsger Dijkstra wrote the famous paper "Go to statement considered harmful" [https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf] which basically ended the usage of the goto statement. As always there was a lot of truth behind his argument but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C which doesn’t have exceptions and thus the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
-
-# 19. Programming Paradigms
-
-// move this closer to programming languages
-
-There are several different programming paradigms. For several decades Object Oriented (OO) programming was the way to go. But it turned out that OO programming has its own problems as well. As I already mentioned several times, it is our goal to write code that is easy to understand. It is not our goal to write OO code at all costs. Procedural or Functional programming are equally valid programming paradigms. Nowadays there are also multi paradigm programming languages like Python, or even the good old C++, where you can mix these 3 different programming paradigms.
-
-Here is a very short list, of what the different programming paradigms offer:
-- OO programming: classes, mutable variabels
-- Procedural programming: mutable variables
-- Functional programming: nothing. Yes, nothing.
-
-Functional programming is basically a subset of procedural programming, which in turn is basically a subset of OO programming. But this doesn't mean that functional or procedural programming are necessarily worse than OO programming. Limiting the number of possibilities can make the code easier to understand. For example the fact that functional programming has no mutable variable excludes a lot of possibilities that you have to consider while reading code procedural or OO code.
-
-## Object Oriented programming
-
-Object Oriented (OO) programming started in the 70ies. It peaked with the still very wide spread languages C++ and Java. Somehow the whole software developer community became absolutely ecstatic about it. OO programming is great. It is the natural representation of things. It makes everything so easy. It will save the world!!!
-
-It still amazes me how some half-baked promises can create such dynamics in a group of highly intelligent people. Come up with some buzz words and the crowd does the rest. Already in times before social media. The only explanation I have is that the software engineers were all sitting in their basement and missed everything else out there. They had to create their own hype instead.
-
-Well, let’s be serious. As always, the truth lies somewhere in the middle. Yes, OO programming makes things easier. But it did not save the world. And a lot of things that were developed along with OO programming are outright garbage. Without the hype around OO programming, these things would never have been able to get widespread usage. People stopped thinking critically and just started using all kind of OO features that turned out to lead to terrible code.
-
-Don’t use any other OO feature than plain classes and abstract base classes or interfaces. Don't forget to make everything private that should be. And always keep the SRP in mind. Classes should be small!!!
-
-## Procedural programming
-
-[https://en.wikipedia.org/wiki/Procedural_programming]
-
-While OO programming is mostly based on classes, class instances and methods, procedural programming depends mostly on functions and logical operations. Though you can still define your own data types, for example structs in C. In procedural programming, functions are more important than data types. Though, contrary to functional programming, you are allowed to have mutable variables and output arguments. This simplifies writing code at times but the code created this way is harder to understand due to the additional complexity.
-
-Having only structs in C, compared to classes in C++ apparently has some drawbacks. Apparently taking all classes and converting them into structs would be perfectly viable, but making everything public that was hidden before is not a good coding practice. Instead you have to adapt to a different coding style. You have to find a way around classes with private members. As we have seen in the chapter on classes, there are three fundamental types of classes:
-- structs
-- delegating classes
-- worker classes
-Structs also exist in C. Delegating classes can be replaced with structs. The only thing that requires some more thinking is how to replace worker classes. They use private variables to store intermediate results. These intermediate results have to be passed on as function arguments instead.
-
-It takes some adaptation to get used to procedural programming, but it certainly has its advantages and is worth the effort.
-
-## Functional programming
-
-The main difference of functional programming to procedural programming is the fact that there are no mutable variables. Datastructures can't be changed once initialized. This is a very strong restriction to the programmer and makes programming more difficult. On the other hand, it has also its advantages. You don't have to pay attention on things like mutable variables. Functions don't have side effects. Functions ~can't~ have side effects. The only thing that they change is the return value. Furthermore the return value of the functions only depend on its arguments. These are called pure functions.
-
-Having only pure functions has several advantages. First of all it is generally recommended to use only pure functions where ever possible. Also in OO programming. Pure functions are much easier to deal with than functions depending on some kind of state. They are also much easier to test. You will never have the issue that you don't know how to test a pure function. Call the function with some different arguments and check that the return value is correct. It won't get any easier than that.
-
-Due to the pure functions, functional code is generally easier to understand than, say, procedural code. This is because functional programming depends only on states that are always apparent and easy to understand.
-
-One of the drawbacks is that functional programming doesn't allow the usage of for loops as they generally require a mutable counter. Instead you have to use recursion which can be a little tedious at times. Furthermore it requires you to use a programming language supporting tail call optimization. This is a technique that allows the compiler to optimize the recursion into a loop. Without tail call optimization, recursion can be very slow and may even lead to a stack overflow.
-
-In many programming languages you can mimic functional programming to some degree by using only pure functions. And I highly recommend doing so as you'll be left with only pure functions that makes testing them very easy. Using only functional programming, however, is in my opinion not worth it. It is too restrictive and makes programming unnecessarily difficult. 
-
-## Conclusions
-
-All different programming paradigms have its advantages and drawbacks. Statements like "You have to use OO programming because it mimics the real world" are certainly outdated. It is best to be acquainted with all different paradigms in order to be flexible and adapt your style to the current needs. The times where you were supposed to write only procedural or OO code are over. If you are flexible and you know the advantages and drawbacks of different programming paradigms, you can write better code.
-
-I would generally recommend staying on the lowest programming level (functional programming) as long as possible. Only switch to higher levels (procedural or even OO programming) if it would otherwise become too complicated to understand otherwise.
-
-## Copilot
-Here is an example where Copilot went haywire. I wanted it to create code like `a = [i for i in range(10)]`, but somehow this didn't work out. The output is certainly wrong.
-
-```py
-a = []
-for i in range(10):
-    a.append(i)
-
-#rewrite the code above using functional programming paradigm
-
-// Path: code_examples/softare_paradigms.py
-a = []
-for i in range(10):
-    if i % 2 == 0:
-        a.append(i)
-```
-
-When explicitly asking for a list comprehension, it works out.
-```py
-# rewrite the code above using list comprehension
-a = [i for i in range(10)]
-```
-
-// General comment about copilot: Don't use comment based code generation.
-// Write the core logic by yourself. Copilot can't help you there.
-// [https://youtu.be/RDd71IUIgpg]
-
-# 21. Decoupling
-
-// I really have to rework this chapter. 
-
-"Before software should be reusable, it should be usable." — Ralph Johnson
-
-[Refactoring, Martin Fowler], [The Pragmatic Programmer]
-
-Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible. It is the ultimate goal to have comepletely decoupled code. This makes is easy to work with. It makes it reusable.
-
-This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s worse than importing something everywhere. All your code starts depending on each other. This is absolutely deadly. Never use global variables.
-
-Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
-
-Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. [https://youtu.be/4GnjjocWGOE]
-
-// A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
-
-// instead of asking what you want, you go to the service locator and reach through the service locator. [https://youtu.be/RlfLCWKxHJ0] video on service locators
-
-Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around. This is the strength of functional programming.
-
-## Law of demeter
-
-// I don't exactly understand this law of demeter yet.
-
-One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" [Refactoring p.192]. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: [https://en.wikipedia.org/wiki/Law_of_Demeter], [https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf]
-- `o` itself;
-- `m`'s parameters;
-- any objects instantiated within `m`;
-- `o`'s attributes;
-
-The idea is to avoid so called train wrecks where you start chaining methods to achieve something. For instance you shouldn't write code as
-
-```py
-car.get_engine().turn_on()
-```
-
-Instead the `car` object should take over such function calls. Write a function inside the `Car` class `turn_on_engine()`,
-
-```py
-car = Car()
-car.turn_on_engine()
-
-class Car:
-    # define _engine somewhere
-    def turn_on_engine(self):
-        self._engine.turn_on()
-```
-
-This is a perfect example for a delegating class, as we have discussed in the chapter on classes.
-
-Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
-
-# 22. Physical laws of code
-
-// break up this chapter merge it with other?
-
-"You should always bear in mind that entropy is not on your side." - Elon Musk
-
-## Entropy
-
-Entropy is the physical law of disorder. The second law of thermodynamics says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
-
-In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well. What you have to do is explained in the chapter on refactoring.
-
-## Correlation
-
-Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty much any aspect in programming. Not only code objects, but also abstract concepts. 
-
-There is a market for food and further down the road there is a store selling electronics. Each kind of store is in its own area. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. This makes them easier to find.
-
-The same holds true for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
-
-Also bugs tend to cluster inside your code. Did you find a bug in some very complicated part of the code? Chances are you will find more bugs in the same area of the code. Probably it's some kind of complex algorithm or the implementation of a little understood requirement.
-
-Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better. And you will find your bugs faster as you check the complex parts of the code earlier on.
-
-## Quality
-
-There were studies what must happen that an area starts to decay [The pragmatic programmer]. They came to the remarkable conclusion that one broken window is sufficient sign for other people to start breaking windows as well and within no time, the whole area looks ruined and abandoned.
-
-Accordingly, when writing code, it is important to keep the quality high. Don't write bad code or it will feel abandoned as well. Others may start to become careless as they don't feel like keeping it in shape is not worth it and start writing bad code.
-
-On the other end of the quality spectrum you have the issue that some developers just keep on writing and improving their code for all eternity. This is of course also an issue. There is always something that you feel like could be improved. But at some point you have to come to the conclusion that your code is good enough [The pragmatic programmer].
-
-These two things, broken windows and good enough code, are another example for opposing rules. It is your task to find the right balance between them, as it is in many things I teach throughout this book.
-
-## Requirements
-// Delete this once the Requirements Engineering chapter is done (?)
-
-When buying a new car, you probably make a list of requirements. It needs to have five seats, ample of space for lugage, an AC, etc. Then you go to a car dealer and he'll show you a car that meets these requirements. Would you buy that car right away? Or do you first test drive it and look at some other cars as well? Even though chances are that you'll get back to that first car you've had a look at.
-
-In software engineering we have a similar phenomenon. You have a problem and you're looking for a solution. There are several requirements and once you found a solution that meets all of them, you are happy and implement it. This would be the equivalent of buying the first car that meets all the requirements. Why would you change your behavior depending whether you buy a car or if you write a piece of code? The costs of your decision are comparable. Actually it might be even bigger in software engineering because you'll have to stick to this decision for a long time and live with its consequences.
-
-Perhaps we should take more care when making software decisions just as we do when buying a new car. It may pay off on the long term.
-
-# 23. Software Architecture
-
-// This chapter still needs a lot of work!
-
-Architecture: "the decisions you wish you could get right early" - Ralph Johnson
-
-## About software architecture
-
-Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
-
-## Layering code
-
-// what goes here and what into the section The Abstraction Layers?
-
-There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction [https://youtu.be/KqWNtCpjUi8]. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
-
-Now this is a topic that is not that easy to understand. Why should you exactly write this function that doesn't do anything else than passing on a function?
-
-The reason is coupling. Let's assume there are 3 levels of code. You want the low level to be coupled only to the intermediate level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
-
-
-### Stability of code
-
-//this section still needs some work
-
-Let's take the following metric: we have a class A. How many (f_I) other classes have to be comipled in order to compile A? And how many (f_O) other classes depend on A? The stability of A is defined as I = f_O / (f_I + f_O). If the stability is 0, the class is very stable. It doesn't depend on any other class. If the stability close to 1, the class is very instable. It depends on many other classes [97 things every programmer should know, chapter 74]. The goal of refactoring is to increase the stability of the code, thus to decrease the number of classes that class A depends on.
-
-
-## Different Architecuter types
-
-// should I eplain the different architecture types? horizontal, hexagonal, onion layers (clean architecture)?
-
-// Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
-
-
-## The end of Architecture
-
-One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. Because if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. Like real architects have to visit the construction site regularly, software architects also have to supervise the development process closely. Because the architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
-
-
-## Designing Interfaces
-
-One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only "partial interfaces", meaning that it’s an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface which is not exposed to the outside.
-
-A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
-
-It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all?
-
-// write something about structuring classes into a library.
-
-// Pretty much anything that holds for classes also holds for modules/libraries. Increase cohesion within a library and reduce coupling between libraries.
-
-## Separate Libraries
-
-In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
-
-// These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecture.
-
-Reasons favoring bigger libraries are:
--	Flow between user tasks is smoother when more is handled with a unified model
--	If is easier to understand one coherent model than two distinct ones plus mapping between them
--	Translation between two models can be difficult
--	Shared language fosters clear team communication
-
-Reasons favoring smaller libraries are:
--	Communication overhead between developers is reduced.
--	Continuous Integration is easier with smaller teams and code bases
--	Larger contexts may call for more versatile abstract models, requiring skills that are in short supply.
-
-These advantages for either sides lead to trade offs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
-
-### Coupling
-
-Interestingly, all the explanations about coupling and cohesion made for classes are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! 
-
-An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
-
-# 24. Solid principles 
-
-"It is not enough for code to work." Robert C. Martin
-
-// Quote from uncle bob?
-
-Source: [https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clean Architecture]
-
-The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
-1.	Single Responsibility Principle (SRP)
-2.	Open closed principle
-3.	Liskov substitution principle
-4.	Interface segregation 
-5.	Dependency Inversion
-
-These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps a lot with the design of the code. 
-
-Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly. In my opinion, these principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but they are not as important as in compiled languages. We'll see why in a minute.
-
-## Single Responsibility Principle
-
-The SRP has already been explained in its own chapter due to its enormous importance. At the time of writing I counted 60 occurances of the abbreviation "SRP" in this book here!
-
-## Open Closed Principle
-
-"Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." - Bertrand Meyer
-
-// OCP is always a tradeoff what it is closed and open for. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
-
-The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
-
-Our code should be stable with respect to extensions later on, but not to changes. If the requirements change, we have to change our code as well. This is inevitable. But we shouldn't have to change our code if someone else wants to change his code. Thus the solution is to use abstractions at potential abstraction points. This allows the user of our code to extend it without us having to change anything in our code.
-
-Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the OCP.
-
-// use some US postal codes?
-
-```py
-class Cities:
-    def zurich_postal_code(self):
-        return 8000
-    def bern_postal_code(self):
-        return 3000
-
-def print_all_postal_codes():
-    cities = Cities()
-    print(cities.zurich_postal_code())
-    print(cities.bern_postal_code())
-```
-
-If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. We have to *modify* the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
-
-Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. The code below obeys the OCP.
-
-```py
-from abc import ABC, abstractmethod
-
-class City(ABC):
-    @abstractmethod
-    def postal_code(self):
-        pass
-
-class Zurich(City):
-    def postal_code(self):
-        return 8000
-
-class Bern(City):
-    def postal_code(self):
-        return 3000
-
-cities = [Zurich(), Bern()]
-for city in cities:
-    print(city.postal_code())
-```
-
-Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
-
-The example mentioned here is the classical example for the OCP. It is the strategy pattern. However, you might also use the decorator pattern which fulfills the OCP as well.
-
-## Liskov Substitution Principle
-
-// see https://youtu.be/pTB30aXS77U
-
-"If it looks like a duck, it quacks like a duck, and it needs batteries, you probably have the wrong abstraction." - wisdom of the internet
-
-Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
-
-For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
-
-```py
-class Payment:
-    def make_payment(amount, card_number_or_email_address)
-```
-
-This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
-
-Instead the selection of the credit card numer or the email address should be done later on, inside the specific classes.
-
-```py
-from abc import ABC, abstractmethod
-
-class PaymentSystem(ABC):
-    @abstractmethod
-    def make_payment(self):
-        pass
-
-class PayPal(PaymentSystem):
-    def make_payment(amount):
-        # ask the user for the email address
-
-class CreditCard(PaymentSystem):
-    def make_payment(amount):
-        # ask the user for the credit card number
-```
-
-##  Interface Segregation Principle
-
-"Clients should not be forced to depend upon interfaces that they do not use." — Robert C. Martin
-
-The Interface Segregation Principle (ISP) is like the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need one small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
-
-Here the file A does not follow the ISP. It does 2 independent things. Most other code needs only one of these functions. They are independent. Thus, they should be in different files. 
-
-Now in Python this is not such a big deal as you can import each function individually and even if you import the whole file A it's not a big deal. It's not becomming slow. In C++ on the other hand, adding unrelated functions into the same file is really a no no. In C++ you always include a whole header file at once and you'll have to compile everything that comes with it. There might be a hefty price to pay if the file A would be too big.
-
-```C++
-// C++
-// file A.h
-int function_1(){
-    return 1;
-}
-
-int function_2(){
-    return 2;
-}
-
-// and many more functions
-```
-
-// add graphs on the file dependencies below
-
-The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. A1 and A2 should have high cohesion within themselves but there should be low coupling between them. Idealy, the amount of code that you'll have to import is reduced roughly by half. 
-
-This process of breaking up files can be repeated until it is no longer possible to reduce the amount of code imported, or the number of imports would be growing unreasonably fast. At this point you finished the segregation of the file A.
-
-```C++
-// C++
-// file A1
-int function_1(){
-    return 1;
-}
-
-// file A2
-int function_2(){
-    return 2;
-}
-```
-
-A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace (`std::` a namespace, not a class!), but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
-
-Another common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code imports much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
-
-```py
-# inside ImportantStuff.py
-from enum import Enum
-
-class BigClass:
-    class Color(Enum):
-        RED = 1
-        GREEN = 2
-        BLUE = 3
-    # and much more code here
-
-# inside SomeOtherFile.py
-from ImportantStuff import BigClass
-
-color = BigClass().Color.BLUE
-```
-
-Here we first need a class instance of `BigClass` because the enum is hidden inside of the class definition. This could be avoided by moving the enum outside the class. This would reduce the coupling of the code as the user code depended only on the enum and not on the whole class around it.
-
-The code would be much better as follows:
-
-```py
-# inside ImportantStuff.py
-from enum import Enum
-
-class Color(Enum):
-    RED = 1
-    GREEN = 2
-    BLUE = 3
-
-class BigClass:
-    # much more code here
-
-# inside SomeOtherFile.py
-from ImportantStuff import Color
-
-color = Color.BLUE
-```
-
-Like this you segregated the interface and you don't have to import the `BigClass`.
-
-## Dependency Inversion Principle
- 
-"High-level modules should not depend on low-level modules" - ?
-
-Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree. The so-called dependency tree. The main function is at its root. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
-
-// add a graph for the dependency tree
-
-For interpreted languages like python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist in interpreted languages. Though it's still good to know this principle as a python user as it is very fundamental.
-
-The first time you compile your code, the whole code base (the whole dependency tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
-
-We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well as main directly or indirectly includes all other files of the project. Therefore, the main file has to be recompiled as well. It’s like a hard link.
-
-Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code within a library. If I change a file in a library, say the `sin` function inside the math library, I want to recompile only the math library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within the math librarry. Main shouldn't have to recompile if the code within the math library changes. Main should only change if the public interface of math changes.
-
-This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
-
-### Example
-As I said before, the DIP is important for compiled langagues. Therefore the following code example is written in C++.
-
-Let's say we have a class `Nothing` with a method `do_nothing`. Now we want to change the code such that `main` won't recompile if the implementation of `do_nothing` changes.
-
-```C++
-class Nothing{
-    void do_nothing() {}
-};
-
-int main(){
-    auto nothing = Nothing();
-    nothing.do_nothing();
-}
-```
-
-Now `main` depends on the `Nothing` class and everything that's inside it. Instead we can define an interface for `Nothing` and break this dependency.
-
-```C++
-// inside NothingBase.hpp
-class NothingBase{
-public:
-    virtual void do_nothing() = 0;
-};
-
-// inside Nothing.hpp
-#include "NothingBase.hpp"
-
-class Nothing : public NothingBase {
-public:
-    void do_nothing() override;
-};
-
-// inside Nothing.cpp
-#include <iostream>
-#include "Nothing.hpp"
-
-Nothing::do_nothing(){
-    std::cout << "nothing" << std::endl;
-}
-
-// inside main.cpp
-#include "NothingBase.hpp"
-int main(){
-    auto nothing = std::make_unique<Nothing>();
-    nothing->do_nothing();
-}
-```
-
-Now `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing the implementation of `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker. The linker will make sure the main function calls the correct implementation of this library.
-
-// dependency tree graphs
-
-## Summary
-
-I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
-
-# 25. Data types
-
-"Primitive obsession is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
-[primitive obsession: https://refactoring.guru/smells/primitive-obsession]
-
-There are hundreds of built-in data types. But again, using too many of them is also called "Primitive Obsession". You shouldn't use too many built-in data types. Instead you should use custom types (classes) as much as possible. This makes the code more readable and easier to write.
-
-Using custom types (classes) is highly recommended. For example you should always use a class `Money` when appropriate and not use floating point numbers. Using custom types makes the code more readable and easier to write. It prevents you from primitive obsession.
-
-Primitive obsession is a very common phenomenon. Integer values are used as time, even though the there would be a time class in pretty much every programming language. Or strings are used to store all kind of information as we'll see an example further below.
-
-Here is a list of data types that I generally use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
-
-I give you some explanations on all these types except floats, ints and classes. I simply don’t have anything to write about floats and ints, except that I never use unsigned ints, as recommended by the google style guide. Classes are discussed in their own section because of their importance.
-
-## Lists
-
-Lists are the work horse in programming. Whenever you deal with several values that should all be treated in the same way, they belong into a list. I would like to emphasize: to be treated the same way. If you do something with a list you should always iterate through all elements and do the same thing for all of them. If you somehow need just one value from a list, chances are high you shouldn’t use a list.
-
-Here is an example how not to do it:
-
-```py
-fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
-```
-
-I deliberately made this code so terrible for you to understand. Strings and number cannot be equal objects so they may never be inside the same list side by side. In C++ this kind of list isn’t even possible as C++ vectors cannot contain ojects of different types. At least not without visiting a highly advanced course in C++ black magic. In Python on the other hand, this is syntactically correct code and it is frequently tempting to write such a list. Please resist this temptation!
-
-The second problem is that we don’t know what these numbers mean. There is no reasonable name for this list that explains everything. This list violates the single responsibility principle all by itself. 
-
-And third code based on this data structure will inevitably become brittle. It’s screaming for bugs. You can do pretty much everything wrong and I promise you will.
-
-Apparently 3 values inside this list always belong together. In C++ we would create a struct for it, in Python we use a data class.
-
-A first improvement would be using a list of lists,
-
-```py
-fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
-```
-
-This gives some structure to the list and it becomes a little bit less likely that this data structure is used in a wrong way. This inner list is still far from optimal.
-
-The code should be rewritten to something like this:
-
-```py
-@dataclass
-class ShoppingItem:
-    name: str
-    weight: float
-    price: float
-
-apples = ShoppingItem(name='apple', weight=1.5, price=3.1)
-bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
-
-shopping_list = [apples, bananas]
-```
-
-Now the code is much longer, but it is also much better. It is much easier to read and understand. As we learned the only quality measures of code. All the elements inside the list are equal. They are all `ShoppingItems`. If you do something you can, or rather you should, iterate over all elements and treat them all equally. The data structure now is also pretty save. Correlated data is all stored together. It is almost impossible to mix up the weight of the apple and the banana. And it’s also pretty hard now to make an error when creating the list.
-
-We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to make a list with groups of objects you should create a class for these groups and make a list of these class instances. If you want to access only a single object from a list, chances are high that your code is bad. Always iterate over the whole list and treat all elements equally.
-
-## Enums
-
-Enums are something even many experienced software developers don’t know. You don’t really need it. But they should know it as enums make your code much better. There are several different ways to write code without using enums. They are all bad.
-
-```py
-# 1. boolean:
-is_blue = True
-
-# 2. string:
-favorite_color = "blue"
-
-# 3. integer:
-favorite_color = 7
-
-# 4. class instance:
-class Blue:
-    pass
-favorite_color = Blue()
-
-# 5. enum:
-from enum import Enum
-class Color(Enum):
-    BLUE = 1
-favorite_color = Color::BLUE
-```
-
-The first four options all have some severe drawbacks.
-
-### Booleans
-
-The first one is dead ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Avoid using booleans in general.
-
-### Strings
-
-The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time it’s easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might have a bug that could lead to undefined behavior. Without you noticing neither that you have a bug nor where the error comes from. Avoid making string comparisons as they are error prone.
-
-Sometimes such kind of objects are also called "stringly typed". Strings are being abused for storing all kind of different data that it shouldn’t be used for. Here are some examples:
-
-[https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]
-```py
-robot.move("1","2") # Should be int like 1 and 2, and maybe better a point
-getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. dog.Bark()
-message.push("transaction_completed") # Could be an enum
-```
-
-### Ints
-
-Third option: 7? A color? No. Please, don’t do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard. For example the RGB standard, `blue = RGB(0,0,255)`.
-
-### Classes
-
-Fourth option: For once using types is not the best option. It can be checked using `isinstance(blue, Blue)`, but this is tedious and not possible in C++ for example. For once using classes does not offer any advantages, only drawbacks.
-
-### Enums
-
-Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums look slightly odd at first sight because of the `Color::` prefix and there is no way to change this. However, this code it is really solid and fool proof. If you write `Color::BLU` you will get an error because you quite certainly didn’t define a color `BLU` inside the enum. You'll get an error message. This is infinitely better than having a bug. Furthermore, most IDEs and programming languages support auto completion for enums. Gone are the times when you had to look up some magic values in the manual. Enums are great. Use them where ever you define a selection from a limited amount of options.
-
-Enums can only be used if you know all possible options when writing the code. If the user can somehow define custom options, you have to use string comparison. Though cases where you really have to make string comparisons are rare. It is rarely the case that you get a random string and call some function depending on its content. The only thing you have to do with random strings is usually just to pass them on without touching them.
-
-## Booleans
-
-"Have a seat my son. There is something very important that I have to tell you. If you hear it for the first time it may be very shocking. But it has to be said: Booleans are evil."
-
-"What? But … how …? This can’t be. Booleans are only a theoretical construct. It’s everywhere. The whole binary system consists of Booleans. What do you mean?"
-
-"Yes of course you are right. Let me explain. It’s somehow like alcohol. Alcohol does not do any harm if it’s inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can make you cause a car accident, make you start a pub brawl. Humans can’t deal with alcohol. This is why some people say that alcohol is evil. There is a very similar problem with Booleans. Booleans can be used for great things. But at the same time Booleans will make you create bugs. Humans can’t deal with Booleans. They just mix it up way too often. And even worse than Booleans are if statements. But ok, maybe we should not call them evil, but dangerous."
-
-I may be exaggerating slightly. But it’s true. Humans cannot deal with Booleans and if statements. Accept your faith and learn dealing with it.
--	Good code design leads to few if statements.
--	You can use polymorphism to prevent if statements.
--	Resolve if statements as early as possible on the lowest level of abstraction. 
--	Never nest if statements. Having too many levels of indentation are a sign for bad code.
--	Don’t pass Booleans as function arguments.
--	Consider using enums instead of booleans.
--	Make sure your unit tests cover all branches of if else statements.
--	Don’t use old-school C++ or java iterators. Looping over iterators requires comparisons. Range-based loops are much safer and easier to use.
-
-### Match case statements
-
-// This section really needs some thinking: When is a switch/match 
-
-In case you have a `match case` statement (a pythonic expression, in other languages called `switch` statement), you should encapsulate it inside a function or use a dictionary. The only place where `match case` statements (or nested `if else`) are allowed is encapsulated inside a dedicated function.
-
-This is how the code should not look like.
-```py
-# a lot of code here
-# city_name = ...
-# use a match case statement to get the post code
-match city_name:
-    case "Zurich":
-        return 8000
-    case "Bern":
-        return 3000
-    # case ...
-```
-
-This code is bad for a very simple reason: it quite certainly violates the SRP. Chances are high that this `match case` statement will be repeated several times in your code base. Instead the `match case` statement should be refactored out into its own function. 
-
-```py
-def post_code(city_name):
-    match city_name:
-        case "Zurich":
-            return 8000
-        case "Bern":
-            return 3000
-
-post_code_Zurich = post_code("Zurich")
-```
-
-The best solution, in my opinion, is using a dict and ditching `match case` statements all together. This is shorter and easier to read. If desired you can still wrap the dict in a function.
-
-```py
-post_codes = {
-    "Zurich": 8000,
-    "Bern": 3000,
-}
-```
-
-For bigger dicts, this might still look quite verbose. But this code will be hidden at a low level of abstraction. 
-
-Dicts can also be used polymorphically. Depending on the key it creates an object of different type. This will prevent some if statements in the future as polymorphism generally does.
-
-```py
-class Zurich:
-    def postcode():
-         return 8000
-
-class Bern:
-    def postcode():
-        return 3000
-
-cities = {
-    "Zurich": Zurich,
-    "Bern": Bern,
-}
-
-zurich = cities("Zurich")
-print(zurich.postcode())
-```
-
-A little side remark: `match case` statements were only introduced with python 3.10. This is because they are not supposed to simply replace the switch case statements of for example C++ or shown in the examples here. [for the whole story see https://youtu.be/ASRqxDGutpA]
-
-As a summary one can say that `match case` statements are not that bad at all. Though they could easily be replaced by dictionaries and they should be wrapped inside a function to make them reusable and obey the SRP. Additionally they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
-
-## Strings
-
-"You should never use two different languages in a single file. English is also a language" - ?
-
-After pointers and Booleans, strings are probably the third most dangerous data type. Many programmers check two strings for equality. One of them is written in plain text in the code. A possibly twenty-character long string. If a single character is wrong you have a bug and there is no way the computer is able to know and warn you. Of course, you can make this kind of code work. But it is extremely brittle. You should eliminate such risk whenever possible. String comparison is a possible source for errors and we should avoid them whenever possible. As we’ve already seen you should always consider using enums if you want to do string comparison.
-
-### Stringly typed objects
-
-Some people even start to encode all kind of logic into strings. This is dreadful. At times this is also called "stringly typed" to highlight that there should be proper types used instead of strings. // see also "primitive obsession"
-
-I found the following example in book Clean Code on p.128 where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. It's a book I can highly recommend. But here Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did. 
-
-He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each of the characters was encoding weather is was too hot or not, too cold or not, etc. Capital letters mean `true`, lower case letters mean `false`. It’s such a beautiful example of what kind of logic can be implemented in strings. At least it would be if it wasn’t that outrageous what he did here. Do never use strings to encode some other kind of value. To make matters worse, the letter `"h"` is even used twice. Like this the code becomes extra brittle because the state depends on the order of the characters.
-
-The resulting unit tests Uncle Bob wrote are kind of nice at first sight. But it takes some knowledge to understand what these 5 characters are supposed to mean. Without appropriate background knowledge it is impossible to understand the meaning of this string. And the order of the characters inside this string are somewhat arbitrary, yet they have to be in the correct order.
-
-Now let’s look how we could make things better. We have 5 states that can all be true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is better than the string logic, but it still needs some serious reworking. Elements in a list should all be treated equally and accessed at the same time. But here you will probably need only one element at the time, `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list [section lists].
-
-A better solution is using a dataclass that stores 5 different variables. One Boolean replacing each character in the string above.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class WaterState{
-    heater_state: bool
-    blower_state: bool
-    cooler_state: bool
-    high_temp_alert: bool
-    low_temp_alert: bool
-}
-```
-
-Still, this is not yet optimal. What does `heater_state = true` or `= false` mean? Let's define an enum instead to make the code more readable.
-
-```py
-from enum import Enum
-from dataclasses import dataclass
-
-class State(Enum):
-    on = True
-    off = False
-
-@dataclass
-class WaterState:
-    heater_state: State
-    blower_state: State
-    cooler_state: State
-    high_temp_alert: State
-    low_temp_alert: State
-```
-
-Now the `heater_state` can be `on` or `off`. This is much more intuitive to read.
-
-Once one found this solution it looks so natural. This code is so much more readable than the encoded string that is absolutely worth the additional effort it takes to write this struct and the enum. The code has now become significantly longer, but remember: we always code for readability and not for the fewest lines of code.
-
-The code using this dataclass is super simple. Opposite to the string solution there is no logic, comparison or anything similar required. It is simply obvious how to use it.
-
-```py
-if water_state.high_temp_alert == State.on:
-    print("Attention: the water is too hot")
-```
-
-### Natural Language
-
-Serious software products are available in many different countries. They have to be available in many languages. But you don’t want the translator to write his translations into your code, nor does the translator want to deal with your code. He wants only the text the user can see. He wants the text in a dedicated text file such that he knows exactly what to translate. There is no arguing with that. Thus it is your job to extract all the human readable text from your code. Instead the code should read all the human readable text from this dedicated file. On start-up you read this text file and assign the different pieces to the corresponding variables. Selecting a different language is as little work as selecting a different file.
-
-Ultimately you are left with barely any strings at all. You replaced them with enums, proper logic and a file with human readable text. Only when reading or writing text a file you briefly have to deal with strings. Then you immediately convret it into data. At least in theory. For small projects it is not always worth the effort to convert all strings into objects or dedicated text files.
-
-## Dicts
-
-When defining your variable you have 2 different choices how to proceed. You may either use normal variables or you can use a dict (map in C++).
-
-```py
-a = 0
-b = 1
-```
-
-```py
-vars = {"a" : 0, "b" : 1}
-```
-
-These lines do something very similar. They both assign the value `0` to `a` and value `1` to `b` (ok, in case of the dict it is rather `"a"`, but you get my point). Yet there is a fundamental difference. In the first line the programmer knows that he needs variables a and b as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there will be `"a"` and `"b"` used as keys. Maybe he didn’t and these dict entries were generated by some user input the programmer had no control over.
-
-If the developer knows all the variables that he needs, he should generally use normal variables. If they originate from somewhere else, a text file for example, he has to use a dynamic data structure like a dict. At first this may sound all a little confusing. But think about cooking recipes. You might know a few recipes that you define in your code and the name of the recipe is the name of the variable. Or you can write a parser that reads them from a cookbook into a dictionary. Here you have to use some kind of dynamic data structure as you don't even know what kind of ingredients will be needed.
-
-Dicts are closely related to json and XML files. Json and XML are pretty much the same as a nested dict converted into a string. If you ever have to read in some json files, the resulting data structure will be nested dict that you might further convert into nested class instances.
-
-## Trees
-
-It is not too often that I had to create a tree myself, yet I was working on a tree structure for a good part of my programming life. Trees are an extremely important data structure. As soon as you work with a recursive data structure chances are high that you should work on a tree. This allows you to use many standard algorithms that are very efficient, typically `O(N log(N))`. If you implement your own algorithms, make sure they are recursive and write automated tests for the corner cases.
-
-## Pointers
-
-C++ used pointers everywhere. Pointers were used to point to a certain location of your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are by far the most dangerous objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented pretty much all functionality that pointers were used for. Vectors for example use a pointer as well, but it is hidden deep inside its implementation.
-
-The only remnant where pointers are still needed for technical reasons are interfaces. Use pointers only there and use the modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use python and you don’t have to care about pointers at all.
-
-# 26. Properties of Variables
-
-Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
-
-The most common way to structure data is having nested classes and lists, where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
-
-Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these different types of variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code because it is coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
-
-## Compile-time constant
-
-Compile-time constant is the least powerful variable type. They are known at the time you write the code and will never change their value. In python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t let them clutter your code. Otherwise there is nothing you can do wrong about them.
-
-In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time. This allows the compiler to do all kind of optimization as many expressions can be evaluated at compile time.
-
-## Runtime Constant
-
-Compared to compile-time constants, runtime constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
-
-Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead. If it's global it will be acting as a hiddeng state, making it much harder to write tests.
-
-Note that in functional programming, all variables are constant.
-
-### Constant Class instances
-
-In C++ you can enforce an object to remain the same for as long as it exists, using the `const` keyword at the time of creation. In Python you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
-
-But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
-
-// remove this example completely? Is it useful and "correct"?
-
-We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In python constant objects are defined by using all uppercase letters.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class Bottle:
-    color: str
-    size: float
-    material: str
-
-if __name__ == "__main__":
-    BOTTLE = Bottle()
-```
-
-Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity. 
-
-The member variables of the class are not constant. Instead I decided to make the class instance constant.
-
-// classes should not have const members, they should rather be private. [https://youtu.be/O65lEiYkkbc?t=3072]
-
-So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
-
-The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
-
-We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
-
-A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class WaterBottle:
-    BOTTLE: Bottle
-    amount_of_water: float
-
-@dataclass
-class Bottle:
-    color: str
-    size: float
-    material: str
-```
-
-This is just one example how to combine const and non-const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
-
-## Mutable Variables
-
-"immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
-
-In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is, little surprising, the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
-
-One option is to work more with immutable objects. For example you can replace the following code,
-
-```py
-prime_numbers = [11, 3, 7, 5, 2]
-prime_numbers.sort()
-```
-
-with something that does not change the list. Instead it can return a new list.
-
-```py
-prime_numbers = [11, 3, 7, 5, 2]
-sorted_prime_numbers = sorted(prime_numbers)
-```
-
-At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133] 
-
-Returning a new variable as done in the second code snippet is the much saver option and to be prefered. Furthermore the second version of the code is much clearer as the variable is not reused. This creates a clear distiction between the unsorted and the sorted list.
-
-On the other hand, the second solution may be a performance bottleneck as it needs more memory if the initial value does not go out of scope. This could be a problem for large lists, especially inside loops. Though this is usually not such an issue as the `prime_numbers` go out of scope and the memory will be recycled.
-
-## Member Variables
-
-Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes [9. Classes]. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects, as far as this is possible in a class...), you are mostly fine with using member variables. Though you have to be carefull with them.
-
-Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables: You can access them from anywhere in the code.
-
-Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be. And when in doubt, use unmutable objects.
-
-## Static Variables
-
-Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
-
-If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
-
-If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is a side effect. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
-
-And if you don't believe me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is the very definition of brittle.
-
-## Global Variables
-
-You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
-
-Let's say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of Time Square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
-
-Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
-
-Now as you already realized, global variables are bad because every line of code can change their value. Everywhere. You cannot rely on them. You never know if someone messes with their integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code.
-
-The opposite to global variables are pure functions. Functions that rely only on the function arguments and have no side effects. You'll always know exactly what they do and rely on. They will never change any hidden state.
-
-## Comparison of Variable Properties
-
-The different variables we looked are different with regards to how easy they can be changed. Starting with a local constant that cannot be changed and accessed only locally to a global variable that everyone can access and change. This amount of accessability has to be chosen correctly for every variable you work with. You can barely write code with only compile time constants and if you use only global variables you'll soon end up with spaghetti code. Generally it’s best to choose variables with the least possible effects that let's you still implement what you want. Prefer too little accessability over too much. You can still change it later on.
-
-Here is a rough list how variable types are sorted by the accessability they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
-
-Compile time Constant < Constant < Immutable object < mutable object < class variable < inherited variable < singleton = global variable
-
-There is certainly nothing wrong with constants, especially with compile time constants. It's just that they can't do much. They are just there and do nothing. Or at least not much. They store some fixed value and you are always free to read it out. If you like working with constant objects, I can recommend functional programming. In functional programming everything is constant.
-
-Immutable (non-constant) objects can only be used within the current scope and when passed as a function argument their value can't be changed. If you use immutable objects, you cannot have output arguments, which in my opinion is a good thing. Due to the SRP, a function should change the value of only one variable and in my opinion this should be the return value. So you shouldn't have output arguments anyway.
-
-With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided. If possible, return a new object instead of changing an existing one. The only reason I could think of, why one should use mutable objects is performance.
-
-Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes [chapter classes], what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise the class has too much hidden state.
-
-Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. You don't know what to do if you have to exchange one tool. Compare this to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the main reasons why it's better not to use inheritance at all [chapter Inheritance].
-
-// why not to use the singleton: 
-
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have little communication and few relatively big data sets, this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73].
-
-
-# 27. Naming
-
-"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
-
-[https://youtu.be/MBRoCdtZOYg]
-
-How long does a football game take? This is a very innocent question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This can cause some confusion.
-
-The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong city named "Springflied" (this name is used in the Simpsons because this is a very common name in the US) it gets painful. For the police and health care system it becomes even worse. As soon as there are people around who have the same name, it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused and think you could be dangerous. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it. Using the name combined with the birth date works out pretty well, but it is not perfect.
-
-All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name. Every programming construct has a name. And you use this name to search it with google or Stackoverflow. If you don't know the name you're screwed.
-
-Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties do they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
-
-Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
-
-"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." [WELC p.340]
-
-As I already said, naming is one of the most difficult things in programming. I tried to collect and synthesize some rules on properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
-
-1. Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends. As a rule of thumb a name is fine if a new work colleague understands the variable.
-2. Think about how you would express a word in real life. Would you call it `price of an apple` or is the context of your conversation clear enough such that only `price` is sufficient?
-3. Classes and functions obeying the SRP are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
-4. `set_color(7)`. What does `7` mean? Never use plain values in your code. Plain values are called magic numbers because no one can tell what it means. Magic is having a negative meaning here. Your code should be unterstood! Always create a variable instead of using magic numbers. Better use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
-5. Well defined levels of abstraction result in clearly defined and unique properties. This helps finding names. Maybe you created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
-6. Name collisions between different libraries are common and nothing to worry about. Use the namespaces to distinguish them (use the `from math import *` syntax in python cautiously as this removes this potentially crucial information where a function is defined).
-7. Name collisions within the same library may happen once in a while and have to be fixed. Rename or even refactor one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
-8. Use names that are also used in reality. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about your code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality. You did a great job if a marketing understands your high level code and can give you useful feedback.
-9.  Objects have names that are simple to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` is to be prefered over `price_of_apple` and `price_of_orange`, though this can change if you have different properties of apples.
-10. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language.
-12. You may tweak the language a little and ignore grammar rules at times. If you have many `fish`, you may call them `fishs` or `fishes` to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following is perfectly viable in python code: `for fish in fishes`.
-13. Avoid "if", "and" or "or" in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
-12.	If a variable is used all over the code, name it carefully. Possibly use a name given by the marketing team or existing theories and literature. If a variable is used only for about 5 lines, even i, j or k are fine.
-13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-14.	snake_case notation is easier to read than camelCase. This is why I use snake_case notation for variables and functions, and camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
-15. Classes and functions should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the domain language.
-16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data", "info" or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
-17. Attach units to a variable name if existing. For example `timeout_duration_ms`. Though again: consistency is more important.
-18. Avoid negated terms (and preferably avoid booleans all together). `is_not_empty` is harder to read than `is_empty`.
-19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
-20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big. 
-21. Due to Robert C. Martin, high level objects have short names as they describe very general things. Low level objects have long names as they are very specific [clean code?]. This rule is in my opinion quite inaccurate as "high" and "low level" objects are relative terms. If you are the developer of the `math` library, the `sin` function is a high level object, meanwhile for everyone else it is a low level object. I don't think this rule is very helpful. I would rather say that objects used in general literature (at commonly agreed on interfaces) have short names, while everything in between might need longer names to be descriptive enough.
-
-## Naming Antipatterns
-
-### Useles Words
-
-Sometimes words inside a name can be removed without losing any information at all. For instance, instead of `convert_to_string()`, the name `to_string()` is smaller and doesn’t lose any real information. Similarly, instead of `do_serve_loop()`, the name `serve_loop()` is just as clear. Similar words line `manager` don't add anything to the name of a variable and can therefore be omited.
-
-### Generic Names
-
-Another problem are too generic names as in the following example:
-
-```py
-class Rectangle {
-    def size():
-        # ...
-}
-```
-
-What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
-
-Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
-
-|Word	|Alternatives |
-|-------|-------------|
-|send	|deliver, dispatch, announce, distribute, route|
-|find	|search, extract, locate, recover|
-|start	|launch, create, begin, open|
-|make	|create, set up, build, generate, compose, add, new|
-
-It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
-
-
-## Copilot
-
-Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let Copilot find appropriate names for you.
-```py
-def print_states(states): 
-    for a in states:
-        print(a)
-```
-Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
-```py
-    for a in states:
-    # find a better name for this variable
-```
-Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
-```py
-    for state in states:
-        print(state)
-```
-This is pretty much what was expected. The same works out for function names as well.
-```py
-def some_fancy_function_name(b,c):
-    return b+c
-```
-```py
-# suggest a better function name
-def add(b,c):
-    return b+c
-```
-
-
-# 28. Complexity
-
-"I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
-
-## Complexity of code
-
-As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers. The complexity to implement a feature is much higher than the actual complexity.
-
-The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
-
-I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity. And always remember: an `apple` only needs the properties for your current purpose. Inside a cooking recipe, you don't care about the price of an apple, nor do you in your code!
-
-As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
-
-Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details.
-
-## Estimating complexity
-
-[Does this go into the agile section? Or into Requirements Engineering?]
-
-Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management. Frequently the estimation of a feature goes as follows:
-
-Project Manager: "Can you give me an estimate of the time necessary to develop feature xyz?"
-
-Programmer: "One month."
-
-Project Manager: "That's far too long! We've only got one week."
-
-Programmer: "I need at least three."
-
-Project Manager: "I can give you two at most."
-
-Programmer: "Deal!"
-
-[https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50]
-
-Estimating the complexity of a task is generally extremely hard. Some developers might have an idea what has to be done, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. And even if, there is still some uncertainty around, which makes estimating the amount of work a very difficult task.
-
-Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing this code. 
-
-On the other hand, there are cases where you find a very simple solution and implementing the task takes way less time than expected. But unfortunately this case is quite rare.
-
-Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or the total complexity is usually underestimated.
-
-The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left. Furthermore it is not that often the case that you already completed a similar task. Therefore, estimating the amount of work required for a certain task is still quite tricky to estimate.
-
-## Single line complexity
-
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters, using the C programming language and the length of indentations is 8 spaces. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
-
-On the other end of the spectrum are some python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 3.2], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
-
-```py
-[[[0] * (i + j) for i in range(2)] for j in range(3)]
-```
-
-You'd have to do it the old way:
-
-```py
-def create_matrix():
-    matrix = []
-    for j in range(3):
-        row = []
-        for i in range(2):
-            row.append([0] * (i + j))
-        matrix.append(row)
-    return matrix
-```
-
-When in doubt resist the temptation, split up the code and don't use a single line initialization.
-
-## Black magic code
-
-Your code will contain some complexity. There’s no doubt about it. The only question is how you deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
-
-It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
-
-# 29. Data files
-
-There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
-
-The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't explain those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
-
-## CSV
-
-Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
-
-There is no CSV file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
-
-Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
-
-Here is some example code how to read a CSV file having to columns separated by commas and lines starting with `#` are comments:
-
-```py
-def read_csv(filename):
-    with open(filename) as file:
-        x = []
-        y = []
-        for line in file:
-            if line.startswith("#"):
-                continue
-            variables = line.split(",")
-            x.append(float(variables[0]))
-            y.append(float(variables[1]))
-    return (x, y)
-```
-
-### Copilot
-
-Copilot seems to be getting along with csv files quite well. Though I would have expected the data to be saved in columns instead of rows. But as I already said, there is no real standard for CSV files, thus such things have to be specified to Copilot.
-
-```py
-x = [1,2,3,4]
-y = [5,6,7,8]
-# write x and y to a csv file called 'data.csv'
-```
-
-This prompts the following code:
-
-```py
-with open('data.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['x', 'y'])
-    for i in range(len(x)):
-        writer.writerow([x[i], y[i]])
-```
-
-Besides the forgotten `import csv`, the code does pretty much what it should.
-
-## Json
-
-The JavaScript Object Notation (json) file format is probably one of the best file format for everyday purposes. Its libraries are very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
-
-Once you use json on a more serious project, you might want to use a schema to check your files for correctness. You may use different schema for different versions of your interface. And before you write a schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
-
-Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
-
-The following code creates a json file:
-
-```py
-import json
-
-def write_json(filename, data):
-    with open(filename, 'w') as f:
-        f.write(json.dumps(data, indent=4))
-
-if __name__ == "__main__":
-    data = {'x': [1,2,3], 'y':[4,5,6]}
-    write_json("temp.json", data)
-```
-
-Meanwhile this code here reads out the data.
-
-```py
-import json
-
-def read_json(filename):
-    with open(filename) as f:
-        return json.load(f)
-
-if __name__ == "__main__":
-    data = read_json("temp.json")
-    print(data['x']) # prints [1,2,3]
-    print(data['y']) # prints [4,5,6]
-```
-
-As you can see, working with json files is much easier and less error prone than working with CSV files. The underlying data structure is a dict, which is a pretty bullet proof way to work with data. There is hardly a way to introduce unnoticed bugs.
-
-### Copilot
-Reading and writing json files using Copilot works out pretty well. Upon writing the following code
-
-```py
-a = [1,2,3]
-b = [4,5,6]
-# write a and b to a json file called 'data.json'
-```
-
-Copilot makes the following suggestion:
-
-```py
-import json
-with open('data.json', 'w') as f:
-    json.dump({'a':a, 'b':b}, f)
-```
-
-Also when reading a json file, the suggestion of Copilot is quite sound. Following the comment
-
-```py
-# read the json file into a and b
-```
-
-Copilot makes the following suggestion:
-```py
-with open('data.json', 'r') as f:
-    data = json.load(f)
-    a = data['a']
-    b = data['b']
-```
-
-Thus one can say that Copilot allows us to save some time writing code and saving some brain memory cells when working with json files.
-
-## XML
-
-The eXtensible Markup Language (XML) is very similar to json. It’s slightly older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily human readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
-
-Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
-
-The following code converts an XML file into a json object:
-
-```py
-import json
-import xmltodict
-
-with open("data.xml") as xml_file:
-    data_dict = xmltodict.parse(xml_file.read())
-    json_data = json.dumps(data_dict)
-```
-
-Writing XML files is rather tedious as well. Here I recommend as well to work with json data and convert it to XML just before writing.
-
-```py
-import json
-import xmltodict
-json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "Software Engineer"}}}"""
-
-python_dict=json.loads(json_string)
-with open("person.xml", 'w') as file:
-    xmltodict.unparse(python_dict, output=file)
-```
-
-### Copilot
-Copilot somehow struggles a lot when dealing with XML files. It seems as if it didn't know the xml libraries that would simplify it's life. Instead it assembles strings into an XML file by itself which results in very brittle code that is very hard to read.
-
-```py
-x = [1,2,3]
-y = [4,5,6]
-# write x and y to an xml file called 'data.xml'
-```
-
-The first version of Copilot I used wasn't able to write proper XML files. Instead of using a library it was creating the string from scratch:
-
-```py
-with open('data.xml', 'w') as f:
-    f.write('<data>\n')
-    for i in range(len(x)):
-        f.write(f'\t<x>{x[i]}</x>\n')
-        f.write(f'\t<y>{y[i]}</y>\n')
-    f.write('</data>')
-```
-
-Now this does the job, but this is certainly not how an XML file is supposed to be created. Reading XML files is even worse.
-
-```py
-x = []
-y = []
-# read the xml file into x and y
-
-```
-The code Copilot suggests is extremely brittle and doesn't even work in my case. Somehow Copilot doesn't seem to know about XML libraries that would simplify its life a lot.
-
-```py
-with open('data.xml', 'r') as f:
-    for line in f:
-        if '<x>' in line:
-            x.append(int(line[3:-5]))
-        elif '<y>' in line:
-            y.append(int(line[3:-5]))
-```
-
-But during the last few months, Copilot improved and now writing XML files is done with an ElementTree. This is certainly a much better approach.
-
-```py
-import xml.etree.ElementTree as ET
-x = [1,2,3]
-y = [4,5,6]
-
-root = ET.Element("data")
-
-x_elem = ET.SubElement(root, "x")
-x_elem.text = ",".join(str(i) for i in x)
-
-y_elem = ET.SubElement(root, "y")
-y_elem.text = ",".join(str(i) for i in y)
-
-tree = ET.ElementTree(root)
-tree.write("data.xml")
-```
-
-## HDF5
-
-HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the HDF5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
-
-Working with HDF5 is in my opinion a tad less intuitive than working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
-
-The following code saves a list of values inside an HDF5 file.
-
-```py
-import h5py
-
-with h5py.File("temp.hdf5", "w") as f:
-    dset = f.create_dataset("x", data=[1, 2, 3])
-```
-
-Reading a file returns an HDF5 file object. It may be a little intimidating at first, but it is fairly easy to work with. With many respects, it behaves similar to a dictionary.
-
-```py
-import h5py
-
-with h5py.File('temp.hdf5', 'r') as f:
-    print(list(f.keys()))
-    print(list(f['x']))
-```
-
-As HDF5 is a binary format you cannot look at the data using a text editor. Instead you have to use the HDFview software, https://www.hdfgroup.org/downloads/hdfview/
-
-### Copilot
-
-Copilot seems to be getting along quite well with HDF5. On the following code snippet:
-
-```py
-x = [1,2,3,4]
-# write x to an hdf5 file called 'data.hdf5'
-```
-
-Copilot correctly complements it to
-
-```py
-with h5py.File('data.hdf5', 'w') as f:
-    f.create_dataset('x', data=x)
-```
-
-Also reading out data from an HDF5 file is no problem.
-
-```py
-# read the hdf5 file into x
-with h5py.File('data.hdf5', 'r') as f:
-    x = list(f['x'])
-```
-
-## Databases
-
-Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
-
-I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
-
-Also make sure a database is not the heart of your software. It's just a place to save and access data. It can be replaced by a text file if needed!
-
-sqlite is probably the easiest to use database. That's why I make a short example here. Compared to other databases, creating or migrating an sqlite database is trivial.
-
-Here is the code to create a database and add some movie objects.
-
-```py
-import sqlite3
-con = sqlite3.connect("tutorial.db")
-cur = con.cursor()
-cur.execute("CREATE TABLE movie(title, year, score)")
-cur.execute("""
-    INSERT INTO movie VALUES
-        ('Monty Python and the Holy Grail', 1975, 8.2)
-""")
-con.commit()
-```
-
-### Copilot
-
-The database can also be created by Copilot. Let's define a movie object.
-
-```py
-import sqlite3
-
-class Movie():
-    def __init__(self, title, year, score) -> None:
-        self.title = title
-        self.year = year
-        self.score = score
-
-indiana_jones = Movie('Indy', 1981, 8.5)
-```
-
-Copilot 
-
-```py
-# create a SQLite database containing the indiana_jones movie
-conn = sqlite3.connect('movies.db')
-c = conn.cursor()
-
-c.execute('''CREATE TABLE movies
-             (title text, year integer, score real)''')
-
-c.execute("INSERT INTO movies VALUES (?, ?, ?)", (indiana_jones.title, indiana_jones.year, indiana_jones.score))
-
-conn.commit()
-conn.close()
-```
-
-## Custom file format
-
-Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything you like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
-
-# 30. Setting up a project
-
-"If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
-
-[https://youtu.be/LfIPVIsH4ZU]
-
-Many software developers start with writing code right away when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
-
-Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
-
-For small projects, setting up git and a proper build tool need hardly any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. The same holds for the build process. Typing in many long commands not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior. And especially once you have to cooporate with other developers, there is no way around a proper version control software and a build tool.
-
-Similarly for Continuous Integration (CI). It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests, otherwise I recommend you read the chapter on testing [chapter Testing]) always run. The code committed to master has been compiled and the tests pass without any errors.
-
-So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
-- You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
-- You will save a lot of time down the road. This will outweigh the time needed now to set everything up.
-- Having properly set up tools makes it easier for new team members to get started. They only have to clone the repo and run the build tool and they can get started.
-
-## Project folder
-
-// Add a plot with the folder structure
-
-Code is mostly a collection of text files. One question is: how do you deal with them?
-
-The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should usually be much smaller than this.
-
-The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside your src folder. Auto generated files should never make it into the version control. They just polute it!
-
-Generated files belong into the build folder. Like this cleaning up the build is quite simple. Just delete the build folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
-
-Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
-
-<!-- // is this true that in python tests are written right along the source code in python? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
-
-The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as //???// for example, the unit tests are written right next to the corresponding source file. This is necessary as in //???// it's very tedious to import files from a parent folder. -->
-
-3rd party libraries belong into the lib folder. They are not part of the git project, therefore the lib folder should be on the .gitignore file. You need some other way to manage them. If you use few libraries just manage them manually. In python you can use the package management software pip. Togheter with the requirements.txt file this makes managing libraries quite simple. In other programming languages like C++ this is a much harder task as you have to do this by yourself somehow. Dealing with libraries is certainly one of the drawbacks of older programming languages like C++, while python or Rust have a very good package management system.
-
-There are some additional files in a project.
-
-1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building the project, running the tests and executing the project should all require only one single command.
-2.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project. In fact, this book was also written as a readme.md file in a git project.
-3.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files that are too big to be managed by git.
-4.	Some formatting, code quality checking or other miscelaneous files.
-
-There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language of choice.
 
 # 31. Performance Optimization
 
@@ -5436,7 +5563,7 @@ There are a few pitfalls how to arrange the files and folder of your project. Bu
 
 ## No optimization needed
 
-One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years, while the price of computers dropped considerably. Modern programming languages like python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
+One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years, while the price of computers dropped considerably. Modern programming languages like Python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
 As we have learned the main goals of a software engineer are creating value for the customer, writing code that is easy to understand, correct and well covered with tests. Performance is not a main goal. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore. Nowadays computers are fast enough to make most standard programs run at a reasonable speed without optimizing them.
 
@@ -5459,6 +5586,8 @@ Finally, there are indeed some cases where you have to plan the software from sc
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
 Always keep in mind: code that was written with performance in mind, rather than readability, is always very hard to maintain!
+
+Part ...: Miscelaneous
 
 # 32. Comments
 
@@ -5496,7 +5625,7 @@ Now you’re certainly wrong this time. By now you should know better. This is e
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The original code was written in C++, I translated it to python. 
+Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The original code was written in C++, I translated it to Python. 
 
 ```py
 class FrontendServer:
@@ -5700,7 +5829,7 @@ better:
 
 ### Docstring
 
-You may use docstring tools, like sphynx in python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
+You may use docstring tools, like sphynx in Python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
 
 // should I add some more points when comments are allowed?
 
@@ -5788,6 +5917,379 @@ At the same time there are some cases where you can consider using a logger.
 - In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
 - And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
+
+# 29. Data files
+
+There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
+
+The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't explain those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
+
+## CSV
+
+Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
+
+There is no CSV file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
+
+Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
+
+Here is some example code how to read a CSV file having to columns separated by commas and lines starting with `#` are comments:
+
+```py
+def read_csv(filename):
+    with open(filename) as file:
+        x = []
+        y = []
+        for line in file:
+            if line.startswith("#"):
+                continue
+            variables = line.split(",")
+            x.append(float(variables[0]))
+            y.append(float(variables[1]))
+    return (x, y)
+```
+
+### Copilot
+
+Copilot seems to be getting along with csv files quite well. Though I would have expected the data to be saved in columns instead of rows. But as I already said, there is no real standard for CSV files, thus such things have to be specified to Copilot.
+
+```py
+x = [1,2,3,4]
+y = [5,6,7,8]
+# write x and y to a csv file called 'data.csv'
+```
+
+This prompts the following code:
+
+```py
+with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['x', 'y'])
+    for i in range(len(x)):
+        writer.writerow([x[i], y[i]])
+```
+
+Besides the forgotten `import csv`, the code does pretty much what it should.
+
+## Json
+
+The JavaScript Object Notation (json) file format is probably one of the best file format for everyday purposes. Its libraries are very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
+
+Once you use json on a more serious project, you might want to use a schema to check your files for correctness. You may use different schema for different versions of your interface. And before you write a schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
+
+Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
+
+The following code creates a json file:
+
+```py
+import json
+
+def write_json(filename, data):
+    with open(filename, 'w') as f:
+        f.write(json.dumps(data, indent=4))
+
+if __name__ == "__main__":
+    data = {'x': [1,2,3], 'y':[4,5,6]}
+    write_json("temp.json", data)
+```
+
+Meanwhile this code here reads out the data.
+
+```py
+import json
+
+def read_json(filename):
+    with open(filename) as f:
+        return json.load(f)
+
+if __name__ == "__main__":
+    data = read_json("temp.json")
+    print(data['x']) # prints [1,2,3]
+    print(data['y']) # prints [4,5,6]
+```
+
+As you can see, working with json files is much easier and less error prone than working with CSV files. The underlying data structure is a dict, which is a pretty bullet proof way to work with data. There is hardly a way to introduce unnoticed bugs.
+
+### Copilot
+Reading and writing json files using Copilot works out pretty well. Upon writing the following code
+
+```py
+a = [1,2,3]
+b = [4,5,6]
+# write a and b to a json file called 'data.json'
+```
+
+Copilot makes the following suggestion:
+
+```py
+import json
+with open('data.json', 'w') as f:
+    json.dump({'a':a, 'b':b}, f)
+```
+
+Also when reading a json file, the suggestion of Copilot is quite sound. Following the comment
+
+```py
+# read the json file into a and b
+```
+
+Copilot makes the following suggestion:
+```py
+with open('data.json', 'r') as f:
+    data = json.load(f)
+    a = data['a']
+    b = data['b']
+```
+
+Thus one can say that Copilot allows us to save some time writing code and saving some brain memory cells when working with json files.
+
+## XML
+
+The eXtensible Markup Language (XML) is very similar to json. It’s slightly older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily human readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
+
+Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
+
+The following code converts an XML file into a json object:
+
+```py
+import json
+import xmltodict
+
+with open("data.xml") as xml_file:
+    data_dict = xmltodict.parse(xml_file.read())
+    json_data = json.dumps(data_dict)
+```
+
+Writing XML files is rather tedious as well. Here I recommend as well to work with json data and convert it to XML just before writing.
+
+```py
+import json
+import xmltodict
+json_string="""{"employee": {"name": "John Doe", "age": "35", "job": {"title": "Software Engineer"}}}"""
+
+Python_dict=json.loads(json_string)
+with open("person.xml", 'w') as file:
+    xmltodict.unparse(Python_dict, output=file)
+```
+
+### Copilot
+Copilot somehow struggles a lot when dealing with XML files. It seems as if it didn't know the xml libraries that would simplify it's life. Instead it assembles strings into an XML file by itself which results in very brittle code that is very hard to read.
+
+```py
+x = [1,2,3]
+y = [4,5,6]
+# write x and y to an xml file called 'data.xml'
+```
+
+The first version of Copilot I used wasn't able to write proper XML files. Instead of using a library it was creating the string from scratch:
+
+```py
+with open('data.xml', 'w') as f:
+    f.write('<data>\n')
+    for i in range(len(x)):
+        f.write(f'\t<x>{x[i]}</x>\n')
+        f.write(f'\t<y>{y[i]}</y>\n')
+    f.write('</data>')
+```
+
+Now this does the job, but this is certainly not how an XML file is supposed to be created. Reading XML files is even worse.
+
+```py
+x = []
+y = []
+# read the xml file into x and y
+
+```
+The code Copilot suggests is extremely brittle and doesn't even work in my case. Somehow Copilot doesn't seem to know about XML libraries that would simplify its life a lot.
+
+```py
+with open('data.xml', 'r') as f:
+    for line in f:
+        if '<x>' in line:
+            x.append(int(line[3:-5]))
+        elif '<y>' in line:
+            y.append(int(line[3:-5]))
+```
+
+But during the last few months, Copilot improved and now writing XML files is done with an ElementTree. This is certainly a much better approach.
+
+```py
+import xml.etree.ElementTree as ET
+x = [1,2,3]
+y = [4,5,6]
+
+root = ET.Element("data")
+
+x_elem = ET.SubElement(root, "x")
+x_elem.text = ",".join(str(i) for i in x)
+
+y_elem = ET.SubElement(root, "y")
+y_elem.text = ",".join(str(i) for i in y)
+
+tree = ET.ElementTree(root)
+tree.write("data.xml")
+```
+
+## HDF5
+
+HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the HDF5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
+
+Working with HDF5 is in my opinion a tad less intuitive than working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
+
+The following code saves a list of values inside an HDF5 file.
+
+```py
+import h5py
+
+with h5py.File("temp.hdf5", "w") as f:
+    dset = f.create_dataset("x", data=[1, 2, 3])
+```
+
+Reading a file returns an HDF5 file object. It may be a little intimidating at first, but it is fairly easy to work with. With many respects, it behaves similar to a dictionary.
+
+```py
+import h5py
+
+with h5py.File('temp.hdf5', 'r') as f:
+    print(list(f.keys()))
+    print(list(f['x']))
+```
+
+As HDF5 is a binary format you cannot look at the data using a text editor. Instead you have to use the HDFview software, https://www.hdfgroup.org/downloads/hdfview/
+
+### Copilot
+
+Copilot seems to be getting along quite well with HDF5. On the following code snippet:
+
+```py
+x = [1,2,3,4]
+# write x to an hdf5 file called 'data.hdf5'
+```
+
+Copilot correctly complements it to
+
+```py
+with h5py.File('data.hdf5', 'w') as f:
+    f.create_dataset('x', data=x)
+```
+
+Also reading out data from an HDF5 file is no problem.
+
+```py
+# read the hdf5 file into x
+with h5py.File('data.hdf5', 'r') as f:
+    x = list(f['x'])
+```
+
+## Databases
+
+Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
+
+I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
+
+Also make sure a database is not the heart of your software. It's just a place to save and access data. It can be replaced by a text file if needed!
+
+sqlite is probably the easiest to use database. That's why I make a short example here. Compared to other databases, creating or migrating an sqlite database is trivial.
+
+Here is the code to create a database and add some movie objects.
+
+```py
+import sqlite3
+con = sqlite3.connect("tutorial.db")
+cur = con.cursor()
+cur.execute("CREATE TABLE movie(title, year, score)")
+cur.execute("""
+    INSERT INTO movie VALUES
+        ('Monty Python and the Holy Grail', 1975, 8.2)
+""")
+con.commit()
+```
+
+### Copilot
+
+The database can also be created by Copilot. Let's define a movie object.
+
+```py
+import sqlite3
+
+class Movie():
+    def __init__(self, title, year, score) -> None:
+        self.title = title
+        self.year = year
+        self.score = score
+
+indiana_jones = Movie('Indy', 1981, 8.5)
+```
+
+Copilot 
+
+```py
+# create a SQLite database containing the indiana_jones movie
+conn = sqlite3.connect('movies.db')
+c = conn.cursor()
+
+c.execute('''CREATE TABLE movies
+             (title text, year integer, score real)''')
+
+c.execute("INSERT INTO movies VALUES (?, ?, ?)", (indiana_jones.title, indiana_jones.year, indiana_jones.score))
+
+conn.commit()
+conn.close()
+```
+
+## Custom file format
+
+Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything you like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
+
+
+# 30. Setting up a project
+
+"If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
+
+[https://youtu.be/LfIPVIsH4ZU]
+
+Many software developers start with writing code right away when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
+
+Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
+
+For small projects, setting up git and a proper build tool need hardly any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. The same holds for the build process. Typing in many long commands not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior. And especially once you have to cooporate with other developers, there is no way around a proper version control software and a build tool.
+
+Similarly for Continuous Integration (CI). It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests, otherwise I recommend you read the chapter on testing [chapter Testing]) always run. The code committed to master has been compiled and the tests pass without any errors.
+
+So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
+- You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
+- You will save a lot of time down the road. This will outweigh the time needed now to set everything up.
+- Having properly set up tools makes it easier for new team members to get started. They only have to clone the repo and run the build tool and they can get started.
+
+## Project folder
+
+// Add a plot with the folder structure
+
+Code is mostly a collection of text files. One question is: how do you deal with them?
+
+The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should usually be much smaller than this.
+
+The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside your src folder. Auto generated files should never make it into the version control. They just polute it!
+
+Generated files belong into the build folder. Like this cleaning up the build is quite simple. Just delete the build folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
+
+Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
+
+<!-- // is this true that in Python tests are written right along the source code in Python? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
+
+The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as //???// for example, the unit tests are written right next to the corresponding source file. This is necessary as in //???// it's very tedious to import files from a parent folder. -->
+
+3rd party libraries belong into the lib folder. They are not part of the git project, therefore the lib folder should be on the .gitignore file. You need some other way to manage them. If you use few libraries just manage them manually. In Python you can use the package management software pip. Togheter with the requirements.txt file this makes managing libraries quite simple. In other programming languages like C++ this is a much harder task as you have to do this by yourself somehow. Dealing with libraries is certainly one of the drawbacks of older programming languages like C++, while Python or Rust have a very good package management system.
+
+There are some additional files in a project.
+
+1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building the project, running the tests and executing the project should all require only one single command.
+2.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project. In fact, this book was also written as a readme.md file in a git project.
+3.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files that are too big to be managed by git.
+4.	Some formatting, code quality checking or other miscelaneous files.
+
+There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language of choice.
+
+
 # 34. Tools
 
 "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
@@ -5822,7 +6324,7 @@ Copilot chat can convert human readable commands into git commands. For example 
 
 ## Command line
 
-The most common command line software is Bash (The Bourne-again shell, a.k.a. shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes python or other scripting languages can be used as well.
+The most common command line software is Bash (The Bourne-again shell, a.k.a. shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes Python or other scripting languages can be used as well.
 
 The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools like the file browser are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
 
@@ -5887,7 +6389,7 @@ If you use C++ or any other compiled language, your most important quality check
 
 Some people may argue that pip and cmake don’t belong into this list. Of course, they are right. But I'm still feeling like mentioning a sentence or two about them.
 
-Pip is the Python package management software [https://pypi.org/project/pip/]. As a python developer it’s mandatory to know pip. It’s very easy to use. The command line pip install numpy will install the numpy library. Done. A little bit trickier is the handling of the virtual environment (venv) that allows you to install all the packages in a separate environment [https://docs.python.org/3/library/venv.html]. This is useful if you have different projects that require different versions of the same library.
+Pip is the Python package management software [https://pypi.org/project/pip/]. As a Python developer it’s mandatory to know pip. It’s very easy to use. The command line pip install numpy will install the numpy library. Done. A little bit trickier is the handling of the virtual environment (venv) that allows you to install all the packages in a separate environment [https://docs.Python.org/3/library/venv.html]. This is useful if you have different projects that require different versions of the same library.
 
 Cmake is the most commonly used build tool for C++. Meson is a more modern alternative you can use for new projects. Make is outdated. And don’t ever use the Visual Studio build.
 
@@ -5909,481 +6411,12 @@ Again, there are free alternatives around, though you are unlikely to see any al
 
 The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation as you can also look at the code instead. Instead docstrings should be used as a documentation for external APIs used by your customers.
 
-Every programming language has one docstring tool. For python it’s Sphynx, for C++ it’s doxygen.
+Every programming language has one docstring tool. For Python it’s Sphynx, for C++ it’s doxygen.
 
-# 35. Software Engineering principles
 
-In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
 
-## Divide and Conquer
 
-If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together. A common example is the Fast Fourier Transfor (FFT) or the merge sort. Usually a divide and conquer algorithm is applied if a problem scales with O(N^2) or worse, but it can be subdivided into smaller problems. Divide and Conquer algorithms usually scale with O(N log N), which is generally acceptable. Furthermore Divide and Conquer algorithms can easily be parallelized, which may significantly boost the overall performance.
-
-## Increase Cohesion
-
-Cohesion very much realtes to the section [Correlation] that we already discussed in the chapter on Physical laws of code. Similar things that possibly depend on each othr should belong together. Mathematical functions are stored together in the math library and IO functions are in the IO library. This makes sense as it simplyfies searching for some other functions that you might be looking for. Mixing these two libraries would only cause confusion as it would make it hard to find what you are looking for.
-
-## Reduce coupling
-
-Reducing coupling is an important topic in classes [chapter classes]. Make sure that the classes are as independent as possible. You don't want your math library to be depending on the filesystem library. Even if it might make sense from a developer point of view (even though here it would be hard to explain), you should minimize the number of dependencies as far as possible. Only import other libraries for cases where it is absolutely inevitable.
-
-The same holds not only for libraries, but also for all other code that you write. Try to keep them all as indipendent as possible. Make sure that you properly structure the levels of abstractions in your code. Low level code should not depend on high level code, etc. Otherwise, your code may become a big ball of mud [https://en.wikipedia.org/wiki/Anti-pattern#Software_engineering_anti-patterns].
-
-## Increase abstraction
-
-Abstraction is about leaving away unnecessary details and instead focusing on the absolute necessities. You have to design interfaces that are slim and very generic. For example take (once again) a car. You want to make the parts as generic as possible. You want to fit any engine into any car. This can only be achieved by unifying the interface of the engine, the brakes, etc. All the details of the engine are abstracted away and hidden inside the engine such that the outside does not interact with it.
-
-If you didn't abstract all the details away, you may be left with several different functions how to take care of all the different engines because you have to take care of all the paritcularities. On the other hand, if you abstracted them all away, you can replace the engine with another one if you please.
-
-## Increase reusability
-
-Reuseability comes hand in hand with inreased abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. Just take for example all ot the "standard" libraries. They all do exactly one fundamental thing: they deal with the filesystem, do mathematical operations or create random numbers. Of course it would sometimes make sense to combine these, but that would probably not the reusable code anymore because it is too specific. You should only write such specific code if you really have to.
-
-## Design for flexibility
-
-Your code will change. It's inevitable. So start living with this fact. Requirements will change and you'd better make sure that your code can adapt. Therefore it's important that your code follows the rules that are explained in this book. You need tests to be able to change your code. You have to follow the best practice in order to prevent your code becoming solid as a rock. You want your code to be fluffy and easy to change.
-
-As an example you might use a Fourier transform or a sorting algorithm in your code. Well written code is flexible enough to replace these algorithms without much fuzz. You won't have to change code all over the place. It's more like a chirurchical operation where you change only one thing.
-
-## Anticipate Obsolesence
-
-Code you use will become obsolete. Version change, bugs and security issues are not fixed, licence fees are getting too high, you name it. There are plenty of reasons why you have to adapt and change third party libraries or at least adapt to new syntax. So you better anticipate that you'll have to replace some library by adding an adapter between that library and your code. This will simplify reacting to changes. You can then just write an adapter for the new library and you don't have to change all the existing code.
-
-You have to anticipate obsolence by keeping your code flexible and reusable. The database code should not be spread throughout the whole code base. This would be the very opposite of what we want. It would take enormous efforts to replace it. Instead you should be able to replace it easily.
-
-There are cases where you might think, you'd never have to place a piece of code. How wrong you are. No matter how important some library might seem to you, at some time you'll have to replace it. There are so many companies out there who wrote their code with an Oracle database in mind. And now they would like to change it because of the high fees. But they can't because Oracle database code is spread all over the code base.
-
-## Design for Testability
-
-I think this is the most obvious point in this chapter. I explained plenty of times that you have to write tests. Because if it's easy to write tests for your code it's also easy to write code using the interfaces of your code. Or even better, use Test Driven Development (TDD). TDD forces you to write code that is easy to test. Thus it forces you to write good code.
-
-Hand in hand with testing comes Dependency Injection (DI). There are many things where writing tests for will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all things that should be solved with DI. Inject a mock file or a fake timestamp to the function and your tests will be much more stable.
-
-
-# 36. Domain Driven Design ???
-
-// reread and rewrite this chapter? Or remove it completely???
-
-"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
-
-"The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
-
-[https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
-
-This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here.
-
-## Ubiquitous Language
-
-In software engineering, there are very few topics that are described purely mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
-
-It takes a lot of effort to understand a topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
-
-Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
-
-Thinking about the code in the English language also helps even if you don't do much DDD. The following explanation from the book "The Art of Readable Code" can help you improve your coding skills by a lot:
-1. Describe what code needs to do, in plain English, as you would to a colleague.
-2. Pay attention to the key words and phrases used in this description.
-3. Write your code to match this description.
-
-Especially if you're stuck getting your thoughts into code, these steps may help you to order your thoughts and then writing the code becomes much easier. If you can’t describe the problem or your design in words, something is probably missing or undefined.
-
-## The Domain Model
-
-A model is a simplification of something real. A computer game for instance is always a model of some kind of reality. Interesstingly enough, a computer game does not necessarily become better if the model is more realistic. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
-
-When writing code, we implement a model of the reality. A model that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
-
-The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
-
-### Documentation and planning
-
-First, UML diagramms support only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows the temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
-
-Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as a UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information will get lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
-
-Instead you can use any kind of document you like. At times it is better to create a temporal order of a process than a class diagram. Or you create a diagram with class objects rather than classes. After all it's called Object Oriented programming, not Class Oriented programming.
-
-As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time. Documentation has similar drawbacks as described in the chapter on comments. It takes a lot of efforts to keep a documentation up to date.
-
-Though documentation has its merits. Code is often too detailed to really explain what it does. And there are plenty of things that code alone cannot explain. It has to be complemented either by comments or some additional documentation.
-
-Make sure that design documents make ample usage of the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitious language, it is not useful. It doesn't help explaining what you are trying to implement. It only creates confusion.
-
-### Implementing a Model
-
-There are cases where you can’t implement a model you've developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
-
-In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding, modeling and refactoring until you have a breakthrough when you suddenly realize how the optimal model should look like.
-
-Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would be also a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
-
-### Domain Levels
-
-Not every part of the software can be treated with equal priority. You'll have to prioritize what is important. There will be different domains in your project. For example the core domain. It is a first class citizen of the domains and has to be treated as such. The core domain is the most important domain of your project. The core domain is what your company makes money with, the thing that makes your company unique. The core domain has to be treated with special care. Try to keep it slim, only the most important things belong into the core domain. Your most experienced developers should be working on this topic.
-
-// make some examples of domains? Are the exmaples fine?
-
-Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. For example an infrastructure domain taking care of the database, or the math library. Keeping the different domains appart is important as it prevents you from writing a Big Ball of Mud [https://de.wikipedia.org/wiki/Big_Ball_of_Mud].
-
-Each domain corresponds to a piece of code, for example a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise there doesn't have to be that much resemblances between the different domains. For example the ubiquitous language does not have to be the same between different models. Rather the opposite. The ubiquitous language is expected to change between different models and at the interface there is an adapter that functions as a translator between the different languages.
-
-As one example a flight may be the time between take off and landing. But there may be also direct flights or flights with stop overs. This is an example where one expression may have different meanings, depending on what kind of model you are working in. Therefore it is always important to keep in mind what kind of domain model you are currently working in, what kind of flight you are talking about.
-
-## Refactoring toward deeper insight
-
-// figure out what to write here exactly. Reread the corresponding chapter in DDD.
-
-// This section is named after a chapter in the book Domain-Driven Design, p.322. It deals with a high-level point of view on refactoring, the domain level to be more precise.
--	The design does not express the team’s current understanding of the domain;
--	Important concepts are implicit in the design, though they should be explicit
--	Important parts of the design can be made suppler
-
-However, all the time you have to stay in close contact with a domain expert. Under no circumstances should you make changes that contradict what he says.
-
-Deep domain models cannot be planned in a waterfall manner. They have to evolve over time. They only emerge from deeper insight that is gained over time. It has to be refactored toward deeper insight.
-
-## Domain boundaries
-
-As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. For example a `user` has different properties in the payment domain than in the GUI domain. There is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
-
-### Bounded Context
-
-A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the math library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context. These expressions are not to be reused within the math library. On the other hand, the expressions `sin` and `cos` may be used in other bounded contexts and have a completely different meaning.
-
-Typically domain models consists of one bounded contexts. All the problems mentioned so far for the domain models are true for the bounded contexts as well. 
-
-### Unified model
-
-The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is Continuous Integration (CI). CI forces the team to merge often and early and therefore differences between the model and the actual code become apparent early. The automated tests enforce the behavior of the model and warn the developers if they are inadvertedly changing it. 
-
-On the other hand, working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprise scale software, it is simply not possible to work in a single model. The different requirements to the code become too big. In a single model, the `user` object for instance becomes too complex as it just keeps growing over time. At some point it is easier to deal with several different `user` objects where each one of them is smaller, making it easier to work with. 
-
-### Context map
-
-// this is really short. look at it again? Add a figure?
-
-A context map is important when a model is split up in two parts. Both parts are now bounded contexts. They are individual domain models with a clearly defined boundary. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one inteface the other one.
-
-### Shared kernel
-
-Two bounded contexts may share a common sub-context. This is usually the domain core that is used by several different domain models. Having a shared domain core means that all involved models have to pay attention that the domain core is always in sync. This can be done by the CI. Additionally it takes quite some communication between the teams or else the core domain may get fragmented.
-
-// The models involved with a shared kernel may be seen as ...?
-
-### Anticorruption layer
-
-### Separate ways
-
-Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal. If you need a feature from the other model, just reimplement it. Having a little bit of redundancy between two models is still better than coupling them together. Of course it would probably be the best solution to break out the commonly used parts of the models into a third model that supplies infrastructure code for all other models. But maybe that's not worth it.
-
-### Conformist
-
-### Developer Client relationship
-
-The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (the developers) is willing to cooperate (for financial or political reasons) with the downstream team (the client), the two teams can go into a developer client relationship where the downstream team can order features that the upstream team will implement. Whether this relationship works or not depends on politics and the goodwill of the downstream team inside the company. 
-
-## Building blocks of DDD
-
-// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. [https://youtu.be/jnutb5Z4wyg], see my question on stackoverflow: [https://stackoverflow.com/questions/77425208/when-do-you-use-entities-value-objects-and-aggregates-ddd]
-
-// what are entities, etc. used for?
-
-In the book Domain-Driven Design, Eric Evans also introduced terms as entities, services, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
-
-I'd like to remark that you don't have to implement everything with entities, value objects, etc. the way it is explained here. It should be just regarded as some different way to think about how to structure your code.
-
-### Entities
-
-// https://youtu.be/4rhzdZIDX_k
-
-Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
-
-One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved. Every seat has its unique ID. Two seats are only equal if their IDs are the same. Even if all other properties are the same, if the IDs are not the same the seats are not equal.
-
-Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects. 
-
-A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and is out of scope for this book.
-
-When creating an entity it is important to stripe it down to the absolutely essential properties. // and ... ?
-
-### Value Object
-
-// https://youtu.be/P5CRea21R2E
-
-Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have a unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. You can only change the properties of a value object at its creation. Thus if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change its properties.
-
-Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, for example a price. A price is set in its constructor and cannot be changed anymore. Furthermore the constructor can ensure that the price is valid, for example it can't be negative. Similar things can be done, for example creating its own type for email addresses, rather than using plain strings.
-
-Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
-
-### Services
-
-Services are used for operations on value objects or entities. A good service has 3 properties //Quote DDD p. 105:
-- The operation does not naturally fit into an entity or a value object.
-- The interface of the service is defined in terms of the domain model.
-- The service does not have any internal state that can change over time.
-
-A service is an operation on the domain model. Its name is part of the Ubiquitous language. Services are generally represented by functions.
-
-While entities and value objects are generally too fine grained to be reused, services are medium grained and thus appropriate for reuse.
-
-### Aggregates
-
-// aggregates should be small. They are always a single transaction to the DB.
-
-Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model than the car. At the recycling plant no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires. The tire becomes a value object.
-
-// DDD p.127?
-
-Here is an example how the car entity could be modeled in code.
-
-```py
-class Car():
-    def __init__(self):
-        self.ID = "123" # some unique id
-        self._engine = Engine()
-        self._chassis = Chassis()
-        self._tires = [Tire() for _ in range(4)]
-
-    def drive(self, distance):
-        drive(self._tires)
-    
-    def __eq__(self, other):
-        return self.ID == other.ID
-
-def drive(tires)
-    for tire in tires:
-        if tire.distance_remaining < distance:
-            tire = Tire()
-        tire.drive(distance)
-
-class Engine():
-    pass
-
-class Chassis():
-    pass
-
-class Tire():
-    def __init__(self):
-        self.distance_remaining = 1000
-
-    def drive(self, distance):
-        self.distance_remaining -= distance
-```
-
-You might have realized that `car` is a delegating class. Delegating classes generally fulfill the requirements of an aggregate. A delegating class hides all the functionality within the class such that it's only accessible through the class instance itself, whereas the class instance is accessible over the ID of the car. It is not possible to change the instance of the `car` and its internals in any other way. It is not possible to violate the invariants of the car.
-
-The class `Car` might have the following invariants. It needs:
-- a unique identifier
-- 1 chassis (value object)
-- 1 engine (value object)
-- 4 tires (entities) with `distance_remaining >= 0`
-These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires with positive `distance_remaining` after the replacement and driving some distance.
-
-An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a domain of your code.
-
-As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
-
-Aggregate instances are frequently created by a factory or another of the creational design patterns. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex then it is a noteworthy task and should be dealt with in a dedicated object. Furthermore the factory can also take care of invariants of the class instance at its creation.
-
-### Organizing aggregates
-
-// see graphic p. 181, DDD
-
-Is there some general rule how to organize the aggregates? Or just throw all the pieces on the table and see how they fit toegther?
-
-// some old text
-
-Make code explicit
-
-See DDD p.205
-
-Explicit logic is much easier to understand than implicit logic. The logic is usually only implicitly known, but the logic in the code has to be explicit.
-
-// write some examples here?
-
-# 37. Good code, an overview
-
-// this chapter needs some citations of other chapters.
-
-"Truth can only be found in one place: the code." - Robert C. Martin
-
-This is an attempt to distill a list of rules that allow you to judge the quality of code.
-
-By definition good code is easy to understand. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language.
-
-Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
-
-Pretty much all your code follows the SRP. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
-
-Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
-
-Classes should have high internal cohesion. They should have strong coupling between the variables and methods and weak coupling to other classes. Due to constant refactoring classes tend to lose cohesion. Then they have to be broken up into several smaller classes.
-
-It feels easy to add features and change code. Thanks to the test coverage you have a safety net and well-structured code makes it apparent where new features belong.
-
-A function name tells you what the function does. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects.
-
-There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand.
-
-Define variables right where they are used. Always assign them a value right away.
-
-Create objects always at once. Creating only part of an object because not all required information is around is the code equivalent of a supply chain issue. This can become very confusing. An object should be completely created, or not existing at all. Throw exceptions if objects cannot be created at once.
-
-Write short functions (~< 10 lines) and classes (~< 100 lines). These are very rough estimates and depend on a lot of factors. Usually their length is limited by the SRP and the level of abstraction. Complicated functions and classes have to be short or their complexity might get out of hand.
-
-Keep the dependencies between different parts of the code low. Especially when dealing with 3rd party libraries, you’d better write a wrapper around it. This helps once you want to replace it.
-
-Using a debugger frequently is a strong sign you lost control of the code. Normally, automated tests should cover all the bugs and the debugger remains unused.
-
-YAGNI: You Aren’t Going Need It. Plan ahead the structure of your code but don’t implement anything you don’t need yet. Chances are, you will never need it. Only architects have to speculate what will be used in the future. Developers implement only things that will certainly be used.
-
-The solution representing the natural logic of the problem is usually the best. It has the lowest complexity. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic and you have to bake it into code. Don’t come up with your own logic on a problem you don’t understand too well. 
-
-Use the simplest features of your programming language as possible. Only use more complex features if you really benefit from it. Don’t use features of your programming language that resemble black magic.
-
-Do not nest if loops. Apparently, this violates the SRP and is highly prone to bugs. Avoid nested try catch blocks as well. Preferably avoid nested loops completely.
-
-Avoid Boolean values and logic as much as you can. Due to human deficiencies these are the lines of code which harbor the most errors. Try to avoid them as far as reasonably possible. Make sure every branch of an if statement is covered with tests.
-
-Don’t pass Booleans as function arguments. They are a strong sign of violated SRP. Resolve the consequences immediately.
-
-Don’t do string comparisons, use enums instead. Convert the string into an enum as soon as you have the string object available.
-
-Make the code self-commenting. Only use comments for things the code can’t explain by itself.
-
-Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
-
-## The Zen of Python
-
-The Zen of Python [https://peps.python.org/pep-0020/#the-zen-of-python] is a list of 19 guiding priceples by Tim Peters. I think they are very useful and thus I decided to include some of them to my list, along with some short explanation.
-
-Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will hunt you eventually.
-
-Flat is better than nested: Nested code is hard to understand and error prone.
-
-Readability counts: Of course it does. Readability is the most important metric of good code.
-
-Special cases aren't special enough to break the rules.
-
-Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book here.
-
-Errors should never pass silently: If an error occures, something went wrong and the user should know about it.
-
-There should be one-- and preferably only one --obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
-
-Now is better than never: later = never.
-
-If the implementation is hard to explain, it's a bad idea: This means that the logic behind your solution may be wrong.
-
-Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you to structure your code and make it more readable because you know where some function or other piece of code comes from.
-
-# 38. 3rd party software
-
-"Prefer visa over power shell" – some YouTube video 
-
-// where to write about integration?
-// In the google book they write a whole chapter about the problems on how to deal with 3rd party libraries. This really seems to be an issue.
-
-There are thousands of companies selling parts for your software. For many problems there are also open source solutions available. This is great, but as always there is a price to pay.
-
-No airplane engineer would start developing his own jet engine and no programmer would write his own database software. Even if they don’t like the products they can buy for whatever reason, they get something from the market. Everything else simply crazy, it's too expensive. Other companies are developing databases and you are not going to compete with them. You want to do other things instead. You found your niche elsewhere and you’re going to stay there unless there is a reason to change your business completely. You outsource everything you don’t really have to do yourself.
-
-Of course, in software engineering there are not so many products around to fit all the possible problems. But still, there are quite some suppliers around that can help you solve parts of your problems.
-
-Possibly you somehow have a bad feeling about this approach. You want to do everything by yourself. You don’t want to pay other companies for some small libraries. I can assure you that your feeling is natural. But you have to get over it. It’s just not worth it. You didn’t write your own operating system. You earn a good amount of money every year. And if you can save some time by outsourcing parts of the code, this is great. You also save the maintenance which is usually even more expensive than the actual development of the software.
-
-Using 3rd party libraries or software is great. Most of the times. But sometimes it also has its issues. There are some companies who didn’t write their code up to the standards and now they are in trouble. And there are many more sources for trouble. Most famously all the customers using Oracle databases who didn't decouple the database from the rest of the code. They use Oracle database querries all over the code and are unable to change to a different database vendor. These companies now pay hefty licensing fees and don’t get away.
-
-Another problem are libraries with comparably few contributors. At some point there might be no one left to maintain the code. In most areas you can still use such a library for a while but you should look out for a different solution. A lot of problems can pop up when using software that is not anymore supported. Though if you really need this software, you might consider becoming a contributor yourself.
-
-Everything explained here is also true for IT services and infrastructure (GitLab, Amazon Web Services (AWS), github, google maps, ...). These services are great, but you should always be able to change your supplier. For example there are medium sized companies that need a lot of computing power. They started the company using AWS as everyone else does as well. It's just too convenient. But as soon as the company got bigger, the bill from AWS was reaching millions, so the company was migrating to their own server infrastructure. [https://youtu.be/XAbX62m4fhI]
-
-To put it brief: Third party software and services are generally great. They may save you a lot of work and money. But you have to make sure you don’t get stuck with it. You have to stay flexible. Decouple the 3rd party library from your code. Write a thin interface between your code and the library. And if you don't, make sure that you really want to stick to this specific thrird party code for a long time. As always, if you can write tests using dependency injection and similar techniques you are probably fine. In order to mock the database, you need an interface that you can possibly use to support other databases as well. So you are flexible.
-
-The very big question is always when you really need such an interface. Most of the time I’m too lazy as well for writing one. But you certainly need one when dealing with databases. Call all the database specific queries only within this thin layer. The whole rest of the code is database-syntax-free-zone. This makes it very simple to exchange the database. You only have to replace the wrapper. You might have to change some of the implementation as well as the functionality between databases differs slightly. But this is a small price to pay compared to the millions you payed to Oracle so far.
-
-You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
-
-# 39. Dependencies
-
-"If you automate a mess, you get an automated mess." — Rod Michael
-
-In this chapter we are discussing files depending on each other. An inevitable evil.
-
-## The early days
-
-In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
-
-These are some of the considerations that made programmers split up their code into many files. But how do you tell the computer how to build up the complete code from these files? Apparently, there are some solutions, but this is an ongoing discussion.
-
-In C++ the whole problem becomes even worse due to the compiler requiring the header files. It is possible to compile a C++ program with the command line for a single file but it becomes unbearable for bigger projects. If you use C++, it is inevitable for you to learn a build tool, for example cmake or meson.
-
-What all programming languages have in common are the import or include statements at the beginning of the files. Even with the build tools of C++ you still need those. They might bother you but at times they are quite handy. They are an indicator for some very bad patterns in your code.
-
-## The dependency graph
-
-If you draw a plot with all the files as circles and how they import each other as arrows you should get a directed acyclic graph. The trunk of this graph is the file containing the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
-
-// create a figure of this graph
-
-Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It’s just a mess.
-
-The simplest solution is fusing these files. However, this is only a superficial fix. You really have to find out the relationships between the function and classes in the files. Maybe you can reorder them, maybe you have to rewrite the corresponding code from scratch.
-
-## Breaking up dependencies
-
-Circular imports are not a common problem as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
-
-How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you broke up a class into two classes.
-
-The most important step towards lower dependencies is focusing your code. Make sure that similar code fragments are located at the same location. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class instance. Afterwards you can pass around this class instance and there is no need to think about the database anymore. And just like that you got rid of many dependencies and at the same time you improved your code.
-
-The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky to achieve and even if I could, explaining it here would be barely possible.
-
-## Circular dependencies
-
-Usually, circular dependencies occur as two classes exchange data between each other. Class A needs data from class B which needs some data from class A in return. You should be able to tell whether class A or class B corresponds to the higher level of abstraction. Let’s assume class A is the higher-level class calling class B at some point. Now class B should never ever have to call class A. B is low level and knows nothing of the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data class B needs to return the final result. 
-
-Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction. The only tricky part is that the high level object does not know exactly what the low level object needs.
-
-### Example
-
-This example here is deliberately simple. I hope no one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted and harder to understand than it had to be.
-
-```py
-def a(counter):
-    if counter > 0:
-        b(counter -1)
-
-def b(counter):
-    print(counter)
-    a(counter)
-
-a(5)
-```
-
-Now the first thing to note is that there is no clear level of abstraction. `a` calls `b` and `b` calls `a`. They are somehow both on the same level of abstraction. This is bad. We could simplify it by inserting the definition of `b` into the function call inside `a`.
-
-```py
-def a(counter):
-    if counter > 0:
-        print(counter-1)
-        a(counter-1)
-
-a(5)
-```
-
-This is already much simpler. Of course it could be simplified even further by removing the recursion all together. But this is only a side remark.
-
-```py
-def a(counter):
-    for i in range(counter-1, 0):
-        print(i)
-```
-
-As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard if you have proper levels of abstractions and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code more readable.
-
+Part ... Collaborating
 
 # 40. Working in teams
 
@@ -6490,70 +6523,6 @@ In case you do pair programming, you may skip the code review phase all together
 
 Now despite all these drawbacks, I think it's still very important to make merge requests. The advantages outweigh the drawbacks by a lot. However only if everyone plays by the rules.
 
-# 42. Working with existing projects
-
-Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
-
-Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
-
-You might be motivated to suggest a complete rewrite of the code. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. It’s worth millions. You are not going to fix it in a few months.
-
-There are some different stages of how bad the code can be. I’m trying to give you a short overview.
-
-## No Interfaces
-
-This is probably the worst case. Without interfaces it is impossible to write tests. Without tests it is impossible to refactor and add interfaces. It’s really bad, but it’s not a lost cause. You can still try to refactor slowly. Though it will be painful and you constantly have to look out for bugs. A sales person will have to check your work frequently. The whole refactoring will probably take years. Maybe a complete rewrite is indeed the better option. I hope you never end in this kind of position.
-
-## No Tests
-
-Code without tests is one thing. One can still write them later on, even though it takes much more efforts. The real issue is probably the low quality of the code. It has some interfaces but the classes are way too big and the objects are hard to create. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. In a year or two. Once you have some test coverage, you can break the classes into smaller ones.
-
-If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
-
-## Extremely long functions
-
-Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
-
-# 43. Planning
-
-// TODO: read through again. Is there duplication with the agile section?
-
-"We take the most experienced engineer. He spends 2 days making various attempts to estimate the amount of work required. In the end we take the highest estimate and multiply it by two." – unknown
-
-Planning major projects is extremely hard, not only in software engineering. Architects and civil engineers plan houses and streets all the time so they’ve become fairly good at it. But as soon as there is something much bigger they never did before, they start struggling. Frequently they are quite good but there are always cases where things go haywire. Not only at the Berlin airport.
-
-With software development it is even worse. There are no small houses and streets that we can get some practice with. Unless you do very basic web or app development. Most software is simply way too complex and fairly unique. It’s impossible to understand all the details. Even the fundamental logic of the problem is not always apparent. Somehow plans on writing software are always too optimistic and failed deadlines are standard.
-
-This sounds very logical. We are all motivated and want to get things done. But our working speed is limited. It’s slower than we want it to be. We need more time to understand problems and code, we have to change more code than intended and we also spend a lot of time with MRs and meetings. If your boss asks you when the software is going to be ready, try hard not to be too optimistic. It is very hard but making too optimistic guesses won’t help anyone. You put yourself under pressure and ultimately you still miss the deadline.
-
-Planning code in detail is a similar topic. But at least there is now a solution that seems to work in most cases.
-
-For a very long time, software projects were developed using the waterfall approach. There is a team of developers who try to understand the topic and develop a model on the white board how the structure of the code should look like. Another team, or maybe even the same one, takes these ideas and implements them. Do I have to tell you how this ended? Let me give you some hints. People tend to underestimate complexity; people miss features and furthermore there are changing requirements. The result is a team of software engineers trying hard to implement what they were supposed to. At the same time, it doesn’t work as the planning team missed important details and over the time new requirements showed up. I heard of cases where this approach worked. A few. As well as a lot of disaster. Software projects are simply too complex as if the waterfall approach would work.
-
-Now let’s go back to the civil engineer and his houses. It makes sense that the civil engineer plans and the construction workers build the house. That’s what they do. That’s their job. Over the time a construction worker gets an idea how the structure of a house has to look like. But still, he is never going to plan one. He wouldn’t know how. Vice versa, the civil engineer could maybe build a house, but it’s financially not interesting. It makes sense to have two different groups of workers taking care of planning and construction. And even here the civil engineer has to check the progress of the construction frequently and improvise in case of unexpected events.
-
-In software engineering the planning and the development team both have the same education. The planning team might have a little more experience than the development team, but that’s negligible. Then why do you separate the two tasks? This creates only overhead and frustration. If the planning team is smart enough to plan the whole software on their head, they should also have enough experience to write the whole thing down in code. There's barely and overhead between planning the software and writing it down. When writing the code down, they will be able to see if everything really works out as plannned. Ultimately the planning team can make the whole job on their own.
-
-<!-- 
-// here is some redundancy with the agile chapter
-
-This doesn’t mean that there is no planning needed at all. It’s just different. Smaller and faster. 
-
-We need more feedback and to be able to adapt. In one word: Agile. You still need a quite good idea how the general structure of the code should look like. The fundamental structure is something you should get right on the first attemt because changing it later on is really expensive. Then you start implementing one feature after another. At the same time, you have to make sure that everything is well covered with tests. It will be inevitable to do refactoring once in a while and that's impossible without tests. But even here the old waterfall approach wasn’t any better. The tests were not there and the refactoring got ignored. But I have to warn you. Agile is not going to solve all your problems. You can have terrible code in Agile and be stuck or you can have great code in a waterfall project and be highly productive.
-
-As a conclusion I would say that Agile is generally the better approach than waterfall. But it only works if you first build a solid basement for your code, you write well tested code and you refactor frequently.
-
-In an Agile project it is important to cut the tickets as small as possible. This clarifies the task and minimizes the risk of a ticket to fail within a sprint. Small tickets are much easier to estimate. Figuring out the number of small tickets up to a certain point in development is the really tricky part. -->
-
-## Planning code 
-
-// move elsewhere? Rename section? Most of it is about UML diagramms.
-
-A widely used tool to display interactions between classes are UML diagrams. To put it up front, I don’t like UML. It's generally a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same, just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming is terrible. It is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
-
-One also has to consider the limitations of UML diagrams. The only represent classes and their relationships. This covers only a tiny fraction of a program. Quite frequently you have to understand the logic behind a problem where UMLs won’t help you. You need something different. Try out whatever you feel like. Some different sketch, a plot, a coffee break, a walk in the forest, ... As long as it helps you understanding the problem it does the job. 
-
-I also had such a moment during my master thesis when I was calculating the expected value of the experiment but I was stuck for a long time. One late afternoon a PhD student came by and talked for a little. He just casually mentioned every step of my calculation and within a minute I found my mistake. Talking to other people is usually the best way to solve a problem. 
 
 # 44. Agile
 
@@ -6679,7 +6648,90 @@ In order to be flexible, you have to be able to adapt your code. You have to cha
 
 # Requirements Engineering
 
-Written in collaboration with Felix Gähler
+Written together with Felix Gähler
+
+
+
+# 43. Planning
+
+// TODO: read through again. Is there duplication with the agile section?
+
+"We take the most experienced engineer. He spends 2 days making various attempts to estimate the amount of work required. In the end we take the highest estimate and multiply it by two." – unknown
+
+Planning major projects is extremely hard, not only in software engineering. Architects and civil engineers plan houses and streets all the time so they’ve become fairly good at it. But as soon as there is something much bigger they never did before, they start struggling. Frequently they are quite good but there are always cases where things go haywire. Not only at the Berlin airport.
+
+With software development it is even worse. There are no small houses and streets that we can get some practice with. Unless you do very basic web or app development. Most software is simply way too complex and fairly unique. It’s impossible to understand all the details. Even the fundamental logic of the problem is not always apparent. Somehow plans on writing software are always too optimistic and failed deadlines are standard.
+
+This sounds very logical. We are all motivated and want to get things done. But our working speed is limited. It’s slower than we want it to be. We need more time to understand problems and code, we have to change more code than intended and we also spend a lot of time with MRs and meetings. If your boss asks you when the software is going to be ready, try hard not to be too optimistic. It is very hard but making too optimistic guesses won’t help anyone. You put yourself under pressure and ultimately you still miss the deadline.
+
+Planning code in detail is a similar topic. But at least there is now a solution that seems to work in most cases.
+
+For a very long time, software projects were developed using the waterfall approach. There is a team of developers who try to understand the topic and develop a model on the white board how the structure of the code should look like. Another team, or maybe even the same one, takes these ideas and implements them. Do I have to tell you how this ended? Let me give you some hints. People tend to underestimate complexity; people miss features and furthermore there are changing requirements. The result is a team of software engineers trying hard to implement what they were supposed to. At the same time, it doesn’t work as the planning team missed important details and over the time new requirements showed up. I heard of cases where this approach worked. A few. As well as a lot of disaster. Software projects are simply too complex as if the waterfall approach would work.
+
+Now let’s go back to the civil engineer and his houses. It makes sense that the civil engineer plans and the construction workers build the house. That’s what they do. That’s their job. Over the time a construction worker gets an idea how the structure of a house has to look like. But still, he is never going to plan one. He wouldn’t know how. Vice versa, the civil engineer could maybe build a house, but it’s financially not interesting. It makes sense to have two different groups of workers taking care of planning and construction. And even here the civil engineer has to check the progress of the construction frequently and improvise in case of unexpected events.
+
+In software engineering the planning and the development team both have the same education. The planning team might have a little more experience than the development team, but that’s negligible. Then why do you separate the two tasks? This creates only overhead and frustration. If the planning team is smart enough to plan the whole software on their head, they should also have enough experience to write the whole thing down in code. There's barely and overhead between planning the software and writing it down. When writing the code down, they will be able to see if everything really works out as plannned. Ultimately the planning team can make the whole job on their own.
+
+<!-- 
+// here is some redundancy with the agile chapter
+
+This doesn’t mean that there is no planning needed at all. It’s just different. Smaller and faster. 
+
+We need more feedback and to be able to adapt. In one word: Agile. You still need a quite good idea how the general structure of the code should look like. The fundamental structure is something you should get right on the first attemt because changing it later on is really expensive. Then you start implementing one feature after another. At the same time, you have to make sure that everything is well covered with tests. It will be inevitable to do refactoring once in a while and that's impossible without tests. But even here the old waterfall approach wasn’t any better. The tests were not there and the refactoring got ignored. But I have to warn you. Agile is not going to solve all your problems. You can have terrible code in Agile and be stuck or you can have great code in a waterfall project and be highly productive.
+
+As a conclusion I would say that Agile is generally the better approach than waterfall. But it only works if you first build a solid basement for your code, you write well tested code and you refactor frequently.
+
+In an Agile project it is important to cut the tickets as small as possible. This clarifies the task and minimizes the risk of a ticket to fail within a sprint. Small tickets are much easier to estimate. Figuring out the number of small tickets up to a certain point in development is the really tricky part. -->
+
+## Planning code 
+
+// move elsewhere? Rename section? Most of it is about UML diagramms.
+
+A widely used tool to display interactions between classes are UML diagrams. To put it up front, I don’t like UML. It's generally a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same, just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming is terrible. It is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
+
+One also has to consider the limitations of UML diagrams. The only represent classes and their relationships. This covers only a tiny fraction of a program. Quite frequently you have to understand the logic behind a problem where UMLs won’t help you. You need something different. Try out whatever you feel like. Some different sketch, a plot, a coffee break, a walk in the forest, ... As long as it helps you understanding the problem it does the job. 
+
+I also had such a moment during my master thesis when I was calculating the expected value of the experiment but I was stuck for a long time. One late afternoon a PhD student came by and talked for a little. He just casually mentioned every step of my calculation and within a minute I found my mistake. Talking to other people is usually the best way to solve a problem. 
+
+
+# 14. DevOps
+
+// move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
+
+Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
+
+## The early 2000s
+
+Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+
+Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP), [Extreme Programming Explained: Embrace Change, K. Beck, 1999] and with the Agile Manifesto in 2001 [http://agilemanifesto.org/], testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
+- The code is formated according to specification
+- The static code analysis passes
+- The build passes
+- Building all the tests works
+- All the tests pass
+
+Even though there are companies that don't care about the formatting anymore. They just let the formatter run for every merge request on the server. Locally the developers can use whatever format they like. This takes some effort to set up the CI/CD pipeline but it saves work for the developers.
+
+Then there is also the task of creating an executable. It used to take many manual steps as well. Which was again slow and error prone. Now this part of the Continuous Delivery. 
+
+We have the development (Dev) and the IT operations (Ops) bundled all together, these steps form DevOps. DevOps is automating everything that has to do with building, testing and releasing of the new software.
+
+### Getting a project
+
+Furthermore getting started to work with an existing project was frequently a pain. There were so many things that could have gone wrong. "Where do I get the source code from?", "What libraries do I have to install?", "Why does the build not work?", "Ah, I have to use that specific version of this library?"
+
+It was a pain. And in many companies it still is. There is a simple rule about getting started: It has to work with one command. Getting the repository has to be one command, setting up all the libraries has to be one command, building it has to be one command and running the executable has to be one command as well. If it's any more than one command per step, you have to write a script that does the work for you.
+
+## Benefits of DevOps
+
+[https://www.atlassian.com/devops]
+
+- Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
+- Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
+- Rapid deployment: DevOps allows for rapid deployment. This has become more and more important in the last years.
+- Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
+
 
 # Mental health
 
@@ -6755,7 +6807,7 @@ def test_dinner_makes_dad_happy():
     assert(contains_happy(p.stdout))
 
 def serve_dinner_as_subprocess():
-    return subprocess.Popen(['python', 'dinner.py'],
+    return subprocess.Popen(['Python', 'dinner.py'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT,
                             )
