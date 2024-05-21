@@ -49,16 +49,16 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [7. Good code: a list of rules](#7-good-code-a-list-of-rules)
   - [The Zen of Python](#the-zen-of-python)
 - [8. Understandable code](#8-understandable-code)
-  - [How humans think](#how-humans-think)
+  - [How Humans Think](#how-humans-think)
   - [Spaghetti code](#spaghetti-code)
   - [Examples](#examples)
-    - [Structuring function arguments](#structuring-function-arguments)
+    - [Structuring Function Arguments](#structuring-function-arguments)
     - [Complicated code](#complicated-code)
     - [Assigning variables inside conditions](#assigning-variables-inside-conditions)
     - [Scope of variables](#scope-of-variables)
     - [Approximate programming](#approximate-programming)
   - [Copilot](#copilot)
-- [9. Single responsibility principle](#9-single-responsibility-principle)
+- [9. Single Responsibility Principle](#9-single-responsibility-principle)
   - [Do not Repeat Yourself](#do-not-repeat-yourself)
     - [Exceptions of DRY](#exceptions-of-dry)
   - [Advantages of the SRP](#advantages-of-the-srp)
@@ -735,164 +735,194 @@ If the implementation is hard to explain, it's a bad idea: This suggests that th
 
 Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you structure your code and make it more readable because you know where a function or other piece of code originates from.
 
-
 # 8. Understandable code
 
 "Any fool can write code that a computer can understand. A good programmer writes code a human can understand." – Martin Fowler
 
-## How humans think
+## How Humans Think
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is written for humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn't care as long as the syntax is correct. And if there is a bug, the computer simply runs it. But we don't care about the computer. This book is written for humans. We have to ask ourselves: When does a human understand something? Or what do humans struggle with?
 
-Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, good imagination to get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
+Humans are fundamentally different from computers. We can achieve incredible feats, yet we also have significant weaknesses. The evolution adapted us to our environment. We were made to live in the forest, hunt animals, and socialize with our clan. We needed keen eyes to spot our prey, a vivid imagination to grasp the terrain and wind direction, and familiarity with our hunting companions. These tasks necessitate a great deal of intuition and approximate reasoning. These are challenges that computers or robots struggle with. Though they improve, thanks to the emergence of artificial intelligence.
 
-Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result within five minutes.
+One thing is clear: Humans are not good at math. It's so simple and logical. It took me 12 years of school to learn how to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer can execute the following line of code without any issues, but I doubt any reader would be able to determine the result within five minutes.
 
 ```py
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
-``` 
+
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
+
+```
+
 [https://www.quora.com/What-are-some-prime-examples-of-bad-Python-code]
 
-The result is the famous "Fizz Buzz" game, [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with such code because we can't structure it. It is too big to understand it at once and we can't break it down into smaller pieces.
+The result is the famous "Fizz Buzz" game [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with code like this because we struggle to structure it. It is too big to understand all at once, and we can't break it down into smaller pieces.
 
-We are limited by the amount of complexity we can imagine. So there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you'll have to repeat this step recursively until you have small enough pieces that you can deal with. This is what we are relatively good at and how we can solve complex problems. Use your imagination!
+We are limited by the amount of complexity we can imagine. So, there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you will have to repeat this step recursively until you have small enough pieces that you can deal with. This is our area of expertise, where we excel in solving complex problems. Use your imagination!
 
-This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and them build them together like Lego. Every time we assemble a few pieces we create something new that we give a name for and are able to explain to other humans what this thing does. It has a higher level of abstraction.
+This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and then build them together like Lego bricks. Every time we assemble a few pieces, we create something new that we give a name to and can explain to other humans what this thing does. It has a higher level of abstraction.
 
-Most people driving a car have a fair idea how it works. It has an engine, wheels, brakes, a steering wheel, etc. We can mentally break down a car into smaller objects that we still understand roughly. Now if the car has a technical problem, we can usually guess quite precisely which of all these parts broke, even if you are no car mechanic. With your own code, it should be the same.
+Most people driving a car have a good understanding of how it works. A car consists of various components such as an engine, wheels, brakes, a steering wheel, etc. We can mentally deconstruct a car into smaller parts that we can still comprehend. Now, if the car has a technical problem, we can usually make a fairly accurate guess about which of all these parts broke, even if you are not a car mechanic. With your own code, it should be the same.
 
 ## Spaghetti code
 
-So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write it in understandable code.
+So far, every programmer who told me they were working on a really complex problem simply wrote poor code. They all failed to break the problem into small pieces and reassemble them again. Or rather, they didn't realize they should do so and wrote spaghetti code instead. The code became so complicated that they were barely able to add any new features. If something is complex, then you absolutely have to break it down. As long as you can explain how something works in words, you can also write it in understandable code.
 
-You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it. And this is no exageration!
+You should never underestimate the complexity that can arise from poorly written code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it. And this is no exaggeration!
 
-This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
+This entire book is about writing code with low complexity. The sections on the Single Responsibility Principle, naming, and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human-readable code.
 
 ## Examples
 
-### Structuring function arguments
+### Structuring Function Arguments
 
-In the following code, one can easily mix up the different arguments as they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple. 
+In the following code, one can easily mix up the different arguments since they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple.
 
 ```py
+
 def send_email(to, subject, body):
-    # ...
+
+# ...
+
 ```
 
 ```py
+
 from dataclasses import dataclass
 
 @dataclass
+
 class Email:
-    to: str
-    subject: str
-    body: str
+
+to: str
+
+subject: str
+
+body: str
 
 email = Email(to="google", subject="new search engine", body="it's awesome")
 
 def send_email(email):
-    # ...
+
+# ...
+
 ```
 
 In Python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
 
 ```py
+
 def send_email(to: str, subject: str, body: str):
-    pass
+
+pass
 
 send_email(to="google", subject="new search engine", body="it's awesome")
+
 ```
 
-Though it is still generally recommended to use a class instead of using named arguments. It orders the arguments in a logical way. The `email` is a higher order object than the three strings. It orders these three objects in one logical unit, which makes it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or as we have learned, they should have used a tool box.
+While it is still generally recommended to use a class instead of named arguments. It orders the arguments in a logical way. The `email` is of a higher order than the three strings. It orders these three objects into one logical unit, making it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or, as we have learned, they should have used a toolbox.
 
 ### Complicated code
 
-Let's look at the FizzBuzz code from above again.
+Let's review the FizzBuzz code mentioned above.
 
 ```py
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
+
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
+
 ```
 
-This example is very hard to understand as there is too much logic concentrated on a single line. It is very hard to keep track of all the logic that is going on here. Instead it is much easier to understand the code if you break it into smaller pieces as done in the following code.
+This example is challenging to comprehend because there is an excessive amount of logic concentrated on a single line. It is very challenging to keep track of all the logic that is happening here. Instead, it is much easier to understand the code if you break it into smaller pieces, as demonstrated in the following code.
 
 ```py
+
 output = []
+
 for i in range(1, 101):
-    if i % 3 == 0 and i % 5 == 0:
-        output.append("fizzbuzz")
-    elif i % 3 == 0:
-        output.append("fizz")
-    elif i % 5 == 0:
-        output.append("buzz")
-    else:
-        output.append(i)
+
+if i % 3 == 0 and i % 5 == 0:
+
+output.append("fizzbuzz")
+
+elif i % 3 == 0:
+
+output.append("fizz")
+
+elif i % 5 == 0:
+
+output.append("buzz")
+
+else:
+
+output.append(i)
+
 ```
 
-This is, at least in my eyes, much easier to understand.
+This is, at least in my opinion, much easier to understand.
 
 ### Assigning variables inside conditions
 
-Don't make assignments within if statements. It's hard to read and easy to make mistakes. I had to make a C++ example as in Python such code isn't even possible. It returns an error message if you make an assignment inside an if statement.
+Avoid creating assignments within if statements. It is difficult to read and easy to make mistakes. I had to create a C++ example because such code is not possible in Python. It returns an error message if you make an assignment inside an if statement.
 
 ```C++
+
 if (int t = time_elapsed()) ...
+
 ```
 
-The problem is that you can easily mix this code up with `int t == time_elapsed()`. This is a very common mistake. 
+The problem is that you can easily confuse this code with `int t == time_elapsed()`. This is a very common mistake.
 
 ### Scope of variables
 
-Avoid `do while` statements. Again, this is something that isn't supported in Python. The problem is that you have to keep track of the conditional variable over the whole range of the loop. This is extremely error prone as keeping track of a variable over such a long time is hard. It is much better to use a `while` loop and initialize the variable before the loop.
+Avoid using `do while` statements if it's supported by your programming language of choice. The issue is that you need to keep track of the conditional variable throughout the entire range of the loop. This is extremely error-prone because keeping track of a variable over such a long time is challenging. It is much better to use a `while` loop and initialize the variable before the loop.
 
-It is generally good to have as few variables as possible. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long time, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Eliminate control flow variables wherever possible.
+It is generally advisable to minimize the number of variables. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long period, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Avoid using control flow variables whenever feasible.
 
-Shrink the scope of all variables: no globals, short classes, short functions, etc. If the scope is bigger than it should, make the variable constant if possible.
+Limit the scope of all variables: avoid globals, keep classes and functions concise, etc. If the scope is larger than necessary, consider making the variable constant if possible.
 
 ### Approximate programming
 
-Let's say you want to program something similar to Tripadvisor or google maps. You have longitude and latitude of every restaurant and you want to find the nearest restaurant. You have to calculate the distance on a sphere.
+If you aim to develop a program akin to TripAdvisor or Google Maps. Let's assume you have the longitude and latitude coordinates of each restaurant, you want to determine the closest restaurant. You have to calculate the distance on a sphere.
 
-But in reality, such accuracy may not be required. You can simply take the coordinates and calculate the distance as done on a map. This is sufficient to have an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
+But in reality, such precision may not be necessary. You can simply take the coordinates and calculate the distance as you would on a map. This is sufficient for an estimate, rather than a very precise calculation. This makes the whole calculation much easier.
 
 ## Copilot
 
-Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at. The human readable version of the Fizz Buzz code above was written by Copilot.
+Copilot is generally quite proficient at generating readable code. At times, it is even better than me. You can tell that Copilot learned "programming" based on a set of fairly well-written code. It is often beneficial to seek a second opinion from copilot as an inexpensive alternative to a code review. I think this is one of the areas where Copilot truly excels. The human-readable version of the Fizz Buzz code above was written by Copilot.
 
-
-# 9. Single responsibility principle 
+# 9. Single Responsibility Principle
 
 **Every object does exactly one thing. Everything is done by exactly one object.**
 
-The Single Responsability principle advises to separate concerns, to isolate and simplify change. - Klaus Iglberger [https://youtu.be/motLOioLJfg?t=1003]
+"The Single Responsibility Principle advises to separate concerns to isolate and simplify change." - Klaus Iglberger [https://youtu.be/motLOioLJfg?t=1003]
 
-There are different definitions of the Single Responsibility Principle (SRP) [Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
+There are various interpretations of the Single Responsibility Principle (SRP) [Clean Architecture]. I don't think the differences between them really matter. The highlighted version above represents my personal interpretation of the SRP. It is much more important that you understand the idea behind it.
 
-The SRP is probably the most important topic in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation of readable and reusable code. When applied properly, any kind of code will become an order of magnitude more readable.
+The SRP is arguably the most crucial topic in this book and in all of software development. Every piece of code should have exactly one task. It is the foundation of readable and reusable code. When applied correctly, any type of code will become an order of magnitude more readable.
 
-Please note that the SRP does *not* state that every software developer is responsible for his own piece of code. The SRP is about code fragments, not about code ownership.
+Please note that the SRP does *not* state that every software developer is responsible for their own piece of code. The SRP focuses on code fragments, not on code ownership.
 
 ## Do not Repeat Yourself
 
-You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [The pragmatic programmer]. Instead you should refactor the code you want to copy into a dedicated function. If you have duplicated code, something is not done by one object but rather by two or more. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
+You should not copy and paste your own code (copying from Stack Overflow is fine, though). This creates code duplications and violates the "Do not Repeat Yourself" (DRY) principle [The pragmatic programmer]. Instead, you should refactor the code you want to copy into a dedicated function. If you have duplicated code, it indicates that a task is not being performed by a single object but rather by two or more objects. Instead, write a function and use it from now on. This explanation covers most cases that violate the SRP.
 
-The DRY principle also applies to processes like building your project. If you have to execute many steps for building your project, there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
+The DRY principle also applies to processes such as constructing your project. If you have to execute many steps to build your project, something is wrong. Instead, you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should run through in one step without any warnings or errors. Warnings are unnecessary mental burdens. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
-The other case is code that emerged as a duplication over time. Frequently, one piece of logic is needed at several different places and due to the lack of knowledge is re-implemented several times. This kind of duplication has to be refactored out relentlessly. It is very hard to detect this kind of duplication as it grows over time. Who knows about every piece of code in some huge program? And is it worth the effort to dig through the whole code base for a social security number parser rather than just writing a new one? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, it will be nearly impossible to find all the bits and pieces of code dealing with them. This might become a serious source of bugs.
+The other case involves code that has emerged as duplicated over time. Frequently, the same piece of logic is required in multiple locations, leading to its repeated implementation due to a lack of knowledge. This kind of duplication must be refactored relentlessly. It is very difficult to detect this type of duplication as it accumulates over time. Who knows about every piece of code in a large program? Is it worth the effort to search through the entire codebase for a social security number parser, or would it be more efficient to write a new one from scratch? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, it will be nearly impossible to locate all the bits and pieces of code related to them. This could potentially become a significant source of bugs.
 
-As I said, it is hard to keep track of this kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
+As I mentioned, it is difficult to keep track of this type of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive so that it is always more or less clear where a certain feature has to be implemented.
 
-One common source of repetition are switch case or if statements. They look something like this:
+One common source of repetition is switch-case or if statements. They look something like this:
 
 ```py
 if job == "president":
     residency = "White house"
 # ...
+
 if job == "president":
     security_standards = "very high"
 ```
 
-etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the corresponding properties.
+etc. It is fairly common to have many repeating if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the appropriate properties.
 
 ```py
 class President:
@@ -901,14 +931,14 @@ class President:
         self.security_standards = "very high"
 ```
 
-Now you only have to create a `president` object once and there is no more need for any if statements.
+Now you only have to create a `president` object once, and there is no longer any need for any if statements.
 
 ```py
 president = President()
 location = president.residency
 ```
 
-Another option is using a dictionary,
+Another option is to use a dictionary.
 
 ```py
 president = {
@@ -919,38 +949,43 @@ president = {
 
 ### Exceptions of DRY
 
-The DRY principle does not always have to be obeyed strictly. It's not always worth to try to find this abstraction with only one repetion of few lines of code. Also the overhead of creating a new function might be higher than the gain of refactoring the code. This is also in agreement with the test driven design (TDD) [Writing better code with tests] where you only have to refactor if there is a three-fold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately. 
+The DRY principle does not always have to be strictly followed. It's not always worth trying to find this abstraction with only one repetition of a few lines of code. Also, the overhead of creating a new function might be higher than the benefit gained from refactoring the code. This is also in agreement with Test-Driven Development (TDD) [Writing better code with tests] where you only have to refactor if there is a threefold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetition, there are certainly no more excuses. In the case of three-fold repetitions, you have to refactor the code immediately.
 
 ## Advantages of the SRP
 
 The importance of the SRP cannot be overstated. It alone makes your code an order of magnitude better when applied properly or worse when ignored. And it is fairly simple to learn. There are dozens of reasons why this is the case. Here are the most important ones.
 
 ### Understanding
-A function or class that implements exactly one thing will always be compareably easy to understand. It all follows the same logic and there will be no unexpected behavior. Additionally, the code for a certain problem will be short as it focuses only on its core. All other duties are resolved elsewhere.
+
+A function or class that implements only one thing will always be comparatively easy to understand. It all follows the same logic, and there will be no unexpected behavior. Additionally, the code for a specific problem will be concise as it focuses solely on its core functionality. All other duties are handled elsewhere.
 
 ### Naming
-Giving names to objects is one of the hardest tasks of a programmer and can be extremely frustrating. Names are always either too long or not expressive enough. This is an indication you might have violated the SRP. If an object obeys the SRP, it does one thing. And naming an object that does only one thing is usually not that hard. If you choose a name containing an "and", chances are high that you violated the SRP.
+
+Assigning names to objects is one of the most challenging tasks for a programmer and can be extremely frustrating. Names are either always too long or not expressive enough. This is an indication that you might have violated the SRP. If an object obeys the SRP, it does one thing. Naming an object that serves only one function is typically not that difficult. If you choose a name containing an "and", chances are high that you violated the SRP.
 
 ### No Duplication
-Every bit of logic is taken care of in exactly one place in your code. You have no code duplication. You are not allowed to copy paste any code. Do not Repeat Yourself. DRY. However, this does not only apply to copy paste code. It can also be that there are two pieces of code quite far apart in the code doing very similar things. If you see redundant code you should probably start refactoring. 
 
-Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparably easy as you have to change code only in one location. Your payment system has to be updated? Go to the `PaymentSystem` class and update it. Done.
+Every bit of logic is handled in exactly one place in your code. You have no code duplication. You are not allowed to copy and paste any code. Do not Repeat Yourself. DRY. This, however, does not only apply to copy-paste code. It can also happen that there are two pieces of code quite far apart in the code performing very similar tasks. If you see redundant code, you should start refactoring it.
+
+Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparatively easy since you only have to change the code in one location. Is your payment system in need of an update? Go to the `PaymentSystem` class and make the necessary updates. Done.
 
 ### Easy Testing
-Writing unit tests becomes fairly simple as well. A class obeying the SRP is not so big, initializing class instances is probably not a big deal, nor is understanding the logic behind it. You know exactly what the idea of the class is and finding the important parts to test becomes easy. Just look at the few public functions. And as the class is simple, you will be immediately able to tell what the expected output of the function will be.
+
+Writing unit tests becomes fairly simple as well. A class adhering to the SRP is not overly complex. Initializing class instances is likely not a significant issue, nor is comprehending the logic behind it. Understanding the concept of the class makes it easier to identify the key components for testing. Just look at the few public functions. As the class is straightforward, you will immediately be able to determine the expected output of the function.
 
 ### Less Bugs
-As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create way less bugs. And it’s very hard for those bugs to hide. Frequently you'll know right away why a bug showed up as it is immediately apparent which part of the code is responsible for the behavior of the bug.
 
-Again, let me make a real world example: You are dressed in an orange T-shirt, even though you should be dressed in a white shirt. If the only time you have access to a wardrobe is in the morning after having a shower, you know that it was at that time that you made the mistake. Meanwhile if you have access to the wardrobe all the time, you never know when you incorectly decided to get an orange shirt. This example nicely shows why it is important to restrict accsess to objects as much as possible and do things only in one location.
+As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create fewer bugs. And it's very hard for those bugs to hide. Frequently, you will quickly identify why a bug appeared because it is immediately apparent which part of the code is responsible for the bug's behavior.
+
+Again, let me provide a real-world example: You are wearing an orange T-shirt, although you should be wearing a white shirt. If the only time you have access to a wardrobe is in the morning after having a shower, you know that it was at that time that you made the mistake. Meanwhile, if you have access to the wardrobe all the time, you never know when you might incorrectly decide to wear an orange shirt. This example nicely illustrates why it is important to restrict access to objects as much as possible and perform actions in only one location.
 
 ### Bug fixing
-Tracking down bugs will be much easier. You can understand fairly well what each class should do and therefore find unexpected behavior much quicker. However, fixing a bug becomes harder at first sight. You are not anymore allowed to randomly add an if statement in your code. This would violate the SRP and lead to bad code. Instead you have to find a proper solution. Which usually turns out easier than applying some ugly hot fix. And especially it really fixes the bug once and for all. All together, we can conclude that fixing a bug becomes harder, but fixing it properly becomes much easier if you obey the SRP.
+
+Tracking down bugs will be much easier. You can understand fairly well what each class should do and, therefore, find unexpected behavior much quicker. Fixing a bug may seem harder at first glance. You are no longer allowed to randomly add an `if` statement in your code. This would violate the SRP and lead to bad code. Instead, you have to find a proper solution. Usually, this turns out to be easier than applying an unsightly hotfix. And especially, it really fixes the bug once and for all. All in all, we can conclude that fixing a bug becomes more challenging, but fixing it correctly becomes much easier if you adhere to the SRP.
 
 ## Drawbacks of the SRP
 
-There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it is not that bad to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm. When in doubt, you'd better adhere to the SRP and refactor the code.
-
+There are very few drawbacks of the SRP that I could think of. The SRP is sometimes a bit too strict. It is not always worth obeying strictly. If a function is very short, it is not necessarily bad to have it duplicated. Adding a function to introduce an additional level of abstraction increases mental workload and may not always be justified. Though these are exceptions, rather than the norm. When in doubt, it is better to adhere to the SRP and refactor the code.
 
 # 10. Levels of abstraction
 
