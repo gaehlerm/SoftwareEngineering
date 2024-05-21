@@ -1,16 +1,16 @@
-# 1. Introduction to software engineering
+# 1. Introduction to Software Engineering
 
 Copyright Marco Gähler, all rights reserved.
 
-This book is still work in progress. Feedback is highly welcome. Either as a merge request (I have to give you access rights) or directly by email, marco.gaehler@gmx.ch Many small MRs are prefered over one big MR. Feedback can be either about concrete improvements or just some general thoughts. As the book has not yet progressed very far, I'm happy about more general feedback. Tipos can be fixed later on.
+This book is currently undergoing revisions. Feedback is highly valued. Either through a merge request (access rights need to be granted) or by direct email at marco.gaehler@gmx.ch. It is advisable to submit many small merge requests rather than a single large merge request. Feedback may include precise recommendations for enhancement or general reflections. Given the limited progress of the book thus far, I welcome broader feedback. Tipos can be corrected at a later stage.
 
-Oh yeah, and my English could be better... but that will be fixed later on. Pearson Germany is interested in publishing this book, unfortunately that would be in German. I hope it will at least be published as an ebook in English as well.
+Indeed, there is room for improvement in my proficiency in the English language; nevertheless, I plan to tackle this at a later stage. Pearson Germany has expressed interest in publishing this book; however, it would be in the German language. I am hopeful that it will be published as an English e-book.
 
 ## Getting started
 
-If you prefer to have the book as a pdf, let me know. I can send it to you. Though the current setup of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline on the left. This gives you an overview of all the chapters.
+If you would rather receive the book in PDF format, please let me know. I can send it to you. The current configuration of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline located on the left-hand side. This provides an overview of all the chapters.
 
-This is a book about software engineering, similar to Clean Code by Robert C. Martin or The Pragmatic Programmer by Thomas & Hunt. So far it is only a rough draft, though it's making progress. The first few chapters feel already quite good, the second half of the book still needs some serious rework. 
+This is a book about software engineering, similar to "Clean Code" by Robert C. Martin and "The Pragmatic Programmer" by Thomas & Hunt. The current document is only a rough draft, though it's making progress. The initial chapters feel already quite good, the latter portion of the book requires significant revision.
 
 ## Things to write
 
@@ -33,7 +33,7 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 
 // figure out how to sort the different chapters and sections
 
-- [1. Introduction to software engineering](#1-introduction-to-software-engineering)
+- [1. Introduction to Software Engineering](#1-introduction-to-software-engineering)
   - [Getting started](#getting-started)
   - [Things to write](#things-to-write)
 - [2. Table of content](#2-table-of-content)
@@ -452,29 +452,29 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 4. .
 5. Preface: My personal story behind this book.
 6. Software Engineering: We destill some basic rules what Softwar Engineering is about.
-7. Good code, an overview: A short list that summarizes the most important points of this book.
-8. Understandable code: An attempt to explain what we understand and what we don't understand.
-9. Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
-10. Levels of abstraction: Many very complex objects may be combined to a new object which is fairly easy to understand.
+7. Good Code, an overview: A short list that summarizes the most important points of this book.
+8. Understandable Code: An attempt to explain what we understand and what we don't understand.
+9. The Single Responsibility Principle (SRP): We discuss why it is of utmost importance that every piece of code does exactly one thing.
+10. Levels of Abstraction: Many very complex objects may be combined to form a new object that is fairly easy to comprehend.
 11. Interfaces: What is an interface? And how do I design a good interface?
 12. Naming: Naming is the most difficult part of this book because there are so many rough rules but no clear cut answers.
-13. Functions: As learned in the chapter on the SRP, functions should do exactly one thing. Thus, they should be short.
+13. Functions: As discussed in the chapter on the SRP, functions should do exactly one thing. Therefore, they should be short.
 14. Classes: We learn how to structure classes beyond the old getter and setter non-sense.
-15. Inheritance: Inheritance should generally not be used as it often leads to bad code.
-16. Data Types: What kind of primitive data types are there? And why should you be cautios with using booleans and strings?
-17. Properties of Variables: There are additional properties of variables that define mostly the scope in which they can be used and wheather they can be changed or not.
+15. The utilization of inheritance is generally discouraged due to its tendency to result in poor code quality.
+16. Data Types: What types of primitive data are there? And why should you be cautios with using booleans and strings?
+17. Properties of Variables: There are additional properties of variables primarily determine the scope within which they can be utilized and whether they are mutable or immutable.
 18. Testing: Testing is of utmost importance to keep your code correct over the test of time.
-19. Types of Tests: We discuss unit tests, integration tests and functional tests.
+19. Types of Tests: We discuss unit tests, integration tests, and functional tests.
 20. Writing better code with tests: Having tests forces you to write better code as tests require good interfaces.
 21. SOLID principles: Explaining the SOLID principles that Robert C. Martin (Uncle Bob) came up with.
-22. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A] 
-23. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural and functional programming.
-24. Programming languages: A brief overview on the most commonly used programming languages.
-25. Physical laws of code: Surprisingly, code obeys some physical laws as well.
+22. Software Engineering principles: Some general software engineering principles from [https://youtu.be/XQzEo1qag4A]
+23. Programming Paradigms: We briefly discuss the differences between object oriented (OO), procedural, and functional programming.
+24. Programming Languages: A brief overview on the most commonly used programming languages.
+25. Physical Laws of Code: Surprisingly, code obeys some physical laws as well.
 26. Bugs, Errors, Exceptions: A discussion how you should deal with and prevent bugs.
 27. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
 28. Dependencies: How do you deal with dependencies between files and code snippets?
-29. Decoupling: ? // remove chapter?
+29. Decoupling: ? // remove chapter
 30. Software Architecture: // ? rewrite chapter?
 31. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
 32. 3rd party software: How to deal with 3rd party software.
@@ -482,19 +482,19 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 34. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
 35. Refactoring techniques: ...?
 36. Performance Optimization: Don't optimize until the very end of a project.
-37. Comments: Replace comments with code when ever possible.
-38. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging may be needed for distributed systems where race conditions may occure.
+37. Comments: Replace comments with code whenever possible.
+38. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging might be needed for distributed systems where race conditions may occure.
 39. Data files: If you store data, there may be better file formats than csv files.
 40. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
-41. Tools: An overview of the most important tools that you should use, starting with git.
+41. Tools: An overview of the most important tools that you should use, starting with Git.
 42. Working in teams: Working in teams has some advantages and drawbacks.
 43. Code review: Let your code be reviewed by others.
-44. Agile: Agile is a way to organize your work in a team and an alternative to waterfall.
+44. Agile: Agile is a way to organize your work in a team and offers an alternative to waterfall.
 45. Requirements Engineering: What should you actually program?
 46. Planning: Before you start coding, you should roughly plan what you are going to do.
-47. DevOps: DevOps is the way to go regarding the organization of your projects.
+47. DevOps: DevOps is considered the way to go regarding the organization of your projects.
 48. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
-49. Hiring and getting hired: How to get a job as a software engineer.
+49. Hiring and getting hired: How to get a job as a Software Engineer.
 50. Examples: // ? rewrite chapter?
 51. About Copilot: A short overview of Copilot. // move to the introduction?
 52. Outlook: Some personal advice and wishes for your future.
