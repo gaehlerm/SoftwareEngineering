@@ -46,7 +46,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [A word about Copilot](#a-word-about-copilot)
 - [6. Software Engineering](#6-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
-- [7. Good code, a list of rules](#7-good-code-a-list-of-rules)
+- [7. Good code: a list of rules](#7-good-code-a-list-of-rules)
   - [The Zen of Python](#the-zen-of-python)
 - [8. Understandable code](#8-understandable-code)
   - [How humans think](#how-humans-think)
@@ -581,157 +581,159 @@ In general, it can be said that AI code generation is already a very useful tool
 
 
 Part 1: First things first
-
 # 6. Software Engineering
 
-"If I had an hour to solve a problem I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
+"If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
-In this chapter we want to look at how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn’t, use. In my opinion there are plenty of things, especially in object oriented (OO) programming, that are mostly used due to historic reasons. In reality they are usually leading to bad code and should be abandoned. In fact, pretty much everything else than plain classes and interfaces should be used with care in OO programming.
+In this chapter, we want to examine how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn't, use. In my opinion, there are numerous practices in object-oriented (OO) programming that are predominantly utilized for historical reasons. In reality, they usually lead to poor code and should be abandoned. In fact, pretty much everything other than plain classes and interfaces should be used with care in OO programming.
 
-But OO programming is by far not the most important topic in this book. No matter how good or bad your usage of OO features, you can write good or bad code irrespectively. There are more important things to learn throughout this book. Most notably the Single Responsibility Principle (SRP), basics on interfaces, testing and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
+But OO programming is by far not the most important topic in this book. No matter how good or bad your use of OO features is, you can still write good or bad code. There are more important concepts to learn from this book. Most notably, the Single Responsibility Principle (SRP), basics of interfaces, testing, and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
 
-This book contains comparably few code examples. It’s more about general concepts of software engineering, rather than concrete code examples. Still, some of the concepts are easier to understand with a few lines of code. Therefore I tried to make some code examples. Even though it's quite hard to find examples that are short, yet expressive enough to fit into a book. As the programming languages I chose mostly Python and a some C++. Not because these languages would be better than for example JavaScript, but rather because these are the languages I know. And I chose two programming languages as there are some things I could explain only with one or the other. Though there are only very few things that are programming language dependent. Most things explained here are general recommendations that are valid for pretty much any programming language. 
+This book contains relatively few code examples. It's more about general concepts of software engineering, rather than concrete code examples. Still, some concepts are easier to understand with a few lines of code. Therefore, I tried to create some code examples. Even though it's quite challenging to find concise examples that are still expressive enough to fit into a book. As for the programming languages I chose, mostly Python and some C++. Not because these languages would be better than, for example, JavaScript, but rather because these are the languages I know. I chose two programming languages because there are some concepts that I can only explain using one or the other. Though there are only a few things that depend on the programming language. Most of the explanations provided here consist of general recommendations that are applicable to almost any programming language.
 
-This book tries to give clear answers to simple problems. I also try giving answers to hard problems like naming, but these are, as in other books, usually fairly vague. The only thing that really helps against hard problems is a lot of experience. It would take too much explanations or code to explain all the details. I can only try to lay out all the different arguments for some trade offs and then you have to do all the reasoning by yourself. This is why software engineering is hard. There are just too many problems without any clear solutions. And you have to deal with them all by yourself.
+This book aims to provide clear answers to simple problems. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
 
-This book is about engineering, not about a scientific approach. Thus there is no absolute truth. I rather give some general advice. For this reason, there are only few references for specific topics. Many chapters are my personal summary about some other more specialized book. Thus I mention what book I was reading as a foundation for the corresponding chapter.
+This book is about engineering, not a scientific approach. Thus, there is no absolute truth. I would rather give some general advice. Due to this reason, there are only a few references available for specific topics. Several chapters consist of my personal summaries of more specialized books. Thus, I mention the book I was reading as a foundation for the corresponding chapter.
 
 ## The Life of a Software Engineer
 
-I know you want me to get started and show you some fancy code examples. And I’m sorry to tell you that this is not happening. We don’t even know yet what this book should be about. Of course, you want to become a great software engineer get a job at google earn a lot of money and life a happy life. But this is all so vague. We have to sit down and analyze the situation. I even found moral support from a fellow physicist.
+I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is all so vague. We have to sit down and analyze the situation. I even found moral support from a fellow physicist.
 
-Let me start with a very blunt question: What do you think does a software engineer do?
+Let me start with a very blunt question: What do you think a software engineer does?
 
 "He writes code" may be your first response.
 
 "He engineers software" is a very smart one.
 
-Indeed, these answers contain some truth. But writing code covers only a tiny fraction of your future working day. One thing you will do is the same as we do right now: you analyze a problem and try to figure out what to do next. 
+Indeed, these answers contain some truth. But writing code only represents a small portion of your future workday. One thing you will do is the same as what we are doing right now: analyzing a problem and trying to figure out what to do next.
 
-You will of course spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most time on cleaning up or discussing things. The part that’s really fun covers only a small fraction of it. The following plot with highly unscientific numbers I found somewhere on the internet sums it up nicely.
+You will, of course, spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most of your time cleaning up or discussing things. The part that is truly enjoyable only covers a small fraction of it. The following plot, with highly unscientific numbers that I found somewhere on the internet, sums it up nicely.
 
-<img src=images/programmerActivity.png width="400">
+src=images/programmerActivity.png width="400">
 
-You certainly have to look twice to grasp the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not including all the meetings that you have to visit as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you work on a new project there is no refactoring (code clean up) required yet and there is less code for you to read. Ultimately, you’ll spend more time coding. In a very big project, it takes more time to implement changes. It can take a year until you are fully productive in a big project! But the company is already earning money with this code for a long time, so adding new features is not that important anymore. Either way, I will continue the discussion with the value from the plot.
+You definitely need to take a second look to fully understand the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not to mention all the meetings you have to attend as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you are working on a new project where no refactoring (code clean up) is required yet, you will have less code to read. Ultimately, you will spend more time coding. In a very large project, it takes more time to implement changes. It can take a year to become fully productive in a large project! But the company has been generating revenue from this code for a long time, so prioritizing the addition of new features is no longer as crucial. Either way, I will continue the discussion with the value from the plot.
 
-The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It’s about reading code! If you can reduce the time required to read code by half you save more time than you spend writing code in total. By a lot. 
+The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It's about reading code! If you can reduce the time required to read code by half, you save more time than you spend writing code in total. By a lot.
 
 The first rule of software engineering:
 
 **We write code that is easy to understand.**
 
-Good code is not fancy, good code is not complex and it’s not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It’s ... it’s rather like watching some politicians... Using only 1000 different words is great if you are talking on the TV. Everyone understands you. Even as people are tired or uneducated, they like listening to you. They don't have to focus in order to understand you. I’m sometimes embarrassed because of my lousy English. But writing these lines is really cheering me up. Most people reading this book are not native English speakers neither and therefore my somewhat limited language skills may actually help with that respect. It makes this book easier to understand. And with code it’s fairly similar. Simple code is good because it's easy to understand.
+Good code is not fancy; it is not complex, and it is not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It's ... it's rather like watching some politicians... Who's vocabulary consists of only 1000 different words. This is beneficial when speaking on television. Everyone understands you. Even when people are tired or uneducated, they enjoy listening to you. They don't have to focus in order to understand you. I sometimes feel embarrassed because of my poor English skills. But writing these lines is really cheering me up. Most people reading this book are not native English speakers, and therefore, my somewhat limited language skills may actually be helpful in that regard. It makes this book easier to understand. And with code, it's fairly similar. Simple code is good because it is easy to comprehend.
 
-Good code uses only the bare minimum of syntax that a programming language offers. It is great if you don’t know a programming language too well. You don’t fall into the trap of using fancy but useless features. Don’t learn programming languages. Learn programming. Unless you work for google on some other company working on highly specialized code, you will never need all the gimmicks modern programming languages have to offer.
+Good code utilizes only the essential syntax provided by a programming language. It is great if you don't know a programming language too well. You avoid falling into the trap of using fancy but useless features. Don't learn programming languages. Learn programming. Unless you work for Google or another company developing highly specialized code, you will never need all the gimmicks that modern programming languages have to offer.
 
-Now it's not only important to make the code work, we also have to make sure that it is correct. The crash of two Boeing air planes in 2018/2019 was not the first time that software bugs caused catastrophic damage. Nor will it be the last time, unfortunately.
+Now, it is not only important to ensure that the code works, but we also have to verify its correctness. The crash of two Boeing airplanes in 2018/2019 was not the first time that software bugs led to catastrophic damage. Nor will it be the last time, unfortunately.
 
-We don’t want to be responsible for people to die or companies to go bankrupt. We want to write code that is impeccable. We want to be as certain as possible that there are no bugs. We constantly check our code is correct. We test our code. We let our computers test our code. We write code that tests our code!
+We don't want to be responsible for people dying or companies going bankrupt. We want to write impeccable code. We want to ensure that there are no bugs to the best of our ability. We constantly check that our code is correct. We test our code. We let our computers test our code. We write code to test our code!
 
 The second rule of software engineering:
 
-**We write automated tests that cover all our code.**
+**We write automated tests that cover all of our code.**
 
-Now let’s go back to our lovely plot. There is one more huge chunk of work. Changing existing code. Also known as refactoring. Yes, as astonishing as it sounds you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring and its importance cannot be understated. It helps you keeping the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring your code quite quickly becomes such a huge mess, you will barely be able to make any changes. And there will be a million places where bugs can hide. Though changing code always has the inherent danger, that you might break it. This is one of the reasons why we need good tests. If we have a good test coverage, we can change the code with confidence that we don't break it.
+Now let's return to our lovely plot. There is one more substantial chunk of work. Modifying the current code. Also known as refactoring. Yes, as astonishing as it sounds, you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring, and its importance cannot be understated. It helps you keep the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring, your code quite quickly becomes a huge mess, making it difficult to implement any changes. And there will be a million places where bugs can hide. Though changing code always carries the inherent risk of potentially breaking it. This is one of the reasons why we need good tests. If we have good test coverage, we can change the code with confidence that we won't break it.
 
 The third rule of software engineering:
 
 **We constantly clean up our code.**
 
-Now you know what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to half an hour ago. I can explain to you the fundamental principles how to write good code.
+Now you have an idea of what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to do half an hour ago. I can explain the fundamental principles of writing good code.
 
-You might be already working in a company, or at least you soon will be. Your boss is not going to let you write code for a month just because you like it. You will be spending quite a lot of time in meetings and talking to other people about figuring out what you should do exactly. What your customers want. 
+You might already be working in a company, or you will be soon. Your boss is not going to let you write code for a month just because you like it. You will be spending a considerable amount of time in meetings and engaging in discussions with others to determine precisely what you should do. What your customers want.
 
 The fourth rule of software engineering:
 
-**We write code in order to create value for our customers.**
+**We write code to create value for our customers.**
 
-If you don’t like meetings nor customers you can stay at home and write whatever code you like. But unless you are a genius, chances are very low anyone will pay you for that. It is more rewarding to write mediocre code that’s being used rather than writing brilliant code no one cares about.
+If you don't like meetings nor customers, you can stay at home and write whatever code you like. But unless you are a genius, the chances of anyone paying you for that are very low. It is more rewarding to write mediocre code that is being used than to write brilliant code that no one cares about.
 
 These four rules will accompany us throughout our book.
 
 //make a list of the 4 rules in a box
+
 - We write code that is easy to understand.
-- We write automated tests that cover all our code.
+
+- We write automated tests that cover all of our code.
+
 - We constantly clean up our code.
-- We write code in order to create value for our customers.
 
+- We write code to create value for our customers.
 
-# 7. Good code, a list of rules
+# 7. Good code: a list of rules
 
 // this chapter needs some citations of other chapters.
 
 "Truth can only be found in one place: the code." - Robert C. Martin
 
-This is an attempt to distill a list of rules that allow you to judge the quality of code.
+This is an attempt to distill a list of rules that enable you to assess the quality of code.
 
-By definition good code is easy to understand [preface]. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language [domain driven design].
+By definition, good code is easy to understand [preface]. Also, for new software developers on the team. With good code, even marketing people may comprehend some of your technical discussions as you use the same language [domain driven design].
 
-Good code is well tested [testing]. It has both, unit and acceptance tests, maybe also integration tests [types of tests]. Especially a good coverage with unit tests is paramount, as it forces you to write good code [writing better code with tests]. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
+Good code is well-tested [testing]. It includes unit and acceptance tests, and possibly integration tests [types of tests]. Especially a good coverage with unit tests is essential as it compels you to write high-quality code [writing better code with tests]. At the same time, unit tests significantly reduce the number of errors in your code.
 
-Pretty much all your code follows the SRP [Single Responsability Principle]. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. 
+Pretty much all your code follows the SRP [Single Responsability Principle]. Functions, classes, modules. Everything. The build process only requires one command. This makes the code much easier to understand, and naming also becomes simpler.
 
-Names should be short, yet concise [Naming].
+Names should be short yet concise [Naming].
 
-Do not repeat yourself (DRY) [section Do not Repeat Yourself]. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
+Do not repeat yourself (DRY) [section Do not Repeat Yourself]. There is no copy-paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you can never be sure if making a single change is sufficient, or if it needs to be applied in multiple other locations. This leads to bugs and high maintenance costs very quickly.
 
-Classes should have high internal  [classes]. They should have strong coupling between the variables [Data types] and methods [Functions] and weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then they have to be broken up into several smaller classes [Refactoring].
+Classes should have high internal [classes]. They should have a strong coupling between the variables [Data types] and methods [Functions] and weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then, they have to be broken up into several smaller classes [Refactoring].
 
-It feels easy to add features and change code. Thanks to the test coverage [Testing] you have a safety net and well-structured code makes it apparent where new features belong [Physical Laws of Code].
+It feels easy to add features and change code. Thanks to the test coverage [Testing] you have a safety net, and well-structured code makes it apparent where new features belong [Physical Laws of Code].
 
-A function name tells you what the function does [Naming]. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects [Functional Programming].
+A function name explains you what the function does [Naming]. There is no surprising behavior. The same holds true for classes and variables. Functions have no side effects [Functional Programming].
 
-There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand [Naming].
+There are no magic numbers. Assigning the magic number to a variable with a suitable name makes the code much clearer to understand [Naming].
 
-Define variables right where they are used. Always assign them a value right away.
+Define variables right where they are used. Always assign a value to them immediately.
 
-Create objects always at once. Creating only part of an object because not all required information is around is the code equivalent of a supply chain issue. This can become very confusing. An object should be completely created, or not existing at all. Throw exceptions if objects cannot be created at once.
+Create objects all at once. Creating only a part of an object due to missing information is akin to a supply chain issue in coding. This can become very confusing. An object should be created completely or not at all. Throw exceptions if objects cannot be created at once.
 
-Write short functions (~< 10 lines) and classes (~< 100 lines) [Single responsability principle]. These are very rough estimates and depend on a lot of factors. Usually their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes have to be short or their complexity [Complexity] might get out of hand.
+Write short functions (~< 10 lines) and classes (~< 100 lines) [Single responsability principle]. These are very rough estimates and depend on numerous factors. Usually, their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes should be kept short to prevent their complexity [Complexity] from getting out of hand.
 
-Keep the dependencies between different parts of the code low [Dependencies]. Especially when dealing with 3rd party libraries [3rd Party libraries], you’d better write a wrapper [Interfaces] around it. This helps once you want to replace it.
+Keep the dependencies between different parts of the code minimal [Dependencies]. Especially when dealing with third-party libraries [Third-Party Libraries], it is advisable to create a wrapper [Interfaces] around them. This is helpful when you want to replace it.
 
-Using a debugger [Bugs, Errors, Exceptions] frequently is a strong sign you lost control of the code. Normally, automated tests [Testing] should cover all the bugs and the debugger remains unused.
+Using a debugger [Bugs, Errors, Exceptions] frequently is a strong sign that you have lost control of the code. Normally, automated tests [Testing] should cover all bugs, rendering the debugger unused.
 
-YAGNI: You Aren’t Going Need It. Plan ahead the structure of your code but don’t implement anything you don’t need yet [Planning]. Chances are, you will never need it. Only architects have to speculate what will be used in the future [Software Architecture]. Developers implement only things that will certainly be used.
+YAGNI: You Aren't Going to Need It. Plan ahead the structure of your code, but refrain from implementing anything you don't need yet [Planning]. Chances are, you will never need it. Only architects have to speculate on what will be used in the future [Software Architecture]. Developers implement only features that will definitely be utilized.
 
-The solution representing the natural logic of the problem is usually the best [Domain driven desing]. It has the lowest complexity [Complexity]. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic and you have to bake it into code. Don’t come up with your own logic on a problem you don’t understand too well. 
+The solution representing the natural logic of the problem is usually the best [Domain driven desing]. It has the lowest complexity [Complexity]. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic, and you need to bake it into the code. Don't come up with your own logic on a problem you don't understand well.
 
-Use the simplest features of your programming language as possible [Programming language]. Only use more complex features if you really benefit from it. Don’t use features of your programming language that resemble black magic.
+Use the most basic features of your programming language. [Programming language]. Only use more complex features if you truly benefit from them. Avoid utilizing features of your programming language that resemble black magic.
 
-Do not nest if loops. Apparently, this violates the SRP and is highly prone to bugs [Single Responsability Principle]. Avoid nested try catch blocks as well. Preferably avoid nested loops completely.
+Avoid nesting if loops. Apparently, this violates the SRP and is highly prone to bugs [Single Responsability Principle]. Avoid nested try-catch blocks as well. It is preferable to avoid nested loops entirely.
 
-Avoid Boolean values [section Booleans] and logic as much as you can. Due to human deficiencies these are the lines of code which harbor the most errors. Try to avoid them as far as reasonably possible. Make sure every branch of an if statement is covered with tests.
+Avoid using Boolean values [section Booleans] and logic as much as possible. Due to human deficiencies, these lines of code harbor the most errors. Try to avoid them as far as reasonably possible. Ensure that every branch of an if statement is tested.
 
-Don’t pass Booleans as function arguments [Functions]. They are a strong sign of violated SRP [Single Responsability Principle]. Resolve the consequences immediately.
+Avoid passing Booleans as function arguments [Functions]. They are a strong indication of a violated SRP [Single Responsability Principle]. Resolve the consequences immediately.
 
-Don’t do string comparisons [section Strings], use enums instead [seciton Enums]. Convert the string into an enum as soon as you have the string object available.
+Avoid string comparisons [section Strings]. Use enums instead [seciton Enums]. Convert the string into an enum as soon as you have the string object available.
 
-Make the code self-commenting. Only use comments for things the code can’t explain by itself [Comments].
+Write self-explanatory code. Only use comments for aspects that the code cannot explain on its own. [Comments]
 
 ## The Zen of Python
 
-The Zen of Python [https://peps.Python.org/pep-0020/#the-zen-of-Python] is a list of 19 guiding priceples by Tim Peters. I think they are very useful and thus I decided to include some of them to my list, along with some short explanation.
+The Zen of Python [https://peps.Python.org/pep-0020/#the-zen-of-Python] is a list of 19 guiding principles by Tim Peters. I find them very useful, so I decided to include some in my list, along with a brief explanation.
 
-Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will hunt you eventually.
+Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will haunt you eventually.
 
-Flat is better than nested: Nested code is hard to understand and error prone.
+Flat is better than nested: Nested code is hard to understand and error-prone.
 
-Readability counts: Of course it does. Readability is the most important metric of good code.
+Readability counts: Of course, it does. Readability is the most important metric of good code.
 
 Special cases aren't special enough to break the rules.
 
-Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book here.
+Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book.
 
-Errors should never pass silently: If an error occurs, something went wrong and the user should know about it.
+Errors should never pass silently: If an error occurs, something went wrong, and the user should be informed about it.
 
-There should be one, and preferably only one, obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
+There should be one, and preferably only one, obvious way to do it: Of course, there are always some details that you don't know how to deal with. In general, it is true that there should be only one way to implement a feature.
 
 Now is better than never: later = never.
 
-If the implementation is hard to explain, it's a bad idea: This means that the logic behind your solution may be wrong.
+If the implementation is hard to explain, it's a bad idea: This suggests that the logic behind your solution may be flawed.
 
-Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you to structure your code and make it more readable because you know where some function or other piece of code comes from.
+Namespaces are one honking great idea -- let's do more of those! Yes, namespaces are great. They help you structure your code and make it more readable because you know where a function or other piece of code originates from.
 
 
 # 8. Understandable code
