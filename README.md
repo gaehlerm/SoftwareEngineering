@@ -442,7 +442,8 @@ This is a book about software engineering, similar to Clean Code by Robert C. Ma
 
 # 3. One sentence summary
 
-// mention which part some chapters are in??
+// mention which part the chapters are in??
+// fix the whole enumeration
 
 1. .
 2. .
@@ -511,18 +512,24 @@ Chapters to work on:
 
 I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked for a few years as a teacher, before I decided to switch to software engineering. I worked as a few years as a software engineer for Zurich Instruments, a company developing electronic devices that are used in quantum computing. There I was mostly busy developing software for the Quantum Controller software. 
 
-At the beginning of my time there, I was still a novice in software engineering, but I picked up a lot of things quite quickly. I also read a whole pile of books and watched a lot of youtube videos since. At the same time I was in touch with many PhD students and realized how bad the code was that they were writing. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in industry. Such that every person with a litle bit of knowledege of a programming language can boost his programming skills to a professional level without much further help. That being said, reading this book will of course not be enough. It also takes quite a lot of practice.
+At the beginning of my time there, I was still a novice in software engineering, but I picked up a lot of things quite quickly. At the same time I was in touch with many PhD students and realized how bad the code was that they were writing. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in industry. Such that every person with a litle bit of knowledege of a programming language can boost his programming skills. That being said, reading this book will of course not be enough. It also takes quite a lot of practice.
 
 I wasn't really sure where this book would take me. I mean my English is fairly lousy and I was never really good at writing essays as school. But the feedback I got was very good. People praised this book for being well structured, written and easy to understand. Even Pearson Germany was interessted in printing it. This motivated me to keep writing and getting it published.
 
+I hope you'll enjoy reading this book,
+
+Marco Gähler
+
 ## Thanks to
+
+There are some people who read through this book and were very helpful in giving me feedback. I want to thank them here:
 
 - Volker Obermeit
 - Rafael Gort
 - Felix Gähler
 - Claudia Gähler
 - Linus Gasser
-- you?
+- ... you?
 
 # 5. Preface
 
@@ -657,49 +664,49 @@ These four rules will accompany us throughout our book.
 
 This is an attempt to distill a list of rules that allow you to judge the quality of code.
 
-By definition good code is easy to understand. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language.
+By definition good code is easy to understand [preface]. Also for new software developers in the team. With good code, even marketing people may understand some of your technical discussions as you use the same language [domain driven design].
 
-Good code is well tested. It has both, unit and acceptance tests. Especially a good coverage with unit tests is paramount, as it forces you to write good code. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
+Good code is well tested [testing]. It has both, unit and acceptance tests, maybe also integration tests [types of tests]. Especially a good coverage with unit tests is paramount, as it forces you to write good code [writing better code with tests]. Yet at the same time, unit tests are strongly reducing the number of errors in your code.
 
-Pretty much all your code follows the SRP. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. Names should be short, yet concise.
+Pretty much all your code follows the SRP [Single Responsability Principle]. Functions, classes, modules. Everything. Even the build takes only one command. This makes the code much easier to understand and also naming becomes simpler. 
 
-Do not repeat yourself. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
+Names should be short, yet concise [Naming].
 
-Classes should have high internal cohesion. They should have strong coupling between the variables and methods and weak coupling to other classes. Due to constant refactoring classes tend to lose cohesion. Then they have to be broken up into several smaller classes.
+Do not repeat yourself (DRY) [section Do not Repeat Yourself]. There is no copy paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you never know if making a single change is enough, or if it has to be implemented in several other locations. This leads to bugs and high maintenance costs very quickly.
 
-It feels easy to add features and change code. Thanks to the test coverage you have a safety net and well-structured code makes it apparent where new features belong.
+Classes should have high internal  [classes]. They should have strong coupling between the variables [Data types] and methods [Functions] and weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then they have to be broken up into several smaller classes [Refactoring].
 
-A function name tells you what the function does. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects.
+It feels easy to add features and change code. Thanks to the test coverage [Testing] you have a safety net and well-structured code makes it apparent where new features belong [Physical Laws of Code].
 
-There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand.
+A function name tells you what the function does [Naming]. There is no surprising behavior. The same holds for classes and variables. Functions have no side effects [Functional Programming].
+
+There are no magic numbers. Assign the magic number to a variable with an appropriate name and the code becomes much clearer to understand [Naming].
 
 Define variables right where they are used. Always assign them a value right away.
 
 Create objects always at once. Creating only part of an object because not all required information is around is the code equivalent of a supply chain issue. This can become very confusing. An object should be completely created, or not existing at all. Throw exceptions if objects cannot be created at once.
 
-Write short functions (~< 10 lines) and classes (~< 100 lines). These are very rough estimates and depend on a lot of factors. Usually their length is limited by the SRP and the level of abstraction. Complicated functions and classes have to be short or their complexity might get out of hand.
+Write short functions (~< 10 lines) and classes (~< 100 lines) [Single responsability principle]. These are very rough estimates and depend on a lot of factors. Usually their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes have to be short or their complexity [Complexity] might get out of hand.
 
-Keep the dependencies between different parts of the code low. Especially when dealing with 3rd party libraries, you’d better write a wrapper around it. This helps once you want to replace it.
+Keep the dependencies between different parts of the code low [Dependencies]. Especially when dealing with 3rd party libraries [3rd Party libraries], you’d better write a wrapper [Interfaces] around it. This helps once you want to replace it.
 
-Using a debugger frequently is a strong sign you lost control of the code. Normally, automated tests should cover all the bugs and the debugger remains unused.
+Using a debugger [Bugs, Errors, Exceptions] frequently is a strong sign you lost control of the code. Normally, automated tests [Testing] should cover all the bugs and the debugger remains unused.
 
-YAGNI: You Aren’t Going Need It. Plan ahead the structure of your code but don’t implement anything you don’t need yet. Chances are, you will never need it. Only architects have to speculate what will be used in the future. Developers implement only things that will certainly be used.
+YAGNI: You Aren’t Going Need It. Plan ahead the structure of your code but don’t implement anything you don’t need yet [Planning]. Chances are, you will never need it. Only architects have to speculate what will be used in the future [Software Architecture]. Developers implement only things that will certainly be used.
 
-The solution representing the natural logic of the problem is usually the best. It has the lowest complexity. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic and you have to bake it into code. Don’t come up with your own logic on a problem you don’t understand too well. 
+The solution representing the natural logic of the problem is usually the best [Domain driven desing]. It has the lowest complexity [Complexity]. The complexity of the code is equal to the complexity of the actual problem to be implemented. The sales team can explain the domain logic and you have to bake it into code. Don’t come up with your own logic on a problem you don’t understand too well. 
 
-Use the simplest features of your programming language as possible. Only use more complex features if you really benefit from it. Don’t use features of your programming language that resemble black magic.
+Use the simplest features of your programming language as possible [Programming language]. Only use more complex features if you really benefit from it. Don’t use features of your programming language that resemble black magic.
 
-Do not nest if loops. Apparently, this violates the SRP and is highly prone to bugs. Avoid nested try catch blocks as well. Preferably avoid nested loops completely.
+Do not nest if loops. Apparently, this violates the SRP and is highly prone to bugs [Single Responsability Principle]. Avoid nested try catch blocks as well. Preferably avoid nested loops completely.
 
-Avoid Boolean values and logic as much as you can. Due to human deficiencies these are the lines of code which harbor the most errors. Try to avoid them as far as reasonably possible. Make sure every branch of an if statement is covered with tests.
+Avoid Boolean values [section Booleans] and logic as much as you can. Due to human deficiencies these are the lines of code which harbor the most errors. Try to avoid them as far as reasonably possible. Make sure every branch of an if statement is covered with tests.
 
-Don’t pass Booleans as function arguments. They are a strong sign of violated SRP. Resolve the consequences immediately.
+Don’t pass Booleans as function arguments [Functions]. They are a strong sign of violated SRP [Single Responsability Principle]. Resolve the consequences immediately.
 
-Don’t do string comparisons, use enums instead. Convert the string into an enum as soon as you have the string object available.
+Don’t do string comparisons [section Strings], use enums instead [seciton Enums]. Convert the string into an enum as soon as you have the string object available.
 
-Make the code self-commenting. Only use comments for things the code can’t explain by itself.
-
-Functions asking for more information than they need. They ask for a complicated structured object, even though they need only a small fraction of the information. "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
+Make the code self-commenting. Only use comments for things the code can’t explain by itself [Comments].
 
 ## The Zen of Python
 
@@ -715,9 +722,9 @@ Special cases aren't special enough to break the rules.
 
 Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book here.
 
-Errors should never pass silently: If an error occures, something went wrong and the user should know about it.
+Errors should never pass silently: If an error occurs, something went wrong and the user should know about it.
 
-There should be one-- and preferably only one --obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
+There should be one, and preferably only one, obvious way to do it: Of course there are always some details that you don't know how to deal with. But in general it's true that there should be only one way to implement a feature.
 
 Now is better than never: later = never.
 
@@ -732,11 +739,11 @@ Namespaces are one honking great idea -- let's do more of those! Yes, namespaces
 
 ## How humans think
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is about humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn’t care, as long as the syntax is correct. And if there is a bug, the computer just executes it. But we don’t care about the computer. This book is written for humans. We have to ask ourselves: when does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different than computers. We can do incredible things, yet at the same time we have severe weaknesses. The evolution adapted us to our environment. We were made to life in the forest, hunt animals and socialize with our clan. We needed good eyes to see our prey, good imagination to get an understanding of the terrain and the direction of the wind and we had to know our hunting party. These things require a lot of intuition and approximate thinking. These are things computers or robots struggle with. Though they improve thanks to the emergence of artificial intelligence.
 
-Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result.
+Something humans are not good at is very obvious. Math. We are bad at math. It’s so simple and logical. Yet it took me 12 years of school to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer has no problem executing the following line of code, but I doubt any reader would be able to tell me the result within five minutes.
 
 ```py
 (lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1) 
@@ -755,7 +762,7 @@ Most people driving a car have a fair idea how it works. It has an engine, wheel
 
 So far, every programmer that told me he was working on a really complex problem simply wrote bad code. They all failed to break the problem into small pieces and reassemble them again. Or rather they didn’t realize they should do so and wrote spaghetti code instead. The code became so complicated they were barely able to add any new features. If something is complex then you absolutely have to break it down. As long as you can explain to someone in words how something works, you can also write it in understandable code.
 
-You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it.
+You should never underestimate the complexity you can create with bad code. If you write a thousand lines of unstructured spaghetti code, it might cost millions to rewrite it. And this is no exageration!
 
 This whole book is about how to write low complexity code. The sections on the Single Responsibility Principle, naming and levels of abstraction are probably the most fundamental ones. It is all about learning how to write human readable code.
 
@@ -847,7 +854,7 @@ But in reality, such accuracy may not be required. You can simply take the coord
 
 ## Copilot
 
-Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at.
+Copilot is generally quite good with writing readable code. At times it is even better than myself. You can tell that Copilot learned "programming" based on a set of fairly well written code. It is frequently worth getting a second opinion from copilot as a cheap version of a code review. I think this is really one of the things that Copilot excels at. The human readable version of the Fizz Buzz code above was written by Copilot.
 
 
 # 9. Single responsibility principle 
@@ -858,15 +865,13 @@ The Single Responsability principle advises to separate concerns, to isolate and
 
 There are different definitions of the Single Responsibility Principle (SRP) [Clean Architecture]. I don’t think the differences between them really matter. The highlighted version above is my personal understanding of the SRP. It is much more important that you get the idea behind it.
 
-The SRP is probably one of the most important topics in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation of readable and reusable code.
+The SRP is probably the most important topic in this book and in all of software development. It says that every piece of code should have exactly one task. It is the foundation of readable and reusable code. When applied properly, any kind of code will become an order of magnitude more readable.
 
 Please note that the SRP does *not* state that every software developer is responsible for his own piece of code. The SRP is about code fragments, not about code ownership.
 
 ## Do not Repeat Yourself
 
-// DRY does not always have to be obeyed that strictly. Repeat yourself until it is clear what the acronym should be.
-
-You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [citation The pragmatic programmer]. Instead you should refactor the code you want to copy into a dedicated function. If you have duplicated code, something is not done by one object but rather by two or more. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
+You should not copy paste your own code (copying from Stackoverflow is fine though). This creates code duplications and violates the Do not Repeat Yourself (DRY) principle [The pragmatic programmer]. Instead you should refactor the code you want to copy into a dedicated function. If you have duplicated code, something is not done by one object but rather by two or more. Instead write a function and use the function from now on. This explanation here covers most cases violating the SRP.
 
 The DRY principle also applies to processes like building your project. If you have to execute many steps for building your project, there is something wrong. Instead you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should be one step running through without any warnings or errors. Warnings are unnecessary mental work. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
@@ -875,6 +880,7 @@ The other case is code that emerged as a duplication over time. Frequently, one 
 As I said, it is hard to keep track of this kind of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive such that it is always more or less clear where a ceartain feature has to be implemented.
 
 One common source of repetition are switch case or if statements. They look something like this:
+
 ```py
 if job == "president":
     residency = "White house"
@@ -882,22 +888,35 @@ if job == "president":
 if job == "president":
     security_standards = "very high"
 ```
+
 etc. It is fairly common to have many repeating such if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the corresponding properties.
+
 ```py
 class President:
     def __init__(self):
         self.residency = "White house"
         self.security_standards = "very high"
 ```
+
 Now you only have to create a `president` object once and there is no more need for any if statements.
+
 ```py
 president = President()
 location = president.residency
 ```
 
+Another option is using a dictionary,
+
+```py
+president = {
+    "residency": "White house",
+    "security_standards": "very high"
+}
+```
+
 ### Exceptions of DRY
 
-The DRY principle does not always have to be obeyed strictly. When having a two-time repetition, it might not be apparent how the underlying abstraction looks like. It's not always worth to try to find this abstraction with only one repetion of few lines of code. Also the overhead of creating a new function might be higher than the gain of refactoring the code. This is also in agreement with the test driven design (TDD) [chapter Writing better code with tests] where you only have to refactor if there is a three-fold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately. 
+The DRY principle does not always have to be obeyed strictly. It's not always worth to try to find this abstraction with only one repetion of few lines of code. Also the overhead of creating a new function might be higher than the gain of refactoring the code. This is also in agreement with the test driven design (TDD) [Writing better code with tests] where you only have to refactor if there is a three-fold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetitions there are certainly no more excuses. In case of three-fold repetitions you have to refactor the code immediately. 
 
 ## Advantages of the SRP
 
@@ -929,6 +948,7 @@ Tracking down bugs will be much easier. You can understand fairly well what each
 
 There are very few drawbacks of the SRP that I could think of. The SRP is at times a little bit too strict. It is not always worth obeying strictly. If a function is really short, it is not that bad to have it duplicated. Adding a function to introduce an additional level of abstraction is adding some mental overhead and not always worth it. Though these are exceptions, rather than the norm. When in doubt, you'd better adhere to the SRP and refactor the code.
 
+
 # 10. Levels of abstraction
 
 "You can solve every problem with another level of indirection." – Andrew Konig
@@ -953,7 +973,7 @@ Creating good levels of abstraction is probably the most important task in softw
 
 C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always: The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
-C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the infamous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason.
+C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the infamous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason. Because as it was leaking memory, it became slow.
 
 Here is an example how to use `new` and `delete`.
 
@@ -970,7 +990,7 @@ One of the main reasons Java got so popular in the 90ies was the introduction of
 
 Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete in pairs. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
 
-Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code, even when pointers are required. But we won't be able to cover this topic here. The interested reader is referred to [citation: Effective Modern C++].
+Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code. But we won't be able to cover this topic here. The interested reader is referred to [citation: Effective Modern C++].
 
 Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
 
@@ -1016,13 +1036,13 @@ Vectors are a higher level of abstraction than arrays. They are easier to use an
 
 // I think I have to rework this text here. Maybe I should move it into the architecture chapter?
 
-In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher, but only on lower levels. The code can be divided into different layers. I personally like to break it up into 5 layers. Though it has to be remarked, that this is by far not the only way to sort the code. There are many different ways to do it. It can also be separated in onion layers. If you like this approach better, you can find a detailed explanation in [Clean Architecture].
+In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher, but only on lower levels. The code can be divided into different layers. I personally like to break it up into 5 layers. Though it has to be remarked, that this is by far not the only way to sort the code. There are many different ways to do it and also the number of levels depends on the problem to be solved.
 
 //create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application layer – API – acceptance tests/GUI. See DDD p.68 what the layers are used for there.
 
-No matter if you are looking at horizontal layers as done here, or at onion layers, there is always one rule: dependencies go only downward or inward. The higher levels always depend on the lower levels, but never on higher levels. This is the whole magic: my text processing software depends on the OS, but the OS doesn't need to know anything about the text processing software because it's on a higher level. 
+No matter if you are looking at horizontal layers as done here, or at onion layers, there is always one rule: dependencies go only downward or inward. The high levels always depend on the low levels, but never on higher levels. This is the whole magic: my text processing software depends on the OS, but the OS doesn't need to know anything about the text processing software because it's on a higher level. 
 
-Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handled directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example because of performance reasons. But this should be the exception rather than the rule.
+Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handed directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example because of performance reasons. But this should be the exception rather than the rule.
 
 ### Example of layered code
 
@@ -1036,7 +1056,7 @@ def process_email():
 	close_email()
 ```
 
-`open_email` and `close_email` are clearly functions on a higher level of abstraction than `with open ...`. In order to have all the code on the same level of abstraction, we have to move the `with open ...` into a function. The code should look like this:
+`open_email` and `close_email` are clearly functions on a higher level of abstraction than `with open ...`. In order to have all the code on the same level of abstraction, we have to move the `with open ...` code into a dedicated function. The code should look like this:
 
 ```py
 def print_attachment():
@@ -1053,7 +1073,7 @@ Now the code looks much better. All lines of code are function calls to higher l
 
 ### 3rd party libraries
 
-The lowest level is the programming language and 3rd party libraries. You can’t change those unless you replace them. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestions implemented. Therefore 3rd party libraries are on the lowest level of abstraction. They do not depend on any of your code.
+The lowest level of abstraction consists of the programming language and 3rd party libraries. You can’t change those unless you replace them as a whole. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestions implemented. Therefore 3rd party libraries are on the lowest level of abstraction. They do not depend on any of your code.
 
 ### Infrastructure code
 
@@ -1065,7 +1085,7 @@ One layer above the 3rd party libraries we have our own low-level infrastructure
 
 //add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
 
-Then there is the domain level. This is the core of your application (though it is not the core of the abstraction level onion!). It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain model converts the low level computer language from the infrastructure into a human readable text, though it still follows the syntax of a programming language! Every business person should be able to understand the final result of this text.
+Then there is the domain level, see also [chapter Domain Driven Design]. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain model converts the low level computer language from the infrastructure into a human readable text, though it still follows the syntax of a programming language! Every business person should be able to understand the final result of this text.
 
 The domain level is the part that is hard to develop and you can't buy elsewhere. You have to do it yourself. Because this is what you will earn money with. It's the core of your business.
 
@@ -1091,13 +1111,13 @@ As a summary I want to emphasize again the tremendous importance of abstraction 
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
 
-In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface thousands of times. Therefore it pays off to design an interface properly, as it was already explained in the chapter on levels of abstraction.
+In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface thousands of times. Therefore it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
 
 ## Real world interfaces
 
 Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot, but the basic principles are very similar.
 
-"Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European socket and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, causing potentially damage. It’s fail-safe. It is good design that they are not interoperatable. Though most devices can deal with both voltages by now.
+"Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European socket and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It’s fail-safe. It is good design that they are not interoperatable. Though most devices can deal with both voltages by now.
 
 An example of bad design is the USB port A (used by USB 2 devices). The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB C port (used by USB 3 devices) has a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symetrically or asymetrically. The technicians implemented a solution that enabled both kind of connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers. But once solved, it is a very convenient solution for the users.
 
@@ -1111,17 +1131,17 @@ I hope these simple examples gave you an idea what good interfaces are about. If
 
 Combustible car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running them faster makes them inefficient and noisy. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities. Now there used to be a minor problem about the gear boxes. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
 
-Now there is a well-known solution: automatic gears. A car can drive at any pace of choice and the automatic gear box will select the most suitable gear. Problem solved. You pay a little fee for the automatic gear but you’ll never have to think about it again. You push the gas pedal to control the speed of your car and all the technical details are taken care of by the board electronics of your car. Now we only have to wait for self-driving cars in order to remove the steering wheel and the gas pedal all together.
+Now there is a well-known solution: automatic transmission. A car can drive at any pace of choice and the automatic transmission will select the most suitable gear. Problem solved. You pay a little fee for the automatic transmission but you’ll never have to think about it again. You push the gas pedal to control the speed of your car and all the technical details are taken care of by the board electronics of your car. Now we only have to wait for self-driving cars in order to remove the steering wheel and the gas pedal all together.
 
 ## Code interfaces
 
-Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the real world examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in section // ? // on test driven development (TDD).
+Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the real world examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in section [Test Driven Development] on test driven development (TDD).
 
 Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
 
-An interface that is designed from the engineers point of view is usually no good. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality was mostly determined by the engineers preferences. The designers had little to say and were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use. This is how you have to design your interfaces. You need someone with some vision on how your code should be used. Not some engineer who does a great job implementing the code but has no idea how to use it.
+An interface that is designed from the engineers point of view is usually badly designed. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality was mostly determined by the engineers preferences. The designers had little to say and were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use. This is how you have to design your interfaces. You need someone with some vision on how your code should be used. Not some engineer who does a great job implementing the code but has no idea how to use it.
 
-Interfaces are everywhere. Every function // cite the chapter? // or class // cite the chapter? // has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
+Interfaces are everywhere. Every function [Functions] or class [Classes] has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
 
 ### Example
 
@@ -1153,7 +1173,7 @@ If you are expecting a complete chapter explaining all the ins and outs of APIs,
 
 An API is an extremely important part of your software. It is the public interface of your software. It is what everyone sees and uses from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
-That was no joke by the way. Apple once had an important security fix in their latest update. They added new emojis to the update as emojis are the better motivation to install an update than a security fix.
+That was no joke by the way. Apple once had an important security fix in their latest update. They added new emojis to the update as emojis are for most users the better motivation to install an update than a security fix.
 
 APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! Now you might think this is doable. But I can promise, you will get nightmares.
 
@@ -1205,7 +1225,7 @@ Usually companies support many API versions simultaneously. They know their user
 
 ## Orthogonality
 
-Orthogonality is a mathematical definition. It has been used in software engineering by Thomas and Hunt in their highly recommendable book The Pragmatic Programmer [The Pragmatic Programmer]. Orthogonality states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me explain code-orthogonality by showing you a brief example that everybody knows.
+Orthogonality is a mathematical definition. It has been used in software engineering by Thomas and Hunt in their highly recommendable book The Pragmatic Programmer [citation: The Pragmatic Programmer]. Orthogonality states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me explain code-orthogonality by showing you a brief example that everybody knows.
 
 // TODO search images without copy right
 <div class="row">
@@ -1258,7 +1278,9 @@ The example was cute. You may get a laugh when mixing them up but it doesn’t c
 
 All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name. Every programming construct has a name. And you use this name to search it with google or Stackoverflow. If you don't know the name you're screwed.
 
-Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties do they have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need.
+Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties does this object have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need. 
+
+It also has to be said that consistency in naming is more important than the actual name. If someone came up with an imperfect name you either have to change it everywhere or stick to it.
 
 Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
 
@@ -1266,21 +1288,21 @@ Coming up with your own names is everything but easy. Especially new programmers
 
 As I already said, naming is one of the most difficult things in programming. I tried to collect and synthesize some rules on properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
 
-1. Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends. As a rule of thumb a name is fine if a new work colleague understands the variable.
+1. Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb a name is fine if a new work colleague understands the variable.
 2. Think about how you would express a word in real life. Would you call it `price of an apple` or is the context of your conversation clear enough such that only `price` is sufficient?
 3. Classes and functions obeying the SRP are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
 4. `set_color(7)`. What does `7` mean? Never use plain values in your code. Plain values are called magic numbers because no one can tell what it means. Magic is having a negative meaning here. Your code should be unterstood! Always create a variable instead of using magic numbers. Better use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
 5. Well defined levels of abstraction result in clearly defined and unique properties. This helps finding names. Maybe you created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
 6. Name collisions between different libraries are common and nothing to worry about. Use the namespaces to distinguish them (use the `from math import *` syntax in Python cautiously as this removes this potentially crucial information where a function is defined).
-7. Name collisions within the same library may happen once in a while and have to be fixed. Rename or even refactor one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
+7. Name collisions within the same library may happen once in a while and have to be resolved. Rename or even refactor one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
 8. Use names that are also used in reality. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about your code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality. You did a great job if a marketing understands your high level code and can give you useful feedback.
 9.  Objects have names that are simple to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` is to be prefered over `price_of_apple` and `price_of_orange`, though this can change if you have different properties of apples.
-10. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language.
-12. You may tweak the language a little and ignore grammar rules at times. If you have many `fish`, you may call them `fishs` or `fishes` to highlight the plural. Being able to understand the meaning of the code is importanter //deliberately misspelled// than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following is perfectly viable in Python code: `for fish in fishes`.
-13. Avoid "if", "and" or "or" in the names of your variables. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
+10. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language like CEO, etc.
+11. You may tweak the language a little and ignore grammar rules at times. If you have many `fish`, you may call them `fishs` or `fishes` to highlight the plural. Being able to understand the meaning of the code is *importanter* than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following is perfectly viable in Python code: `for fish in fishes`.
+12. Avoid "if", "and" or "or" in the names of your variables, functions and classes. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
 12.	If a variable is used all over the code, name it carefully. Possibly use a name given by the marketing team or existing theories and literature. If a variable is used only for about 5 lines, even i, j or k are fine.
 13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-14.	snake_case notation is easier to read than camelCase. This is why I use snake_case notation for variables and functions, and camelCase for class definitions and file names. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
+14.	snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions, PascalCase for class definitions and camelCase for class instances. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
 15. Classes and functions should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the domain language.
 16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data", "info" or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
 17. Attach units to a variable name if existing. For example `timeout_duration_ms`. Though again: consistency is more important.
@@ -1308,7 +1330,7 @@ class Rectangle {
 
 What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
 
-Here are some examples of generic words and some more specific alternatives. These examples are from the book "The Art of Readable Code".
+Here are some examples of generic words and some more specific alternatives. These examples are from the book [The Art of Readable Code].
 
 |Word	|Alternatives |
 |-------|-------------|
@@ -1323,30 +1345,38 @@ It happens quite frequently that the author of some code doesn't know how to nam
 ## Copilot
 
 Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let Copilot find appropriate names for you.
+
 ```py
 def print_states(states): 
     for a in states:
         print(a)
 ```
+
 Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
+
 ```py
     for a in states:
     # find a better name for this variable
 ```
+
 Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
+
 ```py
     for state in states:
         print(state)
 ```
+
 This is pretty much what was expected. The same works out for function names as well.
+
 ```py
-def some_fancy_function_name(b,c):
-    return b+c
+def some_fancy_function_name(b, c):
+    return b + c
 ```
+
 ```py
 # suggest a better function name
-def add(b,c):
-    return b+c
+def add(b, c):
+    return b + c
 ```
 
 
@@ -1364,7 +1394,7 @@ Throughout this book, we’ll distinguish between functions and methods as most 
 
 ## Do one thing only
 
-Due to the single responsibility principle, functions may cover only one level of abstraction. Therefore, they have to be short. As a rule of thumb, they should be at most about twenty lines (that's what fits on my laptop screen without scrolling), though less than 10 lines is certainly to be prefered because shorter functions are much easier to understand. If fact, there is also absolutely nothing wrong with functions that cover only one line of code. One line functions are really useful to make code more readable, as it elevates all code to a similar level of abstraction. But this is something that many programmers don't think of.
+Due to the single responsibility principle [SRP], functions may cover only one level of abstraction. Therefore, they have to be short. As a rule of thumb, they should be at most about twenty lines (that's what fits on my laptop screen without scrolling), though less than 10 lines is certainly to be prefered because shorter functions are much easier to understand. If fact, there is also absolutely nothing wrong with functions that cover only one line of code. One line functions are really useful to make code more readable, as it elevates all code to a similar level of abstraction. But this is something that many programmers don't think of.
 
 Let's make a small example of a one line function. We have a pandas object (a Python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I think this function makes the code that uses it much clearer because it is operating on a higher level of abstraction.
 
@@ -1443,24 +1473,26 @@ if is_eating():
 attack()
 ```
 
-Assuming that this code is written inside a function, we have 2 levels of indentation, so we are compliant with Linus Thorwalds rule.
+Assuming that this code is written inside a function, we have 2 levels of indentation, so we are compliant with Linus Thorwalds' rule.
 
 With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depending on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
 
 ```py
-def can_fight(button):
+def can_fight(button, fighter):
     if button == "":
         return false
-    if is_sleeping():
+    if is_sleeping(fighter):
         print("Cannot fight while sleeping")
         return false
-    if is_eating():
+    if is_eating(fighter):
         print("Cannot fight while eating")
         return false
     return true
 ```
 
-Though the question is how to pass the `is_sleeping` and `is_eating` functions into the `can_fight` function. Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is frequently no perfect solution, but at least we have improved it a lot compared to the initial code.
+Assuming that we don't use global variables, I had to add the `fighter` object as a function argument. Instead one could also have written this code inside a class. But these are technical details.
+
+Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is usually no perfect solution, but at least we have improved it a lot compared to the initial code.
 
 ### Naming
 
@@ -1468,7 +1500,7 @@ Naming becomes less hard (I would love to write "easier", but it's never easy...
 - The name is a summary of what is going on inside the function. 
 - There is no hidden behavior inside a function.
 - There is no unexpected behavior inside a function. 
-- The function body is one level of abstraction lower than the function name. 
+- All of the function body is one level of abstraction lower than the function name. 
 
 
 The following function clearly has a side effect:
@@ -1480,7 +1512,7 @@ def log_in(email_address):
     check(email_address)
 ```
 
-It says nothing about a hidden counter, thus this is hidden behavior that is not mentioned in the function name and thus should be avoided. Additionally, side effects may lead to temporal coupling as the order of calling functions with side effects matter.
+The function name says nothing about a hidden counter, thus this is hidden behavior and should be avoided. Additionally, side effects may lead to temporal coupling [see next section] as the order of calling functions with side effects matter.
 
 A better name for this function would be `log_in_and_increase_counter`, though that would make it apparent that the function does more than one thing and thus violates the SRP. A function name shouldn't contain an `and` as this indicates a violation of the SRP.
 
@@ -1499,6 +1531,7 @@ class Shopping():
     def go_shopping(self):
         # use the shopping_list and money
 ```
+
 Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
 
 ```py
@@ -1529,7 +1562,7 @@ shopping_list = create_shopping_list(["apple", "banana"])
 go_shopping(money, shopping_list)
 ```
 
-In this case it is physically impossible to go shopping without having a shopping list.
+In this case it is physically impossible to go shopping without having a shopping list as shown below:
 
 ```Py
 money = get_money(50)
@@ -1542,6 +1575,7 @@ After swapping the last two lines, this code cannot be executed anymore as the v
 Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments. If possible, enforce temporal coupling, for example by using functional programming.
 
 ## Number of arguments
+
 As for the length of the function, the number of arguments should also be as small as possible. This simplifies the function a lot. Here I try to give you a rough estimate on how many variables a function or method may have. But this ultimately depends on the general complexity of the code, etc.
 
 Now there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments using class variables as a replacement for function arguments, the argument here holds only for functions and not for methods). These functions are the easiest, they always behave the same way. There’s not much to test, but at the same time there isn't much such a function can do.
@@ -4791,7 +4825,7 @@ Though as I already said before, the law of Demeter is only a vague recommendati
 
 
 
-Part : High level design
+Part 6: High level design
 
 # 30. Software Architecture
 
@@ -4875,13 +4909,11 @@ An apple can have a color, a flavor and a price. There can be three different li
 
 // reread and rewrite this chapter? Or remove it completely???
 
-"When a politician greets you: 'How are you?' and a nurse asks you 'How are you?', these are totally different questions, even though they sound and spell exactly the same." - Mel Conway
-
 "The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
 
 [https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
 
-This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here.
+This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here. I did not understand everything that was explained in this book, so I just explain it the way I think it makes sense.
 
 ## Ubiquitous Language
 
@@ -5140,7 +5172,7 @@ The very big question is always when you really need such an interface. Most of 
 
 You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
-Part ... Existing code
+Part 7: Existing code
 
 
 # 33. Working with existing projects
@@ -5589,7 +5621,7 @@ There are many small things you can do for optimizing your code like manual loop
 
 Always keep in mind: code that was written with performance in mind, rather than readability, is always very hard to maintain!
 
-Part ...: Miscelaneous
+Part 8: Miscelaneous
 
 # 37. Comments
 
@@ -6418,7 +6450,7 @@ Every programming language has one docstring tool. For Python it’s Sphynx, for
 
 
 
-Part ... Collaborating
+Part 9 Collaborating
 
 # 42. Working in teams
 
