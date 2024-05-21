@@ -72,7 +72,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [10. Levels of abstraction](#10-levels-of-abstraction)
   - [Real world example](#real-world-example)
   - [Programming Example](#programming-example)
-  - [The abstraction layers](#the-abstraction-layers)
+  - [The Abstraction Layers](#the-abstraction-layers)
     - [Example of layered code](#example-of-layered-code)
     - [3rd party libraries](#3rd-party-libraries)
     - [Infrastructure code](#infrastructure-code)
@@ -993,27 +993,27 @@ There are very few drawbacks of the SRP that I could think of. The SRP is someti
 
 "Except for the problem of too many levels of indirection." – my hero
 
-Levels of abstraction is an extremely important concept in software engineering. Yet it doesn’t get the amount of attention it would deserve. It applies to so many things around us, but so few people know about it. It’s about taking a few objects and creating a new object out of it with completely different properties. Something completely new emerges.
+Levels of abstraction are an extremely important concept in software engineering. Yet, it doesn't receive the amount of attention it deserves. It applies to so many things around us, but so few people know about it. It's about taking a few objects and creating a new object with completely different properties. Something completely new emerges.
 
 ## Real world example
 
-You take a CPU, a main board, RAM, an SSD and a power supply. Some of the most complex objects human kind had ever created. From some of them you might have a rough idea what they do, and maybe even how they work. When you assemble these parts, it becomes mind boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It’s a computer. And all your questions are gone. It’s a higher level of abstraction and it’s fairly simple to use. As I write this book I only care about the text software that I use. I don’t care about the operating system (OS). I don’t care about the computer that’s standing on the floor. I don’t care about the CPU inside. I don’t care about the billions of transistors inside and I don’t care about the quantum mechanical effects that the transistors are based on. My text software depends on all these things but I don’t have to know anything about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
+You take a CPU, a motherboard, RAM, an SSD, and a power supply. Some of the most complex objects humankind has ever created. From some of them, you might have a rough idea of what they do, and maybe even how they work. When you assemble these parts, it becomes mind-boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It's a computer. And all your questions are gone. It represents a higher level of abstraction and is quite simple to use. As I write this book, I only care about the text software that I use. I don't care about the operating system (OS). I don't care about the computer that is standing on the floor. I don't care about the CPU inside. I don't care about the billions of transistors inside a device, nor do I care about the quantum mechanical effects that these transistors are based on. My text software relies on all these components, but I don't need to have any knowledge about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
 
-One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don’t know anything about CPUs. CPUs don’t know anything about computers, computers don’t know anything about the OS and the OS doesn’t know anything about my text software. Some things like the quantum mechanics are just there. We can’t change them, but we can use it and create other objects. Other things like the transistors are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements to operate inside a CPU. Yet you could take a CPU, break out a transistor and use it on its own. It’s just a transistor. Albeit an extremely small one. You would need an electron microscope to see it. The OS supplies an interface, which the text processing software is running on, but the OS doesn't care about the text processing software.
+One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don't know anything about CPUs. CPUs don't know anything about computers, computers don't know anything about the OS and the OS doesn't know anything about my text software. Some things, like quantum mechanics, just exist. We can't change them, but we can use them to create other objects. Transistors, among other components, are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements for operating inside a CPU. Yet, you could take a CPU, break out a transistor, and use it on its own. It's just a transistor. Although it is an extremely small one. You would need an electron microscope to see it. The OS supplies an interface on which the text processing software runs, but the OS does not concern itself with the text processing software.
 
-Another example is a company. Every company has a job hierarchy. Even if some modern companies try to keep it flat, some kind of hierarchy is still around. Every level of this hierarchy has a different task. The lowest level are the factory workers. They do the actual work. However, the other levels are also required. The department head has to make sure all his employees are happy, or at least that they do their job. And as you go further up the hierarchy, the work is more about strategy of the company. It involves more politics and HR. This is the natural way companies are organized. Big companies won’t work in any other way. The CEO cannot manage all 10’000 employees by himself, nor can he know every detail of every processes within the company. He needs this job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self organizing companies without a hierarchy frequently don't work out very well.
+Another example is a company. Every company has a job hierarchy. Even though some modern companies attempt to maintain a flat structure, some form of hierarchy still exists. At every level of this hierarchy, there is a different task. The lowest level comprises the factory workers. They do the actual work. However, the other levels are also necessary. The department head has to ensure that all his employees are content, or at least that they fulfill their job responsibilities. As you move up the hierarchy, the work becomes more focused on the company's strategy. It involves more politics and HR. This is the natural way companies are organized. Big companies won't work in any other way. The CEO cannot manage all 10,000 employees by himself, nor can he know every detail of every process within the company. He needs to establish a job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self-organizing companies without a hierarchy often do not work out very well.
 
-You create a level of abstraction every time you combine some existing objects. The new object has a higher level of abstraction than the previous ones. It may have completely different properties than the lower levels. In theory the higher level object combines the complexity of all the underlying objects but if the higher-level object is well designed you don’t care anymore about the lower level objects at all. Just like it's very hard to calculate the quantum mechanical properties of a simple molecule, yet you can take a statistical average of billions of molecules and make very accurate predictions on the behavior of a combustion engine or the aerodynamics of an airplane.
+By combining existing objects, you create a level of abstraction. The new object has a higher level of abstraction than the previous ones. It may have completely different properties than the lower levels. In theory, the higher-level object combines the complexity of all the underlying objects. However, if the higher-level object is well-designed, you no longer need to concern yourself with the lower-level objects. Just as it is very challenging to calculate the quantum mechanical properties of a simple molecule, you can still derive accurate predictions about the behavior of a combustion engine or the aerodynamics of an airplane by taking a statistical average of billions of molecules.
 
-Creating good levels of abstraction is probably the most important task in software engineering. This is the very heart that allows us humans to understand and tackle such extremely complex tasks. You have to break them up into smaller and smaller blocks that you can understand.
+Creating good levels of abstraction is probably the most important task in software engineering. This is the very core that enables us, as humans, to comprehend and address such exceedingly intricate tasks. You have to break them up into smaller and more manageable blocks that you can understand.
 
 ## Programming Example
 
-C++ is a fairly low-level programming language. Its widespread usage has mostly historical reasons. There are a lot of things that newer programming languages do better. But it’s the same as always: The code is working and it will not be replaced because of some smaller inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
+C++ is a fairly low-level programming language. Its widespread usage is mostly due to historical reasons. There are many aspects in which newer programming languages outperform older ones. But it's the same as always: The code is working and it will not be replaced due to some minor inconveniences in the programming language. About a decade ago, some of the most fundamental inconveniences were removed with the release of the C++11 standard.
 
-C++ uses old school arrays. These are commands to allocate memory in order to store some objects. If the programmer doesn’t know how many objects there will be, he has to use the infamous `new` and `delete` commands in order to allocate memory on the heap and delete it in the end. These commands are extremely error prone. They were extremely hard to use. If you forgot to use delete in a corner case, the software was leaking memory leading to undefined behavior. Usually you had to restart your operating system every few days for this reason. Because as it was leaking memory, it became slow.
+C++ uses old school arrays. These commands allocate memory to store objects. If the programmer doesn't know how many objects there will be, he has to use the infamous `new` and `delete` commands to allocate memory on the heap and deallocate it in the end. These commands are extremely error-prone. They were extremely difficult to use. If you forgot to use `delete` in a corner case, the software would leak memory. Usually, you had to restart your operating system every few days for this reason. As it was leaking memory, it became slow.
 
-Here is an example how to use `new` and `delete`.
+Here is an example of how to use `new` and `delete`.
 
 ```C++
 int * arr = new int[10];
@@ -1022,15 +1022,15 @@ arr[0] = 42;
 delete[] arr;
 ```
 
-If you use `delete arr` instead of `delete[] arr`, you create a memory leak. Apparently it is very simple to make mistakes when using new and delete such that one shouldn't use them at all.
+If you use `delete arr` instead of `delete[] arr`, you create a memory leak. Apparently, it is very easy to make mistakes when using `new` and `delete`, such that one should avoid using them altogether.
 
-One of the main reasons Java got so popular in the 90ies was the introduction of the garbage collector. It took care of all the deleting. Meanwhile there are still ways to create memory leaks in Java, most problems with memory management were gone. Without a doubt a tremendous improvement at the time.
+One of the main reasons Java became so popular in the 1990s was the introduction of the garbage collector. It took care of all the deletions. Meanwhile, there are still ways to create memory leaks in Java; however, most issues with memory management were gone. Without a doubt, that was a tremendous improvement at the time.
 
-Though it turns out there exists also a solution to the memory allocation problem using only pure C++ code. There is a quite simple pattern that ensures you to always call new and delete in pairs. You create a class that calls new inside the constructor and delete in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor deleting the object. The constructor and destructor are both called exactly once. Always. So if we call new inside the constructor and delete inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed again. So the whole allocation/deallocation process is guaranteed to work out as it should.
+Though it turns out there is also a solution to the memory allocation problem using only pure C++ code. There is a simple pattern that ensures you always call new and delete in pairs. You create a class that calls `new` inside the constructor and `delete` in the destructor. No matter what you do, every object in C++ is guaranteed to call its constructor when creating and the destructor when deleting the object. The constructor and destructor are each called exactly once. Always. So, if we instantiate `new` inside the constructor and `delete` inside the destructor, they are both guaranteed to be called exactly once. The allocated memory is guaranteed to be freed. So, the entire allocation and deallocation process is guaranteed to function correctly.
 
-Note that C++ also needs the smart pointers introduced in C++11 in order to write fully memory safe code. But we won't be able to cover this topic here. The interested reader is referred to [citation: Effective Modern C++].
+Note that C++ also requires the use of smart pointers introduced in C++11 to ensure writing fully memory-safe code. But we won't be able to cover this topic here. The interested reader is referred to [citation: Effective Modern C++].
 
-Here is a very simplified version how the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This takes a little bit of logic, but in the end the user doesn't have to know anything about the array inside the vector class anymore.
+Here is a very simplified version of what the fundamental idea of the vector class looks like. Our custom `VectorClass` contains an array and manages its size. This requires some logic to understand, but ultimately, the user no longer needs to have any knowledge about the array inside the vector class.
 
 [https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/]
 ```C++
@@ -1049,73 +1049,74 @@ public:
     }
     ~VectorClass()
     {
-        delete [] arr;
+        delete [] arr;  
     }
     void push(int data)
     {
-        // if the array is full, allocate more memory
+        // if the array is full, allocate more memory   
         if (current == capacity) {
             int* temp = new int[2 * capacity];
             capacity *= 2;
         }
-        current++;
-        // etc.
+    current++;
+    // etc.
     }
 }
+
 ```
 
-This idea simplifying the usage of arrays changed C++. One of the biggest problems was gone. The user friendliness improved a lot. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers [Effective C++].
+This idea of simplifying the usage of arrays changed C++. One of the biggest problems has been resolved. The user-friendliness has improved significantly. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Myers [Effective C++].
 
-If there is a code pattern that everyone uses it becomes part of the programming language. The vector class was born. It’s a higher-level object based on the array. It hides all the nasty work with new and delete and comes with an easy to use interface and all the important functionality one would expect. The only price to pay is a tiny bit of performance due to the internal implementation details. This loss of performance is so small, you won’t be able to measure it in any ordinary software. This is a perfect example that you should let the computer take care off what it can. The loss in performance is minimal and the gain in usability is very significant.
+If there is a code pattern that everyone uses, it becomes part of the programming language. The `Vector` class was created. It is a higher-level object based on the array. It hides all the complex work associated with `new` and `delete` and provides an easy-to-use interface with all the essential functionality one would anticipate. The only price to pay is a slight decrease in performance due to the internal implementation details. This loss of performance is so minimal that you won't be able to measure it using any standard software. This is a perfect example that you should let the computer take care of what it can. The loss in performance is minimal, but the gain in usability is very significant.
 
-Vectors are a higher level of abstraction than arrays. They are easier to use and simply better than arrays in every aspect. Don’t ever bother using old school arrays. Don’t even waste time learning more about arrays. I told you everything you have to know.
+Vectors are a higher level of abstraction than arrays. They are easier to use and superior to arrays in every aspect. Don't ever bother using old-school arrays. Don't even waste time learning more about arrays. I have told you everything you need to know.
 
-## The abstraction layers
+## The Abstraction Layers
 
 // I think I have to rework this text here. Maybe I should move it into the architecture chapter?
 
-In your code you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher, but only on lower levels. The code can be divided into different layers. I personally like to break it up into 5 layers. Though it has to be remarked, that this is by far not the only way to sort the code. There are many different ways to do it and also the number of levels depends on the problem to be solved.
+In your code, you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher levels, but only on lower levels. The code can be divided into different layers. I personally like to break it up into five layers. Though it has to be remarked that this is by far not the only way to sort the code. There are many different ways to approach it, and the number of levels depends on the complexity of the problem to be solved.
 
 //create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application layer – API – acceptance tests/GUI. See DDD p.68 what the layers are used for there.
 
-No matter if you are looking at horizontal layers as done here, or at onion layers, there is always one rule: dependencies go only downward or inward. The high levels always depend on the low levels, but never on higher levels. This is the whole magic: my text processing software depends on the OS, but the OS doesn't need to know anything about the text processing software because it's on a higher level. 
+No matter if you are looking at horizontal layers as shown here, or at onion layers, there is always one rule: dependencies only go downward or inward. High levels always depend on low levels, but never on higher levels. This is the essence of the magic: my text processing software relies on the OS, but the OS doesn't need to have any knowledge about the text processing software since it operates at a higher level.
 
-Furthermore, the dependencies should always be only one level deep. Even if some dependency is seemingly not depending on an intermediate level, it should still be routed through this level. This is important in order to decouple the code. For example a database access should always be redirected through the infrastructure layer and never be handed directly to the domain layer. You should only bypass levels of abstraction if it's absolutely inevitable, for example because of performance reasons. But this should be the exception rather than the rule.
+Furthermore, the dependencies should always be only one level deep. Even if some dependencies do not appear to rely on an intermediate level, they should still be routed through this level. This is important in order to decouple the code. For example, database access should always be redirected through the infrastructure layer and never be handed directly to the domain layer. You should only bypass levels of abstraction if it is absolutely necessary, for example, due to performance reasons. But this should be the exception rather than the rule.
 
 ### Example of layered code
 
-In the following code snippet, not all lines of code are on the same level of abstraction:
+In the following code snippet, not all lines of code are at the same level of abstraction:
 
 ```py
 def process_email():
-	open_email()
-	with open('attachment.txt', 'r') as f:
-    	print(f.read())
-	close_email()
+    open_email()
+    with open('attachment.txt', 'r') as f:
+    print(f.read())
+    close_email()
 ```
 
-`open_email` and `close_email` are clearly functions on a higher level of abstraction than `with open ...`. In order to have all the code on the same level of abstraction, we have to move the `with open ...` code into a dedicated function. The code should look like this:
+`open_email` and `close_email` are clearly functions at a higher level of abstraction than `with open ...`. In order to ensure that all the code is at the same level of abstraction, we need to relocate the `with open ...` code into a separate function. The code should look like this:
 
 ```py
 def print_attachment():
     with open('attachment.txt', 'r') as f:
-    	print(f.read())
+    print(f.read())
 
 def process_email():
-	open_email()
-	print_attachment()
-	close_email()
+    open_email()
+    print_attachment()
+    close_email()
 ```
 
-Now the code looks much better. All lines of code are function calls to higher level functions. Every line of code inside `process_email` reads like an English sentence and not like Python syntax. Note that the code now became a little bit longer. This is not an issue. Readability counts, not the length of the code.
+Now the code looks much better. All lines of code consist of function calls to higher-level functions. Every line of code within the `process_email` function is written in a way that resembles an English sentence rather than typical Python syntax. Note that the code has now become a little longer. This is not an issue. Readability counts, not the length of the code.
 
 ### 3rd party libraries
 
-The lowest level of abstraction consists of the programming language and 3rd party libraries. You can’t change those unless you replace them as a whole. Changing code in a 3rd party library may be possible in some cases, but I highly discourage you from doing that. Unless you take the library into your own code base and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a huge amount of work. The only reasonable approach is writing the authors of the library and offering help to get your suggestions implemented. Therefore 3rd party libraries are on the lowest level of abstraction. They do not depend on any of your code.
+The lowest level of abstraction consists of the programming language and third-party libraries. You can't change those unless you replace them as a whole. Modifying code in a third-party library may be feasible in certain situations, but I strongly advise against it. Unless you incorporate the library into your codebase and treat it the same way as all your other code. Generally, this is an extremely bad idea as it involves a significant amount of work. The only reasonable approach is to contact the authors of the library and offer help to get your suggestions implemented. Therefore third-party libraries are on the lowest level of abstraction. They do not depend on any of your code.
 
 ### Infrastructure code
 
-One layer above the 3rd party libraries we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details the user will never see. The engine parts of your car. Parts that the user will not even know about. He can only guess how this stuff could be implemented, but if done properly, he will not have any clue how it's actually done. Neither in a car engine nor in your infrastructure code.
+One layer above the third-party libraries, we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details that the user will never see. The engine parts of your car. Parts that the user will not even know about. He can only guess how this stuff could be implemented, but if done properly, he will not have any clue how it's actually done. Neither in a car engine nor in your infrastructure code.
 
 ### The domain level
 
@@ -1123,28 +1124,27 @@ One layer above the 3rd party libraries we have our own low-level infrastructure
 
 //add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
 
-Then there is the domain level, see also [chapter Domain Driven Design]. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes understanding of the business to understand this code here. The domain model converts the low level computer language from the infrastructure into a human readable text, though it still follows the syntax of a programming language! Every business person should be able to understand the final result of this text.
+Then there is the domain level; see also [chapter Domain Driven Design]. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes an understanding of the business to comprehend this code. The domain model converts the low-level computer language from the infrastructure into human-readable text, although it still adheres to the syntax of a programming language! Every businessperson should be able to comprehend the ultimate outcome of this text.
 
-The domain level is the part that is hard to develop and you can't buy elsewhere. You have to do it yourself. Because this is what you will earn money with. It's the core of your business.
+The domain level is the part that is difficult to develop and cannot be purchased elsewhere. You have to do it yourself. This is what you will earn money with. It's the core of your business.
 
 ### The application level
 
-The next level is the application level code. Here the code follows pretty much the same logic as the problem we are solving. Variables and functions have the same names as the sales person uses. It also follows the same logic. If a marketing person looks at the application level code, he should be able to understand what is going on and possibly also spot potential errors.
+The next level is the application-level code. Here, the code follows a logic similar to the problem we are solving. Variables and functions have the same names as those used by the salesperson. It also follows the same logic. If a marketing professional reviews the application-level code, they should be able to comprehend the process and potentially identify any errors.
 
 ### API
 
-One level higher is the API. This defines the interface between our code and the user. It’s a wrapper around the application level code. The API offers all the functionality the user would expect in an easy to use form. However, the API is not the highest level. It is still one level below the Graphical User Interface (GUI). It is of utmost importance to decouple the API from the GUI. The API should know nothing about the GUI and the GUI should only use API functions! And the very same holds for acceptance tests.
+One level higher is the API. This defines the interface between our code and the user. It is a wrapper around the application-level code. The API provides all the functionality that users would expect in an easy-to-use format. However, the API is not at the highest level. It is still one level below the Graphical User Interface (GUI). It is of utmost importance to decouple the API from the GUI. The API should have no knowledge of the GUI, and the GUI should solely utilize API functions! And the same applies to acceptance tests.
 
 ### GUI and acceptance tests
 
-On the highest level are the GUI and the acceptance tests, both at the same level. If you ever have a GUI make sure its code is completely decoupled from the rest of the code. The only interaction should be through your API. The same holds for the acceptance tests. The GUI and the acceptance tests are on a totaly different level of abstraction than all the other code that you deal with. Already the programming language for the GUI is completely different. You may write html! Due to the SRP you are not allowed to wirte any logic in the GUI. Also writing tests for the GUI is a pain. Therefore the only solution is to write acceptance tests on the API level and to make sure you never break the GUI by keeping it as simple as possible.
+At the highest level are the GUI and the acceptance tests, both at the same level. If you ever develop a GUI, ensure that its code is entirely decoupled from the rest of the system's code. The only interaction should be through your API. The same principle applies to acceptance tests [section Acceptance Tests]. The GUI and the acceptance tests operate at a significantly higher level of abstraction compared to all other code you work with. Already, the programming language for the GUI is completely different. You may write HTML! Due to the SRP you are not allowed to write any logic in the GUI. Writing tests for the GUI can be challenging. Therefore, the only solution is to write acceptance tests at the API level and ensure that you never break the GUI by maintaining its simplicity.
 
 ## Summary
 
-As a summary I want to emphasize again the tremendous importance of abstraction levels. Different abstraction levels are the only reason we are able to understand highly complex systems. And it’s your job to define the abstraction levels for your code. Avoid mixing different levels of abstraction.
+As a summary, I want to emphasize once again the tremendous importance of abstraction levels. Different abstraction levels are the key reason we can comprehend highly complex systems. And it's your job to define the abstraction levels for your code. Avoid mixing different levels of abstraction.
 
 # 11. Interfaces
-
 "Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers
 
 Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
