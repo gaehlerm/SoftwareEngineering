@@ -82,14 +82,14 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [GUI and acceptance tests](#gui-and-acceptance-tests)
   - [Summary](#summary)
 - [11. Interfaces](#11-interfaces)
-  - [Real world interfaces](#real-world-interfaces)
-  - [Code interfaces](#code-interfaces)
+  - [Real-world Interfaces](#real-world-interfaces)
+  - [Code Interfaces](#code-interfaces)
     - [Example](#example)
   - [APIs](#apis)
     - [Adding more functionality](#adding-more-functionality)
     - [Semantic Versioning](#semantic-versioning)
   - [Orthogonality](#orthogonality)
-    - [Advantages of orthogonal systems](#advantages-of-orthogonal-systems)
+    - [Advantages of Orthogonal Systems](#advantages-of-orthogonal-systems)
     - [Example of an adapter](#example-of-an-adapter)
   - [Copilot](#copilot-1)
 - [12. Naming](#12-naming)
@@ -1144,86 +1144,88 @@ At the highest level are the GUI and the acceptance tests, both at the same leve
 
 As a summary, I want to emphasize once again the tremendous importance of abstraction levels. Different abstraction levels are the key reason we can comprehend highly complex systems. And it's your job to define the abstraction levels for your code. Avoid mixing different levels of abstraction.
 
+
 # 11. Interfaces
+
 "Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers
 
-Interfaces go hand in hand with levels of abstraction. Each level of abstraction has two interfaces. One to the low-level side, another one towards the high-level side.
+Interfaces are closely related to levels of abstraction. Each level of abstraction has two interfaces. One is on the low-level side, and the other is on the high-level side.
 
-In this chapter we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer has to implement it only once while the users might have to interact with the interface thousands of times. Therefore it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
+In this chapter, we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer only has to implement it once, while users might have to interact with the interface thousands of times. Therefore, it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
 
-## Real world interfaces
+## Real-world Interfaces
 
-Functions, classes, libraries and also complete software or smartphone apps have an interface. Even technical objects like plugs have an interface. The technical details may vary quite a lot, but the basic principles are very similar.
+Functions, classes, libraries, and complete software or smartphone apps all have interfaces. Even technical objects, such as plugs, have an interface. The technical details may vary significantly, but the basic principles are very similar.
 
-"Plugs", you may laugh. Yes, even plugs. Electric plugs in America look different than the European ones. It is impossible to plug in an American plug into a European socket and vice versa. This is due to historical reasons, but at the same time also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It’s fail-safe. It is good design that they are not interoperatable. Though most devices can deal with both voltages by now.
+"Plugs," you may laugh. Yes, even plugs. Electric plugs in America look different from European ones. It is impossible to plug an American plug into a European socket, and vice versa. This is due to historical reasons, but at the same time, it is also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It's fail-safe. It is a good design that they are not interoperable. Most devices can now handle both voltages.
 
-An example of bad design is the USB port A (used by USB 2 devices). The USB cable looks symmetric on the outside but in reality, it is not. Someone once said you always needed 3 attempts to plug in a USB 2 device. The first time would have been right but you didn’t manage, the second time was the wrong way around and the third time you managed to plug it in. The USB C port (used by USB 3 devices) has a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symetrically or asymetrically. The technicians implemented a solution that enabled both kind of connections. The two devices involved have to negotiate between each other how to use the different lanes of the cable. This was some extra work for the engineers. But once solved, it is a very convenient solution for the users.
+An example of poor design is the USB Type-A port (used by USB 2 devices). The USB cable appears symmetric on the outside, but in reality, it is not. Someone once said that you always need three attempts to plug in a USB 2 device. The first time would have been right, but you didn't manage it. The second time was the wrong way around, and the third time you managed to plug it in. The USB-C port, which is used by USB 3 devices, features a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symmetrically or asymmetrically. The technicians implemented a solution that enabled both types of connections. The two devices involved must negotiate with each other on how to utilize the various lanes of the cable. This was some additional work for the engineers. But, once solved, it becomes a very convenient solution for the users.
 
-Another example are water tabs for showers, as already explained in the section on orthogonality. There are 2 tubes for cold and hot water where the plumber attached one valve each. This was a pain to use. It took quite a while to set the temperature correctly and once you changed the amount of water, the whole procedure started again. This was the engineer friendly solution, not the user friendly one. This was a bad interface. The new handles allow you to choose the amount of water and the temperature separately. This might be technically a little bit more complicated to implement but it’s so much more convenient to use. 
+Another example are water tabs for showers, as previously discussed in the section on orthogonality. There are two tubes for cold and hot water where the plumber attached one valve to each. This was a pain to use. It took quite a while to set the temperature correctly, and once you changed the amount of water, the whole procedure started again. This was the engineer-friendly solution, not the user-friendly one. This was a bad interface. The new handles allow you to choose the amount of water and the temperature separately. This might be a bit more complicated to implement, but it's much more convenient to use.
 
-Notice how both solutions have 2 degrees of freedom. A mathematician would call this a coordinate transformation. With the old valve you and all other users had to do this transformation yourselves. With the new valve this is solved mechanically once and for all. 
+Notice how both solutions have 2 degrees of freedom. A mathematician would refer to this as a coordinate transformation. With the old valve, you and all other users had to perform this transformation yourselves. With the new valve, this issue is resolved permanently through mechanical means.
 
-I hope these simple examples gave you an idea what good interfaces are about. If you design an interface, you should always know your customers. What do they do? How do they think? How are they going to use your product? This is of utmost importance. A good interface is user centric. It represents the way the user thinks and hides all the technical details.
+I hope these simple examples gave you an idea of what good interfaces are about. If you design an interface, you should always know your customers. What do they do? How do they think? How will they utilize your product? This is of utmost importance. A good interface is user-centric. It represents the way the user thinks and conceals all the technical details.
 
 // to the reviewers: remove this example as there are too many of them?
 
-Combustible car engines are operating best around roughly 2000-3000rpm. At lower rotations the engine could not operate properly, running them faster makes them inefficient and noisy. This problem is mitigated by the gear box that allows your car to operate at a wide range of velocities. Now there used to be a minor problem about the gear boxes. The user had to manually change the gear using a clutch. Most car drivers get the hang out of it quickly, but it is certainly not user friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to care about neither the gear box nor the clutch in their car!
+Combustible car engines operate best at around 2000-3000 rpm. At lower rotations, the engine could not operate properly; running it faster makes it inefficient and noisy. This problem is mitigated by the gearbox, which allows your car to operate at a wide range of velocities. Now, there used to be a minor issue with the gearboxes. The user had to manually change gears using a clutch. Most car drivers quickly get the hang of it, but it is certainly not user-friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to worry about either the gearbox or the clutch in their car!
 
-Now there is a well-known solution: automatic transmission. A car can drive at any pace of choice and the automatic transmission will select the most suitable gear. Problem solved. You pay a little fee for the automatic transmission but you’ll never have to think about it again. You push the gas pedal to control the speed of your car and all the technical details are taken care of by the board electronics of your car. Now we only have to wait for self-driving cars in order to remove the steering wheel and the gas pedal all together.
+Now there is a well-known solution: automatic transmission. A car can be driven at any chosen speed, and the automatic transmission will select the most suitable gear. Problem solved. You pay a small fee for the automatic transmission, but you'll never have to think about it again. When you push the gas pedal, you control the speed of your car, while all the technical details are managed by the onboard electronics of your car. Now we only have to wait for self-driving cars to eliminate the steering wheel and the gas pedal altogether.
 
-## Code interfaces
+## Code Interfaces
 
-Once again, understanding interfaces in general will allow you to write much better code. It’s just the same as in the real world examples above. Try to follow the same principles. Figuring out what the user really wants, makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in section [Test Driven Development] on test driven development (TDD).
+Once again, understanding interfaces in general will enable you to write much better code. It's just the same as in the real-world examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in the section [Test Driven Development] on Test Driven Development (TDD).
 
-Always define an interface from the user perspective. What is it a user wants? How does he want to use your code? These are the important questions to ask. 
+Always define an interface from the user's perspective. What does the user want? How does he want to use your code? These are the important questions to ask.
 
-An interface that is designed from the engineers point of view is usually badly designed. It is designed from the wrong point of view. An engineers interface is easy to implement but not that easy to use as engineers look at what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineers interface is like an old Nokia phone. It's shape and functionality was mostly determined by the engineers preferences. The designers had little to say and were only allowed to smoothen the edges a little. Meanwhile a good interface is more like an iPhone. Here is was the other way around. Designers told the engineers what they had to do and the solution was a phone with an interface that is easy to use. This is how you have to design your interfaces. You need someone with some vision on how your code should be used. Not some engineer who does a great job implementing the code but has no idea how to use it.
+An interface that is designed from the engineer's point of view is usually poorly designed. It is designed from the wrong perspective. An engineer's interface is easy to implement but not necessarily easy to use, as engineers tend to focus on what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineer's interface is like an old Nokia phone. The shape and functionality were mostly determined by the engineers' preferences. The designers had little to say and were only allowed to smooth out the edges slightly. Meanwhile, a good interface is more like an iPhone. Here it was the other way around. Designers instructed the engineers on the necessary tasks, resulting in a phone with a user-friendly interface. This is how you should design your interfaces. You need someone with a vision for how your code should be utilized. Not just an engineer who excels at implementing the code but lacks understanding of how to use it.
 
-Interfaces are everywhere. Every function [Functions] or class [Classes] has an external interface and uses several interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes it is hard to define a good interface that let's the user do what he wants without exposing too much of the internals of the class. But also with functions one has to consider how the function arguments should be ordered.
+Interfaces are everywhere. Every function [Functions] or class [Classes] has an external interface and utilizes multiple interfaces from other functions or classes. This is why understanding good interface design is paramount. Especially with classes, it is challenging to define a good interface that allows the user to perform desired actions without revealing too many internal details of the class. When working with functions, it is important to consider the order in which function arguments should be arranged.
 
 ### Example
 
-This is a code example for a car. The car has a current `speed` and a `top_speed`. However the user of this code doesn't know anything about these attributes. He only sees the public interface containing the methods `accelerate`, `brake` and `get_speed`. He doesn't know anything about the implementation of this class.
+This is a code example for a car. The car has a current `speed` and a `top_speed`. However, the user of this code doesn't know anything about these attributes. He only sees the public interface containing the methods `accelerate`, `brake`, and `get_speed`. He doesn't know anything about the implementation of this class.
 
 ```py
 class Car:
     def __init__(self):
         self._speed = 0
         self._TOP_SPEED = 200
-
+    
     def accelerate(self, amount):
         assert amount >= 0
         self._speed = min(self._speed + amount, self._TOP_SPEED)
-
+    
     def brake(self, amount):
         assert amount >= 0
         self._speed = max(self._speed - amount, 0)
-
+    
     def get_speed(self):
         return self._speed
 ```
 
 ## APIs
 
-"With a sufficient number of users of an Application Programmable Interface (API), it does not matter what you promise in the contract: all observable behaviors of your system will be depended on by somebody." - Hyrums law
+"With a sufficient number of users of an Application Programmable Interface (API), it does not matter what you promise in the contract; all observable behaviors of your system will be dependent on by somebody." - Hyrum's Law
 
-If you are expecting a complete chapter explaining all the ins and outs of APIs, I'll have to disappoint you. This is a huge topic and I can only scratch the surface here. I will only explain some of the most important aspects of APIs that I could think of.
+If you are expecting a comprehensive chapter that explains all the details of APIs, I'll have to disappoint you. This is a vast topic, and I can only scratch the surface here. I will only explain some of the most important aspects of APIs that I could think of.
 
-An API is an extremely important part of your software. It is the public interface of your software. It is what everyone sees and uses from the outside. Everything we discussed in the interface section matters here as well, but in an API, it is really important to get everything right. Having a bad API will cost you a lot of money. People won’t buy your product if the user experience is bad. They rather go to the company next door and buy their software. "They support even emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
+An API is an extremely important component of your software. It is the public interface of your software. It is what everyone sees and uses from the outside. Everything we discussed in the interface section applies here as well, but in an API, it is crucial to get everything right. Having a bad API will cost you a lot of money. People won't buy your product if the user experience is bad. They would rather go to the company next door and buy their software. "They even support emojis!" Yes, sadly enough, supporting emojis is important nowadays for business reasons.
 
-That was no joke by the way. Apple once had an important security fix in their latest update. They added new emojis to the update as emojis are for most users the better motivation to install an update than a security fix.
+That was no joke, by the way. Apple once had an important security fix in their latest update. The update includes new emojis. For many users, emojis serve as a stronger motivation to install an update compared to a security fix.
 
-APIs are an extremely difficult topic. Not so much for technical reasons, but rather because you deal with users outside the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client’s code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never ever break your clients code! Now you might think this is doable. But I can promise, you will get nightmares.
+APIs are an extremely complex subject. Not so much for technical reasons, but rather because you interact with users external to the company. They use your code hidden underneath the API. Every change you make in your code could potentially lead to a bug in your client's code. Even fixing a small bug in your own code. When maintaining an API, you have exactly one task: Never, ever break your clients' code! Now you might think this is doable. But I can promise you will have nightmares.
 
-You are always allowed to add new functionality as long as you don’t change the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way it did before, but you can use some new functionality as well. Vice versa you are never allowed to change or delete existing functionality. This would lead to compilation errors or, even worse, bugs in the user code. And that’s when customers go rampage. "Up to now the code worked and all of a sudden it fails. What the **** did you do?" If you don’t understand this harsh reaction, you never had a work colleague randomly breaking your code once in a while. You would feel exactly the same.
+You are always allowed to add new functionality as long as you do not alter the functionality implemented with the old syntax. The old code is guaranteed to run exactly the same way as it did before, but you can also utilize some new functionality. Vice versa, you are never allowed to change or delete existing functionality. This could result in compilation errors or, even worse, bugs in the user code. And that's when customers go on a rampage. "Up to now, the code worked, but all of a sudden, it fails. What the **** did you do?" If you don't understand this harsh reaction, you've never had a work colleague randomly break your code once in a while. You would feel exactly the same.
 
 ### Adding more functionality
 
-You want to add a new option to one of your API functions, but there is a lot of customer code out there. This code doesn’t use this new option so far and won’t use it in the future. How can you add this option without breaking this old user code?
+You want to add a new option to one of your API functions, but there is a lot of existing customer code. This code does not currently utilize this new option and won't use it in the future. How can you add this option without breaking this old user code?
 
-The answer are default arguments. The current behavior is set to be the default and after the update, the user can select an alternative option inside the function call. This works in all modern programming languages. You don’t even need an if statement.
+The answers are default arguments. The current behavior is set to be the default. After the update, the user can select an alternative option within the function call. This works in all modern programming languages. You don't even need an if statement.
 
-Let's make a small example. Let's say we have the following function:
+Let's make a brief example. Let's consider the following function:
 
 ```py
 # version 1.0
@@ -1231,7 +1233,7 @@ def my_super_function(arg1):
     return arg1
 ```
 
-We can easily change this function to the following code. We added a flag (`arg2`) which changes the functionality. The function now only returns the `arg1`, if `arg2` is set to `True`.
+We can easily modify this function with the following code. We added a flag (`arg2`) that alters the functionality. The function now only returns the `arg1`, if `arg2` is set to `True`.
 
 ```py
 # version 1.1
@@ -1240,56 +1242,58 @@ def my_super_function(arg1, arg2=True)
         return arg1
 ```
 
-However, you can also omit the `arg2` and the functionality is still the same as was before the code was changed.
+However, you can also omit the `arg2`, and the functionality remains the same as it was before the code was changed.
 
 ```py
 my_super_funtion("hello")
 ```
 
-returns `"hello"`, independently of the version number.
+returns `"hello"`, regardless of the version number.
 
-Removing functionality on the other hand is really hard. This inevitably changes the behavior of existing functionality. You are not allowed to do so except under very special circumstances, as explained in the next section.
+Removing functionality, on the other hand, is really hard. This inevitably changes the behavior of existing functionality. You are not allowed to do so except under very special circumstances, as explained in the next section.
 
 ### Semantic Versioning
 
-APIs have version number. These are 2 or 3 numbers separated by dots. For example, "3.11.2" was the latest Python version at the time of writing. "3" is the major version, "11" is the minor version and "2" is the trace. The trace is used only in bigger projects. 
+APIs have version numbers. These are 2 or 3 numbers separated by dots. For example, "3.11.2" was the latest Python version at the time of writing. "3" represents the major version, "11" represents the minor version, and "2" represents the trace. The trace is only used in larger projects.
 
-Every time you make a new release you increase the version number. 
-- For bug fixes or internal improvements, you increase the trace number. This is for all kind of changes the user shouldn’t notice or probably doesn't care about. The user should be able to change to a software with a higher or lower trace version without any issues.
-- The minor version number is increased for new features. The changes explained so far still backward compatible as they don’t change any existing functionality. 
-- The really big disaster starts with major version changes. Sometimes this is required. And it is dreadful. You might think that it’s not so much effort for the customers to change some code. "HA!" Think again. To migrate most of the Python 2 code to the major version 3 took 12 years and only a few years ago the support of Python 2 was stopped. The transition was pretty much a nightmare because a lot of libraries available were not yet updated. Users simply don't have time to update their code to a new major version of your library. So if you don't want to lose them, you should make damn sure you don't break the old interface. Only increase the major version of your software if it is absolutely required.
+Every time you make a new release, you increase the version number.
 
-Usually companies support many API versions simultaneously. They know their users need time to adapt to the new version. And some users will never adapt at all. They are forced to support the old API versions for many more years, even though there would be a better API available.
+- For bug fixes or internal improvements, you increment the trace number. This is for all kinds of changes that the user shouldn't notice or probably doesn't care about. The user should be able to switch to software with a higher or lower trace version without any issues.
+- The minor version number is increased for new features. The changes explained so far are still backward compatible as they don't alter any existing functionality.
+- The really big disaster begins with major version changes. Sometimes this is required. And it is dreadful. You might think that it's not so much effort for the customers to change some code. "HA!" Think again. Migrating most of the Python 2 code to the major version 3 took 12 years, and support for Python 2 was only discontinued a few years ago. The transition was quite a nightmare because many available libraries had not been updated yet. Users simply don't have time to update their code to a new major version of your library. So, if you don't want to lose them, you should make sure you don't break the old interface. Only increase the major version of your software if it is absolutely necessary.
+
+Usually, companies support multiple API versions simultaneously. They know that their users need time to adapt to the new version. Some users will never adapt at all. They are forced to support the old API versions for many more years, even though a better API is available.
 
 ## Orthogonality
 
-Orthogonality is a mathematical definition. It has been used in software engineering by Thomas and Hunt in their highly recommendable book The Pragmatic Programmer [citation: The Pragmatic Programmer]. Orthogonality states that two objects are under a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but the part about the coordinate system...? Let me explain code-orthogonality by showing you a brief example that everybody knows.
+Orthogonality is a mathematical concept. It has been used in software engineering by Thomas and Hunt in their highly recommended book "The Pragmatic Programmer" [citation: The Pragmatic Programmer]. Orthogonality states that two objects are at a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but what about the coordinate system...? Let me explain code orthogonality by providing a brief example that is familiar to everyone.
 
 // TODO search images without copy right
+
 <div class="row">
     <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
     <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
-</div> 
+</div>
 
-On the left-hand side, we have old school water tabs. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user generally wants. It turns out, the user wants to be able to control the 2 degrees of freedom differently. He wants to control the total amount of water along with the temperature of the water. The orthogonal solution from the user perspective is shown on the right-hand side. The solution on the left-hand side is outdated. It is orthogonal in the engineers coordinate system but nowadays the users have higher requirements and are not satisfied with the engineers’ solution anymore. We expect this coordinate transformation into the users coordinate system to be done inside the water tab.
+On the left-hand side, we have old-school water taps. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user typically desires. It turns out that the user wants to be able to control the two degrees of freedom differently. He wants to control both the total amount and temperature of the water. The orthogonal solution from the user's perspective is shown on the right-hand side. The solution on the left-hand side is outdated. In the engineer's coordinate system, it is orthogonal. However, nowadays, users have higher requirements and are no longer satisfied with the engineers' solutions. We expect this coordinate transformation into the user's coordinate system to be performed within the water tab.
 
-In software engineering we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to deal with orthogonal data, but they may be working in separate coordinate systems. Now it is always the upstream persons job to transform the output to make the data orthogonal in the downstream persons coordinate system. This is similar to other cases where it is always the upstream persons duty to make the downstream persons life as comfortable as possible by converting the data handed over. This also makes sense from an economic point of view: there is only one developer (upstream person), but many users (downstream persons). So if the developer makes the coordinate transformation, only one person (or team) has to do it, compared to all the users if the developers don't do this job by themselves. 
+In software engineering, we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to work with orthogonal data, but they may be operating in different coordinate systems. Now, it is always the upstream person's job to transform the output to make the data orthogonal in the downstream person's coordinate system. In similar cases, it is always the upstream person's duty to make the downstream person's life as comfortable as possible by converting the data handed over. This also makes sense from an economic standpoint: there is only one developer (upstream person), but many users (downstream persons). So, if the developer handles the coordinate transformation, only one person (or team) needs to do it, as opposed to all users having to do it themselves if the developers don't take on this task.
 
-It may not always be that obvious how the downstream would like an interface to look like. When in doubt, the upstream should return the data in the most general representation. Make sure that no implementation details leak into the interface, even tough this is sometimes easier said than done. This general interface has the highest chances to be orthogonal from the user point of view. And try to cut down the interface as much as possible. Less is more.
+It may not always be obvious how the downstream would like an interface to look. When in doubt, the upstream should return the data in the most general representation. Make sure that no implementation details leak into the interface, even though this is sometimes easier said than done. This general interface has the highest likelihood of being orthogonal from the user's perspective. And try to minimize the interface as much as possible. Less is more.
 
-Frequently you cannot choose how the data looks like you work with. For example, if it originates from a third-party library. And the data at hand really does not fit to the algorithm you want to use for your specific problem. In this case you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up to start with. A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, others are more easily solved in the other coordinate system. In most cases it’s best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation apart, in accordance with the SRP.
+Frequently, you cannot choose how the data looks when you work with it. For example, if it originates from a third-party library. The data at hand does not align well with the algorithm you intend to use for your specific problem. In this case, you should first orthogonalize the input data before continuing. Separating the orthogonalization and algorithm steps is much simpler than running an algorithm on a dataset that is not optimally set up from the beginning. A common example is the coordinate transformation between spherical (r $\phi$ $\theta$) and Cartesian (x y z) coordinates. Some problems are easier to solve in one coordinate system, while others are more easily solved in the other coordinate system. In most cases, it's best to first convert the data into the appropriate coordinate system, rather than adapting the algorithm. This keeps the algorithm and the coordinate transformation separate, following the SRP.
 
-### Advantages of orthogonal systems
+### Advantages of Orthogonal Systems
 
 Working in an orthogonal system has many advantages:
--	Errors just propagate straight through the system and are easy to find. They don’t spread out.
--	Fixing these bugs is easier as the system is less fragile.
--	It is easier to write tests for an orthogonal system.
--	It decouples the code as the transformation acts as an adapter.
+- Errors propagate directly through the system and are easy to find. They don't spread out.
+- Fixing these bugs is easier because the system is less fragile.
+- Writing tests for an orthogonal system is easier.
+- It decouples the code because the transformation acts as an adapter.
 
 ### Example of an adapter
 
-Let's say you have an electric sensor. It measures the amount of light in the room by measuring a voltage. However this voltage is no the final value you want to work with. Instead, you want to know the density of the light, measured in Watt per square meter (W/m^2). So you need a function that converts the voltage into the desired units.
+Let's say you have an electric sensor. It measures the amount of light in the room by detecting a voltage. However, this voltage is not the final value you want to work with. Instead, you want to know the density of light, measured in watts per square meter (W/m^2). So, you need a function that converts the voltage into the desired units.
 
 ```py
 def voltage_to_light_density(voltage):
@@ -1297,11 +1301,11 @@ def voltage_to_light_density(voltage):
     return voltage * 10
 ```
 
-Now this function returns the orthogonal data for this particular example. Of course, in your code the transformation required will look completely different.
+Now, this function returns the orthogonal data for this specific example. Of course, the transformation required in your code will look completely different.
 
 ## Copilot
 
-Copilot is generally not to good with writing interfaces. Instead you should do this yourself and let Copilot fill in the gaps. This is generally also the better approach than writing some comments and let Copilot define code based on these comments.
+Copilot is generally not very good at writing interfaces. Instead, you should do this yourself and let Copilot fill in the gaps. This is generally the better approach than writing comments and letting Copilot define code based on them.
 
 
 # 12. Naming
