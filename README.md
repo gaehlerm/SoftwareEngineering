@@ -101,11 +101,11 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Do one thing only](#do-one-thing-only)
     - [Levels of indentation](#levels-of-indentation)
     - [Naming](#naming-1)
-  - [Temporal coupling](#temporal-coupling)
-  - [Number of arguments](#number-of-arguments)
+  - [Temporal Coupling](#temporal-coupling)
+  - [Number of Arguments](#number-of-arguments)
     - [Copilot](#copilot-3)
   - [Output arguments](#output-arguments)
-  - [Return values](#return-values)
+  - [Return Values](#return-values)
   - [Summary](#summary-1)
   - [Copilot](#copilot-4)
 - [14. Classes](#14-classes)
@@ -1418,8 +1418,7 @@ def add(b, c):
     return b + c
 ```
 
-
-Part 2: Components of code
+Part 2: Components of Code
 
 # 13. Functions
 
@@ -1427,15 +1426,15 @@ Part 2: Components of code
 
 [Clean Code, chapter 3]
 
-Functions (and methods) are, along with classes, the backbone of modern object oriented (OO) software. People just don’t care about functions too much as they do about classes. They are fairly simple to use and there are only very few things to take care off. Still, there is quite a lot to know about functions as well. We'll learn why functions have to follow the SRP and that they shouldn't have any side effects.
+Functions (and methods) are, along with classes, the backbone of modern object-oriented (OO) software. People just don't care about functions as much as they do about classes. They are fairly simple to use, and there are only a few things to take care of. Still, there is quite a lot to know about functions as well. We will learn why functions must adhere to the SRP and should not have any side effects.
 
-Throughout this book, we’ll distinguish between functions and methods as most authors do so. Even though I would personally like to call them both just functions as they are pretty much the same, just in a slightly different context. Most things I write about functions apply to methods as well as they are with many respects very similar. The class variables and the slightly different context are not a fundamental difference. Class variables are just about the same as output arguments. I hope it's generally clear from the context if some explanation is true for functions, methods or both.
+Throughout this book, we will distinguish between functions and methods, as is common practice among most authors. Even though I would personally like to refer to both of them as functions since they are essentially the same, just in slightly different contexts. Most of the concepts I write about functions also apply to methods, as they are very similar in many respects. The class variables and the slightly different context are not fundamentally different. Class variables are similar to output arguments. I hope it is generally clear from the context whether an explanation applies to functions, methods, or both.
 
 ## Do one thing only
 
-Due to the single responsibility principle [SRP], functions may cover only one level of abstraction. Therefore, they have to be short. As a rule of thumb, they should be at most about twenty lines (that's what fits on my laptop screen without scrolling), though less than 10 lines is certainly to be prefered because shorter functions are much easier to understand. If fact, there is also absolutely nothing wrong with functions that cover only one line of code. One line functions are really useful to make code more readable, as it elevates all code to a similar level of abstraction. But this is something that many programmers don't think of.
+Due to the SRP [SRP], functions should only cover one level of abstraction. Therefore, they have to be short. As a rule of thumb, functions should be at most about twenty lines long (that's what fits on my laptop screen without scrolling), although less than 10 lines is certainly preferred because shorter functions are much easier to understand. In fact, there is absolutely nothing wrong with functions that cover only one line of code. One-line functions are extremely useful for enhancing code readability as they elevate all code to a consistent level of abstraction. But this is something that many programmers don't consider.
 
-Let's make a small example of a one line function. We have a pandas object (a Python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I think this function makes the code that uses it much clearer because it is operating on a higher level of abstraction.
+Let's create a brief example of a one-line function. We have a pandas object (a Python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I believe this function enhances the clarity of the code that utilizes it as it operates on a higher level of abstraction.
 
 // maybe find another example?
 
@@ -1458,31 +1457,29 @@ john = data[data["name"] == "john"]
 # ...
 ```
 
-The reason is that the first version of the code reads much more like normal english. The function describes to you what it does in words. Meanwhile the second version of the code uses cryptic Python syntax that exposes details you usually don't need to know. And in those few cases where you need to know, you can still look it up.
-
+The reason is that the first version of the code reads much more like normal English. The function describes what it does in words. Meanwhile, the second version of the code uses cryptic Python syntax that reveals details you typically do not need to know. And in those rare cases where you need to know, you can still look it up.
 
 ### Levels of indentation
 
 "If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program." - Linus Torvalds
 
-The easiest way to judge the complexity of a function is the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This means that there is hardly any complex logic hiding inside a single function. Having nested `if/else`, `while` or `for` loops would violate the SRP because the function has two jobs: resolving the logical operator and doing some other work. Having few levels of indentation in a function automatically makes it easy to name and understand. At the same time, it takes getting used to the formatting of such code. Almost all code is written at the first level of indentation.
+The easiest way to assess the complexity of a function is by counting the number of levels of indentation. Having no or very little indentation in your functions is always a very good sign. This implies that there is hardly any complex logic concealed within a single function. Having nested `if/else`, `while`, or `for` loops would violate the SRP because the function has two tasks: resolving the logical operator and performing other work. Having only a few levels of indentation in a function automatically makes it easier to name and understand. At the same time, one needs to get used to the formatting of such code. Most code is typically written at the first level of indentation.
 
-A frequent problem are deeply nested `if/else` clauses.
-
+A frequent problem is deeply nested `if/else` clauses.
 [https://youtu.be/rHRbBXWT3Kc]
 ```py
 button = input("")
 if button != "":
     if not is_sleeping():
         if not is_eating():
-            fight()
+            attack()
         else:
             print("Cannot fight while eating")
     else:
         print("Cannot fight while sleeping")
 ```
 
-This code is very hard to understand. It has too many negations. And as I wrote before, it has too many levels of indentation. This can be fixed by sorting the `if/else` clauses differently. Do not let them span over the whole code base. Check that the `button` is empty instead and return if it is.
+This code is very hard to understand. It has too many negations. As I mentioned earlier, there are too many levels of indentation. This issue can be resolved by rearranging the `if/else` clauses. Avoid letting them span across the entire codebase. Check if the `button` is empty and return if it is.
 
 ```py
 button = input("")
@@ -1497,7 +1494,7 @@ else:
     print("Cannot fight while sleeping")
 ```
 
-We can return this technique also for the other `if` clauses. The resulting code will look as follows:
+We can apply this technique to the other `if` clauses as well. The resulting code will look like this:
 
 ```py
 button = input("")
@@ -1512,35 +1509,33 @@ if is_eating():
 attack()
 ```
 
-Assuming that this code is written inside a function, we have 2 levels of indentation, so we are compliant with Linus Thorwalds' rule.
+Assuming that this code is written inside a function, we have two levels of indentation, so we are compliant with Linus Thorwalds' rule.
 
-With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depending on how difficult it is to deal with the conditions, one could also write all conditions inside a dedicated function that does all the checks. Something like this:
+With this technique, the code became much easier to read. Of course, one could also use `if/else` clauses instead of the `if... return` statements. Depending on the complexity of handling the conditions, one could consolidate all conditions within a dedicated function that performs all the necessary checks. Something like this:
 
 ```py
 def can_fight(button, fighter):
-    if button == "":
-        return false
-    if is_sleeping(fighter):
-        print("Cannot fight while sleeping")
-        return false
-    if is_eating(fighter):
-        print("Cannot fight while eating")
-        return false
-    return true
+if button == "":
+    return false
+if is_sleeping(fighter):
+    print("Cannot fight while sleeping")
+    return false
+if is_eating(fighter):
+    print("Cannot fight while eating")
+    return false
+return true
 ```
 
-Assuming that we don't use global variables, I had to add the `fighter` object as a function argument. Instead one could also have written this code inside a class. But these are technical details.
-
-Anyway, we have seen some approaches how to deal with nested `if/else` clauses. There is usually no perfect solution, but at least we have improved it a lot compared to the initial code.
+Assuming that global variables are not used, I had to include the `fighter` object as a function argument. Instead, one could have also have written this code inside a class. But these are technical details.
+Anyway, we have seen some approaches on how to deal with nested `if/else` clauses. There is usually no perfect solution, but at least we have improved it significantly compared to the initial code.
 
 ### Naming
 
-Naming becomes less hard (I would love to write "easier", but it's never easy...) if you follow the following rules: 
-- The name is a summary of what is going on inside the function. 
-- There is no hidden behavior inside a function.
-- There is no unexpected behavior inside a function. 
-- All of the function body is one level of abstraction lower than the function name. 
-
+Naming becomes less challenging (I would love to write "easier", but it's never easy...) if you follow the rules below:
+- The name is a summary of the function content.
+- There are no hidden behaviors within a function.
+- There is no unexpected behavior within a function.
+- The entire function body is one level of abstraction lower than the function name.
 
 The following function clearly has a side effect:
 
@@ -1551,27 +1546,29 @@ def log_in(email_address):
     check(email_address)
 ```
 
-The function name says nothing about a hidden counter, thus this is hidden behavior and should be avoided. Additionally, side effects may lead to temporal coupling [see next section] as the order of calling functions with side effects matter.
+The function name does not indicate the presence of a hidden counter, making this hidden behavior that should be avoided. Additionally, side effects may lead to temporal coupling [see next section] because the order of calling functions with side effects matters.
 
-A better name for this function would be `log_in_and_increase_counter`, though that would make it apparent that the function does more than one thing and thus violates the SRP. A function name shouldn't contain an `and` as this indicates a violation of the SRP.
+A more suitable name for this function could be `log_in_and_increase_counter`, but this would reveal that the function performs multiple tasks, contradicting the SRP. A function name should not contain an `and` as this indicates a violation of the SRP.
 
-Side effects also become a real problem when testing code. When calling the above function `log_in` twice, the value of `counter` will be different every time. This will make the tests very brittle because of the temporal coupling. And as we'll learn in the chapter on testing [Writing better Code with Tests], brittle tests are a strong indication of bad code.
+Side effects can also become a significant issue when testing code. When calling the function `log_in` twice, the value of `counter` will be different each time. This will make the tests very fragile due to temporal coupling. And as we will learn in the chapter on testing [Writing better Code with Tests], brittle tests are a strong indication of poor code quality.
 
-## Temporal coupling
+## Temporal Coupling
 
-Temporal coupling is if you can do things in the wrong order. Sometimes the code enforces the right order, sometimes it doesn't. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. Let me make a brief example:
+Temporal coupling occurs when tasks can be performed in an incorrect sequence. Sometimes the code enforces the correct order, and sometimes it does not. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. The class variables are there all the time. Let me make a brief example:
 
 ```Py
 class Shopping():
     def get_money(self, amount):
         self.money = amount
+
     def create_shopping_list(self, shopping_list):
         self.shopping_list = shopping_list
+
     def go_shopping(self):
         # use the shopping_list and money
 ```
 
-Apparently you have to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
+Apparently you need to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
 
 ```py
 shopping = Shopping()
@@ -1580,7 +1577,7 @@ shopping.create_shopping_list(["apple", "banana"])
 shopping.go_shopping()
 ```
 
-This sequence of function calls is given by the natural order of the shopping process. First you need money and a shopping lst, before you go shopping. However, this order is not enforced by the code. One could also swap two of the function calls as follows:
+This sequence of function calls follows the natural order of the shopping process. First, you need money and a shopping list before you go shopping. However, this order is not enforced by the code. One could also swap two of the function calls as follows:
 
 ```py
 shopping = Shopping()
@@ -1589,11 +1586,11 @@ shopping.go_shopping()
 shopping.create_shopping_list(["apple", "banana"])
 ```
 
-Now you go shopping before creating a shopping list. In fact, the call of `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead you go shopping with a shopping list that is either empty or not existent. Either way, this is apparently undesired behavior. Probably it would be best to throw an exception in this case.
+Now you go shopping before creating a shopping list. In fact, the call to `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead, you go shopping with a shopping list, which is either empty or non-existent. Either way, this behavior is apparently undesired. It would probably be best to throw an exception in this case.
 
-This is one of the drawbacks of OO code. Methods change the state of the object. Thus it is very hard to enforce that the methods get called in the correct order. 
+This is one of the drawbacks of OO code. Methods change the state of the object. Thus, it is very difficult to enforce that the methods are called in the correct order.
 
-It is one of the advantages of procedural code that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes other paradigms yield better code. Let's look at the procedural version of this code.
+One advantage of procedural code is that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes, other paradigms produce better code. Let's examine the procedural version of this code.
 
 ```Py
 money = get_money(50)
@@ -1601,7 +1598,7 @@ shopping_list = create_shopping_list(["apple", "banana"])
 go_shopping(money, shopping_list)
 ```
 
-In this case it is physically impossible to go shopping without having a shopping list as shown below:
+In this case, it is physically impossible to go shopping without having a shopping list, as shown below:
 
 ```Py
 money = get_money(50)
@@ -1609,11 +1606,11 @@ go_shopping(money, shopping_list)
 shopping_list = create_shopping_list(["apple", "banana"])
 ```
 
-After swapping the last two lines, this code cannot be executed anymore as the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above you will get an error, `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+After swapping the last two lines, this code cannot be executed anymore because the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above, you will get an error: `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
 
-Long story short: make sure your functions never have side effects. Functions and methods should only have an effect on the class instance or, if necessary, to mutable arguments. If possible, enforce temporal coupling, for example by using functional programming.
+Long story short: Ensure that your functions never have side effects. Functions and methods should only affect the class instance or, if necessary, mutable arguments. If possible, enforce temporal order, for instance, by utilizing functional programming.
 
-Another example of temporal coupling are global or static variables.
+Another example of temporal coupling is global or static variables.
 
 ```py
 counter = 0
@@ -1622,45 +1619,47 @@ def log_in(email_address):
     check(email_address)
 ```
 
-Here the value of the `counter` depends on how often `log_in` has been called before. Now it might make sense to have such a counter in your code, however this may lead to all kind of problems, for example when testing it [Testing?].
+Here, the value of the `counter` depends on how often `log_in` has been called before. Now it might make sense to have such a counter in your code; however, this may lead to all kinds of problems. For example, when testing it [Testing?].
 
-## Number of arguments
+## Number of Arguments
 
-As for the length of the function, the number of arguments should also be as small as possible. This simplifies the function a lot. Here I try to give you a rough estimate on how many variables a function or method may have. But this ultimately depends on the general complexity of the code, etc.
+As for the length of the function, the number of arguments should be kept to a minimum as well. This simplifies the function significantly. Here, I try to provide a rough estimate of the number of variables a function or method may have. But this ultimately depends on the overall complexity of the code, etc.
 
-Now there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments using class variables as a replacement for function arguments, the argument here holds only for functions and not for methods). These functions are the easiest, they always behave the same way. There’s not much to test, but at the same time there isn't much such a function can do. Especially if it's a pure function [section Functional Programming].
+Now, there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments that use class variables as a replacement for function arguments, the argument applies only to functions and not to methods). These functions are the simplest; they always behave consistently. There's not much to test, but at the same time, there isn't much that such a function can do. Especially if it's a pure function [section Functional Programming].
 
-As a function has more arguments, it can contain more functionality. Yet at the same time the more complex it will become. Functions with one or two arguments are usually fairly easy to handle and they should cover most of the code. Functions with three arguments are already quite complex. They are hard to understand and hard to test.
+As a function has more arguments, it can encompass more functionality. Yet, at the same time, it will become more complex. Functions with one or two arguments are usually fairly easy to handle and should cover most of the code. Functions with three arguments are already quite complex. They are difficult to understand and challenging to test.
 
-Avoid functions with more than 3 arguments whenever possible. This shouldn’t be a big burden. A plumber manages to carry all his stuff with only two hands, thanks to the invention of the tool box. Why shouldn't we be able to juggle everything within 3 arguments? We can use our equivalent to a toolbox: the data class (Python) or struct (C++) [Classes]. If you don’t know how to pack all the variables you need into three struct objects, it’s time you reconsider your function design.
+Avoid functions with more than three arguments whenever possible. This shouldn't be a significant burden. A plumber can manage to carry all his tools with only two hands, thanks to the invention of the toolbox. Why shouldn't we be able to juggle everything with just 3 arguments? We can use our equivalent to a toolbox: the data class (Python) or struct (C++) [Classes]. If you are struggling to fit all the variables you require into three struct objects, it may be necessary to rethink your function design.
 
-In classes the number of arguments issue becomes even worse. Methods can access additionally all the class variables. The equation is very simple,
+In classes, the issue of the number of arguments becomes even worse. Methods can additionally access all the class variables. The equation is very simple:
 
 `Total variables = method arguments + class variables`
 
-Global variables should not be used, so we neglect those. Still, with having function arguments and class variables at the same time, it is very easy to exceed the recommended amount of 3 variables. This is the main reason why I don't recommend using classes too much, but rather procedural or functional programming instead. And if you use classes with complitaced methods, there should be hardly any class variables at all. Otherwise its complexity will blow up.
+Global variables should not be used; therefore, we disregard them. Still, when combining function arguments and class variables, it is very easy to exceed the recommended limit of 3 variables. This is the main reason why I don't recommend using classes excessively; instead, I suggest opting for procedural or functional programming. When dealing with classes with complex methods, there should be as few class variables as possible. Otherwise, its complexity will blow up.
 
-A method might access some class variables. However, one does not know this until one has read all of the methods and sub-methods involved. Furthermore, one has to check whether a method changes the class variables or not, except if it uses the C++ `const` expression. You should really try to keep the total number of variables as low as possible. This is the only way to keep the code maintainable.
+A method may access certain class variables. However, one does not know this until one has read all of the methods and sub-methods involved. Furthermore, one must check whether a method modifies the class variables, unless it utilizes the C++ `const` expression. It is advisable to minimize the total number of variables in use. This is the only way to keep the code maintainable.
 
-Following the SRP, functions can only be either a query or a command [https://en.wikipedia.org/wiki/Command%E2%80%93query_separation], but never both at the time. The code does not become more readable when violating this rule. In the best case you gain one line of code because you don't have to make an additional check. But at the same time you make the code more confusing as two responsibilities are much harder to deal with than only one. And potentially saving one line of code is not worth violating the SRP. A common anti pattern with that respect is returning a boolean flag on a set command.
+Following the SRP, functions can only be either a query or a command [https://en.wikipedia.org/wiki/Command%E2%80%93query_separation], but never both at the same time. The code does not become more readable when this rule is violated. In the best case scenario, you save one line of code by avoiding an extra check. But at the same time, you make the code more confusing because handling two responsibilities is much harder than dealing with just one. And potentially saving one line of code is not worth violating the SRP. A common antipattern in this regard is returning a boolean flag with a set command.
 
 ```py
 if set_node("money", 50):
     go_shopping()
 ```
 
-Here the `set_node` function does two things at a time. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
+Here, the `set_node` function performs two actions simultaneously. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
 
 ### Copilot
 
-Copilot can help out with reducing the number of arguments by using dataclasses. Though the suggested code is not necessarily always better.
+Copilot can help reduce the number of arguments by structuring them using dataclasses. But the suggested code is not always better.
+
+Let's say we have the following code:
 
 ```py
 def do_something(a, b):
     return a + b
 ```
 
-With the command `put a and b into a dataclass` we get the following suggestion. Now as I already said, the suggestion of Copilot is not always an improvement. Wether such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader. 
+With the command `put a and b into a dataclass`, we receive the following suggestion. Now, as I already mentioned, the suggestions from Copilot are not always improvements. Whether such kind of refactoring makes the code more readable is a highly specific question and has to be decided by the reader.
 
 ```py
 @dataclass
@@ -1674,23 +1673,23 @@ def do_something(numbers: Numbers):
 
 ## Output arguments
 
-A very irritating thing are functions altering the value of the arguments. This is also a very common source for bugs as it is something quite unexpected. Now, once again, in C++ one can make this understood with the type of the argument. One can pass the argument by reference, which renders it modifiable, or by const reference to make it non-modifiable. However, in other languages, this has to be clear from the context of the function.
+One very irritating thing is functions that alter the value of their arguments. This is also a very common source of bugs as it is something quite unexpected. Now, once again, in C++, one can clarify this by specifying the type of the argument. One can pass the argument by reference to make it modifiable, or by const reference to make it non-modifiable. However, in other languages, this clarity has to be inferred from the context of the function.
 
-Changes of function arguments are very hard to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. If you change the value of an argument, it has to be the most important argument. It’s kind of an input and output argument at the same time. So, it has to be special. It has to be first.
+Changes to function arguments can be challenging to keep track of. For this reason, a function should always modify at most the first argument. Modifying two arguments violates the SRP and is even more confusing. If you change the value of an argument, it has to be the most important argument. It's a dual-purpose input and output argument. So, it has to be special. It has to be first.
 
-Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values. Just that the class instance is obviously a very special variable. The function acting on those variables may change the value of the output argument or the class instance and thus may have side effects. This is in either case sometimes required, but at the same time undesired behavior as it is hard to keep track of.
+Output arguments can be compared to class instance objects. They are essentially both function arguments that may change their values. Just that the class instance is obviously a very special variable. The function acting on those variables may change the value of the output argument or the class instance, thus potentially causing side effects. This is sometimes necessary, but at the same time, it is undesired behavior as it is difficult to keep track of.
 
-As always, output arguments give you a lot of power if used wisely. But at the same time it can be also a source of very unreadable code when used carelessly.
+As always, output arguments give you a lot of power when used wisely. But at the same time, they can also be a source of very unreadable code when used carelessly.
 
-## Return values
+## Return Values
 
-Return values are in my opinion very normal, yet many OO programmers tend to dislike them. These OO programmers work with their class methods which manipulate the existing class instances. In my opinion, return values have the very distinct advantage that their intention is clearer. It states: this is a new value. Compared to: This method might change a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value or an output argument or change a class instance. But never two of them at the same time.
+Return values are, in my opinion, very normal, yet many OO programmers tend to dislike them. These OO programmers work with class methods that manipulate the existing class instances. In my opinion, return values have a distinct advantage as their intention is clearer. It states: this is a new value. Compared to: This method may alter a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value, an output argument, or change a class instance. But never two of them at the same time.
 
-Return values are very central in functional programming. In functional programming, you are not allowed to alter values of existing objects. So you don't have the issue of function arguments changing their values. The workaround are return values. They have the advantage that it's obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track what state a variable is in because the state for every variable is unique. After every step of your computation, you create a new variable so you'll never store different information inside a single variable. You just create a new one.
+Return values are central in functional programming. In functional programming, you are not allowed to alter the values of existing objects. So, you don't have the issue of function arguments changing their values. The workarounds are return values. They have the advantage that it is obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track the state of a variable because each variable has a unique state. After every step of your computation, you create a new variable so that you will never store different information inside a single variable. You just create a new one.
 
-All together I think there is really nothing wrong with return values. Use them if it's not a performance critical task where reusing an existing data structure is required.
+All together I think there is really nothing wrong with return values. Use them if it's not a performance-critical task where reusing an existing data structure is required.
 
-Here is a small example from Python. There are two ways to sort elements in a list. Either you use the `sorted` function which returns a new list or you use the `sort` method which changes the list in place. I generally recommend using the `sorted` function as it's clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget, that the elements in the list are now sorted.
+Here is a small Python example. There are two ways to sort elements in a list. You can either use the `sorted` function, which returns a new list, or you can use the `sort` method, which changes the list in place. I generally recommend using the `sorted` function because it makes it clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget that the elements in the list are now sorted.
 
 ```py
 L = [1, 6, 4, 3, 3]
@@ -1703,13 +1702,14 @@ print(L)
 
 ## Summary
 
-As a summary I’d like to emphasize that you should take care of the length of a function as well as the number of arguments. This is especially the case for methods and functions that change the value of a function argument. Such function arguments are very delicate as they may cause a lot of confusion.
+As a summary, I would like to emphasize the importance of considering both the length of a function, but also the number of arguments. This is especially true for methods and functions that modify the value of a function argument. Function arguments are delicate as they can cause significant confusion.
 
-Return values are completely fine even if some OO programmers dislike them. Use return values every time the object created is not too big for causing performance issues.
+Return values are completely acceptable, even if some OO programmers dislike them. Use return values every time the object created is not too large to cause performance issues.
 
 ## Copilot
 
-Copilot is, just as with any piece of comparably simple code, fairly good at writing new functions from scratch. The following code needed only very little guidance. The usage of dependency injection [section Dependency Injection] with the `condition` argument was also a suggestion by Copilot. I really like Copilot for this part as I always forget how to use lambdas and sometimes it produces really nice code. The only question is, if the code is really doing what you want it to.
+Copilot, like any other piece of relatively simple code, is quite proficient at generating new functions from scratch. The following code required only minimal guidance. The usage of dependency injection [section Dependency Injection] with the `condition` argument was also suggested by Copilot. I really like Copilot for this part because I often forget how to use lambdas, and sometimes it generates really nice code. The only question is whether the code is truly performing as intended.
+
 
 ```py
 books = [
