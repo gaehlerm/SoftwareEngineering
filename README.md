@@ -1310,58 +1310,56 @@ Copilot is generally not very good at writing interfaces. Instead, you should do
 
 # 12. Naming
 
-"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp fiction
-
+"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction"
 [https://youtu.be/MBRoCdtZOYg]
 
-How long does a football game take? This is a very innocent question, yet people might not agree to an answer. In Europe most people would say 90 minutes while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that have the same name. This can cause some confusion.
+How long does a football game last? This is a very innocent question, although people may not agree on an answer. In Europe, most people would say 90 minutes, while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that share the same name. This can cause some confusion.
 
-The example was cute. You may get a laugh when mixing them up but it doesn’t cause any harm. With city names it already gets a little trickier. If you miss a job interview because you drove to the wrong city named "Springflied" (this name is used in the Simpsons because this is a very common name in the US) it gets painful. For the police and health care system it becomes even worse. As soon as there are people around who have the same name, it may get dangerous. If your namesake is a highly dangerous criminal, the cops may become really rough because they are confused and think you could be dangerous. Even in Europe. Also in a hospital there are issues with using names as an identifier and so far there is no unique solution how to solve it. Using the name combined with the birth date works out pretty well, but it is not perfect.
+The example was cute. Mixing them up may cause amusement, but it does not cause any harm. When it comes to city names, things can get a little trickier. If you miss a job interview because you drove to the wrong city named "Springfield" (this name is used in The Simpsons because it is a very common name in the US), it can be quite painful. For the police and healthcare system, it becomes even worse. When there are individuals with identical names present, it can become risky. If your namesake is a highly dangerous criminal, the police may become really rough because they are confused and think you could be dangerous. Even in Europe. In a hospital, there are issues with using names as an identifier, and so far, there is no unique solution on how to solve it. Using the name combined with the birth date works out quite well, but it is no definite solution.
 
-All these things happen for only one reason. Name collisions. Different objects having the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language we define things by giving them a name. Every variable, function or class has a name. Every programming construct has a name. And you use this name to search it with google or Stackoverflow. If you don't know the name you're screwed.
+All these things happen for only one reason. Name collisions. Various objects sharing the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language, we define things by giving them a name. Every variable, function, or class has a name. Every programming construct has a name. You can use this name to search for it on Google or Stack Overflow. If you don't know the name, you're in trouble.
 
-Choosing good names is paramount in programming. You certainly don’t want to run into name collisions as explained above. It would cause a lot of confusion and could be the source for many errors to come. But there is much more to consider when defining the name of an object. We are humans and we have to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that give us an idea what an object is and what properties it has. This is the only way we can create a picture in our mind what the code roughly does. It requires everyone working on the project to know what all these expressions mean. What kind of properties does this object have? We have to be like lawyers. The law defines every crime as exactly as possible and gives it a unique name. This is what we need. 
+Choosing good names is paramount in programming. You certainly don't want to encounter name collisions as explained above. It would cause a lot of confusion and could be the source of many errors in the future. But there is much more to consider when defining the name of an object. We are humans, and we need to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that provide us with an understanding of an object's purpose and characteristics. This is the only way we can create a mental image of what the code roughly does. It is necessary for everyone involved in the project to understand the meanings of all these expressions. What kind of properties does this object have? We have to be like lawyers. The law defines every crime as precisely as possible and assigns it a unique name. This is what we need.
 
-It also has to be said that consistency in naming is more important than the actual name. If someone came up with an imperfect name you either have to change it everywhere or stick to it.
+Though, consistency in naming is more important than the actual name. If someone came up with an imperfect name, you either have to change it everywhere or stick to it.
 
-Coming up with your own names is everything but easy. Especially new programmers really struggle finding good names. There are just too many possibilities how you can name an object. But there are some rules you can follow and at least some of the names are quite easy to find. Meanwhile for other variables even experienced programmers have to take a deep think. In fact, naming takes up a quite big fraction of our programming time. We do it very often and there is often no obvious solution, there might be only some vague recommendations. Or as Michael Feathers put it in his book "Working Effectively with Legacy Code":
+Coming up with your own names is anything but easy. Especially new programmers really struggle to find good names. There are just too many possibilities for naming an object. But there are some rules you can follow, and at least some of the names are quite easy to find. Meanwhile, for other variables, even experienced programmers have to think deeply. In fact, naming consumes a significant portion of our programming time. We do it very often, and there is often no obvious solution; there might be only some vague recommendations. Or as Michael Feathers stated in his book "Working Effectively with Legacy Code":
 
-"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn’t have to be perfect." [WELC p.340]
+"When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn't have to be perfect." [WELC p.340]
 
-As I already said, naming is one of the most difficult things in programming. I tried to collect and synthesize some rules on properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
-
-1. Names should be short yet clear. Thus, there is a constant trade-off on the length of a name. Short names may be unclear, yet long names may be a sign that the object is hard to describe. On the other hand, long names are not as bad as unclear names. When in doubt choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb a name is fine if a new work colleague understands the variable.
-2. Think about how you would express a word in real life. Would you call it `price of an apple` or is the context of your conversation clear enough such that only `price` is sufficient?
-3. Classes and functions obeying the SRP are comparably easy to name as they do only one thing. Vice versa, if it’s hard to find a good name, reconsider whether the object follows the SRP and rewrite it accordingly.
-4. `set_color(7)`. What does `7` mean? Never use plain values in your code. Plain values are called magic numbers because no one can tell what it means. Magic is having a negative meaning here. Your code should be unterstood! Always create a variable instead of using magic numbers. Better use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
-5. Well defined levels of abstraction result in clearly defined and unique properties. This helps finding names. Maybe you created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be on a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
-6. Name collisions between different libraries are common and nothing to worry about. Use the namespaces to distinguish them (use the `from math import *` syntax in Python cautiously as this removes this potentially crucial information where a function is defined).
-7. Name collisions within the same library may happen once in a while and have to be resolved. Rename or even refactor one or both variables involved. They might do very similar things and should be refactored into one object. Otherwise you should be able to find clearly distinguishable names.
-8. Use names that are also used in reality. Make sure your object in the code and the real object have very similar properties. You should be able to talk to a domain expert about your code and he should be understanding at least some of your problems. If he doesn’t understand you, you probably came up with names or a model that does not exist in reality. You did a great job if a marketing understands your high level code and can give you useful feedback.
-9.  Objects have names that are simple to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` is to be prefered over `price_of_apple` and `price_of_orange`, though this can change if you have different properties of apples.
-10. Use normal English words everybody knows and don’t use abbreviations unless you use them in your spoke language like CEO, etc.
-11. You may tweak the language a little and ignore grammar rules at times. If you have many `fish`, you may call them `fishs` or `fishes` to highlight the plural. Being able to understand the meaning of the code is *importanter* than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things in an unambiguous way. The following is perfectly viable in Python code: `for fish in fishes`.
-12. Avoid "if", "and" or "or" in the names of your variables, functions and classes. These neat little words are tempting to use, yet they are a clear sign to a violation of the SRP.
-12.	If a variable is used all over the code, name it carefully. Possibly use a name given by the marketing team or existing theories and literature. If a variable is used only for about 5 lines, even i, j or k are fine.
-13.	The name of a function should tell you exactly what it does. There shouldn’t be unexpected behavior hidden in the code. For example, it shouldn’t interact with global states, which is anyway a bad thing to do.
-14.	snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions, PascalCase for class definitions and camelCase for class instances. Though it is more important to stick to the rules used in an ongoing project than coming up with your own notation rules.
-15. Classes and functions should reveal their purpose by the name. This relieves the developers from reading the internals and thus saving a lot of time. The name should be part of the domain language.
-16. Prefer explicit names over implicit names, prefer `hammer` over `nail_smashing_rod`. Don't use generic words like "data", "info" or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
-17. Attach units to a variable name if existing. For example `timeout_duration_ms`. Though again: consistency is more important.
-18. Avoid negated terms (and preferably avoid booleans all together). `is_not_empty` is harder to read than `is_empty`.
-19. Normal reasoning should be able to tell you how an algorithm roughly scales. A function `size()` should not be O(n). If you want to have a function calculating the size that is O(n), you should call it `compute_size()`.
-20. At times it is suggested to use a trailing underscore character to class variables. This is to distinguish them from local variables. However, I think this is a sign of bad code. If you need such a distinction, your methods are probably too long and your class might be too big. 
-21. Due to Robert C. Martin, high level objects have short names as they describe very general things. Low level objects have long names as they are very specific [clean code?]. This rule is in my opinion quite inaccurate as "high" and "low level" objects are relative terms. If you are the developer of the `math` library, the `sin` function is a high level object, meanwhile for everyone else it is a low level object. I don't think this rule is very helpful. I would rather say that objects used in general literature (at commonly agreed on interfaces) have short names, while everything in between might need longer names to be descriptive enough.
+As I already mentioned, naming is one of the most challenging aspects of programming. I tried to collect and synthesize some rules on the properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
+1. Names should be short but clear. Thus, there is a constant trade-off regarding the length of a name. Short names may be unclear, while long names may indicate that the object is difficult to describe. On the other hand, long names are not as detrimental as unclear names. When in doubt, choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb, a variable name is fine if a new work colleague can understand it.
+2. Think about how you would articulate a word in an everyday conversation. Would you refer to it `price of an apple` or is the context of your conversation clear enough that only `price` is sufficient?
+3. Classes and functions that adhere to the SRP are relatively easy to name because they perform only one task. Vice versa, if it's difficult to find a suitable name, reconsider whether the object adheres to the SRP and rewrite it accordingly.
+4. `set_color(7)`. What does `7` mean? Avoid using raw values in your code. Plain values are referred to as Magic Numbers because their meaning is not immediately apparent. Where Magic is being used in a negative context here. Your code should be understood! Always create a variable instead of using magic numbers. It is better to use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
+5. Well-defined levels of abstraction result in clearly defined and unique properties. This helps with finding names. Maybe you have created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be at a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
+6. Name collisions between different libraries are common and nothing to worry about. Use namespaces to distinguish them. Use the `from ... import *` syntax in Python cautiously as this removes this potentially crucial information about where a function is defined.
+7. Name collisions within the same library may occur occasionally and need to be resolved. Rename or even refactor one or both variables involved. They might perform very similar functions and should be refactored into a single object. Otherwise, you should be able to find clearly distinguishable names.
+8. Use names that are commonly used in real life. Ensure that the object in the code and the actual object have very similar properties. You should be able to communicate with a domain expert about your code, and he should understand at least some of your problems. If he doesn't understand you, you probably used names or a model that do not exist in reality. You did a great job if a marketer understands your high-level code and can provide you with useful feedback.
+9. Objects have names that are easy to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` are preferred over `price_of_apple` and `price_of_orange`, although this preference can change if you have different properties of apples as well.
+10. Use common English words that are familiar to everyone, and avoid abbreviations unless they are commonly used in spoken language, such as "CEO", etc.
+11. You are allowed to adjust the language slightly and sometimes disregard grammar rules. If you have many `fish`, you may call them `fishes` to highlight the plural. Being able to understand the meaning of the code is *importanter* than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things unambiguously. The following is perfectly viable code in Python: `for fish in fishes`.
+12. Avoid using "if," "and," or "or" in the names of your variables, functions, and classes. These concise terms may be appealing to employ, but they clearly indicate a breach of the SRP.
+13. When a variable is utilized extensively throughout the code, it is important to name it thoughtfully. Consider using a name provided by the marketing team or existing theories and literature. If a variable is used for only about 5 lines, even i, j, or k are fine.
+14. The name of a function should clearly indicate its purpose. There shouldn't be any unexpected behavior hidden in the code. For example, it shouldn't interact with global states, which is generally considered a poor practice.
+15. snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions and PascalCase for class definitions. Though it is more important to stick to the rules established in an ongoing project than coming up with your own notation rules.
+16. Classes and functions should reveal their purpose through their names. This relieves the developers from reading the internals, thus saving a lot of time. The name should be a part of the domain language.
+17. Prefer explicit names over implicit names; choose `hammer` over `nail_smashing_rod`. Avoid using generic terms such as "data," "information," or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
+18. Attach units to a variable name if they exist. For example, `timeout_duration_ms`. Though, once again, consistency is more important.
+19. Avoid using negated terms (and preferably avoid booleans altogether). `is_not_empty` is more difficult to read than `partially_full`.
+20. Normal reasoning should be able to help you understand how an algorithm generally scales. A function `size()` should not have a time complexity of O(n). If you want to create a function that calculates the size in O(n) time complexity, you should name it `compute_size()`.
+21. At times, it is suggested to use a trailing underscore character for class variables. This is to distinguish them from local variables. However, I think this is a sign of poor code. If you require such a distinction, your methods are likely too lengthy, and your class may be too large.
+22. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate because "high" and "low level" objects are relative terms. If you are the developer of the `math` library, the `sin` function is considered a high-level object, while for everyone else, it is seen as a low-level object. I don't think this rule is very helpful. I would argue that objects utilized in general literature (at commonly agreed-upon interfaces, typically have short names, whereas items falling in between may require longer names to adequately describe them.
 
 ## Naming Antipatterns
 
 ### Useles Words
 
-Sometimes words inside a name can be removed without losing any information at all. For instance, instead of `convert_to_string()`, the name `to_string()` is smaller and doesn’t lose any real information. Similarly, instead of `do_serve_loop()`, the name `serve_loop()` is just as clear. Similar words line `manager` don't add anything to the name of a variable and can therefore be omited.
+Sometimes words within a name can be omitted without losing any information. For instance, instead of using `convert_to_string()`, the name `to_string()` is shorter and does not lose any crucial information. Similarly, instead of using `do_serve_loop()`, the name `serve_loop()` is just as clear. Similar words line `manager` do not add anything to the name of a variable and can therefore be omitted.
 
 ### Generic Names
 
-Another problem are too generic names as in the following example:
+Another problem is using overly generic names, as shown in the following example:
 
 ```py
 class Rectangle {
@@ -1370,42 +1368,41 @@ class Rectangle {
 }
 ```
 
-What does `size()` exactly mean? It is a very generic name. Is is the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it's the length of one side.
+What does `size()` exactly mean? It is a very generic name. Is it the area or the length of one side? The name is not specific enough. The name `area()` would be much better. Or `length()` if it represents the length of one side.
 
 Here are some examples of generic words and some more specific alternatives. These examples are from the book [The Art of Readable Code].
 
-|Word	|Alternatives |
+|Word |Alternatives |
 |-------|-------------|
-|send	|deliver, dispatch, announce, distribute, route|
-|find	|search, extract, locate, recover|
-|start	|launch, create, begin, open|
-|make	|create, set up, build, generate, compose, add, new|
+|send |deliver, dispatch, announce, distribute, route|
+|find |search, extract, locate, recover|
+|start |launch, create, begin, open|
+|make |create, set up, build, generate, compose, add, new|
 
-It happens quite frequently that the author of some code doesn't know how to name a variable and he chooses a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is ok to use a generic name temporarily and replace it later on when you're smarter. But don't leave generic names in your code. They are a sign of laziness. Even Copilot can help you out with finding better names.
-
+It is quite common for the author of a code to struggle with naming variables and opt for a very generic name. This, however, is really bad practice. Names should be as specific as possible. It is okay to use a generic name temporarily and replace it later when you are more smarter. Avoid using generic names in your code. They are a sign of laziness. Even Copilot can help you find better names.
 
 ## Copilot
 
-Naming is one of the hardest tasks in programming and Copilot is a great help. One thing one can do is writing some code and then let Copilot find appropriate names for you.
+Naming is one of the most challenging tasks in programming, and Copilot is a great aid. One thing you can do is write some code and then let Copilot find appropriate names for you.
 
 ```py
-def print_states(states): 
+def print_states(states):
     for a in states:
         print(a)
 ```
 
-Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out pretty well.
+Here `a` is clearly not an appropriate name. Writing a comment to Copilot to search for a better name works out quite well.
 
 ```py
-    for a in states:
+for a in states:
     # find a better name for this variable
 ```
 
 Though Copilot needs some help to get started and I had to write the beginning `for` in order to get the following suggestion:
 
 ```py
-    for state in states:
-        print(state)
+for state in states:
+    print(state)
 ```
 
 This is pretty much what was expected. The same works out for function names as well.
