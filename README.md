@@ -3954,15 +3954,16 @@ Part 4: Design Principles
 Source: [https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clean Architecture]
 
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
+
 1.	Single Responsibility Principle (SRP)
 2.	Open closed principle
 3.	Liskov substitution principle
-4.	Interface segregation 
-5.	Dependency Inversion
+4.	Interface segregation principle
+5.	Dependency Inversion principle
 
-These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps a lot with the design of the code. 
+These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps with the design of the code.
 
-Interestingly enough, most people agree on the fact that these principles are very important, but there is no exact common agreement how these principles should be applied nor what they mean exactly. In my opinion, these principles hold for compiled languages as Java and C++. Python users have to know only the first two principles, the other three are nice to know but they are not as important as in compiled languages. We'll see why in a minute.
+Interestingly enough, many people agree on the fact that these principles are (or at least were) important, but there is no exact common agreement how these principles should be applied nor what they mean exactly. In my opinion, these principles hold for compiled languages as Java and C++. For Python users only the SRP is really important, the OCP and the LSP are somewhat useful. The ISP and the DIP are nice to know but they are only important in compiled languages. We'll see why in a minute.
 
 ## Single Responsibility Principle
 
@@ -3980,8 +3981,6 @@ Our code should be stable with respect to extensions later on, but not to change
 
 Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the OCP.
 
-// use some US postal codes?
-
 ```py
 class Cities:
     def zurich_postal_code(self):
@@ -3997,7 +3996,7 @@ def print_all_postal_codes():
 
 If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. We have to *modify* the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
 
-Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new class to extend the implementation of the city interface. The code below obeys the OCP.
+Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new object to extend the implementation of the city interface. The code below obeys the OCP.
 
 ```py
 from abc import ABC, abstractmethod
@@ -4022,7 +4021,7 @@ for city in cities:
 
 Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
 
-The example mentioned here is the classical example for the OCP. It is the strategy pattern. However, you might also use the decorator pattern which fulfills the OCP as well.
+The example mentioned here is the classical example for the OCP. It is the strategy design pattern [Design Patterns]. However, you might also use the decorator pattern which fulfills the OCP as well.
 
 ## Liskov Substitution Principle
 
@@ -4032,7 +4031,7 @@ The example mentioned here is the classical example for the OCP. It is the strat
 
 Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
 
-For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address. This leads to the situation where you don't know what the payment interface should take as an input argument.
+For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address [https://youtu.be/pTB30aXS77U?t=455]. This leads to the situation where you don't know what the payment interface should take as an input argument.
 
 ```py
 class Payment:
@@ -4041,7 +4040,7 @@ class Payment:
 
 This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
 
-Instead the selection of the credit card numer or the email address should be done later on, inside the specific classes.
+Instead the selection of the credit card numer or the email address should be done later on, inside the specific classes. It is there that these credentials have to be asked from the user.
 
 ```py
 from abc import ABC, abstractmethod
