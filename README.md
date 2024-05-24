@@ -136,17 +136,17 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Conclusions](#conclusions)
   - [Copilot](#copilot-5)
 - [15. Inheritance](#15-inheritance)
-  - [Two types of Inheritance](#two-types-of-inheritance)
-  - [Drawbacks of inheritance](#drawbacks-of-inheritance)
+  - [Two Types of Inheritance](#two-types-of-inheritance)
+  - [Drawbacks of Inheritance](#drawbacks-of-inheritance)
     - [Tight Coupling](#tight-coupling)
-    - [Error prone](#error-prone)
+    - [Inheritance is Error-Prone](#inheritance-is-error-prone)
     - [Obscure code](#obscure-code)
     - [Implementation](#implementation)
-    - [Overriden baseclass functions](#overriden-baseclass-functions)
+    - [Overriden Baseclass Functions](#overriden-baseclass-functions)
   - [Advantages of Inheritance](#advantages-of-inheritance)
   - [Inheritance and Composition](#inheritance-and-composition)
   - [Conclusions](#conclusions-1)
-- [16. Data types](#16-data-types)
+- [16. Data Types](#16-data-types)
   - [Lists](#lists)
   - [Enums](#enums)
     - [Booleans](#booleans)
@@ -2198,15 +2198,15 @@ The only drawback is that Copilot suggests the function `get_descriptive_name` i
 
 Or my version of this rule: "Use composition, not inheritance"
 
-"Inheritance is the base class of evil", [https://youtu.be/2bLkxj6EVoM?list=PLM5v5JsFsgP21eB4z2mIL8upkvT00Tw9B]
+"Inheritance is the base class of evil" [https://youtu.be/2bLkxj6EVoM?list=PLM5v5JsFsgP21eB4z2mIL8upkvT00Tw9B]
 
 [https://youtu.be/da_Rvn0au-g]
 
-Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often said to be an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
+Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often described as an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
-## Two types of Inheritance
+## Two Types of Inheritance
 
-There are two kinds of inheritance: implementation inheritance and interface inheritance. Interface inheritance is used to define and implement interfaces. In C++ these base classes consists of only pure virtual functions which will be implemented in the derived classes. This kind of inheritance is completely fine. Actually, it is needed for many different purposes like runtime polymorphism.
+There are two types of inheritance: implementation inheritance and interface inheritance. Interface inheritance is used to define and implement interfaces. In C++, these base classes consist of only pure virtual functions that will be implemented in the derived classes. This type of inheritance is perfectly acceptable. Actually, it is needed for many different purposes, such as runtime polymorphism.
 
 ```py
 import abc
@@ -2222,9 +2222,9 @@ class Derived(Base):
         print("a derived")
 ```
 
-There is not much more to say about interface inheritance. It is a good thing and you should use it. It is a way to define interfaces and to implement them. In C++ there is no way around it, in Python you can omit it if you want.
+There is not much more to say about interface inheritance. It is a good thing, and you should use it. It is a method to define interfaces and implement them. In C++, there is no way around it; in Python, you can omit it if you want.
 
-Implementation inheritance inherits the implementation of the base class. Here all kind of different problems may occure that we'll look at in this section. Thus, if I write about inheritance in this section, I always mean implementation inheritance.
+Implementation inheritance inherits the implementation of the base class. Here, all kinds of different problems may occur that we'll look at in this section. Thus, when I write about inheritance in this section, I always mean implementation inheritance.
 
 ```py
 class Base:
@@ -2238,45 +2238,44 @@ class Derived(Base):
     def print_a(self):
         print("derived a")
 ```
+## Drawbacks of Inheritance
 
-## Drawbacks of inheritance
-
-Implementation inheritance comes along with quite some issues and should thus be avoided if possible. In the C++ Core Guidelines there is at least a dozen of points to consider when working with implementation inheritance [C++ Core Guidelines, C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support implementation inheritance anymore. [https://golangbot.com/inheritance/]
+Implementation inheritance comes with several issues and should therefore be avoided whenever possible. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines, C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
 
 ### Tight Coupling
 
-The most obvious problem with implementation inheritance is that we may create very long inheritance chains. I once read an article about some code having 10 levels of inheritance. It turned out to be absolutely disastrous. There is barely any stronger coupling between code than in inheritance. It was impossible to apply any changes nor to remove all the inheritance. This inheritance structure was like a tree whose roots were entangling all the code around it. The code lost all his fluffiness and became solid as a rock. 
+The most obvious problem with implementation inheritance is that we may create very long inheritance chains. I once read an article about a piece of code that had 10 levels of inheritance. It turned out to be absolutely disastrous. There is hardly any stronger coupling between code than in inheritance. It was impossible to apply any changes or remove all the inheritance. The inheritance structure resembled a tree, with its roots entangling all the surrounding code. The code lost all its fluffiness and became solid as a rock.
 
-One of the main problems here is that all inheritance levels have access to the base level variables. The variables and methods are not sorted. They are just there. Meanwhile with composition, you only have to consider the location of variables inside the class. This makes it much clearer where a variable comes from and probably prevents you from accessing objects several layers deep in the hierarchy, unless you really want to do so. Therefore one can say that composition properly implements encapsulation while inheritance doesn't.
+One of the main issues here is that all levels of inheritance have access to the variables at the base level. The variables and methods are not sorted. They are just there. Meanwhile, with composition, you only need to consider the location of variables within the class. This clarification helps identify the origin of a variable and likely deters you from delving into objects nested deeply in the hierarchy, unless you intentionally choose to do so. Therefore, one can say that composition properly implements encapsulation, while inheritance does not.
 
-Furthermore, I regard the common usage of implementation inheritance as an old dogma. It is your job to write code that’s easy to understand. Don’t let yourself get bothered by someone saying that a `sheep` is an `animal` and you should therefore use inheritance. It will quite certainly not improve the code and you can end the discussion. You are probably developing a model of a `sheep` that doesn’t need to know about `animals`. You have to be pragmatic. If a `sheep` doesn't have to know about the `Animal` class, then there is no reason why it should inherit from it.
+Furthermore, I consider the widespread use of implementation inheritance as an outdated dogma. It is your responsibility to write code that is easy to understand. Don't let yourself get bothered by someone saying that a `sheep` is an `animal` and you should, therefore, use inheritance. It will almost certainly not improve the code, so you can conclude the discussion. You are probably developing a model of a `sheep` that doesn't need to know about `animals`. You have to be pragmatic. If a `sheep` does not need to be aware of the `Animal` class, there is no justification for it to inherit from it.
 
-### Error prone
+### Inheritance is Error-Prone
 
-There are several other issues with inheritance. This is already clear due to the fact that Michael Feathers wrote in his book Working Effectively with Legacy Code many examples that he wanted to refactor. In about half of them there were problems with inheritance or global variables because these things can come out of nowhere. It’s just too easy to create bugs with inheritance. One misspelled function will not override the base class function as you would have intended and you created a bug. You can delete a derived class function and the code still compiles due to the base class function. Meanwhile without inheritance you would get a compiler error for pretty much any kind of typo.
+There are several other issues with inheritance. This is already evident from Michael Feathers' book "Working Effectively with Legacy Code," where he provides numerous examples that he aimed to refactor. In about half of the cases, there were issues with inheritance or global variables because these things can come out of nowhere. It's just too easy to create bugs with inheritance. One misspelled function will not override the base class function as intended, potentially creating a bug. Even if you delete a function from a derived class, the code will still compile because of the presence of the base class function. Meanwhile, without inheritance, you would get a compiler error for pretty much any kind of typo.
 
-Though it has to be said, that with the `override` keyword or attribute, this problem has been resolved in some programming languages like C++ and Java. Still, I would recommend not to use inheritance and always use `override` in case you do have to use inheritance to prevent nasty bugs.
+Though it has to be said that with the `override` keyword or attribute, this problem has been resolved in some programming languages like C++ and Java. Still, I would recommend avoiding the use of inheritance and always using `override` when necessary to prevent nasty bugs.
 
 ### Obscure code
 
-Additionally, there is the problem with variables inherited from the base class. These are almost as bad as global variables. One doesn’t know where they come from. Imagine a variable you get from 10 levels of inheritance. And there are dozens of methods that can alter them. This is absolutely terrifying. With composition on the other hand, you'd have to dig your self a way through all the variables. This seems like a drawback at first sigth, but it turns out to be a distinct advantage as you always know where in the instance chain you are exactly. For this reason it is generally not recommended to nest inheritance and I recommend using composition instead. And honestly, I don't see at all, why inheritance should be used, other than for defining interfaces. Code reuse can be better implemented using composition or functions.
+Additionally, there is a problem with variables inherited from the base class. These are nearly as detrimental as global variables. One doesn't know where they come from. Imagine a variable obtained from 10 levels of inheritance. And there are dozens of methods that can modify them. This is absolutely terrifying. With composition, on the other hand, you would have to dig your way through all the variables. This seems like a drawback at first sight, but it turns out to be a distinct advantage as you always know exactly where you are in the instance chain. For this reason, it is generally not recommended to nest inheritance, and I recommend using composition instead. And honestly, I don't see why inheritance should be used at all, except for defining interfaces. Code reuse can be better implemented using composition or functions.
 
 ### Implementation
 
-The implementation of inheritance can be complex task, especially for some of the early OO programming languages like C++. There are many things that the compilers in the early days were not able to deal with. The danger was very high that a programmer created very subtle bugs. Even today it is still difficult to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires quite some knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice not to use inheritance you won’t have to bother with such technicalities.
+The implementation of inheritance can be a complex task, especially for some of the early OO programming languages like C++. In the early days, compilers struggled to handle many tasks. The danger was very high that a programmer created very subtle bugs. Even today, it is still challenging to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires a considerable amount of knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice and avoid using inheritance, you won't have to deal with such technicalities.
 
-// get a better image without copy right
+// get a better image without copyright restrictions.
 <img src=images/diamond.jpg width="400">
 
-When using multiple inheritance, there is the additional diamond problem. Let's say, we have a base class `A`. `B` and `C` inherit from `A`. So far so good. Now there is the class `D` inheriting from `B` and `C`. Classes `A`, `B` and `C` all have a function `f` implemented. Which function `f` should `D` use? The one from `B` or the one from `C`?
+When using multiple inheritance, there is an additional issue known as the diamond problem. Let's say we have a base class called `A`. `B` and `C` inherit from `A`. So far so good. Now there is a class `D` inheriting from classes `B` and `C`. Classes `A`, `B`, and `C` all have a function `f` implemented. Which function `f` should `D` use? The one from `B` or the one from `C`?
 
-This leads to all kind of nasty ambiguities which functions should be used. For this reason, some languages like Java don't support multiple inheritance. And while I regard single inheritance as a bad practice, multiple inheritance should certainly be avoided.
+This leads to all kinds of nasty ambiguities regarding which functions should be used. For this reason, some languages, like Java, do not support multiple inheritance. And while I consider single inheritance to be a bad practice, multiple inheritance should definitely be avoided.
 
-### Overriden baseclass functions
+### Overriden Baseclass Functions
 
-Inheritance is difficult to implement properly. Especially when dealing with constructors and overridden functions, there is quite something you have to know about v-tables and other technicalities. Chances for creating errors are significant. This can be avoided by not using inheritance. Inheritance is simply too error prone. Though this is better in Python than in C++.
+Implementing inheritance properly can be challenging. Especially when dealing with constructors and overridden functions, there is quite a bit you have to know about v-tables and other technical aspects. The chances of making errors are significant. This issue can be avoided by refraining from using inheritance. Inheritance is simply too error-prone. Though this is better in Python than in C++.
 
-Sometimes inheritance can be confusing. Let's take the following example:
+Sometimes inheritance can be confusing. Let's consider the following example:
 
 ```py
 class Animal(): 
@@ -2295,23 +2294,23 @@ if __name__ == "__main__":
     lion.feed()
 ```
 
-Is the lion now eating grass or meat? Of course it's eating meat. But using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem [https://en.wikipedia.org/wiki/Yo-yo_problem] where the programmer has switch between reading code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. We break the encapsulation of the base class and introduce a mutual dependency. This is so confusing, it is dreadful. Please don't write such code.
+Is the lion now eating grass or meat? Of course, it's eating meat. Using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem, [https://en.wikipedia.org/wiki/Yo-yo_problem] where the programmer has to switch between reading the code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. By breaking the encapsulation of the base class, we introduce a mutual dependency. This is so confusing; it is dreadful. Please refrain from writing such code.
 
-Of course, this can be avoided using the final keyword in some programming languages. But it is just another example, why in my opinion inheritance should be avoided. As I said, in my opinion there is just too much that can go wrong with inheritance. Inheritance should only be possible if it is explicitly allowed.
+Of course, this can be avoided by using the final keyword in some programming languages. But it is just another example of why, in my opinion, inheritance should be avoided. As I mentioned, in my opinion, there is simply too much that can go wrong with inheritance. Inheritance should only be possible if it is explicitly allowed.
 
-In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is bigger than it has to be. This is bad as it violates the Interface Segregation Principle, [chapter SOLID principles]. Having to write tests for unused functions in the interface is only the most obvious problem.
+In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is larger than necessary. This violates the Interface Segregation Principle [chapter SOLID Principles]. Having to write tests for unused functions in the interface is only the most obvious problem.
 
 ## Advantages of Inheritance
 
-There are quite few advantages and none of them justify using implementation inheritance. The only one I can think of is code reuse. But it is not worth the drawbacks that come along, as mentioned further above.
+There are quite little advantages, but none of them justify using implementation inheritance. The only concept I can think of is code reuse. But it is not worth the drawbacks that come along, as mentioned above.
 
-The only real use case of inheritance is in my opinion the definition of interfaces.
+The only real use case of inheritance, in my opinion, is the definition of interfaces.
 
 ## Inheritance and Composition
 
 [https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/inheritance-in-oops/]
 
-To finish this chapter, let me briefly make an example to show you the differences between inheritance and composition. In the class `Lion`, the `lion` can directly access the `food` object from the base class.
+To conclude this chapter, let me provide a brief example to illustrate the distinctions between inheritance and composition. In the class `Lion`, the `lion` can directly access the `food` object from the base class.
 
 ```py
 class Animal():
@@ -2341,16 +2340,16 @@ taxi = Car()
 print(taxi.engine.power)
 ```
 
-Now there may be many programmers that prefer the code used for the `lion`, for example because it is less code. But in my opinion, this is very bad. The `lion` code is implicit. And implicit code is genereally to be avoided because it is not as clear as explicit code. Or as the Zen of Python says: "Explicit is better than implicit." The code used with the `taxi` is clearly to be prefered as it is explicit. You have to write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it tells you where the `power` variable comes from. It is a variable inside the `engine`. This is the ultimate reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
+Now, there may be many programmers who prefer the code used for the `lion`, for example, because it is shorter. But in my opinion, this is very bad. The `lion` code is implicit. And implicit code should generally be avoided because it is not as clear as explicit code. As the Zen of Python states: "Explicit is better than implicit." The code used with the `taxi` is clearly preferred as it is explicit. Write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it indicates the origin of the `power` variable. It is a variable within the `engine`. This is the primary reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
 
 ## Conclusions
 
-You don’t gain much by using inheritance. Using composition is in most cases a perfectly viable alternative. If your code looks messy as you start using composition instead of inheritance you probably wrote messy code all along. You just didn’t see it because the inheritance was hiding it. Which is another bad thing. Composition generally makes the code more readable and easier to understand. It is also less error prone. And it is much easier to test. Inheritance is a very common source for bad code. It should be avoided if possible. Use only interface inheritance.
+You don't gain much by using inheritance. Using composition is, in most cases, a perfectly viable alternative. If your code looks messy when you start using composition instead of inheritance, you probably wrote messy code all along. You just didn't see it because the inheritance was hiding it. This is another negative aspect. Composition generally makes the code more readable and easier to understand. It is also less error-prone. And it is much easier to test. Inheritance is a common source of poor code quality. It should be avoided if possible. Use only interface inheritance.
 
-There are also some more esoteric things, for example friend classes. At first sight, friend classes look like a good idea as it makes writing code easier. However, on the long term this has similar issues as making private variables public. In most cases it results in bad code that is not properly encapsulated. Just ignore friend classes and similar things and never look back. There are very few cases where friend classes are really useful. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code in the most common way possible and only consider all the fancy language features only if they really improve your code.
+There are also some more esoteric concepts, such as friend classes. At first sight, friend classes seem like a good idea because they make writing code easier. However, in the long term, this has similar issues to making private variables public. In most cases, it results in poorly written code that lacks proper encapsulation. Just ignore friend classes and similar concepts and never look back. There are very few cases where friend classes are truly beneficial. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code using the most common language features, and only consider using fancy language features if they genuinely enhance your code.
 
 
-# 16. Data types
+# 16. Data Types
 
 "Primitive obsession is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
 [primitive obsession: https://refactoring.guru/smells/primitive-obsession]
