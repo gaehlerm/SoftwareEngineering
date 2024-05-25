@@ -165,7 +165,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [17. Properties of Variables](#17-properties-of-variables)
   - [Compile-time constant](#compile-time-constant)
   - [Runtime Constant](#runtime-constant)
-    - [Constant Class instances](#constant-class-instances)
+    - [Constant Class Instances](#constant-class-instances)
   - [Mutable Variables](#mutable-variables)
   - [Member Variables](#member-variables)
   - [Static Variables](#static-variables)
@@ -251,7 +251,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Python](#python)
     - [Type hints](#type-hints)
     - [Slots](#slots)
-    - [Abstract base classes and protocols](#abstract-base-classes-and-protocols)
+    - [Abstract Base Classes and Protocols](#abstract-base-classes-and-protocols)
   - [C++](#c)
     - [Vectors](#vectors)
     - [Smart pointers](#smart-pointers)
@@ -321,7 +321,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Aggregates](#aggregates)
     - [Organizing aggregates](#organizing-aggregates)
 - [32. 3rd party software](#32-3rd-party-software)
-- [33. Working with existing projects](#33-working-with-existing-projects)
+- [33. Working with Existing Projects](#33-working-with-existing-projects)
   - [No Interfaces](#no-interfaces)
   - [No Tests](#no-tests)
   - [Extremely long functions](#extremely-long-functions)
@@ -403,6 +403,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Working with customers](#working-with-customers)
 - [43. Code review](#43-code-review)
   - [Drawbacks](#drawbacks)
+  - [Conclusions](#conclusions-3)
 - [44. Agile](#44-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
@@ -533,6 +534,8 @@ There are some people who read through this book and were very helpful in giving
 
 I would also thank to Martin Fowler, Robert C. Martin, and Dave Thomas, amoung others, for their moral support and their great books. Though, little surprisingly, they didn't have time to read through this book.
 
+I'm also thankful Copilot and Wordvice that helped me writing this book. Copilot at times gave me some inspiration on how to finish a sentence and Wordvice helped me out with making this text more readable. When revising this text, I just realized once again how bad my English was.
+
 # 5. Preface
 
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It's not that the graduates aren't bright or talented, it's just that they haven't been taught what programming is really all about." - Robert C. Martin
@@ -557,7 +560,7 @@ Of course, I also included some code examples. I didn't want this book to be too
 
 I'm not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand as I tried to keep all chapters concise and easy to understand. It keeps the book short and motivates you to read it all because everything I wrote is important. At least, that's what I hope.
 
-I'm not God, and this is not the Holy Bible. This book aims to assist you with your programming problems, but it does not contain absolute truth. Probably, there are hardly any absolute truths in programming; there are only trade-offs. I hope that the recommendations I provide in this book will help you write better code. And if you don't agree with some of my recommendations, that's fine. You will certainly be able to find examples where my general recommendations will not apply. Feel free to create a YouTube video to explain your point. I believe this is one of the best ways to enhance our software development skills.
+I'm not God, and this is not the Holy Bible. This book aims to assist you with your programming problems, but it does not contain absolute truth. Probably, there are hardly any absolute truths in programming; there are only trade-offs. I hope that the recommendations and trade-offs I provide in this book will help you write better code. And if you don't agree with some of my recommendations, that's fine. You will certainly be able to find examples where my general recommendations will not apply. Feel free to create a YouTube video to explain your point if you can come up with a better rule how to do something. I would be delighted if you taught me how to become a better software developer. 
 
 Reading this book is only one step in your career. Next, you have to get out into the real world. Get a job. Write code and learn how to apply the principles you have learned here. It is hard; this will take your whole life. Many others face similar problems. Talk to them, improve your solutions, and get smarter. Become a real software engineer.
 
@@ -573,7 +576,9 @@ At the same time, I'd like to mention what this book isn't. It doesn't teach you
 
 ## Writing this book
 
-Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and mathematics are precise sciences, and you can derive all your formulas. Software engineering, on the other hand, is not an exact science. There are some best practice rules at most, but it is never really clear whether you should apply one rule or another. The best example is the naming of variables, functions, and classes. There is no right or wrong. There are only trade-offs. I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book aims to serve as a manual, but ultimately, you will need to learn how to apply the recommendations written here on your own.
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and mathematics are precise sciences, and you can derive all your formulas. Software engineering, on the other hand, is not an exact science. I can only give some examples to support my claims, but no proofs. And you can certainly find counter examples if you try. There are some rules of thumb at most, but there may be two rules contradicting each other. The best example is the naming of variables, functions, and classes. There is the rule that "a name should be short, yet concise". Good luck finding such a name.
+
+I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book aims to serve as a manual, but ultimately, you will need to learn how to apply the recommendations given here on your own.
 
 ## A word about Copilot
 
@@ -2658,37 +2663,38 @@ C++ used pointers extensively. Pointers were used to point to a specific locatio
 
 The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use Python because you don't have to bother with pointers at all.
 
+
 # 17. Properties of Variables
 
-Once again, things only got stated with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to make them interact with each other. Here one can easily create a huge mess if things are not considered properly. And even experienced programmers do not always know how to structure them properly. Because it is hard. And I’m trying to explain to you at least some very fundamental ideas to look out for.
+Once again, things only got started with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to facilitate interaction between them. Here, one can easily create a huge mess if things are not considered properly. Even experienced programmers do not always know how to structure them properly. It is challenging. And I'm trying to explain to you at least some very fundamental ideas to look out for.
 
-The most common way to structure data is having nested classes and lists, where one class contains instances of other classes. There’s certainly nothing wrong with that, but sometimes there are better solutions.
+The most common way to structure data is by using nested classes and lists, where one class contains instances of other classes. There's certainly nothing wrong with that, but sometimes there are better solutions.
 
-Variables do not only have a type, but they can also have additional properties that we want to look at in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic or global. And possibly many more. All these different types of variables have a different scope in which they can be accessed and altered. As always in programming, it is very convenient when you can access a variable all the time, like a global variable, for instance. At the same time, this is very prone to create bad code because it is coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn’t give you any more accessibility permissions than that.
+Variables do not only have a type, but they can also have additional properties that we will explore in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic, or global. And possibly many more. All these various types of variables have distinct scopes within which they can be accessed and modified. As is often the case in programming, it is very convenient to have access to a variable at all times, similar to a global variable. At the same time, this approach is very likely to result in poor code quality due to tightly coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn't grant more accessibility permissions than necessary.
 
 ## Compile-time constant
 
-Compile-time constant is the least powerful variable type. They are known at the time you write the code and will never change their value. In Python there is no way to enforce const'ness. But it is generally agreed upon that variables written in all upper case are constant and may not be changed, `PI=3.14`. In C++ there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is not possible anymore to change the variable `pi` or the compiler returns an error. Keep these constants somewhere separated and don’t let them clutter your code. Otherwise there is nothing you can do wrong about them.
+Compile-time constants are the least powerful variable type. They are known at the time you write the code and will never change their value. In Python, there is no way to enforce const'ness. But it is generally agreed upon that variables written in all uppercase are constant and may not be changed, `PI=3.14`. In C++, there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is no longer possible to change the variable `pi`, or the compiler will return an error. Keep these constants stored separately and avoid cluttering your code. Otherwise, there is nothing you can do wrong with them.
 
-In C++ there is also the `constexpr` key word to indicate that an expression can be evaluated at compile time. This allows the compiler to do all kind of optimization as many expressions can be evaluated at compile time.
+In C++, there is also the `constexpr` keyword to indicate that an expression can be evaluated at compile time. This allows the compiler to perform various optimizations, as many expressions can be evaluated at compile time.
 
 ## Runtime Constant
 
-Compared to compile-time constants, runtime constants do not know its values at the time of compilation. They will be assigned at runtime upon creation of the object.
+Compared to compile-time constants, runtime constants do not know their values at the time of compilation. The values will be assigned at runtime upon the creation of the object.
 
-Once created you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even make a constant global and not suffer from the main issues of global variables. Though it is still recommended to pass them around as function arguments instead. If it's global it will be acting as a hiddeng state, making it much harder to write tests.
+Once created, you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even declare a constant global variable and avoid the main issues associated with global variables. Though it is still recommended to pass them around as function arguments instead. If it's global, it will be acting as a hidden state, making it much harder to write tests.
 
-Note that in functional programming, all variables are constant.
+Note that in functional programming, all variables are constant. If you want to change a variable, you have to create a new one.
 
-### Constant Class instances
+### Constant Class Instances
 
-In C++ you can enforce an object to remain the same for as long as it exists, using the `const` keyword at the time of creation. In Python you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is easy, even though it might be a little confusing at the beginning. Everything that should never be changed should be made constant and can be defined so at the time of creation. You create an object and it will remain the same until you throw it away. This makes life of a programmer much easier and prevents abuse of variables. This has once again to do with power. Life becomes easier if you don't have the power to change an object that should not be changed. It prevents you from making a mistake by changing the object.
+In C++, you can enforce an object to remain the same for as long as it exists by using the `const` keyword at the time of creation. In Python, you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is straightforward, even though it might be a little confusing at first. Everything that should never be changed should be kept constant and defined at the time of creation. Once you create an object, it will remain the same until you decide to discard it (once it goes out of scope). This makes the life of a programmer much easier and prevents the abuse of variables. This is once again related to power. Life becomes easier when you lack the power to alter an object that should remain unchanged. It prevents you from making a mistake by altering the object.
 
-But things are not always that easy. You might have cases where all properties are const except one. Or is it? Let’s look at an example. 
+// But things are not always that easy. In some cases, you might have all properties as constants except for one. Or is it? Let's look at an example.
 
 // remove this example completely? Is it useful and "correct"?
 
-We have a bottle. It has a color, size and material. They are all fixed when the bottle is created. In our code that would be the constructor. These properties can never ever be changed. You could only replace the bottle with a different one. An instance of the bottle class should be made constant. In Python constant objects are defined by using all uppercase letters.
+We have a bottle. It has a color, size, and material. All of them are fixed when the bottle is created. In our code, that would be the constructor. These properties can never be changed. You could only replace the bottle with a different one. An instance of the Bottle class should be declared as constant. In Python, constant objects are defined using all uppercase letters.
 
 ```py
 from dataclasses import dataclass
@@ -2703,19 +2709,19 @@ if __name__ == "__main__":
     BOTTLE = Bottle()
 ```
 
-Note that color and material should probably not be a string, but rather a `Color` or `Material` enumeration, respectively. We just use strings here for the sake of simplicity. 
+Note that color and material should probably not be a string, but rather an enumeration of `Color` or `Material`, respectively. We only use strings here for the sake of simplicity.
 
-The member variables of the class are not constant. Instead I decided to make the class instance constant.
+The member variables of the class are not constant. Instead, I decided to make the class instance constant.
 
-// classes should not have const members, they should rather be private. [https://youtu.be/O65lEiYkkbc?t=3072]
+// classes should not have const members; instead, they should be private. [https://youtu.be/O65lEiYkkbc?t=3072]
 
-So far so good. We created a bottle that is contsant. But having an empty bottle is fairly useless. You want to use it. You fill water into the bottle and drink it later on. This is a really simple example but, in our code, it leads to very fundamental questions. We have a constant bottle with a not constant amount of water in it. How are we solving this problem?
+So far, so good. We created a bottle that is constant. However, having an empty bottle is quite useless. You want to use it. You fill the bottle with water and drink it later. This is a very simple example, but in our code, it raises some fundamental questions. We have a constant bottle object with a not constant amount of water in it. How are we going to solve this problem?
 
-The first attempt is removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Do never remove a const'nes from an object that is constant.
+The first attempt involves removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Never remove a const'nes from an object that is constant.
 
-We make all variables private and write getters for them. The amount of water can be changed with the functions fill and release. This is better, yet somehow it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
+We make all variables private and write getters for them. The amount of water can be adjusted using the functions `fill` and `release`. This is an improvement, but it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
 
-A completely different idea is keeping the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from getting any bigger and it keeps some structure in the code.
+A completely different idea is to keep the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from growing too large and helps maintain structure in the code.
 
 ```py
 from dataclasses import dataclass
@@ -2732,15 +2738,15 @@ class Bottle:
     material: str
 ```
 
-This is just one example how to combine const and non-const objects. One always has to consider whether an object or only parts of it should be constant. Such considerations are important as const'nes is an important property of variables. You shouldn't consider const'nes as restricting you, but rather that it fixes some behavior.
+This is just one example of how to combine const and non-const objects. One always has to consider whether an object or only parts of it should remain constant. Such considerations are important as const'nes is a crucial property of variables. You shouldn't consider const'nes as restricting you, but rather as something that fixes certain behaviors.
 
 ## Mutable Variables
 
 "immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
 
-In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (nor class instances) is very hard. If you want to know how hard exactly, try functional programming. The problem of mutable variables is, little surprising, the mutability. They may change their values, even if they are just an argument of a function. This makes keeping track of their value so hard.
+In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time, they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (or class instances) is very challenging. If you want to understand the level of difficulty, experiment with functional programming. The problem with mutable variables is, perhaps not surprisingly, their mutability. Values may change, even if they are just a function argument. This makes it so hard to keep track of their value.
 
-One option is to work more with immutable objects. For example you can replace the following code,
+One option is to work more with immutable objects. For example, you can replace the following code:
 
 ```py
 prime_numbers = [11, 3, 7, 5, 2]
@@ -2754,63 +2760,63 @@ prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
 
-At first sight the two options look pretty much equal. The first one changes the list instance, the second one return a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error prone. Furthermore it reuses the variable, which is a violation of the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133] 
+At first sight, the two options look pretty much equal. The first one changes the list instance, while the second one returns a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error-prone. Furthermore, it reuses the variable, which violates the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133]
 
-Returning a new variable as done in the second code snippet is the much saver option and to be prefered. Furthermore the second version of the code is much clearer as the variable is not reused. This creates a clear distiction between the unsorted and the sorted list.
+Returning a new variable, as demonstrated in the second code snippet, is a much safer option and is preferred. Furthermore, the second version of the code is much clearer because the variable is not reused. This creates a clear distinction between the unsorted and the sorted list.
 
-On the other hand, the second solution may be a performance bottleneck as it needs more memory if the initial value does not go out of scope. This could be a problem for large lists, especially inside loops. Though this is usually not such an issue as the `prime_numbers` go out of scope and the memory will be recycled.
+On the other hand, the second solution may create a performance bottleneck as it requires more memory if the initial value does not go out of scope. This could pose a problem for large lists, particularly within loops. Though this is usually not a significant issue because the `prime_numbers` go out of scope, and the memory will be recycled.
 
 ## Member Variables
 
-Member variable is by far the most common property of a variable. Yet there is a lot that can go wrong as well, as member variables are at the same time mutable variables. Most things you have to know are explained in the section on classes [9. Classes]. As long as your class design is alright (classes should be small!) and the methods are well designed (no unexpected side effects, as far as this is possible in a class...), you are mostly fine with using member variables. Though you have to be carefull with them.
+Being a member variable is by far the most common property of a variable. Yet, there is a lot that can go wrong as well, as member variables are mutable variables simultaneously. Most of the information you need to know is explained in the section on classes [Classes]. As long as your class design is appropriate (classes should be small!), the methods are well-designed (with no unexpected side effects, as far as this is possible in a class...), you are mostly fine with using member variables. Though you have to be careful with them.
 
-Member variables have pretty much the same problem as global variables, just in a somewhat limited scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables: You can access them from anywhere in the code.
+Member variables have essentially the same issue as global variables, but within a more restricted scope. They are a hidden state. This is one reason why classes have to be small in order to limit the extent of this hidden state. If the class becomes too big, the member variables are very similar to global variables as they can be accessed from almost anywhere in the code.
 
-Passing output arguments to functions makes the code obscure as well. The best solution would be passing around only immutable variables as done in functional programming. However, it would also be too difficult to code this way. This is how functional programming works, but it is not too wide spread, even though it exists longer than OO programming. OO seems to be in the sweet spot between accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you keep the balance and it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be. And when in doubt, use unmutable objects.
+Passing output arguments to functions can make the code less clear. The best solution would be passing around only immutable variables. However, it would also be too difficult to code in this manner. Functional programming works this way, but it is not too wide spread, even though it exists longer than OO programming. OO seems to strike a balance between the accessibility and privacy of variables and functions. But you always have to be aware of this and make sure you maintain the balance so that it doesn't tip over to the accessibility side. Keep your classes small and make everything private that can be. When in doubt, use immutable objects.
 
 ## Static Variables
 
-Static variables are member variables that share the same value over all class instances. Let’s briefly figure out when to use them. 
+Static variables are member variables that share the same value across all class instances. Let's briefly figure out when to use them.
 
-If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed to do so, as in Java, for instance.
+If a static variable is const, one could also create a const variable outside the class instead. Except if this is not allowed, as in Java, for instance.
 
-If a static variable is not const, it is probably used to change the value of the variable in all class instances at once. This is a side effect. This is dark magic! This is dreadful!! Do never use dark magic. Do never use non-constant static variables. 
+Having const static variables doesn't make much sense as they can also be stored outside of a class.
 
-And if you don't believe me, try to write unit tests for a class containing static variables. You won't be able to change the order of the tests because they might break. This is the very definition of brittle.
+If a static variable is not constant, it is likely intended to modify the value of the variable in all class instances simultaneously. This is a side effect. This is dark magic! This is dreadful!! Never use dark magic. Avoid using static variables.
+
+And if you don't believe me, try writing unit tests for a class that contains static variables. You won't be able to change the order of the tests because it might cause them to fail. This is the very definition of brittle.
 
 ## Global Variables
 
-You might have heard about global variables. They are bad and you should never use them. This is indeed true. Let me make an everyday example to show you why this is the case. 
+You might have heard about global variables. They are bad, and you should never use them. This is indeed true. Let me provide an everyday example to illustrate why this is the case.
 
-Let's say you have to give a bag to a friend. But you are not able to meet. Now your solution is you place it in the middle of Time Square and he can pick it up later on. Are you now thinking ...? No! NO! Don’t even think about it! There is NO WAY this is ever going to work. Everyone around can mess with the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, millions have failed. No one found a solution how to safely work with global variables. Do NEVER use global variables. If you think using a global variable is the only way to solve your problems you need someone to review your code and fix some fundamental issues. Using global variables is only going to make things worse.
+Let's say you have to give a bag to a friend. But you are not able to meet. Now, your solution is to place it in the middle of a very busy square, and he can pick it up later on. Are you now thinking...? No! NO! Don't even think about it! There is NO WAY this is ever going to work. Everyone around can compromise the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, and millions have failed. No one has found a solution on how to safely work with global variables. Do NEVER use global variables. If you believe that using a global variable is the only solution to your problems, you should seek assistance to review your code and address some fundamental issues. Relying on global variables will only exacerbate the situation.
 
-Of course, it’s slightly different if the bag weights 1000 tons and no one can move it. Not even Superman. Nor your friend. This is not a variable anymore. This is a constant. You define it once and it will never change. But even here it is considered bad practice to make it global. Pass them around as function arguments in order to make the dependencies apparent.
+Of course, it's slightly different if the bag weighs 1000 tons and no one can move it. Not even Superman. Not your friend. This is not a variable anymore. This is a constant. You define it once, and it will never change. But even here, it is considered bad practice to make it global. Pass the variables around as function arguments to make the dependencies apparent.
 
-Now as you already realized, global variables are bad because every line of code can change their value. Everywhere. You cannot rely on them. You never know if someone messes with their integrity. This makes code also incredibly hard to understand, because the work flow becomes extremely entangled. All of a sudden you have temporal coupling between different function calls if they change this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code.
+Now, as you may have already realized, global variables are problematic because any line of code can alter their value. Everywhere. You cannot rely on them. You never know if someone compromises their integrity. This also makes the code incredibly hard to understand, as the workflow becomes extremely entangled. All of a sudden, there is temporal coupling between different function calls if they modify this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. And once again, if you don't believe me try writing tests for code containing global variables. They will break all the time.
 
-The opposite to global variables are pure functions. Functions that rely only on the function arguments and have no side effects. You'll always know exactly what they do and rely on. They will never change any hidden state.
+The opposite of global variables are pure functions (yes, I compare variables with functions). Pure functions are functions that depend solely on their input arguments and do not produce any side effects. You'll always know exactly what they do and can rely on. They will never change any hidden state.
 
 ## Comparison of Variable Properties
 
-The different variables we looked are different with regards to how easy they can be changed. Starting with a local constant that cannot be changed and accessed only locally to a global variable that everyone can access and change. This amount of accessability has to be chosen correctly for every variable you work with. You can barely write code with only compile time constants and if you use only global variables you'll soon end up with spaghetti code. Generally it’s best to choose variables with the least possible effects that let's you still implement what you want. Prefer too little accessability over too much. You can still change it later on.
+The variables we examined vary in terms of how easily they can be changed. Starting with a local compile time constant that cannot be changed and accessed only locally, to a global variable that everyone can access and change. This level of accessibility must be selected carefully for every variable you work with. You can barely write code with only compile-time constants, but if you use only global variables, you'll soon end up with spaghetti code. Generally, it's best to choose variables with the least possible effects that still allow you to implement what you want. Prefer too little accessibility over too much. You can still change it later on.
 
-Here is a rough list how variable types are sorted by the accessability they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
+Here is a rough list of how variable types are sorted by the accessibility they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
 
-Compile time Constant < Constant < Immutable object < mutable object < class variable < inherited variable < singleton = global variable
+Compile-Time Constant < Constant < Immutable Object < Mutable Object < Class Variable < Inherited Variable < Singleton = Global Variable
 
-There is certainly nothing wrong with constants, especially with compile time constants. It's just that they can't do much. They are just there and do nothing. Or at least not much. They store some fixed value and you are always free to read it out. If you like working with constant objects, I can recommend functional programming. In functional programming everything is constant.
+There is certainly nothing wrong with constants, especially with compile-time constants. It's just that they can't do much. They are just there and do nothing. Or at least not much. They store a fixed value, and you are always free to read it. If you enjoy working with constant or immutable objects, I recommend functional programming. In functional programming, everything is constant.
 
-Immutable (non-constant) objects can only be used within the current scope and when passed as a function argument their value can't be changed. If you use immutable objects, you cannot have output arguments, which in my opinion is a good thing. Due to the SRP, a function should change the value of only one variable and in my opinion this should be the return value. So you shouldn't have output arguments anyway.
+Immutable (non-constant) objects can only be used within the current scope. When passed as a function argument, their value cannot be changed. If you use immutable objects, you cannot have output arguments, which, in my opinion, is a good thing. Due to the SRP, a function should change the value of only one variable, and in my opinion, this should be the return value. So, you shouldn't have output arguments anyway.
 
-With mutable objects you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions change only the value of the first argument, otherwise things can become very confusing. This is no strict law, but more of a convention. Changing more than one argument by a function call is also a violation of the SRP and should be avoided. If possible, return a new object instead of changing an existing one. The only reason I could think of, why one should use mutable objects is performance.
+With mutable objects, you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions modify at most the value of the first argument, as altering other arguments can lead to confusion. This is not a strict law, but rather a convention. Making multiple changes through a single function call is also a violation of the SRP and should be avoided. If possible, create a new object instead of modifying an existing one. The only reason I could think of why one should use mutable objects is performance. Creating new objects all the time may be slow.
 
-Class variables are already quite tricky to deal with. There are just too many ways they can mess up the work flow and cause side effects. They may be used, of course, but I give some lengthy explanations in the chapter on classes [chapter classes], what things have to be considered to prevent you from causing chaos. Class variables and mutable objects both offer the option of changing an object. At the same time, this is also exactly the reason why they are hard to deal with. Furthermore, class variables are accessible in a potentially much bigger scope, within the whole class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise the class has too much hidden state.
+Dealing with class variables can be quite tricky. There are too many ways they can disrupt the workflow and cause side effects. They may be used, of course, but I provide detailed explanations in the chapter on classes [Classes] about the considerations that need to be taken into account to avoid causing chaos. Class variables and mutable objects both allow for modifying an object. At the same time, this is also precisely why they are difficult to deal with. Furthermore, class variables are accessible in a significantly broader scope, throughout the entire class. This is fine for small classes, but one of the reasons why classes should not be too big. Otherwise, the class has too much hidden state that will confuse the reader.
 
-Inherited variables are even worse than class variables. You don’t see that easily where an inherited variable is defined. It’s like getting a couple of tools and you don’t know where they come from nor who they belong to. You don't know what to do if you have to exchange one tool. Compare this to composition giving you an ordered tool box to deal with. Thus, inherited variables make the code strictly harder to understand. And there’s no apparent reason why one should use inheritance. And no, the few words saved are no reason. Number of words used is not a merit for the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the main reasons why it's better not to use inheritance at all [chapter Inheritance].
+Inherited variables are even worse than class variables. It is not easy to see where an inherited variable is defined. It's like receiving a couple of tools without knowing their origin or ownership. If you need to exchange a tool, you may be unsure of what to do. Compare this to a composition that provides you with an organized toolbox to work with. Inherited variables make the code more difficult to understand. And there's no apparent reason why one should use inheritance. And no, the few words saved are not a reason. The number of words used is not a measure of the quality of code. Readability is. And readability is certainly better with composition than with inheritance. This is one of the main reasons why it's better not to use inheritance at all [Inheritance].
 
-// why not to use the singleton: 
-
-A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are really useful. This is mostly the case for connections. It allows several pieces of your code to share the same connection to your database, webserver, mobile phone, etc. If you have little communication and few relatively big data sets, this is not required. You wouldn’t gain much with the singleton pattern. Every class or library can connect to the database if it needs some data and disconnect in the end. But for many small database requests, using a singleton may increase the performance considerably. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason it is genrally discouraged to use singletons, unless you really know why you need one [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73].
+A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are truly useful. This is mostly the case for connections. It allows multiple sections of your code to utilize the same connection to your database, web server, mobile phone, etc. If you have limited communication and only a few relatively large datasets, this is not necessary. You wouldn't gain much from using the singleton pattern. Every class or library can connect to the database to retrieve data when needed and disconnect when finished. For many small database requests, using a singleton may significantly increase performance. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason, it is generally discouraged to use singletons unless you truly understand why you need one [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73].
 
 
 Part 3: Testing
@@ -3514,7 +3520,7 @@ Once you know that the engine, the gear box and the brakes of a car work and are
 
 # 20. Writing better Code with Tests
 
-Quality is a product of a conflict between programmers and testers. ― Yegor Bugayenk
+"Quality is a product of a conflict between programmers and testers." ― Yegor Bugayenk
 
 [https://www.testim.io/blog/test-automation-benefits/]
 
@@ -4442,11 +4448,11 @@ class Apple:
 
 Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
 
-### Abstract base classes and protocols
+### Abstract Base Classes and Protocols
 
-Though it is not required, I still recommend using abstract base classes (ABC), as done throughout this book. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement.
+I still recommend using abstract base classes (ABC), alhough it is not required in Python. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement. And it also prevents you from making mistakes that might be nasty to track down.
 
-An alternative to abstract baseclasses are protocols. They are mostly equivalent, though protocols have some advantage when working with type hints. Tough this is a highly advanced topic and I cannot go into details here. 
+An alternative to ABCs are Protocols, which were introduced in Python 3.8. They are mostly equivalent, though Protocols have some advantage when working with type hints. Though this is a highly advanced topic and I cannot go into details here. 
 
 ## C++
 
@@ -5251,7 +5257,9 @@ You should rethink using a 3rd party library if it has only few developers. If t
 Part 7: Existing code
 
 
-# 33. Working with existing projects
+# 33. Working with Existing Projects
+
+"Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
 
 Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
 
@@ -5702,6 +5710,8 @@ Part 8: Miscelaneous
 # 37. Comments
 
 "Code is like humor. When you have to explain it, it’s bad." – Cory House
+
+As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. 
 
 Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
 
@@ -6565,7 +6575,7 @@ Software engineers have several tasks. The most obvious one is, of course, talki
 
 You also have to talk during pair programming. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it. Because remember: the most important resource in your company isn't code, but knowledge. And knowledge is gained by talking to each other.
 
-Another fairly big job is going through merge requests (MRs). Everyone has to do it, no one really likes it. But it has to be. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so... elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be resolved by writing comments.
+Another fairly big job is going through Merge Requests (MRs), also refered to as Pull Requests. Everyone has to do it, no one really likes it. But it has to be. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so... elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be resolved by writing comments.
 
 ## Communication
 
@@ -6629,9 +6639,15 @@ Always be polite. An MR is like criticizing someones code by email. This is a hi
 
 One thing I can highly recommend is looking at the code together, kind of a pair reviewing. In theory, the referee is supposed to understand the code all by himself, or at least that’s my understanding of an MR. However, discussing the code with the author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
-In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. This is one of the reasons why pair programming does not take twice the amount of time. The code review may take a considerable amount of time that will be saved with pair programming.
+## Conclusions
 
-Now despite all these drawbacks, I think it's still very important to make merge requests. The advantages outweigh the drawbacks by a lot. However only if everyone plays by the rules.
+In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. Pair programming also allows your team to exchange knowlegde that would have to be done in the code review. This is one of the reasons why pair programming does not require twice the amount of time. The code review would take a considerable amount of time that will be saved with pair programming.
+
+For teams with little experience, I think it's still important to make merge requests. The advantages outweigh the drawbacks in my opinion. However, only if everyone plays by the rules and gives fast feedback. 
+
+With very experienced programmers, on the other hand, one can skip the code reviews and just do some high-level discussion of the code instead. This is faster and usually does the job as well. Very experienced programmers only have to coordinate the high-level abstractions and don't have to review the low-level details. I hope your team gets to this state quickly as you can be so much more productive.
+
+I generally recommend doing code reviews. But if code reviews become a nuisance, which they easily can you have to rethink the way you work and possibly find alternative ways to share knowledge about your code. Just don't forget that sharing knowledge is very important, but unfortunately also very expensive.
 
 
 # 44. Agile
@@ -7133,7 +7149,7 @@ Copilot is indeed a great tool. It was a great help writing this book and the co
 
 # 52. Further reading
 
-I learned quite some things reading books, even though not as much as I did when thinking about and discussing code at work. Here are the books that I read so far:
+I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
 
 The Pragmatic Programmer 2nd edition (Thomas, Hunt) This book is one of the inspirations to write my book here. It contains a lot of general advice on software development, tough ultimately only quite little of their recommendations made it into this book.
 
@@ -7165,12 +7181,12 @@ Refactoring 2nd edition (Martin Fowler) Simply a great book on refactoring. The 
 
 Software Engineering at google (Winters et al.)
 
-Cheat sheet bbv, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
+BBV Cheat Sheet by Urs Enzler, https://en.bbv.ch/publikationen-category/cheat-sheet-en/
 
-google style guide, https://google.github.io/styleguide/
+Google Style Guide, https://google.github.io/styleguide/
 
-And several youtube channels,
-@alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim
+And several youtube channels:
+@alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim, @ContinuousDelivery, 
 
 # 53. Outlook
 
