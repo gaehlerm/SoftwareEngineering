@@ -1,14 +1,18 @@
+Software Engineering made easy
+
+How to write better code
+
 # 1. Introduction to Software Engineering
 
 Copyright Marco Gähler, all rights reserved.
 
-This book is currently undergoing revisions. Feedback is highly valued. Either through a merge request (access rights need to be granted) or by direct email at marco.gaehler@gmx.ch. It is advisable to submit many small merge requests rather than a single large merge request. Feedback may include precise recommendations for enhancement or general reflections. Given the limited progress of the book thus far, I welcome broader feedback. Tipos can be corrected at a later stage.
+This book is currently undergoing revisions. Feedback is highly valued. Either through a merge request (access rights need to be granted) or by commenting the PDF sent to marco.gaehler@gmx.ch. It is advisable to submit many small merge requests rather than a single large merge request. Feedback may include precise recommendations for enhancement or general reflections. Given the limited progress of the book thus far, I welcome broader feedback. Tipos are getting fixed using some AI tool, so don't worry about them.
 
-Indeed, there is room for improvement in my proficiency in the English language; nevertheless, I plan to tackle this at a later stage. Pearson Germany has expressed interest in publishing this book; however, it would be in the German language. I am hopeful that it will be published as an English e-book.
+Pearson Germany has expressed interest in publishing this book; however, it would be in the German language. I am hopeful that it will be published in English as well.
 
 ## Getting started
 
-If you would rather receive the book in PDF format, please let me know. I can send it to you. The current configuration of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline located on the left-hand side. This provides an overview of all the chapters.
+The current configuration of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline located on the left-hand side. This provides an overview of all the chapters.
 
 This is a book about software engineering, similar to "Clean Code" by Robert C. Martin and "The Pragmatic Programmer" by Thomas & Hunt. The current document is only a rough draft, though it's making progress. The initial chapters feel already quite good, the latter portion of the book requires significant revision.
 
@@ -173,12 +177,12 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Comparison of Variable Properties](#comparison-of-variable-properties)
 - [18. Introduction to Testing](#18-introduction-to-testing)
   - [A short story about tests](#a-short-story-about-tests)
-  - [Test examples](#test-examples)
-    - [Structure of a Software test](#structure-of-a-software-test)
+  - [Test Examples](#test-examples)
+    - [Structure of a Software Test](#structure-of-a-software-test)
     - [When](#when)
     - [How](#how)
-  - [General thoughts about tests](#general-thoughts-about-tests)
-    - [Double Entry Book Keeping](#double-entry-book-keeping)
+  - [General Thoughts about Tests](#general-thoughts-about-tests)
+    - [Double Entry Bookkeeping](#double-entry-bookkeeping)
     - [Understand what you do](#understand-what-you-do)
     - [A few tips](#a-few-tips)
     - [Quality of test code](#quality-of-test-code)
@@ -515,9 +519,9 @@ Chapters to work on:
 
 I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before deciding to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software for the Quantum Controller Software.
 
-At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in the industry. Such that every person with a little bit of knowledge of a programming language can boost their programming skills. That being said, reading this book will, of course, not be enough. It also takes quite a lot of practice.
+At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices and everything else during the few years I spent in industry. Such that every person with a little bit of knowledge of a programming language can boost their programming skills reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice.
 
-I wasn't really sure where this book would take me. I mean, my English is fairly poor, and I was never really good at writing essays in school. But the feedback I received was very good. People praised this book for being well-structured, well-written, and easy to understand. Even Pearson Germany was interested in printing it. This motivated me to keep writing and getting it published.
+I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I mean, my English is fairly poor, and I was never really good at writing essays in school. And I only decided what chapters to write as I was reading other books. But the feedback I received was very good. People praised this book for being well-structured, well-written, and easy to understand. I hope you will agree with this assesment. Even Pearson Germany was interested in publishing it. This motivated me to keep writing and getting it published.
 
 I hope you'll enjoy reading this book,
 Marco Gähler
@@ -534,7 +538,7 @@ There are some people who read through this book and were very helpful in giving
 
 I would also thank to Martin Fowler, Robert C. Martin, and Dave Thomas, amoung others, for their moral support and their great books. Though, little surprisingly, they didn't have time to read through this book.
 
-I'm also thankful Copilot and Wordvice that helped me writing this book. Copilot at times gave me some inspiration on how to finish a sentence and Wordvice helped me out with making this text more readable. When revising this text, I just realized once again how bad my English was.
+Copilot and Wordvice helped me a lot writing this book. Copilot at times gave me some inspiration on how to finish a sentence and Wordvice helped me out with improving the language. When revising this text, I just realized once again how poor my English was.
 
 # 5. Preface
 
@@ -588,6 +592,7 @@ In general, it can be said that AI code generation is already a very useful tool
 
 
 Part 1: First things first
+
 # 6. Software Engineering
 
 "If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
@@ -598,9 +603,9 @@ But OO programming is by far not the most important topic in this book. No matte
 
 This book contains relatively few code examples. It's more about general concepts of software engineering, rather than concrete code examples. Still, some concepts are easier to understand with a few lines of code. Therefore, I tried to create some code examples. Even though it's quite challenging to find concise examples that are still expressive enough to fit into a book. As for the programming languages I chose, mostly Python and some C++. Not because these languages would be better than, for example, JavaScript, but rather because these are the languages I know. I chose two programming languages because there are some concepts that I can only explain using one or the other. Though there are only a few things that depend on the programming language. Most of the explanations provided here consist of general recommendations that are applicable to almost any programming language.
 
-This book aims to provide clear answers to simple problems. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
+"Software Engineering is the application of an epmirical, scientific approach to finding efficient, economic solutions to practical problems in software" - David Farely [Modern Software Engineering, p. xxii] This book aims to provide clear answers to simple problems in software engineering. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books.This is what makes the problems so challenging and software engineering exciting. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. This is why it is fun. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
 
-This book is about engineering, not a scientific approach. Thus, there is no absolute truth. I would rather give some general advice. Due to this reason, there are only a few references available for specific topics. Several chapters consist of my personal summaries of more specialized books. Thus, I mention the book I was reading as a foundation for the corresponding chapter.
+This book is about engineering. It's about finding ways how to write better code. It's not a strictly scientific approach, it's more of an empiric approach. Thus, there is no absolute truth and there are no proofs in this book. I will rather give you some general advice on best practices. Due to this reason, there are only a few references available for specific topics. Most chapters consist of my personal interpretations of more specialized books Thus, I mention the book I was reading as a foundation for the corresponding chapter. And of course, all of this book is biased by my personal opinions and reasonings.
 
 ## The Life of a Software Engineer
 
@@ -616,7 +621,7 @@ Indeed, these answers contain some truth. But writing code only represents a sma
 
 You will, of course, spend a fair amount of time with your precious code. But I have to disappoint you once again. It will be like in a marriage. You spend most of your time cleaning up or discussing things. The part that is truly enjoyable only covers a small fraction of it. The following plot, with highly unscientific numbers that I found somewhere on the internet, sums it up nicely.
 
-src=images/programmerActivity.png width="400">
+<img src=images/programmerActivity.png width="400">
 
 You definitely need to take a second look to fully understand the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not to mention all the meetings you have to attend as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you are working on a new project where no refactoring (code clean up) is required yet, you will have less code to read. Ultimately, you will spend more time coding. In a very large project, it takes more time to implement changes. It can take a year to become fully productive in a large project! But the company has been generating revenue from this code for a long time, so prioritizing the addition of new features is no longer as crucial. Either way, I will continue the discussion with the value from the plot.
 
@@ -2128,7 +2133,7 @@ The rule defined above by Robert C. Martin was intended for worker classes. Work
 
 // get a better image without copy right
 
-src=images/CouplingVsCohesion.svg.png width="400">
+<img src=images/CouplingVsCohesion.svg.png width="400">
 
 [fundamentals of software architecture p. 43, LCOM metric]
 
@@ -2821,65 +2826,69 @@ A Singleton is a class that can have at most one instance. If you create objects
 
 Part 3: Testing
 
+Part 3: Testing
+
 # 18. Introduction to Testing
 
-// if you don't use tdd: insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
+// if you don't use TDD, insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
-"Algorithms + data structures = software" Adapted from Niklaus Wirth
+"Algorithms + Data Structures = Software" Adapted from Niklaus Wirth
 
-"Abstractions + testing = engineering" Marco Gähler
+"Abstractions + Testing = Engineering" Marco Gähler
 
-=> software engineering = algorithms + data structures + abstractions + testing
+=> Software Engineering = Algorithms + Data Structures + Abstractions + Testing
 
-It may sound surprising to you, but proper testing is an absolutely essential step towards writing better code. It *forces* you to write better code. In fact, this was the first chapter that I wrote for this book, exactly for this reason. In the following chapters, we learn why tests are so important, how to write them and what to look out for when writing tests.
+It may sound surprising to you, but proper testing is an absolutely essential step toward writing better code. It *forces* you to write better code. In fact, this was the first chapter that I wrote for this book, precisely for this reason. In the following chapters, we will learn why tests are crucial, how to write them effectively, and what to consider when creating tests.
 
 ## A short story about tests
 
-In the early days of software engineering, people wrote code and packaged it into the software they were selling. Before the release, the whole company had to drop all its work for 2 weeks and manually check that all the features were implemented correctly. The software developers had to spend night shifts to fix the bugs ASAP because otherwise the release of the software would be delayed.
+In the early days of software engineering, people wrote code and packaged it into the software they were selling. Before the release, the entire company had to pause all its work for two weeks to manually verify that all the features were implemented correctly. The software developers had to work night shifts to fix the bugs as soon as possible because otherwise the release of the software would be delayed.
 
-But that's not the end of it. Of course, the company wants to make more money. They add some small features to this huge software and sell it again. But here comes the problem: before they can release the software and make a lot of money, they have to do the quality assurance all over again. All the code that was changed since the last check has to be tested. ALL the code has to be tested because developers changed also code used by old features. Once again, the whole company freezes for 2 weeks.
+But that's not the end of it. Of course, the company wants to make more money. They added some minor features to this extensive software and resold it. But here comes the problem: before they could release the software and make a lot of money, they had to redo the quality assurance process all over again. All the code that has been changed since the last check needs to be tested. *All* the code has to be tested because developers also changed the code used by old features. Once again, the entire company will be on a two-week freeze.
 
-Obviously, this is highly frustrating. Before every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Before every release, you waste 2 weeks of your time to do the same boring repetitive task. Before every release, the company spends millions to test things that were already tested several times before. And even worse, as the software grows, the number of bugs increases. Some of them even slip through the expensive testing. And the release gets delayed as the bugs become harder and harder to fix. It's a nightmare.
+Obviously, this is highly frustrating. Before every release, you have to test a feature that didn't change at all, yet the team could have introduced some bugs. Before every release, you waste two weeks of your time on the same boring and repetitive task. Before every release, the company spends millions to test things that have already been tested several times before. And even worse, as the software grows, the number of bugs increases. Some of them even slip through the expensive testing. As the bugs become more challenging to fix, the release gets delayed. It's a nightmare.
 
-After another terrible release, the company is at the verge of collapsing. The CEO comes to meet the development team. His tie is hanging lose and he looks really tired. Apparently, it's been days since he slept for the last time. And he says "Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development I want here a list with all the features that are currently not working according to specification. If everything works, it should be green. If you make this work, I’ll pay you one hundred Millions."
+After another terrible release, the company is on the verge of collapsing. The CEO comes to meet the development team. His tie is hanging loose, and he looks really tired. Apparently, it has been days since he last slept. And he says, "Guys, it cannot go on like this. These tests are killing us. We need the following: Here is a screen. At any time during the development process, I want to have a list of all the features that are currently not working according to the specifications. If everything works, it should be green. If you make this work, I'll pay you one hundred million dollars."
 
-Silence in the room. One hundred Millions??? You may laugh. But there are more than enough companies that would actually pay this amount for such a feature. It’s an enormous amount, but at the same time the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It’s hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working and chances are that the company will be bankrupt before you finish writing all the tests.
+Silence filled the room. One hundred million?? You may laugh. But there are more than enough companies that would actually pay this amount for such a feature. It's an enormous amount, but at the same time, the efforts required are incredible. There are millions of lines of code and tens of thousands of features. It's hard to find anyone in the company who knows what the specifications are. It will take years to get these automated tests working, and there is a possibility that the company will go bankrupt before completing all the tests.
 
-On the other hand, the benefits for the company would be worth this amount. At first you might think "ah, spend one hundred Millions for saving 2 weeks of testing??". But there is so much more to it.
+On the other hand, the benefits for the company would justify this expenditure. At first, you might think, "Ah, spend one hundred million for saving two weeks of testing??". But there is so much more to it.
 
-1.	You can release anytime the screen is green. If the team works well, you can release every day ("nightly build").
-2.	If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
-3.	There are less bugs as automated tests are more reliable than manual testing.
+1. You can release anytime the screen is green. If the team works well, you can release every day (known as a "nightly build").
 
-And that’s only the marketing side of it. At least as important is the developers’ side of this screen. So far you were always afraid that you would break some feature when changing code. A feature was working so far but all of a sudden, it’s broken. Nobody realized when it happened. You’ll spend the rest of your work life in constant fear. This is worse than the zombie apocalypse because you know it will never end. There is nothing that can make you feel save again. You are never going to touch a single line of code again unless you really have to, as you are afraid of breaking something.
+2. If a customer needs a feature urgently, you can quickly implement it and send him the nightly build.
 
-But now, all of a sudden... magic! You know if you accidentally broke a feature. The screen tells you everything is alright! Your paranoia starts to fade. You gain confidence again in your code. In your abilities. In yourself! You can start replacing all this old ugly code that had been sewn together like a Frankenstein monster. Things that were welded together by force because the author didn’t dare to rewrite the existing code to make a clean solution possible. Suddenly things look fine again.
+3. There are fewer bugs because automated tests are more reliable than manual testing.
 
-You go to your CEO, give him a hug and a box of chocolate. You thank him for saving your career and you pay him back the one hundret Millions.
+And that's only the marketing side of it. Equally important is the developers' perspective on this screen. So far, you have always been afraid that you would break some feature when changing code. A feature was working fine until suddenly, it broke down. Nobody realized when it happened. You'll spend the rest of your work life in constant fear. This situation is worse than the zombie apocalypse because you know it will never end. There is nothing that can make you feel safe again. You may never want to touch a single line of code again unless absolutely necessary, as you fear breaking something.
 
-Did I exagerate a little to make my point? Maybe. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. They are no guarantees to make your software project a success. But I can tell you that projects without automated tests are doomed and will fail sooner rather than later.
+But now, all of a sudden... magic! If you accidentally broke a feature, you would know. The screen indicates that everything is alright! Your paranoia starts to fade. You regain confidence in your code. In your abilities. In yourself! You can start replacing all this old, ugly code that has been patched together like a Frankenstein monster. Things were welded together by force because the author was hesitant to rewrite the existing code to create a cleaner solution. Suddenly, things look fine again.
 
-I hope this is enough motivation to make you read through this chapter and really try to write tests by yourself. As always, it’s not easy at the beginning. Ask the internet and others for advice and you’ll get a fairly good idea how to write them.
+You go to your CEO, give him a hug, and a box of chocolates. You thank him for saving your career and you repay him the one hundred million dollars.
 
-## Test examples
+Did I exaggerate a little to make my point? Maybe. But the exaggeration is smaller than you think. The importance of writing automated tests cannot be overestimated. Tests are no guarantee to make your software project a success. But I can tell you that projects without automated tests are doomed and will fail sooner rather than later.
 
-Here is a small real-world example how a test works. 
+I hope this serves as sufficient motivation for you to read through this chapter and genuinely attempt to write tests on your own. As always, it's not easy at the beginning. Ask the internet and others for advice, and you'll get a fairly good idea of how to write them.
 
-1.	Make sure the coffee machine is clean, has coffee, water and electricity. Press the coffee button. Wait until the coffee has finished.
-2.	Taste the coffee. If you like it, the test passes. Otherwise it fails.
-3.	Throw away the cup and the remaining coffee.
+## Test Examples
 
-This is it. Tests always consist of a few instructions that should be easy to understand. The result of the test can take up only two values. It passed (you like the coffee) or it failed (you didn’t like it). If it failed, you should call the technician to fix it. Or even better, you write a script that calls the technician automatically.
+Here is a small real-world example of how a test works.
 
-Tests consist of three stages that are run on a test bench.
+1. Ensure that the coffee machine is clean and equipped with coffee, water, and electricity. Press the coffee button. Wait until the coffee has finished brewing.
+2. Taste the coffee. If you like it, the test passes. Otherwise, it fails.
+3. Discard the cup and the leftover coffee.
 
-1.	Setup: make everything ready for the test
-2.	Execution: check the requirements are fulfilled
-3.	Tear-down: clean up all the objects created for the test
+This is it. Tests always consist of a few instructions that should be easy to understand. The result of the test can only take on two values. It passed (you liked the coffee) or it failed (you didn't like it). If it failed, you should call a technician to fix it. Or even better, you could write a script that automatically calls the technician.
 
-### Structure of a Software test
+Tests consist of three stages that are conducted on a test bench.
 
-In software we do the same as for the coffee machine in the example above. In every programming language, there is a major testing library dedicated for this purpose. They all do pretty much the same, no matter what programming language you use. The Python testing library is called pytest.
+1. Setup: Prepare everything for the test
+2. Execution: Check if the requirements are fulfilled
+3. Tear-down: Clean up all the objects created for the test
+
+### Structure of a Software Test
+
+In software, we follow the same process as with the coffee machine in the example above. In every programming language, there is a major testing library dedicated to this purpose. They all function similarly, regardless of the programming language you use. The Python testing library is called pytest.
 
 Here is a small example of a class we want to test:
 
@@ -2942,37 +2951,37 @@ This returns the following error message:
 AssertionError: should = 2, is = 1
 ```
 
-As you can see it’s pretty simple to write a test. Not only in Python. There are testing libraries for all major programming languages. And from the testing library point of view you won’t have to learn much more than what I explained here for quite a while.
+As you can see, it's pretty simple to write a test. Not only in Python. There are testing libraries available for all major programming languages. From the perspective of the testing library, you won't need to learn much more than what I have explained here for a considerable period.
 
-Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when and how you should test. Let’s have a look at the code and try to understand.
+Once again, the difficulty lies not in the usability of the testing framework. The much harder questions are what, when, and how you should test. Let's have a look at the code and try to understand.
 
 ### When
 
-Our class vector contains the member function `distance_to`. It is part of the interface of the class and therefore has to be tested. This is the price you pay for public functions. Or rather: It’s a small fraction of the price you pay for having public functions. Keep functions private if possible. Private functions give you much more degrees of freedom as you are allowed to change them at will and you don't have to test them. For pubilc functions you have to make sure that the interface stays the same. Making a function public means that you guarantee that the function will stay the same. Avoid changing existing interfaces, it's a lot of work. Write tests for public functions to assert that you don't accidentaly change their behavior.
+Our class vector contains the member function `distance_to`. It is part of the class interface and, therefore, must be tested. This is the price you pay for public functions. Or rather, it's a small fraction of the price you pay for having public functions. Keep functions private whenever possible. Private functions offer greater flexibility since you can modify them freely without the need for testing. For public functions, you have to ensure that the interface remains the same. Ensuring a function is public means committing to keeping the function unchanged. Avoid altering existing interfaces; it requires a significant amount of work. Write tests for public functions to assert that you don't accidentally change their behavior.
 
 ### How
 
-Inside the test_vector.py file we write the test case. Before you miss it, I’d like the emphasize the very first line. We want to test the `Vector` class. We have to import the corresponding file (or libary).
+Inside the test_vector.py file, we write the test case. Before you miss it, I'd like to emphasize the very first line. We want to test the `Vector` class. We have to import the corresponding file (or library).
 
-Next, we define the test case. Every test case gets a unique name. This name will show up in the test report if this test fails. It is good practice to give the test case a name which explains fairly well what it tests. These names may be up to one line long if needed. You don’t use these names anywhere else so it doesn’t hurt having very long test names.
+Next, we will define the test case. Every test case receives a unique name. This name will appear in the test report if this test fails. It is good practice to give the test case a name that fairly explains what it tests. These names may be up to one line long if necessary. You don't use these names anywhere else, so it doesn't hurt to have very long test names.
 
-Inside the test we start with the setup part. In order to test the `distance_to` function we need two vector objects `v1` and `v2`. In the next line we calculate the distance between `v1` and `v2`.
+Inside the test, we start with the setup part. In order to test the `distance_to` function, we need two vector objects `v1` and `v2`. In the following line, we calculate the distance between `v1` and `v2`.
 
-Now comes the execution of the test. We check if the result of the test is correct.
+Now comes the execution of the test. We check if the test result is correct.
 
-Good inputs should thoroughly test the code. But they should also be simple so that they’re easy to read. For tests it's even more important that they are easy to read than for normal code. Tests should not contain any fancy logic. Just follow the pattern of the example above. Setup, check, tear-down. Make it as easy as possible.
+Good inputs should thoroughly test the code. But they should also be simple so that they are easy to read. For tests, it is even more important that they are easy to read than for normal code. Tests should not contain any complex logic. Just follow the pattern of the example above. Set up, check, tear down. Make it as easy as possible.
 
-## General thoughts about tests
+## General Thoughts about Tests
 
-One of the main missunderstandings about tests is that tests are supposed to prove that there are no errors around. This corresponds to Dijkstras fundamental attempt to mathematically prove that a certain algorithm is correct. Which failed misserably. Programming is just too complex for such fundamental approaches. They won't work as the complexity in any decent sized program is too high. It is simply impossible to prove that a program is correct. And therefore it is also impossible to write tests that prove that a program is correct. "Tests can only prove the existance of bugs, not their absence." [Dijkstra]
+One of the main misunderstandings about tests is that they are supposed to prove that there are no errors present. This corresponds to Dijkstra's fundamental attempt to mathematically prove that a certain algorithm is correct. This failed miserably. Programming is too complex for such fundamental approaches. They won't work because the complexity in any decent-sized program is too high. It is simply impossible to prove that a program is correct. And therefore, it is also impossible to write tests that prove that a program is correct. "Tests can only prove the existence of bugs, not their absence." - Dijkstra
 
-A lot of people think that the only reason for writing tests is finding or preventing bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but another reason is probably even more important: Tests enable us to fixate the behavior of the code.
+Many people believe that the sole purpose of writing tests is to discover or prevent bugs. They couldn't be further from the truth. Of course this is one of the reasons why we write tests, but another reason is probably even more important: Tests enable us to fixate the behavior of the code.
 
-### Double Entry Book Keeping
+### Double Entry Bookkeeping
 
-Robert C. Martin compared programming with tests to Double Entry Book Keeping [Clean Craftsman]. I really like this comparison. In both cases you have two independent truths (creditor and debtor, or code and tests, respectively) that have to yield the same result. Once both truths yield equal results, it is highly likely that this result is correct. Especially if one of them is as easy as the code of tests. It is unlikely that the same mistake was made for both code and tests when implementing both of them independently.
+Robert C. Martin compared programming with tests to double entry bookkeeping [Clean Craftsman]. I really like this comparison. In both cases, you have two independent truths (creditor and debtor, or code and tests, respectively) that must produce the same result. Once both propositions yield equal results, it is highly likely that this outcome is correct. Especially if one of them is as simple as the test code. It is unlikely that the same mistake was made in both the code and tests when implementing them independently.
 
-Having two absolute truths allows you to play around with one of them. You still have something to check that the final result is correct. This allows you to refactor the code while leaving the tests as they are. Or you may change the tests while leaving the code as is. The other, untouched, component always works as a ground truth that you can compare your changes with. This allows you to refactor your code without having to be afraid that your code might break. And if your tests fail for some unknown reason, you can just undo your changes.
+Having two absolute truths allows you to manipulate one of them. You still have something to check to ensure that the final result is correct. This allows you to refactor the code while leaving the tests unchanged. Or you may change the tests while leaving the code as is. The other, untouched component always serves as a ground truth against which you can compare your changes. This allows you to refactor your code without the fear of breaking it. If your tests fail for an unknown reason, you can simply revert your changes.
 
 Here is a very small example of a function with a test.
 
@@ -2984,6 +2993,8 @@ def add(a, b):
 def test_add():
     assert add(1, 2) == 3
 ```
+
+/////////
 
 Now if you want the function `add` to return a different result, you'll also have to change the test as well. Each change has to be applied in both, the code and the test.
 
@@ -3022,6 +3033,8 @@ For a single argument function, I recommend testing all possible corner cases an
 For functions with many arguments it becomes very tricky to write tests. If you have 3 arguments and for each one you would like test 3 values you end up with `3^3 = 27` test cases. This is quite a lot. Now you really have to make sure you understand what you are doing. 
 
 Here is an example of a function with three arguments. I have not written down all the test cases, but you can guess how tedious this might become.
+
+//////////
 
 ```py
 def f(a,b,c):
