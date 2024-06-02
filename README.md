@@ -199,19 +199,19 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [The Beyoncé Rule](#the-beyoncé-rule)
   - [Not Automatable Tests](#not-automatable-tests)
 - [19. Types of Tests](#19-types-of-tests)
-  - [Unit tests](#unit-tests)
-    - [Testing files in unit tests](#testing-files-in-unit-tests)
+  - [Unit Tests](#unit-tests)
+    - [Testing Files in Unit Tests](#testing-files-in-unit-tests)
     - [Testing classes](#testing-classes)
     - [Copilot](#copilot-6)
-  - [Integration tests](#integration-tests)
-  - [Functional tests](#functional-tests)
-  - [Other kinds of tests](#other-kinds-of-tests)
-    - [Performance tests](#performance-tests)
-    - [Explorative tests](#explorative-tests)
-  - [When to run tests](#when-to-run-tests)
-  - [Who should write tests](#who-should-write-tests)
-  - [The testing pyramid](#the-testing-pyramid)
-- [20. Writing better Code with Tests](#20-writing-better-code-with-tests)
+  - [Integration Tests](#integration-tests)
+  - [Functional Tests](#functional-tests)
+  - [Other Kinds of Tests](#other-kinds-of-tests)
+    - [Performance Tests](#performance-tests)
+    - [Explorative Tests](#explorative-tests)
+  - [When to run Tests](#when-to-run-tests)
+  - [Who should write Tests?](#who-should-write-tests)
+  - [The Testing Pyramid](#the-testing-pyramid)
+- [20. Writing Better Code with Tests](#20-writing-better-code-with-tests)
   - [Unit tests](#unit-tests-1)
   - [Integration and Functional Tests](#integration-and-functional-tests)
   - [Testing existing code](#testing-existing-code)
@@ -3264,20 +3264,23 @@ As software engineers, we aim to automate everything, including tests. However, 
 
 # 19. Types of Tests
 
-There are different types of tests, depending on their scope. There are several different categories of tests. Though for the sake of simplicity I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a mixture of two different types. But in general, the following 3 categories are sufficient.
-1. Unit tests test the behavior of individual functions, classes and modules.
-2. Integration tests test interaction between the modules.
-3. Functional tests test the behavior of the complete software.
+There are different types of tests, depending on their scope. There are several different categories of tests. Though, for the sake of simplicity, I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a combination of two different types. But, in general, the following three categories are sufficient.
 
-As we will see, each of these categories has its own right of existance as they each cover different parts of the code. They are all important and should be used in combination. There are also other types of tests and some of them we will go into more details later on, while others we just ignore. Also the naming of the different types of tests is not standardized. There are different names for the same type of test. For example functional tests are also called end-to-end (E2E) or acceptance tests.
+1. Unit tests assess the behavior of individual functions, classes, and modules.
 
-The small unit tests are the foundation of the testing infrastructure. They can be executed quickly. Meanwhile going towards bigger tests, they may take longer to execute and are testing the interaction of components, rather than individual components themselves. Thus, bigger tests are more likely to find bugs, but at the same time they are not appropriate for locating them. 
+2. Integration tests assess the interaction between modules.
 
-Functional tests can also be written in a different programming language and by a different person than the underlying code. They depend for example on the API that might be written in a different language. I wrote functional tests of some C++ software in Python as it was easier to process the resulting text files.
+3. Functional tests assess the behavior of the entire software system.
 
-## Unit tests
+As we will see, each of these categories has its own right to exist as they each cover different parts of the code. They are all important and should be used in combination. There are also other types of tests that we will delve into later, while others we will simply ignore. Also, the naming of the different types of tests is not standardized. There are different names for the same type of test. For example, functional tests are also referred to as end-to-end (E2E) or acceptance tests.
 
-First we have to figure out, why unit tests are acutally needed. A lot of programmers work as follows: They write a function and then they have to figure out if it works correctly. In order to do so, they use print statements or use the debugger. They run the code and check if the results are correct. Let's look at the following example.
+The small unit tests are the foundation of the testing infrastructure. They can be executed quickly. Meanwhile, as tests become more complex, they may take longer to execute as they are designed to assess the interaction of components rather than individual components themselves. Thus, larger tests are more likely to find bugs, but at the same time, they are not suitable for pinpointing them.
+
+Functional tests can also be written in a different programming language and by a different person than the underlying code. They depend, for example, on the API that might be written in a different language. I wrote functional tests for some C++ software in Python because it was easier to process the resulting text files.
+
+## Unit Tests
+
+First, we have to figure out why unit tests are actually needed. Many programmers follow this workflow: they write a function and then need to determine if it works correctly. To achieve this, they utilize print statements or the debugger. They run the code and check if the results are correct. Let's look at the following example.
 
 ```Py
 def square(x):
@@ -3288,9 +3291,9 @@ print(square(2))
 print(square(5))
 ```
 
-This works. People worked like this for decades. But it’s absolutely terrible. The print statements will be deleted once the code works. The checks will be thrown away and no one knows anymore what the code is actually supposed to do. Whether it still works. When changing the function, you have to test it all over again. Everything. Every time. By hand! This is a typical example of a procedural DRY violation that should be optimized away. And the solution are unit tests.
+This works. People worked like this for decades. But it's absolutely terrible. The print statements will be deleted once the code works. The checks will be discarded, and no one knows anymore what the code is actually supposed to do. Whether it still works. When modifying the function, you have to test it again. Everything. Every time. By hand! This is a typical example of a procedural DRY violation that should be optimized. The solution is unit tests.
 
-Unit tests cover comparably small pieces of code. Usually they test a public method or a standalone function. In the example above, the unit tests would check everything that is checked using print statements. The unit tests for the `square` function would look something like this:
+Unit tests cover relatively small sections of code. Usually, they test a public method or a standalone function. In the example above, the unit tests would verify everything that is typically verified using print statements. The unit tests for the `square` function would look something like this:
 
 ```py
 def test_square():
@@ -3299,19 +3302,19 @@ def test_square():
     assert square(5) == 25
 ```
 
-This does pretty much the same as the print statements above. But with the very important difference that this test code here is going to stay. It goes into the test suite and it will stay there forever. Or at least as long as you still have the `square` function defined. This test will be executed every time you run all the unit tests. You'll know if the code still works, even after changing the underlying implementation. The only drawback is that it takes a millisecond for each test to execute (and these numbers may add up as you keep writing unit tests) and that you'll have to change the test code if you change the implementation. But the last point is actually a good thing. It prevents you from inadvertently changing the behavior of the code. You have to assert that you want the behavior to change. If you change the actual code, you also have to change the according unit tests.
+This code snippet essentially performs the same function as the print statements mentioned earlier. But with a very important difference, this test code will remain. It goes into the test suite and will remain there indefinitely. Or at least as long as you still have the `square` function defined. This test will be executed every time you run all the unit tests. You'll know if the code still works, even after changing the underlying implementation. The only drawback is that it takes a millisecond for each test to execute, and these numbers may add up as you keep writing unit tests. Additionally, you will have to modify the test code if you change the implementation. But the last point is actually a good thing. It prevents you from inadvertently changing the behavior of the code. You have to assert that you want the behavior to change. If you change the actual code, you also have to update the corresponding unit tests.
 
-It may sound surprising to you, but unit tests are the foundation of the testing infrastructure. They are even more important than functional tests. This is because unit tests are fast and they can give you precise information about what piece of your code contains a bug, meanwhile functional tests can only tell you that something is wrong within the whole code base and they take a lot of time to execute. Therefore, having your whole code covered with unit tests will have a similar effect as having it covered with functional tests. However, unit tests have the advantage that you'll know quite exactly where an error occurred and they are much faster to execute. 
+It may sound surprising, but unit tests are the cornerstone of the testing infrastructure. They are even more important than functional tests. This is because unit tests are fast and can provide precise information about which part of your code contains a bug. In contrast, functional tests can only indicate that something is wrong within the entire code base and they require a significant amount of time to execute. Therefore, having your entire code covered with unit tests will have a similar impact as having it covered with functional tests. However, unit tests have the advantage that you will know precisely where an error occurred, and they are much faster to execute.
 
-The drawback being that unit tests do not test if these building blocks are connected correctly. Unit tests cannot test the interaction of different code blocks.
+The drawback is that unit tests do not verify whether these building blocks are connected correctly. Unit tests cannot assess the interaction between different code blocks.
 
-### Testing files in unit tests
+### Testing Files in Unit Tests
 
-Usually, unit tests only need a setup and an execution phase. There is no tear down function required as unit tests don’t interact with any files or databases that you would have to delete in the end.
+Usually, unit tests only require a setup and an execution phase. There is no tear-down function required for unit tests since they do not interact with any files or databases that need to be deleted afterward.
 
 "Why...? How? No files? No database?"
 
-Yes, good point. According to the SRP, a function or class should do only one thing. Therefore it should not read a text file and do some complicated calculation. Reading a text file should be done in a dedicated function. This function will not have a unit test. But it is not necessary as reading a file and returning it as a string is no difficult task that needs to be tested automatically. And it will be covered by functional test.
+Yes, that's a good point. According to the SRP, a function or class should only perform one task. Therefore, it should not read a text file and perform complicated calculations. Reading a text file should be done in a dedicated function. This function will not have a unit test. But it is not necessary to test automatically because reading a file and returning it as a string is not a difficult task. The code will be covered by functional testing.
 
 Let's say we have the following code.
 
@@ -3324,7 +3327,7 @@ def share_values(filename):
     return share_values
 ```
 
-The section of this code reading the file is very simple. It is not necessary to test it. Instead, it can be easily exctracted into a separate function. This is called the "Wrap Method" by Michael Feathers [WELC, p.70]
+The section of this code that reads the file is very simple. It is not necessary to test it. Instead, it can be easily extracted into a separate function. This method is referred to as the "Wrap Method" by Michael Feathers [WELC, p.70]
 
 ```py
 def get_share_values(file_content):
@@ -3341,7 +3344,7 @@ def share_values(filename):
     return get_share_values(file_content)
 ```
 
-Here we wraped the code reading out the file into a separate function. The rest of the code is written into a dedicated function. For this function one can easily write a unit test because it doesn't depend on the file system. A test might look as follows:
+Here, we wrapped the code for reading the file into a separate function. The rest of the code is written within a dedicated function. For this function, one can easily write a unit test because it does not depend on the file system. A test might look as follows:
 
 ```py
 def test_get_share_values():
@@ -3349,30 +3352,30 @@ def test_get_share_values():
     assert get_share_values(file_content) == {"Apple": 150.3}
 ```
 
-This is similar to the GUI layer for functional tests. You pack everything you don’t want to test into a thin layer that is unlikely to fail and the remaining test becomes much smoother. In this case here this small layer is the function `read_share_values` which reads the file into a string. Uncle Bob calls this a "Humble Object" [Clean Craftsman p.157]. It is a small layer that is unlikely to fail and therefore does not need to be tested. It is just a thin wrapper around the function reading the file.
+This is similar to the GUI layer for functional tests. You pack everything you don't want to test into a thin layer that is unlikely to fail, making the remaining test much smoother. In this case, this small layer is the function `read_share_values`, which reads the file into a string. Uncle Bob refers to this as a "Humble Object" [Clean Craftsman p.157]. It is a thin layer that is unlikely to fail and therefore does not need testing. It is simply a thin wrapper around the function that reads the file.
 
-The same holds also for database access or the current time value. You write a small wrapper function that does nothing but calling the database or returning the current time. Then you pack everything else into a separate function that you can test.
+The same holds true for database access or retrieving the current time value. You write a small wrapper function that does nothing but calls the database or returns the current time. Separate the remaining code into a distinct function that can be tested independently.
 
-When writing integration or functional tests, an even better solution is writing Dependency Injection (DI) [https://martinfowler.com/articles/injection.html] as explained in the next chapter. But for the moment we’ll leave it with the small wrapper function.
+When writing integration or functional tests, an even better solution is to implement Dependency Injection (DI) [https://martinfowler.com/articles/injection.html] as explained in the next chapter. But for the moment, we'll leave it with the small wrapper function.
 
 ### Testing classes
 
-Writing unit tests for classes is probably the most important part of this chapter. This is not only because of the prevalence of classes, but also because classes tend to become messy without any unit tests.
+Writing unit tests for classes is arguably the most crucial aspect of this chapter. This is not only due to the prevalence of classes but also because classes tend to become messy without any unit tests.
 
-First of all, classes tend to become too big. They have too many member variables and complicated methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do [classes]. Member variables increase the dimensionality of the problem under test. This leads to many more possible test cases than should be required for good class design, as discussed in chapter [Testing].
+First of all, classes tend to become too large. They have too many member variables and complicated methods. Both will make it very hard to write unit tests. Member variables share the same issues as function arguments do [Classes]. Member variables increase the dimensionality of the problem being tested. This leads to many more possible test cases than should be required for good class design, as discussed in chapter [Testing].
 
-Furthermore, there is the issue of how to deal with private methods in big classes. Apparently, the testing framework doesn’t have access to private methods. No one has, except for the class itself and maybe some friends classes. A first attempt is making the private methods public. This, however, is not recommended. You should not make methods public, only in order to test them. This will lead to crippled code with too many public methods, which is the exact opposite of encapsulation. For the same reason you should resist the temptation of making the test a friend class of the class under test. Therefore, unit tests (and certainly also all other tests) should only test the public interface of a class. It should test the class as a whole. If you are tempted to test also some private methods, you should resist. This is a clear sign that your private methods are too complex. Make these private methods a class on their own with a public interface that you can test.
+Furthermore, there is the issue of how to handle private methods in large classes. Apparently, the testing framework does not have access to private methods. No one has, except for the class itself and perhaps some friends' classes. One initial approach is to change the private methods to public. This, however, is not recommended. It is not advisable to make methods public solely for testing purposes. This will result in convoluted code with an excessive number of public methods, which is the complete opposite of encapsulation. For the same reason, you should resist the temptation of making the test a friend class of the class under test. Therefore, unit tests (and certainly all other tests) should only test the public interface of a class. It should test the class as a whole. If you are tempted to test private methods, you should resist. This is a clear sign that your private methods are too complex. Consider creating a separate class for these private methods with a public interface that can be tested.
 
-Classes that are hard to instantiate are another problem. For example, if an object is hard to construct, or the constructor has side effects that are not guaranteed to be undone by the destructor. Such as opening a file, incrementing a counter, etc. In the real code, it may be guaranteed that all the required conditions are met such that you never run into trouble. For instance that you are instantiating a class only once. When running unit tests however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
+Classes that are difficult to instantiate pose another problem. For example, if an object is difficult to construct, or if the constructor has side effects that are not guaranteed to be undone by the destructor. Such as opening a file, incrementing a counter, etc. In the actual code, it can be ensured that all necessary conditions are met so that you never encounter any issues. For instance, if you are instantiating a class only once. When running unit tests, however, these guarantees may be broken in some cases, leading to undesired behavior. For these reasons, the constructors should be small and not execute any fancy operations.
 
-As a summary one can say the following things about classes and tests:
+In summary, the following points can be made about classes and tests:
 - Classes should be small and contain few member variables
-- If you feel like testing private methods, you should refactor them into separate classes
-- The constructors should be simple and not rely on any fancy logic
+- If you want to test private methods, consider refactoring them into separate classes.
+- The constructors should be simple and not rely on any complex logic
 
-All these rules are implied by the topics we covered so far. But now we have a reason why we absolutely have to obey them. The unit tests force us to do so.
+All these rules are implied by the topics we have covered so far. But now we have a reason why we absolutely have to obey them. The unit tests compel us to do so.
 
-Here's an example how to refactor a complicated private method into a dedicated class.
+Here is an example of how to refactor a complex private method into a dedicated class.
 
 ```py
 class Car:
@@ -3408,11 +3411,11 @@ class Car:
         self.engine.increase_rpm()
 ```
 
-Now the code is much better. By moving the method `increase_rpm` into the `Engine` class and making it public, we can now test it. Furthermore this method anyway belongs to the `Engine` class, not into the `Car` class.
+Now the code is much better. By moving the method `increase_rpm` into the `Engine` class and making it public, we can now test it. Furthermore, this method belongs to the `Engine` class, not the `Car` class.
 
 ### Copilot
 
-Copilot can be a significant help when writing tests. I wrote a function to convert literal numbers into roman numbers and created a unit test file. Copilot started implementing the unit tests right away and without further instructions.
+Copilot can be significantly helpful when writing tests. I have written a function to convert numerical values into Roman numerals and have created a unit test file. Copilot started implementing the unit tests without any additional instructions.
 
 ```py
 from refactoring import roman_number
@@ -3437,101 +3440,102 @@ The code above can be refactored, for example using a dict,
         assert roman_number(key) == dictionary[key]
 ```
 
-Even if I wanted this change, when looking at the code it is not quite clear if this is an improvement over the original code. We have removed some redundancy and use only one assert. On the other hand the redundancy was not that bad and the old code was very easy to understand, which is maybe even more important than removing the repeating code. This is a decision that takes human judgment and I'm still not sure which one is the better solution.
+Even if I desired this change, upon reviewing the code, it is not entirely clear whether this is an enhancement over the original code. We have removed some redundancy and now only use one assertion. On the other hand, the redundancy was not that significant, and the old code was very easy to understand, which may be even more important than removing the repetitive code. This decision requires human judgment, and I am still unsure which solution is better.
 
-## Integration tests
+## Integration Tests
 
-Integration tests lie in between unit and functional tests with respect to all: size, granularity and execution time. Integration tests only test the interaction of several pieces of code. The interaction of several libraries/modules for instance. The public interface of the libraries under test is not connected to other libraries, but rather to fake or mock objects. These allow a library to be tested alone, without creating a functional test.
+Integration tests lie between unit and functional tests in terms of size, granularity, and execution time. Integration tests only assess the interaction of multiple pieces of code. The interaction of several libraries/modules, for instance. The public interface of the libraries under test is not connected to other libraries, but rather to fake or mock objects. This allows a library to be tested independently, without creating a functional test.
 
-Integration tests, at its own right, are just at least as important as functional tests. Integration tests are different from functional tests as they use fakes and stubs to mimic the behavior of collaborating objects, while functional tests use the real objects.
+Integration tests, in their own right, are just as important as functional tests. Integration tests are different from functional tests because they utilize fakes and stubs to replicate the behavior of collaborating objects, whereas functional tests employ the actual objects.
 
-// is there anything else to write here? About fakes, mocks and stubs?
+// is there anything else to write here? About fakes, mocks, and stubs?
 
-## Functional tests
+## Functional Tests
 
-Functional tests do what most people would intuitively expect from a test. Some marketing person, e.g. the Product Manager (PM), orders a new feature. He tells you, more or less exactly, what this feature should do and gives you some examples. The feature is complete once these examples can be executed with your software. As you don’t want to end up in the same situation as in the story in the previous chapter [Testing] with the desperate manager, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone was changing the underlying code. So there is one thing you'll always do: for every new ticket you write a functional test.
+Functional tests perform tasks that align with most people's intuitive expectations of a test. Some marketing personnel, for example, the Product Manager (PM), orders a new feature. He tells you, more or less exactly, what this feature should do and provides you with some examples. The feature is considered complete once these examples can be executed using your software. As you don't want to end up in the same situation as in the story in the previous chapter [Testing] with the desperate manager, you write automated tests that cover the examples. This is a fairly good guarantee that the feature is still working, even if someone were changing the underlying code. So, there is one thing you will always do: write a functional test for every new ticket.
 
-If you publish code examples as part of your API documentation, you should write a functional test for every single one of them. There’s nothing more embarrassing than failing examples in your documentation.
+If you publish code examples as part of your API documentation, you should write a functional test for every single one of them. There's nothing more embarrassing than including failed examples in your documentation.
 
-Functional tests are user centered. The user doesn’t know anything about the internals of the code. He doesn't want to know anything about the internals of the code. He has only the interfaces you give him: GUI, API, keyboard, webcam, etc. And this is all he cares about. He wants to watch a YouTube video. He wants a high image quality and a fast response time. He doesn’t care what kind of fancy algorithms the thousands of google employees developed to control all the server farms.
+Functional tests are user-centered. The user lacks knowledge about the internal workings of the code. He doesn't want to know anything about the internals of the code. He only has the interfaces you provide: GUI, API, keyboard, webcam, etc. This is all he cares about. He wants to watch a YouTube video. He wants high image quality and fast response time. He doesn't care what kind of fancy algorithms the thousands of Google employees developed to control all the server farms.
 
-Sounds good. But at the same time, it seems extremely difficult to write these tests? Testing a GUI or the input of a webcam sounds pretty hard. 
+Sounds good. But at the same time, it seems extremely difficult to write these tests. Testing a GUI or webcam input seems quite challenging.
 
-True. But when making a few simplifications, the effort becomes fairly reasonable. Most importantly, you need to have well-structured code. As shown in figure [levels of abstraction...?] the GUI is an abstraction level higher than the API. Don't mix the two! The GUI code consists only of some html and CSS code, images, buttons and graphs. These things are hard to test automatically, but they contain no logic that is likely to contain bugs. As mentioned before, this is called a Humble Object. This layer is hard to test, but unlikely to fail. Every mouse click corresponds to a function call to the underlying API. If the GUI looks fine, it is quite certainly fine. It is a thin layer that doesn't contain any logic and it's not able to hide bugs.
+True. But when making a few simplifications, the effort becomes quite reasonable. Most importantly, you need to have well-structured code. As shown in Figure [levels of abstraction...?] the GUI is an abstraction level higher than the API. Don't mix the two! The GUI code consists of HTML and CSS code, images, buttons, and graphs. These things are difficult to test automatically, but they do not contain any logic that is likely to have bugs. As mentioned before, this is called a Humble Object. This layer is difficult to test but unlikely to fail. Every mouse click corresponds to a function call to the underlying API. If the GUI looks fine, it is most likely functioning correctly. It is a thin layer that does not contain any logic and is unable to hide bugs.
 
-Of course, if you leave away the GUI layer, the tests become similar to integration tests. It is up to you to decide whether you want to call them integration tests or functional tests. I prefer to keep calling them functional test as the API is still a public interface to your software.
+Of course, if you neglect the GUI layer, the tests become similar to integration tests. It is up to you to decide whether you want to call them integration tests or functional tests. I prefer to continue referring to them as functional tests since the API remains a public interface to your software.
 
-Writing tests on the GUI level is quite hard. Though there are tools, for example Selenium [https://www.selenium.dev/], that automate the clicks on the GUI and translate them into API calls. It is generally recommended to keep the number of GUI test cases as low as possible. However, there are just too many programs that are not structured as recommended in this book. They cannot be tested otherwise as they don't have an API that is well separated from the GUI. Meanwhile there is considerable demand for testing these programms never the less. Needless to say that using these testing tools adds significant overhead to the testing efforts required.
+Writing tests at the GUI level is quite challenging. Though there are tools, such as Selenium [https://www.selenium.dev/], that automate clicks on the GUI and translate them into API calls. It is generally recommended to keep the number of GUI test cases as low as possible. However, there are simply too many programs that are not structured as recommended in this book. They cannot be tested otherwise because they don't have an API that is well separated from the GUI. Meanwhile, there is considerable demand for testing these programs nonetheless. Needless to say, using these testing tools adds significant overhead to the testing efforts required.
 
-Testing on the API level is in comparably easy. You can translate each button click from the GUI examples directly into API function calls. Write a test that makes the API calls, checks the result and you’re done. However, there is one problem with functional tests. In practice you have to deal with potentially huge files, databases and slow network connections. This may slow down your tests considerably. Additionally, the files or databases first have to be created. This can be done either with some script or by copying them from another location. 
+Testing on the API level is comparatively easy. You can translate each button click from the GUI examples directly into API function calls. Write a test that makes the API calls, checks the results, and you're done. However, there is one problem with functional tests. In practice, you have to deal with potentially large files, databases, and slow network connections. This may significantly slow down your tests. Additionally, the files or databases must first be created. This task can be accomplished either by using a script or by copying them from another location.
 
-The output of the tests may be potentially huge files as well. Comparing the results of these big files may also be not too helpful. One tiny difference in these huge files won't tell you much about what is broken. One option for improving the performance is comparing hash values instead of comparing complete files. It won't tell you more than that the files are different, but at least it is much faster to compute.
+The output of the tests may potentially result in large files as well. Comparing the results of these large files may not be very helpful. One tiny difference in these large files won't provide much insight into what is malfunctioning. One option for improving performance is to compare hash values instead of comparing complete files. It won't provide more information than indicating that the files are different, but at least it is much faster to compute.
 
-One solution is to use small files. This makes the tests run faster. However, having only tests with comparably small data sets and files is not representative to the every day usage of your software. You absolutely have to run also performance tests with realistic data sets. Otherwise you might run into all kind of performance problems at the release.
+One solution is to use small files. This makes the tests run faster. However, having only tests with relatively small data sets and files is not representative of the everyday usage of your software. You absolutely have to run performance tests with realistic data sets as well. Otherwise, you might run into all kinds of performance problems at the release.
 
-Functional tests are important, but they cannot tell you where an error comes from. Furthermore, functional tests are quite frequently highly correlated. A single bug in your infrastructure code can cause many tests to fail. Therefore it is important to make functional tests `@pytest.mark.dependency()` as explained in the section on [Dependent tests]. You should always combine functional tests with unit tests in order to locate the source of the bug.
+Functional tests are important, but they cannot pinpoint the origin of an error. Furthermore, functional tests are often highly correlated. A single bug in your infrastructure code can cause many tests to fail. Therefore, it is important to mark functional tests with `@pytest.mark.dependency()` as explained in the section on [Dependent tests]. You should always combine functional tests with unit tests to pinpoint the source of the bug.
 
-## Other kinds of tests
+## Other Kinds of Tests
 
-### Performance tests
+### Performance Tests
 
-One test class that frequently gets forgotten are performance tests. Functional tests frequently are created for small databases in order to reduce the execution time. But this leads to the problem that executing the code with normal sized databases is not tested and chances are that this would be unacceptably slow. For this reason it is important to write performance tests that are running with realistic parameters to prevent bad user experience due to slow response times.
+Performance tests are one type of test class that is frequently overlooked. Functional tests are often developed for small databases to minimize execution time. But this leads to the problem that executing the code with normal-sized databases is not tested, and chances are that this would be unacceptably slow. For this reason, it is important to write performance tests that run with realistic parameters to prevent a poor user experience caused by slow response times.
 
-There are many different kinds of performance tests. The most common one is load testing, where for example the number of users is increased until the system breaks down or one measures the response time of the system. It is the goal of these tests to find the limits of the system.
+There are many different types of performance tests. The most common type of testing is load testing, where, for example, the number of users is increased until the system breaks down, or one measures the response time of the system. It is the goal of these tests to determine the system's limits.
 
-### Explorative tests
+### Explorative Tests
 
-Explorative tests are written for finding bugs that the developer might not have thought about. They are usually executed by the testing or quality assurance team. They are not automated and are not part of the test suite. They are just executed and if a bug is found it is reported to the developer. Otherwise it is just ignored. Explorative tests are not a replacement for unit or functional tests. They are just an additional tool to find bugs.
+Explorative tests are designed to uncover bugs that the developer may not have considered. They are typically carried out by the testing or quality assurance team. They are not automated and are not part of the test suite. They are executed, and if a bug is found, it is reported to the developer. Otherwise, it is just ignored. Explorative tests are not a substitute for unit or functional tests. They are just an additional tool to find bugs.
 
-Executing explorative tests takes some experience about what could go wrong. What corner cases might have been missed by the programmers? 
+Conducting exploratory tests requires some experience in anticipating potential issues. What corner cases might have been overlooked by the programmers?
 
-## When to run tests
+## When to run Tests
 
-It is very important that all tests, explorative tests excluded, are run automatically. This is the only way to ensure that they are always run. When they are run exactly, however, depends on the kind of test.
+It is very important that all tests, excluding exploratory tests, are run automatically. This is the only way to ensure that they are always run. When they are run exactly, however, depends on the kind of test.
 
-Unit tests are fasts. Each one of them takes only a few milliseconds to run. All together they shouldn't take more than a few seconds. Split them up in subgroups if your program becomes too big and it takes more than a few seconds to run them all. It is important that unit tests are fast as they are run all the time. You should run them every few lines of code that you wrote.
+Unit tests are fast. Each one of them takes only a few milliseconds to run. All together, they shouldn't take more than a few seconds. Split the unit tests up in subgroups if your program becomes too large and it takes more than a few seconds to run all of it. It is important that unit tests are fast because they are run frequently. You should run them every few lines of code that you write.
 
-Code is only allowed to be merged into master if the all unit tests pass. This means that every programmer has to run the unit tests before creating a merge request (MR) [devops] the same way as he has to make sure the whole projects compiles. It is mandatory to fix code that broke unit tests, otherwise it won't be merged.
+Code is only allowed to be merged into the master branch if all unit tests pass. This means that every programmer has to run the unit tests before creating a merge request (MR) [devops] in the same way as ensuring that the whole project compiles. It is mandatory to fix the code that broke the unit tests; otherwise, it will not be merged.
 
-Now let me repeat: It is mandatory that all unit tests pass before an MR can be merged into master. This is a rule that should be automated. Set up the Continuous Integration (CI) [devops (?)] accordingly. It should check the unit tests just the same as it checks the formating and the compilation of the code. This is just another mandatory requirement inside the MR, along with the fact that the code has to compile. This is the only way to ensure that the unit tests are guaranteed to pass all the time.
+Now let me reiterate: It is mandatory that all unit tests pass before an MR can be merged into the master branch. This is a rule that should be automated. Set up the Continuous Integration (CI) [devops (?)] accordingly. It should check the unit tests just the same as it checks the formatting and the compilation of the code. This is just another mandatory requirement within the MR, in addition to ensuring that the code compiles. This is the only way to ensure that the unit tests always pass.
 
-With functional tests it becomes a little bit trickier. Functional tests are slow and can't be run before every MR. It would slow down the whole development too much. Therefore you can't guarantee that all functional tests to be run all the time. Instead you have to set up the CI to run the functional tests overnight ("nightly build"). And if a test fails, it should send an email to all the developers who changed something the last day that the tests fail. The team then has to sit together and figure out why this is the case. Usually it is fairly obvious why the tests failed and it won't take much time to figure out who broke the test and how. But it is important that the problem gets resolved as soon as possible.
+When it comes to functional tests, things get a little trickier. Functional tests are slow and cannot be run before every MR. It would slow down the entire development process too much. Therefore, you can't guarantee that all functional tests will be run all the time. Instead, you have to set up the CI to run the functional tests overnight ("nightly build"). If a test fails, it should send an email to all the developers who made changes on the previous day. The team must then gather and determine the reasons behind this situation. Usually, it is fairly obvious why the tests failed, and it won't take much time to figure out who broke the test and how. But it is important that the problem is resolved as soon as possible.
 
-Integration tests are somewhere between unit and functional tests. If they take only a few seconds to run, they can be run before every MR. If they take longer, they should be run overnight. The same holds for performance tests.
+Integration tests are positioned between unit and functional tests. If they take only a few seconds to run, they can be executed before every MR. If they take longer, they should be run overnight. The same holds true for performance tests. Here you have to be pragmatic: run the tests as often as time allows.
 
-## Who should write tests
+## Who should write Tests?
 
-With unit and integration tests, it's quite clear that the corresponding developer has to write the tests. He knows the code best and he knows what the code is supposed to do. Unless you work in the automotive, medical or aerospace industry, where the tests are written by a dedicated tester as they are highly regulated.
+With unit and integration tests, it is evident that the responsible developer must write the tests. He knows the code best and understands what it is supposed to do. Unless you work in the automotive, medical, or aerospace industry, where the tests are written by a dedicated tester due to high regulations.
 
-With functional and performance tests, the situation is not that clear. Should the tests be written by someone from the development team, from the marketing side or by an independent tester? As always in software engineering, such questions have no easy answer. There are just some trade offs to be made between the different solutions.
+When it comes to functional and performance tests, the situation is not that clear. Should the tests be written by someone from the development team, the marketing side, or an independent tester? As always in software engineering, such questions have no easy answer. There are trade-offs to consider when choosing between different solutions.
 
-Having a developer write the tests has the advantage that he knows the code. He knows where the difficulties lie. He can target these difficulties by writing dedicated tests. A developer might also know what the custormers want and where generally the issues are. This helps as well to target the most important areas of the code.
+Having developers write the tests has the advantage that they know the code. They know the difficulties. They can address these challenges by creating specific tests. A developer might also understand what the customers want and where the common issues lie. This also helps to target the most critical areas of the code.
 
-On the other hand, having an independent tester has some advantages as well. He doesn't know about the weaknesses of the code. Instead he writes more explorative tests. These tests might find bugs that were not expected by the developers as they are in areas of the code they were not expecting to contain bugs. Additionally the developers are usually over confident about the quality of their code. They think the code is better than it actually is. This is why it is good to have an independent tester who is not biased by the code. Furthermore, independent testers are usually closer to the customer and write tests that are closer to the actual use case.
+On the other hand, having an independent tester also has some advantages. He doesn't know about the weaknesses of the code. Instead, he writes more explorative tests. These tests might uncover bugs that developers did not anticipate, as they are in areas of the code where bugs were not expected. Additionally, developers are usually overconfident about the quality of their code. They think the code is better than it actually is. This is why it is beneficial to have an independent tester who is not influenced by the code. Furthermore, independent testers are typically closer to the customer and create tests that closely resemble the actual use case.
 
-Tests should be written as early as possible. This is not only true for unit tests, but also for functional tests. Writing tests at the end of a project has the drawback that possible issues will be very hard to resolve as the whole software is nearly finished and making changes has become very difficult and possibly expensive. As a general rule of thumb, the price of fixing a bug increases exponentially with time.
+Tests should be written as early as possible. This principle applies not only to unit tests but also to functional tests. Writing tests at the end of a project has the drawback that possible issues will be very hard to resolve because the entire software is nearly finished, making changes very difficult and potentially expensive. As a general rule of thumb, the cost of fixing a bug increases exponentially over time.
 
 // get an image without copy right
 <img src=images/costs.png width="300">
 
-## The testing pyramid
+////
+## The Testing Pyramid
 
-We've defined here 3 categories of functional tests, additional to the performance tests and the exlorative tests. From the fine grained unit tests up to the very coarse functional tests. As a rule of thumb one can say that the testing suite of any program should consist of a lot of small grained and few coarse tests.
+We have defined three categories of functional tests here, in addition to performance tests and exlorative tests. From the fine-grained unit tests up to the very coarse functional tests. As a rule of thumb, one can say that the testing suite of any program should consist of many small-grained tests and comparably few coarse tests.
 
-Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can return a detailed feedback if something is broken. They are like testing the individual parts of a car radio before assembling it. Unit tests prevent the usage of faulty parts. Roughly estimated 80% of all tests should be unit tests. [software engineering at google]. 
+Unit tests are the foundation of the testing pyramid. They are generally the most useful as they check each part individually and can provide detailed feedback if something is broken. They are like testing the individual parts of a car radio before assembling it. Unit tests prevent the use of faulty components. Roughly, an estimated 80% of all tests should be unit tests. [software engineering at google].
 
 // get an image without copy right
 <img src=images/testing_pyramid.jpg width="300">
 
-Integration tests are the second level of the pyramid. They are like testing the assembled radio in a test stand. Integration tests are coarser than unit tests and can't locate errors as precisely. But they are still useful to check the functionality of the radio. About 15% of all tests are integration tests.
+Integration tests are the second level of the testing pyramid. They are like testing the assembled radio on a test stand. Integration tests are coarser than unit tests and cannot pinpoint errors as precisely. But they are still useful for checking the functionality of the radio. About 15% of all tests are integration tests.
 
-The functional tests should only check that the installation of the radio in the car worked out as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
+The functional tests should only verify that the installation of the radio in the car was successful as expected. Turning it on once should be completely sufficient as there is not much more that can still go wrong.
 
-Functional tests are the least common. They are very valuable to check that a program really works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you get from an functional test is very limited. It will mostly tell you that something is off, but you'll spend a lot of time debugging the cause of this issue. On the other hand you don't need too many functional tests. If you have good test coverage with your unit and integration tests, chances are low that you'll have a lot of failing functional tests. 
+Functional tests are the least common. They are very valuable for verifying that a program actually works. There are always some things that can go wrong, even if all unit tests pass. However, the feedback you receive from a functional test is very limited. It will mostly indicate that something is wrong, but you will spend a lot of time debugging the cause of this issue. On the other hand, you don't need too many functional tests. If you have good test coverage with your unit and integration tests, the likelihood of experiencing numerous failing functional tests is low.
 
-Once you know that the engine, the gear box and the brakes of a car work and are playing together correctly, there is not much left to test on the completely assembled car. If it runs, it's probably fine. Only about 5% of all tests are functional tests.
+Once you confirm that the engine, gearbox, and brakes of a car are functioning properly and working in harmony, there is not much more to test on the fully assembled car. If it runs, it's probably fine. Only about 5% of all tests are functional tests.
 
-# 20. Writing better Code with Tests
+# 20. Writing Better Code with Tests
 
 "Quality is a product of a conflict between programmers and testers." ― Yegor Bugayenk
 
@@ -4772,6 +4776,8 @@ On the other end of the spectrum are some Python programmers. It seems like addi
 ```
 
 You'd have to do it the old way:
+
+// or make a mix: for loop for j and list for i
 
 ```py
 def create_matrix():
