@@ -239,9 +239,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Increase Cohesion](#increase-cohesion)
   - [Reduce coupling](#reduce-coupling)
   - [Increase abstraction](#increase-abstraction)
-  - [Increase reusability](#increase-reusability)
+  - [Increase Reusability](#increase-reusability)
   - [Design for flexibility](#design-for-flexibility)
-  - [Anticipate Obsolesence](#anticipate-obsolesence)
+  - [Anticipate Obsolescence](#anticipate-obsolescence)
   - [Design for Testability](#design-for-testability)
 - [23. Programming Paradigms](#23-programming-paradigms)
   - [Object Oriented programming](#object-oriented-programming)
@@ -4245,58 +4245,56 @@ Now, `main` depends only on the interface of `NothingBase`, not on the implement
 
 I believe this was the longest section in the book where I delve into technical details for C++ that may not be essential for Python users. At the same time, I would like to emphasize that this section was very important for C++ and Java programmers. Both for the quality of the code and for understanding how the concepts of includes, compiler, and linker work.
 
-
 # 22. Software Engineering Principles
 
-In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
+In this chapter, I explain some very general design principles that I learned from a YouTube video [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general principles and therefore decided to write a chapter about them.
 
 ## Divide and Conquer
 
-If you have a huge problem, you won't be able to solve it at once. It's too difficult. But what you might be able to do is breaking out small pieces of this problem and solve those. This is generally how software is designed. Break the problem into small pieces and assemble them back together. A common example is the Fast Fourier Transfor (FFT) or the merge sort. Usually a divide and conquer algorithm is applied if a problem scales with O(N^2) or worse, but it can be subdivided into smaller problems. Divide and Conquer algorithms usually scale with O(N log N), which is generally acceptable. Furthermore Divide and Conquer algorithms can easily be parallelized, which may significantly boost the overall performance.
+If you have a huge problem, you won't be able to solve it all at once. It's too difficult. But what you might be able to do is break out small pieces of this problem and solve them. This is generally how software is designed. Break the problem into small pieces and then reassemble them. A common example is the Fast Fourier Transform (FFT) or the merge sort. Usually, a divide and conquer algorithm is applied when a problem scales with O(N^2) or worse, but it can be subdivided into smaller problems. Divide and Conquer algorithms typically scale with O(N log N), which is generally acceptable. Furthermore, Divide and Conquer algorithms can be easily parallelized, which can significantly enhance the overall performance.
 
 ## Increase Cohesion
 
-Cohesion very much realtes to the section [Correlation] that we already discussed in the chapter on Physical laws of code. Similar things that possibly depend on each othr should belong together. Mathematical functions are stored together in the math library and IO functions are in the IO library. This makes sense as it simplyfies searching for some other functions that you might be looking for. Mixing these two libraries would only cause confusion as it would make it hard to find what you are looking for.
+Cohesion is closely related to the section [Correlation] that we previously discussed in the chapter on the Physical Laws of Code. Similar things that possibly depend on each other should belong together. Mathematical functions are stored together in the math library, and IO functions are in the IO library. This makes sense as it simplifies searching for other functions that you might be looking for. Mixing these two libraries would only cause confusion because it would make it difficult to find what you are looking for.
 
 ## Reduce coupling
 
-Reducing coupling is an important topic in classes [chapter classes]. Make sure that the classes are as independent as possible. You don't want your math library to be depending on the filesystem library. Even if it might make sense from a developer point of view (even though here it would be hard to explain), you should minimize the number of dependencies as far as possible. Only import other libraries for cases where it is absolutely inevitable.
+Reducing coupling is an important topic in classes [chapter classes]. Ensure that the classes are as independent as possible. You don't want your math library to depend on the filesystem library. Even if it might make sense from a developer's point of view (although it would be difficult to explain in this context), you should minimize the number of dependencies as much as possible. Only import other libraries when it is absolutely necessary.
 
-The same holds not only for libraries, but also for all other code that you write. Try to keep them all as indipendent as possible. Make sure that you properly structure the levels of abstractions in your code. Low level code should not depend on high level code, etc. Otherwise, your code may become a big ball of mud [https://en.wikipedia.org/wiki/Anti-pattern#Software_engineering_anti-patterns].
+The same holds true not only for libraries but also for all other code that you write. Try to keep them all as independent as possible. Ensure that you properly structure the levels of abstraction in your code. Low-level code should not depend on high-level code, and so forth. Otherwise, your code may become a Big Ball of Mud [https://en.wikipedia.org/wiki/Anti-pattern#Software_engineering_anti-patterns].
 
 ## Increase abstraction
 
-Abstraction is about leaving away unnecessary details and instead focusing on the absolute necessities. You have to design interfaces that are slim and very generic. For example take (once again) a car. You want to make the parts as generic as possible. You want to fit any engine into any car. This can only be achieved by unifying the interface of the engine, the brakes, etc. All the details of the engine are abstracted away and hidden inside the engine such that the outside does not interact with it.
+Abstraction is about omitting unnecessary details and instead focusing on the essential elements. You have to design interfaces that are sleek and highly versatile. For example, let's consider a car once again. You should aim to make the parts as generic as possible. You want to fit any engine into any car. This can only be achieved by unifying the interface of the engine, the brakes, etc. All the details of the engine are abstracted away and hidden inside the engine so that the outside does not interact with it.
 
-If you didn't abstract all the details away, you may be left with several different functions how to take care of all the different engines because you have to take care of all the paritcularities. On the other hand, if you abstracted them all away, you can replace the engine with another one if you please.
+If you don't abstract all the details, you may end up with multiple functions to manage various engines due to the need to address specific characteristics. On the other hand, if you abstract them all away, you can replace the engine with another one if you wish.
 
-## Increase reusability
+## Increase Reusability
 
-Reuseability comes hand in hand with inreased abstraction. Leaving away all the details of an object reduces it to a fundamental building block that can be reused more easily. Because general objects are more likely to fit as a building block than something very specific. Just take for example all ot the "standard" libraries. They all do exactly one fundamental thing: they deal with the filesystem, do mathematical operations or create random numbers. Of course it would sometimes make sense to combine these, but that would probably not the reusable code anymore because it is too specific. You should only write such specific code if you really have to.
+Reusability comes hand in hand with increased abstraction. Leaving out all the details of an object reduces it to a fundamental building block that can be more easily reused. Because general objects are more likely to fit as a building block than something very specific. Just take, for example, all of the "standard" libraries. They all perform one fundamental task: interacting with the filesystem, conducting mathematical operations, or generating random numbers. Of course, it would sometimes make sense to combine these, but that would probably not result in reusable code anymore because it is too specific. It is advisable to write such specific code only when absolutely necessary.
 
 ## Design for flexibility
 
-Your code will change. It's inevitable. So start living with this fact. Requirements will change and you'd better make sure that your code can adapt. Therefore it's important that your code follows the rules that are explained in this book. You need tests to be able to change your code. You have to follow the best practice in order to prevent your code becoming solid as a rock. You want your code to be fluffy and easy to change.
+Your code will change. It's inevitable. So, start living with this fact. Requirements will change, and you'd better ensure that your code can adapt. Therefore, it's important that your code follows the rules that are explained in this book. You need tests to be able to modify your code. To prevent your code from becoming as solid as a rock, you must follow best practices. You want your code to be fluffy and easy to modify.
 
-As an example you might use a Fourier transform or a sorting algorithm in your code. Well written code is flexible enough to replace these algorithms without much fuzz. You won't have to change code all over the place. It's more like a chirurchical operation where you change only one thing.
+As an example, you might use a Fourier transform or a sorting algorithm in your code. Well-written code is flexible enough to replace these algorithms without much fuss. You won't have to change code in multiple locations. It's more like a surgical operation where you change only one thing.
 
-## Anticipate Obsolesence
+## Anticipate Obsolescence
 
-Code you use will become obsolete. Version change, bugs and security issues are not fixed, licence fees are getting too high, you name it. There are plenty of reasons why you have to adapt and change third party libraries or at least adapt to new syntax. So you better anticipate that you'll have to replace some library by adding an adapter between that library and your code. This will simplify reacting to changes. You can then just write an adapter for the new library and you don't have to change all the existing code.
+Code you use will become obsolete. Version changes, bugs, and security issues are not fixed; license fees are becoming too high, you name it. There are plenty of reasons why you need to adapt and modify third-party libraries or at least adjust to new syntax. So, you should anticipate that you may need to replace some libraries by adding an adapter between the library and your code. This will simplify reacting to changes. You can simply create an adapter for the new library, eliminating the need to modify all the existing code.
 
-You have to anticipate obsolence by keeping your code flexible and reusable. The database code should not be spread throughout the whole code base. This would be the very opposite of what we want. It would take enormous efforts to replace it. Instead you should be able to replace it easily.
+You have to anticipate obsolescence by keeping your code flexible and reusable. The database code should not be scattered throughout the entire codebase. This would be the exact opposite of what we desire. It would take enormous effort to replace it. Instead, you should be able to replace it easily.
 
-There are cases where you might think, you'd never have to place a piece of code. How wrong you are. No matter how important some library might seem to you, at some time you'll have to replace it. There are so many companies out there who wrote their code with an Oracle database in mind. And now they would like to change it because of the high fees. But they can't because Oracle database code is spread all over the code base.
+There are cases where you might think you'd never have to replace a piece of code. How wrong you are. No matter how important a library may seem to you, at some point, you will have to replace it. Many companies have written their code with an Oracle database in mind. And now they would like to change it because of the high fees. But they can't because the Oracle database code is spread all over the code base.
 
 ## Design for Testability
 
-I think this is the most obvious point in this chapter. I explained plenty of times that you have to write tests. Because if it's easy to write tests for your code it's also easy to write code using the interfaces of your code. Or even better, use Test Driven Development (TDD). TDD forces you to write code that is easy to test. Thus it forces you to write good code.
+I believe this is the most evident point in this chapter. I have explained numerous times that you need to write tests. If writing tests for your code is easy, then writing code using the interfaces of your code is also easy. Or even better, use Test Driven Development (TDD). TDD forces you to write code that is easy to test. Thus, it forces you to write good code.
 
-Hand in hand with testing comes Dependency Injection (DI). There are many things where writing tests for will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all things that should be solved with DI. Inject a mock file or a fake timestamp to the function and your tests will be much more stable.
+Hand in hand with testing comes Dependency Injection (DI). There are many things for which writing tests will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all issues that should be addressed with DI. Inject a mock file or a fake timestamp into the function, and your tests will become much more stable.
 
 
-Part 5: Programming 
-
+Part 5: Programming
 
 # 23. Programming Paradigms
 
