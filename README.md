@@ -250,8 +250,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Conclusions](#conclusions-2)
   - [Copilot](#copilot-8)
 - [24. Programming Languages](#24-programming-languages)
-  - [Existing programming languages](#existing-programming-languages)
-  - [Code examples](#code-examples)
+  - [Existing Programming Languages](#existing-programming-languages)
+  - [Code Examples](#code-examples)
   - [Python](#python)
     - [Type hints](#type-hints)
     - [Slots](#slots)
@@ -259,7 +259,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [C++](#c)
     - [Vectors](#vectors)
     - [Smart pointers](#smart-pointers)
-    - [Pass by reference](#pass-by-reference)
+    - [Pass by Reference](#pass-by-reference)
     - [Classes](#classes-1)
     - [Structs](#structs)
   - [Copilot](#copilot-9)
@@ -4389,43 +4389,43 @@ a = [i for i in range(10)]
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
 
-A very frequent question from beginners is: "Which programming language should I learn?". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most of the Object Oriented languages are similar enough and the differences in the programming philosophies are fairly small. Small enough to understand my programming examples in this book, I hope.
+A very common question among beginners is: "Which programming language should I learn?". Some may have read somewhere that programming language A is better than language B for some very obscure reason. The very simple answer is: It doesn't matter too much. Most OO languages are similar enough, and the differences in programming philosophies are fairly small. Small enough to understand the programming examples in this book, I hope.
 
-For example, a lot of the low level C++ features for instance can be wrapped into a higher level object, making it look like an intermediate level language. Though it's still not quite such a high level language as Python.
+For example, many of the low-level C++ features can be encapsulated within a higher-level object, giving the appearance of an intermediate-level language. Though it's still not quite at the same level of sophistication as Python.
 
-I really want to emphasize that you shouldn’t learn a programming language in too much detail. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search in the internet as you need some specific syntax along the way. Google and Stackoverflow are a better help than your vague three-year-old memory and Copilot is also becomming a good help. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, meanwhile concepts you have to be understood.
+I really want to emphasize that you shouldn't delve too deeply into learning a programming language. Reading a small book about the language you want to use is certainly a good start. A small book, not a big one. The rest you can search on the internet as you need some specific syntax along the way. Google and Stack Overflow are more helpful than relying on your vague three-year-old memory, and Copilot is also becoming a valuable resource. It is much more important that you learn how to program in general. To understand the general concepts. The concepts are easier to understand and more powerful than some syntax. Syntax can easily be looked up, whereas concepts must be understood.
 
-But as you asked for a programming language, I would briefly like to give my point of view. Though it is highly biased. I know mainly C++ and Python, and a little bit about Java and JavaScript due to the programming books that I read. If you work in a field where one specific programming language is used, you should certainly learn that one. Even if it’s just Matlab. You can still learn some other langague later on.
+But as you asked about a programming language, I would like to briefly share my perspective. Although it is highly biased. I know mainly C++ and Python, and a little bit about Java and JavaScript from the programming books I have read. If you work in a field where a specific programming language is used, you should definitely learn that language. Even if it's just Matlab. You can still learn another language later on.
 
-As I am a scientist, I would recommend Python as a first programming language. Javascript is a viable alternative if you do web development. They are both scripting languages that don’t need a compiler and are fairly easy to get started. As they use dynamic typing, you don’t need inheritance to define an interface. Any two objects that have the same interface can be exchanged in the code. And there is no need to learn anything about pointers or memory allocation like in the old days. These things are outdated, as explained in the chapter [levels of abstraction].
+As a scientist, I recommend Python as a first programming language. JavaScript is a viable alternative for web development. Both are scripting languages that do not require a compiler and are relatively easy to get started with. Dynamic typing (duck typing) eliminates the need for inheritance to define an interface. Any two objects that have the same interface can be interchanged in the code. And there is no need to learn anything about pointers or memory allocation as in the past. These things are outdated, as explained in the chapter [levels of abstraction].
 
-Though it has to be said that dynamic typing has also its drawbacks. Having type information is not only a help for the compiler but also for the programmer. It is easier to understand what a function does if you know the types of the arguments. For instance, there are ways to add type hints in Python, but I'm frequently too lazy to add them.
+While it has to be said that dynamic typing also has its drawbacks. Having type information is not only helpful for the compiler but also for the programmer. Understanding a function's purpose is simpler when you are aware of the types of its arguments. For instance, there are methods to include type hints in Python, but I often find myself too lazy to add them.
 
-I would not recommend learning Java or C++ as a first programming language, even if I use some C++ code in this book. C++ and Java are too complicated to learn them as an introductory language and it takes much more time understanding the language itself. The C++ examples throughout this book are only to explain low level details that you don't have to care about in Python. Instead you should learn how to apply the higher level principles taught in this book and elsewhere to improve your coding skills. Of course, later on in your career it makes sense to learn many more languages. Java and C++ are still among the most widely used. Not because these languages are better, but simply because there are so many old projects around. 
+I would not recommend learning Java or C++ as a first programming language, even though I included some C++ code in this book. C++ and Java are too complicated to be learned as introductory languages, and it takes much more time to understand the languages themselves. The C++ examples throughout this book are only meant to explain low-level details that you don't need to worry about in Python. Instead, you should learn how to apply the higher-level principles taught in this book and elsewhere to improve your coding skills. Of course, later in your career, it makes sense to learn many more languages. Java and C++ are still among the most widely used programming languages. Not because these languages are superior, but simply due to the abundance of old projects.
 
-C++ and Java are both staticly typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will show you other ways of thinking about some problems. Changing from Python to C++ you'll have to learn quite some basics of software development. It opens up more job opportunities as well. But it’s nothing worth bothering with when you just start programming.
+C++ and Java are both statically typed. They have to be compiled and use inheritance to define interfaces. And you have to deal with pointers. Learning new languages will expose you to alternative ways of approaching problems. Switching from Python to C++ will require you to learn many fundamental aspects of software development. It also opens up more job opportunities. But it's nothing worth bothering with when you are just starting to program.
 
-## Existing programming languages
+## Existing Programming Languages
 
-Programming languages and APIs share the same fate. It would be easy to create a new programming language that is clearly better than an existing one. Someone said that you could remove the C++ template specialization of `std::vector<bool>` and you had a better programming language (it is optimized and treated as a bitwise array which makes it annoying to work with). And he is certainly right. But there are millions of software projects that already use the current languages and they depend on the current functionality. Their code is worth billions. You cannot update such quantities of code only because of such a small nuisance in the programming language. Instead, there are thousands of developers making suggestions how the current programming languages could be improved without breaking compatibility. A team of experts will debate about all kind of possible issues before a new feature or internal change will be accepted into the standard of a programming language.
+Programming languages and APIs share a common destiny. Creating a new programming language that is clearly superior to an existing one would be easy. Someone said that removing the C++ template specialization of `std::vector` would lead to a better programming language. This specialization optimizes and treats `std::vector` as a bitwise array, which can be cumbersome to work with. And he is certainly right. But there are millions of software projects that already use the current languages and depend on the current functionality. Their code is worth billions. You should not update large amounts of code just because of a minor issue in the programming language. Instead, there are thousands of developers making suggestions on how current programming languages could be improved without breaking compatibility. A team of experts will debate all kinds of possible issues before a new feature or internal change is accepted into the standard of a programming language.
 
-For example: In C++ there is the boost library. Pretty much everyone programming C++ knows it. It is one of the most commonly used third party libraries and known for its high quality standard. The boost library contains hundreds of very important sub-libraries that are not part of the C++ standard library. Usually new features are first implemented and tested as a boost library. Only once a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how the smart pointers and the filesystem library made their way into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
+For example, in C++, there is the Boost library. Pretty much everyone programming in C++ knows it. It is one of the most commonly used third-party libraries and is known for its high-quality standards. The Boost library contains hundreds of very important sub-libraries that are not part of the C++ standard library. Usually, new features are first implemented and tested as a Boost library. Only after a new feature has been used and tested by the community for a few years, it might be accepted into the C++ standard library. This is how smart pointers and the filesystem library were incorporated into the standard. It is important to note that these are all extensions of the programming language, not changes. They don't break any existing code.
 
-## Code examples
+## Code Examples
 
-There are quite some code examples in this book. Most concepts that I explain here can be explained with real world examples. The syntax I used is held as easy as possible as I want to teach you concepts, not syntax. I tried to make this book as agnostic to programming languages as possible. The code examples are mostly written in Python and sometimes in C++, if needed to explain some low level feature. It’s not a deliberate choice to use Python and C++, those are just the programming languages that I know. I’ll try to explain the examples such that you can roughly understand them, even if you don’t know the according programming language too well. I promise that the syntax will be very simple to understand. It requires only the very basics of the corresponding programming language.
+There are quite a few code examples in this book. Most concepts that I explain here can be illustrated with real-world examples. The syntax I used is kept as simple as possible because I want to focus on teaching you concepts, not syntax. I tried to make this book as language-agnostic as possible. The code examples are mostly written in Python and occasionally in C++ if necessary to explain some low-level features. It's not a deliberate choice to use Python and C++; those are just the programming languages that I know. I'll try to explain the examples so that you can roughly understand them, even if you don't know the corresponding programming language that well. I promise that the syntax will be very simple to understand. It requires only a fundamental knowledge of the relevant programming language.
 
 ## Python
 
-Even though Python is a fairly easy programming language to learn, there are some things that are some language specific things worth learning. For more advanced topics, there is the google style guide [https://google.github.io/styleguide/pyguide.html].
+Even though Python is a fairly easy programming language to learn, there are some language-specific concepts that are worth learning. For more advanced topics, there is the Google Style Guide [https://google.github.io/styleguide/pyguide.html].
 
 ### Type hints
 
 [https://youtu.be/dgBCEB2jVU0]
 
-Python is dynamically typed. At first sight, this seems like a great thing. You don't have to write the types and a function can be called by many different argument types. But it also comes along with its drawbacks. Types are an important part of the information of arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example the `+` operator does something quite different with floats than with strings. So at times, it would be useful to know the type of a variable.
+Python is dynamically typed. At first sight, this seems like a great thing. A function can be called with many different argument types, so you don't have to specify them. As long as the argument supports the required functions called. But it also comes with its drawbacks. Types are an important part of the information regarding arguments and return values. With types, you know what kind of operations you are allowed to perform, or what the expected outcome of an operation will be. For example, the `+` operator behaves differently with floats than with strings. So, at times, it would be useful to know the type of a variable.
 
-While it is not possible to enforce types in Python, and according to Guido van Rossum it will never be as it's not Pythonic, it is possible to write type hints. A simple `: str` following a function argument to indicate that it should be a string.
+While it is not possible to enforce types in Python, and according to Guido van Rossum, it will never be as it is not Pythonic, it is possible to write type hints. A simple `: str` following a function argument indicates that it should be a string.
 
 Here is an example using type hints:
 
@@ -4434,15 +4434,15 @@ def digits_of(number: str) -> list[int]:
     return [int(d) for d in number]
 ```
 
-But as I said, this is not enforcing that the argument of `digits_of` is a string. You could also pass a list of floats instead and have a perfectly valid result. It's just that this was apparently not intended by the author of the code.
+But, as I mentioned, this does not enforce that the argument of `digits_of` is a string. You could also pass a list of floats instead and achieve a perfectly valid result. It's just that this was apparently not intended by the author of the code.
 
-I generally recommend using type hints as it makes the code more readable. Even if I'm sometimes too lazy to do it myself. And even if it moves the syntax a fair amount closer to C++. C++ is not such a bad programming language after all. It's just a little bit old fashioned.
+I generally recommend using type hints as they make the code more readable. Even if I'm sometimes too lazy to do it myself. And even if it moves the syntax much closer to C++. C++ is not such a bad programming language after all. It's just a little bit old-fashioned.
 
 ### Slots
 
 [https://youtu.be/Fot3_9eDmOs]
 
-Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class as such:
+Python is a very dynamic language. It allows you to do things that wouldn't be possible in other languages. For instance, you may add fields to a predefined class like this:
 
 ```py
 class Apple:
@@ -4454,9 +4454,9 @@ apple = Apple(price=1.0, weight=0.5)
 apple.hi = "hi"
 ```
 
-Adding this member variable `hi` to an existing class instance wouldn't be possible in hardly any other language. And this for good reasons. It might seem tempting to add such a new variable at any point in time.  But it's generally not good coding practice to do such things. For example you could accidentally misspell `apple.pice = 2.50` and Python doesn't complain. Rather, it creates a new member variable `pice` and assigns it a value of `2.50`.
+Adding the member variable `hi` to an existing class instance wouldn't be possible in almost any other language. And this for good reasons. It might seem tempting to add a new variable at any point in time. But it's generally not good coding practice to do such things. For example, you could accidentally misspell `apple.pice = 2.50` and Python doesn't complain. Instead, it creates a new member variable `pice` and assigns it a value of `2.50`.
 
-This issue can be prevented by using slots. 
+This issue can be prevented by using slots.
 
 ```py
 class Apple:
@@ -4467,71 +4467,71 @@ class Apple:
         self.weight = weight
 ```
 
-Slots fixes the available member variables. In this case, there are only the variables `price` and `weight` allowed. (Accidentally) adding other member variables to the `Apple` class is not possible anymore.
+Slots fix the available member variables. In this case, only the variables `price` and `weight` are allowed. (Accidentally) adding other member variables to the `Apple` class is no longer possible.
 
 ### Abstract Base Classes and Protocols
 
-I still recommend using abstract base classes (ABC), alhough it is not required in Python. It makes the code slightly more readable as it defines the structure of the interface you are going to use and implement. And it also prevents you from making mistakes that might be nasty to track down.
+Defining base classes as an interface is not required in Python. However, I still recommend using Abstract Base Classes (ABC), although it is not required in Python. Defining the structure of the interface you are going to use and implement makes the code slightly more readable. And it also prevents you from making mistakes that might be difficult to track down.
 
-An alternative to ABCs are Protocols, which were introduced in Python 3.8. They are mostly equivalent, though Protocols have some advantage when working with type hints. Though this is a highly advanced topic and I cannot go into details here. 
+An alternative to ABCs are Protocols, which were introduced in Python 3.8. Protocols have some advantages when working with type hints, although they are mostly equivalent. This is a highly advanced topic, I cannot delve into details here. [https://youtu.be/dryNwWvSd4M]
 
 ## C++
 
-C++ has some particularities like a preprocessor, header files, pointers and arrays that make the language somewhat special. Thus I'd like to explain some of the things where C++ tics while other programming languages toc.
+C++ has some peculiarities such as a preprocessor, header files, pointers, and arrays that make the language unique. Thus, I'd like to explain some of the differences between C++ and other programming languages.
 
-C++ has been developed by Bjarne Stroustrup and published in the 80ies. He took the existing C programming language and added object orientation to it, along with some other things. So yes, it is an old language, but it is still around and will accompany us for several more decades. Thanks to the constant development of the language, it has overcome many of the ancient problems that it brought along. At the same time, C++ is a very good example to learn a lot about programming languages and how they evolved. As I used C++ in some of the examples here, I’m going to explain here some of the particularities of this programming language.
+C++ was developed by Bjarne Stroustrup and first published in the 1980s. He enhanced the existing C programming language by incorporating object-oriented programming principles, along with other modifications. So, yes, it is an old language, but it is still in use and will continue to be with us for several more decades. Thanks to the constant development of the language, many of the ancient problems it once brought along have been overcome. At the same time, C++ is a very good example to learn a lot about programming languages and how they have evolved. As I used C++ in some of the examples here, I'm going to explain some of the particularities of this programming language.
 
-For more information about C++ I can recommend the google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
+For more information about C++, I can recommend the Google C++ style guide, [https://google.github.io/styleguide/cppguide.html]
 
 ### Vectors
 
-In C++, people used to work with pointers and arrays. But these times are long gone. Nowadays, we have vectors, which are a higher level version of the array, as explained in the chapter on levels of abstraction. There is no more reason to use arrays in C++.
+In C++, people used to work with pointers and arrays. But these times are long gone. Nowadays, we have vectors, which are a higher-level version of arrays, as explained in the chapter on levels of abstraction. There is no longer a need to use arrays in C++. You don't even have to learn about them, it would be a waste of time.
 
-There are libraries that require plain old arrays instead of vectors. This, however, is no reason to use arrays throughout your code. Instead you can use vectors as usual and convert them to arrays using the `data()` and `size()` function as needed.
+Some libraries require the use of plain old arrays instead of vectors. This, however, is not a reason to use arrays throughout your code. Instead, you can use vectors as usual and convert them to arrays using the `data()` and `size()` functions as needed.
 
 ```C++
 std::vector<int> vec {1,2,3,4};
 some_old_C_style_library(vec.data(), vec.size());
 ```
 
-Again, this allows you to deal with vectors as long as possible and to convert them only at the very end.
+This approach allows you to work with vectors for as long as possible and only convert them at the very end.
 
 ### Smart pointers
 
-Smart pointers, `std::unique_ptr`, `std::shared_ptr` and `std::weak_ptr`, are the replacement for the plain old pointers. Smart pointers are a higher-level implementation. It has things built in like reference counting and they know when to go out of scope. There are still some things to know like weak pointers, but these are mostly details that you don’t have to care about in the beginning.
+Smart pointers, `std::unique_ptr`, `std::shared_ptr`, and `std::weak_ptr`, are replacements for plain old pointers. Smart pointers are a higher-level implementation. It has built-in features like reference counting, and they automatically know when to go out of scope. There are still some things to know, such as weak pointers, but these are mostly details that you don't have to worry about in the beginning.
 
-There are libraries that require plain old pointers as function arguments. This is no reason to use plain old pointers throughout all your code. Instead you can convert the smart pointer into a pointer using the `get()` function.
+There are libraries that require plain old pointers as function arguments. There is no reason to use plain old pointers throughout all your code. Instead, you can convert the smart pointer into a raw pointer using the `get()` function.
 
 ```C++
 auto foo = std::make_unique<Foo>();
 some_old_C_style_library(foo.get());
 ```
 
-This prevents you from having to deal with old school pointers until the very end.
+This prevents you from having to deal with old-school pointers until the very end.
 
-### Pass by reference
+### Pass by Reference
 
-In order for an object to be mutable, it can be either passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. Passing an object by reference means that you basically pass the object itself and thus it can be modified. If the object is passed by const reference it cannot be modified. Passing by const reference is done very frequently. Passing an object by value creates a copy of the object and requires a lot of memory.
+In order for an object to be mutable, it can be passed by pointer or by reference. Passing by pointer is outdated. Objects should always be passed by reference. Passing an object by reference means that you essentially pass the object itself, allowing it to be modified. If the object is passed by const reference, it cannot be modified. Passing by const reference is done very frequently. Passing an object by value creates a copy of the object and requires a significant amount of memory.
 
-Passing an object by reference or by const reference is an important difference. Passing an object by const reference means that it is not going to be changed by the function call. In fact, the compiler will lock this object and it won't be possible to change it. 
+Passing an object by reference or by const reference is an important distinction. Passing an object by const reference means that it will not be altered by the function call. In fact, the compiler will lock this object, and it won't be possible to change it.
 
-At the same time, this is also one point for critisism as passing by const reference should have been the default. The compiler won't complain if you forgot a `const` even though you should have used it. It would be much safer to use the programming language if `const` was the default value and you had to specify an argument `mutable`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
+At the same time, this is also one point for criticism as passing by const reference should have been the default. The compiler won't complain if you forget to use `const`, even though you should have used it. It would be much safer to use the programming language if `const` were the default property, and you had to specify an argument as `non_const`. This would cause a compiler error if you changed this argument. This is done in Rust, one of the more modern programming languages.
 
 ### Classes
 
-C++ was one of the first mainstream programming languages to support classes, inheritance, etc. Probably it became so wide spread because most things worked out pretty well, except some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I told you not to use inheritance, you don’t have to worry about such details.
+C++ was one of the first mainstream programming languages to support classes, inheritance, and more. Probably, it became so widespread because most things worked out pretty well, except for some details about multiple inheritance [https://www.geeksforgeeks.org/multiple-inheritance-in-c/]. But as I advised you not to use inheritance, you don't have to worry about such details.
 
-There is one thing however that was done better in other languages, in Java for instance. In Java, defining an interface is actually called this way, while in C++ or Python one has to define an "abstract base class" (though in Python it is not necessary). This is the only kind of inheritance that I recommend using. Remember when I say you shouldn’t use inheritance: the whole thing with abstract base classes should be named differently and is not affected by this rule. It is fine to use inheritance with abstract base classes or interfaces.
+There is one thing, however, that was done better in other languages, such as Java. In Java, defining an interface is actually called this way, while in C++ or Python one must define an "abstract base class" (although in Python it is not necessary). This is the only type of inheritance that I recommend using. Remember when I say you shouldn't use inheritance: the entire concept of abstract base classes should be named differently and is not impacted by this rule. It is fine to use inheritance with abstract base classes or interfaces.
 
 ### Structs
 
-Structs are essentially the same as dataclasses in Python [chapter classes]. They are classes where all members are public. In general, structs are used to store different data types, though in theory structs may also contain functions. The later is only forbidden by general agreement.
+Structs are essentially the same as dataclasses in Python [chapter classes]. These are classes where all members are public. In general, structs are used to store various data types, although theoretically, structs may also include functions. The latter is only forbidden by general agreement.
 
-Structs are generally very useful objects, as explained in the section on classes. It’s a pity struct like objects are barely used in Java and some other languages. In Java a struct can be defined as a normal class containing only variables without any getter nor setter functions. Or since Java 14, one can use a record which is roughly the same as a struct.
+Structs are generally very useful data structures, as explained in the section on classes. It's a pity that struct-like objects are barely used in Java and some other languages. In Java, a struct can be defined as a normal class containing only variables without any getter or setter functions. Since Java 14, one can use a `record`, which is similar to a struct.
 
 ## Copilot
 
-Copilot can be used to translate between different programming languages. Here is a very simple example to show the capabilities of Copilot. Though I don't know how difficult code snippets Copilot can translate.
+Copilot can be used to translate between different programming languages. Here is a very simple example to demonstrate the capabilities of Copilot. Though I am unsure of how well Copilot can translate complex code snippets.
 
 ```C++
 #include <iostream>
