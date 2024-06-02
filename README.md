@@ -234,7 +234,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Dependency Inversion Principle](#dependency-inversion-principle)
     - [Example](#example-1)
   - [Summary](#summary-3)
-- [22. Software Engineering principles](#22-software-engineering-principles)
+- [22. Software Engineering Principles](#22-software-engineering-principles)
   - [Divide and Conquer](#divide-and-conquer)
   - [Increase Cohesion](#increase-cohesion)
   - [Reduce coupling](#reduce-coupling)
@@ -3978,10 +3978,10 @@ Source: [https://youtu.be/pTB30aXS77U], [https://youtu.be/9ch7tZN4jeI] and [Clea
 The solid principles were named by Robert C. Martin. SOLID is named after 5 general rules how to write object oriented (OO) code. These are:
 
 1.	Single Responsibility Principle (SRP)
-2.	Open closed principle
-3.	Liskov substitution principle
-4.	Interface segregation principle
-5.	Dependency Inversion principle
+2.	Open closed principle (OCP)
+3.	Liskov substitution principle (LSP)
+4.	Interface segregation principle (ISP)
+5.	Dependency Inversion principle (DIP)
 
 These 5 very general rules describe mostly how classes, and also code in general, should be structured and interacting with each other. Obeying them helps with the design of the code.
 
@@ -3993,15 +3993,15 @@ The SRP has already been explained in its own chapter due to its enormous import
 
 ## Open Closed Principle
 
-"Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." - Bertrand Meyer
+"Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification." - Bertrand Meyer
 
-// OCP is always a tradeoff what it is closed and open for. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
+// OCP is always a tradeoff between what is closed and open. Adding more types or more functionality? [https://youtu.be/fwXaRH5ffJM]
 
-The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It says that an object should be open for extension and closed for modification. The original version states that one should use inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add as many implementations at comparably low cost, while it is fairly expensive to change the interface itself. Each class implementing that interface would have to be changed as well.
+The Open Closed Principle (OCP) was first mentioned by Bertrand Meyer in 1988. It is stated that an object should be open for extension and closed for modification. The original version suggests using inheritance to achieve this goal. [Object-Oriented Software Construction, B. Mayer] This is an unfortunate choice. Robert C. Martin suggested using interfaces instead. Interfaces allow you to add multiple implementations at a relatively low cost, while modifying the interface itself can be quite expensive. Each class implementing that interface would also need to be modified.
 
-Our code should be stable with respect to extensions later on, but not to changes. If the requirements change, we have to change our code as well. This is inevitable. But we shouldn't have to change our code if someone else wants to change his code. Thus the solution is to use abstractions at potential abstraction points. This allows the user of our code to extend it without us having to change anything in our code.
+Our code should be stable with respect to extensions in the future, but not to changes. If the requirements change, we must also modify our code. This is inevitable. But we shouldn't have to change our code if someone else wants to change their code. Therefore, the solution is to utilize abstractions at possible abstraction points. This allows the user of our code to extend it without requiring any modifications to our code.
 
-Let's make a small example. We have a class containing some postal codes of Swiss cities. If we want to add an additional city, we'd have to add an additional function to this class. The class `City` is not closed for modification. We have to modify it every time we add another city. This class is not obeying the OCP.
+Let's consider a brief example. We have a class containing some postal codes of Swiss cities. If we want to add another city, we would need to include an extra function in this class. The class `City` is not open for modification. We have to modify it every time we add another city. This class does not adhere to the OCP.
 
 ```py
 class Cities:
@@ -4016,9 +4016,9 @@ def print_all_postal_codes():
     print(cities.bern_postal_code())
 ```
 
-If the user of this code wants to add another city, we have to do this within our own code inside the class `Cities`. We have to *modify* the class `Cities`. This is the opposite of what the OCP want to achieve. The OCP want to separate the user code from the interface.
+If the user of this code wishes to add another city, they will need to do so within our own code inside the `Cities` class. We have to *modify* the class `Cities`. This is the opposite of what the OCP wants to achieve. The OCP wants to separate the user code from the interface.
 
-Instead we can create an interface `City` and implement it for every city we are interested in. We are free to add an additional city if we want to. We don't have to change any existing class or interface. Instead we can create a new object to extend the implementation of the city interface. The code below obeys the OCP.
+Instead, we can create an interface called `City` and implement it for every city we are interested in. We are free to add an additional city if we choose to. We don't have to change any existing class or interface. Instead, we can create a new object to extend the implementation of the city interface. The code below adheres to the OCP.
 
 ```py
 from abc import ABC, abstractmethod
@@ -4041,28 +4041,28 @@ for city in cities:
     print(city.postal_code())
 ```
 
-Now this code on the other hand fulfills the OCP. If the user wants to add another city, he can create as many additional cities as he wants and we don't have to care about it. The base class `City` defines the interface and that's enough for us to work with any class the user adds.
+Now, this code, on the other hand, fulfills the OCP. If the user wants to add another city, they can create as many additional cities as they want, and we don't have to worry about it. The base class `City` defines the interface, which is sufficient for us to work with any class the user adds.
 
-The example mentioned here is the classical example for the OCP. It is the strategy design pattern [Design Patterns]. However, you might also use the decorator pattern which fulfills the OCP as well.
+The example mentioned here is a classic illustration of the OCP. It is the strategy design pattern [Design Patterns]. However, you might also consider using the decorator pattern, which also satisfies the OCP.
 
 ## Liskov Substitution Principle
 
 // see https://youtu.be/pTB30aXS77U
 
-"If it looks like a duck, it quacks like a duck, and it needs batteries, you probably have the wrong abstraction." - wisdom of the internet
+"If it looks like a duck, quacks like a duck, and needs batteries, you probably have the wrong abstraction." - Wisdom of the Internet
 
-Implementation of interfaces shouldn't blindly follow the "is a" principle. This is only a rule of thumb and not sufficient. Instead the implementations really have to share the same interface.
+Implementation of interfaces should not blindly adhere to the "is a" principle. This is only a rule of thumb and not sufficient. Instead, the implementations really have to share the same interface.
 
-For example credit cards and Paypal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while Paypal requires an email address [https://youtu.be/pTB30aXS77U?t=455]. This leads to the situation where you don't know what the payment interface should take as an input argument.
+For example, credit cards and PayPal should not implement the same payment system interface, even though they are both payment methods. The credit card requires a card number, while PayPal requires an email address [https://youtu.be/pTB30aXS77U?t=455]. This leads to a situation where you are unsure about what the payment interface should accept as an input argument.
 
 ```py
 class Payment:
     def make_payment(amount, card_number_or_email_address)
 ```
 
-This logical contradiction about what the second argument should be (email address or card number) is a violation of the Liskov substitution principle. Credit card payments and Paypal payments should not implement the same interface.
+This logical contradiction regarding whether the second argument should be (email address or card number) violates the Liskov substitution principle. Credit card payments and PayPal payments should not use the same interface.
 
-Instead the selection of the credit card numer or the email address should be done later on, inside the specific classes. It is there that these credentials have to be asked from the user.
+Instead, the selection of the credit card number or the email address should be done later, within the specific classes. It is there that these credentials have to be requested from the user.
 
 ```py
 from abc import ABC, abstractmethod
@@ -4081,15 +4081,15 @@ class CreditCard(PaymentSystem):
         # ask the user for the credit card number
 ```
 
-##  Interface Segregation Principle
+## Interface Segregation Principle
 
 "Clients should not be forced to depend upon interfaces that they do not use." — Robert C. Martin
 
-The Interface Segregation Principle (ISP) is like the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to keep the coupling low. You don't want to import and compile a huge library only because you need one small feature of it. If there are some logical blocks within a library that are separate, make sure that they are made available separately.
+The Interface Segregation Principle (ISP) is similar to the SRP for interfaces. Interfaces should be split up into many small parts. This is important in order to maintain low coupling. You don't want to import and compile a huge library solely for one small feature. If there are separate logical blocks within a library, ensure that they are also made available separately.
 
-Here the file A does not follow the ISP. It does 2 independent things. Most other code needs only one of these functions. They are independent. Thus, they should be in different files. 
+Here, file A does not comply with the ISP. It does two independent things. Most other code only needs one of these functions. They are independent. Thus, they should be in different files.
 
-Now in Python this is not such a big deal as you can import each function individually and even if you import the whole file A it's not a big deal. It's not becomming slow. In C++ on the other hand, adding unrelated functions into the same file is really a no no. In C++ you always include a whole header file at once and you'll have to compile everything that comes with it. There might be a hefty price to pay if the file A would be too big.
+Now in Python, this is not such a big deal because you can import each function individually. Even if you import the whole file A, it's not a big deal. It's not becoming slow. In C++, on the other hand, adding unrelated functions in the same file is really a no-no. In C++, you always include an entire header file at once, and you will have to compile everything that is included with it. There might be a hefty price to pay if file A is too large.
 
 ```C++
 // C++
@@ -4107,9 +4107,9 @@ int function_2(){
 
 // add graphs on the file dependencies below
 
-The solution is to split up the file A into two subfiles A1 and A2. The goal is to find a way to do this, such that most of the other files use only one of the newly created files A1 and A2. A1 and A2 should have high cohesion within themselves but there should be low coupling between them. Idealy, the amount of code that you'll have to import is reduced roughly by half. 
+The solution is to split up the file A into two subfiles, A1 and A2. The goal is to find a way to achieve this so that the majority of the other files utilize only one of the newly created files, A1 and A2. A1 and A2 should exhibit high cohesion within themselves, but there should be low coupling between them. Ideally, the amount of code that you'll have to import is reduced by roughly half.
 
-This process of breaking up files can be repeated until it is no longer possible to reduce the amount of code imported, or the number of imports would be growing unreasonably fast. At this point you finished the segregation of the file A.
+This process of breaking up files can be repeated until it is no longer possible to reduce the amount of imported code, or the number of imports would be growing unreasonably fast. At this point, you have finished segregating file A.
 
 ```C++
 // C++
@@ -4124,9 +4124,9 @@ int function_2(){
 }
 ```
 
-A well known example where the interface is segregated is the standard library in C++. All the functionality is defined inside the `std::` namespace (`std::` a namespace, not a class!), but the whole library is split up into many different files. Importing the whole standard library only because you need some part of it would increase the compilation times too much.
+A well-known example of interface segregation is the standard library in C++. All the functionality is defined inside the `std::` namespace (`std::` a namespace, not a class!), but the whole library is split up into many different files. Importing the entire standard library solely for the sake of using a small portion of it would significantly increase compilation times tremendously.
 
-Another common example is defining an enum inside a class, while other parts of the code might need access to this enum as well. This other part of the code has to import the complete class containing the enum, even though it doesn’t care about anything else than this simple enum. This other code imports much more code than it would have to. And the solution is pretty simple. One can just extract the enum from the class and have it stand alone. Then it fulfills the ISP.
+Another common example is defining an enum inside a class, while other parts of the code might also need access to this enum. This section of the code needs to import the entire class that contains the enum, even though it only requires this simple enum and nothing else. This code imports more modules than necessary. The solution is quite simple. One can simply extract the enum from the class and make it standalone. Then it fulfills the ISP.
 
 ```py
 # inside ImportantStuff.py
@@ -4145,7 +4145,7 @@ from ImportantStuff import BigClass
 color = BigClass().Color.BLUE
 ```
 
-Here we first need a class instance of `BigClass` because the enum is hidden inside of the class definition. This could be avoided by moving the enum outside the class. This would reduce the coupling of the code as the user code depended only on the enum and not on the whole class around it.
+Here, we first need a class instance of `BigClass` because the enum is encapsulated within the class definition. This issue could be avoided by moving the enum outside the class. This would reduce the coupling of the code because the user code would only depend on the enum and not on the entire class surrounding it.
 
 The code would be much better as follows:
 
@@ -4167,30 +4167,31 @@ from ImportantStuff import Color
 color = Color.BLUE
 ```
 
-Like this you segregated the interface and you don't have to import the `BigClass`.
+By doing this, you have segregated the interface, and you don't have to import the `BigClass`.
 
 ## Dependency Inversion Principle
- 
+
 "High-level modules should not depend on low-level modules" - ?
 
-Dependency Inversion Principle (DIP) is a technique used in languages as C++ and Java to reduce the compilation times considerably. The files in your project include each other and form a tree. The so-called dependency tree. The main function is at its root. The leaves of the tree are low level functions of your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
+The Dependency Inversion Principle (DIP) is a technique used in languages such as C++ and Java to significantly reduce compilation times. The files in your project reference each other and form a tree structure. The so-called dependency tree. The main function is at its root. The leaves of the tree represent low-level functions in your code and other libraries, as we have learned in the chapter on levels of abstraction. The main function is the root.
 
 // add a graph for the dependency tree
 
-For interpreted languages like Python the dependency inversion principle is not so important. This is mainly a technique to break compilation dependencies which don’t exist in interpreted languages. Though it's still good to know this principle as a Python user as it is very fundamental.
+For interpreted languages like Python, the dependency inversion principle is not as crucial. This technique is primarily used to break compilation dependencies that do not exist in interpreted languages. Though it's still important to understand this principle as a Python user because it is very fundamental.
 
-The first time you compile your code, the whole code base (the whole dependency tree) has to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a time stamp. If you recompile your code later on, only the files that changed since the last compilation have to be recompiled. For small changes, this reduces the time required for compilation to a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause huge parts of the code to recompile. For everyone working on the project. This is why software developers have so much time to spend in front of the coffee machine, waiting for their code to compile.
+The first time you compile your code, the entire codebase (the complete dependency tree) needs to be compiled. This can easily take minutes, maybe even hours. The resulting binary files carry a timestamp. If you recompile your code later, only the files that have changed since the last compilation need to be recompiled. For minor modifications, this reduces the compilation time to just a few seconds. However, there is a serious problem. As you change a file, you also affect all files that include this file, directly or indirectly. Everything in the branch of the tree up to the main function. A small change in a library file can cause significant portions of the code to recompile. For everyone working on the project. This is why software developers often spend a lot of time in front of the coffee machine, waiting for their code to compile.
 
-We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, main changes as well as main directly or indirectly includes all other files of the project. Therefore, the main file has to be recompiled as well. It’s like a hard link.
+We first have to understand the source of this problem. As I mentioned before, it has to do with the `includes` (or `imports`). The main file includes all the other files. It is the root of the dependency tree. If one file changes, the main file changes as well because it directly or indirectly includes all other files in the project. Therefore, the main file has to be recompiled as well. It's like a hard link.
 
-Instead we want a soft link. Main should depend only on the public interface of a library, not its implementation. Such that main won’t be affected by internal changes of the code within a library. If I change a file in a library, say the `sin` function inside the math library, I want to recompile only the math library itself. I want to cut off this library branch from the dependency tree and deal with it independently. Main shouldn’t know about anything going on within the math librarry. Main shouldn't have to recompile if the code within the math library changes. Main should only change if the public interface of math changes.
+Instead, we want a soft link. Main should depend only on the public interface of a library, not its implementation. To ensure that the main code remains unaffected by internal changes within a library. If I modify a file within a library, such as the `sin` function in the math library, I aim to recompile solely the math library. I want to cut off this library branch from the dependency tree and handle it separately. Main shouldn't know about anything going on within the math library. Main shouldn't have to recompile if the code within the math library changes. Main should only change if the public interface of math changes.
 
-This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead couples it loosely by the interface of the branch. You can do that by defining an abstract base class (interface in Java) that defines the shape of the interface. The file containing this interface doesn’t have any dependencies. It’s on the lowest level of the dependency tree. Or at least in something like a local minimum. The old interface code of the library inherits from this interface. It implements it. As main uses this library, at first is has only the information of the interface. Everything else is hidden as it’s not included. Unless you change the interface, changing code inside the library will not cause anything else to recompile. 
+This is where dependency inversion comes into play. It does exactly what I just described. It breaks a branch off of the dependency tree and instead loosely couples it through the interface of the branch. You can achieve this by defining an abstract base class (interface in Java) that outlines the structure of the interface. The file containing this interface does not have any dependencies. It's on the lowest level of the dependency tree. Or at least in something akin to a local minimum. The old interface code of the library inherits from this interface. It implements it. As the main user of this library, initially, it only has information about the interface. Everything else is hidden as it is not included. Unless you modify the interface, altering code within the library will not trigger recompilation of anything else.
 
 ### Example
-As I said before, the DIP is important for compiled langagues. Therefore the following code example is written in C++.
 
-Let's say we have a class `Nothing` with a method `do_nothing`. Now we want to change the code such that `main` won't recompile if the implementation of `do_nothing` changes.
+As I said before, the DIP is important for compiled languages. Therefore, the following code example is written in C++.
+
+Let's consider a class `Nothing` with a method `do_nothing`. Now we want to modify the code so that `main` does not recompile if the implementation of `do_nothing` changes.
 
 ```C++
 class Nothing{
@@ -4236,16 +4237,16 @@ int main(){
 }
 ```
 
-Now `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing the implementation of `Nothing` does not change `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected together by the linker. The linker will make sure the main function calls the correct implementation of this library.
+Now, `main` depends only on the interface of `NothingBase`, not on the implementation defined in `Nothing`. Changing the implementation of `Nothing` does not affect `main`. Therefore, `main` does not need to be recompiled if `Nothing` changes! `main` and `Nothing` are only connected by the linker. The linker will ensure that the main function calls the correct implementation of this library.
 
-// dependency tree graphs
+// Dependency Tree Graphs
 
 ## Summary
 
-I think this was the longest section in this book where I explain technical details for C++ that Python users don’t necessarily need. At the same time, I’d like to emphasize that this section was very important for the C++ and Java programmers. Both, for the quality of the code, and also for understanding how the whole concepts of includes, compiler and linker work.
+I believe this was the longest section in the book where I delve into technical details for C++ that may not be essential for Python users. At the same time, I would like to emphasize that this section was very important for C++ and Java programmers. Both for the quality of the code and for understanding how the concepts of includes, compiler, and linker work.
 
 
-# 22. Software Engineering principles
+# 22. Software Engineering Principles
 
 In this chapter I explain some very general design principles that I saw on youtube, [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general priciples and therefore decided to write a chapter about them.
 
