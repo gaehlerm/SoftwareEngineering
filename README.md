@@ -629,7 +629,7 @@ You definitely need to take a second look to fully understand the meaning of thi
 
 The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It's about reading code! If you can reduce the time required to read code by half, you save more time than you spend writing code in total. By a lot.
 
-The first rule of software engineering:
+I came up with five fundamental rules for software engineering. The first one is:
 
 **We write code that is easy to understand.**
 
@@ -645,9 +645,15 @@ The second rule of software engineering:
 
 **We write automated tests that cover all of our code.**
 
-Now let's return to our lovely plot. There is one more substantial chunk of work. Modifying the current code. Also known as refactoring. Yes, as astonishing as it sounds, you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring, and its importance cannot be understated. It helps you keep the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring, your code quite quickly becomes a huge mess, making it difficult to implement any changes. And there will be a million places where bugs can hide. Though changing code always carries the inherent risk of potentially breaking it. This is one of the reasons why we need good tests. If we have good test coverage, we can change the code with confidence that we won't break it.
+Along with this rule comes the fact that we all make mistakes. We're only human after all. So we have to write our code accordingly.
 
 The third rule of software engineering:
+
+**We write code that can have as few possible bugs as possible.**
+
+Now let's return to our lovely plot. There is one more substantial chunk of work. Modifying the current code. Also known as refactoring. Yes, as astonishing as it sounds, you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring, and its importance cannot be understated. It helps you keep the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring, your code quite quickly becomes a huge mess, making it difficult to implement any changes. And there will be a million places where bugs can hide. Though changing code always carries the inherent risk of potentially breaking it. This is one of the reasons why we need good tests. If we have good test coverage, we can change the code with confidence that we won't break it.
+
+The fourth rule of software engineering:
 
 **We constantly clean up our code.**
 
@@ -655,27 +661,23 @@ Now you have an idea of what the life of a programmer will look like. Now you kn
 
 You might already be working in a company, or you will be soon. Your boss is not going to let you write code for a month just because you like it. You will be spending a considerable amount of time in meetings and engaging in discussions with others to determine precisely what you should do. What your customers want.
 
-The fourth rule of software engineering:
+The fifth rule of software engineering:
 
 **We write code to create value for our customers.**
 
 If you don't like meetings nor customers, you can stay at home and write whatever code you like. But unless you are a genius, the chances of anyone paying you for that are very low. It is more rewarding to write mediocre code that is being used than to write brilliant code that no one cares about.
 
-These four rules will accompany us throughout our book.
+These five rules will accompany us throughout our book.
 
-//make a list of the 4 rules in a box
+//make a list of the 5 rules in a box
 
 - We write code that is easy to understand.
-
 - We write automated tests that cover all of our code.
-
+- We write code that can have as few possible bugs as possible.
 - We constantly clean up our code.
-
 - We write code to create value for our customers.
 
 # 7. Good code: a list of rules
-
-// this chapter needs some citations of other chapters.
 
 "Truth can only be found in one place: the code." - Robert C. Martin
 
@@ -727,7 +729,7 @@ Write self-explanatory code. Only use comments for aspects that the code cannot 
 
 ## The Zen of Python
 
-The Zen of Python [https://peps.Python.org/pep-0020/#the-zen-of-Python] is a list of 19 guiding principles by Tim Peters. I find them very useful, so I decided to include some in my list, along with a brief explanation.
+The Zen of Python [https://peps.Python.org/pep-0020/#the-zen-of-Python] is a list of 19 guiding principles by Tim Peters. I find them very useful, so I decided to include some of them in my list, along with a brief explanation.
 
 Explicit is better than implicit: Explicit code is easier to understand. Do not try to hide complicated logic as it will haunt you eventually.
 
@@ -735,9 +737,9 @@ Flat is better than nested: Nested code is hard to understand and error-prone.
 
 Readability counts: Of course, it does. Readability is the most important metric of good code.
 
-Special cases aren't special enough to break the rules.
+Special cases aren't special enough to break the rules: Stick to the rules explained in this book.
 
-Although practicality beats purity: Yes, there are times when you are allowed to break the rules explained in this book.
+Although practicality beats purity: You are allowed to break the rules explained in this book if you have a valid reason.
 
 Errors should never pass silently: If an error occurs, something went wrong, and the user should be informed about it.
 
@@ -1327,6 +1329,8 @@ Copilot is generally not very good at writing interfaces. Instead, you should do
 "And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction"
 [https://youtu.be/MBRoCdtZOYg]
 
+This chapter is a futile attempt to help you find better names. If you are not satisfied by my lousy explanations, I recommend the book [The Art of Readable Code] which has some more detailed explanations.
+
 How long does a football game last? This is a very innocent question, although people may not agree on an answer. In Europe, most people would say 90 minutes, while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that share the same name. This can cause some confusion.
 
 The example was cute. Mixing them up may cause amusement, but it does not cause any harm. When it comes to city names, things can get a little trickier. If you miss a job interview because you drove to the wrong city named "Springfield" (this name is used in The Simpsons because it is a very common name in the US), it can be quite painful. For the police and healthcare system, it becomes even worse. When there are individuals with identical names present, it can become risky. If your namesake is a highly dangerous criminal, the police may become really rough because they are confused and think you could be dangerous. Even in Europe. In a hospital, there are issues with using names as an identifier, and so far, there is no unique solution on how to solve it. Using the name combined with the birth date works out quite well, but it is no definite solution.
@@ -1786,6 +1790,7 @@ Let's explore the reasons for having private variables and functions. We need so
 You have this absolutely massive object, and essentially, you can only do three things with it: increase the speed, reduce the speed, and change the direction. And miraculously, that's all you need. As long as your car is running, you don't care about anything else. I correct myself: you don't want to know about anything else. Everything else works automatically as it should. It's like magic. You don't want to adjust the fuel pump, modify engine settings, or tamper with the servo control of the steering wheel. It works, and it's fine. You don't want to deal with the internal workings of the car. You don't even want to be able to take care of these parts. These are the private parts of the car and should not be touched by you. Only a mechanic should maintain them.
 
 There is one very simple rule of thumb for determining which parts of a class should be public or private. If a class has no functions, it is a struct, and all variables should be public. Otherwise, as few functions as possible should be public, and all variables should be private. But we will look at this rule in more detail in the next sections.
+
 ## Different Kinds of Classes
 
 I like to categorize classes by the number of variables and the complexity of the functions they contain. Ensuring that your classes fit into one of these categories is helpful for fulfilling the SRP.
@@ -2167,7 +2172,7 @@ As we are discussing static functions, we can also discuss static variables as u
 
 "You wanted a banana, but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
-Classes are frequently misused for writing poor code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too large. It is just too convenient to write everything inside a single class. Having all the member variables readily available makes it easy to work this way. In some cases, I had the feeling that the authors of certain code aimed to write all the code within a single class. This is extremely problematic. If a single class covers the entire code, then the member variables become ... global variables! [Additional Properties of Variables] The entire code turns into a Big Ball of Mud. [https://en.wikipedia.org/wiki/Big_Ball_of_Mud]
+Classes are frequently misused for writing poor code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too large. It is just too convenient to write everything inside a single class. Having all the member variables readily available makes it easy to work this way. In some cases, I had the feeling that the authors of certain code aimed to write all the code within a single class. This is extremely problematic. If a single class covers the entire code, then the member variables become ... global variables! [Additional Properties of Variables] Member variables are also called mini-globals in [The Art of Readable Code] for this purpose. With too many member variables the entire code turns into a Big Ball of Mud. [https://en.wikipedia.org/wiki/Big_Ball_of_Mud]
 
 But also for slightly smaller classes, member variables can be problematic. They represent a hidden state. It is generally preferred to pass variables as function arguments to functions and methods. This makes the methods easier to test since you don't have to set up a class instance. Be careful with class variables. Or even worse, inherited variables. Keep your classes small to limit the scope of your class variables.
 
@@ -4546,7 +4551,7 @@ for i in range(10):
     print(i)
 ```
 
-
+/////
 # 25. Physical laws of code
 
 // break up this chapter merge it with other?
@@ -5745,11 +5750,13 @@ Part 8: Miscelaneous
 
 "Code is like humor. When you have to explain it, it’s bad." – Cory House
 
-As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. 
+As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. *What* can be understood by looking at the code. With the *why*, this is not possible. Was the code written because of some ticket? Add a comment.
 
 Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
 
 ## Bad comments
+
+// to the reviewers: Is this code too much ranting about the other book? If yes, how can I improve it?
 
 "Comments? Don’t."
 
@@ -5761,25 +5768,25 @@ def add(a,b):
     return a + b
 ```
 
-Of course, I exaggerated in this example. I just wanted to make a point. But there are programmers out there who think that this comment here is justified. 
+Trust me, I've seen similar comments out in the wild. Apparently the programmer thought it was a good idea to write this comment.
 
-I do not share this opinion at all. In my opinion this comment is just a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure, take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP.
+I do not share this opinion. In my opinion this is a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure, take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP. It's a duplicate explanation of what the code does.
 
 "Yes, but it’s only one line of comment. It can’t hurt us.", you might say. 
 
 "NO!"
 
-Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions or variable names, you can’t enforce that a comment stays at its correct location. You will eventually end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cost time. It will cause bugs.
+Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions or variable names, you can’t enforce that a comment stays at its correct location. You will eventually end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cost time. 
 
 Not convinced? You think you won’t have these issues because you work carefully? 
 
 "Ha ha. NO!"
 
-Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this whole book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and deal with it. Code is good if you can make as few mistakes as possible. Removing useless comments is a must. They are an unnecessary source for bugs.
+Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this entire book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and learn how to deal with it. Code is good if you can make as few mistakes as possible. Removing useless comments is a must. They violate the third rule of this software engineering. Such comments are an unnecessary source of bugs.
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The original code was written in C++, I translated it to Python. 
+Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. I really like that book, but there are some examples to improve upon. The original code was written in C++ and I translated it to Python like pseudo code.
 
 ```py
 class FrontendServer:
@@ -5793,9 +5800,9 @@ class FrontendServer:
     close_database(location)
 ```
 
-Undoubtadly, this code is bad. It is very hard to read this code. There is too much code without any structure.
+Undoubtadly, this code is bad. It is very hard to read it. It doesn't contain any visible structure.
 
-The authors of this book formated the code a little and ended up with something like this:
+The authors of this book sorted the code a little, added some comments, and ended up with something like this:
 
 ```py
 class FrontendServer:
@@ -5813,9 +5820,10 @@ class FrontendServer:
     open_database(location, user)
     close_database(location)
 ```
-The code certainly became much more readable. But adding these comments doesn't solve the fundamental issue: This class should be broken down into 3 sub classes and one dataclass as a parent containing the class instances. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
 
-Here is my own suggestion how to rewrite the code above:
+The code certainly became much more readable. But this refactoring can be taken one step further. Adding these comments doesn't solve the fundamental issue: This class should be broken down into 3 sub classes and one dataclass as a parent containing the class instances. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
+
+Here is my own suggestion how to rewrite the code above (again: it's only pseudo code):
 
 ```py
 from dataclasses import dataclass
@@ -5845,11 +5853,11 @@ server = FrontendServer()
 server.profile.view(request)
 ```
 
-The resulting code is once again longer than the initial version, including the user code of it. But it is both much better structured and there is no need for any comments. Note how we were also able to simplify some parts of the code. For instance we now write just `view` instead of `view_profile`. The profile part of the function name is now already clear due to the context inside the `Profile` class.
+The resulting code is once again longer than the initial version. But it is both much better structured and there is no need for any comments. Note how we were also able to simplify some parts of the code. For instance we now define the function `view` instead of `view_profile`. The profile part of the function name is now already clear due to the context inside the `Profile` class or the function call as `profile.view`.
 
-Here is another example from the same book. It suffers from a similar problem: The authors tried to improve the code by adding comments instead of improving the code itself.
+Here is another example from the same book. It suffers from a similar problem to improve upon: The authors improved the code by adding comments instead of improving the code itself.
 
-This is the original code. Needless to say that it is not very readable. It lacks any visible structure.
+This is the original code. Needless to say that it is very hard to read.
 
 ```py
 # Import the user's email contacts, and match them to users in our system.
@@ -5867,7 +5875,7 @@ def suggest_new_friends(user, email_password):
     return render("suggested_friends.html", display)
 ```
 
-After the refactoring suggested in the book, the code is already much more readable. But once again, the code should not be commented but refactored.
+After the refactoring suggested in the book, the code is already much more readable. But once again, the code should not be commented. It should be refactored.
 
 ```py
 def suggest_new_friends(user, email_password):
@@ -5891,7 +5899,7 @@ def suggest_new_friends(user, email_password):
     return render("suggested_friends.html", display)
 ```
 
-Here is my suggestion.
+Here is my suggestion (of course, I have the advantage of using Python which makes the code shorter).
 
 ```py
 def suggest_new_friends(user, email_password):
@@ -5901,8 +5909,8 @@ def suggest_new_friends(user, email_password):
 
     suggested_friends = find_suggested_friends(non_friend_emails)
 
-    items = create_dict(user, friends, suggested_friends)
-    return render("suggested_friends.html", items)
+    dict_items = create_dict(user, friends, suggested_friends)
+    return render("suggested_friends.html", dict_items)
 
 def get_friends_emails_of(user):
     return set(f.email for f in user.friends())
@@ -5924,7 +5932,7 @@ def create_dict(user, friends, suggested_friends):
 
 This time the code became only quite little longer compared to other refactoring examples. But at the same time it is so much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
 
-At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code" (I would like to mention that I really like the book, but I don't agree with all the examples they use):
+At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code" (I would like to mention that I really like the book, but the examples can be improved upon):
 
 ```C++
 // Rearrange 'v' so that elements < pivot come before those >= pivot;
@@ -5932,9 +5940,9 @@ At times it is very difficult to explain code with code alone. So there is of co
 int Partition(vector<int>* v, int pivot);
 ```
 
-I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is always suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value at the same time. This is a violation of the SRP. The function should be split into two parts.
+I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value at the same time. This is a violation of the SRP. The function should probably be split into two parts.
 
-Additionally there is something else that can explain code: unit tests. The test cases act as examples how the code is supposed to be used. This is frequently a better help than some comment.
+Additionally there is something else that can explain code: unit tests. The test cases act as examples how the code is supposed to be used and serves as an example at the same time. This is frequently a better help than some hard-to-read comment.
 
 ### Commented out code
 
