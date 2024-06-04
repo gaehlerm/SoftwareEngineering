@@ -5786,7 +5786,7 @@ Now you’re certainly wrong this time. By now you should know better. This is e
 
 You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. I really like that book, but there are some examples to improve upon. The original code was written in C++ and I translated it to Python like pseudo code.
+Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The book has some good ideas, but there are some examples to improve upon. The original code was written in C++ and I translated it to Python like pseudo code.
 
 ```py
 class FrontendServer:
