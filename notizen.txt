@@ -1,0 +1,7 @@
+Alle Modelle sind falsch, aber manche sind nützilch. George Box, Einführung in DDD, p. 54
+
+karten sind Modelle. Sie zeigen nur einen Ausschnitt der Realität.
+
+Ubiquituous languages sind nur innerhalb von einem Model gültig.
+
+Unterschiedliche Theorien sind in unterschiedlichen Kontexten gültig.
