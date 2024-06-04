@@ -1,6 +1,8 @@
 parts of the book
 
 First things first
+-Introduction
+-Understandable code
 -SRP
 -Interfaces
 -Levels of abstraction
@@ -24,34 +26,37 @@ Design Principles
 Programming
 -Programming paradigms
 -Programming languages
--Errors, Exceptions, Bugs
-
-About code
--Understandable code
--Comments
 -Physical laws of code
--Domain Driven Design
--Software Architecture
--Good Code
+-Errors, Exceptions, Bugs
 -Complexity
 -Decoupling
+
+High level code
+-Software Architecture
+-Domain Driven Design
+-3rd party code
 
 Existing Code
 -Working with existing Projects
 -Refactoring Fundamentals
 -Performance Optimization
 
+Miscellaneous
+-Comments
+-Logging
+-Data files
+-Setting up a project
+-Tools
+
 Collaborating
 -Working in teams
 -Code Review
--Planning
--Hiring and getting Hired
--DevOps
 -Agile
 -Requirements Engineering (Felix)
+-Planning
+-DevOps
+-Mental health
+-Hiring and getting Hired
 
-Miscellaneous
--Setting up a project
--Logging
--Tools
--Data files
+
+
