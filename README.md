@@ -547,12 +547,19 @@ There are some people who read through this book and were very helpful in giving
 - Rafael Gort
 - Felix Gähler
 - Hans Märki
+- Bernhard Brodowsy
 - Claudia Gähler
+- Barbara Schneider
+- Fabian Mäser
 - ... you?
+
+Furthermore I'd like to thank Uwe Schmitt and the Research Software Engeneering (RSE) community
 
 I would also thank to Martin Fowler, Robert C. Martin, and Dave Thomas, amoung others, for their moral support and their great books. Though, little surprisingly, they didn't have time to read through this book.
 
 Copilot and Wordvice helped me a lot writing this book. Copilot at times gave me some inspiration on how to finish a sentence and Wordvice helped me out with improving the language. When revising this text, I just realized once again how poor my English was.
+
+I would also like to thank the team of Pearson Germany for their support.
 
 # 5. Preface
 
@@ -6012,7 +6019,7 @@ You may use docstring tools, like sphynx in Python, for automatically generated 
 
 For using docstrings as a documentation for external users, on the other hand, comments are really useful. Furthermore, for commenting external APIs using docstrings, there apply completely different rules than for internal comments. When commenting an API, it is very important to comment the *what* and not the *why*. The user doesn't have access to the code, or at least he's not supposed to read it. So he solely relies on the docstring comments. Therefore, you have to comment *what* your functions and classes do, and how to use them. Possibly also by adding examples. The *why* on the other hand is not important at all.
 
-As a short summary: Use docstrings for documenting your external APIs. Docstrings should comment the *what* and not the *why*.
+As a short summary: Docstrings are very useful for documenting your external APIs, but not for internal code. Docstrings should comment the *what* and not the *why*.
 
 ## Commenting magic numbers
 
