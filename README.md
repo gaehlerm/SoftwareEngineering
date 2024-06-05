@@ -289,10 +289,10 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Single line complexity](#single-line-complexity)
   - [Black magic code](#black-magic-code)
 - [28. Dependencies](#28-dependencies)
-  - [The early days](#the-early-days)
+  - [The Early Days](#the-early-days)
   - [The dependency graph](#the-dependency-graph)
-  - [Breaking up dependencies](#breaking-up-dependencies)
-  - [Circular dependencies](#circular-dependencies)
+  - [Breaking up Dependencies](#breaking-up-dependencies)
+  - [Circular Dependencies](#circular-dependencies)
     - [Example](#example-2)
 - [29. Decoupling](#29-decoupling)
   - [Law of demeter](#law-of-demeter)
@@ -4841,47 +4841,47 @@ It is much better to be honest. The problem is complex, and we break it down int
 
 "If you automate a mess, you get an automated mess." — Rod Michael
 
-In this chapter we are discussing files depending on each other. An inevitable evil.
+In this chapter, we are discussing files that depend on each other. An inevitable evil.
 
-## The early days
+## The Early Days
 
-In the early days, people wrote code in a single file. This has several drawbacks. It’s very easy to lose the overview of the code and it is hard if you have to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you can’t use it at all.
+In the early days, people wrote code in a single file. This has several drawbacks. It's very easy to lose track of the code, and it can be challenging when you need to replace a part of it. For example, if you found a faster library. Even worse, the library is only available as a binary. Then you cannot use it at all.
 
-These are some of the considerations that made programmers split up their code into many files. But how do you tell the computer how to build up the complete code from these files? Apparently, there are some solutions, but this is an ongoing discussion.
+These are some of the considerations that led programmers to split their code into multiple files. How do you instruct the computer to compile the complete code from these files? Apparently, there are some solutions, but this is an ongoing discussion.
 
-In C++ the whole problem becomes even worse due to the compiler requiring the header files. It is possible to compile a C++ program with the command line for a single file but it becomes unbearable for bigger projects. If you use C++, it is inevitable for you to learn a build tool, for example cmake or meson.
+In C++, the problem becomes even more challenging because the compiler requires the header files. It is possible to compile a C++ program using the command line for a single file, but it becomes impractical for larger projects. If you use C++, it is inevitable that you learn a build tool, such as CMake or Meson.
 
-What all programming languages have in common are the import or include statements at the beginning of the files. Even with the build tools of C++ you still need those. They might bother you but at times they are quite handy. They are an indicator for some very bad patterns in your code.
+All programming languages have import or include statements at the beginning of the files. Even with the build tools of C++, you still need them. They might bother you, but at times they are quite handy. They are an indicator of some very bad patterns in your code.
 
 ## The dependency graph
 
-If you draw a plot with all the files as circles and how they import each other as arrows you should get a directed acyclic graph. The trunk of this graph is the file containing the main function, the highest level of abstraction. As you go up in the graph, the level of abstraction becomes lower.
+If you draw a plot with all the files represented as circles and their interconnections as arrows, you should obtain a directed acyclic graph. The trunk of this graph is the file containing the main function, representing the highest level of abstraction. As you move up on the graph, the level of abstraction decreases.
 
 // create a figure of this graph
 
-Now the first thing to look out for in this abstraction graph are two arrows pointing in opposite directions. This means that two files import each other. Depending on the language this may cause anything from normal behavior, undefined behavior, or errors. But even if it works, it is very bad design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It’s just a mess.
+Now, the first thing to look out for in this abstraction graph is two arrows pointing in opposite directions. This means that two files are importing each other. Depending on the language, this may result in anything from normal behavior to undefined behavior or errors. But even if it works, it is a very poor design. If you have mutual dependencies, there is no clear distinction between the levels of abstraction. It's just a mess.
 
-The simplest solution is fusing these files. However, this is only a superficial fix. You really have to find out the relationships between the function and classes in the files. Maybe you can reorder them, maybe you have to rewrite the corresponding code from scratch.
+The simplest solution is to merge these files. However, this is only a superficial fix. You really have to determine the relationships between the functions and classes in the files. Maybe you need to reorder them, or perhaps you have to rewrite the corresponding code from scratch.
 
-## Breaking up dependencies
+## Breaking up Dependencies
 
-Circular imports are not a common problem as they are easy to spot and experienced programmers don’t have such issues anyway. With good coding habits, circular dependencies won't show up. The much more common problem are too many dependencies. This makes the code become very sticky. It is very hard to give some numbers to quantify the problem, as it depends on a lot of factors. Breaking up a file is usually a good thing to do, but at the same time it increases the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little and it should be reconsidered if the number of dependencies almost doubles. The later means that most code needs all of the code from this file, so it makes sense to have it all bundled together. 
+Circular imports are not a common problem because they are easy to spot, and experienced programmers typically do not encounter such issues. With good coding habits, circular dependencies won't occur. The much more common problem is having too many dependencies. This makes the code very sticky. It is challenging to provide specific numbers to quantify the problem because it depends on numerous factors. Breaking up a file is usually beneficial, but it also leads to an increase in the number of dependencies. This is inevitable. As a rule of thumb, breaking a file into two is a good thing if the number of dependencies increases only a little, and it should be reconsidered if the number of dependencies almost doubles. The latter means that most code requires all the code from this file, so it makes sense to have it all bundled together.
 
-How you break up a file is the even harder question. Sometimes you can easily bunch the code into groups, other times it is very hard to tell what belongs together. You can certainly split some of the code into a new file if you broke up a class into two classes.
+How you break up a file is an even harder question. Sometimes you can easily group the code into clusters, while other times it is challenging to discern what belongs together. If you have divided a class into two classes, you can definitely separate some of the code into a new file.
 
-The most important step towards lower dependencies is focusing your code. Make sure that similar code fragments are located at the same location. Having database access spread all over the code is usually a very bad sign. The logic of your code should be concentrated at a few spots. Make all the database requests at once, as far as possible, and store the results in a data class instance. Afterwards you can pass around this class instance and there is no need to think about the database anymore. And just like that you got rid of many dependencies and at the same time you improved your code.
+The most important step towards reducing dependencies is to focus on your code. Ensure that similar code fragments are placed in the same location. Having database access spread throughout the code is typically a significant red flag. The logic of your code should be concentrated in a few key areas. Make all the database requests at once, whenever possible, and store the results in an instance of a data class. Afterward, you can pass around this class instance, and there is no need to think about the database anymore. And just like that, you have eliminated many dependencies while simultaneously enhancing your code.
 
-The hardest part is reducing the dependencies by improving the general structure of the code. Good code has simple logic, which in turn has few dependencies. This, however is quite tricky to achieve and even if I could, explaining it here would be barely possible.
+The most challenging aspect is reducing dependencies by enhancing the overall structure of the code. Good code has simple logic, which in turn has few dependencies. This, however, is quite tricky to achieve, and even if I could, explaining it here would be barely possible.
 
-## Circular dependencies
+## Circular Dependencies
 
-Usually, circular dependencies occur as two classes exchange data between each other. Class A needs data from class B which needs some data from class A in return. You should be able to tell whether class A or class B corresponds to the higher level of abstraction. Let’s assume class A is the higher-level class calling class B at some point. Now class B should never ever have to call class A. B is low level and knows nothing of the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data class B needs to return the final result. 
+Circular dependencies typically occur when two classes exchange data between each other. Class A requires data from class B, which in turn requires some data from class A. You should be able to determine whether class A or class B corresponds to the higher level of abstraction. Let's assume that class A is the higher-level class calling class B at some point. Now, Class B should never have to call class A. B is at a lower level and knows nothing about the high-level class A. This leads to only one solution: class A has to call class B exactly once and hand over all the data that class B needs to return the final result.
 
-Long story short: The high-level object calls the low-level object and hands over all the data required at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and sorts out the levels of abstraction. The only tricky part is that the high level object does not know exactly what the low level object needs.
+Long story short: The high-level object calls the low-level object and passes all the necessary data at once. The low-level object returns the final result at the end of the calculation. This resolves the problem of circular dependencies and organizes the levels of abstraction. The only tricky part is that the high-level object does not know exactly what the low-level object needs.
 
 ### Example
 
-This example here is deliberately simple. I hope no one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently this makes the code much more convoluted and harder to understand than it had to be.
+This example is intentionally simple. I hope no one would write code like this. It's just to make a point. Here we have a circular dependency between the functions `a` and `b`. Apparently, this makes the code much more convoluted and harder to understand than necessary.
 
 ```py
 def a(counter):
@@ -4895,7 +4895,7 @@ def b(counter):
 a(5)
 ```
 
-Now the first thing to note is that there is no clear level of abstraction. `a` calls `b` and `b` calls `a`. They are somehow both on the same level of abstraction. This is bad. We could simplify it by inserting the definition of `b` into the function call inside `a`.
+Now, the first thing to note is that there is no clear level of abstraction. `a` calls `b` and `b` calls `a`. They are somehow both on the same level of abstraction. This is bad. We could simplify it by inserting the definition of `b` into the function call inside `a`.
 
 ```py
 def a(counter):
@@ -4914,8 +4914,7 @@ def a(counter):
         print(i)
 ```
 
-As a summary one can say that circular dependencies should be avoided all together. This is usually not too hard if you have proper levels of abstractions and it improves the readability of the code significantly. Even a single recursive call can often be refactored away and make the code more readable.
-
+As a summary, one can say that circular dependencies should be avoided altogether. This task is usually not too difficult if you use proper levels of abstraction, and it significantly enhances the readability of the code. Even a single recursive call can often be refactored to improve code readability.
 
 
 # 29. Decoupling
