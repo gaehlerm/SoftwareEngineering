@@ -297,15 +297,13 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [29. Decoupling](#29-decoupling)
   - [Law of Demeter](#law-of-demeter)
 - [30. Software Architecture](#30-software-architecture)
-  - [About software architecture](#about-software-architecture)
-  - [Layering code](#layering-code)
-    - [Stability of code](#stability-of-code)
-  - [Different Architecuter types](#different-architecuter-types)
   - [The end of Architecture](#the-end-of-architecture)
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
-- [31. Domain Driven Design ???](#31-domain-driven-design-)
+- [31. Design patterns](#31-design-patterns)
+  - [Factory](#factory)
+- [31. Domain Driven Design](#31-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
     - [Documentation and planning](#documentation-and-planning)
@@ -4978,47 +4976,20 @@ Part 6: High level design
 
 // This chapter still needs a lot of work!
 
-Architecture: "the decisions you wish you could get right early" - Ralph Johnson
+Architecture: "The decisions you wish you could get right early." - Ralph Johnson
 
-// just write a short text what software architecture is
+In this chapter, I'm only giving a high level introduction on what software architecture is. I'm not an expert on software architecture and I'll leave the details to more specialized books. [Clean Architecture], [Fundamentals of Software Architecture]
 
 There are many people misunderstanding the work of "real" architects. Architects don't just make a plan and hand it over to the construction company. Instead they closely monitor the construction as there are always questions and problems popping up that have to be fixed.
 
 With software engineering it is similar. As far as I understand the expression "software architecture", architects are not only the ones designing the cornerstones of the software. They also have to monitor the complete process of the software development as there will always be fundamental questions along the way.
 
-## About software architecture
-
-Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
-
-## Layering code
-
-// what goes here and what into the section The Abstraction Layers?
-
-There are different ways to structure your code. You can have a layered architecture [Software Architecture Patterns?] or an onion architecture [clean architecture?]. Though in my opinion it does not really matter how you strucutre your layers. The important thing is only that they are structured and that the dependencies all go in one direction [https://youtu.be/KqWNtCpjUi8]. A low level object should never depend on a high level object. Furthermore a request should always go through all the layers and you shouldn't try to skip one. Even if this means writing a function that just passes on a command to a lower level without doing anything else. 
-
-Now this is a topic that is not that easy to understand. Why should you exactly write this function that doesn't do anything else than passing on a function?
-
-The reason is coupling. Let's assume there are 3 levels of code. You want the low level to be coupled only to the intermediate level code. This has a very simple reason: If you violate this rule, the high-level code becomes also directly dependent on the low-level code. So in order to change the low-level code, you'll have to look out throughout your whole code base what other things depend on this low-level code. Meanwhile if you introduce these pass-through functions in the intermediate-level code, the only place where you have to change code is the intermediate level. The amount of work to change the code might be the same, but it's much easier to find all the pieces of code that need changes if you layer it properly. And if you have more than 3 levels, it becomes even worse if you don't separate the different levels properly. 
-
-
-### Stability of code
-
-//this section still needs some work
-
-Let's take the following metric: we have a class A. How many (f_I) other classes have to be comipled in order to compile A? And how many (f_O) other classes depend on A? The stability of A is defined as I = f_O / (f_I + f_O). If the stability is 0, the class is very stable. It doesn't depend on any other class. If the stability close to 1, the class is very instable. It depends on many other classes [97 things every programmer should know, chapter 74]. The goal of refactoring is to increase the stability of the code, thus to decrease the number of classes that class A depends on.
-
-
-## Different Architecuter types
-
-// should I eplain the different architecture types? horizontal, hexagonal, onion layers (clean architecture)?
-
-// Client Server frequently has the question: should the logic go into the client device or into the server? The answer of this question has changed several times over the last few decades.
+Here is an example of what I understand with the word "software architecture" from my own work experience: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
 
 
 ## The end of Architecture
 
-One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. Because if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. Like real architects have to visit the construction site regularly, software architects also have to supervise the development process closely. Because the architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
-
+One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. And if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. The architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
 
 ## Designing Interfaces
 
@@ -5026,28 +4997,13 @@ One of the main jobs of a software architect is defining the building blocks (li
 
 A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
 
-It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all?
-
-// write something about structuring classes into a library.
-
-// Pretty much anything that holds for classes also holds for modules/libraries. Increase cohesion within a library and reduce coupling between libraries.
+It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all? Implementing an interface in existing code will be very expensive.
 
 ## Separate Libraries
 
+Increase cohesion within a library and reduce coupling between them. It's exactly the same principle as for classes, just on a higher level.
+
 In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
-
-// These rules were for domain models and not for libraries. Move it to the according location. Instead add the rules from Clean Architecture.
-
-Reasons favoring bigger libraries are:
--	Flow between user tasks is smoother when more is handled with a unified model
--	If is easier to understand one coherent model than two distinct ones plus mapping between them
--	Translation between two models can be difficult
--	Shared language fosters clear team communication
-
-Reasons favoring smaller libraries are:
--	Communication overhead between developers is reduced.
--	Continuous Integration is easier with smaller teams and code bases
--	Larger contexts may call for more versatile abstract models, requiring skills that are in short supply.
 
 These advantages for either sides lead to trade offs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
 
@@ -5058,7 +5014,45 @@ Interestingly, all the explanations about coupling and cohesion made for classes
 An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
 
 
-# 31. Domain Driven Design ???
+# 31. Design patterns
+
+Design patterns [Design Patterns, Elements of Reusable Object-Oriented Software] are a specific interplay of classes, methods and inheritance that allows for some unexpected properties of the resulting object. There are about two dozen of commonly accepted different design patterns around and numerous books explaining them. I have neither the space nor the knowledge to write about all of them. I just added this chapter because I think it's important that you heard of design patterns.
+
+## Factory
+
+I'll show the so called factory pattern as an example that you get an idea what design patterns are all about. It's a very simple pattern. Chances are, that you already implemented a factory before even if you didn't know about this pattern.
+
+A factory is an object In Python implementing a factory is particularly easy due to the duck typing. In strongly types languages like C++, you would have to use a base class and pointers to implement the `vehicles`.
+
+```py
+class Car:
+    def move(self, speed):
+        if speed > 200:
+            raise Exception("Cannot move that fast")
+        print(f"Car is moving at {speed} km/h")
+
+class SpaceShip:
+    def move(self, speed):
+        print(f"SpaceShip is moving at {speed} km/h")
+
+def factory(type):
+    if type == "car":
+        return Car()
+    if type == "spaceship":
+        return SpaceShip()
+
+vehicles = []
+vehicles.append(factory("car"))
+vehicles.append(factory("spaceship"))
+
+for vehicle in vehicles:
+    vehicle.move(100)
+```
+
+The crucial point of the factory is that you can create objects of different types depending on a string or whatever else you provide.
+
+
+# 31. Domain Driven Design
 
 // reread and rewrite this chapter? Or remove it completely???
 
