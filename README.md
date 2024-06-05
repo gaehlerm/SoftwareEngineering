@@ -4974,8 +4974,6 @@ Part 6: High level design
 
 # 30. Software Architecture
 
-// This chapter still needs a lot of work!
-
 Architecture: "The decisions you wish you could get right early." - Ralph Johnson
 
 In this chapter, I'm only giving a high level introduction on what software architecture is. I'm not an expert on software architecture and I'll leave the details to more specialized books. [Clean Architecture], [Fundamentals of Software Architecture]
@@ -6844,7 +6842,7 @@ In order to be flexible, you have to be able to adapt your code. You have to cha
 
 # 45. Requirements Engineering
 
-Written together with Felix Gähler
+Written by Felix Gähler
 
 
 
