@@ -263,7 +263,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Classes](#classes-1)
     - [Structs](#structs)
   - [Copilot](#copilot-9)
-- [25. Physical laws of code](#25-physical-laws-of-code)
+- [25. Physical Laws of Code](#25-physical-laws-of-code)
   - [Entropy](#entropy)
   - [Correlation](#correlation)
   - [Quality](#quality)
@@ -4569,8 +4569,7 @@ for i in range(10):
     print(i)
 ```
 
-/////
-# 25. Physical laws of code
+# 25. Physical Laws of Code
 
 // break up this chapter merge it with other?
 
@@ -4578,31 +4577,31 @@ for i in range(10):
 
 ## Entropy
 
-Entropy is the physical law of disorder. The second law of thermodynamics says that disorder is always going to increase. Fighting entropy is a lot of work. It is like you cleaning up your room every week. If you don’t do it, your room will become dirty and you don’t find your stuff anymore.
+Entropy is the physical law of disorder. The second law of thermodynamics states that entropy, or disorder, will always increase. Fighting entropy is a challenging task. It is like cleaning up your room every week. If you don't clean your room, it will become dirty, and you won't be able to find your stuff anymore.
 
-In software engineering we have a very similar phenomenon and it has very severe consequences. As we write code, there is more and more disorder created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away stuff that you don’t really need or is duplicated. This will take time and effort. But such is life. You don’t get a well payed job in IT without doing the dirty part as well. What you have to do is explained in the chapter on refactoring.
+In software engineering, we have a very similar phenomenon, and it has very severe consequences. As we write code, more disorder is created. On the one hand, this is very natural as a growing code base automatically attracts more disorder. There is simply more stuff around that you have to take care of. On the other hand, this disorder is also man-made. The entropy only grows significantly if you allow it to. You have to fight entropy in your code the same way you fight entropy in your bedroom. You have to clean up regularly. You have to sort all your belongings. You have to throw away things that you don't really need or that are duplicated. This will take time and effort. But such is life. You don't get a well-paid job in IT without doing the dirty work as well. What you have to do is explained in the chapter on refactoring.
 
 ## Correlation
 
-Similar things belong together. It sounds fairly trivial and it is extremely helpful when designing code. And it’s true for pretty much any aspect in programming. Not only code objects, but also abstract concepts. 
+Similar things belong together. It may sound trivial, but it is extremely helpful when designing code. And it's true for pretty much any aspect in programming. Not only code objects, but also abstract concepts.
 
-There is a market for food and further down the road there is a store selling electronics. Each kind of store is in its own area. If you find a market store selling apples, chances are high that the next store sells apples as well. It is just normal that similar things align together. This makes them easier to find.
+There is a market for food, and further down the road, there is a store selling electronics. Each type of store is located in its designated area. If you find a market store selling apples, chances are high that the next store sells apples as well. It is normal for similar things to align together. This makes them easier to find.
 
-The same holds true for code. Functions are bundled together by their functionality, as are classes. This makes them easier to find if you search for some specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists only of a few high-level function calls. No string manipulations or other low-level stuff. These low-level functions are buried somewhere in a deeper level of abstraction.
+The same holds true for code. Functions are bundled together based on their functionality, just like classes. This makes them easier to find when searching for specific functionality. At the same time, they should also have the same level of abstraction. The main function, for example, consists of only a few high-level function calls. Avoid any string manipulations or other low-level operations. These low-level functions are buried deep within a lower level of abstraction.
 
-Also bugs tend to cluster inside your code. Did you find a bug in some very complicated part of the code? Chances are you will find more bugs in the same area of the code. Probably it's some kind of complex algorithm or the implementation of a little understood requirement.
+Bugs also tend to cluster inside your code. Did you find a bug in a very complex part of the code? Chances are you will find more bugs in the same area of the code. Probably it's some kind of complex algorithm or the implementation of a little-understood requirement.
 
-Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes so much tidier. It will feel more natural and it doesn’t need too much work to make it better. And you will find your bugs faster as you check the complex parts of the code earlier on.
+Once you start thinking about this rule, you will automatically structure your code in a much better way. It becomes much tidier. It will feel more natural and won't require too much effort to improve. By checking the complex parts of the code earlier on, you will be able to find your bugs faster.
 
 ## Quality
 
-There were studies what must happen that an area starts to decay [The pragmatic programmer]. They came to the remarkable conclusion that one broken window is sufficient sign for other people to start breaking windows as well and within no time, the whole area looks ruined and abandoned.
+There were studies on what must happen for an area to start decaying [The pragmatic programmer]. They came to the remarkable conclusion that one broken window is a sufficient signal for other people to start breaking windows as well. In no time, the whole area looks ruined and abandoned.
 
-Accordingly, when writing code, it is important to keep the quality high. Don't write bad code or it will feel abandoned as well. Others may start to become careless as they don't feel like keeping it in shape is not worth it and start writing bad code.
+Accordingly, when writing code, it is crucial to maintain high quality. Don't write poor code, or it will feel neglected too. Some individuals may become careless when they feel that maintaining code quality is not worthwhile, leading them to write poor code.
 
-On the other end of the quality spectrum you have the issue that some developers just keep on writing and improving their code for all eternity. This is of course also an issue. There is always something that you feel like could be improved. But at some point you have to come to the conclusion that your code is good enough [The pragmatic programmer].
+On the other end of the quality spectrum, you have the issue that some developers persist in writing and improving their code indefinitely. This is, of course, also an issue. There is always something that you feel could be improved. But at some point, you have to come to the conclusion that your code is good enough [The pragmatic programmer].
 
-These two things, broken windows and good enough code, are another example for opposing rules. It is your task to find the right balance between them, as it is in many things I teach throughout this book.
+These two things, broken windows and good enough code, are another example of opposing principles. It is your task to find the right balance between them, as it is in many things I teach throughout this book.
 
 ### Over Engineering
 
