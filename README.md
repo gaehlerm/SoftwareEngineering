@@ -197,6 +197,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Brittle tests](#brittle-tests)
     - [Random Numbers](#random-numbers)
   - [The Beyoncé Rule](#the-beyoncé-rule)
+  - [Exceptions and Tests](#exceptions-and-tests)
   - [Not Automatable Tests](#not-automatable-tests)
 - [19. Types of Tests](#19-types-of-tests)
   - [Unit Tests](#unit-tests)
@@ -282,9 +283,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Wrapping exceptions](#wrapping-exceptions)
     - [Exceptions and Goto](#exceptions-and-goto)
 - [27. Complexity](#27-complexity)
-  - [Complexity of code](#complexity-of-code)
+  - [Complexity of Code](#complexity-of-code)
   - [Estimating complexity](#estimating-complexity)
-    - [Precision and accuracy](#precision-and-accuracy)
+    - [Precision and Accuracy](#precision-and-accuracy)
   - [Single line complexity](#single-line-complexity)
   - [Black magic code](#black-magic-code)
 - [28. Dependencies](#28-dependencies)
@@ -3281,6 +3282,12 @@ If you ever use random numbers in your code, you might get stuck with your tests
 
 A common question is "What to test?". A very simple answer is: everything. This is certainly a correct answer, although you cannot always test everything equally extensively. You will simply lack the capacity for that. Instead, at Google, they came up with the Beyoncé Rule. [Software Engineering at Google] She sings in her song, "If you like it, then you should have put a ~~ring~~ *test* on it." Apparently, this applies to most of your code. You do like your code, don't you?
 
+## Exceptions and Tests
+
+One thing people people frequently forget to test are exceptions. And you should not only test the type of the exception, but also the exception message. Both, the exception type and the message, are important. That's why they exist.
+
+TDD may help to avoid this issue. With TDD you first write the test and you'll realize right away that the your tests already pass. Which is an indication that there is something wrong with your tests.
+
 ## Not Automatable Tests
 
 As software engineers, we aim to automate everything, including tests. However, this is not always possible. There are still things that we can hardly automate. One example is image processing algorithms. How much can an image be compressed while still maintaining good quality? This is very difficult to determine with an automated test and is better assessed by humans. When running complex simulations, such as analyzing the aerodynamics of an airplane, it is impossible to create a test to verify the accuracy of the simulation results. Simply because you don't know the correct result. You can only judge if the result makes sense based on your experience. There are still things that are better tested by humans than computers.
@@ -4743,25 +4750,25 @@ By the way, you might have heard of the `goto` statement that was widely used un
 
 "I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
 
-## Complexity of code
+## Complexity of Code
 
-As we are writing software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code covers all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This also becomes apparent as one product manager creates more than enough work for several programmers. The complexity to implement a feature is much higher than the actual complexity.
+As we write software, we have to deal with two different complexities. The complexity of the problem we want to solve and the complexity of your code. As the code encompasses all the features of the real problem, the complexity of the code will always be at least as high as the complexity of the actual problem. This becomes apparent when one product manager generates an excessive amount of work for several programmers. The complexity of implementing a feature is much higher than its actual complexity.
 
-The goal of the software is to keep the complexity as low as possible. Close to the complexity of the real problem. If possible equal to the real problem. The code should mimic the real problem 1 to 1. Unfortunately, this will never happen. There is always some overhead when programming. Not only boiler plate code, but also conceptual overhead. How should you map a real problem 1 to 1 into code? How should, say, an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming came up. It claimed to be the natural representation of things. Because you could write a class `Apple` and this would solve all our problems. But it did not. We still don’t know how this apple should interact with all other objects in our code. We don’t even know how this apple class should really look like!
+The goal of writing software is to minimize complexity as much as possible. Close to the complexity of the real problem. If possible, it should be equivalent to the actual problem. The code should replicate the real problem one-to-one. Unfortunately, this will never happen. There is always some overhead when programming. Not only boilerplate code but also conceptual overhead. How should you map a real problem one-to-one into code? How should an apple ever become code? The answer is: it depends on your requirements. This is where object-oriented programming originated. It claimed to be the natural representation of things. Because you could create a class called `Apple`, and this would solve all our problems. But it did not. We still don't know how this apple should interact with all other objects in our code. We don't even know how this apple class should really look like!
 
-I cannot deny that OO programming makes some things easier and having an `Apple` class is a good start. But it doesn’t explain all the logic to you. You have to figure it out yourself. You have to try and explain what the apple really does. Maybe even write it down. Talk to other people, experts. It takes time to build up that knowledge what is important and how everything is connected. This is a fundamental requirement for writing good code with little complexity. And always remember: an `apple` only needs the properties for your current purpose. Inside a cooking recipe, you don't care about the price of an apple, nor do you in your code!
+I cannot deny that OO programming makes some things easier, and having an `Apple` class is a good start. But it doesn't explain all the logic to you. You have to figure it out yourself. You have to try to explain what the apple really does. Maybe even write it down. Engage in conversations with others, including experts. It takes time to build up knowledge of what is important and how everything is connected. This is a fundamental requirement for writing high-quality code with minimal complexity. And always remember: an `apple` only needs the properties for your current purpose. Inside a cooking recipe, you don't care about the price of an apple, nor do you in your code!
 
-As a next step, you have to get an idea how you can convert all this knowledge into code. Take all the objects involved and connect them in different ways. Change the order of statements and how data is passed between the objects. When done correctly, you’ll end up with code that resembles very much the explanation given by the experts of the domain. The objects have the same properties, the functions do the same things and you use the same names. Your code feels like a 1 to 1 mapping of the real problem. Eric Evans called this a domain model [Domain-driven design]. Handle it with care. The domain model is very precious and you can easily destroy it by adding code that doesn’t fit into the model.
+As a next step, you have to figure out how to convert all this knowledge into code. Explore various ways to connect all the objects involved. Change the order of statements and the way data is passed between the objects. When done correctly, you will end up with code that closely resembles the explanation provided by domain experts. The objects have the same properties, the functions perform the same tasks, and you use the same names. Your code seems to directly map to the real problem. Eric Evans referred to this as a Domain Model [Domain-driven design]. Handle it with care. The domain model is very valuable, and you can easily compromise it by incorporating code that does not align with the model.
 
-Having a domain model is a great asset. It forces you to understand the problem really well and write the core of your code first. At the same time, it prevents you from getting lost in low level details.
+Having a domain model is a valuable asset. It forces you to understand the problem thoroughly and write the core of your code first. At the same time, it prevents you from getting lost in low-level details.
 
 ## Estimating complexity
 
 [Does this go into the agile section? Or into Requirements Engineering?]
 
-Estimating complexity of a task is extremely difficult. Not only from a technical point of view, but also due to pressure from management. Frequently the estimation of a feature goes as follows:
+Estimating the complexity of a task is extremely difficult. Not only due to technical considerations but also because of pressure from management. Frequently, the process of estimating a feature is as follows:
 
-Project Manager: "Can you give me an estimate of the time necessary to develop feature xyz?"
+Project Manager: "Can you provide me with an estimate of the time required to develop feature xyz?"
 
 Programmer: "One month."
 
@@ -4775,35 +4782,40 @@ Programmer: "Deal!"
 
 [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_50]
 
-Estimating the complexity of a task is generally extremely hard. Some developers might have an idea what has to be done, others don’t. But nobody really knows exactly. And everyone is a little bit scared of that task. Nobody knows for sure how to break the complete problem down into smaller pieces. And even if, there is still some uncertainty around, which makes estimating the amount of work a very difficult task.
+Estimating the complexity of a task is typically very challenging. Some developers might have an idea of what needs to be done, while others do not. But nobody really knows exactly. And everyone is a little bit scared of that task. No one knows for certain how to break the complete problem down into smaller components. And even if there is still some uncertainty. Estimating the amount of work remains a very difficult task.
 
-Probably everyone could have come up with a neat solution for solving the problem, but not with the existing code base. Instead you have to consider what you really need and what parts are already implemented in the code. This case is extremely common. Pretty much everything might have been already implemented in the code, but nobody realized it. So you reimplement the code and you are left with redundant code violating the SRP. Additionally to the time used for re-developing this code. 
+Probably everyone could have come up with a clever solution to solve the problem, but not with the current code base. Instead, you have to consider what you really need and which parts are already implemented in the code. This case is extremely common. It is possible that everything has already been implemented in the code, but no one has realized it. When you reimplement the code, you may end up with redundant code that violates the SRP. Additionally, time was spent on redeveloping this code.
 
-On the other hand, there are cases where you find a very simple solution and implementing the task takes way less time than expected. But unfortunately this case is quite rare.
+On the other hand, there are cases where you find a very simple solution, and implementing the task takes much less time than expected. Unfortunately, this case is quite rare.
 
-Generally there are two different methods to estimate the amount of work required for a certain task. The first one is based on breaking down the whole topic into small pieces and adding up the effort of all the individual pieces. This requires a lot of knowledge on the specific task and there is a strong tendency to underestimate the actual amount of work involved. When breaking down a task into smaller pieces, usually a lot of subtasks are being forgotten or the total complexity is usually underestimated.
+Generally, there are two different methods to estimate the amount of work required for a certain task. The first approach involves breaking down the entire topic into smaller components and then aggregating the efforts of each individual piece. This task requires a significant amount of expertise, and there is a common tendency to underestimate the actual workload involved. When breaking down a task into smaller pieces, many subtasks are often overlooked, or the overall complexity is usually underestimated my a lot.
 
-The second method to estimate the amount of work is based on a comparison with similar tasks. This is generally the more accurate approach, though there is still quite some uncertainty left. It works best if you do some repetitive work like building a house. Or creating a homepage. However, for more unique problems like writing custom software, this usually doesn't work because you don't have any previous work you can compare to. Therefore, estimating the amount of work required for a certain task is still quite tricky.
+The second method to estimate the amount of work is based on comparing it with similar tasks. This is generally the more accurate approach, although there is still some uncertainty remaining. It works best if you engage in repetitive tasks, such as building a house, or creating a homepage. However, for more unique problems, such as developing custom software, this approach usually doesn't work because there is no previous work available for comparison. Therefore, estimating the amount of work required for a certain task is still quite tricky.
 
-Ultimately is doesn't really matter how hard you try to get a good estimation. You will always be too low by a factor of two to four. [https://youtu.be/v21jg8wb1eU?t=414] You could also call it guessing instead of estimating. The only conclusion is that you should avoid guessing and just try to implement the task as good as possible.
+Ultimately, it doesn't really matter how hard you try to get a good estimation. You will always be underestimating by a factor of two to four. [https://youtu.be/v21jg8wb1eU?t=414] You could also refer to it as guessing rather than estimating. The only conclusion is that you should avoid guessing and simply try to implement the task as well as possible.
 
-### Precision and accuracy
+### Precision and Accuracy
 
-"Saying that pi = 17.630231 is more precise but less accurate than saying that pi = 3." [https://youtu.be/v21jg8wb1eU?t=469] There are many companies that want precise answers, disregarding the fact that they are not accurate. This is non-sense. The precision should always be as good as the accuracy. If someone asks you how long it will take, you best give an order of magnitude: hours, days, weeks or months. Only if you have several different options you can tell, which one will take the least time.
+"Saying that pi = 17.630231 is more precise but less accurate than saying that pi = 3." [https://youtu.be/v21jg8wb1eU?t=469] There are many companies prioritizing precise answers over accurate ones. This is nonsense. The precision should always be as good as the accuracy. If someone asks you how long it will take, you should provide an estimate in terms of an order of magnitude: hours, days, weeks, or months. Only if you have several different options can you determine which one will take the least time.
 
 ## Single line complexity
 
-A frequent topic is the amount of logic in a single line of code. There are very different opinions. On one side we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters, using the C programming language and the length of indentations is 8 spaces. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite something about how code can look like.
+A common subject of discussion is the level of logic present in a single line of code. There are very different opinions. On one side, we have Linus Thorwalds. In the Linux kernel, the maximum line length used to be 80 characters when using the C programming language, and the length of indentations is 8 spaces. It is absolutely impossible to write more than one or maybe two operations on a single line of code. Try it yourself. It is really worth writing such code once in a while. You will learn quite a bit about what code can look like.
 
-On the other end of the spectrum are some Python programmers. It seems like adding as much logic as possible on a single line would be a sport. Very honestly, I think this is a pretty bad habit. You don’t gain anything by saving lines of code. At the same time every single line becomes increasingly convoluted. You won’t understand it anymore. For this reason the maximum line length set by the google style guide is set to 80 characters. For both, Python and C++. [https://google.github.io/styleguide/pyguide.html section 3.2], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example it may not loop over two different variables as shown in the following example.
+On the other end of the spectrum are some Python programmers. It seems like turning the addition of as much logic as possible into a single line into a sport. Honestly, I believe this is a rather unhealthy habit. You don't gain anything by saving lines of code. At the same time, every single line becomes increasingly convoluted. You won't understand it anymore. For this reason, the maximum line length set by the Google Style Guide is 80 characters. For both Python and C++. [https://google.github.io/styleguide/pyguide.html Section 3.2], [https://google.github.io/styleguide/cppguide.html#Line_Length] Additionally there are restrictions on list initialization. For example, it may not loop over two different variables, as shown in the following example.
 
 ```py
 [[[0] * (i + j) for i in range(2)] for j in range(3)]
 ```
 
-You'd have to do it the old way:
+One alternative is to refactor out one of the loops:
 
-// or make a mix: for loop for j and list for i
+```py
+for j in range(3):
+    l.append([[0] * (i+j) for i in range(2)])
+```
+
+Or we can do it the old way:
 
 ```py
 def create_matrix():
@@ -4816,13 +4828,13 @@ def create_matrix():
     return matrix
 ```
 
-When in doubt resist the temptation, split up the code and don't use a single line initialization.
+When in doubt, resist the temptation to split up the code and avoid using single-line initialization.
 
 ## Black magic code
 
-Your code will contain some complexity. There’s no doubt about it. The only question is how you deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kind of black magic. This may work at times, but the code will be cursed. You can keep working on the code, but once in a while you see this black magic and you’ll become petrified. Your only thought will be: "I hope I’ll never have to touch this."
+Your code will contain some complexity. There's no doubt about it. The only question is how you deal with it. One point is that you have to be honest. Some programmers try to hide complex code using all kinds of black magic. This approach may work occasionally, but the code will be cursed. You can keep working on the code, but occasionally you see this black magic and you'll become petrified. Your only thought will be: "I hope I'll never have to touch this."
 
-It is much better to be honest. The problem is complex and we break down the complexity until we have some pieces that we can solve. Do not hide the complexity, make it apparent.
+It is much better to be honest. The problem is complex, and we break it down into smaller pieces that we can solve. Do not hide the complexity; make it apparent.
 
 
 # 28. Dependencies
