@@ -301,7 +301,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
-- [31. Design patterns](#31-design-patterns)
+- [31. Design Patterns](#31-design-patterns)
+    - [Coupling](#coupling-1)
+- [31. Design Patterns](#31-design-patterns-1)
   - [Factory](#factory)
 - [31. Domain Driven Design](#31-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
@@ -4976,43 +4978,53 @@ Part 6: High level design
 
 Architecture: "The decisions you wish you could get right early." - Ralph Johnson
 
-In this chapter, I'm only giving a high level introduction on what software architecture is. I'm not an expert on software architecture and I'll leave the details to more specialized books. [Clean Architecture], [Fundamentals of Software Architecture]
+In this chapter, I am only providing a high-level introduction to what software architecture is. I'm not an expert on software architecture, and I'll leave the details to more specialized books. [Clean Architecture], [Fundamentals of Software Architecture]
 
-There are many people misunderstanding the work of "real" architects. Architects don't just make a plan and hand it over to the construction company. Instead they closely monitor the construction as there are always questions and problems popping up that have to be fixed.
+There are many people who misunderstand the work of "real" architects. Architects do not simply create a plan and pass it on to the construction company. Instead, they closely monitor the construction because there are always questions and problems arising that need to be addressed.
 
-With software engineering it is similar. As far as I understand the expression "software architecture", architects are not only the ones designing the cornerstones of the software. They also have to monitor the complete process of the software development as there will always be fundamental questions along the way.
+In software engineering, it is similar. As far as I understand the expression "software architecture", architects are not only responsible for designing the cornerstones of the software. They also have to monitor the entire process of software development as there will always be fundamental questions along the way.
 
-Here is an example of what I understand with the word "software architecture" from my own work experience: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
-
+Here is an example of how I understand the term "software architecture" based on my work experience: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. The gates were then translated into electrical pulses that were played by our devices. The compiler was comprised of numerous visitors who traversed the AST and sequentially conducted all calculations and optimizations." Anyone familiar with an AST and the visitor design pattern will have a good understanding of the code I was describing. In four sentences, I described the basic data structure (the AST) as well as the fundamental algorithm (the visitor pattern) used in the code.
 
 ## The end of Architecture
 
-One question is: where does architecture end? Or how detailed does it get? And the answer is in my opinion: as far as the architect plans it. There is no fixed boundary. What is clear, however, is, that the architect cannot work out all the details by himself. And if he did, there would not be any need for software engineers anymore. So unless a project is very small, he has only time to take care of the very high level design. All the technical details have to be worked out by the engineers. The architecutre is never perfect and there will always be implementation questions from the software engineers. One thing architects can do to stay in touch with the development team is to write code themselves. They can write code examples or tests that use the code and do something interessting with it. [DDD p. 61 ?]
+One question is: where does architecture end? How detailed does it get? And, in my opinion, the answer lies in how far the architect plans it. There is no fixed boundary. What is clear, however, is that the architect cannot work out all the details by himself. If he did, there would no longer be a need for software engineers. So, unless a project is very small, he only has time to focus on the high-level design. All the technical details have to be worked out by the engineers. The architecture is never perfect, and there will always be implementation questions from the software engineers. One way architects can stay connected with the development team is by writing code themselves. They can write code examples or tests that use the code and do something interesting with it. [DDD p. 61 ?]
 
 ## Designing Interfaces
 
-One of the main jobs of a software architect is defining the building blocks (libraries) and interfaces of the whole software. Some of the interfaces may be only "partial interfaces", meaning that it’s an interface within a library. It fulfills all the requirements of a real interface and the library could easily be broken into two pieces at this point. It's an internal interface which is not exposed to the outside.
+One of the primary responsibilities of a software architect is to define the building blocks (libraries) and interfaces of the entire software system. Some of the interfaces may be only "partial interfaces", indicating that they are interfaces within a library. It fulfills all the requirements of a real interface, and the library could easily be divided into two parts at this point. It is an internal interface that is not exposed to the outside.
 
-A partial interface has the advantage of needing only a limited amount of maintenance for versioning, etc. On the other hand, there is the danger that the interface gets lost over time as programmers start working around it.
+A partial interface has the advantage of requiring only a limited amount of maintenance for versioning, etc. However, there is a risk that the interface may become obsolete over time as programmers begin to work around it.
 
-It’s the architect’s job to figure out in the beginning where are what kind of interfaces required. He has to foresee the future. The YAGNI principle therefore doesn’t always hold for an architect. Because what if it turns out that we really needed that interface after all? Implementing an interface in existing code will be very expensive.
+It is the architect's job to determine at the outset where and what kind of interfaces are required. He has to foresee the future. The YAGNI principle does not always apply to an architect. What if it turns out that we really needed that interface after all? Implementing an interface in existing code will be very costly.
 
 ## Separate Libraries
 
 Increase cohesion within a library and reduce coupling between them. It's exactly the same principle as for classes, just on a higher level.
 
-In every bigger code base, you’ll have to work with several libraries. Some of them are developed internally, others are 3rd party libraries. There are many things to consider when making such choices. The very first question is: do you need another library? Or can you implement the required functionality within an existing library? There are some mechanisms that favor smaller or bigger libraries. 
+In every large codebase, you will have to work with multiple libraries. Some of the software components are developed internally, while others are third-party libraries. There are many factors to consider when making such decisions. The very first question is: Do you need another library? Can you implement the required functionality within an existing library? There are mechanisms that favor either smaller or larger libraries.
 
-These advantages for either sides lead to trade offs in library sizes. Generally, it is favorable to create a dedicated library if there is a corresponding opportunity.
+These advantages for either side lead to trade-offs in library sizes. Generally, it is advantageous to establish a dedicated library if there is a suitable opportunity.
 
 ### Coupling
 
-Interestingly, all the explanations about coupling and cohesion made for classes are also valid for libraries. You should pay attention that libraries are not becoming too large and rigid. You don’t gain a price for writing the biggest library in the company. One library that covers every object there is around. It just won’t work! 
+Interestingly, all the explanations about coupling and cohesion made for classes are also applicable to libraries. It is important to note that libraries should not become too large and rigid. You don't win a prize for writing the largest library in the company. One library that covers every object that exists. It just won't work!
 
-An apple can have a color, a flavor and a price. There can be three different libraries graphical rendering, food and shopping. Each one uses exactly one property and it makes no sense to mix them up. Keep them separate and write glue code between the libraries if needed. That’s the only way to go. Just trust me. Don’t write a monolith software that should mimic the whole world. It won’t work.
+An apple can have a color, a flavor, and a price. There can be three different areas: graphical rendering, food, and shopping. Each one uses exactly one property, and it makes no sense to mix them up. Keep the libraries separate and write glue code between them if needed. That's the only way to go. Just trust me. Don't write monolithic software that tries to replicate the entire world. It won't work.
 
+# 31. Design Patterns
 
-# 31. Design patterns
+In every large codebase, you will have to work with multiple libraries. Some of the software components are developed internally, while others are third-party libraries. There are many factors to consider when making such decisions. The very first question is: Do you need another library? Can you implement the required functionality within an existing library? There are mechanisms that favor either smaller or larger libraries.
+
+These advantages for either side lead to trade-offs in library sizes. Generally, it is advantageous to establish a dedicated library if there is a suitable opportunity.
+
+### Coupling
+
+Interestingly, all the explanations about coupling and cohesion made for classes are also applicable to libraries. It is important to note that libraries should not become too large and rigid. You don't win a prize for writing the largest library in the company. One library that covers every object that exists. It just won't work!
+
+An apple can have a color, a flavor, and a price. There can be three different areas: graphical rendering, food, and shopping. Each one uses exactly one property, and it makes no sense to mix them up. Keep the libraries separate and write glue code between them if needed. That's the only way to go. Just trust me. Don't write monolithic software that tries to replicate the entire world. It won't work.
+
+# 31. Design Patterns
 
 Design patterns [Design Patterns, Elements of Reusable Object-Oriented Software] are a specific interplay of classes, methods and inheritance that allows for some unexpected properties of the resulting object. There are about two dozen of commonly accepted different design patterns around and numerous books explaining them. I have neither the space nor the knowledge to write about all of them. I just added this chapter because I think it's important that you heard of design patterns.
 
