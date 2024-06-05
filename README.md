@@ -295,7 +295,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Circular Dependencies](#circular-dependencies)
     - [Example](#example-2)
 - [29. Decoupling](#29-decoupling)
-  - [Law of demeter](#law-of-demeter)
+  - [Law of Demeter](#law-of-demeter)
 - [30. Software Architecture](#30-software-architecture)
   - [About software architecture](#about-software-architecture)
   - [Layering code](#layering-code)
@@ -4919,29 +4919,29 @@ As a summary, one can say that circular dependencies should be avoided altogethe
 
 # 29. Decoupling
 
-// I really have to rework this chapter. 
+// I really have to rework this chapter.
 
 "Before software should be reusable, it should be usable." — Ralph Johnson
 
 [Refactoring, Martin Fowler], [The Pragmatic Programmer]
 
-Coupling is a very essential part of software engineering. Without coupling, it wouldn't be possible to write code. Coupling is the glue that sticks everything together. But too much glue is bad as everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is really bad because if you want to change one file, you might have to change a whole dozen. Instead you have to make sure that the coupling is as low as possible. This keeps the code soft and flexible. It is the ultimate goal to have comepletely decoupled code. This makes is easy to work with. It makes it reusable.
+Coupling is a crucial aspect of software engineering. Without coupling, it would not be possible to write code. Coupling is the glue that holds everything together. But too much glue is bad because everything becomes sticky. In bad code, everything depends on each other. Every module or file imports dozens of other files. This is a significant issue because if you want to change one file, you might have to change a dozen others. Ensure that the coupling is minimized. This keeps the code soft and flexible. It is the ultimate goal to have completely decoupled code. This makes it easy to work with. It makes it reusable.
 
-This is one of the reasons why global variables and inheritance are not recommended. Global variables are the worst as they instantly glue the whole code together. It’s worse than importing something everywhere. All your code starts depending on each other. This is absolutely deadly. Never use global variables.
+This is one of the reasons why global variables and inheritance are not recommended. Global variables are detrimental as they tightly couple the entire codebase. It's worse than importing something everywhere. All your code dependencies start intertwining with each other. This is absolutely deadly. Never use global variables.
 
-Inheritance is not quite as bad, but almost. Everything that depends on a derived class automatically also depends on its base class. You are not only coupling the derived class to the base class, but also the other way around. You can barely change one without changing the other. This is not how flexible code is supposed to be. Don’t use inheritance.
+Inheritance is not quite as bad, but almost. Everything that depends on a derived class also automatically depends on its base class. You are not only coupling the derived class to the base class but also vice versa. You can barely change one without changing the other. This is not how flexible code is supposed to be. Avoid using inheritance.
 
-Micro services on the other hand are very much decoupled. They are chunks of code that can be called and executed independently. Micro services are somehow similar to functional programming, where you have independent functions that all run by themselves. Micro services and functional programming both call a function or a piece of code that returns a value. [https://youtu.be/4GnjjocWGOE]
+Microservices, on the other hand, are highly decoupled. They are chunks of code that can be called and executed independently. Microservices are somewhat similar to functional programming, where you have independent functions that run autonomously. Microservices and functional programming both involve calling a function or a piece of code that returns a value. [https://youtu.be/4GnjjocWGOE]
 
-// A service locator is an intermediate object that knows about more or less everything. If you want something, ask the service locator. This is an anti pattern.
+// A service locator is an intermediary object that has knowledge about various components. If you want something, ask the service locator. This is an antipattern.
 
-// instead of asking what you want, you go to the service locator and reach through the service locator. [https://youtu.be/RlfLCWKxHJ0] video on service locators
+// instead of asking for what you want directly, you access the service locator and retrieve the service through it. [https://youtu.be/RlfLCWKxHJ0] video on service locators
 
-Only ask for things you directly need. This is another advantage of functional programming or micro services. If you have to validate an email, then call the email validator which does the job for you, where the email validator can be either a micro service or a pure function. The email validator returns a result and resets. You only got what you asked for, nothing else. There are no semi useful objects wobbling around that you don't know how to deal with them. You need exactly what is around. This is the strength of functional programming.
+Only ask for things you directly need. This is another advantage of functional programming or microservices. If you need to validate an email, you can utilize the email validator, which can be either a microservice or a pure function. The email validator returns a result and resets. You only received what you asked for, nothing more. There are no semi-useful objects wobbling around that you don't know how to deal with. You need exactly what is around. This is the strength of functional programming.
 
-## Law of demeter
+## Law of Demeter
 
-// I don't exactly understand this law of demeter yet.
+// I don't exactly understand this law of demeter yet. Remove it completely?
 
 One common rule on coupling is the law of Demeter. Though it's not a very strict law. Martin Fowler called it "The occasionally useful suggestion of Demeter" [Refactoring p.192]. More formally, the Law of Demeter for functions requires that a method `m` of an object `o` may only invoke the methods of the following kinds of objects: [https://en.wikipedia.org/wiki/Law_of_Demeter], [https://www2.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf]
 - `o` itself;
@@ -4962,7 +4962,6 @@ car = Car()
 car.turn_on_engine()
 
 class Car:
-    # define _engine somewhere
     def turn_on_engine(self):
         self._engine.turn_on()
 ```
@@ -4970,7 +4969,6 @@ class Car:
 This is a perfect example for a delegating class, as we have discussed in the chapter on classes.
 
 Though as I already said before, the law of Demeter is only a vague recommendation and not a strict law. Don't become over enthusiastic about it. 
-
 
 
 
