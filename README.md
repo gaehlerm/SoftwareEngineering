@@ -453,6 +453,18 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 // mention which part the chapters are in??
 // fix the whole enumeration
 
+Parts:
+Part 1: First things first 6-12
+Part 2: Components of Code 13-17
+Part 3: Testing 18-20
+Part 4: Design Principles 21-22
+Part 5: Programming 23-29
+Part 6: High level design 30-32
+Part 7: Existing code 33-36
+Part 8: Miscelaneous 37-41
+Part 9 Collaborating 42-50
+
+
 1. .
 2. .
 3. .
@@ -2835,7 +2847,6 @@ A Singleton is a class that can have at most one instance. If you create objects
 
 Part 3: Testing
 
-Part 3: Testing
 
 # 18. Introduction to Testing
 
@@ -4954,6 +4965,12 @@ Part 6: High level design
 
 Architecture: "the decisions you wish you could get right early" - Ralph Johnson
 
+// just write a short text what software architecture is
+
+There are many people misunderstanding the work of "real" architects. Architects don't just make a plan and hand it over to the construction company. Instead they closely monitor the construction as there are always questions and problems popping up that have to be fixed.
+
+With software engineering it is similar. As far as I understand the expression "software architecture", architects are not only the ones designing the cornerstones of the software. They also have to monitor the complete process of the software development as there will always be fundamental questions along the way.
+
 ## About software architecture
 
 Software Architecture is the high-level design of a software system. It's what you tell someone if you have to explain the structure of your code in 5 minutes. For example: "I worked on a quantum compiler. We used an Abstract Syntax Tree (AST) to represent the gate operations. These gates were then translated into electrical pulses that were played by our devices. The compiler consisted of many visitors that traversed the AST and performed all the calculations and optimizations, one after another." Anyone who knows what an AST and the visitor design pattern are will have a pretty good idea of the code I was describing. In 4 sentences I described the basic datastructure (the AST) as well as the basic algorithm (the visitor pattern) that was used in the code.
@@ -5993,8 +6010,9 @@ better:
 
 You may use docstring tools, like sphynx in Python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
 
-// should I add some more points when comments are allowed?
+For using docstrings as a documentation for external users, on the other hand, comments are really useful. Furthermore, for commenting external APIs using docstrings, there apply completely different rules than for internal comments. When commenting an API, it is very important to comment the *what* and not the *why*. The user doesn't have access to the code, or at least he's not supposed to read it. So he solely relies on the docstring comments. Therefore, you have to comment *what* your functions and classes do, and how to use them. Possibly also by adding examples. The *why* on the other hand is not important at all.
 
+As a short summary: Use docstrings for documenting your external APIs. Docstrings should comment the *what* and not the *why*.
 
 ## Commenting magic numbers
 
@@ -6038,7 +6056,6 @@ connect(timeout_ms, use_encryption);
 ```
 
 Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
-
 
 ## Summary
 
