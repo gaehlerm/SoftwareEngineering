@@ -445,7 +445,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Copilot and the future](#copilot-and-the-future)
 - [52. Further reading](#52-further-reading)
 - [53. Outlook](#53-outlook)
-- [54. Abbreviations](#54-abbreviations)
+- [54. Frequently used Abbreviations](#54-frequently-used-abbreviations)
 
 
 # 3. One sentence summary
@@ -463,6 +463,7 @@ Part 6: High level design 30-32
 Part 7: Existing code 33-36
 Part 8: Miscelaneous 37-41
 Part 9 Collaborating 42-50
+Part 10: Final remarks 51-54
 
 
 1. .
@@ -5078,6 +5079,17 @@ for vehicle in vehicles:
 
 The crucial point of the factory is that you can create objects of different types depending on a string or whatever else you provide.
 
+One last remark: Instead of using the if statements in the factory, you could also use a dictionary. In my opinion, this makes the code better and shorter.
+
+```py
+factory = {
+    "car": Car(),
+    "spaceship": SpaceShip()
+}
+
+vehicle = factory["car"]
+```
+
 
 # 31. Domain Driven Design
 
@@ -7175,6 +7187,9 @@ Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and
 
 And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
+
+Part 10: Final remarks
+
 # 51. About Copilot
 
 The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
@@ -7244,6 +7259,8 @@ And as I'm writing these lines, I also get the feeling that Copilot has some nar
 
 Copilot is indeed a great tool. It was a great help writing this book and the code examples. But it is far from perfect. I doubt that it will completely replace software engineers and authors any time soon. Though it may change the way we work. It is a great source of "inspiration" (again: suggestion by Copilot) when you don't know what to write. And at times its suggestions are just hillarious. What it can't do is reading your mind. You first have to give it some input. And even then it is sometimes hard to tell it what you want to do. This is why you are still better off reading this book and understanding the patterns explained here. Copilot is not a replacement for your brain.
 
+
+
 # 52. Further reading
 
 I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
@@ -7291,17 +7308,18 @@ And several youtube channels:
 
 Maybe you were surprised sometimes that there were so few code examples. But I hope you understood that they are not required. I wanted to explain fundamental concepts of software engineering. I wanted to give you an overview of the most important things to look out for. This should be a book that tells you the very basic rules that make your code better. There are not so many. But they are really important.
 
-You might have realized that in software engineering for every problem there are a million of possible solutions. Even when writing these very simple examples in this book I have to reconsider how to do it best. For you it must be even worse. I remember how I was lost when I started programming. This book wants to help you. It explains a lot of things you shouldn’t do or use. It’s restricting you. I don’t want you to get lost.
+You might have realized that in software engineering for every problem there are a million of possible solutions. Even when writing these very simple examples in this book I have to reconsider how to do it best. For you it must be even worse. I remember how I was lost when I started programming. This book wants to help you. It explains a lot of things you shouldn’t do or use. It’s restricting you. I don’t want you to get lost because of all the posibilities you have.
 
-Soon comes the next big step. The real world. Writing code. Finally, you are there. And I have to let you go. I could write another book with code examples and explain why some code is better than the other. But there are plenty such books and I doubt I know better examples than the other authors do.
+Soon comes the next big step. The real world. Writing code. Finally, you are there. And I have to let you go. I could write another book with code examples and explain why some code is better than the other. But there are plenty such books and I doubt I know better examples than the other authors do. Still, I hope that you'll get back to this book once in a while if you seek fundamental advice.
 
-Your next step will be to apply all the things you learned on your journey so far. Write code. As much as you can. And always try to improve it. How can you make it easier to understand? How should you break that class into pieces? How is the test coverage doing? There are so many things to look out for. There are so many obstacles along the way. Find a good programmer to help you overcome them. Or even better, do an internship. (But make sure they write tests before accepting the job.) Talking with other programmers is important to understand how you can change your code to make it better.
+Your next step will be to apply all the things you learned on your journey so far. Write code. As much as you can. And always try to improve it. How can you make it easier to understand? How should you break that class into pieces? How is the test coverage doing? There are so many things to look out for. There are so many obstacles along the way. Find a good programmer to help you overcome them. Or even better, do an internship. (But make sure the company writes tests before you accept the job.) Talking with other programmers is important to understand how you can change your code to make it better.
+
 I hope you learned a lot of things that will help you in your life as a software engineer. Good luck!
+
 Marco
 
+# 54. Frequently used Abbreviations
 
-
-# 54. Abbreviations
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
 CD 	Continuous Delivery
@@ -7311,10 +7329,10 @@ DB	Database
 DI	Dependency injection
 GUI	Graphical User Interface 
 MR	Merge Request
-OO	Object Oriented 
+OO	Object-Oriented 
 QA	Quality Assurance 
-TDD	Test Driven Development 
-YAGNI	You Aren’t Going Need It
+TDD	Test-Driven Development 
+YAGNI You Aren’t Going Need It
 
 
 
