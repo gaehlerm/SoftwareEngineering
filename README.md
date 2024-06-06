@@ -4347,9 +4347,9 @@ Hand in hand with testing comes Dependency Injection (DI). There are many things
 
 ## Pay Now or Pay More Later
 
-This is a very well known issue. If you hurry writing your code, you pile up technical debt that will slow you down on the long run. If you don't fix it now, you pay the price along the way. Now this sounds terrible and it may be. But it's not always as terrible as it sounds. Because later your company will have grown and you will have more resources to fix the technical debt.
+Pay now or pay more later is a very well known issue, not only in software engineering. If you hurry writing code, you pile up technical debt that will slow you down on the long run. If you don't fix it now, you pay the price along the way. Now this sounds terrible and it may be. But it's not always as terrible as it sounds. Because later your company will have grown and you will have more resources to fix the technical debt.
 
-Just imagine Amazon. The first version of the website was very basic. It was just a list of books that you could search using the author name or the book title. Of course, from a current point of view, this is very basic. But it was enough to get started. And now, 30 years later, they rewrote the whole website several times. Jeff Bezos doesn't care anymore about the few thousand dollars he payed for the first version of his website. He was fast, and that was more important.
+Just imagine Amazon. The first version of the website was very basic. It was just a list of books that you could search using the author name or the book title. Of course, from a current point of view, this is very basic. But it was enough to get started. And now, 30 years later, they rewrote the whole website several times. Jeff Bezos doesn't care anymore about the few thousand dollars he payed for the first version of his website. Fast time to market was more important.
 
 That being said, you have to know where you can go fast and where technical debt will bite you right away. For example, it is always worth setting up your CI/CD environment properly, unless you work on a really small project. Unit tests also pay off quite quickly. On the other hand, it is not worth searching for appropriate variable names for hours. Ok is usually good enough.
 
@@ -5054,13 +5054,13 @@ An apple can have a color, a flavor, and a price. There can be three different a
 
 # 31. Design Patterns
 
-Design patterns [Design Patterns, Elements of Reusable Object-Oriented Software] are a specific interplay of classes, methods and inheritance that allows for some unexpected properties of the resulting object. There are about two dozen of commonly accepted different design patterns around and numerous books explaining them. I have neither the space nor the knowledge to write about all of them. I just added this chapter because I think it's important that you heard of design patterns.
+Design patterns [Design Patterns, Elements of Reusable Object-Oriented Software] refer to a specific arrangement of classes, methods, and inheritance that give rise to unique properties in the resulting object. There are about two dozen commonly recognized design patterns and numerous books explaining them. I have neither the space nor the knowledge to write about all of them. I just added this chapter because I think it's important that you learn about design patterns.
 
 ## Factory
 
-I'll show the so called factory pattern as an example that you get an idea what design patterns are all about. It's a very simple pattern. Chances are, that you already implemented a factory before even if you didn't know about this pattern.
+I'll show the so-called factory pattern as an example to give you an idea of what design patterns are all about. It's a very simple pattern. Chances are that you have already implemented a factory before, even if you were not aware of this pattern.
 
-A factory is an object In Python implementing a factory is particularly easy due to the duck typing. In strongly types languages like C++, you would have to use a base class and pointers to implement the `vehicles`.
+A factory is an object. In Python, implementing a factory is particularly easy due to duck typing. In strongly typed languages like C++, you would have to use a base class and pointers to implement the `vehicles`.
 
 ```py
 class Car:
