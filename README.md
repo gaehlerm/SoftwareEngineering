@@ -301,9 +301,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
-- [31. Design Patterns](#31-design-patterns)
     - [Coupling](#coupling-1)
-- [31. Design Patterns](#31-design-patterns-1)
+- [31. Design Patterns](#31-design-patterns)
   - [Factory](#factory)
 - [31. Domain Driven Design](#31-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
@@ -3843,6 +3842,26 @@ This test passes even if the file passed as an argument does not exist. An alter
 
 Mocks have some predefined behavior. In this case, it simply returns the values defined. Mocks are different from fakes, as they mimic real behavior to some extent. Setting up mocks is much easier compared to fakes.
 
+However, there is a caveat with mocks. There is a better solution: Dependency Injection (DI). I like DI much better than mocking. In my opinion, mocking is a hack to get away with sub-optimal code and should not be used. Here is what the code looks like with DI instead of mocking:
+
+```py
+def read_csv(filename):
+    # ...
+    return [1,2,3]
+
+def mock_reader(_):
+    return [4,5,6]
+
+def read_data_from(reader, filename):
+    return reader(filename)
+
+def test_mock_important_stuff():
+    data = read_data_from(mock_reader, "")
+    assert data == [4,5,6]
+```
+
+With this code here you can define your own reader function without the use of a mocking library. And I think the code has become much clearer.
+
 ### Faking
 
 [clean craftsmanship, p.118]
@@ -5011,8 +5030,6 @@ These advantages for either side lead to trade-offs in library sizes. Generally,
 Interestingly, all the explanations about coupling and cohesion made for classes are also applicable to libraries. It is important to note that libraries should not become too large and rigid. You don't win a prize for writing the largest library in the company. One library that covers every object that exists. It just won't work!
 
 An apple can have a color, a flavor, and a price. There can be three different areas: graphical rendering, food, and shopping. Each one uses exactly one property, and it makes no sense to mix them up. Keep the libraries separate and write glue code between them if needed. That's the only way to go. Just trust me. Don't write monolithic software that tries to replicate the entire world. It won't work.
-
-# 31. Design Patterns
 
 In every large codebase, you will have to work with multiple libraries. Some of the software components are developed internally, while others are third-party libraries. There are many factors to consider when making such decisions. The very first question is: Do you need another library? Can you implement the required functionality within an existing library? There are mechanisms that favor either smaller or larger libraries.
 
