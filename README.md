@@ -328,9 +328,10 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Organizing aggregates](#organizing-aggregates)
 - [32. 3rd party software](#32-3rd-party-software)
 - [33. Working with Existing Projects](#33-working-with-existing-projects)
-  - [No Interfaces](#no-interfaces)
+  - [No useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
-  - [Extremely long functions](#extremely-long-functions)
+  - [Extremely long functions and classes](#extremely-long-functions-and-classes)
+  - [Seams](#seams)
 - [34. Refactoring Fundamentals](#34-refactoring-fundamentals)
   - [There will be change](#there-will-be-change)
   - [Keeping code in shape](#keeping-code-in-shape)
@@ -347,7 +348,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Extract function](#extract-function)
     - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
   - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
-    - [Seams](#seams)
+    - [Seams](#seams-1)
     - [Sketches](#sketches)
     - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
     - [What tests should I write?](#what-tests-should-i-write)
@@ -355,9 +356,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
   - [Copilot](#copilot-11)
 - [36. Performance Optimization](#36-performance-optimization)
-  - [No optimization needed](#no-optimization-needed)
-  - [Optimization might be needed](#optimization-might-be-needed)
-  - [Optimizing from scratch](#optimizing-from-scratch)
+  - [No Optimization Needed](#no-optimization-needed)
+  - [Optimization Maybe Needed](#optimization-maybe-needed)
+  - [Optimizing Certainly Needed](#optimizing-certainly-needed)
 - [37. Comments](#37-comments)
   - [Bad comments](#bad-comments)
     - [Commented out code](#commented-out-code)
@@ -5358,34 +5359,41 @@ The very big question is always when you really need such an interface. Most of 
 
 You should rethink using a 3rd party library if it has only few developers. If there is a reasonable alternative, you’d maybe better refrain from it. On the other hand, this code could be absolutely essential for your own software, then it would be a good idea to join the project and become a developer as well. In fact, pretty much all major software companies support the software projects they are relying on. Some projects got that much additional man power that they run out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
-Part 7: Existing code
 
+Part 7: Existing code
 
 # 33. Working with Existing Projects
 
+// This text here still needs some improvements
+
 "Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
 
-Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. "One beer please. Before I am forced to tell you how to wiggle around in an existing project." 
+Up to this point everything was great. We had no restrictions what so ever. We assumed we worked on a so called green field project. I could tell you whatever I wanted. There were no restrictions due to the existing code base. Now, however, we will start dealing with existing code bases. We'll learn how to deal with legacy code.
 
-Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives. It will happen to everyone. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. And unless some extremely fundamental flaws were made it is very well possible to make improvements.
+Yes, working on existing projects can be hard. Sometimes the developers made some very obvious mistakes. But at the same time, it is really hard to keep everything in shape. In every software development there will be this point where you ask yourself: "Gosh, how did I screw up this code so badly?" Even if you follow all the advice this book gives things will deteriorate. It happens to the best of us. So, if you start with your first job and the code looks nothing like what I explained so far, don’t be disappointed. Don’t be too harsh with your coworkers and your boss. Yes, it is not really motivating to work with bad code. But there is still a lot you can learn. Unless some extremely fundamental flaws were made it is very well possible to make improvements.
 
 You might be motivated to suggest a complete rewrite of the code. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. It’s worth millions. You are not going to fix it in a few months.
 
 There are some different stages of how bad the code can be. I’m trying to give you a short overview.
 
-## No Interfaces
+## No useful Interfaces
 
-This is probably the worst case. Without interfaces it is impossible to write tests. Without tests it is impossible to refactor and add interfaces. It’s really bad, but it’s not a lost cause. You can still try to refactor slowly. Though it will be painful and you constantly have to look out for bugs. A sales person will have to check your work frequently. The whole refactoring will probably take years. Maybe a complete rewrite is indeed the better option. I hope you never end in this kind of position.
+Any code always at least two interfaces: the input and the output. But if one or both of them are a GUI, it becomes nearly impossible to write functional tests for the software under test. Furthermore you can't write unit tests if there are no internal interfaces. Without tests, it is impossible to refactor and add interfaces. It is really bad, but it’s not a lost cause. You can still try to refactor slowly. Though it will be painful and you constantly have to look out for bugs. A sales person will have to check your work constantly to see that you didn't introduce any bugs. The whole refactoring will probably take years. Maybe a complete rewrite is indeed the better option. I hope you never end in this kind of position.
 
 ## No Tests
 
-Code without tests is one thing. One can still write them later on, even though it takes much more efforts. The real issue is probably the low quality of the code. It has some interfaces but the classes are way too big and the objects are hard to create. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. In a year or two. Once you have some test coverage, you can break the classes into smaller ones.
+Code without tests is one thing. One can still write them later on, even though it takes much more efforts than doing it right away. The real issue is probably the low quality of the code. It has some interfaces but the classes are way too big and the objects are hard to instantiate. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. In a year or two. Once you have some test coverage, you can break the classes into smaller ones.
 
-If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you wanted. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
+If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
 
-## Extremely long functions
+One trick to avoid this political issue is onion layer code. Instead of fixing a piece of code, you just write a wrapper around it and fix all the issues inside the wrapper. Like this you avoid owning the code, yet you are still able to fix bugs, etc. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
 
-Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. It is absolutely impossible. No one is ever going to touch it. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
+## Extremely long functions and classes
+
+Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. There are so many variables around that no one is able to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
+
+## Seams
+
 
 
 # 34. Refactoring Fundamentals
@@ -5783,7 +5791,7 @@ As always, Copilot works best if you give it some step by step instructions. It 
 
 "Premature optimization is the root of all evil" - Donald Knuth
 
-## No optimization needed
+## No Optimization Needed
 
 One of the most overestimated topics in programming is performance. This has historic reasons. Computers used to be extremely slow and expensive. Thus, it was worth spending a lot of time improving every bit of your algorithm. Back in the days, low level languages like Fortran or even Assembler allowed you to do so. But the performance of computers had been growing exponentially for the last 50 years, while the price of computers dropped considerably. Modern programming languages like Python are not focusing on performance anymore. But rather on usability. Simply because it is more important to write readable code, rather than fast code.
 
@@ -5791,9 +5799,11 @@ As we have learned the main goals of a software engineer are creating value for 
 
 I'd like to remark that the way I recommend to write code does not result in fast code. I didn't care about speed so far. Instead I was coding for readability and reusability. The problem is that all this polymorphism that I recommended requires look ups at the so called v-table and this is slow. There are youtube videos [https://youtu.be/tD5NrevFtbU] that explain these things in great detail. So yes, the code I recommend you to write is comparably slow. But it does not matter. When do you need millions of function calls to this slow polymorphic code? Probably never. It is unlikely that the code I recommend you to write will ever be the bottleneck of your software.
 
-## Optimization might be needed
+One issue with performance optimization is the fact that modern processsors have many cores. In order to use them you have to parallelize your code. This is a potentially tedious task and even if you manage, you don't always gain anything. The overhead of orchestrating results between the different cores may be significantly slower than the single threaded version of your code.
 
-Still, let’s say you start writing one of the few applications that you assume needs performance. You’re a bit lost at which point in time you should start optimizing the code. Right from the beginning? Should you plan your algorithms such that they will be faster? How should you proceed?
+## Optimization Maybe Needed
+
+Let’s say you start writing one of the few applications that you assume needs performance. You’re a bit lost at which point in time you should start optimizing the code. Right from the beginning? Should you plan your algorithms such that they will be faster? How should you proceed?
 
 First of all, it is not recommended to optimize the code at all. In fact, it is best to ignore the performance topic for the time being. Write your code with the usual test – code – refactor work cycles [section TDD]. When done well, the result will be code that is modular, stable, easy to understand and well tested. Code that meets all your requirements, except for performance. 
 
@@ -5801,13 +5811,14 @@ You had this feeling that you had to write highly optimized code to meet the per
 
 If your code takes an hour to run and you use it every day it is worth getting a profiler to check the bottlenecks of your code. Pretty much all code that you’ll ever see has very few bottlenecks. Usually it’s some fancy calculation on a huge data structure that scales worse than O(N\*log(N)) [https://en.wikipedia.org/wiki/Big_O_notation]. This is going to be the one and only point where you’ll have to optimize. As you have written great code, it is very easy to find this bottleneck using a profiler. For example, it turns out to be self written Fourier Transformation operating on a list with 10’000 elements. So, as you start reading through that code, you realize that the algorithm you have implemented scales with O(N^2). Such bad scaling is usually unacceptable. You ask the internet for advice. You find Fourier transform libraries that scale with O(N\*log(N)). As your code is well structured you can just remove your own Fourier transform function call, tweak your data structure a little and use the library you found. Now your code runs within seconds. Done. You won't have to care about anything else.
 
-## Optimizing from scratch
+## Optimizing Certainly Needed
 
-Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized, it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel (or distributed) code compared to linear code. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be likely working in a team where every single team member knows way more about parallel programming than I do.
+Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these cases are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized, it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel (or distributed) code compared to linear code, but it can easily be much more than that. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be likely working in a team where every single team member knows way more about parallel programming than I do.
 
 There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
 
 Always keep in mind: code that was written with performance in mind, rather than readability, is always very hard to maintain!
+
 
 Part 8: Miscelaneous
 
