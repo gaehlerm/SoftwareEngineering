@@ -244,6 +244,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Design for flexibility](#design-for-flexibility)
   - [Anticipate Obsolescence](#anticipate-obsolescence)
   - [Design for Testability](#design-for-testability)
+  - [Pay Now or Pay More Later](#pay-now-or-pay-more-later)
 - [23. Programming Paradigms](#23-programming-paradigms)
   - [Object-Oriented Programming](#object-oriented-programming)
   - [Procedural programming](#procedural-programming)
@@ -4344,6 +4345,14 @@ I believe this is the most evident point in this chapter. I have explained numer
 
 Hand in hand with testing comes Dependency Injection (DI). There are many things for which writing tests will be brittle. Files can be deleted, the network connection might fail, timestamp comparisons will return a different result at some point, etc. These are all issues that should be addressed with DI. Inject a mock file or a fake timestamp into the function, and your tests will become much more stable.
 
+## Pay Now or Pay More Later
+
+This is a very well known issue. If you hurry writing your code, you pile up technical debt that will slow you down on the long run. If you don't fix it now, you pay the price along the way. Now this sounds terrible and it may be. But it's not always as terrible as it sounds. Because later your company will have grown and you will have more resources to fix the technical debt.
+
+Just imagine Amazon. The first version of the website was very basic. It was just a list of books that you could search using the author name or the book title. Of course, from a current point of view, this is very basic. But it was enough to get started. And now, 30 years later, they rewrote the whole website several times. Jeff Bezos doesn't care anymore about the few thousand dollars he payed for the first version of his website. He was fast, and that was more important.
+
+That being said, you have to know where you can go fast and where technical debt will bite you right away. For example, it is always worth setting up your CI/CD environment properly, unless you work on a really small project. Unit tests also pay off quite quickly. On the other hand, it is not worth searching for appropriate variable names for hours. Ok is usually good enough.
+
 
 Part 5: Programming
 
@@ -5815,9 +5824,9 @@ If your code takes an hour to run and you use it every day it is worth getting a
 
 Finally, there are indeed some cases where you have to plan the software from scratch and focus on optimization. But these cases are very rare. These are mostly simulation software, games, websites containing a lot of data, or infrastructure code for huge server farms where not only performance but also energy consumption it a major concern. If the code can be parallelized, it will become much more complicated as this is an additional complexity when designing data structures and algorithms. As a very rough rule of thumb, it takes twice the amount of time to write parallel (or distributed) code compared to linear code, but it can easily be much more than that. There is a lot to learn if you want to write high performance code. But you won’t be alone. You’ll be likely working in a team where every single team member knows way more about parallel programming than I do.
 
-There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms. Especially those that scale better.
+There are many small things you can do for optimizing your code like manual loop unrolling. Keep your hands away! The performance gains are negligible. And if you are working with a compiled language, the compiler can optimize such things much better than you do. Only improve major algorithms, they usually take up 90% of the runtime. Optimizing the other 10% is usually not worth it.
 
-Always keep in mind: code that was written with performance in mind, rather than readability, is always very hard to maintain!
+Always keep in mind: code that was written with performance in mind, rather than readability, is always very hard to maintain. Due to the complexity of the code, it becomes very hard to understand!
 
 
 Part 8: Miscelaneous
