@@ -308,25 +308,25 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [31. Domain Driven Design](#31-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
-    - [Documentation and planning](#documentation-and-planning)
+    - [Documentation and Planning](#documentation-and-planning)
     - [Implementing a Model](#implementing-a-model)
     - [Domain Levels](#domain-levels)
   - [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
-  - [Domain boundaries](#domain-boundaries)
+  - [Domain Boundaries](#domain-boundaries)
     - [Bounded Context](#bounded-context)
-    - [Unified model](#unified-model)
-    - [Context map](#context-map)
-    - [Shared kernel](#shared-kernel)
+    - [Unified Model](#unified-model)
+    - [Context Map](#context-map)
+    - [Shared Kernel](#shared-kernel)
     - [Anticorruption layer](#anticorruption-layer)
     - [Separate ways](#separate-ways)
+    - [Developer-Client Relationship](#developer-client-relationship)
     - [Conformist](#conformist)
-    - [Developer Client relationship](#developer-client-relationship)
-  - [Building blocks of DDD](#building-blocks-of-ddd)
+  - [Building Blocks of DDD](#building-blocks-of-ddd)
     - [Entities](#entities)
     - [Value Object](#value-object)
     - [Services](#services)
     - [Aggregates](#aggregates)
-    - [Organizing aggregates](#organizing-aggregates)
+    - [Organizing Aggregates](#organizing-aggregates)
 - [32. 3rd party software](#32-3rd-party-software)
 - [33. Working with Existing Projects](#33-working-with-existing-projects)
   - [No useful Interfaces](#no-useful-interfaces)
@@ -5103,229 +5103,302 @@ vehicle = factory["car"]
 
 # 31. Domain Driven Design
 
-// reread and rewrite this chapter? Or remove it completely???
+// This chapter still needs some work
 
 "The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
 
 [https://github.com/ddd-referenz/ddd-referenz/blob/master/manuscript/] [https://youtu.be/kbGYy49fCz4]
 
-This chapter is highly influenced by Eric Evans book "Domain-Driven Design" (DDD). The book covers mostly conceptual topics like the domain model and bounded context. This, along with the "Ubiquitous language" (Evans) it forms the heart of that book and will be explained in this chapter here. I did not understand everything that was explained in this book, so I just explain it the way I think it makes sense.
+This chapter is highly influenced by Eric Evans' book "Domain-Driven Design" (DDD) [Domain Driven Design, Eric Evans]. The book covers mostly conceptual topics such as the domain model and bounded context. This, along with the concept of "Ubiquitous language" (Evans), forms the heart of the book and will be explained in this chapter. Though there are some more books on this topic by now. For example [Learning Domain-Driven-Design, Vlad Khononov]
 
 ## Ubiquitous Language
 
-In software engineering, there are very few topics that are described purely mathematically. Most notably finance, physics and engineering. Most other topics are described by the natural language. This is a huge issue as it is hard to bake such a topic into code. How do you implement an apple? The answer is: it depends who you are talking to.
+In software engineering, there are very few topics that are described purely mathematically. Most notably finance, physics, and engineering. Most other topics are described using natural language. This is a significant challenge because it is difficult to incorporate such a topic into code. How do you implement an apple? The answer is: it depends on who you are talking to.
 
-It takes a lot of effort to understand a topic well enough to be able to implement it. It takes a lot of talking to domain experts about the topic. Only through these discussions you can learn how their domain model is built up and what the underlying mechanisms are. It is of utmost importance that the development team learns the language used by the domain experts, use among each other and implement it into the code. A domain expert has to be able to follow the general discussions between developers. He has to be able to tell when something is off as there is something that doesn’t make sense to him. For instance if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually the domain experts are able to tell much earlier that something is off than the developers. If there are expressions used in the code that do not exist in the domain, it is probably wrong. This common language between developers and domain experts was named "Ubiquitous language" by Eric Evans.
+It takes a lot of effort to understand a topic well enough to be able to implement it. Engaging in extensive discussions with domain experts about the topic is essential. Only through these discussions can you learn how their domain model is built up and what the underlying mechanisms are. This common language between developers and domain experts was named "Ubiquitous Language" by Eric Evans. It is of utmost importance that the development team learns this language used by the domain experts, communicates effectively among themselves using it, and implements it into the code. A domain expert must be able to understand the general discussions among developers. He has to be able to tell when something is off because there is something that doesn't make sense to him. For instance, if the developers mix up the usage of atoms and molecules in a chemistry simulation. Usually, domain experts can detect issues much earlier than developers. If there are expressions used in the code that do not exist in the domain, it is most likely incorrect. 
 
-Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between the developers and the domain experts allows high level discussions about the domain. It takes a lot of effort to develop such a language. Developers and domain experts have to remain continuously in touch and keep refining the use of their language and improve the model that is based on this language. Play around with this language. Try to change the words. Try to construct new phrases. This is an important part of the ubiquitous language. You have to develop the language like children learning to speak a natural language. Find easier and better ways to express what you want to say, no matter how stupid it sounds at first. Use the insight gained this way to improve the domain-model. Make sure the business experts understand what you are talking about. If you start using terms that they don't know, there is probably something wrong with your model. Do never use terms that are unknown to the experts, they are a sign for misguided logic!
+Developing this Ubiquitous language is of utmost importance for the whole project. Only a well-developed shared language between developers and domain experts enables high-level discussions about the domain. Developing such a language requires a significant amount of effort. Developers and domain experts need to stay in constant communication and continuously refine their language usage to enhance the model built upon this language. Play around with this language. Attempt to alter the vocabulary. Try to create new phrases. This is an important aspect of the Ubiquitous Language. You have to develop this language like children learning to speak a natural language. Find easier and more effective ways to express your thoughts, regardless of how silly they may seem initially. Utilize the insight gained in this way to enhance the domain model. Ensure that the business experts understand what you are discussing. If you start using terms that domain experts are unfamiliar with, there is likely an issue with your model. Avoid using terms that are unknown to experts, as they indicate flawed logic.
 
-Thinking about the code in the English language also helps even if you don't do much DDD. The following explanation from the book "The Art of Readable Code" can help you improve your coding skills by a lot:
+Thinking about the code in English language also helps, even if you don't do much DDD. The following explanation from the book "The Art of Readable Code" [The Art of Readable Code, Boswell and Foucher] can help you improve your coding skills significantly:
 1. Describe what code needs to do, in plain English, as you would to a colleague.
-2. Pay attention to the key words and phrases used in this description.
+2. Pay attention to the keywords and phrases used in this description.
 3. Write your code to match this description.
 
-Especially if you're stuck getting your thoughts into code, these steps may help you to order your thoughts and then writing the code becomes much easier. If you can’t describe the problem or your design in words, something is probably missing or undefined.
+Especially if you're struggling to translate your thoughts into code, these steps may help you organize your ideas, making it much easier to write the code. If you cannot articulate the problem or your design in words, there is likely something missing or undefined.
 
 ## The Domain Model
 
-A model is a simplification of something real. A computer game for instance is always a model of some kind of reality. Interesstingly enough, a computer game does not necessarily become better if the model is more realistic. But rather if the model is more focused to make a point. If it emphasizes the core domain of what the game is all about, while leaving away unnecessary details.
+A model is a simplification of something real. A computer game, for instance, is always a model of some kind of reality. Interestingly, a computer game does not necessarily become better if the model is more realistic. But rather if the model is more focused on making a point. If it emphasizes the core domain of what the game is all about while leaving out unnecessary details.
 
-When writing code, we implement a model of the reality. A model that resembles most accurately the problem we try to solve. Not one that is the closest to reality. The model has to cover the domain of interest. The field that you are working on. The model has to simplify the domain that you are working on to the bare minimum what you need to fulfill your programming task.
+When writing code, we implement a model of reality. An accurate model that closely resembles the problem we are trying to solve. Not the one that is closest to reality. The model must cover the domain of interest. The field in which you are working. The model needs to simplify the domain you are working on to the bare minimum required to fulfill your programming task.
 
-The domain-model is a high-level concept which has to be described. This can be done in several different ways. The most obvious description are UML diagrams. These are commonly used to show the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
+The domain model is a high-level concept that needs to be described. This can be done in several different ways. The most obvious descriptions are UML diagrams. These are commonly used to illustrate the relationship between different classes. However, UML diagrams are not always the ideal choice for describing code. UML has several deficiencies.
 
-### Documentation and planning
+### Documentation and Planning
 
-First, UML diagramms support only a somewhat limited amount of interactions between classes or class instances. There are frequently better ways to describe code than a class diagram. Maybe a piece of text will do, or a diagram that shows the temporal dependency of some process. It does not really matter how you represent the domain-model, as long as you understand it.
+First, UML diagrams support only a somewhat limited amount of interactions between classes or class instances. There are often more effective ways to describe code than using a class diagram. Maybe a piece of text or a diagram illustrating the temporal dependency of a process would be suitable. It does not really matter how you represent the domain model, as long as you understand it.
 
-Second, one should always consider that UML diagrams should remain small. There are development teams that printed out their whole code base as a UML diagram, but this is pretty useless. There are way too many objects with interactions between each other as if this graph could be useful. There were attempts to create a UML like programming language and they all failed for a reason. Graphical programming simply isn’t any better than textual programming. Furthermore, a lot of information will get lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
+Secondly, one should always consider that UML diagrams should remain small. Some development teams have printed out their entire code base as a UML diagram, but this practice is largely ineffective. There are too many objects and interactions between each other in this graph, as if it could be useful. It's just like a map with too many details. Buried in all the information you won't find what you are looking for. A map should be simple and easy to understand. It should only show what you are interessted in. The same applies to UML diagrams. Keep them small and concise.
 
-Instead you can use any kind of document you like. At times it is better to create a temporal order of a process than a class diagram. Or you create a diagram with class objects rather than classes. After all it's called Object Oriented programming, not Class Oriented programming.
+There have been attempts to create a programming language similar to UML, but they have all failed for various reasons. Graphical programming simply isn't better than textual programming. On the contrary. Graphical programming generally lacks important tooling like version control or testing frameworks. Furthermore, a significant amount of information will be lost during the creation of the diagram. UML is not a complete programming language and it will never be. Keep UML diagrams small.
 
-As with all documents, the documentation of the domain core should be either kept up to date or archived. There is the danger that the documentation and the code diverge over time. Documentation has similar drawbacks as described in the chapter on comments. It takes a lot of efforts to keep a documentation up to date.
+Instead, you can use any type of document you prefer. At times, it is better to create a temporal order of a process than a class diagram. Or you can create a diagram with class instances instead of class definitions. After all, it's called Object-Oriented Programming, not Class-Oriented Programming.
 
-Though documentation has its merits. Code is often too detailed to really explain what it does. And there are plenty of things that code alone cannot explain. It has to be complemented either by comments or some additional documentation.
+As with all documents, the documentation of the domain core should be kept up to date or archived. There is a risk that the documentation and the code may diverge over time. Documentation has similar drawbacks as those described in the chapter on comments. It takes a lot of effort to keep documentation up to date.
 
-Make sure that design documents make ample usage of the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitious language, it is not useful. It doesn't help explaining what you are trying to implement. It only creates confusion.
+Though documentation has its merits. Code is often too detailed to effectively explain its functionality. And there are plenty of things that code alone cannot explain. It has to be complemented either by comments or some additional documentation. 
+
+Ensure that design documents extensively utilize the Ubiquitous language. If the documentation does not use the same terms as defined in the Ubiquitous language, it is not useful. It doesn't help to explain what you are trying to implement. It only creates confusion.
 
 ### Implementing a Model
 
-There are cases where you can’t implement a model you've developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert is able to explain it, so you should be able to implement it. In theory, the complexity of the domain-model should not exceed the complexity of the problem it tries to implement. This is the optimal case where a developer can explain the code to the domain expert and the domain expert understands it. They would simply talk about the very same thing. In this case, the development of the code would feel very easy as everything just falls into place.
+There are cases where you cannot implement a model you have developed. It would be simply too complex. It just doesn't work as planned. This is a clear sign that your model is not optimal. A domain expert can explain it, so you should be able to implement it. In theory, the complexity of the domain model should not exceed the complexity of the problem it tries to implement. This is the optimal scenario where a developer can explain the code to the domain expert, and the domain expert can understand it. They would simply talk about the same thing, the same logic. In this case, the development of the code would feel very easy as everything just falls into place.
 
-In reality, finding this optimal model is a really hard process. Most likely you’ll end up in an iterative loop switching between coding, modeling and refactoring until you have a breakthrough when you suddenly realize how the optimal model should look like.
+In reality, finding the optimal model is a challenging process. Most likely, you'll end up in an iterative loop switching between coding, modeling, and refactoring until you have a breakthrough when you suddenly realize what the optimal model should look like.
 
-Decouple the domain-model code from your other code as explained in the section on The Abstraction Layers. This is important to keep the domain code clean and slim. Violating this rule would be also a violation of the SRP as the domain-model is located on a different abstraction level than, say, the database code. The domain model contains the actual conceptual complexity of the final software and thus it should not be cluttered with non-model related things like infrastructure or GUI code.
+Decouple the domain-model code from your other code, as explained in the section on The Abstraction Layers. This is important for maintaining a clean and concise domain code. Violating this rule would also violate the SRP as the domain model is located on a different abstraction level than for example the database code. The domain model contains the actual conceptual complexity of the final software; therefore, it should not be cluttered with non-model related things such as infrastructure or GUI code.
 
 ### Domain Levels
 
-Not every part of the software can be treated with equal priority. You'll have to prioritize what is important. There will be different domains in your project. For example the core domain. It is a first class citizen of the domains and has to be treated as such. The core domain is the most important domain of your project. The core domain is what your company makes money with, the thing that makes your company unique. The core domain has to be treated with special care. Try to keep it slim, only the most important things belong into the core domain. Your most experienced developers should be working on this topic.
+Not every part of the software can be treated with equal priority. You'll have to prioritize what is important. There will be various domains in your project. For example, the core domain. It is a first-class citizen of the domains and must be treated as such. The core domain is the most crucial domain of your project. The core domain is what your company makes money with; it is the unique aspect that sets your company apart. The core domain must be treated with special care. Try to keep it concise; only the most essential elements should be included in the core domain. Your most experienced developers should be working on this topic.
 
-// make some examples of domains? Are the exmaples fine?
+Around the core domain, you will have several other domains. Each domain typically implements one class of features to support the core domain. For example, an infrastructure domain may involve managing the database or the math library. Keeping the domains separate is important as it prevents you from creating a Big Ball of Mud [https://en.wikipedia.org/wiki/Big_Ball_of_Mud].
 
-Around the core domain you'll have several other domains. Each domain typically implements one class of features to support the core domain. For example an infrastructure domain taking care of the database, or the math library. Keeping the different domains appart is important as it prevents you from writing a Big Ball of Mud [https://de.wikipedia.org/wiki/Big_Ball_of_Mud].
+Each domain corresponds to a piece of code, such as a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise, there doesn't have to be much resemblance between the different domains. For example, the ubiquitous language does not have to be the same across different models. On the contrary. The ubiquitous language is expected to vary among different models, and at the interface, there is an adapter that functions as a translator between the different languages.
 
-Each domain corresponds to a piece of code, for example a library. The different domains are fairly independent of each other. They are only linked through their interfaces. Otherwise there doesn't have to be that much resemblances between the different domains. For example the ubiquitous language does not have to be the same between different models. Rather the opposite. The ubiquitous language is expected to change between different models and at the interface there is an adapter that functions as a translator between the different languages.
-
-As one example a flight may be the time between take off and landing. But there may be also direct flights or flights with stop overs. This is an example where one expression may have different meanings, depending on what kind of model you are working in. Therefore it is always important to keep in mind what kind of domain model you are currently working in, what kind of flight you are talking about.
+As one example, a flight may refer to the time between takeoff and landing. But there may also be direct flights or flights with stopovers. This is an example where one expression may have different meanings, depending on the type of model you are working with. Therefore, it is always important to keep in mind the type of domain model you are currently working in and the specific type of flight you are discussing.
 
 ## Refactoring toward deeper insight
 
 // figure out what to write here exactly. Reread the corresponding chapter in DDD.
 
 // This section is named after a chapter in the book Domain-Driven Design, p.322. It deals with a high-level point of view on refactoring, the domain level to be more precise.
--	The design does not express the team’s current understanding of the domain;
--	Important concepts are implicit in the design, though they should be explicit
--	Important parts of the design can be made suppler
 
-However, all the time you have to stay in close contact with a domain expert. Under no circumstances should you make changes that contradict what he says.
+- The design does not reflect the team's current understanding of the domain.
+- Important concepts are implicit in the design, but they should be made explicit
+- Important parts of the design can be made more flexible
 
-Deep domain models cannot be planned in a waterfall manner. They have to evolve over time. They only emerge from deeper insight that is gained over time. It has to be refactored toward deeper insight.
+However, you must always stay in close contact with a domain expert. Under no circumstances should you make changes that contradict what he says.
 
-## Domain boundaries
+Deep domain models cannot be developed using a waterfall approach. They have to evolve over time. They only emerge from deeper insight that is gained over time. It needs to be refactored to provide deeper insight.
+
+## Domain Boundaries
 
 As your code base grows, it becomes more and more difficult to keep working with a single domain model. There are processes that tend to tear the domain model apart. An object may have very different properties, depending on what part of the code you are working on. For example a `user` has different properties in the payment domain than in the GUI domain. There is the desire to keep working on a unified model for the whole code base, but at the same time there are forces acting on the code to tear the model into smaller pieces. Of course it would be preferable to have a single domain model for the whole code base, but this is not a requirement for good code. You may have several different models, depending on which part of the code you are working on. The only question is: how do you deal with the different models?
 
 ### Bounded Context
 
-A bounded context is everything within a boundary. Typically a domain domain model corresponds to a bounded context, the boundary is its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate some problems from the enterprise wide code base. One example of a bounded context is the math library. The things used in this library may be used elsewhere as well, but `sin`, `cos`, etc. have a very distinct and well defined meaning within this bounded context. These expressions are not to be reused within the math library. On the other hand, the expressions `sin` and `cos` may be used in other bounded contexts and have a completely different meaning.
+A bounded context is everything within a boundary. Typically, a domain model corresponds to a bounded context, where the boundary represents its interface. The interface regulates what goes in and out of the bounded context. Bounded contexts are important as they separate specific problems from the enterprise-wide codebase. One example of a bounded context is the math library. The names used in this library may also be applied in other contexts, but `sin`, `cos`, etc. have a very specific and well-defined meaning within this bounded context. These expressions should not be reused within the math library. On the other hand, the terms `sin` and `cos` may be utilized in other bounded contexts and carry a completely different significance.
 
-Typically domain models consists of one bounded contexts. All the problems mentioned so far for the domain models are true for the bounded contexts as well. 
+Typically, domain models consist of one bounded context. All the problems mentioned so far for the domain models are true for the bounded contexts as well.
 
-### Unified model
+### Unified Model
 
-The attempt to keep the model unified is the most obvious one. Though it is hard to keep up the required level of communication to maintain this state. A good way to enforce this communication is Continuous Integration (CI). CI forces the team to merge often and early and therefore differences between the model and the actual code become apparent early. The automated tests enforce the behavior of the model and warn the developers if they are inadvertedly changing it. 
+The attempt to keep the model unified is the most obvious one. Though it is challenging to sustain the necessary level of communication to uphold this condition. A good way to enforce this communication is through Continuous Integration (CI). CI compells the team to merge frequently and at an early stage, making any disparities between the model and the actual code evident at an early stage. The automated tests enforce the behavior of the model and warn the developers if they are inadvertently changing it.
 
-On the other hand, working on a unified model is not always possible as for bigger project the forces tearing the single model apart become too big. In an entreprise scale software, it is simply not possible to work in a single model. The different requirements to the code become too big. In a single model, the `user` object for instance becomes too complex as it just keeps growing over time. At some point it is easier to deal with several different `user` objects where each one of them is smaller, making it easier to work with. 
+On the other hand, working on a unified model is not always possible because for larger projects, the forces that tear the single model apart become too significant. In an enterprise-scale software, it is simply not possible to work in a single model. The various requirements for the code have become too extensive. In a single model, the `user` object for instance, becomes too complex as it continues to grow over time. At some point, it is easier to work with several different 'user' objects, each of which is smaller, making them easier to manage.
 
-### Context map
+### Context Map
 
-// this is really short. look at it again? Add a figure?
+// this is really short. Look at it again? Add a figure?
 
-A context map is important when a model is split up in two parts. Both parts are now bounded contexts. They are individual domain models with a clearly defined boundary. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one inteface the other one.
+A context map is important when a model is divided into two parts. Both parts are now bounded contexts. They are individual domain models with clearly defined boundaries. You'll need a translation map to convert one model to the other. The translation map is similar to an adapter pattern. It converts one interface to the other one.
 
-### Shared kernel
+### Shared Kernel
 
-Two bounded contexts may share a common sub-context. This is usually the domain core that is used by several different domain models. Having a shared domain core means that all involved models have to pay attention that the domain core is always in sync. This can be done by the CI. Additionally it takes quite some communication between the teams or else the core domain may get fragmented.
+Two bounded contexts may share a common sub-context. This is typically the core domain utilized by various domain models. Having a shared domain core means that all involved models must ensure that the domain core is always in sync. This can be done by the CI. Additionally, it takes considerable communication between teams; otherwise, the core domain may become fragmented.
 
 // The models involved with a shared kernel may be seen as ...?
 
 ### Anticorruption layer
 
+The anticurrupiton layer is similar to the adapter design pattern. You add a small layer around your context. If the other code changes, you only have to adapt your anticorruption layer and not the entire code base. This can save you a lot of work.
+
+The anticurruption layer can be located on the outgoing part of an interface, though typically the users of an interface write it. Just to make sure that their code won't break if the developers change something.
+
 ### Separate ways
 
-Sometimes the overhead of keeping models together simply becomes too big and it turns out that it is no longer useful to work together. It is no longer worth the effort. There is only very little overlap between the two models and cutting them apart is not such a big deal. If you need a feature from the other model, just reimplement it. Having a little bit of redundancy between two models is still better than coupling them together. Of course it would probably be the best solution to break out the commonly used parts of the models into a third model that supplies infrastructure code for all other models. But maybe that's not worth it.
+Sometimes, the burden of maintaining models collectively becomes too big and it becomes apparent that collaborating further is no longer beneficial. It is no longer worth the effort. There is very little overlap between the two models, so cutting them apart is not a significant issue. If you need a feature from another model, simply reimplement it. Having a little bit of redundancy between two models is still preferable to coupling them together. Of course, it would probably be the best solution to break out the commonly used parts of the models into a third model that provides infrastructure code for all other models. But maybe that's not worth it.
+
+### Developer-Client Relationship
+
+The model is split into two parts, and one development team is relying on the other team's model. If the upstream team (the developers) is willing to cooperate (for financial or political reasons) with the downstream team (the client), the two teams can establish a developer-client relationship where the downstream team can request features for implementation by the upstream team. The success of this relationship hinges on politics and the cooperation of the upstream team within the company.
 
 ### Conformist
 
-### Developer Client relationship
+The conformist is a model where the downstream team just follows the upstream team. The downstream team doesn't have anything to say. Needless to say that this is not a very preferable solution for the downstream team, though it is sometimes inevitable. 
 
-The model is split into two parts and one development team is relying on the model of the other team. If the upstream team (the developers) is willing to cooperate (for financial or political reasons) with the downstream team (the client), the two teams can go into a developer client relationship where the downstream team can order features that the upstream team will implement. Whether this relationship works or not depends on politics and the goodwill of the downstream team inside the company. 
+## Building Blocks of DDD
 
-## Building blocks of DDD
+[https://youtu.be/jnutb5Z4wyg], [https://stackoverflow.com/questions/77425208/when-do-you-use-entities-value-objects-and-aggregates-ddd]
 
-// I really need to look at this again. Especially the part with all the IDs is not yet clear to me. [https://youtu.be/jnutb5Z4wyg], see my question on stackoverflow: [https://stackoverflow.com/questions/77425208/when-do-you-use-entities-value-objects-and-aggregates-ddd]
+In the book "Domain-Driven Design," Eric Evans introduced, among others, the terms entities, services, value objects, and aggregates. These are various models used to differentiate between objects with diverse properties. Generally, the building blocks of domain-driven design are implemented in OO design. In most cases, this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may also be chosen.
 
-// what are entities, etc. used for?
-
-In the book Domain-Driven Design, Eric Evans also introduced terms as entities, services, value objects and aggregates. These are different models to distinguish between different objects with different properties. Generally the building blocks of a domain-driven design are implemented in object oriented design. In most cases this is the easiest choice to model the functionality of the building blocks. However, other programming paradigms may be chosen as well.
-
-I'd like to remark that you don't have to implement everything with entities, value objects, etc. the way it is explained here. It should be just regarded as some different way to think about how to structure your code.
+I'd like to point out that you don't have to implement everything using entities, value objects, etc., as explained here. It should be regarded as just a different way to think about how to structure your code.
 
 ### Entities
 
-// https://youtu.be/4rhzdZIDX_k
+[https://youtu.be/4rhzdZIDX_k]
 
-Entities are unique objects. Their lifetime typically spans over most of the code lifetime and they have unique properties and an ID. A very simple example are humans. Every human is unique and there are attempts to give every human some kind of ID. Though this is harder than it sounds. Obviously, names are not appropriate as a unique identifier. The social security number is used in some places, but not everyone has one and there is nothing comparable in many other countries. For many websites, the email-address is used, at times also the phone number. 
+Entities are unique objects. Their lifetime typically spans most of the code's lifespan, and they possess unique properties and an ID. Humans are a very simple example. Every human is unique, and there are efforts to assign some form of identification to each individual. Though this is harder than it sounds. Obviously, names are not suitable as a unique identifier. The social security number is used in some places, but not everyone has one, and there is nothing comparable in many other countries. For many websites, the email address is used, and sometimes the phone number is also required.
 
-One example for entities are seats in a stadium. Each customer buys a ticket for a specific seat. Thus the seats and the customers are both entities. They are both unique objects. For each customer there is exactly one seat reserved. Every seat has its unique ID. Two seats are only equal if their IDs are the same. Even if all other properties are the same, if the IDs are not the same the seats are not equal.
+One example of entities is seats in a stadium. Each customer buys a ticket for a specific seat. Thus, the seats and the customers are both entities. They are both unique objects. For each customer, exactly one seat is reserved. Every seat has a unique ID. Two seats are only considered equal if their IDs are the same. Even if all other properties are the same, if the IDs are not identical, the seats are not considered equal.
 
-Now it is different if the tickets are not assigned to a specific seat (general admission). If the customers may sit on any seat available. Then the seats and customers are not entities anymore. They are just one object among many. They become exchangable. They become value objects. 
+Now, it is different if the tickets are not assigned to a specific seat (general admission). If the customers can sit in any available seat. Then the seats and customers are no longer considered entities. They are just one object among many. They become exchangeable. They become value objects.
 
-A tricky question is how to create a unique identifier for each entity. For example for a user of Netflix. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often it is better to create some kind of unique id, however this is not as easy as it sounds and is out of scope for this book.
+A tricky question is how to create a unique identifier for each entity. For example, for a Netflix user. A first attempt is to take the email address. This was done in many cases and is a good attempt, but it fails if the user wants to change the email address. Often, it is better to create a unique ID; however, this task is more complex than it may seem and is beyond the scope of this book.
 
-When creating an entity it is important to stripe it down to the absolutely essential properties. // and ... ?
+When creating an entity, it is important to strip it down to the absolutely essential properties. // and ... ?
 
 ### Value Object
 
-// https://youtu.be/P5CRea21R2E
+[https://youtu.be/P5CRea21R2E]
 
-Value objects are pretty much the opposite of entities. Value objects are only defined by their properties. They don’t have a unique ID. One example are apples in the super market. They might look slightly different, but all together they are indistinguishable. The only interesting traits are the flavor and the price of an apple. Other than that, they can be replaced at any time. Value objects are immutable. You can only change the properties of a value object at its creation. Thus if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change its properties.
+Value objects are essentially the opposite of entities. Value objects are defined solely by their properties. They do not have a unique ID. One example is apples in the supermarket. We can regard them as indistinguishable. The only interesting aspects of an apple are its flavor and price. Other than that, they can be replaced at any time. Value objects are immutable. You can only modify the properties of a value object during its creation. Thus, if you don't like your apple, replacing it with another one is the only option you have. It's not possible to change its properties.
 
-Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may be set only once by the constructor. Thus you can also do the checking of the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, for example a price. A price is set in its constructor and cannot be changed anymore. Furthermore the constructor can ensure that the price is valid, for example it can't be negative. Similar things can be done, for example creating its own type for email addresses, rather than using plain strings.
+Having value objects is extremely useful, even if you don't care much about DDD. For example, you may have an email object. As it is a value object, it may only be set once by the constructor. Thus, you can also check the correctness of the address in the constructor. You won't have to deal with it anywhere else. Common value objects are small custom types, such as a price. The price is set in its constructor and cannot be changed thereafter. Furthermore, the constructor can ensure that the price is valid; for example, it cannot be negative. Similar things can be done, for example creating a custom data type for email addresses, rather than using plain strings.
 
-Now there is the question left when an object should be an entity or a value object. As I already mentioned before, value objects are immutable. So if you have an object, like the apple above, that will never change it's properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be an entity. Generally you should have more values objects than entities in your code.
+Value objects also help against the primitive obsession. Here is an example of an email address as a value object:
+
+```py
+class EmailAdress:
+    def __init__(self, adress):
+        assert adress.count("@") == 1
+        assert adress.count(".") >= 1
+        self._adress = adress
+    def get_adress(self):
+        return self._adress
+```
+
+It fulfills the requirement of a value object. You can only set the value once in the constructor and the validity of the adress is checked there as well. It is not possible to change the adress afterwards. The email adress is immutable.
+
+Now, the question remains: when should an object be considered an entity or a value object? As I mentioned before, value objects are immutable. So, if you have an object, like the apple mentioned above, that will never change its properties, it is likely to be a value object. On the other hand, if something is important enough to change its properties, it should be considered an entity. In general, you should have more value objects than entities in your code.
 
 ### Services
 
-Services are used for operations on value objects or entities. A good service has 3 properties //Quote DDD p. 105:
-- The operation does not naturally fit into an entity or a value object.
+Services are used for operations on value objects or entities. A good service has 3 properties [DDD p. 105]:
+
+- The operation does not naturally align with an entity or a value object.
 - The interface of the service is defined in terms of the domain model.
 - The service does not have any internal state that can change over time.
 
-A service is an operation on the domain model. Its name is part of the Ubiquitous language. Services are generally represented by functions.
+A service is an operation on the domain model. Its name is part of the Ubiquitous language. Services are typically represented by functions.
 
-While entities and value objects are generally too fine grained to be reused, services are medium grained and thus appropriate for reuse.
+While entities and value objects are generally too fine-grained to be reused, services are of medium granularity and thus appropriate for reuse.
 
 ### Aggregates
 
 // aggregates should be small. They are always a single transaction to the DB.
 
-Aggregates are a combination of several other objects. They typically consist of some entities and value objects. An example of an aggregate is a car. The car has a global ID which is its root entity. A car consists of an engine, a chassis and tires. Let's say that the tires wear off and once in a while you have to change them. This makes them an entity of the car. Meanwhile the engine and the chassis never change their state. These are value objects. The whole car is the only thing that can be accessed from the outside. The engine, chassis and the tires can only be accessed from within the car object. Once the tires are worn off, they are disposed off at the recycling plant. The recycling plant is probably modeled by a different domain model than the car. At the recycling plant no one cares anymore about how worn off a single tire is. The recycling plant simply consists of one huge pile of old tires. The tire becomes a value object.
+Aggregates are a combination of several other objects. They typically consist of entities and value objects. An example of an aggregate is a car. The car has a global ID, which is its root entity. A car consists of an engine, a chassis, and four tires. Let's say that the tires wear out, and occasionally, you have to replace them. This makes them an entity. Meanwhile, the engine and the chassis never change their state. These are value objects. The entire car can only be accessed from the outside. The engine, chassis, and tires can only be accessed from within the car object. 
 
-// DDD p.127?
+Once the tires are worn out, they are disposed of at the recycling plant. The recycling plant is likely represented by a different domain model compared to the car. At the recycling plant, no one cares anymore about how worn out a single tire is. The recycling plant simply consists of one huge pile of old tires. The tire becomes a valuable object. However, we are not going to model the recycling plant in our code here.
 
-Here is an example how the car entity could be modeled in code.
+[DDD p.127?]
+
+Here is an example of how the car entity could be modeled in code. `Engine`, and `Chassis` are value objects, `tires` are entities.
 
 ```py
-class Car():
-    def __init__(self):
-        self.ID = "123" # some unique id
-        self._engine = Engine()
-        self._chassis = Chassis()
-        self._tires = [Tire() for _ in range(4)]
-
-    def drive(self, distance):
-        drive(self._tires)
-    
-    def __eq__(self, other):
-        return self.ID == other.ID
-
-def drive(tires)
-    for tire in tires:
-        if tire.distance_remaining < distance:
-            tire = Tire()
-        tire.drive(distance)
-
-class Engine():
-    pass
-
-class Chassis():
-    pass
+MAX_DISTANCE = 1000
 
 class Tire():
     def __init__(self):
-        self.distance_remaining = 1000
+        # invariant: self._distance_remaining >= 0
+        self._distance_remaining = MAX_DISTANCE
 
     def drive(self, distance):
-        self.distance_remaining -= distance
+        self._distance_remaining -= distance
+
+    def get_distance_remaining(self):
+        return self._distance_remaining
+
+def replace_tire_if_needed(tire, distance):
+    if tire.get_distance_remaining() < distance:
+        tire = Tire()
+
+def drive(tires, distance)
+    assert distance <= MAX_DISTANCE
+    for tire in tires:
+        replace_tire_if_needed(tire, distance)
+        tire.drive(distance)
+
+class Engine():
+    # ...
+    pass
+
+class Chassis():
+    # ...
+    pass 
+
+class Car:
+    def __init__(self):
+        self._tires = [Tire() for _ in range(4)]
+        self._engine = Engine()
+        self._chassis = Chassis()
+
+    def drive(self, distance):
+        drive(self._tires, distance)
 ```
 
-You might have realized that `car` is a delegating class. Delegating classes generally fulfill the requirements of an aggregate. A delegating class hides all the functionality within the class such that it's only accessible through the class instance itself, whereas the class instance is accessible over the ID of the car. It is not possible to change the instance of the `car` and its internals in any other way. It is not possible to violate the invariants of the car.
+/////
+You might have realized that `Car` is a delegating class. Delegating classes typically meet the requirements of an aggregate. A delegating class hides all the functionality within the class so that it is only accessible through the class instance itself. The `car` is accessible as it is a variable. A unique ID would only be needed for saving the `car` object in a database and retrieving it. If you want to save the car information to a database, you would need an identifier, such as the license number. The entire car would be saved intact under this ID.
 
-The class `Car` might have the following invariants. It needs:
-- a unique identifier
+It is not possible to modify the instance of the `Car` and its internals in any other way. It is not possible to violate the car's invariants. All the variables are encapsulated within the `car`, and the methods are guaranteed to maintain the invariants.
+
+The class `Car` may have the following invariants. It needs:
+- a unique identifier (as it's an aggregate)
+- 4 tires (value objects) with `_distance_remaining >= 0`
+- 1 engine (entity) with an ID
 - 1 chassis (value object)
-- 1 engine (value object)
-- 4 tires (entities) with `distance_remaining >= 0`
-These invariants are guaranteed by the constructor of the class (assuming that the `ID` was in fact unique). All the other functions acting on the car have to make sure these invariants are still valid. The method `car.drive()` replaces tires if they are worn down, but there are still 4 tires with positive `distance_remaining` after the replacement and driving some distance.
+Upon construction, these invariants are guaranteed by the constructor of the class, assuming that the `ID` is indeed unique. All the other functions that act on the car must ensure that these invariants are not violated. The method `car.drive()` calls the function to replace tires if they are worn down, but there are still four tires with a positive `_distance_remaining` after the replacement and driving some distance.
 
-An aggregate also acts as a transactional boundary. Or as we called it in the section on classes, it is either a delegating class or a data class. Aggregates should always be dealt with as a whole to ensure they are in a valid state. They should always be dealt with as a whole object, for example saved to or loaded from a database. Aggregates are always completely within a domain of your code.
+As far as I understand the building blocks of DDD, unique identifiers were mostly introduced for storing these objects in databases. I cannot think of any other reason why they are really needed in our situation. We are dealing with class instances that we can access without using an ID.
 
-As the root entity is the only thing accessible from the outside, it is comparably simple to enforce the invariants of the aggregate. For example every car always has to have four wheels that are not yet worn down. All the accessor functions have to pass through the root entity. Thus this is the place where you can enforce the invariants. There you can define functions as `drive` that takes care at the same time that the wheels are still fine and replaces them otherwise.
+An aggregate also serves as a transactional boundary. Or, as we called it in the section on classes, it is usually a delegating class. Aggregates should always be treated as whole objects, for example, saved to or loaded from a database. Aggregates are always entirely within the domain level of your code. It can't be any other way because all parts of an aggregate are on the same level of abstraction. Having one element of the infrastructure level inside an aggregate would violate the SRP.
 
-Aggregate instances are frequently created by a factory or another of the creational design patterns. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex then it is a noteworthy task and should be dealt with in a dedicated object. Furthermore the factory can also take care of invariants of the class instance at its creation.
+As the root entity is the only thing accessible from the outside, it is comparatively simple to enforce the invariants of the aggregate. For example, every car has four wheels that are not yet worn down. All accessor functions must pass through the root entity. Thus, this is the place where you can enforce the invariants. There, you can define functions as `drive` that take care of ensuring the wheels are in good condition and replace them if necessary.
 
-### Organizing aggregates
+Aggregate instances are often created by a factory or another creational design pattern. These patterns allow us to outsource the creation of a fairly complex object. This is in accordance with the SRP. If the instantiation of an object is fairly complex, it is a noteworthy task and should be handled in a dedicated object. Furthermore, the factory can also take care of the invariants of the class instance at its creation.
+
+Just to clarify the concept of an aggregate, let's consider an example where it is violated.
+
+```py
+class Engine:
+    _is_started = False
+
+    def start(self):
+        self._is_started = True
+
+    def is_started(self):
+        return self._is_started
+
+class Car:
+    def __init__(self, engine):
+        self._engine = engine
+
+    def start(self):
+        self._engine.start()
+
+    def get_engine_status(self):
+        return self._engine.is_started()
+
+engine = Engine()
+car = Car(engine)
+car.start()
+print(engine.is_started()) # True
+```
+
+Now that the engine is started, we can use it. This, however, is bad code. The engine is now part of the `car` aggregate and should only be accessed through the `car` interface. Here it is accessed directly. You can also think of a real car where you install the engine, start the car, and then remove the engine for inspection. This feels wrong. And as it's wrong in the real world, it is most likely wrong in the code domain as well.
+
+The solution is the function `get_engine_status()` that I defined in the `Car` class as well. Now, the aggregate is properly encapsulated, and you can access the relevant properties of the engine through the car's interface. Note that this way, we don't need the intermediate `engine` object. Instead, we can directly instantiate it inside the `Car` constructor.
+
+```py
+car = Car(Engine())
+```
+
+Of course, it is sometimes more convenient to have an `engine` as a temporary object. For example, if the readability is affected because the engine is created by a function with a very long name. To achieve this, you should create the mentioned object along with the `car` instance within a specialized factory to encapsulate this temporary object. There, you construct the `engine` and then pass it on to the `car` constructor. The engine should never be visible from the outside!
+
+### Organizing Aggregates
 
 // see graphic p. 181, DDD
 
@@ -7103,32 +7176,34 @@ Next we implement dad and then the create function.
 ```py
 from enum import Enum
 
+class Flavor(Enum):
+    VERY_CREAMY = 1
+    SALTY = 2
+
 class Dad():
     def eat(food):
         if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
             print("I’m so happy")
-
-class Flavor(Enum):
-    VERY_CREAMY = 1
-    SALTY = 2
 ```
 
 Note that the `Flavor` is neither inside the `Dad`, nor inside the `ApplePie` class, as we have learned in the chapter on the solid principles (ISP).
 
 ```py
-def create(food_name):
-    food_dict = {"apple_pie" : ApplePie()}
-    return food_dict[food_name]
-
 class ApplePie():
     def __init__(self):
         self.flavor = Flavor.VERY_CREAMY
         self.name = "apple_pie"
+
+def create(food_name):
+    food_dict = {"apple_pie" : ApplePie()}
+    return food_dict[food_name]
 ```
+
+// etc. Either finish the example or remove it.
 
 ## Paint
 
-Evans p.259
+// DDD p.259
 
 Idea: We want to define paint of certain color that we can mix with each other and change its color accordingly. I would like to make some comments to the implementation in the book mentioned above.
 The code starts with a simple class paint and its variables.
@@ -7139,6 +7214,7 @@ class Paint:
     Y: int
     B: int
 ```
+
 These member variables don’t have expressive names at all. They are renamed to
 ```py
 class Paint:
@@ -7172,10 +7248,10 @@ def add(paint1, paint2):
     Paint paint3
     volume = paint1.volume + paint2.volume
     Paint3.volume = volume
-    Paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
-paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
-paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
-return paint3
+    paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
+    paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
+    paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
+    return paint3
 ```
 Now I see 3 different possibilities:
 1.	We leave paint1 and paint2 as is. We used a copy of the actual paints and didn’t change the original paints.
