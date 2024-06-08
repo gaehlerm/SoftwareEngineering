@@ -331,8 +331,14 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [33. Working with Existing Projects](#33-working-with-existing-projects)
   - [No useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
-  - [Extremely long functions and classes](#extremely-long-functions-and-classes)
-  - [Seams](#seams)
+  - [Extremely long Functions and Classes](#extremely-long-functions-and-classes)
+  - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
+    - [Seams](#seams)
+    - [Sketches](#sketches)
+    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
+    - [What tests should I write?](#what-tests-should-i-write)
+    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
+    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
 - [34. Refactoring Fundamentals](#34-refactoring-fundamentals)
   - [There will be change](#there-will-be-change)
   - [Keeping code in shape](#keeping-code-in-shape)
@@ -348,13 +354,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Renaming](#renaming)
     - [Extract function](#extract-function)
     - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
-  - [Refactoring legacy code \[WELC \]](#refactoring-legacy-code-welc-)
-    - [Seams](#seams-1)
-    - [Sketches](#sketches)
-    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
-    - [What tests should I write?](#what-tests-should-i-write)
-    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
-    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
   - [Copilot](#copilot-11)
 - [36. Performance Optimization](#36-performance-optimization)
   - [No Optimization Needed](#no-optimization-needed)
@@ -987,7 +986,9 @@ president = {
 
 ### Exceptions of DRY
 
-The DRY principle does not always have to be strictly followed. It's not always worth trying to find this abstraction with only one repetition of a few lines of code. Also, the overhead of creating a new function might be higher than the benefit gained from refactoring the code. This is also in agreement with Test-Driven Development (TDD) [Writing better code with tests] where you only have to refactor if there is a threefold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetition, there are certainly no more excuses. In the case of three-fold repetitions, you have to refactor the code immediately.
+The DRY principle does not always have to be strictly followed. It's not always worth trying to find this abstraction with only one repetition of a few lines of code. Also, the overhead of creating a new function might be higher than the benefit gained from refactoring the code. Following the DRY principle increases abstraction of the code, but at the same time also coupling. This is a serious issue.
+
+One opion is to refactor code only in case of a three-fold repetiotion. This is also in agreement with Test-Driven Development (TDD) [Writing better code with tests] where you only have to refactor if there is a threefold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetition, there are certainly no more excuses. In the case of three-fold repetitions, you have to refactor the code immediately.
 
 ## Advantages of the SRP
 
@@ -5060,8 +5061,6 @@ Design patterns [Design Patterns, Elements of Reusable Object-Oriented Software]
 
 I'll show the so-called factory pattern as an example to give you an idea of what design patterns are all about. It's a very simple pattern. Chances are that you have already implemented a factory before, even if you were not aware of this pattern.
 
-A factory is an object. In Python, implementing a factory is particularly easy due to duck typing. In strongly typed languages like C++, you would have to use a base class and pointers to implement the `vehicles`.
-
 ```py
 class Car:
     def move(self, speed):
@@ -5086,6 +5085,8 @@ vehicles.append(factory("spaceship"))
 for vehicle in vehicles:
     vehicle.move(100)
 ```
+
+When looking at this code, you might ask yourself: "what is the point"? This is because the factory in python doesn't seem to be anything special. In Python, implementing a factory is particularly easy due to duck typing. In strongly typed languages like C++, you would have to use a base class and pointers to implement the `vehicles`.
 
 The crucial point of the factory is that you can create objects of different types depending on a string or whatever else you provide.
 
@@ -5441,12 +5442,12 @@ The very big question is always when you really need such an interface. Most of 
 
 You should reconsider using a third-party library if it has only a few developers. If there is a reasonable alternative, you might be better off avoiding it. On the other hand, if this code is crucial for your software, it would be beneficial to participate in the project and contribute as a developer. In fact, pretty much all major software companies support the software projects they rely on. Some projects received so much additional manpower that they ran out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
-
+/////
 Part 7: Existing Code
 
 # 33. Working with Existing Projects
 
-// This text here still needs some improvements
+// This text here still needs some improvements. Especially examples.
 
 "Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
 
@@ -5464,17 +5465,167 @@ Any code always at least two interfaces: the input and the output. But if one or
 
 ## No Tests
 
-Code without tests is one thing. One can still write them later on, even though it takes much more efforts than doing it right away. The real issue is probably the low quality of the code. It has some interfaces but the classes are way too big and the objects are hard to instantiate. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. In a year or two. Once you have some test coverage, you can break the classes into smaller ones.
+Code without tests is one thing. One can still write them later on, even though it takes much more efforts than doing it right away. The real issue is probably the low quality of the code. It may have some interfaces but the classes are way too big and the objects are hard to instantiate. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. Though that may take a year or two. Once you have some test coverage, you can break the classes into smaller ones.
 
 If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
 
 One trick to avoid this political issue is onion layer code. Instead of fixing a piece of code, you just write a wrapper around it and fix all the issues inside the wrapper. Like this you avoid owning the code, yet you are still able to fix bugs, etc. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
 
-## Extremely long functions and classes
+## Extremely long Functions and Classes
 
 Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. No one will ever understand it with all its corner cases. There are so many variables around that no one is able to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is.
 
-## Seams
+## Refactoring legacy code [WELC ]
+
+// WIP
+
+// Stuff here is from Feathers book. Read it again and add some more stuff here.
+// It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
+
+So far we only refactored code covered with tests. Refactoring code without tests would be too dangerous. But unfortunately, this is exactly the problem with so many projects. There are so many of projects out there without tests. And because of global variables, functions with side effects, complicated constructors, etc. it is very hard to write tests for them. In these cases you start getting afraid to changes the code as you are supposed to do in a refactoring. There’s just too much that can break without test. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
+
+Refactoring untested code is usually a very hard task, there are whole books about it. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are
+1.	No tests
+2.	Obscure code
+3.	No time (or budget) to fix it
+
+And on the micro level we have a few more indications that things will get tough:
+1.	No interfaces
+2.	Functions with side effects and global variables
+3.	Huge classes and functions
+4.	Objects that are hard to construct 
+5.	Inheritance chains
+
+Let’s say you want to break a class into pieces, but it's really big. It has no tests and you are uncertain of the side effects it might have. This is bad as functional changes introduced are bugs. The only way to prevent these changes is having plenty of regression tests.
+
+How do you refactor legacy code? 
+
+First of all, you have to change as little code as possible to get tests in place.
+
+1. Identify change points ("Seams")
+2. Break dependencies
+3. Write the tests
+4. Make your changes
+5. Refactor
+
+The difficult points are number 1 and 2. The rest is text book refactoring.
+
+### Seams
+
+Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
+
+There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
+
+Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
+
+The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
+
+```py
+def f(debug):
+    if(debug):
+        # ...
+    else:
+        # ...
+```
+
+However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection. The code above should be used at the highest level and create objects that will be used with dependency injection. For example:
+
+```py
+def create_reader(debug):
+    if(debug):
+        return DebugReader()
+    else:
+        return Reader()
+
+def main(debug=False):
+    reader = create_reader(debug)
+    reader.read()
+```
+
+Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
+
+The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
+
+And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
+
+### Sketches
+
+Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
+
+// Add the temporal graph from Evans? which one? nonlinear growth?
+
+[WELC p.200(?)]
+
+
+### How do I get the code under test?
+
+### What tests should I write?
+
+### Sprout method [WELC p. 58]
+
+Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function).
+
+Assume we have the following code that we can't test for whatever reason. In reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
+
+```py
+def post_entries(transactions, entries):
+    for entry in entries:
+        entry.post()
+    transactions.get_current().add(entries)
+```
+
+Now we only want to add the valid entries to the transactions and execute the `post` function. It seems as if we'd have to create a temporary list and add an if statement. 
+
+```py
+def post_entries(transactions, entries):
+    valid_entries = []
+    for entry in entries:
+        if entry.is_valid():
+            entry.post()
+            valid_entries.append(entry)
+    transactions.get_current().add(valid_entries)
+```
+This, however, makes the untestable code even more complex. Instead we can create a new function that extracts the new functionality. This new function can be tested, so you can apply TDD.
+
+```py
+def test_get_valid_entries():
+    entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
+    valid_entries = get_valid_entries(entries)
+    assert len(valid_entries) == 2
+```
+
+```py
+def get_valid_entries(entries):
+    valid_entries = []
+    for entry in entries:
+        if entry.is_valid():
+            valid_entries.append(entry)
+    return valid_entries
+
+def post_entries(transactions, entries):
+    valid_entries = get_valid_entries(entries)
+    for entry in valid_entries:
+        entry.post()
+    transactions.get_current().add(valid_entries)
+```
+
+So we managed to add only one additional line of code to the original function. All the other code went into the `get_valid_entries` function. This new function is now also unit tested.
+
+### Sprout class [WELC p. 62]
+
+// WIP
+
+If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. If there are too many arguments you have to hand over, you should maybe reconsider your class design and rewrite it such that it has less coupling.
+
+// I think there is still quite something to write here. Maybe add some more examples?
+
+// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
+
+// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
+
+1. Write a test around the buggy area—expiration date validation—and watch it fail
+2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
+3. Fix the bug and watch our test pass
 
 
 
@@ -5640,157 +5791,6 @@ In chess there is a rule of thumb that you should quietly talk with your pieces 
 
 Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention that you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details and the solution from the scratch refactoring might not work out the way you did it. After all, the scratch refactoring was just a dream...
 
-## Refactoring legacy code [WELC ]
-
-// WIP
-
-// Stuff here is from Feathers book. Read it again and add some more stuff here.
-// It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
-
-So far we only refactored code covered with tests. Refactoring code without tests would be too dangerous. But unfortunately, this is exactly the problem with so many projects. There are so many of projects out there without tests. And because of global variables, functions with side effects, complicated constructors, etc. it is very hard to write tests for them. In these cases you start getting afraid to changes the code as you are supposed to do in a refactoring. There’s just too much that can break without test. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
-
-Refactoring untested code is usually a very hard task, there are whole books about it. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are
-1.	No tests
-2.	Obscure code
-3.	No time (or budget) to fix it
-
-And on the micro level we have a few more indications that things will get tough:
-1.	No interfaces
-2.	Functions with side effects and global variables
-3.	Huge classes and functions
-4.	Objects that are hard to construct 
-5.	Inheritance chains
-
-Let’s say you want to break a class into pieces, but it's really big. It has no tests and you are uncertain of the side effects it might have. This is bad as functional changes introduced are bugs. The only way to prevent these changes is having plenty of regression tests.
-
-How do you refactor legacy code? 
-
-First of all, you have to change as little code as possible to get tests in place.
-
-1. Identify change points ("Seams")
-2. Break dependencies
-3. Write the tests
-4. Make your changes
-5. Refactor
-
-The difficult points are number 1 and 2. The rest is text book refactoring.
-
-### Seams
-
-Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
-
-There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
-
-Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
-
-The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
-
-```py
-def f(debug):
-    if(debug):
-        # ...
-    else:
-        # ...
-```
-
-However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection. The code above should be used at the highest level and create objects that will be used with dependency injection. For example:
-
-```py
-def create_reader(debug):
-    if(debug):
-        return DebugReader()
-    else:
-        return Reader()
-
-def main(debug=False):
-    reader = create_reader(debug)
-    reader.read()
-```
-
-Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
-
-The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
-
-And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
-
-### Sketches
-
-Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
-
-// Add the temporal graph from Evans? which one? nonlinear growth?
-
-[WELC p.200(?)]
-
-
-### How do I get the code under test?
-
-### What tests should I write?
-
-### Sprout method [WELC p. 58]
-
-Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function).
-
-Assume we have the following code that we can't test for whatever reason. In reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
-
-```py
-def post_entries(transactions, entries):
-    for entry in entries:
-        entry.post()
-    transactions.get_current().add(entries)
-```
-
-Now we only want to add the valid entries to the transactions and execute the `post` function. It seems as if we'd have to create a temporary list and add an if statement. 
-
-```py
-def post_entries(transactions, entries):
-    valid_entries = []
-    for entry in entries:
-        if entry.is_valid():
-            entry.post()
-            valid_entries.append(entry)
-    transactions.get_current().add(valid_entries)
-```
-This, however, makes the untestable code even more complex. Instead we can create a new function that extracts the new functionality. This new function can be tested, so you can apply TDD.
-
-```py
-def test_get_valid_entries():
-    entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
-    valid_entries = get_valid_entries(entries)
-    assert len(valid_entries) == 2
-```
-
-```py
-def get_valid_entries(entries):
-    valid_entries = []
-    for entry in entries:
-        if entry.is_valid():
-            valid_entries.append(entry)
-    return valid_entries
-
-def post_entries(transactions, entries):
-    valid_entries = get_valid_entries(entries)
-    for entry in valid_entries:
-        entry.post()
-    transactions.get_current().add(valid_entries)
-```
-
-So we managed to add only one additional line of code to the original function. All the other code went into the `get_valid_entries` function. This new function is now also unit tested.
-
-### Sprout class [WELC p. 62]
-
-// WIP
-
-If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. If there are too many arguments you have to hand over, you should maybe reconsider your class design and rewrite it such that it has less coupling.
-
-// I think there is still quite something to write here. Maybe add some more examples?
-
-// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
-
-// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
-
-1. Write a test around the buggy area—expiration date validation—and watch it fail
-2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
-3. Fix the bug and watch our test pass
 
 
 ## Copilot
