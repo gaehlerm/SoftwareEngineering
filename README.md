@@ -311,6 +311,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Documentation and Planning](#documentation-and-planning)
     - [Implementing a Model](#implementing-a-model)
     - [Domain Levels](#domain-levels)
+  - [Domain Specific Language](#domain-specific-language)
   - [Refactoring toward deeper insight](#refactoring-toward-deeper-insight)
   - [Domain Boundaries](#domain-boundaries)
     - [Bounded Context](#bounded-context)
@@ -345,12 +346,12 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Extract function](#extract-function)
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
-- [33. Working with Existing Projects](#33-working-with-existing-projects)
+- [33. Refactoring Legacy Code](#33-refactoring-legacy-code)
   - [No useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
   - [Extremely long Functions](#extremely-long-functions)
   - [Refactoring Legacy Code](#refactoring-legacy-code)
-    - [Seams](#seams)
+  - [Seams](#seams)
     - [Sketches](#sketches)
     - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
     - [What tests should I write?](#what-tests-should-i-write)
@@ -5170,6 +5171,13 @@ Each domain corresponds to a piece of code, such as a library. The different dom
 
 As one example, a flight may refer to the time between takeoff and landing. But there may also be direct flights or flights with stopovers. This is an example where one expression may have different meanings, depending on the type of model you are working with. Therefore, it is always important to keep in mind the type of domain model you are currently working in and the specific type of flight you are discussing.
 
+## Domain Specific Language
+
+A Domain Specific Language (DSL) is a language is a language specifically tailored to the needs of a certain problem. Though it is not exactly defined how this language should look like. Obviously it has to be a programming language of some sort. It can be one relying on heavy usage of preprocessor macros or a language like Gherkin that resembles spoken language. Yet it can also be a API using normal function calls.
+
+Honestly, I don't like the preprocessor or Gherkin approach. If that was the best way to program, our programming languages would all work this way. Which is not the case, probably for a reason. I prefer to design a dedicated API to every problem that a marketing person can still understand with a little bit of programming knowledge. That's also way less work than developing a preprocessor or Gherkin language.
+
+
 ## Refactoring toward deeper insight
 
 // figure out what to write here exactly. Reread the corresponding chapter in DDD.
@@ -5553,7 +5561,7 @@ Refactoring, just as writing code, is a highly non-linear process. It cannot be 
 
 "Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
 
-// WIP: This needs some more work. Read WELC and Refactoring and add some more examples.
+// move some of the techniques here to working with existing code? I think most of them work also with legacy code.
 
 The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests. Though in most cases, this is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overriden functions it becomes tricky. Refactoring code in compiled languages is easier than in interpreted languages as the compiler does valuable checking of names, functions, types, etc.
 
@@ -5653,7 +5661,7 @@ car = Car(Engine(power=100))
 car.drive()
 ```
 
-// add more refactoring techniques from Refactoring, Fowler
+For more refactoring examples, I would like to refer the interested reader to the book Refactoring [Refactoring, Improving the Design of Existing Code, 2019]. It contains a lot of examples and is a great resource for learning how to refactor code. And of course I recommend to do a lot of refactoring yourself in order to learn it.
 
 ## Copilot
 
@@ -5731,7 +5739,7 @@ This code can be further refactored with the following command:
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
 
-# 33. Working with Existing Projects
+# 33. Refactoring Legacy Code
 
 // This text here still needs some improvements. Especially examples.
 
@@ -5794,7 +5802,7 @@ Let’s be honest. A function, or even worse a method, of about a thousand lines
 // It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
 
 
-### Seams
+## Seams
 
 Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
 
@@ -5823,6 +5831,13 @@ def create_reader(debug):
 
 def main(debug=False):
     reader = create_reader(debug)
+    reader.read()
+```
+
+Generally it's much better to use DI instead of passing booleans. The `reader` object can be created where the value of `debug` is first encountered. This is probably where the program is called.
+
+```py
+def main(reader):
     reader.read()
 ```
 
