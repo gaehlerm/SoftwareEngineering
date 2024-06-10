@@ -350,12 +350,12 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [No useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
   - [Extremely long Functions](#extremely-long-functions)
-  - [Refactoring Legacy Code](#refactoring-legacy-code)
   - [Seams](#seams)
-    - [Sketches](#sketches)
-    - [How do I get the code under test?](#how-do-i-get-the-code-under-test)
-    - [What tests should I write?](#what-tests-should-i-write)
-    - [Sprout method \[WELC p. 58\]](#sprout-method-welc-p-58)
+    - [Problems with Missing Enabling Points](#problems-with-missing-enabling-points)
+  - [Sketches](#sketches)
+  - [How do I get the Code under Cest?](#how-do-i-get-the-code-under-cest)
+    - [What Tests should I write?](#what-tests-should-i-write)
+  - [Sprout Method](#sprout-method)
     - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
 - [36. Performance Optimization](#36-performance-optimization)
   - [No Optimization Needed](#no-optimization-needed)
@@ -5793,22 +5793,13 @@ One trick to avoid this political issue is the so called onion layer code. Inste
 
 Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. It lacks interfaces. No one will ever understand it with all its corner cases. There are so many variables around that no one is able to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is. Just work your way around it and accept the fact that at some point you'll have to rewrite it.
 
-## Refactoring Legacy Code
-
-[WELC]
-// WIP
-
-// Stuff here is from Feathers book. Read it again and add some more stuff here.
-// It's not really about refactoring anymore. The refactoring has been treated in the previous section. This is more about the problems you face when refactoring.
-
-
 ## Seams
 
 Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
 
-There are several different ways to implement seams. The best seams are interfaces and dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
+There are several different ways to implement seams. The best seams are interfaces using dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
 
-Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided.
+Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided. And they are not possible when programming Python.
 
 The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
 
@@ -5823,31 +5814,40 @@ def f(debug):
 However, passing a boolean as done in the code above is generally considered bad design. It is much better making the choice earlier on and passing on an object by dependency injection. The code above should be used at the highest level and create objects that will be used with dependency injection. For example:
 
 ```py
-def create_reader(debug):
-    if(debug):
-        return DebugReader()
-    else:
-        return Reader()
+import sys
 
-def main(debug=False):
-    reader = create_reader(debug)
-    reader.read()
-```
+class Reader:
+    def read(self):
+        print("reading")
 
-Generally it's much better to use DI instead of passing booleans. The `reader` object can be created where the value of `debug` is first encountered. This is probably where the program is called.
+class DebugReader:
+    def read(self):
+        print("debug reading")
 
-```py
 def main(reader):
     reader.read()
+
+if __name__ == "__main__":
+    if "debug" in sys.argv:
+        reader = DebugReader()
+    else:
+        reader = Reader()
+    main(reader)
 ```
 
-Usually just passing a number or a string is not sufficient for implementing a seam as changing their values does not alter the behavior of the function significantly. It only yields a different result.
+Like this you never get a boolean flag that you have to resolve something with later on. This is much better design. Just create the `DebugReader` right away and pass it on as a function argument. The only potential problem is, that you might have to pass several debug objects around instead of just one boolean variable. But in the unlikely case that you have several debug objects (usually there are very few of them), you can structure them inside a data class.
 
-The piece of code you hold in your hands between two seams may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. And if you don’t have any useful API you can write your tests with, you might be completely screwed. I'm sorry, there's no other way to say it.
+Now in this case, the seam is where the `read` function is getting called and the enabling point can be anywhere from the command line call of this program, down to the function inside which the `read` function is called (in our case we can write a test and hand over a different reader to the `main` function). Thus, we have pretty much full flexibility regarding the control of our code. This is a good seam.
 
-And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
+### Problems with Missing Enabling Points
 
-### Sketches
+Usually just passing a number or a string is not sufficient for altering the behavior of the function significantly. It only yields a slightly different result. Variables generally don't change the control flow of your code. The only two things which should alter the behavior of your code significantly are booleans and DI objects. And as you're not supposed to use booleans, you are back at using DI, as explained above.
+
+The piece of code you hold in your hands between the enabeling point and the seam may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. This is the problem of missing interfaces.  Writing tests along with, or even before, the code forces you to define enabling points and seams that are close together. It forces you to write interfaces and thus good code.
+
+If your code doesn't have any interfaces, not even an API that you can write your tests with, you are be completely screwed. I'm sorry, there's no other way to say it. And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
+
+## Sketches
 
 Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
 
@@ -5856,19 +5856,23 @@ Making sketches and diagrams may help you finding ways to refactor your code. Th
 [WELC p.200(?)]
 
 
-### How do I get the code under test?
+## How do I get the Code under Cest?
 
-### What tests should I write?
+This is a difficult topic. First of all, you have to be aware of the order of magnitude of the problem you are facing. In well written software, the test code is at least as long as the production code. In highly regulated evironments as in the airplane industry, it may be several times longer than that. So if you want to write tests to some longer piece of software that is not yet tested at all, it will quite certainly take years. So achieving high test coverage is generally not an option. You'll have to be more pragmatic than that.
 
-### Sprout method [WELC p. 58]
+### What Tests should I write?
 
-Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function).
+What tests you should write depends mostly on the code you have. In most cases it is difficult to write tests due to the missing interfaces. You'll have to work with whatever you have. Of course it would usually be best to write unit tests, but that might not be possible as classes cannot be instantiated, methods are way too long, etc. It might be the only option to write functional tests using the API of your software. As we have learned in the chapters on testing, that this is not ideal. Functional tests take way too long to execute. But beggars can't be choosers. At least you have something to work with. Even worse is the case where you don't have an API to work with. In this case you are completely screwed. Writing onion code consisting of wrappers around the existing software may be the only option. Though this limits your ability to implement new features significantly.
+
+## Sprout Method 
+
+Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function) [WELC p. 58].
 
 Assume we have the following code that we can't test for whatever reason. In reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
 
 ```py
 def post_entries(transactions, entries):
-    # complicated code removed
+    # ...
     for entry in entries:
         entry.post()
     transactions.get_current().add(entries)
@@ -5878,7 +5882,7 @@ Now we only want to add the valid entries to the transactions and execute the `p
 
 ```py
 def post_entries(transactions, entries):
-    # complicated code removed
+    # ...
     valid_entries = []
     for entry in entries:
         if entry.is_valid():
@@ -5904,7 +5908,7 @@ def get_valid_entries(entries):
     return valid_entries
 
 def post_entries(transactions, entries):
-    # complicated code removed
+    # ...
     valid_entries = get_valid_entries(entries)
     for entry in valid_entries:
         entry.post()
@@ -5930,7 +5934,7 @@ If you have a class that is getting too big, you can extract some of the functio
 3. Fix the bug and watch our test pass
 
 
-
+There are many more techniques how to refactor code that don't have tests. I recommend the book Working Effectively with Legacy Code [WELC] for further reading. I already applied some of the techniques explained there without even knowing about them. 
 
 
 
