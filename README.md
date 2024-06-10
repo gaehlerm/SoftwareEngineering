@@ -2,9 +2,9 @@ Software Engineering made Easy
 
 What writing code is all about
 
-# 1. Introduction to Software Engineering
-
 Copyright Marco Gähler, all rights reserved.
+
+# 1. Introduction to Software Engineering
 
 This book is currently undergoing revisions. Feedback is highly valued. Either through a merge request (access rights need to be granted) or by commenting the PDF sent to marco.gaehler@gmx.ch. It is advisable to submit many small merge requests rather than a single large merge request. Feedback may include precise recommendations for enhancement or general reflections. Given the limited progress of the book thus far, I welcome broader feedback. Tipos are getting fixed using some AI tool, so don't worry about them.
 
@@ -18,24 +18,18 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 
 ## Things to write
 
-- If you have some smaller suggestions for improvement, wirte them inside a `//...//` comment. This is easier to find than a few characters changed in a long line in git. For bigger changes, create a new issue or write me an email.
-- If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know. The responsible person from the publisher would like to have some tips on Copilot, but I'm not an expert on this topic.
-- What is architecture? Or leave this chapter away all together? Read book "Fundamentals of Software Architecture"? (chapter Architecture)
+- If you have some suggestions create a new issue or write me an email.
+- If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know. My publisher would like to have some explanations how to use Copilot, but I'm not an expert on this topic.
 - What is mocking and stubs? (chapter Testing)
 - Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
-- Which design patterns are important? (chapter Design patterns)
-- Do I need the chapter logging?
 - Restructure and sort the chapters somehow. Similar levels of abstractions should be close to each other. 
-- Some more examples on refactoring (what technique exactly? Converting a function into a class?)
-- Design patterns -> write short explanations to all of them? Or select some of them? Or leave this chapter away completely.
+- Some more examples on refactoring?
 - How to work with existing code? If the code is not as nicely written as explained here. Reread WELC again.
-- How to organize software projects -> Felix
+- Requirements Engineering -> Felix
 - And some more chapters towards the end of the book need to be improved.
 
 
 # 2. Table of content
-
-// figure out how to sort the different chapters and sections
 
 - [1. Introduction to Software Engineering](#1-introduction-to-software-engineering)
   - [Getting started](#getting-started)
@@ -1771,13 +1765,14 @@ def author_is(author):
 
 print_books_where(author_is('Paulo Coelho'))
 ```
+
 # 14. Classes
 
 //rename to types of classes and break up the chapter?
 
 "I think it's a new feature. Don't tell anyone it was an accident." — Larry Wall
 
-Classes are undoubtedly one of the cornerstones of modern code and the essence of OO programming. Unless you are one of the few functional programmers, chances are high that you use them every day. Therefore, it is time we had an in-depth discussion about them.
+Classes are undoubtedly one of the cornerstones of modern code and the essence of OO programming. Unless you are one of the few functional programmers, chances are high that you use them every day. Surpringly, there is very little written about classes in the common literature. Therefore, it is time we had an in-depth discussion about them.
 
 This book does not aim to provide an exact explanation of what classes are. Even though the explanations provided here do not require much prior knowledge. This chapter is about how classes should be used. One can distinguish between different types of classes based on the methods and variables they utilize. We will try to understand when a function or variable should be public or private, and I will explain why I think plain getter and setter methods should generally be avoided.
 
@@ -1785,10 +1780,11 @@ This book does not aim to provide an exact explanation of what classes are. Even
 
 The C programming language was specified well before object-oriented programming was developed. It doesn't support classes, but it has something similar: structs. It is similar to a dataclass in Python. A struct is a user-defined object that contains various types of variables. It is also possible to nest structs within each other. Structs are extremely useful because they allow us to store various data together inside a single object. It's like a toolbox. In theory, you may also store functions within a struct, though this is generally not done, at least not in C++. For storing variables and methods simultaneously, we use classes.
 
-An example of a dataclass:
+In Python, the equivalent of a struct is a data class. Here is an example of a dataclass:
 
 ```py
 from dataclasses import dataclass
+
 @dataclass
 class Person:
     name: str
@@ -1802,13 +1798,13 @@ Nowadays, structs (or dataclasses) are not anymore as commonly used. Especially 
 
 Classes are very similar to structs. Besides some technical details, the only real difference is the encapsulation of variables and functions (methods), as well as the introduction of inheritance. You can decide for each variable or method whether it should be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs.
 
-But more powerful is not always better. A gun is more powerful than a knife, but simultaneously, it is also more dangerous. You can easily shoot yourself in the foot. So, actually, it might not be the best idea to own a gun because the dangers may outweigh the advantages. With great power comes great responsibility!
+But more powerful is not always better. A gun is more powerful than a knife, but simultaneously, it is also more dangerous. You can shoot yourself in the foot. So, actually, it might not be the best idea to own a gun because the dangers may outweigh the advantages. With great power comes great responsibility!
 
 ## Private or Public
 
 If you are not accustomed to working with classes, this may be very confusing. Why would you like to keep anything private at all? Isn't it easier to make everything public?
 
-Indeed, this is a very important question. Even extremely important. Once you are able to create a class and immediately decide which members should be private or public, you are already a fairly good programmer. To put it briefly, it has to do with power once again. Making a variable private reduces the control available to the user. Never give users more power than necessary.
+Indeed, this is a very important question. Once you are able to create a class and immediately decide which members should be private or public, you are already a fairly good programmer. To put it briefly, it has to do with power once again. Making a variable private reduces the control available to the user. Never give users more power than necessary.
 
 Let's explore the reasons for having private variables and functions. We need something where you only interact with the surface and have very limited ways to engage with it. It's not hard to find an example. This description applies to almost everything around you. Once again, we can take a look at a car. A car is a highly complex object. It contains an engine, brakes, and many other parts. You don't even want to know. You only want to drive it. You need the gas pedal, the brake pedal, and the steering wheel.
 
@@ -1824,7 +1820,7 @@ Some of the following class names, namely the worker class, delegating class, an
 
 ### Data Class
 
-We have already briefly mentioned the data class before. It has no member functions, and therefore, all variables are public. It wouldn't make sense to have private variables if there are no functions because the variables wouldn't be accessible at all. The data class has no functionality by itself, but it is great for storing data. As mentioned in the previous section, it's like a toolbox, and the variables are the tools inside. If a data class has too many variables (ideally no more than around eight), it is advisable to split up the data class into sub-classes. This enhances the general overview in the toolbox.
+We have already briefly mentioned the data class before. It has no member functions, and therefore, all variables are public. It wouldn't make sense to have private variables if there are no functions because the variables wouldn't be accessible at all. The data class has no functionality by itself, but it is great for storing data. As mentioned in the previous section, it's like a toolbox, and the variables are the tools inside. If a data class has more than about eight variables, it is advisable to split up the data class into sub-classes. This enhances the general overview in the toolbox.
 
 ```py
 from dataclasses import dataclass
@@ -1835,9 +1831,10 @@ class InventoryItem:
     unit_price: float
     quantity_on_hand: int = 0
 ```
+
 ### Pure Method Classes
 
-A class may have no member variables at all. It consists only of public methods. In Java and C#, writing such classes is necessary because every function must be implemented within a class. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer free-standing functions over classes with only public methods, but I guess that's a matter of taste.
+A class may have no member variables at all. It consists only of public methods. In Java and C#, writing such classes is necessary because every function must be implemented within a class. I regard this as an OO obsession of these programming languages. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer free-standing functions over classes with only public methods, but I guess that's a matter of taste.
 
 In Python, many functions defined in libraries are not part of classes. This can be seen as follows. If we want to call the `sin` function, we have to write the following code:
 
@@ -1892,7 +1889,7 @@ class Car:
 
 Worker classes implement complex algorithms in your code. Some people may argue that these are the only real classes. Most design rules for classes apply specifically to worker classes. Worker classes consist of very few private variables and no public variables. They often include some rather complicated private methods and a few public methods. Worker classes are the only type of classes with private methods. Other classes do not have complicated methods to hide; they only hide variables.
 
-This implies that worker classes are the only classes that perform complex tasks that should to be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than three member variables and about 100 lines of code, depending on the general complexity of the class. Consider using a few functions instead of a worker class. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer.
+This implies that worker classes are the only classes that perform complex tasks that should to be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than three member variables and about 100 lines of code, depending on the general complexity of the class. Consider using a set of functions instead of a worker class. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer.
 
 As a general rule of thumb, one can say that a worker class has become too complex if you struggle to write tests for it. This is a clear indication that it's time to break up the class into smaller pieces. For more details, refer to the chapter on testing.
 
@@ -1916,7 +1913,7 @@ class Worker:
         self.add_entry(entry)
 ```
 
-Just for completeness, this class could be rewritten using only functions as follows:
+Just for completeness, this class could be rewritten using only functions as follows. We pass the `data` around as a function argument instead of using a class variable.
 
 ```py
 def add_entry(number, data):
@@ -1930,9 +1927,10 @@ def read_out_entry(data):
     print(data)
     add_entry(entry, data)
 ```
+
 ### Abstract Base Class
 
-The abstract base class (ABC in Python) has a different name in every programming language. In Java, it's called an interface. This class type defines only the interface (shape) of a class. It does not contain an actual implementation or variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One must write classes that inherit from this abstract base class in order to implement it. In Python and other dynamically typed languages, you don't need interfaces, but they can make the code easier to understand. In C++ and Java, it is crucial to use interfaces to divide the code into smaller components, minimize compilation time, and enable runtime polymorphism. We'll go into more details in chapter [Inheritance]
+The abstract base class (ABC in Python) has a different name in every programming language. In Java, it's called an interface. This class type defines only the interface (shape) of a class. It does not contain an actual implementation or variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One must write classes that inherit from this abstract base class in order to implement it. In Python and other dynamically typed languages, you don't need interfaces, but they can make the code easier to understand. In C++ and Java, it is crucial to use interfaces to split up the code into smaller components, minimize compilation time, and enable runtime polymorphism. We'll go into more details in chapter [Inheritance]
 
 In Python, a class has to inherit from `ABC` to be an abstract base class. The methods are all `abstractmethod` and they do not have any implementation.
 
@@ -2005,15 +2003,13 @@ In C++ and Java, there is the `override` keyword, whereas in Python, it is not a
 
 ### Other Types of Classes
 
-I remember once having written a class that contained some public variables and one public method. Unfortunately, I don't remember why I wrote such a hybrid class. It shows that the types of classes above are not a definitive list; however, I think it's still a good rule of thumb.
+I remember once having written a class that contained some public variables and one public method. Unfortunately, I don't remember why I wrote such a hybrid class. It shows that the types of classes above are not a concluding list. However, it is recommended to stick to the class types mentioned above. This will make your code better. 
 
 ### General Recommendations
 
-It is recommended to stick to the class types mentioned above. It may be convenient to add a method to a data class or a variable to a pure function class. However, this will quite certainly make the code worse as it violates the single responsibility principle.
+It may be convenient to add a method to a data class or a variable to a pure function class. However, this will quite certainly make the code worse as it violates the SRP.
 
 The most common error is mixing up the worker class and the delegating class. You can easily end up with a fairly complex function within a delegation class that utilizes numerous member variables. This design is flawed because the delegation class operates at a high level of abstraction, while the worker class is intended to be a low-level object. Mixing different levels of abstraction is detrimental. Refactor the complex part into a separate class or function and call it from the delegating class. This should do the job.
-
-// new chapter here?
 
 ## Functions vs. Methods
 
@@ -2031,9 +2027,9 @@ It turns out that for most criteria, these two function or method calls are pret
 
 - `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. Thus, `b(a)` decouples the code better than `a.b()`. Though this is not a crucial difference.
 
-- In C++, constness can be enabled for `a` in both `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element; in the second case, `b` has to be made a `const` method. In Python, there is no built-in way to create a constant function. Though with some black magic, one can create a decorator that makes a function or method constant. [https://stackoverflow.com/questions/71394120/Python-equivalent-for-const-methods-with-type-hints]
+- In C++, constness can be enabled for `a` in both `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element; in the second case, `b` has to be made a `const` method. In Python there is no constness to beginn with.
 
-In summary, there are no significant differences. `b(a)` offers somewhat better decoupling and should therefore be somewhat preferred. Ultimately, it all comes down to readability. Which version is easier to understand? The function or the method? Let's look at the following code:
+In summary, there are no significant differences. `b(a)` offers in my opinion somewhat better decoupling and should therefore be preferred. Ultimately, it all comes down to readability. Which version is easier to understand? The function or the method? Let's look at the following code:
 
 ```Py
 # Function:
@@ -2052,7 +2048,7 @@ In software engineering, there are always numerous factors to consider. This was
 
 Constructors and destructors are very special methods. The constructor is called once every time an object is created. This has severe consequences that many software developers are not aware of. Most notably, writing tests can become nearly impossible if the constructor contains too much logic or has side effects. The author of the code may have assumed that there would be only one class instance and planned accordingly. This might be true in his particular part of the code he wrote. However, his assumption might break down when writing unit tests [section unit tests]. When creating objects, it is important to ensure that they can exist independently without any interactions between them. Otherwise, your tests will become very fragile.
 
-Therefore, always ensure that the usage of a constructor is foolproof. A constructor should be as simple as possible. Every action performed by a constructor, such as allocating memory or opening a file, must be reversed by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you should not define a counter in the constructor unless the effect is undone in the destructor. Preferably, your code follows the rule of zero: do not define any custom constructors or destructors. Leave this to the compiler. It will make your code much easier. [https://youtu.be/9BM5LAvNtus?t=2438]
+Therefore, always ensure that the usage of a constructor is foolproof. A constructor should be as simple as possible. Every action performed by a constructor, such as allocating memory or opening a file, must be reversed by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you should not define a counter in the constructor unless the effect is undone in the destructor. Preferably, your code follows the "rule of zero" [effective C++, Scott Meyers]: do not define any custom constructors or destructors. Leave this to the compiler. It will make your code much easier. [https://youtu.be/9BM5LAvNtus?t=2438]
 
 The following code creates a counter for the class instances. It looks neat and it might be useful to have such a counter at times. However, it will be challenging to test this counter. Every time you add a new test case or change the order of the tests, the counter values will change. When you change the order of test execution, your tests will break.
 
@@ -2075,17 +2071,16 @@ You will witness what I said here once you write a complex constructor and attem
 
 ```py
 # Somewhere in your tests. This looks wrong!
-if obj.id == 24:
-    # ...
+assert obj.id == 24
 ```
 
-Now, if you add one more class instance before this line, the counter will be different, and the test will break. If you have a good intuition for code, you might have also realized that this `24` is a very strange number showing up out of the blue. There has to be something wrong with it.
+Now, if you add one more class instance before this line, the counter will change, and the test will break. If you have a good intuition for code, you might have also realized that this `24` is a very strange number showing up out of the blue. There has to be something wrong with it.
 
 ## Getter and Setter Methods
 
-In Java, it is common practice to define a class and make all its variables private. When the developer clicks a button in the IDE, public getter and setter methods are automatically generated. For each private variable, a setter and getter method are created to access and modify the variable. This is extremely widespread, and in my opinion, an absolutely terrible habit. There is also a point in the C++ core guidelines that supports my claim. You should "Avoid trivial getter and setter functions". [C.131 Cpp guidelines, C++ Core Guidelines explained (Rainer Grimm)]
+In Java, it is common practice to define a class and make all its variables private. Then the developer clicks a button in the IDE and public getter and setter methods are automatically generated. One for each variable. This is extremely widespread, and in my opinion, an absolutely terrible habit. There is also a point in the C++ core guidelines that supports my claim. You should "Avoid trivial getter and setter functions". [C.131 Cpp guidelines, C++ Core Guidelines explained (Rainer Grimm)]
 
-Here we distinguish between the different types of classes.
+In order to understand my claim, we have to distinguish between the different types of classes.
 
 ### Data Classes
 
@@ -2107,7 +2102,7 @@ It is claimed that writing getters and setters has the following advantages [htt
 - Better control of class attributes and methods: I don't fully understand what this means
 - Class attributes can be made read-only (if you only use the get method), or write-only (if you only use the set method): If you want to make a variable read-only, you can make it constant instead. This prevents changing the variable as well. It is very odd to have only variables written.
 - Flexibility, the programmer can change one part of the code without affecting other parts: This statement is incorrect, as demonstrated below.
-- Increased security of data: I am not sure what this point exactly means. One advantage is that you can track a variable with the debugger [section ?]. In fact, this is the only advantage I see of writing getters and setters. But having to do this is a clear indication that your code is bad.
+- Increased security of data: I am not sure what this point exactly means. One advantage is that you can track a variable with the debugger [chapter Bugs, Errors, Exceptions]. In fact, this is the only advantage I see of writing getters and setters. But having to do this is a clear indication that your code is bad.
 
 Let's look at decoupling. You want to rename `_size` to `_volume`. It's easy to do; there are only two places where `_size` is used. Replace them with `_volume` and you're done.
 
@@ -2119,7 +2114,7 @@ class Bottle
         self._volume = size
 ```
 
-Do you see the problem? You didn't make any improvements at all. Everyone still uses the `get_size` method, which now returns a `_volume`. This will cause a lot of confusion. You would have to rename the getter and setter functions as well. It decoupled the code only in theory. Writing getters and setters is only useful if the value returned by the getter is the result of a calculation, elevating the code to a higher level of abstraction. But then it's no longer a pure getter function...
+Do you see the problem? You didn't make any improvements at all. Everyone still uses the `get_size` method, which now returns a `_volume`. This will cause a lot of confusion. You would have to rename the getter and setter functions as well. It decoupled the code only in theory. Writing getters and setters is only useful if the value returned by the getter is the result of a calculation, elevating the code to a higher level of abstraction. But then it's no longer a pure getter function... If you want to decouple your code you should write a proper adapter instead.
 
 Having accessor methods for class variables only makes sense if they elevate the code to a higher level of abstraction. Then you really gain something. And it is really a form of decoupling. But this is not possible in data classes as there is no abstraction that could be decoupled.
 
@@ -2127,15 +2122,15 @@ Long story short: Avoid using plain getter and setter methods for data classes. 
 
 ### Worker Classes
 
-The other case is mostly the "normal" worker classes. It is very possible to have getter and setter functions here. If they refer directly to a variable within the same class, it is a hint that your class design is bad. Access functions should elevate you to a higher level of abstraction, whereas the plain getter and setter methods do not achieve that. Instead, they have to access or change data located in a nested data structure. They just make it more convenient to get there.
-
-But again, the member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is generally no reason to write getter or setter methods in worker classes.
+Member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is certainly no reason to write setter methods in worker classes. And there is hardly ever a reason to write a pure getter method.
 
 ### Delegating Classes
 
 The only class type that has something similar to plain getter and setter methods are the delegating classes. But also here, you should not write them. The names of these classes already contradict the concept of getters and setters. Getters and setters are accessor functions and not delegators. Accessors do not increase the level of abstraction; meanwhile, this is exactly the idea of a delegating class.
 
-One example of a delegating class is a car, as we have already seen. You can adjust the temperature by invoking a `set` function. But this is not a fundamental property that had been established in the car production line. It's simply an environmental parameter regulated by the air conditioning system and a temperature sensor.
+One example of a delegating class is a car, as we have already seen before. You can adjust the temperature by invoking a `set` function. But this is not a fundamental property that had been established in the car production line. It's simply an environmental parameter regulated by the air conditioning system and a temperature sensor.
+
+There is also no reason to access the `air_conditioning` via a get method. We wanted to abstract it away. It would only make sense to define a get method to measure the current temperature, though one could argue wether get would be the right name for this method. I would rather name it `read_temperature`. Anyway, there is certainly no reason to write trivial getter or setter functions for delegating classes. A function `get_air_conditioning` would not make any sense.
 
 ```Py
 class Car:
@@ -2144,12 +2139,12 @@ class Car:
 
     def set_temperature(self, temperature):
         self.air_conditioning.set_temperature(temperature)
+
+    def read_temperature(self):
+        return self.air_conditioning.read_temperature()
 ```
-The car class only delegates the `set_temperature` function call to the `air_conditioning`. And also, the `air_conditioning` does not have a temperature variable. It has only a temperature sensor that measures the temperature and has the capability to adjust the temperature.
 
-This might be just one example, but there are no other variables in the car where you can directly use a get or set call. It doesn't enhance the code by creating a `get_air_conditioning` function.
-
-I hope I managed to convince you not to write bare getter and setter methods for member variables. Especially not to all at the time.
+I hope I managed to convince you not to write bare getter and setter methods for member variables in delegating classes.
 
 ## Coupling and Cohesion
 
@@ -2175,15 +2170,17 @@ Two classes have low coupling if the number of interaction points between them i
 
 I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn't any better. It becomes increasingly difficult to make any changes. Implementing new features will take a long time, and fixing bugs is challenging because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
-There always has to be some amount of coupling [Decoupling]. Code cannot exist without it. It's the glue holding everything together. But the level of coupling between classes should be minimized because too much glue makes everything sticky. Additionally, there are techniques to decouple your code. Creating an adapter between two classes, for instance, can provide more flexibility. This allows you to modify the classes independently, and you will only need to adjust the adapter when necessary.
+There always has to be some amount of coupling [Decoupling]. Code cannot exist without it. It's the glue holding everything together. But the level of coupling between classes should be minimized because too much glue makes everything sticky. There is never too little coupling. Furthermore, there are techniques to decouple your code. Creating an adapter between two classes, for instance, can provide more flexibility. This allows you to modify the classes independently, and you will only need to adjust the adapter when necessary.
+
+Anyway, the rule of high cohesion and low coupling is a good rule of thumb when dealing with worker classes. If you stick to it, you can properly structure your classes.
 
 ### Other class types
 
-Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similarities. Splitting a data class requires no effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, These classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
+Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similar properties. Like a hammer and a screw driver both being tools. Splitting a data class requires no effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
 
 ### Inheritance
 
-Coupling is one of the reasons why I recommend avoiding the use of inheritance. Inheritance is one of the strongest coupling available in software development. The derived class inherits all the implementations of the base class functions. Vice versa, the behavior of the base class functions may change if some function calls are overridden by the derived class. Inheritance can obfuscate the code, and removing inheritance at a later stage can be nearly impossible.
+Coupling is one of the reasons why I recommend avoiding the use of inheritance. Inheritance is one of the strongest coupling available in software development. The derived class inherits all the implementations of the base class functions. Vice versa, the behavior of the base class functions may change if some function calls are overridden by the derived class. Inheritance can obfuscate the code, and removing inheritance at a later stage is extremely challenging.
 
 ## Static Expression
 
@@ -2191,7 +2188,7 @@ I discourage the use of static methods. It's not terribly bad, but it's another 
 
 I fully understand that there are programming languages in which functions must remain within a class, and static functions are the only way to write "free" functions. In all other languages, however, I recommend avoiding the use of static methods as they do not add any additional functionality or improve the code. In C++, you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time, you can split a namespace over many files, as is done for the `std::` namespace, for example.
 
-As we are discussing static functions, we can also discuss static variables as used for instance in languages like C++. Static variables are similar to singletons, and testing classes containing static variables can be challenging. Avoid using singletons and static variables. As soon as you start writing unit tests for static variables, you'll see why I discourage using them. They can easily end up in a nightmare.
+As we are discussing static functions, we can also discuss static variables as used for instance in languages like C++. Static variables are similar to singletons, and testing classes containing static variables can be challenging. Avoid using singletons and static variables. As soon as you start writing unit tests for static variables, you'll see why I discourage using them. They are like global variables and can be changed everywhere. This can easily end up in a nightmare.
 
 ## Drawbacks of Classes
 
@@ -2199,7 +2196,7 @@ As we are discussing static functions, we can also discuss static variables as u
 
 Classes are frequently misused for writing poor code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too large. It is just too convenient to write everything inside a single class. Having all the member variables readily available makes it easy to work this way. In some cases, I had the feeling that the authors of certain code aimed to write all the code within a single class. This is extremely problematic. If a single class covers the entire code, then the member variables become ... global variables! [Additional Properties of Variables] Member variables are also called mini-globals in [The Art of Readable Code] for this purpose. With too many member variables the entire code turns into a Big Ball of Mud. [https://en.wikipedia.org/wiki/Big_Ball_of_Mud]
 
-But also for slightly smaller classes, member variables can be problematic. They represent a hidden state. It is generally preferred to pass variables as function arguments to functions and methods. This makes the methods easier to test since you don't have to set up a class instance. Be careful with class variables. Or even worse, inherited variables. Keep your classes small to limit the scope of your class variables.
+But also for slightly smaller classes, member variables can be problematic. They represent a hidden state. It is generally preferred to pass variables as function arguments to functions and methods, rather than having member variables. This makes the functions easier to test since you don't have to set up a class instance. Be careful with class variables. Or even worse, inherited variables. Keep your classes small to limit the scope of your class variables or replace classes completely with functions, if possible.
 
 If you write a class where all method implementations consist of a single line (delegating class) or you have no methods at all (data class), the number of class variables is not too critical. These classes contain very little complexity. If you have more than about 6 to 8 member variables, you should consider organizing them into subclasses. However, as soon as you have to write complex methods, you have to be extremely careful, as things might otherwise get out of hand. The combination of complex methods and numerous member variables causes the complexity to skyrocket. When dealing with complex methods, it is recommended to keep the number of variables to one or two, as advised in the section on worker classes. Or even better, replace the class with a few functions if you can find a reasonable way to eliminate all member variables. Writing tests will become much easier.
 
@@ -2213,7 +2210,7 @@ Follow the rule of "use composition, not inheritance". Avoid using friend classe
 
 Numerous guidelines are written only for worker classes. For example, the rule that classes should have high cohesion. It seems like most people overlooked the other types of classes. A data class lacks cohesion, but it is still a valid object.
 
-Avoid writing getter and setter functions for your classes. They don't improve anything.
+Avoid writing plain getter and setter functions for your classes. They don't improve anything over direct access to variables.
 
 Furthermore, you should generally prefer functions over methods. Though sometimes methods may make the code more intuitive to read and are thus preferred. As always, life as a software engineer is not easy. There are so many things to consider...
 
@@ -5554,6 +5551,7 @@ Writing code follows a similar process to the one I use when writing this book. 
 
 Refactoring, just like writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come unexpectedly. All of a sudden, you understand the problem much better, and the code can be improved accordingly.
 
+////
 # 35. Refactoring Techniques
 
 "Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
