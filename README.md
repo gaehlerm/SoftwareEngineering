@@ -296,7 +296,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Coupling](#coupling-1)
 - [31. Design Patterns](#31-design-patterns)
   - [Factory](#factory)
-- [31. Domain Driven Design](#31-domain-driven-design)
+- [32. Domain Driven Design](#32-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
     - [Documentation and Planning](#documentation-and-planning)
@@ -319,7 +319,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Services](#services)
     - [Aggregates](#aggregates)
     - [Organizing Aggregates](#organizing-aggregates)
-- [32. 3rd party software](#32-3rd-party-software)
+- [33. 3rd party software](#33-3rd-party-software)
 - [34. Refactoring Fundamentals](#34-refactoring-fundamentals)
   - [There will be change](#there-will-be-change)
   - [Don't Let Your Code Rot](#dont-let-your-code-rot)
@@ -337,7 +337,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Extract function](#extract-function)
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
-- [33. Refactoring Legacy Code](#33-refactoring-legacy-code)
+- [36. Refactoring Legacy Code](#36-refactoring-legacy-code)
   - [No useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
   - [Extremely long Functions](#extremely-long-functions)
@@ -348,11 +348,11 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [What Tests should I write?](#what-tests-should-i-write)
   - [Sprout Method](#sprout-method)
     - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
-- [36. Performance Optimization](#36-performance-optimization)
+- [37. Performance Optimization](#37-performance-optimization)
   - [No Optimization Needed](#no-optimization-needed)
   - [Optimization Maybe Needed](#optimization-maybe-needed)
   - [Optimizing Certainly Needed](#optimizing-certainly-needed)
-- [37. Comments](#37-comments)
+- [38. Comments](#38-comments)
   - [Bad comments](#bad-comments)
     - [Commented out code](#commented-out-code)
     - [TODO comments](#todo-comments)
@@ -364,8 +364,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Commenting magic numbers](#commenting-magic-numbers)
   - [Summary](#summary-4)
   - [Copilot](#copilot-12)
-- [38. Logging](#38-logging)
-- [39. Data files](#39-data-files)
+- [39. Logging](#39-logging)
+- [40. Data files](#40-data-files)
   - [CSV](#csv)
     - [Copilot](#copilot-13)
   - [Json](#json)
@@ -377,9 +377,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Databases](#databases)
     - [Copilot](#copilot-17)
   - [Custom file format](#custom-file-format)
-- [40. Setting up a project](#40-setting-up-a-project)
+- [41. Setting up a project](#41-setting-up-a-project)
   - [Project folder](#project-folder)
-- [41. Tools](#41-tools)
+- [42. Tools](#42-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
     - [Copilot](#copilot-18)
@@ -395,16 +395,16 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
-- [42. Working in teams](#42-working-in-teams)
+- [43. Working in teams](#43-working-in-teams)
   - [Team structure](#team-structure)
     - [The bus factor](#the-bus-factor)
   - [Developers work](#developers-work)
   - [Communication](#communication)
   - [Working with customers](#working-with-customers)
-- [43. Code review](#43-code-review)
+- [44. Code review](#44-code-review)
   - [Drawbacks](#drawbacks)
   - [Conclusions](#conclusions-3)
-- [44. Agile](#44-agile)
+- [45. Agile](#45-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
   - [Work planning](#work-planning)
@@ -416,30 +416,30 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Done](#done)
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
-- [45. Requirements Engineering](#45-requirements-engineering)
-- [46. Planning](#46-planning)
+- [46. Requirements Engineering](#46-requirements-engineering)
+- [47. Planning](#47-planning)
   - [Planning code](#planning-code)
-- [47. DevOps](#47-devops)
+- [48. DevOps](#48-devops)
   - [The early 2000s](#the-early-2000s)
     - [Getting a project](#getting-a-project)
   - [Benefits of DevOps](#benefits-of-devops)
-- [48. Mental health](#48-mental-health)
-- [49. Hiring and getting hired](#49-hiring-and-getting-hired)
+- [49. Mental health](#49-mental-health)
+- [50. Hiring and getting hired](#50-hiring-and-getting-hired)
   - [Hiring](#hiring)
   - [Getting hired](#getting-hired)
-- [50. Examples](#50-examples)
+- [51. Examples](#51-examples)
   - [Apple pie](#apple-pie)
     - [User story](#user-story)
     - [Acceptance test](#acceptance-test)
     - [Implementation](#implementation-1)
   - [Paint](#paint)
-- [51. About Copilot](#51-about-copilot)
+- [52. About Copilot](#52-about-copilot)
   - [Copilot and this book](#copilot-and-this-book)
   - [Issues](#issues)
   - [Copilot and the future](#copilot-and-the-future)
-- [52. Further reading](#52-further-reading)
-- [53. Outlook](#53-outlook)
-- [54. Frequently used Abbreviations](#54-frequently-used-abbreviations)
+- [53. Further reading](#53-further-reading)
+- [54. Outlook](#54-outlook)
+- [55. Frequently used Abbreviations](#55-frequently-used-abbreviations)
 
 
 # 3. One sentence summary
@@ -456,7 +456,7 @@ Part 5: Programming 23-29
 Part 6: High level design 30-32
 Part 7: Existing code 33-36
 Part 8: Miscelaneous 37-41
-Part 9 Collaborating 42-50
+Part 9: Collaborating 42-50
 Part 10: Final remarks 51-54
 
 
@@ -489,31 +489,32 @@ Part 10: Final remarks 51-54
 27. Complexity: There is always a certain amount of complexity in a certain problem that will be reflected in the code.
 28. Dependencies: How do you deal with dependencies between files and code snippets?
 29. Decoupling: ? // remove chapter
-30. Software Architecture: // ? rewrite chapter?
-31. Domain Driven Design: An introduction to Domain Driven Design (DDD). // ? needs some rework!!
-32. 3rd party software: How to deal with 3rd party software.
-33. Working with existing projects: There are a whole lot of problems with projects that don't follow the rules explained in this book.
+30. Software Architecture: A brief overview what software architecture is about.
+31. Design patterns: We look the factory pattern to see what design patterns are.
+32. Domain Driven Design: An introduction to Domain Driven Design (DDD).
+33. 3rd party software: How to deal with 3rd party software.
 34. Refactoring Fundamentals: Refactoring is about keeping your code in shape.
 35. Refactoring techniques: ...?
-36. Performance Optimization: Don't optimize until the very end of a project.
-37. Comments: Replace comments with code whenever possible.
-38. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging might be needed for distributed systems where race conditions may occure.
-39. Data files: If you store data, there may be better file formats than csv files.
-40. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
-41. Tools: An overview of the most important tools that you should use, starting with Git.
-42. Working in teams: Working in teams has some advantages and drawbacks.
-43. Code review: Let your code be reviewed by others.
-44. Agile: Agile is a way to organize your work in a team and offers an alternative to waterfall.
-45. Requirements Engineering: What should you actually program?
-46. Planning: Before you start coding, you should roughly plan what you are going to do.
-47. DevOps: DevOps is considered the way to go regarding the organization of your projects.
-48. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
-49. Hiring and getting hired: How to get a job as a Software Engineer.
-50. Examples: // ? rewrite chapter?
-51. About Copilot: A short overview of Copilot. // move to the introduction?
-52. Outlook: Some personal advice and wishes for your future.
-53. Abbreviations: Abbreviations used in this book.
-54. Index: The index of this book.
+36. Refactoring Legacy Code: There are a whole lot of problems with projects that don't follow the rules explained in this book.
+37. Performance Optimization: Don't optimize until the very end of a project.
+38. Comments: Replace comments with code whenever possible.
+39. Logging: For single threaded code where the user uses only an API, logging is not needed. On the other hand, logging might be needed for distributed systems where race conditions may occure.
+40. Data files: If you store data, there may be better file formats than csv files.
+41. Setting up a project: If you start with a new project, you should first get the whole infrastructure right.
+42. Tools: An overview of the most important tools that you should use, starting with Git.
+43. Working in teams: Working in teams has some advantages and drawbacks.
+44. Code review: Let your code be reviewed by others.
+45. Agile: Agile is a way to organize your work in a team and offers an alternative to waterfall.
+46. Requirements Engineering: What should you actually program?
+47. Planning: Before you start coding, you should roughly plan what you are going to do.
+48. DevOps: DevOps is considered the way to go regarding the organization of your projects.
+49. Mental Health: Working in IT can be very stressful. Here are some tips how to deal with it.
+50. Hiring and getting hired: How to get a job as a Software Engineer.
+51. Examples: // ? rewrite chapter?
+52. About Copilot: A short overview of Copilot. // move to the introduction?
+53. Outlook: Some personal advice and wishes for your future.
+54. Abbreviations: Abbreviations used in this book.
+55. Index: The index of this book.
 
 Chapters to work on:
 - Decoupling (Remove?)
@@ -5153,7 +5154,7 @@ vehicle = factory["car"]
 ```
 
 
-# 31. Domain Driven Design
+# 32. Domain Driven Design
 
 // This chapter still needs some work
 
@@ -5472,7 +5473,7 @@ Explicit logic is much easier to understand than implicit logic. The logic is us
 
 // write some examples here?
 
-# 32. 3rd party software
+# 33. 3rd party software
 
 "Prefer visa over power shell" – some YouTube video 
 
@@ -5605,40 +5606,39 @@ Writing code follows a similar process to the one I use when writing this book. 
 
 Refactoring, just like writing code, is a highly non-linear process. It cannot be planned too well because it is a creative process. And knowledge gains may come unexpectedly. All of a sudden, you understand the problem much better, and the code can be improved accordingly.
 
-////
 # 35. Refactoring Techniques
 
 "Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
 
-// move some of the techniques here to working with existing code? I think most of them work also with legacy code.
+// move some of these techniques to working with existing code? I believe most of them also work with legacy code.
 
-The techniques explained here mostly require an existing set of automated tests as changes to the code may introduce bugs otherwise. Refactoring can be done also without tests. Though in most cases, this is a very dangerous game to play. Even if some techniques seem save to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overriden functions it becomes tricky. Refactoring code in compiled languages is easier than in interpreted languages as the compiler does valuable checking of names, functions, types, etc.
+The techniques explained here mostly require an existing set of automated tests because changes to the code may introduce bugs otherwise. Refactoring can also be done without tests. In most cases, this game is very dangerous to play. Even if some techniques seem safe to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overridden functions, it becomes tricky. Refactoring code in compiled languages is easier than in interpreted languages because the compiler performs valuable checks on names, functions, types, and so on.
 
-There is a plethora of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most originate from the book Refactoring of Martin Fowler [Refactoring, Improving the Design of Existing Code, 2019]. In the following I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code and the one categoriy from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests etc. // will I explain the WELC stuff in the next chapter?
+There is a wide range of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most of the concepts originate from the book "Refactoring" by Martin Fowler [Refactoring, Improving the Design of Existing Code, 2019]. In the following, I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code, and the other category from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests, etc. // will I explain the WELC stuff in the next chapter?
 
-Note that some of the techniques explained in the section on good code, for example renaming, can also be applied for legacy code. Meanwhile the techniques explained for legacy code don't make much sense for good code. They would quite certainly lead to bugs.
+Note that some of the techniques explained in the section on good code, such as renaming, can also be applied to legacy code. Meanwhile, the techniques explained here for well-written code are not recommendable for legacy code. They would most certainly lead to bugs.
 
-When following the rules taught in this book, you should be writing good code. It is well tested, contains clear interfaces, no global variables, no side effects, etc. Still, you have to refactor once in a while. But it's comparably easy because you can focus on the refactoring part. The tests are already in place to make sure you don't break anything. In this section, you will learn some techniques that you can apply when refactoring.
+When following the rules taught in this book, you should be writing good code. It is well-tested, contains clear interfaces, no global variables, and no side effects. Still, you have to refactor once in a while. But it's comparatively easy because you can focus on the refactoring part. The tests are already in place to ensure that you don't break anything. In this section, you will learn some techniques that you can apply when refactoring.
 
 ## Renaming
 
-Even though renaming hardly changes the shape of the code, it should be done extremely often. Not only for good, but also for legacy code. Finding good names is one of the hardest tasks in programming as judging the quality of names is very difficult. There are some general rules how naming should be done, yet still it’s not easy at all. This leads to the fact, that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something you just happen to know a better name. Then rename this object. This is the only way names get better over time. Don’t assume the author of the code knew it better. You have much more information now at hand that simplifies finding a good name.
+Even though renaming barely alters the structure of the code, it should be done frequently. Not only for good code, but also for legacy code. Finding good names is one of the most challenging tasks in programming because assessing the quality of names is very difficult. There are some general rules on how naming should be done, yet it is still not easy at all. This leads to the fact that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something for which you happen to know a better name. Then rename this object. This is the only way names improve over time. Don't assume the author of the code knew it better. You now have much more information at hand that simplifies finding a good name.
 
-Though you have to pay attention. People get used to names. If a name for an object has gotten accustomed to the whole development team you shouldn't change it, even if you have a better name. Renaming it would cause too much confusion. For this reason it is better to name central elements of your code in the beginning of the development and not change them anymore later on.
+Though you have to pay attention. People get used to names. If a name for an object has become familiar to the entire development team, you shouldn't change it, even if you have a better name. Renaming it would cause too much confusion. For this reason, it is better to name central elements of your code at the beginning of the development and not change them later on.
 
-One possibility is to use only mediocre names to beginn with and search better names only at the end of programming a few lines. Then also Copilot can help you find better names.
+One possibility is to start with mediocre names initially and then search for better names towards the end of programming a few lines. Then, Copilot can also help you find better names.
 
-## Scratch refactoring [Feathers p. 212] 
+## Scratch refactoring [Feathers p. 212]
 
-In chess there is a rule of thumb that you should quietly talk with your pieces during your opponents turn. You should ask them where they would like to be and thus get a feeling for the position. In programming there is something quite similar. Scratch refactoring is not about improving code, it is only about getting an idea how the code could look like. Just refactor as you like without caring about bugs or similar issues. Figure out how the code should look like in a dream world. But also try to implement some of the edge cases that will make your life harder to get a feel for the drawbacks of your dream implementation. I like this concept of scratch refactoring very much as it gives you an idea how the code could look like instead.
+In chess, there is a rule of thumb that suggests you should silently communicate with your pieces during your opponent's turn. You should ask them where they would like to be and thus get a sense of their preferred position. In programming, there is something quite similar. Scratch refactoring is not about improving code; it is only about getting an idea of how the code could look. Just refactor as you like without worrying about bugs or similar issues. Figure out how the code should look in an ideal scenario. But also try to implement some of the edge cases to challenge your dream implementation and understand its limitations. I like the concept of scratch refactoring very much because it gives you an idea of how the code could look instead.
 
-Once you’re done refactoring, discard everything and do a normal refactoring, trying to apply the ideas you just got. Pay attention that you don’t just lightly reimplement the code you dreamed of before, you might have missed some technical details and the solution from the scratch refactoring might not work out the way you did it. After all, the scratch refactoring was just a dream...
+Once you're done refactoring, discard everything and do a regular refactoring, attempting to implement the ideas you just acquired. Pay attention to not simply reimplementing the code you envisioned previously. You may have overlooked certain technical details, and the solution from scratch refactoring may not turn out as expected. After all, the scratch refactoring was just a dream...
 
 ## Extract function
 
-If I have a function or method that is too long or not cohesive enough, I can replace some of the code with a newly created function. This is one of the most important refactoring techniques as too long functions are an extremely prevalent phenomenon and extracting functions is the main mechanism to get it under control. If there are not too many variables involved, the technique is fairly simple. The biggest difficulty is finding good names for the newly created functions.
+If I have a function or method that is too long or not cohesive enough, I can replace some of the code with a newly created function. This is one of the most important refactoring techniques because excessively long functions are a common issue, and extracting functions is the primary method to manage them. If there are not too many variables involved, the technique is fairly simple. The biggest challenge is finding suitable names for the newly created functions.
 
-Let's say we have this very simple code here. We already saw that this is violating the SRP as printing a string and calling a function are two different levels of abstraction.
+Let's consider this very simple code snippet. We have already observed that this violates the SRP since printing a string and calling a function represent two different levels of abstraction.
 
 ```py
 def print_content():
@@ -5663,21 +5663,21 @@ print_header()
 print_content()
 ```
 
-For once you are allowed to use copy paste in order to create the new function as the old code will be deleted anyway. Even better is to cut (ctrl-x) and paste the code snippet, but that's a detail.
+For once, you are allowed to use copy-paste to create the new function since the old code will be deleted anyway. Even better is to cut (Ctrl+X) and paste the code snippet, but that's a detail.
 
-You can also use Copilot to extract this function. Just write the command "move the print statements into a dedicated function" and Copilot will do the rest for you. Though as always, you should pay attention that the solution is correct. In this case it happened to me that Copilot suggested an incorrect solution.
+You can also utilize Copilot to extract this function. Just write the command "move the print statements into a dedicated function," and Copilot will take care of the rest for you. As always, you should pay attention to ensure that the solution is correct. In this case, it happened to me that Copilot suggested an incorrect solution.
 
-There is not that much more to know about extracting functions than what I just showed here. It is a really simple refactoring technique, yet it is very important. This is probably the most used refactoring technique besides renaming. The only thing you have to watch out for are the variables used by the newly created function. If the code is inside the class you might decide to make the function a member function of the class as well, because otherwise you might have to pass too many arguments to the function. Though this would be a sign of bad class design because the class has too many member variables [chapter classes]. You may extract methods from this class later on if needed.
+There is not much more to know about extracting functions than what I just showed here. It is a simple yet crucial refactoring technique. This is probably the most commonly used refactoring technique besides renaming. The only thing you have to watch out for is the variables used by the newly created function. If the code is inside the class, you might consider making the function a member function of the class as well. Otherwise, you may end up having to pass too many arguments to the function. Though this would be a sign of poor class design because the class has too many member variables [chapter classes]. You may extract methods from this class later on if needed.
 
-Inlining functions is the opposite process of what we just saw and used rarely. Take a function call and replace it with the function body. Apparently, this makes the surrounding function longer as soon as the copied function body has more than one line. This is generally not desirable as most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and split up the old function. One advantage of inlining function is that you don't have to come up with a function name. Though usually this isn't a good sign if you don't know how to call a function.
+Inlining functions is the opposite process of what we have just seen and is rarely used. Replace a function call with the function body. Apparently, this makes the surrounding function longer when the copied function body has more than one line. This is generally not desirable because most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and split up the old function. One advantage of inlining functions is that you don't have to come up with a function name. Though usually this isn't a good sign if you don't know how to call a function.
 
 ## Dependency Injector
 
-As we have already seen, Dependency Injection (DI) is a very helpful tool. Among others, it allows us to inject mock objects to test functionality that would otherwise be untestable. So the question is: can we retrofit DI onto an existing class?
+As we have already seen, Dependency Injection (DI) is a very helpful tool. Among other benefits, it allows us to inject mock objects to test functionality that would otherwise be untestable. So, the question is: Can we retrofit DI onto an existing class?
 
-The answer is yes. And it is fairly simple. Especially in interpreted languages it's super simple, though it is also more dangerous than in compiled langagues. In compiled languages the compiler will tell you if you forgot to adapt one of the function calls to the new signature. In interpreted languages you have to rely on your tests to find out if you forgot to adapt one of the function calls. This is more dangerous as you may have forgotten one function and the code will blow up in production.
+The answer is yes. And it is fairly simple. Especially in interpreted languages, it's super simple, though it is also more dangerous than in compiled languages. In compiled languages, the compiler will notify you if you have forgotten to update one of the function calls to match the new signature. In interpreted languages, you have to rely on your tests to find out if you forgot to adapt one of the function calls. This is more dangerous because you may have forgotten a function, and the code will fail in production.
 
-Let's assume we have once again our `Car` class containing an engine.
+Let's assume we once again have our `Car` class containing an engine.
 
 ```py
 class Engine:
@@ -5695,7 +5695,7 @@ car = Car()
 car.drive()
 ```
 
-The `Engine` object shouldn't be constructed inside the `Car` constructor for several reasons. Most importantly, the constructor should be as simple as possible. It shouldn't create anything that isn't necessary. It is better to pass the `Engine` as an argument. Instead, the `Car` constructor should look like this:
+The `Engine` object should not be instantiated inside the `Car` constructor for several reasons. Most importantly, the constructor should be as simple as possible. It shouldn't create anything that isn't necessary. It is better to pass the `Engine` as an argument. Instead, the `Car` constructor should look like this:
 
 ```py
 # ...
@@ -5710,11 +5710,11 @@ car = Car(Engine(power=100))
 car.drive()
 ```
 
-For more refactoring examples, I would like to refer the interested reader to the book Refactoring [Refactoring, Improving the Design of Existing Code, 2019]. It contains a lot of examples and is a great resource for learning how to refactor code. And of course I recommend to do a lot of refactoring yourself in order to learn it.
+For more refactoring examples, I would like to refer the interested reader to the book Refactoring [Refactoring, Improving the Design of Existing Code, 2019]. It contains numerous examples and is an excellent resource for learning how to refactor code. And, of course, I recommend doing a lot of refactoring yourself in order to learn it.
 
 ## Copilot
 
-It seems as if Copilot sometimes struggles with refactoring code. At times it doesn't find a reasonable refactoring suggestion. Though with playing around a little and giving Copilot some hints, it works out quite well. Here is an example:
+It seems as if Copilot sometimes struggles with code refactoring. At times, it doesn't find a reasonable refactoring suggestion. Though with a little experimentation and providing Copilot with some hints, it works out quite well. Here is an example:
 
 ```py
 def roman_number(number):
@@ -5788,7 +5788,7 @@ This code can be further refactored with the following command:
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
 
-# 33. Refactoring Legacy Code
+# 36. Refactoring Legacy Code
 
 // This text here still needs some improvements. Especially examples.
 
@@ -5987,7 +5987,7 @@ There are many more techniques how to refactor code that don't have tests. I rec
 
 
 
-# 36. Performance Optimization
+# 37. Performance Optimization
 
 "Premature optimization is the root of all evil" - Donald Knuth
 
@@ -6022,7 +6022,7 @@ Always keep in mind: code that was written with performance in mind, rather than
 
 Part 8: Miscelaneous
 
-# 37. Comments
+# 38. Comments
 
 "Code is like humor. When you have to explain it, it’s bad." – Cory House
 
@@ -6338,7 +6338,7 @@ def roman_number(number):
     return roman
 ```
 
-# 38. Logging
+# 39. Logging
 
 // this chapter is very short. merge it with another chapter?
 
@@ -6356,7 +6356,7 @@ At the same time there are some cases where you can consider using a logger.
 - And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
 
-# 39. Data files
+# 40. Data files
 
 There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
 
@@ -6679,7 +6679,7 @@ conn.close()
 Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything you like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
 
 
-# 40. Setting up a project
+# 41. Setting up a project
 
 "If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
 
@@ -6728,7 +6728,7 @@ There are some additional files in a project.
 There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language of choice.
 
 
-# 41. Tools
+# 42. Tools
 
 "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
 
@@ -6856,7 +6856,7 @@ Every programming language has one docstring tool. For Python it’s Sphynx, for
 
 Part 9 Collaborating
 
-# 42. Working in teams
+# 43. Working in teams
 
 // https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
 [Software Engineering at Google, chapter 2]
@@ -6923,7 +6923,7 @@ Customers are only humans. Quite frequently they don't say what they mean becaus
 Frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was really badly designed, the customer refuses to adapt. You really have to come up with some significant improvement that your version will be accepted.
 
 
-# 43. Code review
+# 44. Code review
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
@@ -6968,7 +6968,7 @@ With very experienced programmers, on the other hand, one can skip the code revi
 I generally recommend doing code reviews. But if code reviews become a nuisance, which they easily can you have to rethink the way you work and possibly find alternative ways to share knowledge about your code. Just don't forget that sharing knowledge is very important, but unfortunately also very expensive.
 
 
-# 44. Agile
+# 45. Agile
 
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
@@ -7092,13 +7092,13 @@ Furthermore, there are some things that are absolutely mandatory, when working a
 
 In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task and you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
 
-# 45. Requirements Engineering
+# 46. Requirements Engineering
 
 Written by Felix Gähler
 
 
 
-# 46. Planning
+# 47. Planning
 
 // TODO: read through again. Is there duplication with the agile section?
 
@@ -7140,7 +7140,7 @@ One also has to consider the limitations of UML diagrams. The only represent cla
 I also had such a moment during my master thesis when I was calculating the expected value of the experiment but I was stuck for a long time. One late afternoon a PhD student came by and talked for a little. He just casually mentioned every step of my calculation and within a minute I found my mistake. Talking to other people is usually the best way to solve a problem. 
 
 
-# 47. DevOps
+# 48. DevOps
 
 // move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
 
@@ -7179,7 +7179,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 - Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
 
 
-# 48. Mental health
+# 49. Mental health
 
 I didn't really think about this topic until I watched just another random youtube video about this topic[https://youtu.be/aK_Jq00Hd8E]. It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
 
@@ -7196,7 +7196,7 @@ On the other hand, there are also plenty of things that can make you feel better
 Furthermore a rewarding work is also very important to keep your spirits high. For example if you frequently finish your tickets in time and you are praised for it by your boss. On the other side it is very depressing if your tickets are too big to be finished and you are constantly behind your schedule. This is a common issue in Agile development [section ?]. Your work is only rewarding if your team is realistic about how fast they can work.
 
 
-# 49. Hiring and getting hired
+# 50. Hiring and getting hired
 
 [The Software Craftsman (by Sandro Mancuso)], [Cracking the Coding interview]
 
@@ -7226,7 +7226,7 @@ You shouldn’t take the application process too serious. Just stay yourself. Th
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
 
-# 50. Examples
+# 51. Examples
 
 // remove?  Write a separate book with examples?
 
@@ -7404,7 +7404,7 @@ And sorry folks, my preferred solution is not object-oriented, other than defini
 
 Part 10: Final remarks
 
-# 51. About Copilot
+# 52. About Copilot
 
 The examples on Copilot shown throughout the code were all very short. This was done deliberately. Not only for the sake of keeping the problems easy to understand, but also in order to keep the suggestions from Copilot under control. Just as for a human developer, Copilot works best for incremental changes. It is not able to read your mind (even though sometimes it feels like it) and for complex changes it won't be able to make a correct suggestion. If there is a more difficult problem, Copilot frequently makes some undesired suggestions. The solution is to break down the problem into some smaller parts and maybe guide Copilot by writing the beginning of the code, i.e. the definition of a function.
 
@@ -7475,7 +7475,7 @@ Copilot is indeed a great tool. It was a great help writing this book and the co
 
 
 
-# 52. Further reading
+# 53. Further reading
 
 I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
 
@@ -7516,7 +7516,7 @@ Google Style Guide, https://google.github.io/styleguide/
 And several youtube channels:
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim, @ContinuousDelivery, 
 
-# 53. Outlook
+# 54. Outlook
 
 "Programming is learned by writing programs." ― Brian Kernighan
 
@@ -7532,7 +7532,7 @@ I hope you learned a lot of things that will help you in your life as a software
 
 Marco
 
-# 54. Frequently used Abbreviations
+# 55. Frequently used Abbreviations
 
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
@@ -7547,6 +7547,7 @@ OO	Object-Oriented
 QA	Quality Assurance 
 TDD	Test-Driven Development 
 YAGNI You Aren’t Going Need It
+
 
 
 
