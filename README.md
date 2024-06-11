@@ -18,12 +18,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 
 ## Things to write
 
-- If you have some suggestions create a new issue or write me an email.
 - If anyone is an expert on Copilot and has ideas how to integrate it into this book, let me know. My publisher would like to have some explanations how to use Copilot, but I'm not an expert on this topic.
-- What is mocking and stubs? (chapter Testing)
 - Domain driven design -> what is the idea behind entities, aggregates and value objects? (chapter Domain driven design)
-- Restructure and sort the chapters somehow. Similar levels of abstractions should be close to each other. 
-- Some more examples on refactoring?
 - How to work with existing code? If the code is not as nicely written as explained here. Reread WELC again.
 - Requirements Engineering -> Felix
 - And some more chapters towards the end of the book need to be improved.
