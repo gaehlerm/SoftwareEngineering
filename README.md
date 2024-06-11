@@ -338,13 +338,13 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
 - [36. Refactoring Legacy Code](#36-refactoring-legacy-code)
-  - [No useful Interfaces](#no-useful-interfaces)
+  - [No Useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
-  - [Extremely long Functions](#extremely-long-functions)
+  - [Extremely Long Functions](#extremely-long-functions)
   - [Seams](#seams)
     - [Problems with Missing Enabling Points](#problems-with-missing-enabling-points)
   - [Sketches](#sketches)
-  - [How do I get the Code under Cest?](#how-do-i-get-the-code-under-cest)
+  - [How do I get the Code under Test?](#how-do-i-get-the-code-under-test)
     - [What Tests should I write?](#what-tests-should-i-write)
   - [Sprout Method](#sprout-method)
     - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
@@ -2184,7 +2184,7 @@ Coupling is one of the reasons why I recommend avoiding the use of inheritance. 
 
 I discourage the use of static methods. It's not terribly bad, but it's another example of these misguided object-oriented concepts. Let's first look at static methods. Isn't it strange: you write a class with all kinds of member variables, and then there is one static method that doesn't need any of these variables, yet it is still within the class? Didn't we say we wanted to keep classes small? It should have high cohesion? A static method has as little cohesion as a variable in a data class. Close to zero.
 
-I fully understand that there are programming languages in which functions must remain within a class, and static functions are the only way to write "free" functions. In all other languages, however, I recommend avoiding the use of static methods as they do not add any additional functionality or improve the code. In C++, you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time, you can split a namespace over many files, as is done for the `std::` namespace, for example.
+I fully understand that there are programming languages in which functions must remain within a class, and static functions are the only way to write "free" (standalone) functions. In all other languages, however, I recommend avoiding the use of static methods as they do not add any additional functionality or improve the code. In C++, you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time, you can split a namespace over many files, as is done for the `std::` namespace, for example.
 
 As we are discussing static functions, we can also discuss static variables as used for instance in languages like C++. Static variables are similar to singletons, and testing classes containing static variables can be challenging. Avoid using singletons and static variables. As soon as you start writing unit tests for static variables, you'll see why I discourage using them. They are like global variables and can be changed everywhere. This can easily end up in a nightmare.
 
@@ -5792,15 +5792,15 @@ As always, Copilot works best if you give it some step by step instructions. It 
 
 // This text here still needs some improvements. Especially examples.
 
-"To me, legacy code is code without tests" - Michael Feathers [WELC]
+"To me, legacy code is code without tests." - Michael Feathers [WELC]
 
-Up to this point everything was great. We had no restrictions what so ever. We assumed we were working on a green field project. I could tell you whatever I wanted. I had no restrictions due to the existing code base. I told you to write unit tests and you started writing unit tests. Now, however, we will start dealing with existing code bases. We'll learn how to deal with legacy code; code without tests [WELC]. Or even worse, code without interfaces.
+Up to this point, everything was great. We had no restrictions whatsoever. We assumed we were working on a greenfield project. I could tell you whatever I wanted. I had no restrictions because of the current code base. I told you to write unit tests, and you started writing unit tests. Now, however, we will start working with existing code bases. We will learn how to handle legacy code: code without tests [WELC]. Or even worse, code without interfaces.
 
-So far we only refactored code covered with test coverage. Refactoring code without tests would be too dangerous. But, unfortunately, this is exactly the problem with so many projects. There are so many projects out there without tests. And because of global variables, functions with side effects, complicated constructors, missing interfaces, etc. it is very hard to write tests for them. In these cases you start getting afraid to changes the code as you are supposed to do in a refactoring. There’s just too much that can break without test. This is apparently a really bad thing. No one likes to life in fear. In your own code you can prevent this situation by meticulously testing all the code you write, but if you work on an existing project, you will have to face the demons. 
+So far, we have only refactored code that is covered by tests. Refactoring code without tests would be too dangerous. But, unfortunately, this is precisely the issue with numerous projects. There are so many projects out there without tests. Due to global variables, functions with side effects, complex constructors, and missing interfaces, it is very challenging to write tests for them. In these cases, you may start to feel afraid to make changes to the code as you are supposed to do during refactoring. There's just too much that can break without testing. This is apparently a really bad thing. No one likes to live in fear. In your own code, you can prevent this situation by meticulously testing all the code you write. However, if you work on an existing project, you will have to face the demons.
 
-When you start wokring on a project with bad code, you might be motivated to suggest a complete rewrite. You may do that, though I do not recommend it. A complete rewrite is hardly ever an option. It takes years, costs millions and very often the final code is not that much better. Generally, it is better to improve the existing code. You spot something you want to improve. You write tests and start refactoring. This may seem tedious to you but you always have to consider that the code was written by many programmers over many years. You are not going to fix it in a few months. 
+When you start working on a project with bad code, you might be motivated to suggest a complete rewrite. You may do that, although I do not recommend it. A complete rewrite is rarely an option. It takes years, costs millions, and very often the final code is not significantly better. Generally, it is better to improve the existing code. You have identified something you want to enhance. You write tests and start refactoring. This may seem tedious to you, but you always have to consider that the code was written by many programmers over many years. It will not be fixed in a few months.
 
-Refactoring untested code is usually a very hard task, there are whole books about it [WELC], [Refactoring]. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are
+Refactoring untested code is usually a very hard task. There are entire books about it [WELC], [Refactoring]. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are:
 1.	No tests
 2.	Obscure code
 3.	No time (or budget) to fix it
@@ -5812,11 +5812,11 @@ And on the micro level we have a few more indications that things will get tough
 4.	Objects that are hard to construct 
 5.	Inheritance chains
 
-Let’s say you want to break a class into pieces, but it's really big. It has no tests and you are uncertain of the side effects it might have. This is bad as functional changes introduced are bugs. The only way to prevent these changes is having plenty of regression tests.
+If you want to divide a large class into smaller parts, consider the following approach. It has no tests, and you are uncertain about the side effects it might have. This is bad because the functional changes introduced are bugs. The only way to prevent these changes is by having plenty of regression tests.
 
-How do you refactor legacy code? 
+How can you refactor legacy code?
 
-First of all, you have to change as little code as possible to get tests in place.
+First of all, you have to change as little code as possible to implement tests.
 
 1. Identify change points ("Seams")
 2. Break dependencies
@@ -5824,33 +5824,33 @@ First of all, you have to change as little code as possible to get tests in plac
 4. Make your changes
 5. Refactor
 
-The difficult points are number 1 and 2. The rest is text book refactoring. Though it will take time, especially writing tests.
+The difficult points are numbers 1 and 2. The rest involves textbook refactoring. Though it will take time, especially when writing tests.
 
-## No useful Interfaces
+## No Useful Interfaces
 
-Any code always at least two interfaces: the input and the output. But if one or both of them are a GUI, it becomes nearly impossible to write functional tests for the software. Furthermore you can't write unit tests if there are no internal interfaces. Without tests, it is impossible to refactor and add interfaces. It is really bad, but it’s not a lost cause. You can still try to refactor slowly. Though it will be painful and you constantly have to look out for bugs. A sales person will have to check your work constantly to see that you didn't introduce any bugs. The whole refactoring will probably take years. Maybe a complete rewrite is indeed the better option. I hope you never end in this kind of position.
+Any code always has at least two interfaces: the input and the output. When one or both of them are a GUI, it becomes nearly impossible to write functional tests for the software. Furthermore, you can't write unit tests if there are no internal interfaces. Without tests, it is impossible to refactor and add interfaces. It is really bad, but it's not a lost cause. You can still try to refactor slowly. Though it will be painful, and you will constantly have to watch out for bugs. A salesperson will have to check your work constantly to ensure that you haven't introduced any bugs. The entire refactoring process will likely take years. Perhaps a complete rewrite is indeed the better choice. I hope you never find yourself in this kind of situation.
 
 ## No Tests
 
-Code without tests is one thing. One can still write them later on, even though it takes much more efforts than doing it right away. The real issue is usually the low quality of the code - code without tests tends to be of low quality. It may have some interfaces but the classes are way too big and the objects are hard to instantiate. This is one of the few cases where you are officially allowed to cheat. You may make private methods public in order to test them. Once the refactoring is done, you should make it private again. Though that may take a year or two. Once you have some test coverage, you can break the classes into smaller ones.
+Code without tests is one thing. One can still write them later on, even though it takes much more effort than doing it right away. The real issue is usually the low quality of the code. Code without tests tends to be of low quality. While it may have some interfaces, the classes are excessively large, making the instantiation of objects difficult. This is one of the few cases where you are officially allowed to cheat. You may change private methods to public in order to test them. Once the refactoring is done, you should make it private again. Though that may take a year or two. Once you have some test coverage, you can break the classes into smaller ones.
 
-If you work on an existing project, there might be no or only an insufficient number of tests. This is a serious issue. Not only from a technical point of view, but also a political one. Due to the bad test coverage, one might introduce bugs when refactoring. And the last person to touch the code is becoming responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they’ll become responsible for it and not so much, because it would be hard. Therefore, the developers stop refactoring and the code decays even faster than it did before.
+If you are working on an existing project, the test coverage may be insufficient. This is a serious issue. Not only from a technical point of view, but also from a political perspective. Due to the low test coverage, one might introduce bugs when refactoring. And the last person to touch the code becomes responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they will become responsible for it, not so much because it would be difficult. Therefore, the developers stop refactoring, and the code decays even faster than it did before.
 
-One trick to avoid this political issue is the so called onion layer code. Instead of fixing a piece of code in place, you just write a wrapper around it and fix all the issues inside the wrapper. Like this you avoid owning the code, yet you are still able to fix bugs, etc. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
+One trick to avoid this political issue is the so-called "onion layer code." Instead of fixing a piece of code in place, you can write a wrapper around it and address all the issues inside the wrapper. By doing this, you avoid taking ownership of the code, yet you can still fix bugs, etc. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
 
-## Extremely long Functions
+## Extremely Long Functions
 
-Let’s be honest. A function, or even worse a method, of about a thousand lines is an absolute nightmare. It lacks interfaces. No one will ever understand it with all its corner cases. There are so many variables around that no one is able to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some small changes, but you are not fixing it fundamentally. The only way to really change it is a complete rewrite. The hardest part about it is getting the specification what the function actually did so far. If bugs are absolutely not allowed, you’d better just leave the function as is. Just work your way around it and accept the fact that at some point you'll have to rewrite it.
+Let's be honest. A function, or even worse, a method of about a thousand lines is an absolute nightmare. It lacks interfaces. No one will ever understand it with all its corner cases. There are so many variables present that it is difficult for anyone to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some minor adjustments, but you are not addressing the core issue. The only way to truly change it is through a complete rewrite. The hardest part is obtaining the specification of what the function has actually done so far. If bugs are absolutely not allowed, you'd better leave the function as it is. Just work your way around it and accept the fact that at some point you'll have to rewrite it.
 
 ## Seams
 
-Writing tests would be a very noble thing to do, but it is not always that easy. As I explained before, how easily you can write tests depends highly on the quality of your code. In order to write tests, you need something you can get a hold on. Michael Feathers calls this a "seam". "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, in the so-called enabling point.
+Writing tests can be a noble endeavor, but it is not always easy. As I explained previously, the ease with which you can write tests largely depends on the quality of your code. In order to write tests, you need something tangible to work with. Michael Feathers refers to this as a "seam." "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, at the so-called enabling point.
 
-There are several different ways to implement seams. The best seams are interfaces using dependency injection. They are very easy to deal with and resemble normal code. Just create a new implementation of the interface or inject it and you are done.
+There are several different ways to implement seams. The best seams are interfaces using dependency injection. They are very easy to deal with and resemble typical code. Just create a new implementation of the interface or inject it, and you are done.
 
-Some of the seams explained in [Working Effectively with Legacy Code] change the behavior on the compiler level, either by the linker or the preprocessor. Needless to say that implementing such kind of fancy seams is a fairly desperate measure. Such techniques resemble strongly black magic and should be avoided. And they are not possible when programming Python.
+Some of the seams described in [Working Effectively with Legacy Code] alter the behavior at the compiler level, either through the linker or the preprocessor. Needless to say, implementing such fancy seams is a rather desperate measure. Such techniques strongly resemble black magic and should be avoided. And they are not possible when programming in Python.
 
-The most common seam is simply function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is just a strictly worse version of using dependency injection, but it is still a seam. 
+The most common scenario involves passing function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is simply a less effective version of using dependency injection, but it still serves as a seam. 
 
 ```py
 def f(debug):
@@ -5884,40 +5884,39 @@ if __name__ == "__main__":
     main(reader)
 ```
 
-Like this you never get a boolean flag that you have to resolve something with later on. This is much better design. Just create the `DebugReader` right away and pass it on as a function argument. The only potential problem is, that you might have to pass several debug objects around instead of just one boolean variable. But in the unlikely case that you have several debug objects (usually there are very few of them), you can structure them inside a data class.
+By doing this, you will never end up with a boolean flag that you need to resolve later on. This is a much better design. Just create the `DebugReader` immediately and pass it as a function argument. The only potential issue is that you might have to pass several debug objects around instead of just one boolean variable. In the unlikely event that you have multiple debug objects (typically, there are very few), you can organize them within a data class.
 
-Now in this case, the seam is where the `read` function is getting called and the enabling point can be anywhere from the command line call of this program, down to the function inside which the `read` function is called (in our case we can write a test and hand over a different reader to the `main` function). Thus, we have pretty much full flexibility regarding the control of our code. This is a good seam.
+Now, in this case, the seam is where the `read` function is being called, and the enabling point can be anywhere from the command line call of this program to the function inside which the `read` function is called. In our case, we can write a test and provide a different reader to the `main` function. Thus, we have a great deal of flexibility when it comes to controlling our code. This is a good seam.
 
 ### Problems with Missing Enabling Points
 
-Usually just passing a number or a string is not sufficient for altering the behavior of the function significantly. It only yields a slightly different result. Variables generally don't change the control flow of your code. The only two things which should alter the behavior of your code significantly are booleans and DI objects. And as you're not supposed to use booleans, you are back at using DI, as explained above.
+Usually, just passing a number or a string is not sufficient to significantly alter the behavior of the function. It only yields a slightly different result. Variables generally do not alter the control flow of your code. The only two things that should significantly alter the behavior of your code are booleans and DI objects. And since you are not supposed to use booleans, you are back to using DI, as explained above.
 
-The piece of code you hold in your hands between the enabeling point and the seam may be way too big and you have no idea what you should test exactly. In the extreme case the only tests you can write are functional tests. This is the problem of missing interfaces.  Writing tests along with, or even before, the code forces you to define enabling points and seams that are close together. It forces you to write interfaces and thus good code.
+The piece of code you are holding in your hands, between the enabling point and the seam, may be too large, and you may not have a clear idea of what you should test exactly. In the extreme case, the only tests you can write are functional tests. This is the issue of missing interfaces. Writing tests along with, or even before, the code forces you to define enabling points and seams that are close together. It forces you to write interfaces, thereby promoting good code quality.
 
-If your code doesn't have any interfaces, not even an API that you can write your tests with, you are be completely screwed. I'm sorry, there's no other way to say it. And no, I'm not exagerating. Spaghetti code without tests can be an enormous issue and there really seems to be no solution. A friend of mine was developing gas turbines. And there was one person who developed a complete software that took some parameters and created a complete CAD model of a turbine. Now the problem was that this person got retired and the code was a 15'000 line long mess. The company payed millions in a desperate attempt to refactor the code, but failed. In the end they just worte a wrapper around this piece of code and left it as is.
+If your code doesn't have any interfaces or an API that you can use to write your tests, you are completely screwed. I'm sorry, there's no other way to say it. And no, I'm not exaggerating. Spaghetti code without tests can be an enormous issue and it appears that there is no clear solution. A friend of mine was developing gas turbines. One individual developed software that could generate a full CAD model of a turbine. Now, the problem was that this person retired, and the code was a 15,000-line-long mess. The company paid millions in a desperate attempt to refactor the code but failed. In the end, they just wrote a wrapper around this piece of code and left it as is.
 
 ## Sketches
 
-Making sketches and diagrams may help you finding ways to refactor your code. This doesn’t have to be UML diagrams. It can be anything that helps you understand your code. It can be some kind of temporal behavior or what Feathers called a "scratch refactoring". Basically, a draft code that shows how the final code could roughly look like without considering all the details that make real refactoring so hard. These are all tools that help you understand your code better and make it easier to write the actual refactoring code.
+Creating sketches and diagrams can help you find ways to refactor your code. This doesn't have to be UML diagrams. It can be anything that helps you understand your code. It can be a form of temporary behavior or what Feathers referred to as a "scratch refactoring". Essentially, a draft code that provides a rough idea of how the final code might look, without addressing all the intricate details that make real refactoring challenging. These tools help you better understand your code and make it easier to write the actual refactoring code.
 
 // Add the temporal graph from Evans? which one? nonlinear growth?
 
 [WELC p.200(?)]
 
+## How do I get the Code under Test?
 
-## How do I get the Code under Cest?
-
-This is a difficult topic. First of all, you have to be aware of the order of magnitude of the problem you are facing. In well written software, the test code is at least as long as the production code. In highly regulated evironments as in the airplane industry, it may be several times longer than that. So if you want to write tests to some longer piece of software that is not yet tested at all, it will quite certainly take years. So achieving high test coverage is generally not an option. You'll have to be more pragmatic than that.
+This is a difficult topic. First of all, you have to be aware of the magnitude of the problem you are facing. In well-written software, the test code is at least as long as the production code. In highly regulated environments such as the airplane industry, it may take several times longer than that. If you want to write tests for a longer piece of software that has not been tested at all, it will most likely take years. So, achieving high test coverage is generally not feasible. You'll have to be more pragmatic than that.
 
 ### What Tests should I write?
 
-What tests you should write depends mostly on the code you have. In most cases it is difficult to write tests due to the missing interfaces. You'll have to work with whatever you have. Of course it would usually be best to write unit tests, but that might not be possible as classes cannot be instantiated, methods are way too long, etc. It might be the only option to write functional tests using the API of your software. As we have learned in the chapters on testing, that this is not ideal. Functional tests take way too long to execute. But beggars can't be choosers. At least you have something to work with. Even worse is the case where you don't have an API to work with. In this case you are completely screwed. Writing onion code consisting of wrappers around the existing software may be the only option. Though this limits your ability to implement new features significantly.
+The tests you should write depend mostly on the code you have. In most cases, it is difficult to write tests because of the absence of interfaces. You'll have to work with whatever you have. Of course, it would usually be best to write unit tests. However, that might not be possible if classes cannot be instantiated, methods are excessively long, etc. It might be the only option to write functional tests using the API of your software. As we have learned in the chapters on testing, this is not ideal. Functional tests take too long to execute. But beggars can't be choosers. At least you have something to work with. Lack of an API to work with is even more challenging. In this case, you are completely screwed. Writing onion code, which consists of wrappers around existing software, may be the only option. This limitation significantly hinders your ability to implement new features.
 
-## Sprout Method 
+## Sprout Method
 
-Let's say you have some method or function that you can't test but you have to add some functionality. How do you do that without deterioating the code quality any further? The solution is adding a new function or method that you can test and call it from the old function. This is called a sprout method (or function) [WELC p. 58].
+Let's say you have a method or function that you cannot test, but you need to add some functionality. How do you do that without deteriorating the code quality any further? The solution is to add a new function or method that you can test and call from the old function. This is called a sprout method (or function) [WELC p. 58].
 
-Assume we have the following code that we can't test for whatever reason. In reality it would of course be much more complicated. I just simplified it enough for the sake of making a readable example.
+Assume we have the following code that we cannot test for some reason. In reality, it would, of course, be much more complicated. I have simplified it enough to create a readable example.
 
 ```py
 def post_entries(transactions, entries):
@@ -5964,17 +5963,17 @@ def post_entries(transactions, entries):
     transactions.get_current().add(valid_entries)
 ```
 
-So we managed to add only one additional line of code to the original function. All the other code went into the `get_valid_entries` function. This new function is now also unit tested.
+So, we managed to add only one additional line of code to the original function. All the other code was placed inside the `get_valid_entries` function. This new function is now also unit tested.
 
 ### Sprout class [WELC p. 62]
 
 // WIP
 
-If you have a class that is getting too big, you can extract some of the functionality into a new class. This is called sprouting a class. The new class is usually a member of the old class. This is a very simple refactoring technique. Just make sure that the new class is only loosely coupled to the old class. Otherwise you might have to pass too many arguments to the new class. If there are too many arguments you have to hand over, you should maybe reconsider your class design and rewrite it such that it has less coupling.
+If you have a class that is becoming too big, you can extract some of its functionality into a new class. This is called sprouting a class. The new class is typically a member of the old class. This is a very simple refactoring technique. Just ensure that the new class is only loosely coupled with the old class. Otherwise, you might have to pass too many arguments to the new class. If there are too many arguments that you have to handle, you should perhaps reconsider your class design and rewrite it to reduce coupling.
 
-// I think there is still quite something to write here. Maybe add some more examples?
+// I think there is still quite a bit more to write here. Maybe add some more examples?
 
-// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can’t get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
+// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can't get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
 
 // make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
 
@@ -5982,10 +5981,7 @@ If you have a class that is getting too big, you can extract some of the functio
 2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
 3. Fix the bug and watch our test pass
 
-
-There are many more techniques how to refactor code that don't have tests. I recommend the book Working Effectively with Legacy Code [WELC] for further reading. I already applied some of the techniques explained there without even knowing about them. 
-
-
+There are many more techniques how to refactor code that don't have tests. I recommend the book Working Effectively with Legacy Code [WELC] for further reading. I already applied some of the techniques explained there without even knowing about them.
 
 # 37. Performance Optimization
 
