@@ -154,6 +154,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Enums](#enums-1)
   - [Booleans](#booleans-1)
     - [Match case statements](#match-case-statements)
+    - [For Loops](#for-loops)
   - [Strings](#strings-1)
     - [Stringly typed objects](#stringly-typed-objects)
     - [Natural Language](#natural-language)
@@ -2200,7 +2201,7 @@ But also for slightly smaller classes, member variables can be problematic. They
 
 If you write a class where all method implementations consist of a single line (delegating class) or you have no methods at all (data class), the number of class variables is not too critical. These classes contain very little complexity. If you have more than about 6 to 8 member variables, you should consider organizing them into subclasses. However, as soon as you have to write complex methods, you have to be extremely careful, as things might otherwise get out of hand. The combination of complex methods and numerous member variables causes the complexity to skyrocket. When dealing with complex methods, it is recommended to keep the number of variables to one or two, as advised in the section on worker classes. Or even better, replace the class with a few functions if you can find a reasonable way to eliminate all member variables. Writing tests will become much easier.
 
-It's a good rule of thumb to say that the class design is probably okay as long as writing unit tests works out fine. And you may not feel the urge to test private functions because the class implementation is too complex. Make classes as small as possible while remaining convenient to work with.
+It's a good rule of thumb to say that the class design is probably okay as long as writing unit tests works out fine and you don't feel the urge to test private functions because the class implementation is too complex. Make classes as small as possible while remaining convenient to work with.
 
 ## Conclusions
 
@@ -2232,10 +2233,6 @@ class Car():
 The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the Pythonic `__str__` method. Furthermore, if you already know what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only beneficial if you need ideas on how to structure your class.
 
 # 15. Inheritance
-
-"Favor composition over inheritance" - Basic rule of class design
-
-Or my version of this rule: "Use composition, not inheritance"
 
 "Inheritance is the base class of evil" [https://youtu.be/2bLkxj6EVoM?list=PLM5v5JsFsgP21eB4z2mIL8upkvT00Tw9B]
 
@@ -2279,7 +2276,7 @@ class Derived(Base):
 ```
 ## Drawbacks of Inheritance
 
-Implementation inheritance comes with several issues and should therefore be avoided whenever possible. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines, C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
+Implementation inheritance comes with several issues and should therefore be avoided whenever possible. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
 
 ### Tight Coupling
 
@@ -2600,6 +2597,65 @@ print(zurich.postcode())
 A little side remark: `match case` statements were only introduced with Python 3.10. This is because they are not supposed to simply replace the switch-case statements, as seen in C++ for example or as shown in the examples here. [For the full story, please visit https://youtu.be/ASRqxDGutpA]
 
 In summary, one can say that `match case` statements are not bad at all. Though they could easily be replaced by dictionaries, and they should be wrapped inside a function to make them reusable and adhere to the SRP. Additionally, they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
+
+### For Loops
+
+// move this else where?
+
+There are many ways how to replace for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical version:
+
+```C++
+#include <vector>
+#include <iostream>
+
+std::vector<int> numbers = {1, 2, 3, 4, 5};
+for (int i = 0; i < numbers.size(); i++) {
+    std::cout << numbers[i] << std::endl;
+}
+```
+
+Note that I had to use C++ for this example. I wouldn't know how to write such a terrible for loop in Python. There is so much that can go wrong here. You have the `<` sign which does a comparison. And comparisons are dangerous because you can always mix up `<` and `<=`.
+
+One level better is this code:
+
+```py
+numbers = [1, 2, 3, 4, 5]
+for i in range(len(numbers)):
+    print(numbers[i])
+```
+
+Here we got rid of the comparison. But we still have the index `i` which can be mixed up. Of course, there are times where you need this index. But generally you can use an enumeration instead.
+
+```py
+for number, i in enumerate(numbers):
+    print(number, i)
+```
+
+The best code is the following:
+
+```py
+for number in numbers:
+    print(number)
+```
+
+It doesn't have an iterator, nor any comparison that can go wrong.
+
+Another question is how to filter lists. The classical way is to use a for loop and an if statement. But these are notoriously verbose. You can also use pipelines instead.
+
+Here is the version with list comprehensions:
+
+```py
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+odds = [n for n in numbers if n % 2 == 1]
+ten_times = [n*10 for n in odds]
+plus_five = [n+5 for n in ten_times]
+average = sum(plus_five) / len(plus_five)
+print(average)
+```
+
+// how to write a pipeline example in python?
+// [https://medium.com/@ayush-thakur02/wait-what-are-pipelines-in-python-628f4b5021fd] doesn't work yet...
+
 
 ## Strings
 
@@ -5453,6 +5509,8 @@ Part 7: Existing Code
 # 34. Refactoring Fundamentals
 
 "If you wait until you can make a complete justification for a change, you've waited too long." – Eric Evans
+
+There are books about refactoring techniques [Refactoring 2nd edition, Fowler] which are highly recommendable. Still, the most important aspect of refactoring is that you know how good code looks like (and that you have plenty of tests to back you up). If you know how the code is supposed to look like, you are always going to find a way, how to make it better.
 
 ## There will be change
 
