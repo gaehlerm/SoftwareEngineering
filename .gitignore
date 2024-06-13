@@ -4,6 +4,7 @@ code_examples/
 *.webp
 *.odt*
 
+temp.py
 index.txt
 desired_index.txt
 all_words.txt
