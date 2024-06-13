@@ -372,7 +372,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [40. Data files](#40-data-files)
   - [CSV](#csv)
     - [Copilot](#copilot-13)
-  - [Json](#json)
+  - [JSON](#json)
     - [Copilot](#copilot-14)
   - [XML](#xml)
     - [Copilot](#copilot-15)
@@ -6422,45 +6422,47 @@ def roman_number(number):
 
 # 39. Logging
 
-// this chapter is very short. merge it with another chapter?
+// this chapter is very short. Merge it with another chapter?
 
-The basic idea of logging is to have a feedback what kind of steps your software executed. It might help you finding bugs. Now this sounds great, but in reality, there are several things to consider.
+The basic idea of logging is to provide feedback on the steps that your software executed. It might help you find bugs. Now this sounds great, but in reality, there are several things to consider.
 
-- The most obvious drawback is that logging needs time to be implemented. It’s not a huge amount, yet it may add up.
-- Logging polutes your code, similar to comments.
-- Logging is usually not needed. Most code is deterministic. If you run the same code twice it will do the exact same thing, down to some rounding errors. You don’t need the logs. Run the code with the same settings as the user did and inspect your code using a debugger.
-- If you struggle finding your bugs, you should rather improve the quality of your code. Simplify its structure and write unit tests. You will have less bugs and they are easier to find.
+- The most obvious drawback is that logging requires time to be implemented. It's not a huge amount, but it may add up.
+- Logging pollutes your code, similar to comments.
+- Logging is typically unnecessary. Most code is deterministic. If you run the same code twice, it will produce the exact same results, with minor differences due to finite precision rounding errors. You don't need the logs. Run the code with the same settings as the user did and inspect your code using a debugger.
+- If you struggle to find bugs in your code, you should focus on improving its quality instead. Simplify the structure and write unit tests. You will have fewer bugs, and they are easier to find.
 
-At the same time there are some cases where you can consider using a logger.
+At the same time, there are some cases where you can consider using a logger.
 
-- For non-deterministic software it may be useful. For example, if you have several programs that communicate asynchronously with each other, as in microservices. All kind of race conditions may occur that you didn’t think of. Depending on the temporal order of the messages being sent. A logger may help you to trace back the source of a bug. Though finding such bugs is hard, even with the best logger. You may be just overwhelmed by the amount of log files.
-- In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user finds a bug.
-- And finally, a logger may be helpful for the user to send in auto created error reports if something went wrong. He can just click a button to send in an error report with all relevant data and doesn’t have to bother writing such a report by himself. This may be very useful as errors are almost inevitable and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
-
+- It may be useful for non-deterministic software. For example, if you have several programs that communicate asynchronously with each other, such as in microservices. Race conditions may occur that you hadn't considered. Depending on the temporal order of the messages being sent. A logger can help you trace back to the source of a bug. Though finding such bugs is challenging, even with the best logger. You may be feeling overwhelmed by the volume of log files.
+- In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user encounters a bug.
+- Finally, a logger may be helpful for the user send in auto-generated error reports if something goes wrong. Users can simply click a button to submit an error report containing all relevant data, eliminating the need to manually write the report themselves. This may be very useful as errors are almost inevitable, and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
 # 40. Data files
 
-There are several file formats to save data or use them as an interface. A lot of people apparently don’t even know the most important once of them so I would like to give you a very short introduction.
+There are several file formats available for saving data or using them as an interface. A lot of people apparently don't even know the most important ones, so I would like to give you a very short introduction.
 
-The file formats that I used so far are CSV, json, XML, hdf5 and databases. Along with some custom file formats. There are of course many more as yaml, toml, etc. But for the sake of brevity I won't explain those. The file formats mentioned here are sufficient to get your work done and it won't take much efforts to learn the other file formats if needed.
+The file formats that I have used so far include CSV, JSON, XML, HDF5, and databases. Along with some custom file formats. There are, of course, many more such as YAML, TOML, etc. But for the sake of brevity, I won't explain those. The file formats mentioned here are sufficient to complete your work, and it won't require much effort to learn other file formats if necessary.
 
 ## CSV
 
-Comma Separated Values (CSV) is probably the simplest and one of the most common file format. You save numbers and separate them by commas or whatever other character you feel like. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, German for example, the comma character is used for the decimal separator. Thus you cannot use comma for separating different values as well. This overload of the comma character would cause serious problems when reading a CSV file.
+Comma Separated Values (CSV) is probably the simplest and one of the most common file formats. You can save numbers by separating them with commas or any other character you prefer. It won't get any easier. But this is also one of the weaknesses of CSV. In some natural languages, such as German, the comma character is used as the decimal separator. Thus, you cannot use a comma to separate different values as well. This overload of the comma character could lead to significant issues when reading a CSV file.
 
-There is no CSV file standard so you can do whatever you want. And that’s at the same time the down side of it. People do whatever they want and for every file you have to write a new bit of code to read out the data. Saving auxiliary data is pretty much impossible in CSV files. CSV saves only plain, unstructured lists.
+There is no standard for CSV files, so you can format them however you like. And that's at the same time the downside of it. People do whatever they want, and for every file, you have to write a new piece of code to read the data. Saving auxiliary data in CSV files is quite challenging. CSV saves only plain, unstructured lists.
 
-Long story short: CSV is the file format everyone uses who doesn’t know anything better, like json for example. Or who works with Excel.
+Long story short: CSV is the file format commonly used by those who are not familiar with more advanced options, such as JSON, for example. Or someone who works with Excel.
 
-Here is some example code how to read a CSV file having to columns separated by commas and lines starting with `#` are comments:
+Here is an example code snippet demonstrating how to read a CSV file with two columns separated by commas. Lines starting with `#` are comments:
 
 ```py
+def is_comment(line):
+    return line.startswith("#")
+
 def read_csv(filename):
     with open(filename) as file:
         x = []
         y = []
         for line in file:
-            if line.startswith("#"):
+            if is_comment(line)
                 continue
             variables = line.split(",")
             x.append(float(variables[0]))
@@ -6490,15 +6492,15 @@ with open('data.csv', 'w', newline='') as file:
 
 Besides the forgotten `import csv`, the code does pretty much what it should.
 
-## Json
+## JSON
 
-The JavaScript Object Notation (json) file format is probably one of the best file format for everyday purposes. Its libraries are very simple to use. It can save any data structure you want and is extremely wide spread and thus supported. There are libraries to automate the parsing of json files for all major programming languages. The output data structure is a mixture of nested maps and arrays. It won’t get any easier to read a file into data.
+The JavaScript Object Notation (JSON) file format is probably one of the best file formats for everyday purposes. The libraries are very user-friendly. It can save any data structure you want and is extremely widespread and thus supported. There are libraries available to automate the parsing of JSON files for all major programming languages. The output data structure consists of a combination of nested maps and arrays. It won't get any easier to read a file into data.
 
-Once you use json on a more serious project, you might want to use a schema to check your files for correctness. You may use different schema for different versions of your interface. And before you write a schema by hand, there are tools around to do it. You only have to make sure your json file contains all possible fields in order to get a complete schema.
+Once you use JSON in a more serious project, you might want to consider using a schema to validate your files for accuracy. You may use different schemas for different versions of your interface. Before you manually write a schema, there are tools available to assist you. You only have to ensure that your JSON file contains all possible fields to obtain a complete schema.
 
-Thanks to schemas, json is also a meta language. It is possible to define a general pattern of how the json file should look like. This defines a standard which enables easy file exchange between different projects.
+Thanks to schemas, JSON is also a meta language. It is possible to define a general pattern for how the JSON file should look. This defines a standard that enables easy file exchange between different projects.
 
-The following code creates a json file:
+The following code creates a JSON file:
 
 ```py
 import json
@@ -6560,15 +6562,15 @@ with open('data.json', 'r') as f:
     b = data['b']
 ```
 
-Thus one can say that Copilot allows us to save some time writing code and saving some brain memory cells when working with json files.
+Thus, one can say that Copilot enables us to save time when writing code and conserving mental energy when working with JSON files.
 
 ## XML
 
-The eXtensible Markup Language (XML) is very similar to json. It’s slightly older than json and it doesn’t support arrays as nicely as json. Otherwise there are only minor differences between the two formats. One thing people might miss in json is the possibility to add comments. On the other hand, json is generally considered to be more easily human readable. Other than that, there are only minor differences like the XML supporting comments and namespaces.
+The eXtensible Markup Language (XML) is very similar to JSON. It's slightly older than JSON, and it doesn't support arrays as elegantly as JSON. Otherwise, there are only minor differences between the two formats. One thing people might miss in JSON is the lack of the ability to add comments. On the other hand, JSON is generally considered to be more easily human-readable. Other than that, there are only minor differences, such as XML supporting comments and namespaces.
 
-Generally I prefer json over XML. If I have to read out an XML file, I use tools that convert the data structure into the json object and work with it the way I’m used to. Like this I don't have to learn something new.
+Generally, I prefer JSON over XML. If I need to read an XML file, I utilize tools that convert the data structure into a JSON object and work with it in a familiar manner. I don't have to learn something new like this.
 
-The following code converts an XML file into a json object:
+The following code converts an XML file into a JSON object:
 
 ```py
 import json
@@ -6651,11 +6653,11 @@ tree.write("data.xml")
 
 ## HDF5
 
-HDF5 is the most common binary file format. It is designed to deal with terabytes of data and optimized for high throughput. Pretty much all research facilities and companies dealing with huge amounts of data use this file format. It supports structured and auxiliary data. For looking at the data you either have to use the HDF5 library in your programming language of choice or download the free GUI software. Use HDF5 if you want to save several gigabytes of numeric data.
+HDF5 is the most common binary file format. It is designed to handle terabytes of data and optimized for high throughput. Most research facilities and companies that handle large amounts of data use this file format. It supports structured and auxiliary data. To access the data, you can either utilize the HDF5 library in your preferred programming language or download the free GUI software. Use HDF5 if you need to store multiple gigabytes of numerical data.
 
-Working with HDF5 is in my opinion a tad less intuitive than working with json files. This is because HDF5 uses datasets that have to be created instead of just accepting a dict.
+Working with HDF5 is, in my opinion, slightly less intuitive than working with JSON files. This is because HDF5 uses datasets that need to be created instead of simply accepting a dictionary.
 
-The following code saves a list of values inside an HDF5 file.
+The following code saves a list of values in an HDF5 file.
 
 ```py
 import h5py
@@ -6702,13 +6704,13 @@ with h5py.File('data.hdf5', 'r') as f:
 
 ## Databases
 
-Databases (DB) are used for big amount of data that you want to analyze but doesn’t fit into memory. Databases have a whole lot of different functionality that improves searching and manipulating data within the database. There are several vendors and different technologies. 
+Databases (DB) are used for a large amount of data that you want to analyze but doesn't fit into memory. Databases have a wide range of functionalities that enhance searching and manipulating data within the database. There are several vendors offering different technologies.
 
-I never really cared much about DBs and I'd like to teach you other things instead. So you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive and it’s important to write your code such that you can easily replace the DB by another one, or you’ll be stuck paying hefty annual fees.
+I never really cared much about DBs and I'd like to teach you other things instead. So, you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive, and it's important to write your code in a way that allows for easy replacement of the database with another one. Otherwise, you may find yourself locked into paying substantial annual fees.
 
-Also make sure a database is not the heart of your software. It's just a place to save and access data. It can be replaced by a text file if needed!
+Also, make sure that a database is not the core of your software. It's just a place to save and access data. It can be replaced with a text file if necessary!
 
-sqlite is probably the easiest to use database. That's why I make a short example here. Compared to other databases, creating or migrating an sqlite database is trivial.
+SQLite is probably the easiest database to use. That's why I am providing a brief example here. Compared to other databases, creating or migrating an SQLite database is straightforward.
 
 Here is the code to create a database and add some movie objects.
 
@@ -6758,8 +6760,7 @@ conn.close()
 
 ## Custom file format
 
-Similar to the CSV file you can also define your own file format for other things than only numbers. You can define your own file with structured data. You can even define your own programming language like structured text within your custom file format. You can do pretty much anything you like. You are a free person. Just don’t expect to be paid for such a waste of time. If you want to be a serious software engineer you have to gain value for the customer. You have to use json or write a library for a normal programming language. There’s no reason to define custom file formats.
-
+Similar to the CSV file, you can also define your own file format for things other than just numbers. You can define your own file with structured data. You can even define your own programming language, such as structured text, within your custom file format. You can do pretty much anything you like. You are a free person. Just don't expect to be paid for such a waste of time. If you aspire to become a successful software engineer, you must prioritize delivering value to the customer. You need to utilize JSON, HDF5 or a database. There is no need to define custom file formats.
 
 # 41. Setting up a project
 
