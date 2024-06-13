@@ -332,6 +332,10 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [What to Refactor](#what-to-refactor)
   - [Refactoring Process](#refactoring-process)
 - [35. Refactoring Techniques](#35-refactoring-techniques)
+  - [Breaking classes](#breaking-classes)
+    - [Too many methods](#too-many-methods)
+    - [Structuring variables](#structuring-variables)
+    - [Too many variales](#too-many-variales)
   - [Renaming](#renaming)
   - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
   - [Extract function](#extract-function)
@@ -354,9 +358,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Optimizing Certainly Needed](#optimizing-certainly-needed)
 - [38. Comments](#38-comments)
   - [Bad comments](#bad-comments)
-    - [Commented out code](#commented-out-code)
-    - [TODO comments](#todo-comments)
-    - [Comments replacing code](#comments-replacing-code)
+    - [Commented Out Code](#commented-out-code)
+    - [TODO Comments](#todo-comments)
+    - [Comments Replacing Code](#comments-replacing-code)
   - [Useful comments](#useful-comments)
     - [Requirements](#requirements-1)
     - [How to write comments](#how-to-write-comments)
@@ -4008,11 +4012,9 @@ def main(client):
     # ...
 
 if __name__ == "__main__":
-    main(
-        api_client=ApiClient(
-            api_key=os.getenv("API_KEY"), # <-- here you can change the api_key
-        )
-    )
+    main(api_client=ApiClient(
+        api_key=os.getenv("API_KEY"), # <-- here you can change the api_key
+    ))
 ```
 
 Apparently, you can choose the `api_key` within the `main` function and then pass it as a function argument. This way, you can easily replace it with a counterfeit. This is very useful for testing.
@@ -4027,7 +4029,7 @@ When you need to make a selection, such as when you want to change a value for t
 
 DI is very similar to the strategy design pattern. The main difference lies in what you want to achieve. DI is primarily used for testing, while the strategy pattern is generally employed to enable the user to make a selection at runtime.
 
-One downside of DI is that it makes the code harder to understand. To understand what's going on, you have to look through many functions. For this reason, it is recommended to use DI sparingly. It should be mostly used for the reasons mentioned above: IO, time, random numbers, etc.
+One of the few downsides of DI is that it makes the code harder to understand. To understand what's going on, you have to look through many functions. For this reason, it is recommended to use DI sparingly. It should be mostly used for the reasons mentioned above: IO, time, random numbers and other things you want to change when running the code.
 
 ## Summary
 
@@ -5620,6 +5622,90 @@ Note that some of the techniques explained in the section on good code, such as 
 
 When following the rules taught in this book, you should be writing good code. It is well-tested, contains clear interfaces, no global variables, and no side effects. Still, you have to refactor once in a while. But it's comparatively easy because you can focus on the refactoring part. The tests are already in place to ensure that you don't break anything. In this section, you will learn some techniques that you can apply when refactoring.
 
+## Breaking classes
+
+Breaking classes into smaller pieces is one of the most commonly used refactoring techniques. Simply because of the fact that classes tend to grow over time and have to be split once in a while.
+
+### Too many methods
+
+One issue are excessive methods within a class. As I've already explained before, I prefer having freestanding functions over methods. They are decoupled and you can deal with them more freely. For instance, you can move these functions into a new class if you like, with only minor effort. Furthermore, it is easier to write unit tests for freestanding functions compared to methods. The technique behind it is fairly simple. Just search for functions that use only "few" class variables. Remove this method from the class and create a function out of it. Instead of passing `self` in Python, you have to pass all the function arguments explicitly.
+
+```py
+class House:
+    def __init__(self, address):
+        self._address = address
+
+    def _print_address(self):
+        print(self._address)
+
+    def print_wrapper(self):
+        self._print_address()
+```
+
+Here we can refactor the `_print_address` method out of the class. The only variable needed is `_address`, so we have to pass this variable as a function argument.
+
+```py
+# inside house_helpers.py
+def print_address(address):
+    print(address)
+
+# inside house.py
+class House:
+    def __init__(self, address):
+        self._address = address
+
+    def print_wrapper(self):
+        print_address(self._address)
+```
+
+One problem is the fact that the function `print_address` is now a freestanding function within this file. It has bigger scope now than it did as a private method within the class. In C++ you could encapsulate this function within a namespace to make it local. In Python there is unfortunately no such thing. Instead you have to move it into a helper file that contains functions which should be used only by this file here.
+
+### Structuring variables
+
+If variables are always used together in the same methods, they have high cohesion. This means that they probably belong together. They should be stored in a dataclass.
+
+```py
+class Fish:
+    def __init__(self, name, age, weight):
+        self._name = name
+        self._age = age
+        self._weight = weight
+        self._price = 10.0
+
+    def print_fish(self):
+        print(f"{self._name} is {self._age} years old and weighs {self._weight} kg.")
+```
+
+Here, the variables `_name`, `_age` and `_weight` are all used together. So it makes sense to store them in a dedicated dataclass.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class PersonalDetails:
+    name: str
+    age: int
+    weight: float
+
+class Fish:
+    def __init__(self, personal_details):
+        self._personal_details = personal_details
+        self._price = 10.0
+
+    def print_fish(self):
+        print(f"{self._personal_details.name} is {self._personal_details.age} 
+        years old and weighs {self._personal_details.weight} kg.")
+```
+
+And probably we could rename the `print_fish` method into `print_personal_details` since it only prints the personal details of the fish. As the `print_fish` method now depends only on the `_personal_details` variable, we could also make it a freestanding function that takes only this variable as an argument.
+
+### Too many variales
+
+A very common problem is classes having too many variables. This is a so called "God Class". It does too much and should be broken into smaller pieces. There are several techniques how to deal with this issue. First of all, you should look at the variables. The search function of the IDE will tell you, how often a variable is used within a class. If a variable is used only two or three times and the class is 100 lines long, you should try to remove the variable from the class. It has too little cohesion. Though, this is easier said than done. 
+
+Removing variables from the class is a difficult task as you have to pass them through all the functions instead. Usually you can remove variables from a class when you refactor the methods into standalone functions. This way, you can pass the variables as function arguments instead of class variables. Once you do this, the class might not need this variable anymore and can be removed.
+
+// move these sections to Refactoring Legacy Code?
 ## Renaming
 
 Even though renaming barely alters the structure of the code, it should be done frequently. Not only for good code, but also for legacy code. Finding good names is one of the most challenging tasks in programming because assessing the quality of names is very difficult. There are some general rules on how naming should be done, yet it is still not easy at all. This leads to the fact that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something for which you happen to know a better name. Then rename this object. This is the only way names improve over time. Don't assume the author of the code knew it better. You now have much more information at hand that simplifies finding a good name.
@@ -6020,11 +6106,11 @@ Part 8: Miscellaneous
 
 # 38. Comments
 
-"Code is like humor. When you have to explain it, it’s bad." – Cory House
+"Code is like humor. When you have to explain it, it's bad." – Cory House
 
-As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. *What* can be understood by looking at the code. With the *why*, this is not possible. Was the code written because of some ticket? Add a comment.
+As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. *What* can be understood by examining the code. With the *why*, this is not possible. Was the code written in response to a specific ticket? Add a comment and with the ticket number.
 
-Comments are a very double-edged sword. While they may be useful at times, they are also a liability. You always have to make sure you keep them up to date as you have to any piece of documentation. Additionally comments tend to be a remedy to fix bad code. And this is certainly not what comments are supposed to do.
+Comments are a double-edged sword. While they may be useful at times, they can also be a liability. You always have to make sure you keep them up to date as you would with any piece of documentation. Additionally, comments tend to be a remedy for fixing bad code. And this is certainly not the intended purpose of comments.
 
 ## Bad comments
 
@@ -6040,25 +6126,25 @@ def add(a,b):
     return a + b
 ```
 
-Trust me, I've seen similar comments out in the wild. Apparently the programmer thought it was a good idea to write this comment.
+Trust me, I've seen similar comments before. Apparently, the programmer thought it was a good idea to write this comment.
 
-I do not share this opinion. In my opinion this is a useless boilerplate comment. Read the function name. It explains exactly what the function does. And if you are not sure, take a look at the implementation. This is exactly what makes code good. You read a function name and you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment here is a violation of the SRP. It's a duplicate explanation of what the code does.
+I do not share this opinion. In my opinion, this is a useless boilerplate comment. Read the function name. It precisely explains the function's purpose. If you are unsure, refer to the implementation. This is precisely what distinguishes good code. When you read a function name, you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment is a violation of the SRP. It's a redundant explanation of the code's functionality.
 
-"Yes, but it’s only one line of comment. It can’t hurt us.", you might say. 
+"Yes, but it's only one line of comment. It can't hurt us," you might say.
 
 "NO!"
 
-Sorry, I just lost my temper. I shouldn’t be so harsh with you. Many experienced programmers don’t know, so why should you? I have to tell you that you are wrong. You can’t believe how wrong you are. Maybe I haven’t made myself clear enough so far. This comment is an absolutely useless liability. It claims something that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions or variable names, you can’t enforce that a comment stays at its correct location. You will eventually end up having a comment that is plain wrong. It will confuse everyone who works on this code. It will cost time. 
+Sorry, I just lost my temper. I shouldn't be so harsh with you. Many experienced programmers don't know, so why should you? I have to tell you that you are wrong. You can't believe how wrong you are. Maybe I haven't made myself clear enough so far. This comment is an absolutely useless liability. It makes a claim that will not always be true. The code will change as code always does. But the comment may be forgotten. Unlike function definitions or variable names, you cannot enforce that a comment remains in its correct location. You will eventually end up with a comment that is simply incorrect. It will confuse everyone who works on this code. It will cost time.
 
-Not convinced? You think you won’t have these issues because you work carefully? 
+Not convinced? Do you believe you won't encounter these issues because you work meticulously?
 
 "Ha ha. NO!"
 
-Now you’re certainly wrong this time. By now you should know better. This is exactly what I’m trying to teach you throughout this entire book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It’s inevitable. Accept your faith and learn how to deal with it. Code is good if you can make as few mistakes as possible. Removing useless comments is a must. They violate the third rule of this software engineering. Such comments are an unnecessary source of bugs.
+Now you're certainly wrong this time. By now, you should know better. This is precisely what I'm trying to teach you throughout this entire book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It's inevitable. Accept your fate and learn how to deal with it. Code is good if you can make as few mistakes as possible. Removing unnecessary comments is essential. They violate the third rule of software engineering. Such comments are an unnecessary source of bugs.
 
-You want to become a software engineer. So stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
+You want to become a software engineer. So, stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The book has some good ideas, but there are some examples to improve upon. The original code was written in C++ and I translated it to Python like pseudo code.
+Here is an example from the book "The Art of Readable Code" [The Art of Readable Code: Simple and Practical Techniques for Writing Better Code, Boswell & Foucher]. The book has some good ideas, but there are some examples that could be further improved. The original code was written in C++ and I translated it into Python as pseudo code.
 
 ```py
 class FrontendServer:
@@ -6072,9 +6158,9 @@ class FrontendServer:
     close_database(location)
 ```
 
-Undoubtadly, this code is bad. It is very hard to read it. It doesn't contain any visible structure.
+Undoubtedly, this code is bad. It is very hard to read. The code lacks any visible structure.
 
-The authors of this book sorted the code a little, added some comments, and ended up with something like this:
+The authors of this book organized the code, added comments, and eventually produced the following result:
 
 ```py
 class FrontendServer:
@@ -6093,9 +6179,9 @@ class FrontendServer:
     close_database(location)
 ```
 
-The code certainly became much more readable. But this refactoring can be taken one step further. Adding these comments doesn't solve the fundamental issue: This class should be broken down into 3 sub classes and one dataclass as a parent containing the class instances. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
+The code has certainly become much more readable. But this refactoring can be taken one step further. Adding these comments does not solve the fundamental issue. The class should be divided into three subclasses, with one parent dataclass containing the class instances. This logically separates the different parts of the class. The comments are just a workaround for suboptimal code.
 
-Here is my own suggestion how to rewrite the code above (again: it's only pseudo code):
+Here is my rough suggestion on how to rewrite the code above.
 
 ```py
 from dataclasses import dataclass
@@ -6125,11 +6211,11 @@ server = FrontendServer()
 server.profile.view(request)
 ```
 
-The resulting code is once again longer than the initial version. But it is both much better structured and there is no need for any comments. Note how we were also able to simplify some parts of the code. For instance we now define the function `view` instead of `view_profile`. The profile part of the function name is now already clear due to the context inside the `Profile` class or the function call as `profile.view`.
+The resulting code is once again longer than the initial version. But it is much better structured, and there is no need for any comments. Note how we were also able to simplify certain parts of the code. For instance, we now define the function `view` instead of `view_profile`. The profile part of the function name is now clear due to the context within the `Profile` class or the function call as `profile.view`.
 
-Here is another example from the same book. It suffers from a similar problem to improve upon: The authors improved the code by adding comments instead of improving the code itself.
+Here is another example from the same book. It suffers from a similar problem: the authors attempted to enhance the code by adding comments rather than improving the code itself.
 
-This is the original code. Needless to say that it is very hard to read.
+This is the original code.
 
 ```py
 # Import the user's email contacts, and match them to users in our system.
@@ -6171,7 +6257,7 @@ def suggest_new_friends(user, email_password):
     return render("suggested_friends.html", display)
 ```
 
-Here is my suggestion (of course, I have the advantage of using Python which makes the code shorter).
+Here is my suggestion.
 
 ```py
 def suggest_new_friends(user, email_password):
@@ -6202,9 +6288,9 @@ def create_dict(user, friends, suggested_friends):
     return items
 ```
 
-This time the code became only quite little longer compared to other refactoring examples. But at the same time it is so much more readable. You understand what it does by just looking at the top level function `suggest_new_friends`. You don't have to read the details of the function. You can just read the function names and you know what it does. This is what makes code readable. Not the comments.
+This time, the code only became slightly longer compared to other refactoring examples. But at the same time, it is much more readable. You can understand its functionality simply by looking at the top-level function `suggest_new_friends`. You don't have to read the details of the function. You can read the function names to understand their purpose. This is what makes code readable. Not the comments.
 
-At times it is very difficult to explain code with code alone. So there is of course the temptation to use a comment to make it clearer. As in the folowing example, also from the book "The Art or Readable Code" (I would like to mention that I really like the book, but the examples can be improved upon):
+At times, it is very difficult to explain code using code alone. So, there is, of course, the temptation to use a comment to make it clearer. As in the following example, also from the book [The Art of Readable Code]:
 
 ```C++
 // Rearrange 'v' so that elements < pivot come before those >= pivot;
@@ -6212,45 +6298,45 @@ At times it is very difficult to explain code with code alone. So there is of co
 int Partition(vector<int>* v, int pivot);
 ```
 
-I must say, I do have an issue with this comment. It is very hard to understand. And as always, having a comment to explain code is suboptimal. Now the first problem I see with this function is that it does two things at the same time. It orders the elements of the vector and it returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value at the same time. This is a violation of the SRP. The function should probably be split into two parts.
+I must say, I don't like this comment. It is very difficult to understand. And as always, providing a comment to explain what code does is suboptimal. Now, the first issue I see with this function is that it performs two tasks simultaneously. It orders the elements of the vector and returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value simultaneously. This is a violation of the SRP. The function should probably be split into two parts.
 
-Additionally there is something else that can explain code: unit tests. The test cases act as examples how the code is supposed to be used and serves as an example at the same time. This is frequently a better help than some hard-to-read comment.
+Additionally, there is something else that can explain code: unit tests. The test cases act as examples of how the code is supposed to be used and serve as an example at the same time. This is often more helpful than a difficult-to-read comment.
 
-### Commented out code
+### Commented Out Code
 
-Another thing you might have seem somewhere is commented out code. Someone was developing a feature. Maybe he was replacing some code and wasn’t sure how to implement the new version. So, he commented out the old code and started implementing. He somehow didn’t understand all the details but at some point, everything seemed to work. He knew that he was more guessing that writing structured code. He knew his work was really bad. Therefore, he decided to leave the old code in the repo and just commented it out, right beside the new code.
+Another thing you might have seem somewhere is commented out code. Someone was developing a feature. Maybe he was replacing some code and wasn't sure how to implement the new version. So, he commented out the old code and started implementing. He somehow didn't understand all the details, but at some point, everything seemed to work. He knew that he was guessing more than writing structured code. He knew his work was really bad. Therefore, he decided to leave the old code in the repository and just commented it out, right beside the new code.
 
-Commenting out code is absolutely dreadful. This is one of the candidates for the worst programming practices. What are you supposed to do with commented out code? Everybody reads it. Nobody knows how to deal with it. It’s just causing confusion and wastes everybody’s time. If we only had a tool to browse the history of the code... Something like git...
+Commenting out code is absolutely dreadful. This is one of the candidates for the worst programming practices. What are you supposed to do with commented out code? Everyone reads it. Nobody knows how to deal with it. It's just causing confusion and wasting everybody's time. If we only had a tool to browse the history of the code... Something like Git...
 
-Never use comments (or dead code) for that purpose. You have my permission to delete any commented-out code that you ever see. You may show this book as a proof if needed.
+Never use comments (or dead code) for that purpose. You have my permission to delete any commented-out code that you ever see. You may use this book as proof if needed.
 
-### TODO comments
+### TODO Comments
 
-Another bad habit is TODO comments. When you implement a feature, you are responsible that the implementation is ready to be merged into master. It’s ready to be merged when there is nothing important to be done anymore that would justify a TODO comment. Make sure you never merge any TODOs into master. They only cause confusion and there is never time to do them. You will never implement a feature without a ticket and for refactoring the code you don’t need a TODO comment. Therefore again: make sure you never merge any TODO comments into master.
+Another bad habit is TODO comments. When you implement a feature, you are responsible for ensuring that the implementation is ready to be merged into the master branch. It's ready to be merged when there is nothing important left to be done that would justify a TODO comment. Make sure you never merge any TODOs into the master branch. These tasks only lead to confusion, and there is never enough time to complete them. You should never implement a feature without a corresponding ticket. Additionally, for code refactoring, there is no need for a TODO comment. Therefore, once again, make sure you never merge any TODO comments into the master branch.
 
-At the same time it is fine if you use TODO comments during the development of a feature. It might help you to organize your work. Just make sure to remove all the TODO comments before merging your changes into master.
+During the development of a feature, it is acceptable to use TODO comments. It might help you to organize your work. Just make sure to remove all the TODO comments before merging your changes into the master branch.
 
-### Comments replacing code
+### Comments Replacing Code
 
-Introducing a lot of tiny functions hurts readability to some degree. It takes keeping track of and jumping around the function calls. Though this cost is very low if the functions are named properly. If all the functions do what they say, you can just read the function names and you know what the code does. This is what makes code readable. Not the comments.
+Introducing numerous small functions can somewhat hinder readability. It involves keeping track of and navigating through the function calls. Though this cost is very low if the functions are named properly. If all the functions perform as described, you can simply read the function names to understand what the code does. This is what makes code readable. Not the comments.
 
-As a summary I can say: yes, all the small functions have a price to pay. But adding comments to explain the code is not the best solution.
+As a summary, I can say that all the small functions come with a price to pay. But adding comments to explain the code is not the best solution.
 
 ## Useful comments
 
-So much about why not to use comments. Now let’s talk about the cases where using comments is fully legitimate.
+So much about why not to use comments. Now let's discuss situations where using comments is entirely appropriate.
 
-I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa this means that comments are allowed to explain things you cannot express in code. For example, you can add links to the source of a code fragment, library or the explanation of an algorithm. It may also be useful to use comments on the interface of a library or API used be the documentation software. And of course comments are used at the beginning of the file for the boilerplate copyright statement.
+I have explained that you should not use comments for anything that could (or should) be explained by the code itself. Vice versa, this means that comments are allowed to explain things that you cannot express in code. For example, you can add links to the source of a code fragment, library, or an explanation of an algorithm. It may also be useful to use comments in the interface of a library or API when using documentation software. Comments are typically used at the beginning of the file to include the boilerplate copyright statement.
 
 ### Requirements
 
-A very legitimate use of comments are requirements. A comment that the code has to be this way because of some requirement. Requirements are something you cannot explain in code. They are usually written in a natural language. Yet they are still highly important for the software. At times, the requirements are the only thing that can explain why a certain piece of code looks the way it does. And the only way to explain this is by using comments. Add the ticket number to the comment, or even better, copy the requirement text into the comment as the ticket may be edited later on.
+A very legitimate use of comments is to document requirements. The code has to be written this way due to certain requirements. Requirements are something that cannot be explained in code. They are usually written in a natural language. Despite this, they are still highly important for the software. At times, the requirements are the only thing that can explain why a certain piece of code looks the way it does. And the only way to explain this is by using comments. Please add the ticket number to the comment, or even better, copy the requirement text into the comment as the ticket may be edited later on.
 
-Usually the requirements are also expressed in an acceptance test. And I hope you do write acceptance tests. But acceptance tests are not enough. They are not visible in the code. You have to search for them. And you don't know which acceptance test belongs exactly to which line of code. Therefore, comments are the only thing I could think of that can link the code to the requirements.
+Usually, the requirements are also expressed in an acceptance test. And I hope you do write acceptance tests. But acceptance tests are not sufficient. They are not visible in the code. You have to search for them. It is unclear which acceptance test corresponds to each line of code. Therefore, comments are the only way I can think of to connect the code to the requirements.
 
 ### How to write comments
 
-Just as code, comments should be as short and pregnant as possible. In the following example we have the opposite. What does "it" in the following sentence mean? Don't write such ambiguous sentences. ["The Art of Readable Code"]
+Just like code, comments should be concise and meaningful. In the following example, we have the opposite. What does "it" in the following sentence mean? Please avoid writing ambiguous sentences. [The Art of Readable Code]
 
 ```py
 # Insert the data into the cache, but check if it's too big first
@@ -6263,23 +6349,21 @@ better:
 
 ### Docstring
 
-You may use docstring tools, like sphynx in Python, for automatically generated documentation. However, docstrings should only be used as an external documentation. Never use docstrings for internal purpose. Why should you read a docstring documentation if you can read the source code and all its comments?
+You may use docstring tools, such as Sphinx in Python, for automatically generating documentation. However, docstrings should only be used for external documentation. Never use docstrings for internal purposes. Why should you read a docstring documentation if you can read the source code and all its comments?
 
-For using docstrings as a documentation for external users, on the other hand, comments are really useful. Furthermore, for commenting external APIs using docstrings, there apply completely different rules than for internal comments. When commenting an API, it is very important to comment the *what* and not the *why*. The user doesn't have access to the code, or at least he's not supposed to read it. So he solely relies on the docstring comments. Therefore, you have to comment *what* your functions and classes do, and how to use them. Possibly also by adding examples. The *why* on the other hand is not important at all.
+For using docstrings as documentation for external users, comments are also very useful. Furthermore, when commenting on external APIs using docstrings, completely different rules apply than for internal comments. When documenting an API, it is crucial to comment on the *what* rather than the *why*. The user doesn't have access to the code, or at least he's not supposed to read it. So he solely relies on the docstring comments. Therefore, you have to comment *what* your functions and classes do, and explain how to use them. Possibly by adding examples. The *why*, on the other hand, is not important at all.
 
-As a short summary: Docstrings are very useful for documenting your external APIs, but not for internal code. Docstrings should comment the *what* and not the *why*.
+As a short summary: Docstrings are very useful for documenting your external APIs, but not for internal code. Docstrings should comment on the *what* and not the *why*.
 
 ## Commenting magic numbers
 
-// Move the following example to the chapter on comments?
-
-Here we have an example of bad code, for once it's C++. I found it in "The Art of Readable Code" [The Art of Readable Code]. The authors correctly state that this code is hard to understand. But unfortunately they failed to explain why exactly. Note that this example is in C++ because the suggested solution does not work in Python.
+Here we have an example of poorly written code, this time in C++. I found it in [The Art of Readable Code]. The authors correctly state that this code is hard to understand and I suggest some changes on their solution. Note that this example is in C++ because one of the suggested solutions doesn't work in Python.
 
 ```C++
 connect(10, false); 
 ```
 
-This code is obviously bad as it is very hard to understand what `10` and `false` exactly mean. You'd have to look up the function definition to understand it.
+This code is bad as it is very hard to understand what `10` and `false` exactly mean. You'd have to look up the function definition to understand it.
 
 Copilot suggests to improve the code by adding a comment at the end of the line. Honestly, this is a pretty bad solution.
 
@@ -6293,16 +6377,16 @@ The suggestion in the book was adding the comments inside the function call. Thi
 connect(/* timeout_ms = */ 10, /* use_encryption = */ false);
 ```
 
-In my opinion, this solution is still far from optimal. 
+In my opinion, this solution is still far from optimal - it uses comments.
 
-There are two better solutions to this problem. In Python, C++20 and most other modern programming language, keyword arguments are supported.
+There are two better solutions to this problem. In Python, C++20, and most other modern programming language, keyword arguments are supported.
 
+// check that this is correct
 ```C++
-// check that this code really works!
 connect{.timeout_ms=10, .use_encryption=false};
 ```
 
-The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided, see chapter on Naming. 
+The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided. 
 
 ```C++
 int timeout_ms = 10;
@@ -6314,11 +6398,13 @@ Here I didn't even have to type anything as Copilot was able to suggest the corr
 
 ## Summary
 
-Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important.
+Use comments only for things that cannot be made apparent by the code itself, yet you think it’s still very important. Comment the *why* and not the *what*. If you write docstrings, it's the other way around. Comment the *what*, rather than the *why*.
 
 ## Copilot
 
-Copilot is not yet able to write more than boilerplate comments. The following comment was created by the document function of Copilot Labs.
+Copilot is not yet able to write more than boilerplate comments. The following comment was created by the document function of Copilot Labs. Copilot makes the mistake to comment the *what*. Apparently there is no way for Copilot to find out *why* you write some code. Therefore, I would recommend Copiliot only to write docstrings.
+
+I find it very remarkable that Copilot is able to write such a comment, however it is still fairly useless.
 
 ```py
 def roman_number(number):
