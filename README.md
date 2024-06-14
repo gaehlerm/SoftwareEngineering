@@ -1,6 +1,4 @@
-Software Engineering made Easy
-
-What writing code is all about
+Software Engineering made Easy/Software Engineerig Einfach Gemacht
 
 Copyright Marco Gähler, all rights reserved.
 
@@ -87,6 +85,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Example of an adapter](#example-of-an-adapter)
   - [Copilot](#copilot-1)
 - [12. Naming](#12-naming)
+  - [How to name things](#how-to-name-things)
   - [Naming Antipatterns](#naming-antipatterns)
     - [Useles Words](#useles-words)
     - [Generic Names](#generic-names)
@@ -382,7 +381,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Copilot](#copilot-17)
   - [Custom file format](#custom-file-format)
 - [41. Setting up a project](#41-setting-up-a-project)
-  - [Project folder](#project-folder)
+  - [Project Folder](#project-folder)
 - [42. Tools](#42-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
@@ -531,11 +530,11 @@ Chapters to work on:
 
 # 4. The short story behind this book
 
-I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before deciding to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software for the Quantum Controller Software.
+I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before deciding to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software controlling qunatum computers.
 
 At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices and everything else during the few years I spent in industry. Such that every person with a little bit of knowledge of a programming language can boost their programming skills reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice.
 
-I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I mean, my English is fairly poor, and I was never really good at writing essays in school. And I only decided what chapters to write as I was reading other books. But the feedback I received was very good. People praised this book for being well-structured, well-written, and easy to understand. I hope you will agree with this assesment. Even Pearson Germany was interested in publishing it. This motivated me to keep writing and getting it published.
+I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I was just writing down my thoughts and ideas. My English is fairly poor, and I was never really good at writing essays in school. But as I was reading other books, I got some more inspiration on what to write. And as this text got longer and I got some encouraging feedback from my reviewers, I decided to publish this text as a book.
 
 I hope you'll enjoy reading this book,
 Marco Gähler
@@ -607,7 +606,9 @@ I can only provide you with some general rules of thumb, and you will have to de
 
 ## A word about Copilot
 
-My publisher had the idea to include Copilot, one of the new AI code generation tools available at the time of writing, in this book. And indeed, there are quite a few cases where Copilot can be useful when writing code. I tried to create examples that correspond to the chapters. Though I couldn't provide examples for every chapter. In many cases, the content of the chapters was too generic, as if code examples would be very helpful. In these chapters where I provided code examples, Copilot was generally able to generate useful code. Though sometimes I had to experiment a bit to achieve satisfactory results, I didn't always obtain the desired code. There is still a lot of research to be done on how to use Copilot in the best way.
+// remove the Copilot part altogether?
+
+My publisher had the idea to include Copilot, one of the new AI code generation tools available at the time of writing, in this book. And indeed, there are quite a few cases where Copilot can be useful when writing code. I tried to create examples that correspond to the chapters. Though I couldn't provide examples for every chapter. In many cases, the content of the chapters was too generic, as if code examples would be very helpful. In these chapters where I provided code examples, Copilot was generally able to generate useful code. Though sometimes I had to experiment a bit to achieve satisfactory results, I didn't always obtain the desired code. I think there is still a lot of research to be done on how to use Copilot in the best way.
 
 In general, it can be said that AI code generation is already a very useful tool. It can significantly improve your productivity and the quality of your code if used correctly. It also helped me write this book here. Though you always have to be cautious. While Copilot is not perfect, it can generate code that is not always correct. It provides only some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer; it's just a tool that assists you with your work. You still have to guide it in the right direction.
 
@@ -712,7 +713,7 @@ Names should be short yet concise [Naming].
 
 Do not repeat yourself (DRY) [section Do not Repeat Yourself]. There is no copy-paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you can never be sure if making a single change is sufficient, or if it needs to be applied in multiple other locations. This leads to bugs and high maintenance costs very quickly.
 
-Classes should have high internal [classes]. They should have a strong coupling between the variables [Data types] and methods [Functions] and weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then, they have to be broken up into several smaller classes [Refactoring].
+Classes should have high cohesion [classes]. They should have a strong coupling between the variables [Data types] and methods [Functions]. On the other hand, they should have weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then, they have to be broken up into several smaller classes [Refactoring].
 
 It feels easy to add features and change code. Thanks to the test coverage [Testing] you have a safety net, and well-structured code makes it apparent where new features belong [Physical Laws of Code].
 
@@ -722,7 +723,7 @@ There are no magic numbers. Assigning the magic number to a variable with a suit
 
 Define variables right where they are used. Always assign a value to them immediately.
 
-Create objects all at once. Creating only a part of an object due to missing information is akin to a supply chain issue in coding. This can become very confusing. An object should be created completely or not at all. Throw exceptions if objects cannot be created at once.
+Create objects all at once. There are cases where objects are created only partially due to missing information. This is should be avoided and akin to a supply chain issue. Gather all the pieces needed to create an object before doing son. An object should be created completely or not at all. Throw exceptions if objects cannot be created at once.
 
 Write short functions (~< 10 lines) and classes (~< 100 lines) [Single responsability principle]. These are very rough estimates and depend on numerous factors. Usually, their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes should be kept short to prevent their complexity [Complexity] from getting out of hand.
 
@@ -736,7 +737,7 @@ The solution representing the natural logic of the problem is usually the best [
 
 Use the most basic features of your programming language. [Programming language]. Only use more complex features if you truly benefit from them. Avoid utilizing features of your programming language that resemble black magic.
 
-Avoid nesting if loops. Apparently, this violates the SRP and is highly prone to bugs [Single Responsability Principle]. Avoid nested try-catch blocks as well. It is preferable to avoid nested loops entirely.
+Avoid nesting if loops. This violates the SRP and is highly prone to bugs [Single Responsability Principle]. Avoid nested try-catch blocks as well. It is preferable to avoid nested loops entirely. In fact, you should having many levels of indentation. These make code hard to understand.
 
 Avoid using Boolean values [section Booleans] and logic as much as possible. Due to human deficiencies, these lines of code harbor the most errors. Try to avoid them as far as reasonably possible. Ensure that every branch of an if statement is tested.
 
@@ -780,17 +781,16 @@ As we have discussed, good code is easy to understand. But what makes code easy 
 
 Humans are fundamentally different from computers. We can achieve incredible feats, yet we also have significant weaknesses. The evolution adapted us to our environment. We were made to live in the forest, hunt animals, and socialize with our clan. We needed keen eyes to spot our prey, a vivid imagination to grasp the terrain and wind direction, and familiarity with our hunting companions. These tasks necessitate a great deal of intuition and approximate reasoning. These are challenges that computers or robots struggle with. Though they improve, thanks to the emergence of artificial intelligence.
 
-One thing is clear: Humans are not good at math. It's so simple and logical. It took me 12 years of school to learn how to calculate a differential. And I was comparably good! Humans are not made to think logically. The computer can execute the following line of code without any issues, but I doubt any reader would be able to determine the result within five minutes.
+One thing is clear: Humans struggle to think logically. We are easily overwhelemed if there is no structure that we can understand. The computer can execute the following line of code without any issues, but I doubt any reader would be able to determine the result within five minutes.
 
 ```py
-
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
-
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") +
+    (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
 ```
 
 [https://www.quora.com/What-are-some-prime-examples-of-bad-Python-code]
 
-The result is the famous "Fizz Buzz" game [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with code like this because we struggle to structure it. It is too big to understand all at once, and we can't break it down into smaller pieces.
+The result is the famous "Fizz Buzz" game [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with code like this because we struggle to structure it. It is too big to understand all at once, and most of us can't break it down into smaller pieces.
 
 We are limited by the amount of complexity we can imagine. So, there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you will have to repeat this step recursively until you have small enough pieces that you can deal with. This is our area of expertise, where we excel in solving complex problems. Use your imagination!
 
@@ -813,83 +813,56 @@ This entire book is about writing code with low complexity. The sections on the 
 In the following code, one can easily mix up the different arguments since they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple.
 
 ```py
-
 def send_email(to, subject, body):
-
 # ...
-
 ```
 
 ```py
-
 from dataclasses import dataclass
 
 @dataclass
-
 class Email:
-
-to: str
-
-subject: str
-
-body: str
-
+    to: str
+    subject: str
+    body: str
 email = Email(to="google", subject="new search engine", body="it's awesome")
-
 def send_email(email):
-
-# ...
+    # ...
 
 ```
 
 In Python (and C++ 20), this problem is less prevalent as keyword arguments are supported.
 
 ```py
-
 def send_email(to: str, subject: str, body: str):
-
-pass
-
+    pass
 send_email(to="google", subject="new search engine", body="it's awesome")
-
 ```
 
-While it is still generally recommended to use a class instead of named arguments. It orders the arguments in a logical way. The `email` is of a higher order than the three strings. It orders these three objects into one logical unit, making it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or, as we have learned, they should have used a toolbox.
+While it is still generally recommended to use a class instead of named arguments. It orders the arguments in a logical way. The `email` is of a higher order than the three strings. It orders these three objects into one logical unit, making it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or, as we'll learn in the chapter [classes], you should use a data class that allows you to structure your variables.
 
 ### Complicated code
 
 Let's review the FizzBuzz code mentioned above.
 
 ```py
-
-(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
-
+(lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") + 
+    (not n % 5 and "buzz" or "") or n] + f(f, n+1) if n <= 100 else [], 1)
 ```
 
 This example is challenging to comprehend because there is an excessive amount of logic concentrated on a single line. It is very challenging to keep track of all the logic that is happening here. Instead, it is much easier to understand the code if you break it into smaller pieces, as demonstrated in the following code.
 
 ```py
-
 output = []
-
 for i in range(1, 101):
-
-if i % 3 == 0 and i % 5 == 0:
-
-output.append("fizzbuzz")
-
-elif i % 3 == 0:
-
-output.append("fizz")
-
-elif i % 5 == 0:
-
-output.append("buzz")
-
-else:
-
-output.append(i)
-
+    if i % 3 == 0 and i % 5 == 0:
+        output.append("fizzbuzz")
+    elif i % 3 == 0:
+        output.append("fizz")
+    elif i % 5 == 0:
+        output.append("buzz")
+    else:
+        output.append(i)
 ```
 
 This is, at least in my opinion, much easier to understand.
@@ -899,12 +872,18 @@ This is, at least in my opinion, much easier to understand.
 Avoid creating assignments within if statements. It is difficult to read and easy to make mistakes. I had to create a C++ example because such code is not possible in Python. It returns an error message if you make an assignment inside an if statement.
 
 ```C++
-
 if (int t = time_elapsed()) ...
-
 ```
 
-The problem is that you can easily confuse this code with `int t == time_elapsed()`. This is a very common mistake.
+The problem is that you can easily confuse this code with `t == time_elapsed()`. This is a common mistake.
+
+In C++ and many other programming languages, it is possible to omit curly braces if there is only one line of code. However, this is error prone as people don't pay attention. Therefore, it is recommended to always use curly braces.
+
+```C++
+if (time_elapsed() > 10)
+    std::cout << "time is up" << std::endl;
+    std::cout << "this will always be printed!" << std::endl;
+```
 
 ### Scope of variables
 
@@ -1196,7 +1175,7 @@ Functions, classes, libraries, and complete software or smartphone apps all have
 
 "Plugs," you may laugh. Yes, even plugs. Electric plugs in America look different from European ones. It is impossible to plug an American plug into a European socket, and vice versa. This is due to historical reasons, but at the same time, it is also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It's fail-safe. It is a good design that they are not interoperable. Most devices can now handle both voltages.
 
-An example of poor design is the USB Type-A port (used by USB 2 devices). The USB cable appears symmetric on the outside, but in reality, it is not. Someone once said that you always need three attempts to plug in a USB 2 device. The first time would have been right, but you didn't manage it. The second time was the wrong way around, and the third time you managed to plug it in. The USB-C port, which is used by USB 3 devices, features a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symmetrically or asymmetrically. The technicians implemented a solution that enabled both types of connections. The two devices involved must negotiate with each other on how to utilize the various lanes of the cable. This was some additional work for the engineers. But, once solved, it becomes a very convenient solution for the users.
+An example of poor design is the USB-A port. The USB cable appears symmetric on the outside, but in reality, it is not. Someone once said that you always need three attempts to plug in a device with a USB-A port. The first time would have been right, but you didn't manage it. The second time was the wrong way around, and the third time you managed to plug it in. The USB-C port features a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symmetrically or asymmetrically. The technicians implemented a solution that enabled both types of connections. The two devices involved must negotiate with each other on how to utilize the various lanes of the cable. This was some additional work for the engineers. But, once solved, it becomes a very convenient solution for the users.
 
 Another example are water tabs for showers, as previously discussed in the section on orthogonality. There are two tubes for cold and hot water where the plumber attached one valve to each. This was a pain to use. It took quite a while to set the temperature correctly, and once you changed the amount of water, the whole procedure started again. This was the engineer-friendly solution, not the user-friendly one. This was a bad interface. The new handles allow you to choose the amount of water and the temperature separately. This might be a bit more complicated to implement, but it's much more convenient to use.
 
@@ -1334,8 +1313,8 @@ Let's say you have an electric sensor. It measures the amount of light in the ro
 
 ```py
 def voltage_to_light_density(voltage):
-    # example function that converts voltage to light density
-    return voltage * 10
+    lumen_per_volt = 10
+    return voltage * lumen_per_volt
 ```
 
 Now, this function returns the orthogonal data for this specific example. Of course, the transformation required in your code will look completely different.
@@ -1347,18 +1326,18 @@ Copilot is generally not very good at writing interfaces. Instead, you should do
 
 # 12. Naming
 
-"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction"
+"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction citing the bible"
 [https://youtu.be/MBRoCdtZOYg]
 
 This chapter is a futile attempt to help you find better names. If you are not satisfied by my lousy explanations, I recommend the book [The Art of Readable Code] which has some more detailed explanations.
 
 How long does a football game last? This is a very innocent question, although people may not agree on an answer. In Europe, most people would say 90 minutes, while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that share the same name. This can cause some confusion.
 
-The example was cute. Mixing them up may cause amusement, but it does not cause any harm. When it comes to city names, things can get a little trickier. If you miss a job interview because you drove to the wrong city named "Springfield" (this name is used in The Simpsons because it is a very common name in the US), it can be quite painful. For the police and healthcare system, it becomes even worse. When there are individuals with identical names present, it can become risky. If your namesake is a highly dangerous criminal, the police may become really rough because they are confused and think you could be dangerous. Even in Europe. In a hospital, there are issues with using names as an identifier, and so far, there is no unique solution on how to solve it. Using the name combined with the birth date works out quite well, but it is no definite solution.
+The example was cute. Mixing them up may cause amusement, but it does not cause any harm. When it comes to city names, things can get a little trickier. If you miss a job interview because you drove to the wrong city named "Springfield" (this name is used in The Simpsons because it is a very common name in the US), it can be quite painful. For the police and healthcare system, it becomes even worse. When there are individuals with identical names present, it can become risky. If your namesake is a highly dangerous criminal, the police may become really rough because they are confused and think you could be dangerous. In a hospital, there are issues with using names as an identifier, and so far, there is no unique solution on how to solve it. Using the name combined with the birth date works out quite well, but it is no definite solution.
 
 All these things happen for only one reason. Name collisions. Various objects sharing the same name. Names are everything. No matter what you look at, you can name it. A computer, desk, printer, etc. This is the very foundation of our natural language. Of every language. Including programming languages. In a programming language, we define things by giving them a name. Every variable, function, or class has a name. Every programming construct has a name. You can use this name to search for it on Google or Stack Overflow. If you don't know the name, you're in trouble.
 
-Choosing good names is paramount in programming. You certainly don't want to encounter name collisions as explained above. It would cause a lot of confusion and could be the source of many errors in the future. But there is much more to consider when defining the name of an object. We are humans, and we need to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that provide us with an understanding of an object's purpose and characteristics. This is the only way we can create a mental image of what the code roughly does. It is necessary for everyone involved in the project to understand the meanings of all these expressions. What kind of properties does this object have? We have to be like lawyers. The law defines every crime as precisely as possible and assigns it a unique name. This is what we need.
+Choosing good names is paramount in programming. You certainly don't want to encounter name collisions as explained above. It would cause a lot of confusion and could be the source of many errors in the future. But there is much more to consider when defining the name of an object. We are humans, and we need to be able to read and understand the code. This would not be possible if we used randomly generated names. We need names that provide us with an understanding of an object's purpose and characteristics. This is the only way we can create a mental image of what the code roughly does. It is necessary for everyone involved in the project to understand the meanings of all these expressions. What kind of properties does this object have? Here we can learn from the law. In the law, every expression has a set of properties. We have to do the same when writing software. This is the only way we can prevent missunderstandings and ensure that everyone understands the code.
 
 Though, consistency in naming is more important than the actual name. If someone came up with an imperfect name, you either have to change it everywhere or stick to it.
 
@@ -1366,29 +1345,32 @@ Coming up with your own names is anything but easy. Especially new programmers r
 
 "When naming a class, think about the methods that will eventually reside in. The name should be good, but it doesn't have to be perfect." [WELC p.340]
 
+## How to name things
+
 As I already mentioned, naming is one of the most challenging aspects of programming. I tried to collect and synthesize some rules on the properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
-1. Names should be short but clear. Thus, there is a constant trade-off regarding the length of a name. Short names may be unclear, while long names may indicate that the object is difficult to describe. On the other hand, long names are not as detrimental as unclear names. When in doubt, choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb, a variable name is fine if a new work colleague can understand it.
-2. Think about how you would articulate a word in an everyday conversation. Would you refer to it `price of an apple` or is the context of your conversation clear enough that only `price` is sufficient?
-3. Classes and functions that adhere to the SRP are relatively easy to name because they perform only one task. Vice versa, if it's difficult to find a suitable name, reconsider whether the object adheres to the SRP and rewrite it accordingly.
-4. `set_color(7)`. What does `7` mean? Avoid using raw values in your code. Plain values are referred to as Magic Numbers because their meaning is not immediately apparent. Where Magic is being used in a negative context here. Your code should be understood! Always create a variable instead of using magic numbers. It is better to use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
-5. Well-defined levels of abstraction result in clearly defined and unique properties. This helps with finding names. Maybe you have created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be at a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
-6. Name collisions between different libraries are common and nothing to worry about. Use namespaces to distinguish them. Use the `from ... import *` syntax in Python cautiously as this removes this potentially crucial information about where a function is defined.
-7. Name collisions within the same library may occur occasionally and need to be resolved. Rename or even refactor one or both variables involved. They might perform very similar functions and should be refactored into a single object. Otherwise, you should be able to find clearly distinguishable names.
-8. Use names that are commonly used in real life. Ensure that the object in the code and the actual object have very similar properties. You should be able to communicate with a domain expert about your code, and he should understand at least some of your problems. If he doesn't understand you, you probably used names or a model that do not exist in reality. You did a great job if a marketer understands your high-level code and can provide you with useful feedback.
-9. Objects have names that are easy to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` are preferred over `price_of_apple` and `price_of_orange`, although this preference can change if you have different properties of apples as well.
-10. Use common English words that are familiar to everyone, and avoid abbreviations unless they are commonly used in spoken language, such as "CEO", etc.
-11. You are allowed to adjust the language slightly and sometimes disregard grammar rules. If you have many `fish`, you may call them `fishes` to highlight the plural. Being able to understand the meaning of the code is *importanter* than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things unambiguously. The following is perfectly viable code in Python: `for fish in fishes`.
-12. Avoid using "if," "and," or "or" in the names of your variables, functions, and classes. These concise terms may be appealing to employ, but they clearly indicate a breach of the SRP.
-13. When a variable is utilized extensively throughout the code, it is important to name it thoughtfully. Consider using a name provided by the marketing team or existing theories and literature. If a variable is used for only about 5 lines, even i, j, or k are fine.
-14. The name of a function should clearly indicate its purpose. There shouldn't be any unexpected behavior hidden in the code. For example, it shouldn't interact with global states, which is generally considered a poor practice.
-15. snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions and PascalCase for class definitions. Though it is more important to stick to the rules established in an ongoing project than coming up with your own notation rules.
-16. Classes and functions should reveal their purpose through their names. This relieves the developers from reading the internals, thus saving a lot of time. The name should be a part of the domain language.
-17. Prefer explicit names over implicit names; choose `hammer` over `nail_smashing_rod`. Avoid using generic terms such as "data," "information," or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
-18. Attach units to a variable name if they exist. For example, `timeout_duration_ms`. Though, once again, consistency is more important.
-19. Avoid using negated terms (and preferably avoid booleans altogether). `is_not_empty` is more difficult to read than `partially_full`.
-20. Normal reasoning should be able to help you understand how an algorithm generally scales. A function `size()` should not have a time complexity of O(n). If you want to create a function that calculates the size in O(n) time complexity, you should name it `compute_size()`.
-21. At times, it is suggested to use a trailing underscore character for class variables. This is to distinguish them from local variables. However, I think this is a sign of poor code. If you require such a distinction, your methods are likely too lengthy, and your class may be too large.
-22. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate because "high" and "low level" objects are relative terms. If you are the developer of the `math` library, the `sin` function is considered a high-level object, while for everyone else, it is seen as a low-level object. I don't think this rule is very helpful. I would argue that objects utilized in general literature (at commonly agreed-upon interfaces, typically have short names, whereas items falling in between may require longer names to adequately describe them.
+1. Names should be short yet clear. Thus, there is a constant trade-off regarding the length of a name. Short names may be unclear, while long names may indicate that the object is difficult to describe. On the other hand, long names are not as detrimental as unclear names. When in doubt, choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb, a variable name is fine if a new work colleague can understand it.
+2. Use the same words for creating a name that you would use in a comment. If you use different words, either your abstraction may be bad or your naming is inconsistent.
+3. Think about how you would articulate a word in an everyday conversation. Would you refer to it `price of an apple` or is the context of your conversation clear enough that only `price` is sufficient?
+4. Classes and functions that adhere to the SRP are relatively easy to name because they perform only one task. Vice versa, if it's difficult to find a suitable name, reconsider whether the object adheres to the SRP and rewrite it accordingly.
+5. `set_color(7)`. What does `7` mean? Avoid using raw values in your code. Plain values are referred to as Magic Numbers because their meaning is not immediately apparent. Your code should be understood! Always create a variable instead of using magic numbers. It is better to use `set_color(RED)`, where RED is a constant or, even better, an enum [section enums]. Both are much clearer.
+6. Well-defined levels of abstraction result in clearly defined and unique properties. This helps with finding names. Maybe you have created a level of abstraction that also exists in real life. At the same time, functions and classes are required to be at a single level of abstraction in order to fulfill the SRP. [chapter levels of abstraction]
+7. Name collisions between different libraries are common and nothing to worry about. Use namespaces to distinguish them. Use the `from ... import *` syntax in Python cautiously as this removes this potentially crucial information about where a function is defined.
+8. Name collisions within the same library may occur occasionally and need to be resolved. Rename or even refactor one or both variables involved. They might perform very similar functions and should be refactored into a single object. Otherwise, you should be able to find clearly distinguishable names.
+9. Use names that are commonly used in real life. Ensure that the object in the code and the actual object have very similar properties. You should be able to communicate with a domain expert about your code, and he should understand at least some of your problems. If he doesn't understand you, you probably used names or a model that do not exist in reality. You did a great job if a marketer understands your high-level code and can provide you with useful feedback.
+10. Objects have names that are easy to distinguish. Differences in the names should be as early in the word as possible. `apple_price` and `orange_price` are preferred over `price_of_apple` and `price_of_orange`, although this preference can change if you have different properties of apples as well.
+11. Use common English words that are familiar to everyone. Avoid abbreviations unless they are commonly used in spoken language, such as "CEO", etc. Whether an abbreviation is "commonly used" depends on the context.
+12. You are allowed to adjust the language slightly and sometimes disregard grammar rules. If you have many `fish`, you may call them `fishes` to highlight the plural. Being able to understand the meaning of the code is more important than the usage of proper English. Natural languages have some deficiencies when it comes to explaining things unambiguously. The following code is perfectly viable in Python: `for fish in fishes`.
+13. Avoid using "if," "and," or "or" in the names of your variables, functions, and classes. These concise terms may be appealing to employ, but they clearly indicate a breach of the SRP.
+14. When a variable is utilized extensively throughout the code, it is important to name it thoughtfully. Consider using a name provided by the marketing team or existing theories and literature. If a variable is used for only about 5 lines, even i, j, or k are fine.
+15. The name of a function should clearly indicate its purpose. There shouldn't be any unexpected behavior hidden in the code. For example, it shouldn't interact with global states, which is generally considered a poor practice.
+16. snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions and PascalCase for class definitions. Though it is more important to stick to the rules established in an ongoing project than coming up with your own notation rules.
+17. Classes and functions should reveal their purpose through their names. This relieves the developers from reading the internals, thus saving a lot of time. The name should be a part of the domain language.
+18. Prefer explicit names over implicit names; choose `hammer` over `nail_smashing_rod`. Avoid using generic terms such as "data," "information," or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
+19. Attach units to a variable name if they exist. For example, `timeout_duration_ms`. Though, once again, consistency is more important.
+20. Avoid using negated terms (and preferably avoid booleans altogether). `is_not_empty` is more difficult to read than `partially_full`.
+21. Normal reasoning should be able to help you understand how an algorithm generally scales. A function `size()` should not have a time complexity of O(n). If you want to create a function that calculates the size in O(n) time complexity, you should name it `compute_size()`.
+22. At times, it is suggested to use a trailing underscore character for class variables. This is to distinguish them from local variables. However, I think this is a sign of poor code. If you require such a distinction, your methods are likely too lengthy, and your class may be too large.
+23. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate. It rather depends whether the object is part of a well-known interface or not. Generally names on interfaces are short because they are commonly agreed upon. For example "sinus" in the math library.
 
 ## Naming Antipatterns
 
@@ -1473,30 +1455,24 @@ Throughout this book, we will distinguish between functions and methods, as is c
 
 Due to the SRP [SRP], functions should only cover one level of abstraction. Therefore, they have to be short. As a rule of thumb, functions should be at most about twenty lines long (that's what fits on my laptop screen without scrolling), although less than 10 lines is certainly preferred because shorter functions are much easier to understand. In fact, there is absolutely nothing wrong with functions that cover only one line of code. One-line functions are extremely useful for enhancing code readability as they elevate all code to a consistent level of abstraction. But this is something that many programmers don't consider.
 
-Let's create a brief example of a one-line function. We have a pandas object (a Python object for tables) `all_data` and we want to filter it by a `key` and a `value`. I believe this function enhances the clarity of the code that utilizes it as it operates on a higher level of abstraction.
-
-// maybe find another example?
+Here is a very short code snippet:
 
 ```py
-#example of a one line function
-def filter_data_by_key(data, key, value):
-    return data[data[key] == value]
-
-# example code that uses this function
-data = read_csv("pupils.csv")
-john = filter_data_by_key(data, "name", "John")
-# ...
+if fruit.color == "yellow" and fruit.taste == "sour":
+    make_lemonade()
 ```
 
-I think this code is much easier to read than this:
+This code is far from optimal. It is implicit. Of course, a fruit that is yellow and sour is a lemonade. But it takes thinking and it is not immediately clear. Let's look at the following code instead:
 
 ```py
-data = pd.read_csv("pupils.csv")
-john = data[data["name"] == "john"]
-# ...
+def is_a_lemon(fruit):
+    return fruit.color == "yellow" and fruit.taste == "sour"
+
+if is_a_lemon(fruit):
+    make_lemonade()
 ```
 
-The reason is that the first version of the code reads much more like normal English. The function describes what it does in words. Meanwhile, the second version of the code uses cryptic Python syntax that reveals details you typically do not need to know. And in those rare cases where you need to know, you can still look it up.
+Here we refactored the relevant code into a function. It is only one line, but it makes the code so much more readable.
 
 ### Levels of indentation
 
@@ -1645,11 +1621,11 @@ go_shopping(money, shopping_list)
 shopping_list = create_shopping_list(["apple", "banana"])
 ```
 
-After swapping the last two lines, this code cannot be executed anymore because the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above, you will get an error: `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+After having swapped the last two lines, this code cannot be executed anymore because the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above, you will get an error: `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
 
 Long story short: Ensure that your functions never have side effects. Functions and methods should only affect the class instance or, if necessary, mutable arguments. If possible, enforce temporal order, for instance, by utilizing functional programming.
 
-Another example of temporal coupling is global or static variables.
+A source of temporal coupling are global or static variables.
 
 ```py
 counter = 0
@@ -1662,30 +1638,28 @@ Here, the value of the `counter` depends on how often `log_in` has been called b
 
 ## Number of Arguments
 
-As for the length of the function, the number of arguments should be kept to a minimum as well. This simplifies the function significantly. Here, I try to provide a rough estimate of the number of variables a function or method may have. But this ultimately depends on the overall complexity of the code, etc.
+As for the length of the function, the number of arguments should be kept to a minimum as well. This simplifies the function significantly. Having too many variables is always a sign of too little cohesion while at the same time, the function becomes difficult to understand. Here, I try to provide a rough estimate of the number of variables a function or method may have. But this ultimately depends on the overall complexity of the code, etc.
 
-Now, there are very few functions with zero arguments (though of course there are plenty of methods with zero arguments that use class variables as a replacement for function arguments, the argument applies only to functions and not to methods). These functions are the simplest; they always behave consistently. There's not much to test, but at the same time, there isn't much that such a function can do. Especially if it's a pure function [section Functional Programming].
+Note that member variables to methods behave like arguments to functions. Therefore you have to add up method arguments and member variables to get the total number of variables. And we assume there are no global variables.
+
+Now, there are very few functions with zero arguments. These functions are the simplest; they always behave consistently. There's not much to test, but at the same time, there isn't much that such a function can do. Especially if it's a pure function [section Functional Programming] which doesn't have any side effects..
 
 As a function has more arguments, it can encompass more functionality. Yet, at the same time, it will become more complex. Functions with one or two arguments are usually fairly easy to handle and should cover most of the code. Functions with three arguments are already quite complex. They are difficult to understand and challenging to test.
 
-Avoid functions with more than three arguments whenever possible. This shouldn't be a significant burden. A plumber can manage to carry all his tools with only two hands, thanks to the invention of the toolbox. Why shouldn't we be able to juggle everything with just 3 arguments? We can use our equivalent to a toolbox: the data class (Python) or struct (C++) [Classes]. If you are struggling to fit all the variables you require into three struct objects, it may be necessary to rethink your function design.
+Try to avoid functions with more than three arguments. This shouldn't be a significant burden. A plumber can manage to carry all his tools with only two hands, thanks to the invention of the toolbox. Why shouldn't we be able to juggle everything with just 3 arguments? We can use our equivalent to a toolbox: the data class (Python) or struct (C++) [Classes]. If you are struggling to fit all the variables you require into three struct objects, it may be necessary to rethink your function design.
 
-In classes, the issue of the number of arguments becomes even worse. Methods can additionally access all the class variables. The equation is very simple:
-
-`Total variables = method arguments + class variables`
-
-Global variables should not be used; therefore, we disregard them. Still, when combining function arguments and class variables, it is very easy to exceed the recommended limit of 3 variables. This is the main reason why I don't recommend using classes excessively; instead, I suggest opting for procedural or functional programming. When dealing with classes with complex methods, there should be as few class variables as possible. Otherwise, its complexity will blow up.
+When combining method arguments and member variables, it is very easy to exceed the recommended limit of 3 variables. This is the main reason why I don't recommend using classes excessively. Instead, I generally suggest opting for procedural or functional programming. When dealing with classes with complex methods, there should be as few class variables as possible. Otherwise, its complexity will blow up [worker classes].
 
 A method may access certain class variables. However, one does not know this until one has read all of the methods and sub-methods involved. Furthermore, one must check whether a method modifies the class variables, unless it utilizes the C++ `const` expression. It is advisable to minimize the total number of variables in use. This is the only way to keep the code maintainable.
 
-Following the SRP, functions can only be either a query or a command [https://en.wikipedia.org/wiki/Command%E2%80%93query_separation], but never both at the same time. The code does not become more readable when this rule is violated. In the best case scenario, you save one line of code by avoiding an extra check. But at the same time, you make the code more confusing because handling two responsibilities is much harder than dealing with just one. And potentially saving one line of code is not worth violating the SRP. A common antipattern in this regard is returning a boolean flag with a set command.
+Following the SRP, functions can only be either a query or a command [https://en.wikipedia.org/wiki/Command%E2%80%93query_separation], but never both at the same time. In the best case scenario, you save one line of code by avoiding an extra check. But at the same time, you make the code more confusing because handling two responsibilities is much harder than dealing with just one. And potentially saving one line of code is not worth violating the SRP. A common antipattern in this regard is returning a boolean flag with a set command.
 
 ```py
 if set_node("money", 50):
     go_shopping()
 ```
 
-Here, the `set_node` function performs two actions simultaneously. It sets a value and returns a boolean. This certainly doesn't help with understanding the code.
+Here, the `set_node` function performs two actions simultaneously. It sets a value and returns a boolean. This certainly doesn't help with understanding the code. I would find it better if `set_node` raised an exception if it failed.
 
 ### Copilot
 
@@ -1722,11 +1696,11 @@ As always, output arguments give you a lot of power when used wisely. But at the
 
 ## Return Values
 
-Return values are, in my opinion, very normal, yet many OO programmers tend to dislike them. These OO programmers work with class methods that manipulate the existing class instances. In my opinion, return values have a distinct advantage as their intention is clearer. It states: this is a new value. Compared to: This method may alter a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value, an output argument, or change a class instance. But never two of them at the same time.
+Return values are, in my opinion, very normal, yet many OO programmers tend to dislike them. These OO programmers work with class methods that manipulate the existing class instances. But return values have a distinct advantage as their intention is clearer. It states: this is a new value. Compared to: This method may alter a variable of the class instance. And once again, keep in mind the SRP. A function should only have either a return value, an output argument, or change a class instance. But never two of them at the same time.
 
-Return values are central in functional programming. In functional programming, you are not allowed to alter the values of existing objects. So, you don't have the issue of function arguments changing their values. The workarounds are return values. They have the advantage that it is obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track the state of a variable because each variable has a unique state. After every step of your computation, you create a new variable so that you will never store different information inside a single variable. You just create a new one.
+Return values are central in functional programming. In functional programming, you are not allowed to alter the values of existing objects. So, you don't have the issue of function arguments changing their values. The workaround are return values. They have the advantage that it is obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track the state of a variable because each variable has a unique state. After every step of your computation, you create a new variable so that you will never store different information inside a single variable. You just create a new one.
 
-All together I think there is really nothing wrong with return values. Use them if it's not a performance-critical task where reusing an existing data structure is required.
+All together I think there is really nothing wrong with return values. In performacne-critical code, creating new objects all the time may be a problem. But in most cases, I recommend working with return values, rather than mutable objects.
 
 Here is a small Python example. There are two ways to sort elements in a list. You can either use the `sorted` function, which returns a new list, or you can use the `sort` method, which changes the list in place. I generally recommend using the `sorted` function because it makes it clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget that the elements in the list are now sorted.
 
@@ -1747,7 +1721,7 @@ Return values are completely acceptable, even if some OO programmers dislike the
 
 ## Copilot
 
-Copilot, like any other piece of relatively simple code, is quite proficient at generating new functions from scratch. The following code required only minimal guidance. The usage of dependency injection [section Dependency Injection] with the `condition` argument was also suggested by Copilot. I really like Copilot for this part because I often forget how to use lambdas, and sometimes it generates really nice code. The only question is whether the code is truly performing as intended.
+Copilot is quite proficient at generating new functions from scratch. The following code required only minimal guidance. The usage of dependency injection [section Dependency Injection] with the `condition` argument was also suggested by Copilot. I really like Copilot for this part because I often forget how to use lambdas, and sometimes it generates really nice code. The only question is whether the code is truly performing as intended.
 
 
 ```py
@@ -1770,13 +1744,11 @@ print_books_where(author_is('Paulo Coelho'))
 
 # 14. Classes
 
-//rename to types of classes and break up the chapter?
-
 "I think it's a new feature. Don't tell anyone it was an accident." — Larry Wall
 
-Classes are undoubtedly one of the cornerstones of modern code and the essence of OO programming. Unless you are one of the few functional programmers, chances are high that you use them every day. Surpringly, there is very little written about classes in the common literature. Therefore, it is time we had an in-depth discussion about them.
+Classes are undoubtedly one of the cornerstones of modern code and the essence of OO programming. Unless you are one of the few functional programmers, chances are high that you use them every day. Surpringly, there is very little written about classes in the common literature beyond the fact that they should have high cohesion, be small, etc. Therefore, it is time we had an in-depth discussion about them.
 
-This book does not aim to provide an exact explanation of what classes are. Even though the explanations provided here do not require much prior knowledge. This chapter is about how classes should be used. One can distinguish between different types of classes based on the methods and variables they utilize. We will try to understand when a function or variable should be public or private, and I will explain why I think plain getter and setter methods should generally be avoided.
+One can distinguish between different types of classes based on the methods and variables they utilize. We will try to understand when a function or variable should be public or private, and I will explain why plain getter and setter methods should generally be avoided.
 
 ## Data Classes and Structs
 
@@ -1796,7 +1768,7 @@ class Person:
 p = Person('John', 30, 'New York')
 ```
 
-Nowadays, structs (or dataclasses) are not anymore as commonly used. Especially the Java community was avoiding such kinds of objects at all costs until they introduced `record` classes with Java 14 [https://docs.oracle.com/en/java/javase/17/language/records.html]. Though there is absolutely nothing wrong with structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It's quite helpless.
+Nowadays, structs (or dataclasses) are not anymore as commonly used. Especially the Java community was avoiding such kinds of objects at all costs until they introduced `record` classes with Java 14 [https://docs.oracle.com/en/java/javase/17/language/records.html]. Though there is absolutely nothing wrong with structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It's quite unstructured.
 
 Classes are very similar to structs. Besides some technical details, the only real difference is the encapsulation of variables and functions (methods), as well as the introduction of inheritance. You can decide for each variable or method whether it should be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs.
 
@@ -1818,7 +1790,7 @@ There is one very simple rule of thumb for determining which parts of a class sh
 
 I like to categorize classes by the number of variables and the complexity of the functions they contain. Ensuring that your classes fit into one of these categories is helpful for fulfilling the SRP.
 
-Some of the following class names, namely the worker class, delegating class, and the pure method class, are not commonly used. I created them on my own because I believe it is crucial to differentiate between various types of classes based on the number of variables and functions they contain, as well as their complexity.
+Some of the following class names, namely the worker class and the delegating class, are not commonly used. I defined them by myself because I believe it is crucial to differentiate between various types of classes based on the number of variables and functions they contain, as well as their complexity.
 
 ### Data Class
 
@@ -1836,37 +1808,7 @@ class InventoryItem:
 
 ### Pure Method Classes
 
-A class may have no member variables at all. It consists only of public methods. In Java and C#, writing such classes is necessary because every function must be implemented within a class. I regard this as an OO obsession of these programming languages. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer free-standing functions over classes with only public methods, but I guess that's a matter of taste.
-
-In Python, many functions defined in libraries are not part of classes. This can be seen as follows. If we want to call the `sin` function, we have to write the following code:
-
-```py
-import math
-math.sin(0)
-```
-
-But we can also call it as 
-
-```py
-from math import sin
-sin(0)
-```
-
-If we define the math library ourselves and put the `sin` function inside the `math` class, the code would look as follows:
-
-```py
-# inside math.py
-class Math:
-    def sin(angle):
-        return # implementation of the sin function
-
-# inside the main code
-from math import Math
-Math.sin(0)
-```
-Having the math library contain free functions instead of a class with only public methods isn't much of a difference, but in my opinion, dealing with a set of functions is more intuitive than having them inside a class.
-
-For everyone interested in C++: In C++, there is no way to determine if a function is inside a class or not. A function has exactly the same signature whether it is a static method of a class or a freestanding function in a namespace. The standard (`std::`) library, for example, is a namespace. This has the huge advantage that the standard library can be split up into many small parts. You can import only what you really need.
+A pure method class may have no member variables at all. It consists only of public methods. In programming languages as Java and C#, writing such classes is necessary once in a while because every function must be implemented within a class. I regard this as an OO obsession of these programming languages. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer a set of free-standing functions over classes with only public methods, but I guess that's to some degree a matter of taste.
 
 ### Delegating Class
 
@@ -1891,7 +1833,7 @@ class Car:
 
 Worker classes implement complex algorithms in your code. Some people may argue that these are the only real classes. Most design rules for classes apply specifically to worker classes. Worker classes consist of very few private variables and no public variables. They often include some rather complicated private methods and a few public methods. Worker classes are the only type of classes with private methods. Other classes do not have complicated methods to hide; they only hide variables.
 
-This implies that worker classes are the only classes that perform complex tasks that should to be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than three member variables and about 100 lines of code, depending on the general complexity of the class. Consider using a set of functions instead of a worker class. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer.
+This implies that worker classes are the only classes that perform complex tasks that should be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than three member variables and about 100 lines of code, depending on the general complexity of the class. Consider using a set of functions instead of a worker class. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer.
 
 As a general rule of thumb, one can say that a worker class has become too complex if you struggle to write tests for it. This is a clear indication that it's time to break up the class into smaller pieces. For more details, refer to the chapter on testing.
 
@@ -1907,7 +1849,7 @@ class Worker:
         # some complicated logic
         self._data.append(number)
         self._data.sort()
-        self.read_out_entries()
+        self.read_out_entry()
 
     def read_out_entry(self):
         entry = self._data.pop()
@@ -2021,17 +1963,12 @@ There are two ways to modify the value of an exisitng object using a function. E
 a.b() # method
 b(a)  # function
 ```
-Both lines of code have in common that the method/function `b` can modify the value of `a`.
+There are only minor differences between these two lines of code. Let's compare them:
+- In both lines, the variable `a` can be modified. Which is not necessarily a good thing, though.
+- The function has only access to the public variables of `a`, while the method can also access its private variables.
+- In C++, constness can be applied in both cases.
 
-It turns out that for most criteria, these two function or method calls are pretty much equal:
-
-- In `b(a)` it is assumed that `a` is not changed unless the name of `b` states otherwise. Though the same holds for `a.b()`.
-
-- `b(a)` can access only the public variables and functions of `a`, while `a.b()` can access everything. This is probably the biggest difference here. Thus, `b(a)` decouples the code better than `a.b()`. Though this is not a crucial difference.
-
-- In C++, constness can be enabled for `a` in both `b(a)` and `a.b()`. In the first case, `a` has to be passed as a `const` element; in the second case, `b` has to be made a `const` method. In Python there is no constness to beginn with.
-
-In summary, there are no significant differences. `b(a)` offers in my opinion somewhat better decoupling and should therefore be preferred. Ultimately, it all comes down to readability. Which version is easier to understand? The function or the method? Let's look at the following code:
+In summary, there are no significant differences. The free-standing function `b(a)` offers slightly better decoupling and should therefore be preferred. But ultimately, it all comes down to readability. Which version is easier to understand? The function or the method? Let's look at the following code:
 
 ```Py
 # Function:
@@ -2124,7 +2061,7 @@ Long story short: Avoid using plain getter and setter methods for data classes. 
 
 ### Worker Classes
 
-Member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is certainly no reason to write setter methods in worker classes. And there is hardly ever a reason to write a pure getter method.
+Member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is certainly no reason to write setter methods in worker classes. And there is hardly ever a reason to write a pure getter method. And no, writing a getter method for testing purposes is akin to making a private method puplic in order to test it. This is just bad programming practice.
 
 ### Delegating Classes
 
@@ -2146,7 +2083,7 @@ class Car:
         return self.air_conditioning.read_temperature()
 ```
 
-I hope I managed to convince you not to write bare getter and setter methods for member variables in delegating classes.
+I hope I managed to convince you not to write bare getter and setter methods in any kind of classes. Don't write getters and setters because someone told you so. Only write them if you really found a reason to do so. This should be the exception rather than the norm.
 
 ## Coupling and Cohesion
 
@@ -2668,7 +2605,7 @@ After pointers and Booleans, strings are arguably the third most error-prone dat
 
 Some people even start to encode all kinds of logic into strings. This is dreadful. At times, this is also referred to as "stringly typed" to emphasize the importance of using appropriate types instead of strings. // See also "primitive obsession"
 
-I found the following example in the book "Clean Code" on page 128, where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did.
+I found the following example in the book "Clean Code" on page 128, where Robert C. Martin did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did.
 
 He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each character encodes whether it was too hot or not, too cold or not, etc. Capital letters represent `true`, while lowercase letters represent `false`. It's such a beautiful example of the kind of logic that can be implemented in strings. At least it would be if it weren't so outrageous what he did here. Avoid using strings to encode values of a different type. To make matters worse, the letter `"h"` is even used twice. This code becomes more fragile because the state relies on the order of the characters.
 
@@ -6768,20 +6705,22 @@ Similar to the CSV file, you can also define your own file format for things oth
 
 [https://youtu.be/LfIPVIsH4ZU]
 
-Many software developers start with writing code right away when they have some task to do. And they postpone the whole infrastructure work for as long as they can. They keep compiling code with the command line for as long as they can. They don't use git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things right at the beginning of the project. 
+Many software developers start by writing code immediately when they have a task to complete. And they postpone all infrastructure work for as long as possible. They continue to compile code using the command line for as long as possible. They don't use Git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things at the beginning of the project.
 
-Yes, it will take some time to get started. And yes, it's a painful process if you are not used to it. But it is worth it. The very first reason why it is worth it is DRY. If you have to type in the compilation command to the terminal over and over again, you are repeating yourself time and time again. This is going to slow down the development process. This is way worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
+Yes, it will take some time to get started. And yes, it's a painful process if you are not accustomed to it. But it is worth it. The very first reason why it is worth it is DRY. If you find yourself repeatedly typing the compilation command into the terminal, you are essentially repeating the same action over and over again. This is going to slow down the development process. This is much worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
 
-For small projects, setting up git and a proper build tool need hardly any time. Already after the first time introducing some hard to track down bug you'll be glad having version control and being able to simply revert your last changes. The same holds for the build process. Typing in many long commands not only takes time, it is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard to understand behavior. And especially once you have to cooporate with other developers, there is no way around a proper version control software and a build tool.
+For small projects, setting up Git and a proper build tool hardly takes any time. After encountering a challenging bug for the first time, you will appreciate having version control in place. This will allow you to easily revert back to your previous changes. The same holds true for the build process. Typing in many long commands not only takes time but is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard-to-understand behavior. And especially when you have to cooperate with other developers, there is no way around using proper version control software and a build tool.
 
-Similarly for Continuous Integration (CI). It will take some time setting it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests, otherwise I recommend you read the chapter on testing [chapter Testing]) always run. The code committed to master has been compiled and the tests pass without any errors.
+Similarly, for Continuous Integration (CI). It will take some time to set it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests; otherwise, I recommend you read the chapter on testing [chapter Testing]) always run. The code committed to the master branch has been compiled, and the tests pass without any errors.
 
-So yes, setting up the infrastructure of a project may need some time. But it is certainly time well spent. There are so many advantages having a properly set up infrastructure:
-- You anyway have to learn how to use git, cmake and all the other tools. So it's good practice to get started with them as soon as possible.
-- You will save a lot of time down the road. This will outweigh the time needed now to set everything up.
-- Having properly set up tools makes it easier for new team members to get started. They only have to clone the repo and run the build tool and they can get started.
+Yes, setting up the infrastructure of a project may take some time. But it is certainly time well spent. There are so many advantages to having a properly set up infrastructure.
 
-## Project folder
+- You have to learn how to use Git, CMake, and all the other tools anyway. So, it's good practice to get started with them as soon as possible.
+- You will save a lot of time in the future. This will outweigh the time needed to set everything up now.
+- Having properly set up tools makes it easier for new team members to get started. Users only need to clone the repository and run the build tool to get started.
+
+////
+## Project Folder
 
 // Add a plot with the folder structure
 
@@ -6933,8 +6872,6 @@ Again, there are free alternatives around, though you are unlikely to see any al
 The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation as you can also look at the code instead. Instead docstrings should be used as a documentation for external APIs used by your customers.
 
 Every programming language has one docstring tool. For Python it’s Sphynx, for C++ it’s doxygen.
-
-
 
 
 Part 9 Collaborating
