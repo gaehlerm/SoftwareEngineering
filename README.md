@@ -153,7 +153,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Strings](#strings-1)
     - [Stringly typed objects](#stringly-typed-objects)
     - [Natural Language](#natural-language)
-  - [Dicts](#dicts)
+  - [Dictionaries](#dictionaries)
   - [Trees](#trees)
   - [Pointers](#pointers)
 - [17. Properties of Variables](#17-properties-of-variables)
@@ -1458,7 +1458,8 @@ Due to the SRP [SRP], functions should only cover one level of abstraction. Ther
 Here is a very short code snippet:
 
 ```py
-if fruit.color == "yellow" and fruit.taste == "sour":
+#define enums for Color and Flavor
+if fruit.color == Color.yellow and fruit.flavor == Flavor.sour:
     make_lemonade()
 ```
 
@@ -1466,7 +1467,7 @@ This code is far from optimal. It is implicit. Of course, a fruit that is yellow
 
 ```py
 def is_a_lemon(fruit):
-    return fruit.color == "yellow" and fruit.taste == "sour"
+    return fruit.color == Color.yellow and fruit.flavor == Flavor.sour
 
 if is_a_lemon(fruit):
     make_lemonade()
@@ -1831,9 +1832,9 @@ class Car:
 
 ### Worker Class
 
-Worker classes implement complex algorithms in your code. Some people may argue that these are the only real classes. Most design rules for classes apply specifically to worker classes. Worker classes consist of very few private variables and no public variables. They often include some rather complicated private methods and a few public methods. Worker classes are the only type of classes with private methods. Other classes do not have complicated methods to hide; they only hide variables.
+Worker classes implement complex algorithms in your code. Some people may argue that these are the only real classes. Most design rules for classes apply specifically to worker classes. Worker classes consist of very few private variables and no public variables. They often include some rather complicated private methods and few public methods. Worker classes are the only type of classes with private methods. Other classes do not have complicated methods to hide; they only hide variables.
 
-This implies that worker classes are the only classes that perform complex tasks that should be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than three member variables and about 100 lines of code, depending on the general complexity of the class. Consider using a set of functions instead of a worker class. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer.
+This implies that worker classes are the only classes that perform complex tasks that should be hidden from other programmers. At the same time, worker classes are extremely dangerous. Excessive complexity can be easily concealed within a single worker class, making it incomprehensible to anyone. You have to ensure that your worker classes are small and well-tested. In fact, a worker class isn't that different from a function, where the function arguments correspond to the member variables. Therefore, a worker class should never have more than around three member variables and about 100 lines of code, depending on the general complexity of the class. Preferably less. An alternative to a worker class is a set of functions. Functions have to explicitly pass around the variables, which might make the code easier to understand and test, even if the code overall becomes slightly longer. This is a viable alternative if the cohesiveness is not that high. As far as cohesiveness can be measured.
 
 As a general rule of thumb, one can say that a worker class has become too complex if you struggle to write tests for it. This is a clear indication that it's time to break up the class into smaller pieces. For more details, refer to the chapter on testing.
 
@@ -1860,11 +1861,11 @@ class Worker:
 Just for completeness, this class could be rewritten using only functions as follows. We pass the `data` around as a function argument instead of using a class variable.
 
 ```py
-def add_entry(number, data):
+def add_entry(number, data=[1,2,3]):
     # some complicated logic
     data.append(number)
     data.sort()
-    read_out_entries(data)
+    read_out_entry(data)
 
 def read_out_entry(data):
     entry = data.pop()
@@ -2093,17 +2094,17 @@ I hope I managed to convince you not to write bare getter and setter methods in 
 
 If you don't understand these expressions, we could rewrite it as follows: "There should be significant interaction among methods and variables within a class and minimal interaction between classes." This is indeed a very important rule. However, like most rules in software engineering, it has to be taken with a grain of salt.
 
+As a very simple rule of thumb, you can search the whole class for a variable. If most methods use this variable, it has high cohesion and the variable should stay in the class. Variables that are only used by a single method should be removed from the class and passed on as a function argument.
+
 ### Worker Classes
 
-The rule defined above by Robert C. Martin was intended for worker classes. Worker classes are a common origin of poor code because they often become overly complex. When breaking worker classes into smaller pieces, this rule is very useful. It gives you a hint on how to break them into pieces. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. You may also need to rewrite a few methods before dividing the class into smaller parts. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand. And you have become a much better software engineer.
+The rule cited above by Robert C. Martin was intended for worker classes. Worker classes are a common origin of poor code because they often become overly complex. When breaking worker classes into smaller pieces, this rule is very useful. It gives you a hint on how to break them into pieces. Cluster your methods and variables into small groups. There should be a lot of interaction within the groups and little interaction between the groups. You may also need to rewrite a few methods before dividing the class into smaller parts. It will be worth the effort. If you manage to do this, it will certainly make your code easier to understand. And you have become a much better software engineer.
 
 // get a better image without copy right
 
 <img src=images/CouplingVsCohesion.svg.png width="400">
 
 [fundamentals of software architecture p. 43, LCOM metric]
-
-Unfortunately, it is very difficult to provide an example of such a complex class here. Thus, I can only explain here in rough terms how you could break down such a complicated class into smaller components.
 
 Two classes have low coupling if the number of interaction points between them is relatively low. Ideally, every class completes its work and then passes it on to the next one, similar to a relay race or functional programming. Each class would have an interface consisting of only one function. High coupling, on the other hand, is like two classes playing ping-pong. The classes all have a comprehensive interface containing numerous functions that call each other several times in a specific order. This quickly becomes terribly complex. The worst-case scenario is when two classes call each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is (besides inheritance). Neither of the two classes can be changed without also changing the other one. Such code is solid as a rock. You will never be able to change them again.
 
@@ -2115,7 +2116,7 @@ Anyway, the rule of high cohesion and low coupling is a good rule of thumb when 
 
 ### Other class types
 
-Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similar properties. Like a hammer and a screw driver both being tools. Splitting a data class requires no effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
+Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similar properties and are usually used together. Like a hammer and a screw driver both being tools stored in a tool box. Splitting a data class requires no effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
 
 ### Inheritance
 
@@ -2125,7 +2126,7 @@ Coupling is one of the reasons why I recommend avoiding the use of inheritance. 
 
 I discourage the use of static methods. It's not terribly bad, but it's another example of these misguided object-oriented concepts. Let's first look at static methods. Isn't it strange: you write a class with all kinds of member variables, and then there is one static method that doesn't need any of these variables, yet it is still within the class? Didn't we say we wanted to keep classes small? It should have high cohesion? A static method has as little cohesion as a variable in a data class. Close to zero.
 
-I fully understand that there are programming languages in which functions must remain within a class, and static functions are the only way to write "free" (standalone) functions. In all other languages, however, I recommend avoiding the use of static methods as they do not add any additional functionality or improve the code. In C++, you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time, you can split a namespace over many files, as is done for the `std::` namespace, for example.
+I fully understand that there are programming languages in which functions must remain within a class, and static functions are the only way to write standalone functions. In all other languages, however, I recommend avoiding the use of static methods as they do not add any additional functionality or improve the code. In C++, you can mimic a static function using a namespace. The resulting function call will be indistinguishable. At the same time, you can split a namespace over many files, as is done for the `std::` namespace, for example.
 
 As we are discussing static functions, we can also discuss static variables as used for instance in languages like C++. Static variables are similar to singletons, and testing classes containing static variables can be challenging. Avoid using singletons and static variables. As soon as you start writing unit tests for static variables, you'll see why I discourage using them. They are like global variables and can be changed everywhere. This can easily end up in a nightmare.
 
@@ -2133,7 +2134,7 @@ As we are discussing static functions, we can also discuss static variables as u
 
 "You wanted a banana, but what you got was a gorilla holding the banana and the entire jungle." - Joe Armstrong
 
-Classes are frequently misused for writing poor code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too large. It is just too convenient to write everything inside a single class. Having all the member variables readily available makes it easy to work this way. In some cases, I had the feeling that the authors of certain code aimed to write all the code within a single class. This is extremely problematic. If a single class covers the entire code, then the member variables become ... global variables! [Additional Properties of Variables] Member variables are also called mini-globals in [The Art of Readable Code] for this purpose. With too many member variables the entire code turns into a Big Ball of Mud. [https://en.wikipedia.org/wiki/Big_Ball_of_Mud]
+Classes are frequently misused for writing poor code without the programmers realizing it. They just think it would be normal. The most common problem is that classes become too large. It is just too convenient to write everything inside a single class. Having all the member variables readily available makes it easy to work this way. In some cases, I had the feeling that the authors of some code aimed to write all the code within a single class. This is extremely problematic. If a single class covers the entire code, then the member variables become ... global variables! [Additional Properties of Variables] Member variables are also called mini-globals in [The Art of Readable Code] for this purpose. With too many member variables the entire code turns into a Big Ball of Mud. [https://en.wikipedia.org/wiki/Big_Ball_of_Mud]
 
 But also for slightly smaller classes, member variables can be problematic. They represent a hidden state. It is generally preferred to pass variables as function arguments to functions and methods, rather than having member variables. This makes the functions easier to test since you don't have to set up a class instance. Be careful with class variables. Or even worse, inherited variables. Keep your classes small to limit the scope of your class variables or replace classes completely with functions, if possible.
 
@@ -2172,15 +2173,17 @@ The only drawback is that Copilot suggests the function `get_descriptive_name` i
 
 # 15. Inheritance
 
-"Inheritance is the base class of evil" [https://youtu.be/2bLkxj6EVoM?list=PLM5v5JsFsgP21eB4z2mIL8upkvT00Tw9B]
+"Inheritance is the base class of evil" [https://youtu.be/bIhUE5uUFOA]
 
-[https://youtu.be/da_Rvn0au-g]
+Why inheritance should not be used: [https://youtu.be/da_Rvn0au-g]
 
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often described as an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
 ## Two Types of Inheritance
 
 There are two types of inheritance: implementation inheritance and interface inheritance. Interface inheritance is used to define and implement interfaces. In C++, these base classes consist of only pure virtual functions that will be implemented in the derived classes. This type of inheritance is perfectly acceptable. Actually, it is needed for many different purposes, such as runtime polymorphism.
+
+In Python the same behavior can be implementend using abstract base classes. Even though you don't need inheritance in Python for polymorphism. It is sufficient that two classes implement the same interface and then you can exchange them.
 
 ```py
 import abc
@@ -2196,9 +2199,9 @@ class Derived(Base):
         print("a derived")
 ```
 
-There is not much more to say about interface inheritance. It is a good thing, and you should use it. It is a method to define interfaces and implement them. In C++, there is no way around it; in Python, you can omit it if you want.
+There is not much more to say about interface inheritance. It is a good thing, and you should use it. It is a method to define interfaces and implement them.
 
-Implementation inheritance inherits the implementation of the base class. Here, all kinds of different problems may occur that we'll look at in this section. Thus, when I write about inheritance in this section, I always mean implementation inheritance.
+Implementation inheritance inherits the implementation of the base class. Here, all kinds of different problems may occur that we'll look at in this section.
 
 ```py
 class Base:
@@ -2214,29 +2217,27 @@ class Derived(Base):
 ```
 ## Drawbacks of Inheritance
 
-Implementation inheritance comes with several issues and should therefore be avoided whenever possible. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines explained (Rainer Grimm)]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
+Implementation inheritance comes with several issues and should be avoided. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines explained]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
 
 ### Tight Coupling
 
-The most obvious problem with implementation inheritance is that we may create very long inheritance chains. I once read an article about a piece of code that had 10 levels of inheritance. It turned out to be absolutely disastrous. There is hardly any stronger coupling between code than in inheritance. It was impossible to apply any changes or remove all the inheritance. The inheritance structure resembled a tree, with its roots entangling all the surrounding code. The code lost all its fluffiness and became solid as a rock.
+The most obvious problem with implementation inheritance is that we may create very long inheritance chains. I once read an article about a piece of code that had 10 levels of inheritance. It turned out to be absolutely disastrous. There is hardly any stronger coupling between code than in inheritance. It was impossible to apply any changes nor to remove all the inheritance. The inheritance structure resembled a tree, with its roots entangling all the surrounding code. The code lost all its fluffiness and became solid as a rock.
 
-One of the main issues here is that all levels of inheritance have access to the variables at the base level. The variables and methods are not sorted. They are just there. Meanwhile, with composition, you only need to consider the location of variables within the class. This clarification helps identify the origin of a variable and likely deters you from delving into objects nested deeply in the hierarchy, unless you intentionally choose to do so. Therefore, one can say that composition properly implements encapsulation, while inheritance does not.
-
-Furthermore, I consider the widespread use of implementation inheritance as an outdated dogma. It is your responsibility to write code that is easy to understand. Don't let yourself get bothered by someone saying that a `sheep` is an `animal` and you should, therefore, use inheritance. It will almost certainly not improve the code, so you can conclude the discussion. You are probably developing a model of a `sheep` that doesn't need to know about `animals`. You have to be pragmatic. If a `sheep` does not need to be aware of the `Animal` class, there is no justification for it to inherit from it.
+I consider the widespread use of implementation inheritance as an outdated dogma. It is your responsibility to write code that is easy to understand. Don't let yourself get bothered by someone saying that a `sheep` is an `animal` and you should, therefore, use inheritance. It will almost certainly not improve the code, so you can conclude the discussion. You are probably developing a model of a `sheep` that doesn't need to know about `animals`. You have to be pragmatic. If a `sheep` does not need to be aware of the `Animal` class, there is no justification for it to inherit from it.
 
 ### Inheritance is Error-Prone
 
-There are several other issues with inheritance. This is already evident from Michael Feathers' book "Working Effectively with Legacy Code," where he provides numerous examples that he aimed to refactor. In about half of the cases, there were issues with inheritance or global variables because these things can come out of nowhere. It's just too easy to create bugs with inheritance. One misspelled function will not override the base class function as intended, potentially creating a bug. Even if you delete a function from a derived class, the code will still compile because of the presence of the base class function. Meanwhile, without inheritance, you would get a compiler error for pretty much any kind of typo.
+There are several other issues with inheritance. This is already evident from Michael Feathers' book "Working Effectively with Legacy Code", where he provides numerous examples that he aimed to refactor. In about half of the cases, there were issues with inheritance or global variables because these things can come out of nowhere. It's just too easy to create bugs with inheritance. One misspelled function will not override the base class function as intended, potentially creating a bug. Even if you delete a function from a derived class, the code will still compile because of the presence of the base class function. Meanwhile, without inheritance, you would get a compiler error for pretty much any kind of typo.
 
 Though it has to be said that with the `override` keyword or attribute, this problem has been resolved in some programming languages like C++ and Java. Still, I would recommend avoiding the use of inheritance and always using `override` when necessary to prevent nasty bugs.
 
 ### Obscure code
 
-Additionally, there is a problem with variables inherited from the base class. These are nearly as detrimental as global variables. One doesn't know where they come from. Imagine a variable obtained from 10 levels of inheritance. And there are dozens of methods that can modify them. This is absolutely terrifying. With composition, on the other hand, you would have to dig your way through all the variables. This seems like a drawback at first sight, but it turns out to be a distinct advantage as you always know exactly where you are in the instance chain. For this reason, it is generally not recommended to nest inheritance, and I recommend using composition instead. And honestly, I don't see why inheritance should be used at all, except for defining interfaces. Code reuse can be better implemented using composition or functions.
+Additionally, there is a problem with variables inherited from the base class. These are nearly as detrimental as global variables. One doesn't know where they come from. Imagine a variable obtained from 10 levels of inheritance. And there are dozens of methods that can modify them. This is absolutely terrifying. With composition, on the other hand, you would have to dig your way through all the variables. This seems like a drawback at first sight, but it turns out to be a distinct advantage as you always know exactly where you are in the instance chain. For this reason, it is generally not recommended to nest inheritance, and I recommend using composition instead. And honestly, I don't see why inheritance should be used at all, except for defining interfaces. Code reuse can be better implemented using composition or simple functions.
 
 ### Implementation
 
-The implementation of inheritance can be a complex task, especially for some of the early OO programming languages like C++. In the early days, compilers struggled to handle many tasks. The danger was very high that a programmer created very subtle bugs. Even today, it is still challenging to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires a considerable amount of knowledge and care to prevent bugs. It is fragile. Avoid fragile code. If you follow my advice and avoid using inheritance, you won't have to deal with such technicalities.
+The implementation of inheritance can be a complex task, especially for some of the early OO programming languages like C++. In the early days, compilers struggled to handle many tasks. The danger was very high that a programmer created very subtle bugs. Even today, it is still challenging to use inheritance correctly in some programming languages. Implementing inheritance in C++ requires a considerable amount of knowledge and care to prevent bugs. It is fragile. Avoid fragile code.
 
 // get a better image without copyright restrictions.
 <img src=images/diamond.jpg width="400">
@@ -2351,17 +2352,15 @@ I intentionally made this code so terrible for you to understand. Strings and nu
 
 The second problem is that we don't know the meaning of these numbers. There is no appropriate name for this list that fully explains its contents. This list violates the single responsibility principle all by itself.
 
-And the third code based on this data structure will inevitably become brittle. It's screaming for bugs. You can pretty much do everything wrong, and I promise you will.
+And the third problem is that code based on this data structure will inevitably become brittle. It's screaming for bugs. You can pretty much do everything wrong, and I promise you will.
 
-Apparently, three values inside this list always belong together. In C++, we would create a struct for it; in Python, we use a data class.
-
-A first improvement would be to use a list of lists,
+Apparently, three values inside this list always belong together. A first improvement would be to use a list of lists,
 
 ```py
 fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
 ```
 
-This provides some structure to the list, making it less likely that this data structure will be used incorrectly. This inner list is still far from optimal.
+This provides some structure to the list, making it less likely that this data structure will be used incorrectly. This inner list is still far from optimal. We should use a data class instead.
 
 The code should be rewritten as follows:
 
@@ -2405,7 +2404,7 @@ favorite_color = Blue()
 from enum import Enum
 class Color(Enum):
     BLUE = 1
-favorite_color = Color::BLUE
+favorite_color = Color.BLUE
 ```
 
 The first four options all have some severe drawbacks.
@@ -2417,14 +2416,6 @@ The first one is extremely ugly. What does `is_blue = False` mean? Is it red? In
 ### Strings
 
 The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time, it's easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might introduce a bug that could result in strange behavior. Without you noticing either that you have a bug or where the error comes from. The compiler won't be able to help you with this error. Avoid using string comparisons as they are prone to errors.
-
-Sometimes, objects of this kind are also referred to as "stringly typed". Strings are being misused for storing various types of data for which they are not intended. Here are some examples [https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]:
-
-```py
-robot.move("1","2") # Should be int like 1 and 2, and maybe better a point
-getattr(dog, "bark") # Dispatching a method passing in a string that is the method's name. dog.Bark()
-message.push("transaction_completed") # Could be an enum
-```
 
 ### Ints
 
@@ -2450,42 +2441,48 @@ Enums can only be used if you know all possible options when writing the code. I
 
 "Yes, of course, you are right. Let me explain. It's somewhat similar to alcohol. Alcohol does not do any harm if it is inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can cause a car accident or start a pub brawl. Humans can't handle alcohol. This is why some people say that alcohol is evil. There is a very similar issue with Booleans. Booleans can be used for great things. But at the same time, using Booleans can lead to the creation of bugs. Humans struggle with Booleans. They mix it up too often. And even worse than Booleans lead to if statements. But okay, maybe we should not call them evil, but dangerous."
 
-I may be exaggerating slightly. But it's true. Humans struggle dealing with Booleans and if statements. Accept your fate and learn to deal with it.
+Of course, I may be exaggerating slightly. But there's no denying: Humans struggle with Booleans and if statements. They lead to bugs. You will create bugs with if statements if you keep using them. Here are some points to consider when working with if statements:
 
 - Good code design results in fewer if statements.
-
 - Polymorphism can be utilized to avoid using if statements.
-
-- Resolve `if` statements at the lowest level of abstraction possible.
-
+- Resolve `if` statements as early as possible. Use Dependency Injection (DI) instead of booleans.
 - Avoid nesting if statements. Excessive levels of indentation are a sign of poor code quality.
-
 - Avoid passing Booleans as function arguments.
-
 - Consider using enums instead of booleans.
-
 - Ensure that your unit tests cover all branches of if-else statements.
-
 - Avoid using traditional C++ or Java iterators. Looping over iterators requires comparisons. Range-based loops are much safer and easier to use.
+
+Here is an example how to use DI instead of passing on booleans:
+
+```py
+if __name__ == "__main__":
+    if "debug" in sys.argv:
+        reader = DebugReader()
+    else:
+        reader = Reader()
+    main(reader)
+```
+
+Well yes, we didn't get rid of all `if` statements. This will never be possible. But further down in the code, there are no more booleans. Instead you only have the `reader` object that you can use polymorphically.
 
 ### Match case statements
 
 // This section really needs some consideration: When should a switch/match be used?
 
-In case you have a `match case` statement (a Pythonic expression, in other languages called a `switch` statement), you should encapsulate it inside a function or use a dictionary. The only place where `match case` statements (or nested `if else` statements) are allowed is encapsulated inside a dedicated function.
+In case you have a `match case` statement (a Pythonic expression, in other languages called a `switch` statement), you should encapsulate it inside a dedicated function or use a dictionary.
 
-This is not how the code should look.
+This is not how the code should look:
 
 ```py
-# a lot of code here
-# city_name = ...
-# use a match case statement to get the post code
-match city_name:
-    case "Zurich":
-        return 8000
-    case "Bern":
-        return 3000
-    # case ...
+def do_a_lot_of_work():
+    # a lot of code here
+    # ...
+    city_name = "Zurich"
+    match city_name:
+        case "Zurich":
+            return 8000
+        case "Bern":
+            return 3000
 ```
 
 This code is flawed for a very simple reason: it almost certainly violates the SRP. The likelihood is high that this `match case` statement will be repeated multiple times in your codebase. Instead, the `match case` statement should be refactored into its own function.
@@ -2498,7 +2495,7 @@ def post_code(city_name):
         case "Bern":
             return 3000
 
-post_code_Zurich = post_code("Zurich")
+print(post_code("Zurich"))
 ```
 
 The best solution, in my opinion, is using a dictionary and abandoning `match case` statements altogether. This is shorter and easier to read. If desired, you can still wrap the dictionary in a function.
@@ -2508,6 +2505,7 @@ post_codes = {
     "Zurich": 8000,
     "Bern": 3000,
 }
+print(post_codes["Zurich"])
 ```
 
 For larger dictionaries, this may still appear quite verbose. But this code will be hidden at a low level of abstraction.
@@ -2516,19 +2514,19 @@ Dictionaries can also be used polymorphically. Depending on the key, it creates 
 
 ```py
 class Zurich:
-    def postcode():
+    def postcode(self):
          return 8000
 
 class Bern:
-    def postcode():
+    def postcode(self):
         return 3000
 
 cities = {
-    "Zurich": Zurich,
-    "Bern": Bern,
+    "Zurich": Zurich(),
+    "Bern": Bern(),
 }
 
-zurich = cities("Zurich")
+zurich = cities["Zurich"]
 print(zurich.postcode())
 ```
 
@@ -2538,9 +2536,9 @@ In summary, one can say that `match case` statements are not bad at all. Though 
 
 ### For Loops
 
-// move this else where?
+A long time ago, for loops required the use of booleans. Fortunately, these times are long gone. I add this topic here as an example how to get rid of boolean comparisons.
 
-There are many ways how to replace for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical version:
+There are many ways how to implement for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical version:
 
 ```C++
 #include <vector>
@@ -2554,7 +2552,7 @@ for (int i = 0; i < numbers.size(); i++) {
 
 Note that I had to use C++ for this example. I wouldn't know how to write such a terrible for loop in Python. There is so much that can go wrong here. You have the `<` sign which does a comparison. And comparisons are dangerous because you can always mix up `<` and `<=`.
 
-One level better is this code:
+One level better is this Python code:
 
 ```py
 numbers = [1, 2, 3, 4, 5]
@@ -2565,22 +2563,21 @@ for i in range(len(numbers)):
 Here we got rid of the comparison. But we still have the index `i` which can be mixed up. Of course, there are times where you need this index. But generally you can use an enumeration instead.
 
 ```py
-for number, i in enumerate(numbers):
-    print(number, i)
+for i, number in enumerate(numbers):
+    print(i, number)
 ```
 
-The best code is the following:
+Assuming that you don't need the index `i`, by far the best code is the following:
 
 ```py
 for number in numbers:
     print(number)
 ```
 
-It doesn't have an iterator, nor any comparison that can go wrong.
+Here you don't need any comparison nor an index.
 
-Another question is how to filter lists. The classical way is to use a for loop and an if statement. But these are notoriously verbose. You can also use pipelines instead.
+Another question: how should you filter lists?. The classical way is to use a for loop and an if statement. But there are two alternatives: list comprehensions and lambdas. Both solutions are quite similar (even in performance), so feel free to use the one you prefer.
 
-Here is the version with list comprehensions:
 
 ```py
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -2591,9 +2588,17 @@ average = sum(plus_five) / len(plus_five)
 print(average)
 ```
 
-// how to write a pipeline example in python?
-// [https://medium.com/@ayush-thakur02/wait-what-are-pipelines-in-python-628f4b5021fd] doesn't work yet...
+```py
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+plus_five = map(lambda n: n+5,
+            map(lambda n: n*10,
+            filter(lambda n: n % 2 == 1, numbers)))
+five_list = list(plus_five)
+average = sum(five_list)/len(list(five_list))
+print(average)
+```
 
+Note that the filtering part of both versions could be written in a single line if you insist. And I'm not showing the loop version as it's too much code. 
 
 ## Strings
 
@@ -2605,11 +2610,24 @@ After pointers and Booleans, strings are arguably the third most error-prone dat
 
 Some people even start to encode all kinds of logic into strings. This is dreadful. At times, this is also referred to as "stringly typed" to emphasize the importance of using appropriate types instead of strings. // See also "primitive obsession"
 
-I found the following example in the book "Clean Code" on page 128, where Robert C. Martin did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, Uncle Bob somehow went haywire. What he explained all made sense, but he somehow missed that one should never write code the way he did.
+Here are some examples of strings storing all kind of information that shouldn't be stored as strings [https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]:
 
-He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each character encodes whether it was too hot or not, too cold or not, etc. Capital letters represent `true`, while lowercase letters represent `false`. It's such a beautiful example of the kind of logic that can be implemented in strings. At least it would be if it weren't so outrageous what he did here. Avoid using strings to encode values of a different type. To make matters worse, the letter `"h"` is even used twice. This code becomes more fragile because the state relies on the order of the characters.
+```py
+robot.move("1","2") 
+# Should be int like 1 and 2, and maybe better a point
 
-The unit tests written by Uncle Bob are quite nice at first glance. But it takes some knowledge to understand what these five characters are supposed to mean. Without appropriate background knowledge, it is impossible to understand the meaning of this string. The order of the characters within this string may seem arbitrary, but they must be in the correct sequence.
+getattr(dog, "bark")
+# Dispatching a method passing in a string that is the method's name. dog.Bark()
+
+message.push("transaction_completed")
+# Could be an enum
+```
+
+I found the following example in the book "Clean Code" on page 128, where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, he somehow went haywire. What he explained all made sense, but he missed that one should never write code the way he did.
+
+He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each character encodes whether it was too hot or not, too cold or not, etc. Capital letters represent `true`, while lowercase letters represent `false`. It's such a beautiful example of the kind of logic that can be implemented in strings. But he completely missed the point. Strings should never ever be used to encode logic. To make matters worse, the letter `"h"` is even used twice. Like this, the code becomes even more fragile because the state relies on the order of the characters.
+
+The unit tests written by Uncle Bob look quite nice at first glance. But it takes some knowledge to understand what these five characters are supposed to mean. Without appropriate background knowledge, it is impossible to understand the meaning of this string. The order of the characters within this string may seem arbitrary, but they must be in the correct sequence. This is not something that should show up in a unit test nor in your code.
 
 Now let's consider how we could improve things. We have five states that can each be either true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is an improvement over the string logic, but it still requires significant restructuring. All elements in a list should be treated equally and accessed simultaneously. But here, you will probably need only one element at a time: `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list [section lists].
 
@@ -2649,9 +2667,9 @@ class WaterState:
 
 Now the `heater_state` can be either `on` or `off`. This is much more intuitive to read.
 
-Once one found this solution, it looks so natural. This code is much more readable than the encoded string. It is definitely worth the extra effort required to write this struct and enum. The code has now become significantly longer, but remember: we always code for readability, not for the fewest lines of code.
+Once you found this solution, it looks so natural. This code is much more readable than the encoded string. It is definitely worth the extra effort required to write this struct and enum. The code has now become significantly longer, but remember: we always code for readability, not for the fewest lines of code.
 
-The code utilizing this dataclass is very straightforward. Opposite of the string solution, there is no need for logic, comparison, or anything similar. It is simply obvious how to use it.
+The code utilizing this dataclass, including the unit tests, is very straightforward. Opposite of the string solution, there is no need for logic, comparison, or anything similar. It is simply obvious how to use it.
 
 ```py
 if water_state.high_temp_alert == State.on:
@@ -2660,11 +2678,11 @@ if water_state.high_temp_alert == State.on:
 
 ### Natural Language
 
-Serious software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, and the translator also doesn't want to deal with your code. He wants only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Instead, the code should read all the human-readable text from this specific file. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
+Serious software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, and the translator also doesn't want to deal with your code. He wants to work with only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
 
 Ultimately, you are left with barely any strings at all. You replaced them with enums, proper logic, and a file containing human-readable text. Only when reading or writing a text file do you briefly have to deal with strings. Then you immediately convert it into data. In theory, at least. For small projects, it is not always worth the effort to convert all strings into objects or dedicated text files.
 
-## Dicts
+## Dictionaries
 
 When defining your variable, you have two different choices on how to proceed. You may either use normal variables or a dictionary (a map in C++).
 
@@ -2679,9 +2697,9 @@ vars = {"a" : 0, "b" : 1}
 
 These lines do something very similar. They both assign the value `0` to `a` and the value `1` to `b` (okay, in the case of the dictionary, it is rather `"a"`, but you get my point). Yet, there is a fundamental difference. In the first line, the programmer knows that he needs variables `a` and `b` as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there would be `"a"` and `"b"` used as keys. Maybe he didn't, and these dictionary entries were generated by user input that the programmer had no control over.
 
-If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance what kind of ingredients will be needed.
+If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file where he doesn't the content, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance what kind of ingredients will be needed.
 
-Dictionaries are closely related to JSON and XML files. They are essentially similar to a nested dictionary converted into a string. If you ever need to read JSON files, the resulting data structure will be a nested dictionary that you might further convert into nested class instances.
+Dictionaries are closely related to JSON and XML files. They are essentially similar to a nested dictionary serialized into a string. If you ever need to read JSON files, the resulting data structure will be a nested dictionary that you might further convert into nested class instances.
 
 ## Trees
 
@@ -2689,9 +2707,9 @@ It is not too often that I've had to create a tree myself, yet I have been worki
 
 ## Pointers
 
-C++ used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented essentially all the functionality that pointers were used for. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
+Python, as most other modern programming languages, doesn't use pointers. C++ on the other hand used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented essentially all the functionality that pointers were used for. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
 
-The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine. Be happy if you use Python because you don't have to bother with pointers at all.
+The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine.
 
 
 # 17. Properties of Variables
