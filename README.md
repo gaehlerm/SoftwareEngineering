@@ -336,7 +336,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Structuring variables](#structuring-variables)
     - [Too many variales](#too-many-variales)
   - [Renaming](#renaming)
-  - [Scratch refactoring \[Feathers p. 212\]](#scratch-refactoring-feathers-p-212)
+  - [Scratch refactoring \[WELC p. 212\]](#scratch-refactoring-welc-p-212)
   - [Extract function](#extract-function)
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
@@ -420,6 +420,17 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
 - [46. Requirements Engineering](#46-requirements-engineering)
+  - [Entwicklugsmethoden](#entwicklugsmethoden)
+    - [Wasserfall -\> nach Kapitel Agile verschieben](#wasserfall---nach-kapitel-agile-verschieben)
+    - [Agile -\> siehe Kapitel Agile](#agile---siehe-kapitel-agile)
+  - [Stakeholders](#stakeholders)
+  - [Ziele, Kontext und Scope](#ziele-kontext-und-scope)
+    - [Anforderungen ermitteln](#anforderungen-ermitteln)
+    - [Dokumentation der Anforderungen](#dokumentation-der-anforderungen)
+    - [Priorisierung der Anforderungen](#priorisierung-der-anforderungen)
+    - [Prüfung der Anforderungen](#prüfung-der-anforderungen)
+    - [Verwaltung von Anforderungen](#verwaltung-von-anforderungen)
+    - [Tools zur Anforderungsverwaltung](#tools-zur-anforderungsverwaltung)
 - [47. Planning](#47-planning)
   - [Planning code](#planning-code)
 - [48. DevOps](#48-devops)
@@ -2604,7 +2615,7 @@ Note that the filtering part of both versions could be written in a single line 
 
 ## Strings
 
-"You should never use two different languages in a single file. English is also a language." - Unknown
+"You should never use two different languages in a single file. English is also a language." - Adapted from Robert C. Martin [Clean Code]
 
 After pointers and Booleans, strings are arguably the third most error-prone data type. Programmers often compare two strings for equality. One of them is written in plain text in the code. A string possibly twenty characters long. If a single character is wrong, you have a bug, and there is no way the computer is able to know and warn you. Of course, you can make this code work. But it is extremely brittle. You should eliminate such risks whenever possible. String comparison is a potential source of errors, and we should strive to avoid them whenever feasible. Remember, programming is all about avoiding potential sources of errors. As we have already seen, you should always consider using enums if you want to perform string comparisons.
 
@@ -5565,21 +5576,21 @@ Refactoring, just like writing code, is a highly non-linear process. It cannot b
 
 # 35. Refactoring Techniques
 
-"Work on the assumption that code is a 'best guess'. It is probably wrong." - Dave Farley [https://youtu.be/gLYYXKL-Jug?t=760]
+"The fewer methods a class has, the better. The fewer variables a function knows about, the better. The fewer instance variables a class has, the better" Robert C. Martin
 
 // move some of these techniques to working with existing code? I believe most of them also work with legacy code.
 
 The techniques explained here mostly require an existing set of automated tests because changes to the code may introduce bugs otherwise. Refactoring can also be done without tests. In most cases, this game is very dangerous to play. Even if some techniques seem safe to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overridden functions, it becomes tricky. Refactoring code in compiled languages is easier than in interpreted languages because the compiler performs valuable checks on names, functions, types, and so on.
 
-There is a wide range of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most of the concepts originate from the book "Refactoring" by Martin Fowler [Refactoring, Improving the Design of Existing Code, 2019]. In the following, I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code, and the other category from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests, etc. // will I explain the WELC stuff in the next chapter?
+There is a wide range of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most of the concepts originate from the book "Refactoring" by Martin Fowler [Refactoring, Improving the Design of Existing Code, 2019]. In the following, I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code, and the other category from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests, etc.
 
-Note that some of the techniques explained in the section on good code, such as renaming, can also be applied to legacy code. Meanwhile, the techniques explained here for well-written code are not recommendable for legacy code. They would most certainly lead to bugs.
+The techniques explained in this chapter are unlikely to create bugs. The good refactoring usually consists of a sequence of small changes and the code should almost be in a working state all the time. However you never know. And in very convoluted code, I wouldn't dare to break a class into pieces without having it covered with unit tests.
 
 When following the rules taught in this book, you should be writing good code. It is well-tested, contains clear interfaces, no global variables, and no side effects. Still, you have to refactor once in a while. But it's comparatively easy because you can focus on the refactoring part. The tests are already in place to ensure that you don't break anything. In this section, you will learn some techniques that you can apply when refactoring.
 
 ## Breaking classes
 
-Breaking classes into smaller pieces is one of the most commonly used refactoring techniques. Simply because of the fact that classes tend to grow over time and have to be split once in a while.
+Breaking classes into smaller pieces is one of the most commonly used refactoring techniques. Simply because of the fact that classes tend to grow over time and have to be split once in a while. Classes should be small. And in my opinion, the best classes are the ones that don't exist. Use dataclasses and functions whenever possible.
 
 ### Too many methods
 
@@ -5642,14 +5653,16 @@ class PersonalDetails:
     age: int
     weight: float
 
+    def __str__(self):
+        return f"{self.name} is {self.age} years old and weighs {self.weight} kg."
+
 class Fish:
     def __init__(self, personal_details):
         self._personal_details = personal_details
         self._price = 10.0
 
     def print_fish(self):
-        print(f"{self._personal_details.name} is {self._personal_details.age} 
-            years old and weighs {self._personal_details.weight} kg.")
+        print(self._personal_details)
 ```
 
 And probably we could rename the `print_fish` method into `print_personal_details` since it only prints the personal details of the fish. As the `print_fish` method now depends only on the `_personal_details` variable, we could also make it a freestanding function that takes only this variable as an argument.
@@ -5731,7 +5744,7 @@ Though you have to pay attention. People get used to names. If a name for an obj
 
 One possibility is to start with mediocre names initially and then search for better names towards the end of programming a few lines. Then, Copilot can also help you find better names.
 
-## Scratch refactoring [Feathers p. 212]
+## Scratch refactoring [WELC p. 212]
 
 In chess, there is a rule of thumb that suggests you should silently communicate with your pieces during your opponent's turn. You should ask them where they would like to be and thus get a sense of their preferred position. In programming, there is something quite similar. Scratch refactoring is not about improving code; it is only about getting an idea of how the code could look. Just refactor as you like without worrying about bugs or similar issues. Figure out how the code should look in an ideal scenario. But also try to implement some of the edge cases to challenge your dream implementation and understand its limitations. I like the concept of scratch refactoring very much because it gives you an idea of how the code could look instead.
 
@@ -7194,6 +7207,122 @@ In order to be flexible, you have to be able to adapt your code. You have to cha
 
 Written by Felix Gähler
 
+#Requirements Engineering
+
+Das Requirements Engineering (RE) befasst sich damit, wie man überhaupt bestimmt, was man implementieren soll. Denn wie wir bereits gelernt haben, soll man nur Code schreiben, wenn dies für den User auch Nutzen hat [Kapitel Einführung]. 
+
+**neu in v0.4» Auf den ersten Blick mag es erstaunen, warum es dafür überhaupt ein spezielles Kapitel braucht. Ist es nicht offensichtlich, was man implementieren soll? Leider nein. Es ist oftmals sogar sehr unklar, was man implementieren soll. Und wenn das Entwickler Team dann mal ein paar Monate mit einem Feature vergeudet, welches gar nicht gebraucht wird, so sind schnell mal ein paar Hunderttausend Euro vernichtet. Es ist also sehr wichtig, dass man sich immer bewusst ist, was und warum man entwickelt. 
+«
+
+## Entwicklugsmethoden 
+Für das RE gibt es, wie auch für die Software Entwicklung allgemein, zwei Methoden: Die Wasserfall-Methode, oder die agile Methode. Diese werden im Kapitel Agile besprochen [siehe Kapitel Agile]. 
+
+### Wasserfall -> nach Kapitel Agile verschieben 
+Früher wurden Projekte mit der Wasserfall-Methode angegangen. Dabei wurde wie folgt vorgegangen: 
+1. Man sammelte die Anforderungen an die Software.
+2. Man plante die Architektur der Software.
+3. Man implementierte die Software.
+4. Man übergab die Software dem Kunden, welcher sie testete.
+Der ganze Prozess konnte gut mehrere Jahre dauern. In der Zeit haben sich oftmals die Anforderungen an die Sotfware verändert, es war aber nicht möglich, diese Änderungen in die laufende Entwicklung einzubringen. Oftmals war die Software bereits veraltet, wenn sie fertig war. Zudem gab es oft das Problem, dass die Software erst mit grosser Verspätung fertig wurde, da die einzelnen Schritte länger dauerten als erwartet und z.B. die Architektur des Systems sich doch nicht genau so umsetzen liess, wie erhofft. 
+Aus diesen Gründen wird die Wasserfall-Methode heute kaum noch angewandt. 
+
+### Agile -> siehe Kapitel Agile 
+Bei den agilen Methoden wird hingegen in Iterationen entwickelt. Nach jeder Iteration wird das Benutzer-Feedback eingeholt und die Anforderungen werden entsprechend angepasst. 
+
+###Systembetrachtung
+Im RE wird das ganze zu entwickelnde System betrachtet, inklusive Hardware, Software, Bedienungsanleitungen usw. Die Anforderungen werden möglichst lösungsneutral formuliert. Die Entwickler erhalten damit die Freiheit, die zweckmässigste Lösung zu wählen, beispielsweise welche Anforderungen werden in Hardware implementiert, welche in Software, und welche mit manuellen Abläufen. 
+
+## Stakeholders 
+Wie so oft, verbringt man einen Grossteil der Arbeit damit, mit anderen Personen zu sprechen. Man muss herausfinden, wer wichtig ist, und wer sich nur wichtig fühlt. Zudem muss man immer die unterschiedlichen Charaktere im Team bedenken und entsprechend handeln. Firmenpolitik halt. Wer sich damit nicht sicher fühlt, bleibt besser in der Software Entwicklung und wechselt nicht ins Requirements Engineering. 
+
+Stakeholders sind alle Personen mit Interesse am System. Wenn ich einen Stakeholder vergesse zu befragen, wird dieser am Schluss nicht zufrieden sein. Darum erstelle ich eine Stakeholder Liste, in welcher ich einschätze, wie gross das Interesse ist, und wie gross die Macht. Einen Stakeholder mit grosser Macht muss ich natürlich bei Laune halten, auch wenn sein Interesse eher klein ist. Stakeholder mit grossem Interesse aber kleiner Macht binde ich aktiv ein, denn das sind oft die täglichen Benutzer. Stakeholder mit grossem Interesse und grosser Macht priorisiere ich. Und solche mit kleinem Interesse und wenig Macht kann ich getrost ignorieren, auch wenn sie möglicherweise am meisten Lärm machen. [Grafik erstellen] 
+
+## Ziele, Kontext und Scope
+Zuerst stellt sich die Frage, welche Ziele mit dem neuen System genau erreicht werden sollen. Dabei muss man immer beachten, dass die Ziele möglichst vollständig und widerspruchsfrei sind. Zudem sollen sie nach der Bedeutung gewichtet werden. Es lohnt sich, einige Zeit in eine genaue, mit den Stakeholders abgestimmte Zielbeschreibung zu investieren.
+
+Dabei muss man sich immer bewusst sein, was genau zum neuen System dazu gehört und was nicht (Systemgrenze oder engl. Scope). Dazu gehört auch die Frage, was überhaupt zum System gehört und was von aussen vorgegeben ist. Was im Scope ist, kann im Vorhaben auch verändert werden. 
+
+Ebenfalls wichtig ist die Frage, was aus der Aussenwelt relevant für das System ist. Dies nennt man den Kontext. 
+
+Der Scope und Kontext können in einem Use-Case-Diagramm dargestellt werden. In diesem Diagramm ist leicht ersichtlich, welche Aktoren Einfluss auf Komponenten des Systems nehmen. [Beispiel einfügen] 
+
+Im Scope und im Kontext gibt es anfangs einen Graubereich. Je geringer dieser ist, desto kleiner ist auch das Risiko des Vorhabens. Es lohnt sich also, den Kontext und vor allem den Scope möglichst genau zu ermitteln und bei iterativem Vorgehen, auch regelmässig zu aktualisieren. 
+
+Ziele, Kontext und Scope bilden den Rahmen, in welchem nun die Anforderungen ermittelt werden können. 
+
+### Anforderungen ermitteln 
+Genau so, wie es schwierig ist, guten Code zu schreiben, ist es auch schwierig, eine Anforderung in einem Ticket gut zu beschreiben. Sie soll gleichzeitig nicht zu lange, aber trotzdem möglichst klar sein. Dabei muss gut auf die Entwickler eingegangen werden. Nicht alles, was dem Autor eines Tickets logisch erscheint, ist dies auch für den Entwickler, welcher das Ticket implementieren wird. 
+
+Am besten schreibt man ein paar Beispiele ins Ticket, welche zugleich auch als Testfall dienen können. Diese sollen sowohl den "Happy Case", als auch Randbedingungen und Spezialfälle beinhalten. Letzteres geht oftmals vergessen. So muss z.B. bei einer Banküberweisung verhindert werden, dass ein negativer Betrag überwiesen wird. 
+
+Die Anforderungen sollen möglichst lösungsneutral formuliert werden. Sie soll das WAS beschreiben und nicht das WIE. Der Autor des Features sollte eigentlich nichts von den technischen Details des Codes wissen. Zudem haben die Entwickler oftmals bessere Ideen, wie man etwas umsetzen kann, als aussenstehende Personen. 
+
+Es ist ganz wichtig, die Anforderungen bei und mit den Stakeholders zu ermitteln. Das ist Knochenarbeit. Sie ist zeit- und arbeitsintensiv. Ich versuche dabei, möglichst viel aufzuspüren und aus den Stakeholders ‹herauszukitzeln›. 
+
+Wer denkt, es sei einfach, die Anforderungen für ein neues System zu finden, hat weit gefehlt. Die Benutzer, sowohl ausserhalb, als auch innerhalb der Firma, warten nicht darauf, mit Ihnen stundenlang über die Vor- und Nachteile der Software zu diskutieren. Sie haben schliesslich selbst Arbeit zu verrichten. Anlässe wie Firmenausflüge und Aperos können dabei helfen. Manchmal sind eher Umfragen und Interviews zielführend. Das Wichtigste dabei ist, dass Sie ein guter Zuhörer sind, so dass die Leute gerne mit Ihnen über ihre Anliegen sprechen und sich Ihnen anvertrauen.
+
+Des weiteren muss man sich auch unabhängig der Nutzer über das entsprechende Thema informieren. Dabei ist es nicht nur wichtig, was die Software schon kann, sondern viel mehr, was die Kunden wollen. Oftmals denkt man dabei viel zu engstirnig. So wie Nokia Anfangs der 00er Jahre kein Smartphone entwickeln wollte, obwohl es von einem Ingenieur vorgeschlagen wurde. Nokia sah schlichtwegs keinen Markt für ein Handy ohne Tastatur. 
+
+Wichtigste Quellen der Anforderungen sind 
+- die Stakeholder: Auftraggeber, Kunden, Benutzer, Manager, Betreiber, Entwickler, Architekten, Tester
+- Dokumente: Gesetze, Normen, Standards, Konzepte, Fachartikel, Fehlerberichte
+- Bestehende Systeme: Altsysteme, Vorgängersysteme, Umsysteme, Konkurrenzsysteme
+
+Bei der Ermittlung von Anforderungen gibt es 3 verschiedene Faktoren:
+- Die Basisfaktoren sind jene, welche oftmals garnicht aufgezählt werden, da sie als so selbstverständlich erachtet werden. Sie dürfen aber trotzdem nicht vergessen werden.
+- Die Leistungsfaktoren stehen im Fokus der Nutzer und werden normalerweise diskutiert.
+- Die Begeisterungsfaktoren sind jene, welche sich ein Nutzer wünscht, obwohl er es gar nicht weiss. Wenn Sie diese Features finden, haben Sie eine richtig gute Arbeit gemacht.
+
+Um die Basisfaktoren, Leistungsfaktoren und Begeisterungsfaktoren alle zu finden, ist es am besten, mehrere Erhebungstechniken zu kombinieren. Interviews für die Leistungsfaktoren und ergänzend Kreativitätstechniken wie Workshops oder Brainstorming für die Begeisterungsfaktoren. Für die Basisfaktoren, die für die Interviewten selbstverständlich sind und deshalb gar nicht genannt werden, ist die Feldbeobachtung gut geeignet. 
+
+Beispiel Hotel: Dass Toilettenpapier vorhanden sein muss, wird niemand erwähnen da es als selbstverständlich betrachtet wird. Aber wehe, es fehlt wenn man auf dem Klo sitzt! 
+
+### Dokumentation der Anforderungen 
+Am besten geschieht das Dokumentieren der Anforderungen fortlaufend während der Interviews, Workshops usw. Dabei werden natürlich dieselben oder sehr ähnliche Anforderungen immer wieder genannt. Es macht also Sinn, die Anforderungen nach einem einheitlichen Muster festzuhalten, so dass man Duplikate leicht erkennt. 
+
+Ich dokumentiere die Anforderungen gerne natürlichsprachig. Damit können auch nicht-technische Leser, Lieferanten, Kunden, Manager angesprochen werden. Die Stakeholder müssen nicht zuerst ein Tool lernen, sondern können ohne Einarbeitungszeit mitarbeiten. 
+
+Mit Satzschablonen erziele ich einen standardisierten Aufbau. In diesen werden mehrdeutige Begriffe vermieden. [Beispiel] 
+
+Zusätzlich dokumentiere ich die Anforderungen mittels formaler Modelle. Diese helfen, Lücken und Widersprüche zu finden, und erleichtern die spätere Erarbeitung von Lösungsmodellen. Ein Modell ist wie eine Karte. Ein vereinfachtes Abbild der Wirklichkeit, welches nur die relevanten Sachen zeigt. Das Modell zeigt dieses Abbild aus einer bestimmten Perspektive. Es macht daher Sinn, mehrere Modelle zu erstellen, welche die Realität aus verschiedenen Perspektiven zeigen. 
+
+#Use-Case Modell 
+Mit Use Cases lassen sich die Geschäftsfälle und ihre Interaktionen gut modellieren. Dafür erstelle ich als erstes ein Diagramm, das die Systemgrenze aufzeigt, und die Akteure welche von ausserhalb mit dem System interagieren.  
+
+Um die Use Cases zu identifizieren, beginne ich bei den Akteuren. Ich überlege, was soll das System für den Akteur erledigen? Speichert es dabei Daten? Wer löst die Aktion im System aus? 
+
+Kleine Systeme haben typischerweise etwa 10 Use Cases, während grosse 50 oder mehr haben können.  [Beispiel] 
+
+#Klassendiagramme
+Die Geschäftsobjekte und benötigten Daten können gut in Klassendiagrammen dargestellt werden. [Beispiel, UML-Klassendiagramm] 
+
+### Priorisierung der Anforderungen 
+Es werden nie alle Tickets implementiert, also beginnt man mit den wichtigsten. Die Anforderungen werden daher (in Absprache mit den Stakeholders) priorisiert. Nicht verwunderlich, dass jeder Stakeholder «seine» Anforderung zuoberst sehen will! Um diesen Konflikt zu versachlichen, gibt es Priorisierungsmodelle wie WSJF (Weighted Shortest Job First). Dieses optimiert den ökonomischen Nutzen, indem die Kosten der Verzögerung und Implementationsaufwand verglichen werden. Die Schwierigkeit besteht natürlich darin, diese Kosten abzuschätzen. 
+
+### Prüfung der Anforderungen
+Einen Fehler in der Anforderungsphase zu beheben, ist sehr viel einfacher und billiger, als später in der Testphase oder gar in der Produktion. Daher macht es Sinn, die Anforderungen vor ihrer Umsetzung zu prüfen. Typische Fehler sind nicht korrekte, unvollständige, widersprüchliche, oder unrealistische Anforderungen. 
+
+Wichtig ist bei der Prüfung, die richtigen Stakeholder zu beteiligen. Fehlersuche und die Fehlerkorrektur sollen getrennt werden, die Ausbeute ist dann höher. In stark änderndem Umfeld macht es Sinn, die Prüfung periodisch zu wiederholen. Sind wir noch aktuell? 
+
+Eine einfache und wirksame Prüfmethode ist der Review. Ein Moderator lädt Stakeholder als Gutachter ein, geht mit ihnen die Anforderungen durch und erstellt eine Liste der Befunde mit Gewichtung. Aufgrund der Befunde sind dann die Anforderungen entsprechend zu korrigieren. 
+
+Die geprüften und abgenommenen Anforderungen bilden die sogenannte Baseline für die Entwicklung. 
+
+### Verwaltung von Anforderungen
+Bei einem kleinen Vorhaben können die Anforderungen leicht in einem Textdokument verwaltet werden. Es lohnt sich aber trotzdem, jeder Anforderung eine eindeutige ID als Referenz zu geben. Die ID kann auch zur Dokumentation des Codes verwendet werden. 
+
+Anforderungen haben neben ID und Beschreibung, zudem weitere Attribute. Die wichtigsten sind: 
+- Quelle der Anforderung. Diese ist für Rückfragen wichtig.
+- Priorität der Anforderungen
+- Prüfstatus der Anforderung. Ist sie geprüft und abgenommen, oder erst im Entwurfsstadium?
+- Abnahmetests. Damit wird nachgewiesen, dass die Anforderung korrekt implementiert wurde.
+
+Wichtig ist auch, Aenderungen systematisch zu verwalten. Wenn eine Anforderung während des Projekts geändert wird, dokumentiere ich jeweils genau, was wann geändert wurde. Die geänderte Anforderung muss wiederum die Prüfung durchlaufen und abgenommen werden. Dann stellt sich die Frage, wo überall in der bereits realisierten Software, die Aenderung eine Auswirkung hat. 
+
+Bei sicherheitskritischen Systemen ist auch die Traceability ein Muss. Also die Rückverfolgbarkeit vom Abnahmetest bis zurück zur Quelle der Anforderung. 
+
+### Tools zur Anforderungsverwaltung 
+Ein verbreitetes Tool ist Atlassian Jira. Damit können Anforderungen und Testfälle verwaltet werden, und Entwicklern zur Implementation zugeteilt werden. Auch festgestellte Fehler (engl. Bug, Defect) können gleich im Jira erfasst und priorisiert werden. 
 
 
 # 47. Planning
