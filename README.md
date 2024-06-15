@@ -530,11 +530,13 @@ Chapters to work on:
 
 # 4. The short story behind this book
 
-I, Marco Gähler, 35 years old at the time of writing, studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before deciding to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software controlling qunatum computers.
+I studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before I decided to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software for quantum computers.
 
-At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices and everything else during the few years I spent in industry. Such that every person with a little bit of knowledge of a programming language can boost their programming skills reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice.
+At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices and everything else during the few years I spent in industry. Such that every person with a little bit of programming knowledge can improve their skills reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice and continuous learning.
 
-I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I was just writing down my thoughts and ideas. My English is fairly poor, and I was never really good at writing essays in school. But as I was reading other books, I got some more inspiration on what to write. And as this text got longer and I got some encouraging feedback from my reviewers, I decided to publish this text as a book.
+I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I was just writing down my thoughts and ideas. Things that I once thought of, but couldn't find any literature about or only scattered over many different places. My English is fairly poor, and I was never really good at writing essays in school. But as I was reading other books, I got some more inspiration on what to write. And as this text got longer and I got some encouraging feedback from my reviewers. Therefore, I decided to publish this book.
+
+The two books which inspired me the most are the best sellers "Clean Code" by Robert C. Martin and "The Pragmatic Programmer" by Andrew Hunt and David Thomas. I like how they both give some general advice how to write better code. But, of course, I didn't want to make a copy of these books. Even though there are some similarities, especially with Clean Code. I tried hard to find out why I liked these books and what could be improved. For instance the code examples given in these books. On one hand, The Pragmatic Programmer has no code at all, meanwhile Clean Code frequently has code which is too long to understand. I tried to write a book that has more useful topics and some concrete code examples on most topics. But I really tried to keep them as short as possible in order to make them easy to understand.
 
 I hope you'll enjoy reading this book,
 Marco Gähler
@@ -2718,13 +2720,11 @@ Once again, things only got started with the introduction to the data types. The
 
 The most common way to structure data is by using nested classes and lists, where one class contains instances of other classes. There's certainly nothing wrong with that, but sometimes there are better solutions.
 
-Variables do not only have a type, but they can also have additional properties that we will explore in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic, or global. And possibly many more. All these various types of variables have distinct scopes within which they can be accessed and modified. As is often the case in programming, it is very convenient to have access to a variable at all times, similar to a global variable. At the same time, this approach is very likely to result in poor code quality due to tightly coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn't grant more accessibility permissions than necessary.
+Variables do not only have a type, but they can also have additional properties that we will explore in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic, global or two of them at once. All these various types of variables have distinct scopes within which they can be accessed and modified. As is often the case in programming, it is very convenient to have access to a variable at all times, similar to a global variable. At the same time, this approach is very likely to result in poor code quality as this variable is tightly coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn't grant more accessibility permissions than necessary.
 
 ## Compile-time constant
 
 Compile-time constants are the least powerful variable type. They are known at the time you write the code and will never change their value. In Python, there is no way to enforce const'ness. But it is generally agreed upon that variables written in all uppercase are constant and may not be changed, `PI=3.14`. In C++, there is the `const` keyword that enforces const'ness of a variable. `const double pi=3.14`. Now it is no longer possible to change the variable `pi`, or the compiler will return an error. Keep these constants stored separately and avoid cluttering your code. Otherwise, there is nothing you can do wrong with them.
-
-In C++, there is also the `constexpr` keyword to indicate that an expression can be evaluated at compile time. This allows the compiler to perform various optimizations, as many expressions can be evaluated at compile time.
 
 ## Runtime Constant
 
@@ -2732,7 +2732,7 @@ Compared to compile-time constants, runtime constants do not know their values a
 
 Once created, you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even declare a constant global variable and avoid the main issues associated with global variables. Though it is still recommended to pass them around as function arguments instead. If it's global, it will be acting as a hidden state, making it much harder to write tests.
 
-Note that in functional programming, all variables are constant. If you want to change a variable, you have to create a new one.
+Note that in functional programming, all variables are runtime constant. The only way to change a variable, is to create a new one.
 
 ### Constant Class Instances
 
@@ -5649,18 +5649,80 @@ class Fish:
 
     def print_fish(self):
         print(f"{self._personal_details.name} is {self._personal_details.age} 
-        years old and weighs {self._personal_details.weight} kg.")
+            years old and weighs {self._personal_details.weight} kg.")
 ```
 
 And probably we could rename the `print_fish` method into `print_personal_details` since it only prints the personal details of the fish. As the `print_fish` method now depends only on the `_personal_details` variable, we could also make it a freestanding function that takes only this variable as an argument.
 
 ### Too many variales
 
-A very common problem is classes having too many variables. This is a so called "God Class". It does too much and should be broken into smaller pieces. There are several techniques how to deal with this issue. First of all, you should look at the variables. The search function of the IDE will tell you, how often a variable is used within a class. If a variable is used only two or three times and the class is 100 lines long, you should try to remove the variable from the class. It has too little cohesion. Though, this is easier said than done. 
+A very common problem is classes having too many variables. This is a so called "God Class". It does too much and should be broken into smaller pieces. There are several techniques how to deal with this issue. First of all, you should look at the variables. The search function of the IDE will tell you, how often a variable is used within a class. If a variable is used only two or three times and the class is 100 lines long, you should try to remove the variable from the class. It has too little cohesion. Though, this is easier said than done. You will have to figure out how the few methods using this variable get access to it. But maybe this is also a sign that the class design is bad and you should refactor these few methods out of the class as well.
 
-Removing variables from the class is a difficult task as you have to pass them through all the functions instead. Usually you can remove variables from a class when you refactor the methods into standalone functions. This way, you can pass the variables as function arguments instead of class variables. Once you do this, the class might not need this variable anymore and can be removed.
+Let's take a look at the following class `Boat`. It is not that big because I already refactored out the `Appearance` into a dedicated dataclass. 
 
-// move these sections to Refactoring Legacy Code?
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Appearance:
+    COLOR: str # should be an enum, but for brevity I use a string
+    WEIGHT: float
+    LENGTH: float
+
+    def __str__(self):
+        return f"The boat is {self.COLOR}, {self.LENGTH} meters long and weighs {self.WEIGHT}."
+
+class Boat:
+    def __init__(self, engine, price, color, weight, length):
+        self._engine = engine
+        self.PRICE = price
+        self.APPEARANCE = Appearance(color, weight, length)
+
+    def describe_appearance(self):
+        print(self.APPEARANCE)
+
+    # ...
+```
+
+We have all these physical properties of the boat where the `price` doesn't really fit into. So I'd like to split the class into two pieces. One class contains all the physical properties that I call `BoatFramework`, the other thing is the price, where we don't even need a dedicated class for.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Appearance:
+    COLOR: str # should be an enum, but for brevity I use a string
+    WEIGHT: float
+    LENGTH: float
+
+    def __str__(self):
+        return f"The boat is {self.COLOR}, {self.LENGTH} meters long and weighs {self.WEIGHT}."
+
+class BoatFramework:
+    def __init__(self, engine, color, weight, length):
+        self._engine = engine
+        self.APPEARANCE = Appearance(color, weight, length)
+
+    # ...
+
+class Boat:
+    # The __init__ function should be refactored and not take that many arguments.
+    # But that's a different story.
+    def __init__(self, engine, color, weight, length, price):
+        self._boat = BoatFramework(engine, color, weight, length)
+        self.PRICE = price
+
+    def describe_appearance(self):
+        print(self._boat.APPREARANCE)
+
+    def describe_price(self):
+        print(f"The boat costs {self.PRICE}.")
+
+    # ...
+```
+
+Usually these two techniques shown here are difficult to implement because the variables are used in many methods and it's not clear how they could be sorted in a better way. Furthermore when breaking a class into smaller pieces it requires new names. This may be a difficult task, but at the same time it is also an indication whether the way you broke the classes appart makes sense. If you can't find a reasonable way you probably designed your class badly. 
+
 ## Renaming
 
 Even though renaming barely alters the structure of the code, it should be done frequently. Not only for good code, but also for legacy code. Finding good names is one of the most challenging tasks in programming because assessing the quality of names is very difficult. There are some general rules on how naming should be done, yet it is still not easy at all. This leads to the fact that there are many objects with suboptimal names. And as you write some code, it may happen that you spot something for which you happen to know a better name. Then rename this object. This is the only way names improve over time. Don't assume the author of the code knew it better. You now have much more information at hand that simplifies finding a good name.
@@ -5831,27 +5893,25 @@ As always, Copilot works best if you give it some step by step instructions. It 
 
 # 36. Refactoring Legacy Code
 
-// This text here still needs some improvements. Especially examples.
-
 "To me, legacy code is code without tests." - Michael Feathers [WELC]
 
-Up to this point, everything was great. We had no restrictions whatsoever. We assumed we were working on a greenfield project. I could tell you whatever I wanted. I had no restrictions because of the current code base. I told you to write unit tests, and you started writing unit tests. Now, however, we will start working with existing code bases. We will learn how to handle legacy code: code without tests [WELC]. Or even worse, code without interfaces.
+Up to this point, everything was great. We had no restrictions whatsoever. We assumed we were working on a greenfield project. I could tell you whatever I wanted. There were no restrictions because of the existing code base. I told you to write unit tests, and you started writing unit tests. Now, however, we will start working with existing code bases. We will learn how to handle legacy code: code without tests [WELC]. Or even worse, code without interfaces.
 
 So far, we have only refactored code that is covered by tests. Refactoring code without tests would be too dangerous. But, unfortunately, this is precisely the issue with numerous projects. There are so many projects out there without tests. Due to global variables, functions with side effects, complex constructors, and missing interfaces, it is very challenging to write tests for them. In these cases, you may start to feel afraid to make changes to the code as you are supposed to do during refactoring. There's just too much that can break without testing. This is apparently a really bad thing. No one likes to live in fear. In your own code, you can prevent this situation by meticulously testing all the code you write. However, if you work on an existing project, you will have to face the demons.
 
 When you start working on a project with bad code, you might be motivated to suggest a complete rewrite. You may do that, although I do not recommend it. A complete rewrite is rarely an option. It takes years, costs millions, and very often the final code is not significantly better. Generally, it is better to improve the existing code. You have identified something you want to enhance. You write tests and start refactoring. This may seem tedious to you, but you always have to consider that the code was written by many programmers over many years. It will not be fixed in a few months.
 
 Refactoring untested code is usually a very hard task. There are entire books about it [WELC], [Refactoring]. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are:
-1.	No tests
-2.	Obscure code
-3.	No time (or budget) to fix it
+1. No tests
+2. Obscure code
+3. No time (or budget) to fix it
 
 And on the micro level we have a few more indications that things will get tough:
-1.	No interfaces
-2.	Functions with side effects and global variables
-3.	Huge classes and functions
-4.	Objects that are hard to construct 
-5.	Inheritance chains
+1. No interfaces
+2. Functions with side effects and global variables
+3. Huge classes and functions
+4. Objects that are hard to construct 
+5. Inheritance chains
 
 If you want to divide a large class into smaller parts, consider the following approach. It has no tests, and you are uncertain about the side effects it might have. This is bad because the functional changes introduced are bugs. The only way to prevent these changes is by having plenty of regression tests.
 
