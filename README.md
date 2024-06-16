@@ -331,6 +331,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [What to Refactor](#what-to-refactor)
   - [Refactoring Process](#refactoring-process)
 - [35. Refactoring Techniques](#35-refactoring-techniques)
+  - [Where to start](#where-to-start)
   - [Breaking classes](#breaking-classes)
     - [Too many methods](#too-many-methods)
     - [Structuring variables](#structuring-variables)
@@ -398,6 +399,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
+- [Too short to be a chapter](#too-short-to-be-a-chapter)
+  - [Logging](#logging)
+  - [Design patterns](#design-patterns)
 - [43. Working in teams](#43-working-in-teams)
   - [Team structure](#team-structure)
     - [The bus factor](#the-bus-factor)
@@ -1456,13 +1460,11 @@ Part 2: Components of Code
 
 # 13. Functions
 
-"Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin
-
-[Clean Code, chapter 3]
+"Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin [Clean Code, chapter 3]
 
 Functions (and methods) are, along with classes, the backbone of modern object-oriented (OO) software. People just don't care about functions as much as they do about classes. They are fairly simple to use, and there are only a few things to take care of. Still, there is quite a lot to know about functions as well. We will learn why functions must adhere to the SRP and should not have any side effects.
 
-Throughout this book, we will distinguish between functions and methods, as is common practice among most authors. Even though I would personally like to refer to both of them as functions since they are essentially the same, just in slightly different contexts. Most of the concepts I write about functions also apply to methods, as they are very similar in many respects. The class variables and the slightly different context are not fundamentally different. Class variables are similar to output arguments. I hope it is generally clear from the context whether an explanation applies to functions, methods, or both.
+Throughout this book, we will distinguish between functions and methods, as is common practice among most authors. Even though I would personally like to refer to both of them as functions since they are essentially the same, just in slightly different contexts. Most of the concepts I write about functions also apply to methods, as they are very similar in many respects. Methods have access to class variables, which are basically additional function arguments. If you regard them as such, almost all arguments hold for both, functions and methods. I remaining differences should be clear from the context.
 
 ## Do one thing only
 
@@ -1473,7 +1475,7 @@ Here is a very short code snippet:
 ```py
 #define enums for Color and Flavor
 if fruit.color == Color.yellow and fruit.flavor == Flavor.sour:
-    make_lemonade()
+    make_lemonade(fruit)
 ```
 
 This code is far from optimal. It is implicit. Of course, a fruit that is yellow and sour is a lemonade. But it takes thinking and it is not immediately clear. Let's look at the following code instead:
@@ -1483,7 +1485,7 @@ def is_a_lemon(fruit):
     return fruit.color == Color.yellow and fruit.flavor == Flavor.sour
 
 if is_a_lemon(fruit):
-    make_lemonade()
+    make_lemonade(fruit)
 ```
 
 Here we refactored the relevant code into a function. It is only one line, but it makes the code so much more readable.
@@ -1496,6 +1498,7 @@ The easiest way to assess the complexity of a function is by counting the number
 
 A frequent problem is deeply nested `if/else` clauses.
 [https://youtu.be/rHRbBXWT3Kc]
+
 ```py
 button = input("")
 if button != "":
@@ -5576,7 +5579,7 @@ Refactoring, just like writing code, is a highly non-linear process. It cannot b
 
 # 35. Refactoring Techniques
 
-"The fewer methods a class has, the better. The fewer variables a function knows about, the better. The fewer instance variables a class has, the better" Robert C. Martin
+"The fewer methods a class has, the better. The fewer variables a function knows about, the better. The fewer instance variables a class has, the better" - Robert C. Martin [Clean Code]
 
 // move some of these techniques to working with existing code? I believe most of them also work with legacy code.
 
@@ -5588,13 +5591,21 @@ The techniques explained in this chapter are unlikely to create bugs. The good r
 
 When following the rules taught in this book, you should be writing good code. It is well-tested, contains clear interfaces, no global variables, and no side effects. Still, you have to refactor once in a while. But it's comparatively easy because you can focus on the refactoring part. The tests are already in place to ensure that you don't break anything. In this section, you will learn some techniques that you can apply when refactoring.
 
+## Where to start
+
+Usually it takes me very little time to see whether some code needs to be refactored and if yes, what the problems are. The most frequent problem is classes and functions which are way too long. Those are also very easy to spot, but unfortunatley they are not always that easy to fix. Along with too long functions comes the problem of too many levels of indentation. This is another sign that the logic of the code should be simplified.
+
+Missing unit tests is also a very common problem. Though this one is even harder to fix in a code review. You simply lack information on what a piece of code does. Furthermore, it is certainly the task of the original programmer to write tests, not yours.
+
+A common problem that is easy to spot are comments. If the expression used to explain something in a comment is different than the name of the variable, something is off. Usually the variable should be renamed. Though renaming has not the highest priority. It is more important to fix the logic of the code.
+
 ## Breaking classes
 
-Breaking classes into smaller pieces is one of the most commonly used refactoring techniques. Simply because of the fact that classes tend to grow over time and have to be split once in a while. Classes should be small. And in my opinion, the best classes are the ones that don't exist. Use dataclasses and functions whenever possible.
+Breaking classes into smaller pieces is one of the most commonly used refactoring processes. As it is tempting to write too big classes to begin with, and due to the fact that classes tend to grow over time, they have to be split once in a while. Classes should be small. And in my opinion, the best classes are the ones that don't exist. Use dataclasses and a few functions instead to organize your code. Functional programming does have its merits.
 
 ### Too many methods
 
-One issue are excessive methods within a class. As I've already explained before, I prefer having freestanding functions over methods. They are decoupled and you can deal with them more freely. For instance, you can move these functions into a new class if you like, with only minor effort. Furthermore, it is easier to write unit tests for freestanding functions compared to methods. The technique behind it is fairly simple. Just search for functions that use only "few" class variables. Remove this method from the class and create a function out of it. Instead of passing `self` in Python, you have to pass all the function arguments explicitly.
+One issue of classes is excessive usage of methods. As I've already explained before, I prefer having freestanding functions over methods. They are decoupled and you can deal with them more freely. For instance, you can move these functions into a new class if you like, with only minor effort. Furthermore, it is easier to write unit tests for freestanding functions compared to methods. The technique behind it is fairly simple. Just search for functions that use only "few" class variables. Remove this method from the class and create a function out of it. Instead of passing `self` in Python, you have to pass all the function arguments explicitly.
 
 ```py
 class House:
@@ -5602,29 +5613,35 @@ class House:
         self._address = address
 
     def _print_address(self):
+        # do something more with _address
         print(self._address)
 
-    def print_wrapper(self):
+    def wrapper(self):
+        # do something with _address
         self._print_address()
 ```
 
-Here we can refactor the `_print_address` method out of the class. The only variable needed is `_address`, so we have to pass this variable as a function argument.
+Here we can refactor the `_print_address` method out of the class. The only variable needed by this method is `_address`. So we have to pass this variable as a function argument.
 
 ```py
-# inside house_helpers.py
-def print_address(address):
+def _print_address(address):
+    # do something more with address
     print(address)
 
-# inside house.py
 class House:
     def __init__(self, address):
         self._address = address
 
-    def print_wrapper(self):
-        print_address(self._address)
+    def wrapper(self):
+        # do something with _address
+        _print_address(self._address)
 ```
 
-One problem is the fact that the function `print_address` is now a freestanding function within this file. It has bigger scope now than it did as a private method within the class. In C++ you could encapsulate this function within a namespace to make it local. In Python there is unfortunately no such thing. Instead you have to move it into a helper file that contains functions which should be used only by this file here.
+This is of course a very artificial example and the question is, wherther it's worth doing this refactoring. As the class is very small, it doesn't really matter. But as the class grows, it becomes more and more important to increase cohesion and refactor out everything that doesn't need to be within the class. Here, `_print_address` is such an example. It requires only one member variable from the class, so it has comparably little cohesion. It is therefore a candidate to be refactored out into a separate function. If you don't refactor such methods out of your classes, your code becomes rigid and making changes to the class will require a lot of effort.
+
+In our example, we were able to reduce the number of methods that need access to `_address` from 2 to 1. This is a very significant improvement. If you now have to change the shape of the class by changing the `_address` member variable, it has become much easier. You'll only have to change one method class. 
+
+Of course, this example is so small that you could completely dismantle the class. It has only one variale that is only used in one method. This is not what you should write a class for. The only class like thing here should be the `address`, which should probably be a dataclass.
 
 ### Structuring variables
 
@@ -6142,8 +6159,6 @@ Comments are a double-edged sword. While they may be useful at times, they can a
 
 ## Bad comments
 
-// to the reviewers: Is this code too much ranting about the other book? If yes, how can I improve it?
-
 "Comments? Don’t."
 
 "Why?"
@@ -6154,7 +6169,7 @@ def add(a,b):
     return a + b
 ```
 
-Trust me, I've seen similar comments before. Apparently, the programmer thought it was a good idea to write this comment.
+I've seen similar comments before. Apparently, the programmer thought it was a good idea to write this comment.
 
 I do not share this opinion. In my opinion, this is a useless boilerplate comment. Read the function name. It precisely explains the function's purpose. If you are unsure, refer to the implementation. This is precisely what distinguishes good code. When you read a function name, you know what it does. Good code is self-documenting. There is barely any need for additional comments. This comment is a violation of the SRP. It's a redundant explanation of the code's functionality.
 
@@ -6964,6 +6979,12 @@ The docstring software auto creates a documentation depending on the comments in
 
 Every programming language has one docstring tool. For Python it’s Sphynx, for C++ it’s doxygen.
 
+# Too short to be a chapter
+
+## Logging
+
+## Design patterns
+
 
 Part 9 Collaborating
 
@@ -7207,12 +7228,9 @@ In order to be flexible, you have to be able to adapt your code. You have to cha
 
 Written by Felix Gähler
 
-#Requirements Engineering
-
 Das Requirements Engineering (RE) befasst sich damit, wie man überhaupt bestimmt, was man implementieren soll. Denn wie wir bereits gelernt haben, soll man nur Code schreiben, wenn dies für den User auch Nutzen hat [Kapitel Einführung]. 
 
-**neu in v0.4» Auf den ersten Blick mag es erstaunen, warum es dafür überhaupt ein spezielles Kapitel braucht. Ist es nicht offensichtlich, was man implementieren soll? Leider nein. Es ist oftmals sogar sehr unklar, was man implementieren soll. Und wenn das Entwickler Team dann mal ein paar Monate mit einem Feature vergeudet, welches gar nicht gebraucht wird, so sind schnell mal ein paar Hunderttausend Euro vernichtet. Es ist also sehr wichtig, dass man sich immer bewusst ist, was und warum man entwickelt. 
-«
+Auf den ersten Blick mag es erstaunen, warum es dafür überhaupt ein spezielles Kapitel braucht. Ist es nicht offensichtlich, was man implementieren soll? Leider nein. Es ist oftmals sogar sehr unklar, was man implementieren soll. Und wenn das Entwickler Team dann mal ein paar Monate mit einem Feature vergeudet, welches gar nicht gebraucht wird, so sind schnell mal ein paar Hunderttausend Euro vernichtet. Es ist also sehr wichtig, dass man sich immer bewusst ist, was und warum man entwickelt. 
 
 ## Entwicklugsmethoden 
 Für das RE gibt es, wie auch für die Software Entwicklung allgemein, zwei Methoden: Die Wasserfall-Methode, oder die agile Methode. Diese werden im Kapitel Agile besprochen [siehe Kapitel Agile]. 
