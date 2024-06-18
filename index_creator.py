@@ -36,6 +36,10 @@ def save_all_words(words):
         for word in words:
             all_words.write(word + "\n")
 
+def deal_with_commas(word):
+    words = word.split(",")
+    return words[1].strip() + " " + words[0]
+
 def save_only_desired_words():
     desired_words = []
     with open(desired_index_file, "r") as desired:
@@ -45,8 +49,10 @@ def save_only_desired_words():
 
     with open(index_file, "w") as index:
         for word in desired_words:
+            if word.count(",") > 0:
+                word = deal_with_commas(word)
             index.write(word + " ")
-            # this search takes a long time for many words!!
+            # this search takes a long time!!
             index.write(str(search_page_numbers(word, complete_text)))
 
 no_duplicates = []
@@ -62,5 +68,5 @@ with open(pure_text_file) as readme:
 
     complete_text = PyPDF2.PdfReader(pdf_file)
 
-save_all_words(no_duplicates)
+# save_all_words(no_duplicates)
 save_only_desired_words()
