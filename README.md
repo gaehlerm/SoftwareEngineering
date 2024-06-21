@@ -38,6 +38,10 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [A word about Copilot](#a-word-about-copilot)
 - [6. Software Engineering](#6-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+  - [Writing correct code](#writing-correct-code)
+  - [Cleaning up code](#cleaning-up-code)
+  - [Writing code for a purpose](#writing-code-for-a-purpose)
+  - [The five rules of software engineering](#the-five-rules-of-software-engineering)
 - [7. Good code: a list of rules](#7-good-code-a-list-of-rules)
   - [The Zen of Python](#the-zen-of-python)
 - [8. Understandable code](#8-understandable-code)
@@ -85,6 +89,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Example of an adapter](#example-of-an-adapter)
   - [Copilot](#copilot-1)
 - [12. Naming](#12-naming)
+  - [The importance of Names](#the-importance-of-names)
   - [How to name things](#how-to-name-things)
   - [Naming Antipatterns](#naming-antipatterns)
     - [Useles Words](#useles-words)
@@ -112,10 +117,10 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Abstract Base Class](#abstract-base-class)
     - [Implementation Class](#implementation-class)
     - [Inheritance Classes](#inheritance-classes)
-    - [Other Types of Classes](#other-types-of-classes)
     - [General Recommendations](#general-recommendations)
+    - [One step further](#one-step-further)
   - [Functions vs. Methods](#functions-vs-methods)
-  - [Constructors](#constructors)
+  - [Constructors and Destructors](#constructors-and-destructors)
   - [Getter and Setter Methods](#getter-and-setter-methods)
     - [Data Classes](#data-classes)
     - [Worker Classes](#worker-classes)
@@ -334,6 +339,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Too many methods](#too-many-methods)
     - [Structuring variables](#structuring-variables)
     - [Too many variales](#too-many-variales)
+    - [Splitting classes](#splitting-classes)
   - [Renaming](#renaming)
   - [Scratch refactoring \[WELC p. 212\]](#scratch-refactoring-welc-p-212)
   - [Extract function](#extract-function)
@@ -540,17 +546,19 @@ Chapters to work on:
 
 # 4. The short story behind this book
 
-I studied physics at ETH Zurich, Switzerland. I worked as a teacher for a few years before I decided to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software for quantum computers.
+"Software development is a journey. Every bug fixed is a lesson learned." - ?
 
-At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book that explains everything I learned about good programming practices and everything else during the few years I spent in industry. Such that every person with a little bit of programming knowledge can improve their skills reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice and continuous learning.
+I studied physics at ETH Zurich, Switzerland. And I worked as a teacher for a few years before I decided to switch to software engineering. I worked for a few years as a software engineer at Zurich Instruments, a company that develops electronic devices used in quantum computing. There, I was mostly busy developing software for quantum computers.
+
+At the beginning of my time there, I was still a novice in software engineering, but I quickly picked up a lot of new skills. At the same time, I was in touch with many PhD students and realized how poorly written their code was. This is when I came up with the idea to write a book about software engineering. I wanted to write a book to myself at the end of my studies. When I knew the basics of programming, but nobody told me how to structure my code properly. I wanted to write a book that explains everything I learned about good programming practices during the few years I spent in industry. Such that every person with a little bit of programming knowledge can improve their skills to a reasonable level by reading this book. That being said, reading this book will, of course, not be enough to become a proficient software engineer. It also takes a lot of practice and continuous learning.
 
 I wasn't really sure where this book would take me. In the beginning, I didn't even think this would become a real book. I was just writing down my thoughts and ideas. Things that I once thought of, but couldn't find any literature about or only scattered over many different places. My English is fairly poor, and I was never really good at writing essays in school. But as I was reading other books, I got some more inspiration on what to write. And as this text got longer and I got some encouraging feedback from my reviewers. Therefore, I decided to publish this book.
 
-The two books which inspired me the most are the best sellers [Clean Code] by Robert C. Martin and [The Pragmatic Programmer] by Andrew Hunt and David Thomas. I like how they both give some general advice how to write better code. But, of course, I didn't want to make a copy of these books. Even though there are some similarities, especially with Clean Code. I tried hard to find out why I liked these books and what could be improved. For instance the code examples given in these books. On one hand, The Pragmatic Programmer has no code at all, meanwhile Clean Code frequently has code which is too long to understand.
+The two books which inspired me the most are the best sellers [Clean Code] by Robert C. Martin and [The Pragmatic Programmer] by Andrew Hunt and David Thomas. I like how they both give some general advice how to write better code. But, of course, I didn't want to make a copy of these books. Even though there are some similarities, especially with Clean Code. I tried hard to find out why I liked these books and what could be improved on. For instance the code examples given in these books. On one hand, The Pragmatic Programmer has no code at all, meanwhile the Clean Code frequently has code which is too long to understand.
 
-I tried to write a book that has useful topics and at the same time some concrete code examples. I really tried to keep the code examples as short as possible in order to make them easy to understand. If you wonder why I simplify some code in an example, always imagine this little piece of code being inside a huge codebase.
+Therefore, I tried to write a book that has useful topics and at the same time some concrete code examples. I really tried to keep the code examples as short as possible in order to make them easy to understand. Always imagine this little piece of code being inside a huge codebase.
 
-If you decied to read this book, I have to warn you that I don't like classes and long functions too much. I prefer to structure code with many short functions and small classes. Classes may be useful tools, but they are frequently abused for writing bad code using the member variables as "mini-globals" [The Art of Readable Code]. Instead, classes should usually do little more than organizing data, as done in C-style structs. 
+If you like long functions and classes, I have to warn you that I don't them too much. I prefer to structure code with many short functions and very few, small classes. Classes may be useful tools, but they are frequently abused for writing bad code using the member variables as "mini-globals" [The Art of Readable Code]. Instead, classes should in my opinion usually do little more than organizing data, as done in C-style structs. 
 
 I hope you'll enjoy reading this book,
 Marco Gähler
@@ -560,6 +568,7 @@ Marco Gähler
 There are some people who read through this book and were very helpful in giving me feedback. I want to thank them here:
 - Volker Obermeit
 - Rafael Gort
+- Marios Karakasis
 - Felix Gähler
 - Hans Märki
 - Bernhard Brodowsy
@@ -568,13 +577,13 @@ There are some people who read through this book and were very helpful in giving
 - Fabian Mäser
 - ... you?
 
-Furthermore I'd like to thank Uwe Schmitt and the Research Software Engeneering (RSE) community
+Furthermore I'd like to thank Uwe Schmitt and the Research Software Engeneering (RSE) community in Zurich.
 
 I would also thank to Martin Fowler, Robert C. Martin, and Dave Thomas, amoung others, for their moral support and their great books. Though, little surprisingly, they didn't have time to read through this book.
 
 Copilot and Wordvice helped me a lot writing this book. Copilot at times gave me some inspiration on how to finish a sentence and Wordvice helped me out with improving the language. When revising this text, I just realized once again how poor my English was.
 
-I would also like to thank the team of Pearson Germany for their support.
+I would also like to thank the team of Pearson Germany for their support. Most notably Birger Peil.
 
 # 5. Preface
 
@@ -590,17 +599,17 @@ A few years later, I decided to give programming another shot. I found a company
 
 In the beginning, I struggled a little. I was overwhelmed by the amount of code. I didn't know which IDE to use, and the build process I used was flawed. You name it. Still, I received some good feedback from my boss. A few months later, I had my first significant feature implemented. It also had automated tests, and the code was much cleaner than similar features. Another month later, I implemented my second feature. Everyone in the company expected this task to be very challenging, but I found a neat way to implement it.
 
-My boss wrote most of the code, and the success of the company was largely dependent on his efforts. He knew everything, but I hardly ever understood what he was talking about. In many topics, I lacked the necessary background information.
+My boss wrote most of the code, and the success of the company was largely dependent on his efforts. He knew everything, but I hardly ever understood a thing when he explained his code. In many topics, I lacked the necessary background information.
 
 Around that time, the company hired additional software developers. Especially one of them made a huge impression on me. I could ask him almost anything, and he was able to provide me with a simple answer. He understood the concepts on which our code was based, enabling him to grasp the fundamental structure of our code and organize the remaining elements. But it was also the way he worked. He wrote small functions covered with automated tests. He was also refactoring the code. One Monday morning, he arrived at the office. He opened a massive merge request to refactor some code across the entire codebase. He broke down this huge and widespread problem into small chunks and wrote tests for the new implementation. He opened my eyes. He made me realize that the way he worked was so much better. So much more structured. This was proper engineering. Real software engineering.
 
-There is so much I learned in these few years. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, just fundamental principles. It provides an overview of the most important topics so that you do not get overwhelmed by the infinite number of decisions a programmer has to make. This book contains numerous real-world examples that do not require any code. I want to explain principles that are very general and do not require any code to explain. In fact, software engineering is, in some respects, very similar to other fields of engineering. Therefore, a car is often a better example to explain my point than some fancy piece of code that you struggle comprehending.
+There is so much I learned in those few years. And the basic principles are so easy to learn. You just need someone to teach you. This book is what this book is about. No fancy code, just fundamental principles. An overview of the most important topics so that you do not get overwhelmed by the infinite number of decisions a software engineer has to make. This book contains numerous real-world examples that do not require any code. I want to explain principles that are very general and do not require any code to explain. In fact, software engineering is, in some respects, very similar to other fields of engineering. Therefore, a car is often a better example to explain my point than some fancy piece of code that you struggle comprehending.
 
-Of course, I also included some code examples. I didn't want this book to be too abstract. Though in order to keep the examples small, I frequently had to simplify them.
+Of course, I also included some code examples. I didn't want this book to be too abstract. Though in order to keep the examples easy to understand, they had to be small, and I frequently had to simplify them a lot.
 
 I'm not a great software engineer, not at all. And my English is fairly lousy. But maybe this is a good thing when writing a book. It will be easy to understand as I tried to keep all chapters concise and easy to understand. It keeps the book short and motivates you to read it all because everything I wrote is important. At least, that's what I hope.
 
-I'm not God, and this is not the Holy Bible. This book aims to assist you with your programming problems, but it does not contain absolute truth. Probably, there are hardly any absolute truths in programming; there are only trade-offs. I hope that the recommendations and trade-offs I provide in this book will help you write better code. And if you don't agree with some of my recommendations, that's fine. You will certainly be able to find examples where my general recommendations will not apply. Feel free to create a YouTube video to explain your point if you can come up with a better rule how to do something. I would be delighted if you taught me how to become a better software developer. 
+I'm not God, and this is not the Holy Bible. This book aims to assist you with your programming problems, but it does not contain the absolute truth. Probably, there are hardly any absolute truths in programming; it's not math. Software engineering is an empirical field. We have to find out what works best by trying different things and explain it a few sentences. There are many trade-offs to be made as some of these rules may be contradictory. I hope that the recommendations and trade-offs I provide in this book will help you write better code. And if you don't agree with some of my recommendations, that's fine. You will certainly be able to find examples where my general recommendations will not apply. Feel free to create a YouTube video to explain your point if you can come up with a better rule how to do something. I would be delighted if you taught me how to become a better software developer. 
 
 Reading this book is only one step in your career. Next, you have to get out into the real world. Get a job. Write code and learn how to apply the principles you have learned here. It is hard; this will take your whole life. Many others face similar problems. Talk to them, improve your solutions, and get smarter. Become a real software engineer.
 
@@ -612,7 +621,7 @@ This book was initially intended for PhD students. I know quite a few who spend 
 
 Of course, this book is not only for PhD students. There are also many programmers who never learned proper software engineering. Though as you are reading this book here, chances are that you have already read some other books and that you are familiar with many of the things I am writing about. But I believe there are still some novel ideas in this book that you can utilize to enhance your code.
 
-At the same time, I'd like to mention what this book isn't. It doesn't teach you fancy modern topics in computer science. It doesn't teach you how to develop artificial intelligence, high-performance computing, web development, databases, distributed systems, etc. I simply lack the scope and knowledge to cover all these topics. Though I'm confident that the principles taught throughout this book will help you with these topics, as they all require good software engineering skills.
+At the same time, I'd like to mention what this book isn't about. It doesn't teach you fancy modern topics in computer science. It doesn't teach you how to develop artificial intelligence, high-performance computing, web development, databases, distributed systems, etc. I simply lack the scope and knowledge to cover all these topics. Though I'm confident that the principles taught throughout this book will help you with these topics, as they all require good software engineering skills.
 
 ## Writing this book
 
@@ -643,11 +652,11 @@ This book contains relatively few code examples. It's more about general concept
 
 "Software Engineering is the application of an epmirical, scientific approach to finding efficient, economic solutions to practical problems in software" - David Farely [Modern Software Engineering, p. xxii] This book aims to provide clear answers to simple problems in software engineering. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books.This is what makes the problems so challenging and software engineering exciting. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. This is why it is fun. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
 
-This book is about engineering. It's about finding ways how to write better code. It's not a strictly scientific approach, it's more of an empiric approach. Thus, there is no absolute truth and there are no proofs in this book. I will rather give you some general advice on best practices. Due to this reason, there are only a few references available for specific topics. Most chapters consist of my personal interpretations of more specialized books Thus, I mention the book I was reading as a foundation for the corresponding chapter. And of course, all of this book is biased by my personal opinions and reasonings.
+This book is about engineering. It's about finding ways how to write better code. It's not a strictly scientific approach, it's more of an empiric approach. Thus, there is no absolute truth and there are no proofs in this book. I will rather give you some general advice on best practices. Due to this reason, there are only a few references available for specific topics. Most chapters consist of my personal interpretations of more specialized books. Thus, I mention the books I was reading as a foundation for the corresponding chapter. And of course, all of these books are biased by my personal opinions and reasonings.
 
 ## The Life of a Software Engineer
 
-I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is all so vague. We have to sit down and analyze the situation. I even found moral support from a fellow physicist.
+I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is all so vague. We have to sit down and analyze the situation.
 
 Let me start with a very blunt question: What do you think a software engineer does?
 
@@ -673,6 +682,8 @@ Good code is not fancy; it is not complex, and it is not necessarily short. Good
 
 Good code utilizes only the essential syntax provided by a programming language. It is great if you don't know a programming language too well. You avoid falling into the trap of using fancy but useless features. Don't learn programming languages. Learn programming. Unless you work for Google or another company developing highly specialized code, you will never need all the gimmicks that modern programming languages have to offer.
 
+## Writing correct code
+
 Now, it is not only important to ensure that the code works, but we also have to verify its correctness. The crash of two Boeing airplanes in 2018/2019 was not the first time that software bugs led to catastrophic damage. Nor will it be the last time, unfortunately.
 
 We don't want to be responsible for people dying or companies going bankrupt. We want to write impeccable code. We want to ensure that there are no bugs to the best of our ability. We constantly check that our code is correct. We test our code. We let our computers test our code. We write code to test our code!
@@ -687,6 +698,8 @@ The third rule of software engineering:
 
 **We write code that can have as few possible bugs as possible.**
 
+## Cleaning up code
+
 Now let's return to our lovely plot. There is one more substantial chunk of work. Modifying the current code. Also known as refactoring. Yes, as astonishing as it sounds, you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring, and its importance cannot be understated. It helps you keep the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring, your code quite quickly becomes a huge mess, making it difficult to implement any changes. And there will be a million places where bugs can hide. Though changing code always carries the inherent risk of potentially breaking it. This is one of the reasons why we need good tests. If we have good test coverage, we can change the code with confidence that we won't break it.
 
 The fourth rule of software engineering:
@@ -695,6 +708,8 @@ The fourth rule of software engineering:
 
 Now you have an idea of what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to do half an hour ago. I can explain the fundamental principles of writing good code.
 
+## Writing code for a purpose
+
 You might already be working in a company, or you will be soon. Your boss is not going to let you write code for a month just because you like it. You will be spending a considerable amount of time in meetings and engaging in discussions with others to determine precisely what you should do. What your customers want.
 
 The fifth rule of software engineering:
@@ -702,6 +717,8 @@ The fifth rule of software engineering:
 **We write code to create value for our customers.**
 
 If you don't like meetings nor customers, you can stay at home and write whatever code you like. But unless you are a genius, the chances of anyone paying you for that are very low. It is more rewarding to write mediocre code that is being used than to write brilliant code that no one cares about.
+
+## The five rules of software engineering
 
 These five rules will accompany us throughout our book.
 
@@ -715,9 +732,11 @@ These five rules will accompany us throughout our book.
 
 # 7. Good code: a list of rules
 
+// remove this chapter? we already have the one sentence summary
+
 "Truth can only be found in one place: the code." - Robert C. Martin
 
-This is an attempt to distill a list of rules that enable you to assess the quality of code.
+This is an attempt to distill a list of rules that enable you to assess the quality of code. Unfortunately, I didn't find a way to sort these points. They represent the vastness of software engineering.
 
 By definition, good code is easy to understand [preface]. Also, for new software developers on the team. With good code, even marketing people may comprehend some of your technical discussions as you use the same language [domain driven design].
 
@@ -727,7 +746,7 @@ Pretty much all your code follows the SRP [Single Responsability Principle]. Fun
 
 Names should be short yet concise [Naming].
 
-Do not repeat yourself (DRY) [section Do not Repeat Yourself]. There is no copy-paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you can never be sure if making a single change is sufficient, or if it needs to be applied in multiple other locations. This leads to bugs and high maintenance costs very quickly.
+Do not repeat yourself (DRY) [section Do not Repeat Yourself]. Do not copy-paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you can never be sure if making a single change is sufficient, or if it needs to be applied in multiple other locations. This leads to bugs and high maintenance costs very quickly.
 
 Classes should have high cohesion [classes]. They should have a strong coupling between the variables [Data types] and methods [Functions]. On the other hand, they should have weak coupling to other classes. Due to constantly adding functionality, classes tend to lose cohesion. Then, they have to be broken up into several smaller classes [Refactoring].
 
@@ -741,7 +760,7 @@ Define variables right where they are used. Always assign a value to them immedi
 
 Create objects all at once. There are cases where objects are created only partially due to missing information. This is should be avoided and akin to a supply chain issue. Gather all the pieces needed to create an object before doing son. An object should be created completely or not at all. Throw exceptions if objects cannot be created at once.
 
-Write short functions (~< 10 lines) and classes (~< 100 lines) [Single responsability principle]. These are very rough estimates and depend on numerous factors. Usually, their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes should be kept short to prevent their complexity [Complexity] from getting out of hand.
+Write short functions (~< 10 lines) and classes (~< 30 lines) [Single responsability principle]. These are very rough estimates and depend on numerous factors. Usually, their length is limited by the SRP and the level of abstraction [Levels of abstraction]. Complicated functions and classes should be kept short to prevent their complexity [Complexity] from getting out of hand.
 
 Keep the dependencies between different parts of the code minimal [Dependencies]. Especially when dealing with third-party libraries [Third-Party Libraries], it is advisable to create a wrapper [Interfaces] around them. This is helpful when you want to replace it.
 
@@ -757,7 +776,7 @@ Avoid nesting if loops. This violates the SRP and is highly prone to bugs [Singl
 
 Avoid using Boolean values [section Booleans] and logic as much as possible. Due to human deficiencies, these lines of code harbor the most errors. Try to avoid them as far as reasonably possible. Ensure that every branch of an if statement is tested.
 
-Avoid passing Booleans as function arguments [Functions]. They are a strong indication of a violated SRP [Single Responsability Principle]. Resolve the consequences immediately.
+Avoid passing Booleans as function arguments [Functions]. They are a strong indication of a violated SRP [Single Responsability Principle]. Resolve the consequences immediately and use dependency injection (DI) instead.
 
 Avoid string comparisons [section Strings]. Use enums instead [seciton Enums]. Convert the string into an enum as soon as you have the string object available.
 
@@ -793,11 +812,11 @@ Namespaces are one honking great idea -- let's do more of those! Yes, namespaces
 
 ## How Humans Think
 
-As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn't care as long as the syntax is correct. And if there is a bug, the computer simply runs it. But we don't care about the computer. This book is written for humans. We have to ask ourselves: When does a human understand something? Or what do humans struggle with?
+As we have discussed, good code is easy to understand. But what makes code easy or hard to understand? A computer understands everything. He doesn't care as long as the syntax is correct. And if there is a bug, the computer simply runs it. But we don't care about the computer. This book is written for humans. Code is written for humans. We have to ask ourselves: When does a human understand something? Or what do humans struggle with?
 
 Humans are fundamentally different from computers. We can achieve incredible feats, yet we also have significant weaknesses. The evolution adapted us to our environment. We were made to live in the forest, hunt animals, and socialize with our clan. We needed keen eyes to spot our prey, a vivid imagination to grasp the terrain and wind direction, and familiarity with our hunting companions. These tasks necessitate a great deal of intuition and approximate reasoning. These are challenges that computers or robots struggle with. Though they improve, thanks to the emergence of artificial intelligence.
 
-One thing is clear: Humans struggle to think logically. We are easily overwhelemed if there is no structure that we can understand. The computer can execute the following line of code without any issues, but I doubt any reader would be able to determine the result within five minutes.
+One thing is clear: Humans struggle to think logically. We are easily overwhelemed if there is no structure that we can understand. The computer can execute the following line of code without any issues, but I guess only very few readers would be able to determine the result within five minutes.
 
 ```py
 (lambda f, n: f(f, n))(lambda f, n: [(not n % 3 and "fizz" or "") +
@@ -812,7 +831,7 @@ We are limited by the amount of complexity we can imagine. So, there is only one
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and then build them together like Lego bricks. Every time we assemble a few pieces, we create something new that we give a name to and can explain to other humans what this thing does. It has a higher level of abstraction.
 
-Most people driving a car have a good understanding of how it works. A car consists of various components such as an engine, wheels, brakes, a steering wheel, etc. We can mentally deconstruct a car into smaller parts that we can still comprehend. Now, if the car has a technical problem, we can usually make a fairly accurate guess about which of all these parts broke, even if you are not a car mechanic. With your own code, it should be the same.
+Most people driving a car have a good understanding of how it works. A car consists of various components such as an engine, wheels, brakes, a steering wheel, etc. We can mentally deconstruct a car into smaller parts that we can still comprehend. Now, if the car has a technical problem, we can usually make a fairly accurate guess about which of all these parts broke, even if you are not a car mechanic. With code, it should be the same.
 
 ## Spaghetti code
 
@@ -855,7 +874,7 @@ def send_email(to: str, subject: str, body: str):
 send_email(to="google", subject="new search engine", body="it's awesome")
 ```
 
-While it is still generally recommended to use a class instead of named arguments. It orders the arguments in a logical way. The `email` is of a higher order than the three strings. It orders these three objects into one logical unit, making it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a bad idea. It is clear that they should have structured the arguments using dataclasses. Or, as we'll learn in the chapter [classes], you should use a data class that allows you to structure your variables.
+However, it is still recommendable to use a class instead of named arguments. Classes order the arguments in a logical way. The `email` is of a higher order than the three strings. It orders these three objects into one logical unit, making it much easier to understand the code. Some people start using keyword arguments for 20 function arguments. I think this is a really bad idea, even with keyword arguments. It is clear that they should have structured the arguments using dataclasses.
 
 ### Complicated code
 
@@ -881,19 +900,19 @@ for i in range(1, 101):
         output.append(i)
 ```
 
-This is, at least in my opinion, much easier to understand.
+This is much easier to understand and therefore the better solution.
 
 ### Assigning variables inside conditions
 
-Avoid creating assignments within if statements. It is difficult to read and easy to make mistakes. I had to create a C++ example because such code is not possible in Python. It returns an error message if you make an assignment inside an if statement.
+Avoid creating assignments within if statements. It is difficult to read and easy to make mistakes. I had to create a C++ example because such code is not possible in Python. Python returns an error message if you make an assignment inside an if statement.
 
 ```C++
 if (int t = time_elapsed()) ...
 ```
 
-The problem is that you can easily confuse this code with `t == time_elapsed()`. This is a common mistake.
+The problem is that you can easily confuse this code with `t == time_elapsed()`. This is a common mistake. And as it's our job to prevent mistakes, we should avoid this kind of code.
 
-In C++ and many other programming languages, it is possible to omit curly braces if there is only one line of code. However, this is error prone as people don't pay attention. Therefore, it is recommended to always use curly braces.
+In C++ and many other programming languages, it is possible to omit curly braces if there is only one line of code. However, this is error prone as people don't pay attention. As has happened before. It's not a big thing, but I recommend to always use curly braces.
 
 ```C++
 if (time_elapsed() > 10)
@@ -901,13 +920,36 @@ if (time_elapsed() > 10)
     std::cout << "this will always be printed!" << std::endl;
 ```
 
+Apparently, there's no such discussion in python.
+
 ### Scope of variables
 
 Avoid using `do while` statements if it's supported by your programming language of choice. The issue is that you need to keep track of the conditional variable throughout the entire range of the loop. This is extremely error-prone because keeping track of a variable over such a long time is challenging. It is much better to use a `while` loop and initialize the variable before the loop.
 
-It is generally advisable to minimize the number of variables. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long period, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Avoid using control flow variables whenever feasible.
 
-Limit the scope of all variables: avoid globals, keep classes and functions concise, etc. If the scope is larger than necessary, consider making the variable constant if possible.
+```C++
+int i = 0;
+do {
+    cout << i << "\n";
+    i++;
+}
+while (i < 5);
+```
+
+The following code without a `do while` loop is much easier to understand.
+
+```C++
+int i = 0;
+while (i < 5);
+{
+    cout << i << "\n";
+    i++;
+}
+```
+
+It is generally advisable to minimize the number of variables in use. And they should have only a very small scope. This makes it much easier to keep track of them. If you have to keep track of a variable over a long period, you are very likely to make a mistake. Thus, eliminate intermediate results. Make logic as simple as possible. Avoid using control flow variables whenever feasible.
+
+Limit the scope of all variables: avoid globals, keep classes and functions concise, etc. If the scope is larger than necessary, consider making the variable constant if possible. The scope of a variable should never be more than about 10 lines of code, the maximal recommended length of a function.
 
 ### Approximate programming
 
@@ -923,13 +965,11 @@ Copilot is generally quite proficient at generating readable code. At times, it 
 
 **Every object does exactly one thing. Everything is done by exactly one object.**
 
-"The Single Responsibility Principle advises to separate concerns to isolate and simplify change." - Klaus Iglberger [https://youtu.be/motLOioLJfg?t=1003]
-
 There are various interpretations of the Single Responsibility Principle (SRP) [Clean Architecture]. I don't think the differences between them really matter. The highlighted version above represents my personal interpretation of the SRP. It is much more important that you understand the idea behind it.
 
-The SRP is arguably the most crucial topic in this book and in all of software development. Every piece of code should have exactly one task. It is the foundation of readable and reusable code. When applied correctly, any type of code will become an order of magnitude more readable.
+The SRP is arguably the most crucial topic in this book and in all of software development. Every piece of code should have exactly one task. It is the foundation of readable and reusable code.
 
-Please note that the SRP does *not* state that every software developer is responsible for their own piece of code. The SRP focuses on code fragments, not on code ownership.
+There is one common missconception regarding the SRP: Please note that the SRP does *not* state that every software developer is responsible for their own piece of code. The SRP focuses on code fragments, not on code ownership.
 
 ## Do not Repeat Yourself
 
@@ -937,11 +977,11 @@ A direct consequence of the SRP is the "Do not Repeat Yourself" (DRY) principle 
 
 The DRY principle not only applies to code. It also applies to processes such as constructing your project. If you have to execute many steps by copy-pasting them from some manual to build your project, something is wrong. Instead, you should automate the whole process. Write scripts to build and test your project. [97-things-every-programmer-should-know chapter 63, chapter 42]. The build should run through in one step without any warnings or errors. Warnings are unnecessary mental burdens. Even if ignored. Clean them up immediately. // where did I write something similar before? -> chapter automation?
 
-The other case involves code that has emerged as duplicated over time. Frequently, the same piece of logic is required in multiple locations, leading to its repeated implementation due to a lack of knowledge. This kind of duplication must be refactored relentlessly. It is very difficult to detect this type of duplication as it accumulates over time. Who knows about every piece of code in a large program? Is it worth the effort to search through the entire codebase for a social security number parser, or would it be more efficient to write a new one from scratch? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, it will be nearly impossible to locate all the bits and pieces of code related to them. This could potentially become a significant source of bugs.
+The other case involves code that has emerged as duplicated over time. Frequently, the same piece of logic is required in multiple locations, leading to its repeated implementation due to a lack of knowledge. This kind of duplication must be refactored relentlessly. It is very difficult to detect this type of duplication as it accumulates over time. Who knows about every piece of code in a large program? Is it worth the effort to search through the entire codebase for a social security number parser, or would it be more efficient to write a new one from scratch? Writing a new one may be faster. However, this comes at a cost. If the social security number ever changes, it will be nearly impossible to locate all the bits and pieces of code related to it. This could become a significant source of bugs.
 
 As I mentioned, it is difficult to keep track of this type of redundancies. There is no easy way to prevent them. The only way I could think of is keeping the parts of the software small and cohesive so that it is always more or less clear where a certain feature has to be implemented.
 
-One common source of repetition is switch-case or if statements. They look something like this:
+One common source of repetition is if statements. They look something like this:
 
 ```py
 if job == "president":
@@ -952,7 +992,7 @@ if job == "president":
     security_standards = "very high"
 ```
 
-etc. It is fairly common to have many repeating if statements. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the appropriate properties.
+etc. It is fairly common to have many repeating if statements. Such kind of `if` statements can be spread around the entire code base, violating the DRY principle. Though it would be quite simple to avoid them, for example by using polymorphism. Create a `President` class with the appropriate properties.
 
 ```py
 class President:
@@ -961,14 +1001,14 @@ class President:
         self.security_standards = "very high"
 ```
 
-Now you only have to create a `president` object once, and there is no longer any need for any if statements.
+Now you only have to create a `president` object once and pass it around. There is no longer any need for any if statements.
 
 ```py
 president = President()
 location = president.residency
 ```
 
-Another option is to use a dictionary.
+Another option is to use a dictionary. Dictionaries are great for avoiding switch/match or nested if statements.
 
 ```py
 president = {
@@ -981,7 +1021,7 @@ president = {
 
 The DRY principle does not always have to be strictly followed. It's not always worth trying to find this abstraction with only one repetition of a few lines of code. Also, the overhead of creating a new function might be higher than the benefit gained from refactoring the code. Following the DRY principle increases abstraction of the code, but at the same time also coupling. This is a serious issue.
 
-One opion is to refactor code only in case of a three-fold repetiotion. This is also in agreement with Test-Driven Development (TDD) [Writing better code with tests] where you only have to refactor if there is a threefold duplication of the code. // quote? Clean Craftsmanship??// For a three-fold repetition, there are certainly no more excuses. In the case of three-fold repetitions, you have to refactor the code immediately.
+One option is to refactor code only in case of a three-fold repetition. This is also in agreement with Test-Driven Development (TDD) [Writing better code with tests] where you only have to refactor if there is a threefold duplication of the code. // quote? Clean Craftsmanship??// Though generally I recommend refactoring as soon as you see some repetition that can be refactored out.
 
 ## Advantages of the SRP
 
@@ -997,9 +1037,7 @@ Assigning names to objects is one of the most challenging tasks for a programmer
 
 ### No Duplication
 
-Every bit of logic is handled in exactly one place in your code. You have no code duplication. You are not allowed to copy and paste any code. Do not Repeat Yourself. DRY. This, however, does not only apply to copy-paste code. It can also happen that there are two pieces of code quite far apart in the code performing very similar tasks. If you see redundant code, you should start refactoring it.
-
-Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparatively easy since you only have to change the code in one location. Is your payment system in need of an update? Go to the `PaymentSystem` class and make the necessary updates. Done.
+Any piece of logic should be implemented only once. This has the advantage that refactoring becomes comparatively easy since you only have to change the code in one location. Is your payment system in need of an update? Go to the `PaymentSystem` class and make the necessary changes.
 
 ### Easy Testing
 
@@ -1009,7 +1047,7 @@ Writing unit tests becomes fairly simple as well. A class adhering to the SRP is
 
 As the purpose of each class becomes clearer, it will be easier to structure the logic of your problem. You will only write code that makes sense. You will create fewer bugs. And it's very hard for those bugs to hide. Frequently, you will quickly identify why a bug appeared because it is immediately apparent which part of the code is responsible for the bug's behavior.
 
-Again, let me provide a real-world example: You are wearing an orange T-shirt, although you should be wearing a white shirt. If the only time you have access to a wardrobe is in the morning after having a shower, you know that it was at that time that you made the mistake. Meanwhile, if you have access to the wardrobe all the time, you never know when you might incorrectly decide to wear an orange shirt. This example nicely illustrates why it is important to restrict access to objects as much as possible and perform actions in only one location.
+Let me provide a real-world example: You are wearing an orange T-shirt, although you should be wearing a white shirt. If the only time you have access to a wardrobe is in the morning after having a shower, you know that it was at that time that you made the mistake. Meanwhile, if you have access to the wardrobe all the time, you never know when you might have incorrectly decided to wear an orange shirt. This example nicely illustrates why it is important to restrict access to objects as much as possible and perform actions in only one location.
 
 ### Bug fixing
 
@@ -1031,13 +1069,11 @@ Levels of abstraction are an extremely important concept in software engineering
 
 You take a CPU, a motherboard, RAM, an SSD, and a power supply. Some of the most complex objects humankind has ever created. From some of them, you might have a rough idea of what they do, and maybe even how they work. When you assemble these parts, it becomes mind-boggling. So many extremely complex objects. And now we combine them. How is this going to end up? Surprisingly simple. You sit in front of it every day. It's a computer. And all your questions are gone. It represents a higher level of abstraction and is quite simple to use. As I write this book, I only care about the text software that I use. I don't care about the operating system (OS). I don't care about the computer that is standing on the floor. I don't care about the CPU inside. I don't care about the billions of transistors inside a device, nor do I care about the quantum mechanical effects that these transistors are based on. My text software relies on all these components, but I don't need to have any knowledge about them. All these things were abstracted away by the next higher level. The text processing program emerged from combining all these immensely complex objects.
 
-One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don't know anything about CPUs. CPUs don't know anything about computers, computers don't know anything about the OS and the OS doesn't know anything about my text software. Some things, like quantum mechanics, just exist. We can't change them, but we can use them to create other objects. Transistors, among other components, are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements for operating inside a CPU. Yet, you could take a CPU, break out a transistor, and use it on its own. It's just a transistor. Although it is an extremely small one. You would need an electron microscope to see it. The OS supplies an interface on which the text processing software runs, but the OS does not concern itself with the text processing software.
+One can also look at the problem from the bottom up. Quantum mechanics does not know anything about transistors. Transistors don't know anything about CPUs. CPUs don't know anything about computers, computers don't know anything about the OS and the OS doesn't know anything about my text software. Some things, like quantum mechanics, just exist. We can't change them, but we can use them to create other objects. Transistors, among other components, are designed to operate inside a CPU. We can design transistors that meet the extremely stringent requirements for operating inside a CPU. You could take a CPU, break out a transistor, and use it on its own. It's just a transistor. Although it is an extremely small one. You would need an electron microscope to see it. The OS supplies an interface on which the text processing software runs, but the OS does not concern itself with the text processing software.
 
-Another example is a company. Every company has a job hierarchy. Even though some modern companies attempt to maintain a flat structure, some form of hierarchy still exists. At every level of this hierarchy, there is a different task. The lowest level comprises the factory workers. They do the actual work. However, the other levels are also necessary. The department head has to ensure that all his employees are content, or at least that they fulfill their job responsibilities. As you move up the hierarchy, the work becomes more focused on the company's strategy. It involves more politics and HR. This is the natural way companies are organized. Big companies won't work in any other way. The CEO cannot manage all 10,000 employees by himself, nor can he know every detail of every process within the company. He needs to establish a job hierarchy. He has to delegate his work and let others take care of the time-consuming details. He needs these levels of abstraction. Self-organizing companies without a hierarchy often do not work out very well.
+By combining existing objects, you create a level of abstraction. The new object has a higher level of abstraction than the previous ones. It may have completely different properties than the lower levels, also known as emergence. In theory, the higher-level object combines the complexity of all the underlying objects. However, if the higher-level object is well-designed, you no longer need to concern yourself with the lower-level objects. Just as it is very challenging to calculate the quantum mechanical properties of a simple molecule, you can still derive accurate predictions about the behavior of a combustion engine or the aerodynamics of an airplane by taking a statistical average of billions of molecules. In the very same way, I can work with my text processing software without having to worry about the OS installed on my computer.
 
-By combining existing objects, you create a level of abstraction. The new object has a higher level of abstraction than the previous ones. It may have completely different properties than the lower levels. In theory, the higher-level object combines the complexity of all the underlying objects. However, if the higher-level object is well-designed, you no longer need to concern yourself with the lower-level objects. Just as it is very challenging to calculate the quantum mechanical properties of a simple molecule, you can still derive accurate predictions about the behavior of a combustion engine or the aerodynamics of an airplane by taking a statistical average of billions of molecules.
-
-Creating good levels of abstraction is probably the most important task in software engineering. This is the very core that enables us, as humans, to comprehend and address such exceedingly intricate tasks. You have to break them up into smaller and more manageable blocks that you can understand.
+Creating good levels of abstraction is one of the most important tasks in software engineering. This is the very core that enables us, as humans, to comprehend and address such exceedingly intricate tasks. You have to break them up into smaller and more manageable blocks that you can understand.
 
 ## Programming Example
 
@@ -1097,7 +1133,7 @@ public:
 
 ```
 
-This idea of simplifying the usage of arrays changed C++. One of the biggest problems has been resolved. The user-friendliness has improved significantly. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Meyers [Effective C++].
+This idea of simplifying the usage of arrays changed C++. One of the biggest problems has been resolved. The user-friendliness has improved significantly. This pattern is used everywhere by everyone and has been called "Resource Acquisition Is Initialization" (RAII) by Scott Meyers [Effective Modern C++].
 
 If there is a code pattern that everyone uses, it becomes part of the programming language. The `Vector` class was created. It is a higher-level object based on the array. It hides all the complex work associated with `new` and `delete` and provides an easy-to-use interface with all the essential functionality one would anticipate. The only price to pay is a slight decrease in performance due to the internal implementation details. This loss of performance is so minimal that you won't be able to measure it using any standard software. This is a perfect example that you should let the computer take care of what it can. The loss in performance is minimal, but the gain in usability is very significant.
 
@@ -1123,7 +1159,7 @@ In the following code snippet, not all lines of code are at the same level of ab
 def process_email():
     open_email()
     with open('attachment.txt', 'r') as f:
-    print(f.read())
+        print(f.read())
     close_email()
 ```
 
@@ -1132,7 +1168,7 @@ def process_email():
 ```py
 def print_attachment():
     with open('attachment.txt', 'r') as f:
-    print(f.read())
+        print(f.read())
 
 def process_email():
     open_email()
@@ -1148,17 +1184,13 @@ The lowest level of abstraction consists of the programming language and third-p
 
 ### Infrastructure code
 
-One layer above the third-party libraries, we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details that the user will never see. The engine parts of your car. Parts that the user will not even know about. He can only guess how this stuff could be implemented, but if done properly, he will not have any clue how it's actually done. Neither in a car engine nor in your infrastructure code.
+One layer above the third-party libraries, we have our own low-level infrastructure code. These are generally all your basic data types and all the input/output (IO) code. All the technical details that the user will never see. Like the engine parts of your car. Parts that the user will not even know about. He can only guess how this stuff could be implemented, but if done properly, he will not have any clue how it's actually implemented. Neither in a car nor in your code.
 
 ### The domain level
 
-// Is this redundant with the DDD chapter?
+Then there is the domain level; see also [chapter Domain-Driven Design]. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes an understanding of the business to comprehend this code. The domain model converts the low-level computer language from the infrastructure into human-readable text, although it still adheres to the syntax of a programming language! Every businessperson should be able to comprehend the ultimate outcome of this text.
 
-//add something about domain levels. Write more exactly what the differences between the domain level and high level code are.
-
-Then there is the domain level; see also [chapter Domain Driven Design]. This is the core of your application. It contains all the business logic of your software. This is where all the complexity of your software lies. It takes an understanding of the business to comprehend this code. The domain model converts the low-level computer language from the infrastructure into human-readable text, although it still adheres to the syntax of a programming language! Every businessperson should be able to comprehend the ultimate outcome of this text.
-
-The domain level is the part that is difficult to develop and cannot be purchased elsewhere. You have to do it yourself. This is what you will earn money with. It's the core of your business.
+The domain level is the part that is difficult to develop and cannot be purchased elsewhere. You have to do it yourself. This is what your company will earn money with. It's the core of your business.
 
 ### The application level
 
@@ -1170,7 +1202,7 @@ One level higher is the API. This defines the interface between our code and the
 
 ### GUI and acceptance tests
 
-At the highest level are the GUI and the acceptance tests, both at the same level. If you ever develop a GUI, ensure that its code is entirely decoupled from the rest of the system's code. The only interaction should be through your API. The same principle applies to acceptance tests [section Acceptance Tests]. The GUI and the acceptance tests operate at a significantly higher level of abstraction compared to all other code you work with. Already, the programming language for the GUI is completely different. You may write HTML! Due to the SRP you are not allowed to write any logic in the GUI. Writing tests for the GUI can be challenging. Therefore, the only solution is to write acceptance tests at the API level and ensure that you never break the GUI by maintaining its simplicity.
+At the highest level are the GUI and the acceptance tests, both at the same level. If you ever develop a GUI, ensure that its code is entirely decoupled from the rest of the system's code. The only interaction should be through your API. The same principle applies to acceptance tests [section Acceptance Tests]. The GUI and the acceptance tests operate at a higher level of abstraction compared to all other code you work with. Already, the programming language for the GUI is completely different. You may write HTML! Due to the SRP you are not allowed to write any logic in the GUI. Writing tests for the GUI can be challenging. Therefore, the only solution is to write acceptance tests at the API level and ensure that you never break the GUI by maintaining its simplicity.
 
 ## Summary
 
@@ -1183,15 +1215,15 @@ As a summary, I want to emphasize once again the tremendous importance of abstra
 
 Interfaces are closely related to levels of abstraction. Each level of abstraction has two interfaces. One is on the low-level side, and the other is on the high-level side.
 
-In this chapter, we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective. Because the developer only has to implement it once, while users might have to interact with the interface thousands of times. Therefore, it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
+In this chapter, we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective, as the developer only has to implement it once, while users might have to interact with the interface thousands of times. Therefore, it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
 
 ## Real-world Interfaces
 
 Functions, classes, libraries, and complete software or smartphone apps all have interfaces. Even technical objects, such as plugs, have an interface. The technical details may vary significantly, but the basic principles are very similar.
 
-"Plugs," you may laugh. Yes, even plugs. Electric plugs in America look different from European ones. It is impossible to plug an American plug into a European socket, and vice versa. This is due to historical reasons, but at the same time, it is also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It's fail-safe. It is a good design that they are not interoperable. Most devices can now handle both voltages.
+"Plugs," you may laugh. Yes, even plugs. Electric plugs in America look different from European ones. It is impossible to plug an American plug into a European socket, and vice versa. This is due to historical reasons, but at the same time, it is also a safety measure. It prevents you from connecting an American 110V device to the European 230V grid, potentially causing damage. It's fail-safe. It is a good design that they are not interoperable. Though most devices can now handle both voltages.
 
-An example of poor design is the USB-A port. The USB cable appears symmetric on the outside, but in reality, it is not. Someone once said that you always need three attempts to plug in a device with a USB-A port. The first time would have been right, but you didn't manage it. The second time was the wrong way around, and the third time you managed to plug it in. The USB-C port features a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symmetrically or asymmetrically. The technicians implemented a solution that enabled both types of connections. The two devices involved must negotiate with each other on how to utilize the various lanes of the cable. This was some additional work for the engineers. But, once solved, it becomes a very convenient solution for the users.
+An example of poor design is the USB-A port. The USB cable appears symmetric on the outside, but in reality, it is not. Someone once said that you always need three attempts to plug in a device with a USB-A cable. The first time would have been right, but you didn't manage it. The second time was the wrong way around, and the third time you managed to plug it in. The USB-C port features a much more user-friendly design. You can plug in the cable either way. The lanes can be connected either symmetrically or asymmetrically. The technicians implemented a solution that enabled both types of connections. The two devices involved must negotiate with each other on how to utilize the various lanes of the cable. This was some additional work for the engineers. But, once solved, it becomes a very convenient solution for the users.
 
 Another example are water tabs for showers, as previously discussed in the section on orthogonality. There are two tubes for cold and hot water where the plumber attached one valve to each. This was a pain to use. It took quite a while to set the temperature correctly, and once you changed the amount of water, the whole procedure started again. This was the engineer-friendly solution, not the user-friendly one. This was a bad interface. The new handles allow you to choose the amount of water and the temperature separately. This might be a bit more complicated to implement, but it's much more convenient to use.
 
@@ -1199,17 +1231,11 @@ Notice how both solutions have 2 degrees of freedom. A mathematician would refer
 
 I hope these simple examples gave you an idea of what good interfaces are about. If you design an interface, you should always know your customers. What do they do? How do they think? How will they utilize your product? This is of utmost importance. A good interface is user-centric. It represents the way the user thinks and conceals all the technical details.
 
-// to the reviewers: remove this example as there are too many of them?
-
-Combustible car engines operate best at around 2000-3000 rpm. At lower rotations, the engine could not operate properly; running it faster makes it inefficient and noisy. This problem is mitigated by the gearbox, which allows your car to operate at a wide range of velocities. Now, there used to be a minor issue with the gearboxes. The user had to manually change gears using a clutch. Most car drivers quickly get the hang of it, but it is certainly not user-friendly. Most car drivers only want to get to work, the restaurant, etc. They only want to change the speed of the car. They do not want to worry about either the gearbox or the clutch in their car!
-
-Now there is a well-known solution: automatic transmission. A car can be driven at any chosen speed, and the automatic transmission will select the most suitable gear. Problem solved. You pay a small fee for the automatic transmission, but you'll never have to think about it again. When you push the gas pedal, you control the speed of your car, while all the technical details are managed by the onboard electronics of your car. Now we only have to wait for self-driving cars to eliminate the steering wheel and the gas pedal altogether.
-
 ## Code Interfaces
 
-Once again, understanding interfaces in general will enable you to write much better code. It's just the same as in the real-world examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in the section [Test Driven Development] on Test Driven Development (TDD).
+Once again, understanding interfaces in general will enable you to write much better code. It's just the same as in the real-world examples above. Try to follow the same principles. Figuring out what the user really wants makes writing a well-designed interface quite easy. Writing some user code examples will help you a lot, as you'll learn in the section [Test Driven Development] (TDD).
 
-Always define an interface from the user's perspective. What does the user want? How does he want to use your code? These are the important questions to ask.
+Always define an interface from the user's perspective. What does the user want? How does he want to use your code? These are the important questions to ask. Don't just blindly return the values you have.
 
 An interface that is designed from the engineer's point of view is usually poorly designed. It is designed from the wrong perspective. An engineer's interface is easy to implement but not necessarily easy to use, as engineers tend to focus on what they have. They lack the vision of what they could have. Thus, they miss the point of a good interface. An engineer's interface is like an old Nokia phone. The shape and functionality were mostly determined by the engineers' preferences. The designers had little to say and were only allowed to smooth out the edges slightly. Meanwhile, a good interface is more like an iPhone. Here it was the other way around. Designers instructed the engineers on the necessary tasks, resulting in a phone with a user-friendly interface. This is how you should design your interfaces. You need someone with a vision for how your code should be utilized. Not just an engineer who excels at implementing the code but lacks understanding of how to use it.
 
@@ -1255,7 +1281,7 @@ You are always allowed to add new functionality as long as you do not alter the 
 
 You want to add a new option to one of your API functions, but there is a lot of existing customer code. This code does not currently utilize this new option and won't use it in the future. How can you add this option without breaking this old user code?
 
-The answers are default arguments. The current behavior is set to be the default. After the update, the user can select an alternative option within the function call. This works in all modern programming languages. You don't even need an if statement.
+The answer is default arguments. The current behavior is set to be the default. After the update, the user can select an alternative option within the function call. This works in all modern programming languages. You don't even need an if statement.
 
 Let's make a brief example. Let's consider the following function:
 
@@ -1325,15 +1351,15 @@ Working in an orthogonal system has many advantages:
 
 ### Example of an adapter
 
-Let's say you have an electric sensor. It measures the amount of light in the room by detecting a voltage. However, this voltage is not the final value you want to work with. Instead, you want to know the density of light, measured in watts per square meter (W/m^2). So, you need a function that converts the voltage into the desired units.
+Let's say you have an electric sensor. It measures the amount of light in the room by detecting a voltage. However, this voltage is not the final value you want to work with. Instead, you want to know the density of light, measured in watts per square meter (W/m^2). So, you need a function that converts the voltage into the desired units. You do this transformation once where you get the measured voltage and this problem is solved once and for all.
 
 ```py
-def voltage_to_light_density(voltage):
+def light_density_from_voltage(voltage):
     lumen_per_volt = 10
     return voltage * lumen_per_volt
 ```
 
-Now, this function returns the orthogonal data for this specific example. Of course, the transformation required in your code will look completely different.
+Now, this function returns the orthogonal data for this specific example. Of course, the transformation required in your code may look completely different.
 
 ## Copilot
 
@@ -1346,6 +1372,8 @@ Copilot is generally not very good at writing interfaces. Instead, you should do
 [https://youtu.be/MBRoCdtZOYg]
 
 This chapter is a futile attempt to help you find better names. If you are not satisfied by my lousy explanations, I recommend the book [The Art of Readable Code] which has some more detailed explanations.
+
+## The importance of Names
 
 How long does a football game last? This is a very innocent question, although people may not agree on an answer. In Europe, most people would say 90 minutes, while in the United States, 60 minutes is the common answer. The reason for these different answers is very simple: names. There are two different sports that share the same name. This can cause some confusion.
 
@@ -1379,14 +1407,14 @@ As I already mentioned, naming is one of the most challenging aspects of program
 13. Avoid using "if," "and," or "or" in the names of your variables, functions, and classes. These concise terms may be appealing to employ, but they clearly indicate a breach of the SRP.
 14. When a variable is utilized extensively throughout the code, it is important to name it thoughtfully. Consider using a name provided by the marketing team or existing theories and literature. If a variable is used for only about 5 lines, even i, j, or k are fine.
 15. The name of a function should clearly indicate its purpose. There shouldn't be any unexpected behavior hidden in the code. For example, it shouldn't interact with global states, which is generally considered a poor practice.
-16. snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions and PascalCase for class definitions. Though it is more important to stick to the rules established in an ongoing project than coming up with your own notation rules.
+16. snake_case notation is easier to read than camelCase or PascalCase. This is why I use snake_case notation for variables and functions and PascalCase for class definitions. Though it is more important to stick to the rules established in an ongoing project than coming up with your own notation.
 17. Classes and functions should reveal their purpose through their names. This relieves the developers from reading the internals, thus saving a lot of time. The name should be a part of the domain language.
 18. Prefer explicit names over implicit names; choose `hammer` over `nail_smashing_rod`. Avoid using generic terms such as "data," "information," or "manager". They don't tell you anything. The name `server_can_start()` is vague compared to `can_listen_on_port()`.
 19. Attach units to a variable name if they exist. For example, `timeout_duration_ms`. Though, once again, consistency is more important.
 20. Avoid using negated terms (and preferably avoid booleans altogether). `is_not_empty` is more difficult to read than `partially_full`.
 21. Normal reasoning should be able to help you understand how an algorithm generally scales. A function `size()` should not have a time complexity of O(n). If you want to create a function that calculates the size in O(n) time complexity, you should name it `compute_size()`.
 22. At times, it is suggested to use a trailing underscore character for class variables. This is to distinguish them from local variables. However, I think this is a sign of poor code. If you require such a distinction, your methods are likely too lengthy, and your class may be too large.
-23. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate. It rather depends whether the object is part of a well-known interface or not. Generally names on interfaces are short because they are commonly agreed upon. For example "sinus" in the math library.
+23. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate. It rather depends whether the object is part of a well-known interface or not. Generally names on interfaces are short because they are commonly agreed upon. For example "sin" in the math library.
 
 ## Naming Antipatterns
 
@@ -1461,13 +1489,15 @@ Part 2: Components of Code
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin [Clean Code, chapter 3]
 
-Functions (and methods) are, along with classes, the backbone of modern object-oriented (OO) software. People just don't care about functions as much as they do about classes. They are fairly simple to use, and there are only a few things to take care of. Still, there is quite a lot to know about functions as well. We will learn why functions must adhere to the SRP and should not have any side effects.
+Functions (and methods) are, along with classes, the backbone of modern object-oriented (OO) software. People just don't seem to care about functions as much as they do about classes. They are fairly simple to use, and there are only a few things to take care of. Still, there is quite a lot to know about functions as well. We will learn why functions must adhere to the SRP and should not have any side effects.
 
-Throughout this book, we will distinguish between functions and methods, as is common practice among most authors. Even though I would personally like to refer to both of them as functions since they are essentially the same, just in slightly different contexts. Most of the concepts I write about functions also apply to methods, as they are very similar in many respects. Methods have access to class variables, which are basically additional function arguments. If you regard them as such, almost all arguments hold for both, functions and methods. I remaining differences should be clear from the context.
+Throughout this book, we will distinguish between functions and methods, as is common practice among most authors. Even though I would personally like to refer to both of them as functions since they are essentially the same, just in slightly different contexts. Most of the concepts I write about functions also apply to methods, as they are very similar in many respects. Methods have access to class variables, which are comparable to additional mutable function arguments. If you regard them as such, almost all arguments hold for both, functions and methods. Remaining differences should be clear from the context.
 
 ## Do one thing only
 
-Due to the SRP [SRP], functions should only cover one level of abstraction. Therefore, they have to be short. As a rule of thumb, functions should be at most about twenty lines long (that's what fits on my laptop screen without scrolling), although less than 10 lines is certainly preferred because shorter functions are much easier to understand. In fact, there is absolutely nothing wrong with functions that cover only one line of code. One-line functions are extremely useful for enhancing code readability as they elevate all code to a consistent level of abstraction. But this is something that many programmers don't consider.
+Due to the [SRP], functions should only cover one level of abstraction. Therefore, they have to be short. As a rule of thumb, functions should be at most about twenty lines long (that's what fits on my laptop screen without scrolling), although less than 10 lines is certainly preferred because shorter functions are much easier to understand. This is due to the fact that longer functions also contain more variables. So the complexity of a function scales quadratically with length!
+
+There is absolutely nothing wrong with functions that cover only one line of code. One-line functions are extremely useful for enhancing code readability as they elevate all code to a consistent level of abstraction. But this is something that many programmers don't consider.
 
 Here is a very short code snippet:
 
@@ -1558,6 +1588,7 @@ return true
 ```
 
 Assuming that global variables are not used, I had to include the `fighter` object as a function argument. Instead, one could have also have written this code inside a class. But these are technical details.
+
 Anyway, we have seen some approaches on how to deal with nested `if/else` clauses. There is usually no perfect solution, but at least we have improved it significantly compared to the initial code.
 
 ### Naming
@@ -1619,7 +1650,7 @@ shopping.create_shopping_list(["apple", "banana"])
 
 Now you go shopping before creating a shopping list. In fact, the call to `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead, you go shopping with a shopping list, which is either empty or non-existent. Either way, this behavior is apparently undesired. It would probably be best to throw an exception in this case.
 
-This is one of the drawbacks of OO code. Methods change the state of the object. Thus, it is very difficult to enforce that the methods are called in the correct order.
+This is one of the drawbacks of OO code. Methods change the state of the object. Therefore, it is very difficult to enforce that the methods are called in the correct order.
 
 One advantage of procedural code is that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes, other paradigms produce better code. Let's examine the procedural version of this code.
 
@@ -1641,7 +1672,7 @@ After having swapped the last two lines, this code cannot be executed anymore be
 
 Long story short: Ensure that your functions never have side effects. Functions and methods should only affect the class instance or, if necessary, mutable arguments. If possible, enforce temporal order, for instance, by utilizing functional programming.
 
-A source of temporal coupling are global or static variables.
+Another source for temporal coupling are global or static variables.
 
 ```py
 counter = 0
@@ -1716,7 +1747,7 @@ Return values are, in my opinion, very normal, yet many OO programmers tend to d
 
 Return values are central in functional programming. In functional programming, you are not allowed to alter the values of existing objects. So, you don't have the issue of function arguments changing their values. The workaround are return values. They have the advantage that it is obviously a new object with new properties. For each state the code is in, there is a different set of variables. You'll never have to track the state of a variable because each variable has a unique state. After every step of your computation, you create a new variable so that you will never store different information inside a single variable. You just create a new one.
 
-All together I think there is really nothing wrong with return values. In performacne-critical code, creating new objects all the time may be a problem. But in most cases, I recommend working with return values, rather than mutable objects.
+All together I think there is really nothing wrong with return values. In performance-critical code, creating new objects all the time may be a problem. But in most cases, I recommend working with return values, rather than mutable objects. They are more explicit and easier to understand.
 
 Here is a small Python example. There are two ways to sort elements in a list. You can either use the `sorted` function, which returns a new list, or you can use the `sort` method, which changes the list in place. I generally recommend using the `sorted` function because it makes it clearer that the return value is a new list with different properties than the function argument. When using the `sort` function, the programmer may forget that the elements in the list are now sorted.
 
@@ -1731,9 +1762,9 @@ print(L)
 
 ## Summary
 
-As a summary, I would like to emphasize the importance of considering both the length of a function, but also the number of arguments. This is especially true for methods and functions that modify the value of a function argument. Function arguments are delicate as they can cause significant confusion.
+As a summary, I would like to emphasize the importance of considering both the length of a function, but also the number of arguments. This is especially true for methods and functions that modify the value of a function argument. Changing function arguments is delicate as it can cause significant confusion.
 
-Return values are completely acceptable, even if some OO programmers dislike them. Use return values every time the object created is not too large to cause performance issues.
+Return values are completely acceptable, even if some OO programmers tend to dislike them. Use return values every time the object created is not too large to cause performance issues.
 
 ## Copilot
 
@@ -1786,7 +1817,7 @@ p = Person('John', 30, 'New York')
 
 Nowadays, structs (or dataclasses) are not anymore as commonly used. Especially the Java community was avoiding such kinds of objects at all costs until they introduced `record` classes with Java 14 [https://docs.oracle.com/en/java/javase/17/language/records.html]. Though there is absolutely nothing wrong with structs. In fact, structs are really helpful. Code without structs is like a plumber without a toolbox. It's quite unstructured.
 
-Classes are very similar to structs. Besides some technical details, the only real difference is the encapsulation of variables and functions (methods), as well as the introduction of inheritance. You can decide for each variable or method whether it should be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs.
+Classes are very similar to structs. Besides some technical details, the only real difference is the encapsulation of variables and functions (methods) by making them private, as well as the introduction of inheritance. You can decide for each variable or method whether it should be public (accessible to the outside) or private (usable only within a class). This makes classes strictly more powerful than structs.
 
 But more powerful is not always better. A gun is more powerful than a knife, but simultaneously, it is also more dangerous. You can shoot yourself in the foot. So, actually, it might not be the best idea to own a gun because the dangers may outweigh the advantages. With great power comes great responsibility!
 
@@ -1808,9 +1839,13 @@ I like to categorize classes by the number of variables and the complexity of th
 
 Some of the following class names, namely the worker class and the delegating class, are not commonly used. I defined them by myself because I believe it is crucial to differentiate between various types of classes based on the number of variables and functions they contain, as well as their complexity.
 
+Note that all classes explained here, except for the data class, can also be written as functions passing additional variables around. Classes tend to grow too much and using only functions forces you to write more cohesive code. This is a typical example of where some feature (classes) makes your life easier, but at the same time allows you to write worse code. The simple question is now: when should you write a class, or replace it with a set of functions? This is a very difficult question to answer. My answer is: I don't know. I just have a preferance for functions. I guess it's a matter of taste. 
+
+The only case I know of where you need a class is when you need a constructor and destructor. For example for memory management with `new` and `delete` as done in C++ vectors.
+
 ### Data Class
 
-We have already briefly mentioned the data class before. It has no member functions, and therefore, all variables are public. It wouldn't make sense to have private variables if there are no functions because the variables wouldn't be accessible at all. The data class has no functionality by itself, but it is great for storing data. As mentioned in the previous section, it's like a toolbox, and the variables are the tools inside. If a data class has more than about eight variables, it is advisable to split up the data class into sub-classes. This enhances the general overview in the toolbox.
+We have already briefly mentioned the data class (a.k.a. struct) before. It has no member functions, and therefore, all variables are public. It wouldn't make sense to have private variables if there are no functions because the variables wouldn't be accessible at all. The data class has no functionality by itself, other than a constructor. But it is great for storing data. As mentioned in the previous section, it's like a toolbox, and the variables are the tools inside. If a data class has more than about eight variables, it is advisable to split up the data class into sub-classes. This enhances the general overview in the toolbox.
 
 ```py
 from dataclasses import dataclass
@@ -1824,20 +1859,34 @@ class InventoryItem:
 
 ### Pure Method Classes
 
-A pure method class may have no member variables at all. It consists only of public methods. In programming languages as Java and C#, writing such classes is necessary once in a while because every function must be implemented within a class. I regard this as an OO obsession of these programming languages. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer a set of free-standing functions over classes with only public methods, but I guess that's to some degree a matter of taste.
+A pure method class may have no member variables at all. It consists only of static public methods. In programming languages as Java and C#, writing such classes is necessary once in a while because every function must be implemented within a class. I regard this as an OO obsession of these programming languages. In other programming languages, however, there is not much need for pure method classes. In C++ and Python, you can define the corresponding functions as free-standing functions instead. In fact, I prefer a set of free-standing functions over classes with only static public methods, but I guess that's to some degree a matter of taste.
+
+```py
+class Math:
+    @staticmethod
+    def add(a, b):
+        return a + b
+
+    @staticmethod
+    def subtract(a, b):
+        return a - b
+```
 
 ### Delegating Class
 
-The delegating class is a combination of a data class and a pure method class. All variables are private, and all methods are public. Calls to one of these methods are all delegated to one of the member variables. Thus, most methods are all fairly simple, usually containing only one or two lines of code. If the methods are longer and start becoming too complex, consider using some helper functions.
+The delegating class is a combination of a data class and a pure method class. All variables are private, and all methods are public, though they are not static as they use the private variables. Calls to one of these methods are all delegated to one of the member variables. Thus, most methods are all fairly simple, usually containing only one or two lines of code. If the methods are longer, consider using some helper functions.
 
 A delegating class is similar to a car. It consists of many complex parts, each with its own functionality. You may control all these parts using a simple interface. Setting the temperature will simply send the corresponding command to the air conditioner (AC), which then needs to handle all the complex logic. Most likely, the AC is the only part of the car that needs to know about the temperature.
 
 Note that in this example here, it was not necessary to write a helper function. I just did so as I saw it fit.
 
 ```py
+# This helper function could also be written as a method of the Car class. But
+# as I've already mentioned before, I prefer free-standing functions.
 def _set_temperature(AC, temperature):
     AC.turn_on()
     AC.set_temperature(temperature)
+    # ...
 
 class Car:
     def __init__(self, AC, engine):
@@ -1863,7 +1912,6 @@ This implies that worker classes are the only classes that perform complex tasks
 As a general rule of thumb, one can say that a worker class has become too complex if you struggle to write tests for it. This is a clear indication that it's time to break up the class into smaller pieces. For more details, refer to the chapter on testing.
 
 It is challenging to create a good example for a worker class that is not overly complicated for this book. So I tried to create a somewhat artificial one. Instead of this simple recursion, imagine a highly complex algorithm that is difficult to understand.
-
 
 ```py
 class Worker:
@@ -1897,11 +1945,13 @@ def read_out_entry(data):
     add_entry(entry, data)
 ```
 
+Another example for a worker class are classes implementing memory management in C++. For example the vector class or smart pointers. Though these classes are somewhat special as they rely on the constructor and destructor the take care of the memory management. Contrary to most other worker classes, I don't know how to replace such a class using only functions and data classes as the constructor and destructor are special functions of the class.
+
 ### Abstract Base Class
 
-The abstract base class (ABC in Python) has a different name in every programming language. In Java, it's called an interface. This class type defines only the interface (shape) of a class. It does not contain an actual implementation or variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One must write classes that inherit from this abstract base class in order to implement it. In Python and other dynamically typed languages, you don't need interfaces, but they can make the code easier to understand. In C++ and Java, it is crucial to use interfaces to split up the code into smaller components, minimize compilation time, and enable runtime polymorphism. We'll go into more details in chapter [Inheritance]
+The abstract base class (ABC in Python) has a different name in every programming language. In Java, it's called an Interface. This class type defines only the interface (shape) of a class. It does not contain an actual implementation or variables. It contains only public method declarations. Variables are a hidden detail that should not be defined in an interface. One must write classes that inherit from this abstract base class in order to implement it. In Python and other dynamically typed languages, you don't need interfaces, but they can make the code easier to understand. In C++ and Java, it is crucial to use interfaces to split up the code into smaller components, minimize compilation time, and enable runtime polymorphism. We'll go into more details in chapter [Inheritance]
 
-In Python, a class has to inherit from `ABC` to be an abstract base class. The methods are all `abstractmethod` and they do not have any implementation.
+In Python, a class has to inherit from `ABC` to be an abstract base class. The methods are all `abstractmethod` and they do not have any implementation. The ABC defines an interface that several programmers can implement with their own classes. This is especially useful if you collaborate with other programmers as everyone knows what they have to implement.
 
 ```py
 from abc import ABC, abstractmethod
@@ -1924,13 +1974,13 @@ class Sheep(Animal):
         print("Feeding a sheep with grass.") 
 ```
 
-The abstract base class `Animal` serves as the blueprint for the class `Sheep`. Sheep must adhere to the pattern specified in `Animal`. `Sheep` must implement all the functions defined in `Animal`. This makes it somewhat foolproof as you'll get a warning when misspelling a method name.
+The abstract base class `Animal` serves as the blueprint for the class `Sheep`. Sheep must adhere to the pattern specified in `Animal`. `Sheep` must implement all the functions defined in `Animal`. This makes it somewhat foolproof as you'll get a warning when misspelling a method name or forgetting to implement a method. 
 
 ### Inheritance Classes
 
 Let's discuss the inheritance of non-abstract base classes. This becomes much trickier. As there is quite a lot that can go wrong, I advise against using it. For the sake of completeness, however, I still write down my thoughts.
 
-Inheritance classes typically are delegating classes. They can also be worker classes, although this is not recommended due to the complexity of the resulting class. However, as I mentioned before, I generally do not recommend using inheritance, except for defining interfaces. Anything you can achieve with inheritance can also be accomplished through composition. Avoiding meddling with inheritance can potentially help you avoid a lot of trouble. I have read many books that discuss various refactoring techniques and code snippets that work perfectly well, except when using inheritance in non-abstract base classes (or global variables) [WELC]. The main problem usually arises from overriding base class functions, which can cause all kinds of issues. Furthermore, you don't really gain anything by using this type of inheritance.
+Inheritance classes typically are delegating classes. They can also be worker classes, although this is not recommended due to the complexity of the resulting class. However, as I mentioned before, I generally do not recommend using inheritance, except for defining interfaces. Anything you can achieve with inheritance can also be accomplished through composition. Avoiding meddling with inheritance can potentially help you avoid a lot of trouble. I have read some books that discuss various refactoring techniques and code snippets that work perfectly well, except when using inheritance in non-abstract base classes (or global variables) [WELC]. The main problem usually arises from overriding base class functions, which can cause all kinds of issues. Furthermore, you don't really gain anything by using this type of inheritance.
 
 Here is one of the issues with using inheritance.
 
@@ -1963,22 +2013,24 @@ class Lion(Animal):
 
 if __name__ == "__main__":
     lion = Lion()
-    lion.feed()
 ```
 
-This error prevents you from creating a bug that might be very hard to track down, costing you a lot of time. Instead, you immediately receive a message indicating that there is something wrong with your code.
+This error prevents you from creating a bug that might be very hard to track down, costing you a lot of time. Instead, you immediately receive a message indicating that there is something wrong with your code, `TypeError: Can't instantiate abstract class Lion with abstract method feed`.
 
-In C++ and Java, there is the `override` keyword, whereas in Python, it is not an official language feature. But this only partially fixes the problem. You may forget to specify that a function is `override` or you may redefine a function entirely. These problems cannot occur when using abstract base classes instead of `override`.
+In C++ and Java, there is the `override` keyword, whereas in Python, it is not an official language feature. But this only partially fixes the problem. You may forget to specify that a function is `override` or you may redefine a function entirely. Remember: We're humans, we make mistakes. These problems cannot occur when using abstract base classes.
 
-### Other Types of Classes
-
-I remember once having written a class that contained some public variables and one public method. Unfortunately, I don't remember why I wrote such a hybrid class. It shows that the types of classes above are not a concluding list. However, it is recommended to stick to the class types mentioned above. This will make your code better. 
 
 ### General Recommendations
 
 It may be convenient to add a method to a data class or a variable to a pure function class. However, this will quite certainly make the code worse as it violates the SRP.
 
 The most common error is mixing up the worker class and the delegating class. You can easily end up with a fairly complex function within a delegation class that utilizes numerous member variables. This design is flawed because the delegation class operates at a high level of abstraction, while the worker class is intended to be a low-level object. Mixing different levels of abstraction is detrimental. Refactor the complex part into a separate class or function and call it from the delegating class. This should do the job.
+
+### One step further
+
+As you have seen, I like to have my classes as small as possible. The best class is no class, with the exception being the data class. The delegating class and the worker class can also be written as a combination of data classes and functions. This may seem like a very strict approach, but it is done so in the C programming language, which is still in use for the linux kernel. If programming in this way was really an issue, they would have changed the programming language a long time ago. 
+
+The only thing that requires classes because of their destructors are the C++ vectors and smart pointers.
 
 ## Functions vs. Methods
 
@@ -1991,7 +2043,7 @@ b(a)  # function
 There are only minor differences between these two lines of code. Let's compare them:
 - In both lines, the variable `a` can be modified. Which is not necessarily a good thing, though.
 - The function has only access to the public variables of `a`, while the method can also access its private variables.
-- In C++, constness can be applied in both cases.
+- In C++, const can be applied in both cases.
 
 In summary, there are no significant differences. The free-standing function `b(a)` offers slightly better decoupling and should therefore be preferred. But ultimately, it all comes down to readability. Which version is easier to understand? The function or the method? Let's look at the following code:
 
@@ -2008,11 +2060,13 @@ In this case, I certainly prefer the second option, using a method, due to the r
 
 In software engineering, there are always numerous factors to consider. This was just another example. Probably, there are more arguments for one solution or the other that I may have missed. This might render the entire discussion obsolete.
 
-## Constructors
+## Constructors and Destructors
 
 Constructors and destructors are very special methods. The constructor is called once every time an object is created. This has severe consequences that many software developers are not aware of. Most notably, writing tests can become nearly impossible if the constructor contains too much logic or has side effects. The author of the code may have assumed that there would be only one class instance and planned accordingly. This might be true in his particular part of the code he wrote. However, his assumption might break down when writing unit tests [section unit tests]. When creating objects, it is important to ensure that they can exist independently without any interactions between them. Otherwise, your tests will become very fragile.
 
-Therefore, always ensure that the usage of a constructor is foolproof. A constructor should be as simple as possible. Every action performed by a constructor, such as allocating memory or opening a file, must be reversed by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you should not define a counter in the constructor unless the effect is undone in the destructor. Preferably, your code follows the "rule of zero" [effective C++, Scott Meyers]: do not define any custom constructors or destructors. Leave this to the compiler. It will make your code much easier. [https://youtu.be/9BM5LAvNtus?t=2438]
+Therefore, always ensure that the usage of a constructor is foolproof. A constructor should be as simple as possible. Every action performed by a constructor, such as allocating memory or opening a file, must be reversed by the destructor. This constructor/destructor pair is the only way to guarantee that all effects of the constructor are undone. This also means that you should not define a counter in the constructor unless the effect is undone in the destructor. Preferably, your code follows the "rule of zero" [effective C++, Scott Meyers]: do not define any custom constructors or destructors. Leave this to the compiler. It will make your code much easier. [https://youtu.be/9BM5LAvNtus?t=2438] In data classes, for instance, a constructor is auto generated.
+
+The only real functionality which has to be implemented inside a constructor and destructor that I know of, is memory management. In C++, you have to use the `new` and `delete` operators to allocate and deallocate memory and the best way to do this is inside the constructor and destructor. 
 
 The following code creates a counter for the class instances. It looks neat and it might be useful to have such a counter at times. However, it will be challenging to test this counter. Every time you add a new test case or change the order of the tests, the counter values will change. When you change the order of test execution, your tests will break.
 
@@ -2063,8 +2117,8 @@ class Bottle
 ```
 
 It is claimed that writing getters and setters has the following advantages [https://www.w3schools.com/java/java_encapsulation.asp]:
-- Better control of class attributes and methods: I don't fully understand what this means
-- Class attributes can be made read-only (if you only use the get method), or write-only (if you only use the set method): If you want to make a variable read-only, you can make it constant instead. This prevents changing the variable as well. It is very odd to have only variables written.
+- Better control of class attributes and methods: I don't fully understand what this means. You can read and write the variables in both cases.
+- Class attributes can be made read-only (if you only use the get method), or write-only (if you only use the set method): If you want to make a variable read-only, you can make it constant instead. This prevents changing the variable as well. It is uncommon to have write only variables.
 - Flexibility, the programmer can change one part of the code without affecting other parts: This statement is incorrect, as demonstrated below.
 - Increased security of data: I am not sure what this point exactly means. One advantage is that you can track a variable with the debugger [chapter Bugs, Errors, Exceptions]. In fact, this is the only advantage I see of writing getters and setters. But having to do this is a clear indication that your code is bad.
 
@@ -2086,7 +2140,7 @@ Long story short: Avoid using plain getter and setter methods for data classes. 
 
 ### Worker Classes
 
-Member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is certainly no reason to write setter methods in worker classes. And there is hardly ever a reason to write a pure getter method. And no, writing a getter method for testing purposes is akin to making a private method puplic in order to test it. This is just bad programming practice.
+Member variables of a worker class should be private because they should not be accessed from the outside. They should not be accessed through raw setter or getter methods. Member variables in a worker class should be encapsulated within the class and accessed only by the methods of the class. These variables can be considered as intermediate results of internal calculations. They are not intended to be public. Neither directly nor via accessor methods. Hence, there is certainly no reason to write setter methods in worker classes. And there is hardly ever a reason to write a pure getter method. And no, writing a getter method for testing purposes is just bad programming practice.
 
 ### Delegating Classes
 
@@ -2116,9 +2170,9 @@ I hope I managed to convince you not to write bare getter and setter methods in 
 
 "Classes should have high cohesion within themselves and low coupling between each other." - Robert C. Martin
 
-If you don't understand these expressions, we could rewrite it as follows: "There should be significant interaction among methods and variables within a class and minimal interaction between classes." This is indeed a very important rule. However, like most rules in software engineering, it has to be taken with a grain of salt.
+If you don't understand these expressions, we could rewrite it as follows: "There should be significant interaction among methods and variables within classes and minimal interaction between classes." This is indeed a very important rule. However, like most rules in software engineering, it has to be taken with a grain of salt.
 
-As a very simple rule of thumb, you can search the whole class for a variable. If most methods use this variable, it has high cohesion and the variable should stay in the class. Variables that are only used by a single method should be removed from the class and passed on as a function argument.
+As a very simple rule of thumb, you can search the whole class for a variable. If most methods use this variable, it has high cohesion and the variable should stay in the class. Variables that are only used by very few methods should be removed from the class and passed on as a function argument.
 
 ### Worker Classes
 
@@ -2132,15 +2186,15 @@ The rule cited above by Robert C. Martin was intended for worker classes. Worker
 
 Two classes have low coupling if the number of interaction points between them is relatively low. Ideally, every class completes its work and then passes it on to the next one, similar to a relay race or functional programming. Each class would have an interface consisting of only one function. High coupling, on the other hand, is like two classes playing ping-pong. The classes all have a comprehensive interface containing numerous functions that call each other several times in a specific order. This quickly becomes terribly complex. The worst-case scenario is when two classes call each other recursively. I could hardly imagine any worse code than that! This is about the strongest coupling there is (besides inheritance). Neither of the two classes can be changed without also changing the other one. Such code is solid as a rock. You will never be able to change them again.
 
-I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn't any better. It becomes increasingly difficult to make any changes. Implementing new features will take a long time, and fixing bugs is challenging because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
+I hope from this description you already understand that strong coupling makes the code very difficult to understand. Additionally, it also makes it brittle, which isn't any better. It becomes increasingly difficult to make any changes without breaking it. Implementing new features will take a long time, and fixing bugs is challenging because it is not clear what each class is supposed to do exactly. Having strongly coupled code can become a nightmare.
 
-There always has to be some amount of coupling [Decoupling]. Code cannot exist without it. It's the glue holding everything together. But the level of coupling between classes should be minimized because too much glue makes everything sticky. There is never too little coupling. Furthermore, there are techniques to decouple your code. Creating an adapter between two classes, for instance, can provide more flexibility. This allows you to modify the classes independently, and you will only need to adjust the adapter when necessary.
+There always has to be some amount of coupling [Decoupling]. Code cannot exist without it. It's the glue holding everything together. But the level of coupling between classes should be minimized because too much glue makes everything sticky. As long as your code works, there is never too little coupling. Furthermore, there are techniques to decouple your code. Creating an adapter between two classes, for instance, can provide more flexibility. This allows you to modify the classes independently, and you will only need to adjust the adapter when necessary.
 
-Anyway, the rule of high cohesion and low coupling is a good rule of thumb when dealing with worker classes. If you stick to it, you can properly structure your classes.
+Anyway, the rule of high cohesion and low coupling is a good rule of thumb when dealing with worker classes. If you stick to it, you can properly structure your classes. One alternative would be using some functions. Though also there, you have to pay attention that there isn't too much coupling between them.
 
 ### Other class types
 
-Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similar properties and are usually used together. Like a hammer and a screw driver both being tools stored in a tool box. Splitting a data class requires no effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
+Maybe you have realized by now why this rule about high cohesion does not apply to all kinds of classes. A pure data class has very little cohesion. The variables are only placed into a data structure because they share some similar properties and are generally used together. Like a hammer and a screw driver both being tools stored in a tool box. Splitting a data class requires barely any effort at all. You may split it however you like. A delegating class also has very little cohesion. Nevertheless, these classes are extremely valuable as they allow you to structure your code. This rule about cohesion mostly applies to worker classes.
 
 ### Inheritance
 
@@ -2188,6 +2242,7 @@ class Car():
         self.make = make
         self.model = model
         self.year = year
+
     def get_descriptive_name(self):
         long_name = str(self.year) + ' ' + self.make + ' ' + self.model
         return long_name.title()
@@ -2220,10 +2275,10 @@ class Base(abc.ABC):
 
 class Derived(Base):
     def print_a(self):
-        print("a derived")
+        print("derived")
 ```
 
-There is not much more to say about interface inheritance. It is a good thing, and you should use it. It is a method to define interfaces and implement them.
+There is not much more to say about interface inheritance. It is a good thing, and you should use it whenever more than one class will implement this interface. Interface inheritance is a method to define interfaces and implement them, though in python this is not necessary. If you don't like it, you may simply ignore it.
 
 Implementation inheritance inherits the implementation of the base class. Here, all kinds of different problems may occur that we'll look at in this section.
 
@@ -2239,6 +2294,7 @@ class Derived(Base):
     def print_a(self):
         print("derived a")
 ```
+
 ## Drawbacks of Inheritance
 
 Implementation inheritance comes with several issues and should be avoided. In the C++ Core Guidelines, there are at least a dozen points to consider when working with implementation inheritance [C++ Core Guidelines explained]. More modern languages like Go and Rust don't even support implementation inheritance. [https://golangbot.com/inheritance/]
@@ -2294,7 +2350,7 @@ if __name__ == "__main__":
 ```
 
 Is the lion now eating grass or meat? Of course, it's eating meat. Using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem, [https://en.wikipedia.org/wiki/Yo-yo_problem] where the programmer has to switch between reading the code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. By breaking the encapsulation of the base class, we introduce a mutual dependency. This is so confusing; it is dreadful. Please refrain from writing such code.
-
+////
 Of course, this can be avoided by using the final keyword in some programming languages. But it is just another example of why, in my opinion, inheritance should be avoided. As I mentioned, in my opinion, there is simply too much that can go wrong with inheritance. Inheritance should only be possible if it is explicitly allowed.
 
 In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is larger than necessary. This violates the Interface Segregation Principle [chapter SOLID Principles]. Having to write tests for unused functions in the interface is only the most obvious problem.
@@ -2457,7 +2513,7 @@ Enums can only be used if you know all possible options when writing the code. I
 
 ## Booleans
 
-"The best thing about a boolean is even if you are wrong, you are only off by a bit." - Anonymous
+"If-statements should encapsulate code that is executed only when a condition is true – not jump out of an algorithm or method, if otherwise." - Robert C. Martin
 
 "Have a seat, my son. There is something very important that I have to tell you. If you hear it for the first time, it may be very shocking. But it has to be said: Booleans are evil."
 
@@ -3976,25 +4032,36 @@ if __name__ == "__main__":
 
 This, however, is considered bad practice. As we will learn in the chapter on strings [chapter Data types], such selections should not be postponed. Passing around strings is considered bad practice. Even if you replace the string with an `enum`, you should still avoid postponing this decision.
 
-A better solution is using DI. The API key is generated outside the `ApiClient` class. It is passed to it in the constructor as a function argument. This makes it easy to replace the API key with a fake one. It also makes it easy to reuse the API key in other classes.
+A better solution is using DI. Already in the line `if "fake_api" in sys.argv:` we know whether we want to use a fake API key or the real one. Thus we can already at this point select the corresponding `ApiClient` and then pass it on, rather than some flag. Like this, the desicion is resolved on the highest level of abstraction, inside the main function.
 
 ```py
 import os
+import sys
 
 class ApiClient:
-    def __init__(self, api_key):
-        self.api_key = api_key # <-- dependency is injected
+    def __init__(self):
+        self.api_key = os.getenv("API_KEY")
+
+class FakeApiClient:
+    def __init__(self):
+        self.api_key = "1234"
 
 def main(client):
     # ...
 
 if __name__ == "__main__":
-    main(api_client=ApiClient(
-        api_key=os.getenv("API_KEY"), # <-- here you can change the api_key
-    ))
+    if "fake_api" in sys.argv:
+        api_client = FakeApiClient()
+    else:
+        api_client = ApiClient()
+    main(
+        api_client # <- here you inject the api client we just created
+    )
 ```
 
-Apparently, you can choose the `api_key` within the `main` function and then pass it as a function argument. This way, you can easily replace it with a counterfeit. This is very useful for testing.
+In DI you pass a higher object like a class instance or a function as a function parameter as done here in the call of the `main` function. Here we used the `api_client` as a function argument which can be either a `FakeApiClient` or a normal `ApiClient`. 
+
+DI is a little odd at the beginning. I recommend you read this section again, search some additional examples online and play around with it. The important part is that you select the relevant behavior as early as possible in the program, rather than passing around boolean variables.
 
 Using DI is generally a highly recommended practice and should always be employed when dealing with IO, time, random numbers, etc. This is because you can easily replace the injected code with something else.
 
@@ -5714,6 +5781,65 @@ class Boat:
 ```
 
 Usually these two techniques shown here are difficult to implement because the variables are used in many methods and it's not clear how they could be sorted in a better way. Furthermore when breaking a class into smaller pieces it requires new names. This may be a difficult task, but at the same time it is also an indication whether the way you broke the classes appart makes sense. If you can't find a reasonable way you probably designed your class badly. 
+
+### Splitting classes
+
+One of the hardest tasks is splitting big classes into pieces. Here we have a very small, but suboptimal class that I made deliberately that bad. Here everything is implemented inside the `Shopping` class. This ib bad, because for every comestible, you have to extend the class. This violates the Open Closed Principle (OCP) [chapter SOLID].
+
+```py
+class Shopping:
+    def __init__(self):
+        self._apple_tracker = []
+        self._eggs_tracker = []
+
+    def get_shopping_items(self):
+        return self._apple_tracker + self._eggs_tracker
+
+    def add_apple(self):
+        self._apple_tracker.append('apple')
+
+    def add_egg(self):
+        self._eggs_tracker.append('egg')
+
+shopping = Shopping()
+shopping.add_apple()
+shopping.add_egg()
+print(shopping.get_shopping_items())
+```
+
+Instead you should have a class for each comestible and inside the `Shopping` class, you have only one list for all different comestibles at the same time. The different behavior is implemented inside ever individual class, obeying the OCP. This allows you to simply add a new comestible without changing the `Shopping` class.
+
+```py
+from abc import ABC
+
+class Shopping:
+    def __init__(self):
+        self._shopping_basket = []
+
+    def add_item(self, item):
+        self._shopping_basket.append(item)
+
+    def get_shopping_items(self):
+        return [str(item) for item in self._shopping_basket]
+
+class ShoppingItem(ABC):
+    pass
+
+class Apple(ShoppingItem):
+    def __str__(self):
+        return 'apple'
+    
+class Egg(ShoppingItem):
+    def __str__(self):
+        return 'egg'
+    
+shopping = Shopping()
+shopping.add_item(Apple())
+shopping.add_item(Egg())
+print(shopping.get_shopping_items())
+```
+
+For testing purposes, you can also create a `FakeShoppingItem` if you want. This entire technique here we have already learned in the section on Dependency Injection (DI).
 
 ## Renaming
 
