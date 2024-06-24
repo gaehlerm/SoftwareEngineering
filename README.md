@@ -155,6 +155,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Booleans](#booleans-1)
     - [Match case statements](#match-case-statements)
     - [For Loops](#for-loops)
+    - [Filtering Lists](#filtering-lists)
   - [Strings](#strings-1)
     - [Stringly typed objects](#stringly-typed-objects)
     - [Natural Language](#natural-language)
@@ -164,7 +165,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [17. Properties of Variables](#17-properties-of-variables)
   - [Compile-time constant](#compile-time-constant)
   - [Runtime Constant](#runtime-constant)
-    - [Constant Class Instances](#constant-class-instances)
   - [Mutable Variables](#mutable-variables)
   - [Member Variables](#member-variables)
   - [Static Variables](#static-variables)
@@ -827,7 +827,7 @@ One thing is clear: Humans struggle to think logically. We are easily overwhelem
 
 The result is the famous "Fizz Buzz" game [https://en.wikipedia.org/wiki/Fizz_buzz]. Humans struggle with code like this because we struggle to structure it. It is too big to understand all at once, and most of us can't break it down into smaller pieces.
 
-We are limited by the amount of complexity we can imagine. So, there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you will have to repeat this step recursively until you have small enough pieces that you can deal with. This is our area of expertise, where we excel in solving complex problems. Use your imagination!
+We are limited by the amount of complexity we can imagine. We are not able to understand this seemingly unordered pile of text. So, there is only one strategy that works: divide and conquer. Break up complex problems into many smaller pieces that you can understand. Maybe you will have to repeat this step recursively until you have small enough pieces that you can deal with. This is our area of expertise, where we excel in solving complex problems. Use your imagination!
 
 This is how we are able to create extremely complex objects. We have to break them down into small parts that we understand very well and then build them together like Lego bricks. Every time we assemble a few pieces, we create something new that we give a name to and can explain to other humans what this thing does. It has a higher level of abstraction.
 
@@ -924,26 +924,38 @@ Apparently, there's no such discussion in python.
 
 ### Scope of variables
 
-Avoid using `do while` statements if it's supported by your programming language of choice. The issue is that you need to keep track of the conditional variable throughout the entire range of the loop. This is extremely error-prone because keeping track of a variable over such a long time is challenging. It is much better to use a `while` loop and initialize the variable before the loop.
+It is hard to keep track of variables. One way to mitigate this problem is to use them only in a small scope.
 
+Avoid using `do while` statements if it's supported by your programming language of choice. The issue is that you need to keep track of the conditional variable throughout the entire range of the loop. This is very error-prone because keeping track of a variable over such a long time is challenging. It is much better to use a `while` loop and initialize the variable before the loop.
+
+As `do while` loops are not supported in Python, I provide a C++ example.
 
 ```C++
 int i = 0;
 do {
     cout << i << "\n";
     i++;
+    // code that doesn't use i
 }
-while (i < 5);
+while (i < 5); // what was i again?
 ```
 
-The following code without a `do while` loop is much easier to understand.
+The following code using only a `while` loop is easier to understand. `do while` loops are frequently used if you want a loop to be exectuted at least once. But this can usually also be achieved by setting the variable of the loop and the condition in the loop accordingly.
 
 ```C++
 int i = 0;
-while (i < 5);
-{
+while (i < 5) { // you can find out what i is without scrolling
     cout << i << "\n";
     i++;
+    // code that doesn't use i
+}
+```
+
+Though the best solution is in most cases to use range based for loops. This eliminates the need for an index altogether. Since C++11 they are also available in C++.
+
+```C++
+for(const auto& car: cars) {
+    cout << car << "\n";
 }
 ```
 
@@ -2350,16 +2362,16 @@ if __name__ == "__main__":
 ```
 
 Is the lion now eating grass or meat? Of course, it's eating meat. Using overridden functions in the base class can quickly become confusing. This is the simplest version of the Yo-yo problem, [https://en.wikipedia.org/wiki/Yo-yo_problem] where the programmer has to switch between reading the code of the base class and the derived class in order to understand the code. The derived class not only depends on the base class, it's also the other way around. By breaking the encapsulation of the base class, we introduce a mutual dependency. This is so confusing; it is dreadful. Please refrain from writing such code.
-////
-Of course, this can be avoided by using the final keyword in some programming languages. But it is just another example of why, in my opinion, inheritance should be avoided. As I mentioned, in my opinion, there is simply too much that can go wrong with inheritance. Inheritance should only be possible if it is explicitly allowed.
+
+Of course, this can be avoided by using the final keyword in some programming languages. But it is just another example of why, in my opinion, inheritance should be avoided. It's just another fix for something that is inherently wrong. As I mentioned, in my opinion, there is simply too much that can go wrong with inheritance. Inheritance from a class should only be possible if it is explicitly allowed.
 
 In inheritance, the derived class inherits all the functions defined in the base class. This might be more than what is actually required. The interface of the derived class is larger than necessary. This violates the Interface Segregation Principle [chapter SOLID Principles]. Having to write tests for unused functions in the interface is only the most obvious problem.
 
 ## Advantages of Inheritance
 
-There are quite little advantages, but none of them justify using implementation inheritance. The only concept I can think of is code reuse. But it is not worth the drawbacks that come along, as mentioned above.
+There are quite little advantages, but none of them justify using implementation inheritance. The only thing that I can think of is code reuse. But it is not worth the drawbacks that come along implementation inheritance, as mentioned above.
 
-The only real use case of inheritance, in my opinion, is the definition of interfaces.
+The only real use case of inheritance, in my opinion, is the definition of interfaces using interface inheritance.
 
 ## Inheritance and Composition
 
@@ -2397,9 +2409,16 @@ print(taxi.engine.power)
 
 Now, there may be many programmers who prefer the code used for the `lion`, for example, because it is shorter. But in my opinion, this is very bad. The `lion` code is implicit. And implicit code should generally be avoided because it is not as clear as explicit code. As the Zen of Python states: "Explicit is better than implicit." The code used with the `taxi` is clearly preferred as it is explicit. Write a little bit (one word!) more code inside the print statement, but the clarity really makes up for it. The code using the `taxi` is much clearer because it indicates the origin of the `power` variable. It is a variable within the `engine`. This is the primary reason why I recommend using composition instead of inheritance. It makes the code much clearer. It is explicit.
 
+If `power` is used frequently, you can also write a method for it,
+
+```py
+    def power(self):
+        return self.engine.power
+```
+
 ## Conclusions
 
-You don't gain much by using inheritance. Using composition is, in most cases, a perfectly viable alternative. If your code looks messy when you start using composition instead of inheritance, you probably wrote messy code all along. You just didn't see it because the inheritance was hiding it. This is another negative aspect. Composition generally makes the code more readable and easier to understand. It is also less error-prone. And it is much easier to test. Inheritance is a common source of poor code quality. It should be avoided if possible. Use only interface inheritance.
+You don't gain much by using inheritance. Using composition is, in most cases, a perfectly viable alternative. If your code looks messy when you start using composition instead of inheritance, you probably wrote messy code all along. You just didn't see it because the inheritance was hiding it. This is another negative aspect. Composition generally makes the code more readable and easier to understand. It is also less error-prone. And it is much easier to test. Implementation inheritance is a common source of poor code quality. It should generally be avoided.
 
 There are also some more esoteric concepts, such as friend classes. At first sight, friend classes seem like a good idea because they make writing code easier. However, in the long term, this has similar issues to making private variables public. In most cases, it results in poorly written code that lacks proper encapsulation. Just ignore friend classes and similar concepts and never look back. There are very few cases where friend classes are truly beneficial. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code using the most common language features, and only consider using fancy language features if they genuinely enhance your code.
 
@@ -2426,13 +2445,12 @@ Here is an example of how not to do it:
 
 ```py
 fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
+print(fruits[4]) # ...?
 ```
 
-I intentionally made this code so terrible for you to understand. Strings and numbers cannot be equal objects, so they should not be placed side by side in the same list. In C++, this kind of list isn't even possible because C++ vectors cannot contain objects of different types. At least not without attending a highly advanced course in C++ black magic. In Python, on the other hand, this code is syntactically correct, and it is often tempting to write such a list. Please resist this temptation!
+I intentionally made this code so terrible for you to understand. Strings and numbers cannot be equal objects, so they should not be placed side by side in the same list. In C++, this kind of list isn't even possible because C++ vectors cannot contain objects of different types. At least not without attending a highly advanced course in C++ black magic. In Python, on the other hand, this code is syntactically correct, and it is often tempting to write such a list. Please resist this temptation! 
 
-The second problem is that we don't know the meaning of these numbers. There is no appropriate name for this list that fully explains its contents. This list violates the single responsibility principle all by itself.
-
-And the third problem is that code based on this data structure will inevitably become brittle. It's screaming for bugs. You can pretty much do everything wrong, and I promise you will.
+Your code becomes really bad if you store different things in the same list. The `print(fruits[4])` in the code example above is extremely error prone because you have to count the elements in the list. This list does several things at once and it violates the single responsibility principle (SRP) all by itself. Use data classes instead [clases].
 
 Apparently, three values inside this list always belong together. A first improvement would be to use a list of lists,
 
@@ -2459,7 +2477,7 @@ shopping_list = [apples, bananas]
 
 Now the code is much longer, but it is also much better. It is much easier to read and understand. As we learned, the only quality measures of code. All the elements inside the list are equal. All of them are `ShoppingItems`. If you can do something, you should iterate over all elements and treat them equally. The data structure is now also pretty save. Correlated data is all stored together. It is almost impossible to confuse the weight of the apple and the banana. And it's also pretty hard now to make an error when creating the list.
 
-We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to create a list with groups of objects, you should create a class for these groups and make a list of instances of these classes. If you only need to access a single object from a list, it is likely that your code is bad. Always iterate over the entire list and treat all elements equally.
+We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to create a list with groups of objects, you should create a data class for these groups and make a list of instances of these classes. If you only need to access a single object from a list, it is likely that your code is bad. Always iterate over the entire list and treat all elements equally.
 
 ## Enums
 
@@ -2495,11 +2513,11 @@ The first one is extremely ugly. What does `is_blue = False` mean? Is it red? In
 
 ### Strings
 
-The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time, it's easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might introduce a bug that could result in strange behavior. Without you noticing either that you have a bug or where the error comes from. The compiler won't be able to help you with this error. Avoid using string comparisons as they are prone to errors.
+The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time, it's easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might introduce a bug that could result in strange behavior. Without you noticing either that you have a bug or where the error comes from. The compiler won't be able to help you with this bug. Avoid using string comparisons as they are prone to errors.
 
 ### Ints
 
-Third option: 7? A color? No. Please, don't do this to me. This is an example of a magic number and should be avoided. Unless this is a well-known international color standard. For example, in the RGB standard, `blue = RGB(0,0,255)`.
+Third option: 7? A color? No. Please, don't do this to me. This is an example of a magic number and should be avoided. You would always have to look up the number corresponding to one color. This would be very tedious and error prone. Unless it is a well-known international color standard, for example RGB: `blue = RGB(0,0,255)`.
 
 ### Classes
 
@@ -2507,13 +2525,11 @@ Fourth option: Using types is not the best choice in this case. It can be verifi
 
 ### Enums
 
-Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums may seem slightly unusual at first glance due to the `Color::` prefix, and there is no way to alter this. However, this code is really solid and foolproof. If you write `Color::BLU`, you will get an error because you most likely did not define a color `BLU` inside the enum. You will receive an error message. This is infinitely better than having a bug [Bugs, Errors, Exceptions]. Furthermore, most Integrated Development Environments (IDEs) and programming languages support auto-completion for enums. Gone are the times when you had to look up magic values in the manual. Enums are great. Use them wherever you define a selection from a limited number of options.
+Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums may seem slightly unusual at first glance due to the `Color::` prefix, and there is no way to alter this. However, this code is really solid and foolproof. If you write `Color::BLU`, you will get an error message because you most likely did not define a color `BLU` inside the enum. This is infinitely better than having a bug [Bugs, Errors, Exceptions]. Furthermore, most Integrated Development Environments (IDEs) and programming languages support auto-completion for enums. Gone are the times when you had to look up magic values in the manual. Enums are great. Use them wherever you define a selection from a limited number of options.
 
 Enums can only be used if you know all possible options when writing the code. If the user can define custom options, string comparison must be used. Though cases where you really have to make string comparisons are rare. It is rare to encounter a situation where you receive a random string and then invoke a function based on its content. The only thing you usually have to do with random strings is pass them on without altering them.
 
 ## Booleans
-
-"If-statements should encapsulate code that is executed only when a condition is true – not jump out of an algorithm or method, if otherwise." - Robert C. Martin
 
 "Have a seat, my son. There is something very important that I have to tell you. If you hear it for the first time, it may be very shocking. But it has to be said: Booleans are evil."
 
@@ -2618,7 +2634,7 @@ In summary, one can say that `match case` statements are not bad at all. Though 
 
 A long time ago, for loops required the use of booleans. Fortunately, these times are long gone. I add this topic here as an example how to get rid of boolean comparisons.
 
-There are many ways how to implement for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical version:
+There are many ways how to implement for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical C++ version:
 
 ```C++
 #include <vector>
@@ -2656,8 +2672,9 @@ for number in numbers:
 
 Here you don't need any comparison nor an index.
 
-Another question: how should you filter lists?. The classical way is to use a for loop and an if statement. But there are two alternatives: list comprehensions and lambdas. Both solutions are quite similar (even in performance), so feel free to use the one you prefer.
+### Filtering Lists
 
+Another question: how should you filter lists?. The classical way is to use a for loop and an if statement. But there are two alternatives: list comprehensions and lambdas. Both solutions are quite similar (even in performance), so feel free to use the one you prefer.
 
 ```py
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -2758,7 +2775,7 @@ if water_state.high_temp_alert == State.on:
 
 ### Natural Language
 
-Serious software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, and the translator also doesn't want to deal with your code. He wants to work with only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
+Many software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, nor does the translator want to deal with your code. He wants to work with only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
 
 Ultimately, you are left with barely any strings at all. You replaced them with enums, proper logic, and a file containing human-readable text. Only when reading or writing a text file do you briefly have to deal with strings. Then you immediately convert it into data. In theory, at least. For small projects, it is not always worth the effort to convert all strings into objects or dedicated text files.
 
@@ -2777,17 +2794,17 @@ vars = {"a" : 0, "b" : 1}
 
 These lines do something very similar. They both assign the value `0` to `a` and the value `1` to `b` (okay, in the case of the dictionary, it is rather `"a"`, but you get my point). Yet, there is a fundamental difference. In the first line, the programmer knows that he needs variables `a` and `b` as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there would be `"a"` and `"b"` used as keys. Maybe he didn't, and these dictionary entries were generated by user input that the programmer had no control over.
 
-If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file where he doesn't the content, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance what kind of ingredients will be needed.
+If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file where he doesn't the content, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance how the dishes are called and what kind of ingredients will be needed.
 
 Dictionaries are closely related to JSON and XML files. They are essentially similar to a nested dictionary serialized into a string. If you ever need to read JSON files, the resulting data structure will be a nested dictionary that you might further convert into nested class instances.
 
 ## Trees
 
-It is not too often that I've had to create a tree myself, yet I have been working on tree structures for a significant part of my programming career. Trees are an extremely important data structure. When dealing with a recursive data structure, it is highly likely that you will be working with a tree. This allows you to utilize many standard algorithms that are very efficient, typically with a time complexity of `O(N log(N))`. If you implement your own algorithms, ensure that they are recursive and write automated tests for the corner cases.
+It is not too often that I've had to create a tree myself, yet I have been working on tree structures for a significant part of my programming career. Trees are an extremely important data structure. When dealing with a recursive data structure, it is highly likely that you will be working with a tree. This allows you to utilize many standard algorithms that are very efficient, typically with a time complexity of `O(N log(N))`. If you implement your own algorithms, ensure that they are recursive and write automated tests that cover the corner cases.
 
 ## Pointers
 
-Python, as most other modern programming languages, doesn't use pointers. C++ on the other hand used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented essentially all the functionality that pointers were used for. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
+Python, as most other modern programming languages, doesn't use pointers. C++ on the other hand used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented in C++ for and completely replaced pointers. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
 
 The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine.
 
@@ -2798,7 +2815,7 @@ Once again, things only got started with the introduction to the data types. The
 
 The most common way to structure data is by using nested classes and lists, where one class contains instances of other classes. There's certainly nothing wrong with that, but sometimes there are better solutions.
 
-Variables do not only have a type, but they can also have additional properties that we will explore in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic, global or two of them at once. All these various types of variables have distinct scopes within which they can be accessed and modified. As is often the case in programming, it is very convenient to have access to a variable at all times, similar to a global variable. At the same time, this approach is very likely to result in poor code quality as this variable is tightly coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn't grant more accessibility permissions than necessary.
+Variables do not only have a type, but they can also have additional properties that we will explore in this chapter. They can be compile-time constant, constant, mutable, member, static, dynamic, global or several of them at once. All these various types of variables have distinct scopes within which they can be accessed and modified. As is often the case in programming, it is very convenient to have access to a variable at all times, similar to a global variable. At the same time, this approach is very likely to result in poor code quality as this variable is tightly coupling everything together. Therefore, you should always choose a variable type that is just modifiable enough to work with but doesn't grant more accessibility than necessary.
 
 ## Compile-time constant
 
@@ -2810,67 +2827,13 @@ Compared to compile-time constants, runtime constants do not know their values a
 
 Once created, you can pass and copy them around as much as you please. You are always guaranteed to deal with the same object. You can even declare a constant global variable and avoid the main issues associated with global variables. Though it is still recommended to pass them around as function arguments instead. If it's global, it will be acting as a hidden state, making it much harder to write tests.
 
-Note that in functional programming, all variables are runtime constant. The only way to change a variable, is to create a new one.
-
-### Constant Class Instances
-
-In C++, you can enforce an object to remain the same for as long as it exists by using the `const` keyword at the time of creation. In Python, you cannot enforce it, but you can use the all uppercase notation to hint that a variable may not be changed. The usage of `const` is straightforward, even though it might be a little confusing at first. Everything that should never be changed should be kept constant and defined at the time of creation. Once you create an object, it will remain the same until you decide to discard it (once it goes out of scope). This makes the life of a programmer much easier and prevents the abuse of variables. This is once again related to power. Life becomes easier when you lack the power to alter an object that should remain unchanged. It prevents you from making a mistake by altering the object.
-
-// But things are not always that easy. In some cases, you might have all properties as constants except for one. Or is it? Let's look at an example.
-
-// remove this example completely? Is it useful and "correct"?
-
-We have a bottle. It has a color, size, and material. All of them are fixed when the bottle is created. In our code, that would be the constructor. These properties can never be changed. You could only replace the bottle with a different one. An instance of the Bottle class should be declared as constant. In Python, constant objects are defined using all uppercase letters.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class Bottle:
-    color: str
-    size: float
-    material: str
-
-if __name__ == "__main__":
-    BOTTLE = Bottle()
-```
-
-Note that color and material should probably not be a string, but rather an enumeration of `Color` or `Material`, respectively. We only use strings here for the sake of simplicity.
-
-The member variables of the class are not constant. Instead, I decided to make the class instance constant.
-
-// classes should not have const members; instead, they should be private. [https://youtu.be/O65lEiYkkbc?t=3072]
-
-So far, so good. We created a bottle that is constant. However, having an empty bottle is quite useless. You want to use it. You fill the bottle with water and drink it later. This is a very simple example, but in our code, it raises some fundamental questions. We have a constant bottle object with a not constant amount of water in it. How are we going to solve this problem?
-
-The first attempt involves removing the constness and adding the amount of water to the class variables. This is a dreadful idea. Now anyone could change the color of the bottle. Never remove a const'nes from an object that is constant.
-
-We make all variables private and write getters for them. The amount of water can be adjusted using the functions `fill` and `release`. This is an improvement, but it still feels wrong. I have a grudge against getter and setter functions as explained in the chapter [?].
-
-A completely different idea is to keep the amount of water separate from the bottle. We create a new class `WaterBottle` that contains a constant `Bottle` and a variable amount of `Water`. This also prevents the `bottle` class from growing too large and helps maintain structure in the code.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class WaterBottle:
-    BOTTLE: Bottle
-    amount_of_water: float
-
-@dataclass
-class Bottle:
-    color: str
-    size: float
-    material: str
-```
-
-This is just one example of how to combine const and non-const objects. One always has to consider whether an object or only parts of it should remain constant. Such considerations are important as const'nes is a crucial property of variables. You shouldn't consider const'nes as restricting you, but rather as something that fixes certain behaviors.
+Note that in functional programming, all variables are runtime constant. The only way to change a variable, is to create a new one. This is a severe restriction, but at the same time it makes reading the code easier as you don't have to consider output arguments.
 
 ## Mutable Variables
 
-"immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
+"Immutable types are safer from bugs, easier to understand, and more ready for change" - [https://web.mit.edu/6.005/www/fa15/classes/09-immutability/]
 
-In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time, they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (or class instances) is very challenging. If you want to understand the level of difficulty, experiment with functional programming. The problem with mutable variables is, perhaps not surprisingly, their mutability. Values may change, even if they are just a function argument. This makes it so hard to keep track of their value.
+In many ways, mutable variables can be compared to class instances. They are both very powerful, yet at the same time, they are tricky to deal with as they may change their values. This can easily lead to bugs. On the other hand, writing code without mutable variables (or class instances) is very challenging. If you want to understand the level of difficulty, I can recommend you to try functional programming. The problem with mutable variables is, perhaps not surprisingly, their mutability. Values may change, even if they are just a function argument. This makes it so hard to keep track of their value.
 
 One option is to work more with immutable objects. For example, you can replace the following code:
 
@@ -2886,11 +2849,11 @@ prime_numbers = [11, 3, 7, 5, 2]
 sorted_prime_numbers = sorted(prime_numbers)
 ```
 
-At first sight, the two options look pretty much equal. The first one changes the list instance, while the second one returns a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error-prone. Furthermore, it reuses the variable, which violates the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133]
+At first sight, the two options look pretty much equal. The first one changes the list instance, while the second one returns a new list. However, there is a quite distinct difference. The first one passes a mutable variable, which is error-prone. Furthermore, it reuses the variable, which is a minor violation of the SRP. [https://youtu.be/I8UvQKvOSSw?t=2133]
 
-Returning a new variable, as demonstrated in the second code snippet, is a much safer option and is preferred. Furthermore, the second version of the code is much clearer because the variable is not reused. This creates a clear distinction between the unsorted and the sorted list.
+Returning a new variable, as demonstrated in the second code snippet, is a much safer option and is preferred. Furthermore, the second version of the code is much clearer because the variable is not reused. The different names create a clear distinction between the unsorted and the sorted list.
 
-On the other hand, the second solution may create a performance bottleneck as it requires more memory if the initial value does not go out of scope. This could pose a problem for large lists, particularly within loops. Though this is usually not a significant issue because the `prime_numbers` go out of scope, and the memory will be recycled.
+On the other hand, the second solution may create a performance bottleneck as it requires more memory if the initial value does not go out of scope. This could pose a problem for large lists, particularly within loops. Though this is usually not a significant issue because the `prime_numbers` go out of scope, and the memory will be recycled. Furthermore the `sort` function anyway requires some memory.
 
 ## Member Variables
 
@@ -2914,26 +2877,26 @@ And if you don't believe me, try writing unit tests for a class that contains st
 
 ## Global Variables
 
-You might have heard about global variables. They are bad, and you should never use them. This is indeed true. Let me provide an everyday example to illustrate why this is the case.
+You might have heard about global variables. That they are bad, and you should never use them. This is indeed true. Let me provide an everyday example to illustrate why this is the case.
 
 Let's say you have to give a bag to a friend. But you are not able to meet. Now, your solution is to place it in the middle of a very busy square, and he can pick it up later on. Are you now thinking...? No! NO! Don't even think about it! There is NO WAY this is ever going to work. Everyone around can compromise the integrity of the bag. And they will. Believe me, they certainly will. This is the problem with global variables. Millions have tried this attempt before you, and millions have failed. No one has found a solution on how to safely work with global variables. Do NEVER use global variables. If you believe that using a global variable is the only solution to your problems, you should seek assistance to review your code and address some fundamental issues. Relying on global variables will only exacerbate the situation.
 
-Of course, it's slightly different if the bag weighs 1000 tons and no one can move it. Not even Superman. Not your friend. This is not a variable anymore. This is a constant. You define it once, and it will never change. But even here, it is considered bad practice to make it global. Pass the variables around as function arguments to make the dependencies apparent.
+Of course, it's slightly different if the bag weighs 1000 tons and no one can move it. Not even Superman. This is not a variable anymore. This is a constant. You define it once, and it will never change. But even here, it is considered bad practice to make it global. Pass the variables around as function arguments to make the dependencies apparent.
 
 Now, as you may have already realized, global variables are problematic because any line of code can alter their value. Everywhere. You cannot rely on them. You never know if someone compromises their integrity. This also makes the code incredibly hard to understand, as the workflow becomes extremely entangled. All of a sudden, there is temporal coupling between different function calls if they modify this variable. You have to follow every trace where the variable could be changed. This is the very definition of spaghetti code. And once again, if you don't believe me try writing tests for code containing global variables. They will break all the time.
 
-The opposite of global variables are pure functions (yes, I compare variables with functions). Pure functions are functions that depend solely on their input arguments and do not produce any side effects. You'll always know exactly what they do and can rely on. They will never change any hidden state.
+The opposite of functions using global variables are pure functions. Pure functions are functions that depend solely on their input arguments and do not produce any side effects. You'll always know exactly what they do and can rely on. They will never change any hidden state.
 
 ## Comparison of Variable Properties
 
-The variables we examined vary in terms of how easily they can be changed. Starting with a local compile time constant that cannot be changed and accessed only locally, to a global variable that everyone can access and change. This level of accessibility must be selected carefully for every variable you work with. You can barely write code with only compile-time constants, but if you use only global variables, you'll soon end up with spaghetti code. Generally, it's best to choose variables with the least possible effects that still allow you to implement what you want. Prefer too little accessibility over too much. You can still change it later on.
+The variables we examined vary in terms of how easily they can be changed. Starting with a local compile time constant that cannot be changed and accessed only locally, to a global variable that everyone can access and change. This level of accessibility must be selected carefully for every variable you work with. You can barely write code with only compile-time constants, but if you use only global variables, you'll soon end up with spaghetti code. Generally, it's best to choose variables with the least possible effects that still allow you to implement what you want. Prefer too little accessibility over too much. You can still increase it later on.
 
-Here is a rough list of how variable types are sorted by the accessibility they have, starting with the least. It is not so easy to compare them all, so this comparison here should be taken with a grain of salt.
+Here is a rough list of how variable types are sorted by the accessibility they have, starting with the most accessible:
 
-Compile-Time Constant < Constant < Immutable Object < Mutable Object < Class Variable < Inherited Variable < Singleton = Global Variable
+Compile-Time Constant < Constant < Immutable Object < Mutable Object = Class Variable < Inherited Variable < Singleton = Global Variable
 
-There is certainly nothing wrong with constants, especially with compile-time constants. It's just that they can't do much. They are just there and do nothing. Or at least not much. They store a fixed value, and you are always free to read it. If you enjoy working with constant or immutable objects, I recommend functional programming. In functional programming, everything is constant.
-
+There is certainly nothing wrong with constants, especially with compile-time constants. It's just that they can't do much. They are just there and do nothing. They store a fixed value, and you are always free to read it. If you enjoy working with constant or immutable objects, I recommend functional programming. In functional programming, everything is constant.
+////
 Immutable (non-constant) objects can only be used within the current scope. When passed as a function argument, their value cannot be changed. If you use immutable objects, you cannot have output arguments, which, in my opinion, is a good thing. Due to the SRP, a function should change the value of only one variable, and in my opinion, this should be the return value. So, you shouldn't have output arguments anyway.
 
 With mutable objects, you have to be careful because it may be unexpected that a function call changes the value of an argument. Make sure your functions modify at most the value of the first argument, as altering other arguments can lead to confusion. This is not a strict law, but rather a convention. Making multiple changes through a single function call is also a violation of the SRP and should be avoided. If possible, create a new object instead of modifying an existing one. The only reason I could think of why one should use mutable objects is performance. Creating new objects all the time may be slow.
@@ -5809,8 +5772,10 @@ print(shopping.get_shopping_items())
 
 Instead you should have a class for each comestible and inside the `Shopping` class, you have only one list for all different comestibles at the same time. The different behavior is implemented inside ever individual class, obeying the OCP. This allows you to simply add a new comestible without changing the `Shopping` class.
 
+Also testing this class may be hard. Possibly you'll have to use a mocking library to alter the functionality of some functions that are implemented inside this class. This is a sign that the class is badly designed.
+
 ```py
-from abc import ABC
+from abc import ABC, abstractmethod
 
 class Shopping:
     def __init__(self):
@@ -5823,7 +5788,9 @@ class Shopping:
         return [str(item) for item in self._shopping_basket]
 
 class ShoppingItem(ABC):
-    pass
+    @abstractmethod
+    def __str__(self):
+        pass
 
 class Apple(ShoppingItem):
     def __str__(self):
@@ -5839,7 +5806,9 @@ shopping.add_item(Egg())
 print(shopping.get_shopping_items())
 ```
 
-For testing purposes, you can also create a `FakeShoppingItem` if you want. This entire technique here we have already learned in the section on Dependency Injection (DI).
+This is of course a very simple example. In reality the functions may be much more complex than this. But still, I think it was worth splitting up this class in many smaller classes because it can now be extended much more easily.
+
+For testing purposes, you can also create a `FakeShoppingItem` if you want. This entire technique here we have already learned in the section on Dependency Injection (DI). 
 
 ## Renaming
 
