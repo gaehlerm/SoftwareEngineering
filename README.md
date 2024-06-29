@@ -6,8 +6,6 @@ Copyright Marco Gähler, all rights reserved.
 
 This book is currently undergoing revisions. Feedback is highly valued. Please send me the commented PDF to marco.gaehler@gmx.ch. It is advisable to submit many small changes rather than a single large one. Feedback may include precise recommendations for enhancement or general reflections. I welcome broader feedback. Tipos are getting fixed using some AI tool, so don't worry about them.
 
-Pearson Germany has expressed interest in publishing this book; however, it would be in the German language. I am hopeful that it will be published in English as well.
-
 ## Getting started
 
 The current configuration of the project is quite neat when working with Visual Studio Code with the "Markdown all in one" and the "Markdown PDF" extensions. Open the readme.md file and select the outline located on the left-hand side. This provides an overview of all the chapters.
@@ -335,8 +333,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Too many variales](#too-many-variales)
     - [Splitting classes](#splitting-classes)
   - [Renaming](#renaming)
-  - [Scratch refactoring \[WELC p. 212\]](#scratch-refactoring-welc-p-212)
+  - [Scratch refactoring](#scratch-refactoring)
   - [Extract function](#extract-function)
+    - [Inlining functions](#inlining-functions)
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
 - [36. Refactoring Legacy Code](#36-refactoring-legacy-code)
@@ -349,7 +348,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [How do I get the Code under Test?](#how-do-i-get-the-code-under-test)
     - [What Tests should I write?](#what-tests-should-i-write)
   - [Sprout Method](#sprout-method)
-    - [Sprout class \[WELC p. 62\]](#sprout-class-welc-p-62)
 - [37. Performance Optimization](#37-performance-optimization)
   - [No Optimization Needed](#no-optimization-needed)
   - [Optimization Maybe Needed](#optimization-maybe-needed)
@@ -419,17 +417,16 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Sprints](#sprints)
   - [Becoming agile](#becoming-agile)
 - [46. Requirements Engineering](#46-requirements-engineering)
-  - [Entwicklugsmethoden](#entwicklugsmethoden)
-    - [Wasserfall -\> nach Kapitel Agile verschieben](#wasserfall---nach-kapitel-agile-verschieben)
-    - [Agile -\> siehe Kapitel Agile](#agile---siehe-kapitel-agile)
   - [Stakeholders](#stakeholders)
-  - [Ziele, Kontext und Scope](#ziele-kontext-und-scope)
-    - [Anforderungen ermitteln](#anforderungen-ermitteln)
-    - [Dokumentation der Anforderungen](#dokumentation-der-anforderungen)
-    - [Priorisierung der Anforderungen](#priorisierung-der-anforderungen)
-    - [Prüfung der Anforderungen](#prüfung-der-anforderungen)
-    - [Verwaltung von Anforderungen](#verwaltung-von-anforderungen)
-    - [Tools zur Anforderungsverwaltung](#tools-zur-anforderungsverwaltung)
+  - [Goals, Context and Scope](#goals-context-and-scope)
+    - [Requirements Elicitation](#requirements-elicitation)
+    - [Documentation of the requirements](#documentation-of-the-requirements)
+  - [Use-Case Model](#use-case-model)
+    - [Class Diagrams](#class-diagrams)
+    - [Prioritization of Requirements](#prioritization-of-requirements)
+    - [Review of Requirements](#review-of-requirements)
+    - [Administration of Requirements](#administration-of-requirements)
+    - [Tools for Requirements Management](#tools-for-requirements-management)
 - [47. Planning](#47-planning)
   - [Planning code](#planning-code)
 - [48. DevOps](#48-devops)
@@ -566,8 +563,6 @@ There are some people who read through this book and were very helpful in giving
 - Felix Gähler
 - Hans Märki
 - Bernhard Brodowsy
-- Claudia Gähler
-- Barbara Schneider
 - Fabian Mäser
 - ... you?
 
@@ -633,7 +628,7 @@ In general, it can be said that AI code generation is already a very useful tool
 
 
 
-Part 1: First things first
+-# Part 1: First things first
 
 # 6. Software Engineering
 
@@ -1333,16 +1328,14 @@ Usually, companies support multiple API versions simultaneously. They know that 
 
 ## Orthogonality
 
-Orthogonality is a mathematical concept. It has been used in software engineering by Thomas and Hunt in their highly recommended book "The Pragmatic Programmer" [citation: The Pragmatic Programmer]. Orthogonality states that two objects are at a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but what about the coordinate system...? Let me explain code orthogonality by providing a brief example that is familiar to everyone.
+Orthogonality is a mathematical concept. It has been used in software engineering by Thomas and Hunt in their highly recommended book "The Pragmatic Programmer" [](The Pragmatic Programmer). Orthogonality states that two objects are at a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but what about the coordinate system...? Let me explain code orthogonality by providing a brief example that is familiar to everyone.
 
-// TODO search images without copy right
 
 <div class="row">
-    <img src ="images/water_valve2.jpg" alt="retro water tab"width="247">
-    <img src ="images/water_valve1.jpg" alt="new water tab" width="200">
+    <img src ="images/watertabs.png" alt="retro water>
 </div>
 
-On the left-hand side, we have old-school water taps. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user typically desires. It turns out that the user wants to be able to control the two degrees of freedom differently. He wants to control both the total amount and temperature of the water. The orthogonal solution from the user's perspective is shown on the right-hand side. The solution on the left-hand side is outdated. In the engineer's coordinate system, it is orthogonal. However, nowadays, users have higher requirements and are no longer satisfied with the engineers' solutions. We expect this coordinate transformation into the user's coordinate system to be performed within the water tab.
+[](image Shutterstock) On the right-hand side, we have old-school water taps. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user typically desires. It turns out that the user wants to be able to control the two degrees of freedom differently. He wants to control both the total amount and temperature of the water. The orthogonal solution from the user's perspective is shown on the left-hand side. The solution on the right-hand side is outdated. In the engineer's coordinate system, it is orthogonal. However, nowadays, users have higher requirements and are no longer satisfied with the engineers' solutions. We expect this coordinate transformation into the user's coordinate system to be performed within the water tab.
 
 In software engineering, we encounter exactly the same phenomenon. We have a downstream person (user) and an upstream person (developer). Both want to work with orthogonal data, but they may be operating in different coordinate systems. Now, it is always the upstream person's job to transform the output to make the data orthogonal in the downstream person's coordinate system. In similar cases, it is always the upstream person's duty to make the downstream person's life as comfortable as possible by converting the data handed over. This also makes sense from an economic standpoint: there is only one developer (upstream person), but many users (downstream persons). So, if the developer handles the coordinate transformation, only one person (or team) needs to do it, as opposed to all users having to do it themselves if the developers don't take on this task.
 
@@ -1494,7 +1487,7 @@ def add(b, c):
 
 
 
-Part 2: Components of Code
+-# Part 2: Components of Code
 
 # 13. Functions
 
@@ -2908,7 +2901,7 @@ A Singleton is a class that can have at most one instance. If you create objects
 
 
 
-Part 3: Testing
+-# Part 3: Testing
 
 # 18. Introduction to Testing
 
@@ -4097,7 +4090,7 @@ print(process_data(reader))
 
 
 
-Part 4: Design Principles
+-# Part 4: Design Principles
 
 
 # 21. SOLID principles 
@@ -4428,7 +4421,7 @@ That being said, you have to know where you can go fast and where technical debt
 
 
 
-Part 5: Programming
+-# Part 5: Programming
 
 # 23. Programming Paradigms
 
@@ -5049,7 +5042,7 @@ Microservices, on the other hand, are highly decoupled. They are chunks of code 
 Only ask for things you directly need. This is another advantage of functional programming or microservices. If you need to validate an email, you can utilize the email validator, which can be either a microservice or a pure function. The email validator returns a result and resets. You only received what you asked for, nothing more. There are no semi-useful objects wobbling around that you don't know how to deal with. You need exactly what is around. This is the strength of functional programming.
 
 
-Part 6: High level design
+-# Part 6: High level design
 
 # 30. Software Architecture
 
@@ -5438,7 +5431,7 @@ There are thousands of companies selling software parts. For many problems, ther
 
 No airplane engineer would start developing his own jet engine, and no programmer would write their own database software. Even if they don't like the products available, they can still purchase something from the market. Everything else is simply crazy; it's too expensive. Other companies are developing databases, and you are not going to compete with them. You want to do other things instead. You have found your niche elsewhere and you plan to remain there unless there is a compelling reason to completely change your business. You outsource everything that you don't really have to do yourself.
 
-In software engineering, there are not many products available to address all possible problems. But still, there are quite a few suppliers available who can assist you in solving some of your issues.
+In software engineering, there are not many products available to address all possible problems. But still, there are quite a few suppliers available who can assist you in solving some of your issues. Especially when it comes to infrastructure.
 
 It is possible that you have a bad feeling about this approach. You want to do everything by yourself. You don't want to pay other companies for their libraries. I can assure you that your feelings are natural. But you have to get over it. It's just not worth doing everything by yourself. You haven't developed your own operating system, the database you're using nor the cloud service. Instead, you earn a good amount of money every year by working on your core domain. You do what you can do best. And if you can save time by outsourcing other parts of the code, that is great. This also allows you to save on maintenance costs, which are typically even more expensive than the actual development of the software.
 
@@ -5455,8 +5448,7 @@ The very big question is always when you really need such an adapter. Most of th
 You should reconsider using a third-party library if it has only a few developers. If there is a reasonable alternative, you might be better off avoiding it. On the other hand, if this code is crucial for your software, it would be beneficial to participate in the project and contribute as a developer. In fact, pretty much all major software companies support the software projects they rely on. Some projects received so much additional manpower that they ran out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
 
-
-Part 7: Existing Code
+-# Part 7: Existing Code
 
 # 34. Refactoring Fundamentals
 
@@ -5472,7 +5464,7 @@ If code exists for a long period (which is usually sooner rather than later), it
 
 The most fundamental rule about refactoring is that you shouldn't let your code rot to begin with. Always make sure your code is well-tested and well-structured. This will save you a lot of pain in the future. Once you reach the point of having classes that are a thousand lines long, you will struggle to regain control of your code. By writing properly tested code from the beginning, you'll save a lot of time in the long run. Not only will it be easier to refactor your code, but your code quality will also improve, requiring less refactoring.
 
-Even without external changes, it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a potential source of deteriorating code quality. You may introduce duplication, enlarge the class size, or disrupt the logical order in your code. Over time, the code becomes messy and needs to be cleaned up. Sometimes it is also compared to entropy, the physical law of disorder [The Pragmatic Programmer]. Fighting entropy is hard. It takes a lot of effort, as explained in the section on entropy [Physical Laws of Code].
+Even without external changes, it is important to refactor your code once in a while. We have to face the sad fact that our perfect code deteriorates over time. Every line of code you add is a potential source of deteriorating code quality. You may introduce duplication, enlarge the class size, or disrupt the logical order in your code. Over time, the code becomes messy and needs to be cleaned up. Sometimes it is also compared to entropy, the physical law of disorder [](The Pragmatic Programmer). Fighting entropy is hard. It takes a lot of effort, as explained in the section on entropy [](chapter Physical Laws of Code).
 
 I assume that everyone reading this book is familiar with some of the reasons why code rots. The very first example is copy paste code. Copy-paste code should be banned altogether. Instead of rewriting a function to meet its new requirements, one simply duplicates it and modifies a line or two in its new position. Another issue arises when adding more and more features to an existing class. Also, the features that you added are in the wrong place in your code and need to be moved to the correct location. These are some of the reasons why code rots and requires regular refactoring.
 
@@ -5486,11 +5478,11 @@ If you are confident about the test coverage, you can do pretty much anything yo
 
 ### Keep Refactorings Small
 
-Most refactoring is usually minor in scale. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. Rewrites of entire features are relatively uncommon.
+Most refactoring is usually minor in scale. Renaming a variable. Breaking up a class into two new classes. Removing duplicate code. Extracting functions. Meanwhile, rewrites of entire features are relatively uncommon.
 
 The biggest mistake one can make with refactoring is waiting too long. If you have a gut feeling that your fundamental data structure could be an obstacle, you should act right away. Discuss with your work colleagues whether this is truly the correct choice and explore alternative options. Peripheral code can still be refactored later on. But if the core of your code is rotten, you will have a big issue fixing it. And it will only get worse if you don't act quickly. As always, the core of your code needs the highest priority.
 
-Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor code as soon as you encounter something you don't like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It's: write code – test – refactor. For every feature you implement, you should follow this pattern. Or even better, you can also write tests - code - refactor, as explained in the section on Test-Driven Development [chapter Writing Better Code with Tests]. This pattern is great because you can focus on one thing at a time. You can start by writing mediocre code. Maybe you are unsure about how to name a variable, or you might be inclined to create a class that is too large. There may be duplicated code. Certainly, it would be better to write flawless code from the outset. But you cannot multitask. You cannot develop code and make it perfect at the same time. You're not perfect. Learn to deal with your imperfections and refactor your imperfect code.
+Probably you do some smaller refactorings quite often. But not really in a structured manner. You refactor code as soon as you encounter something you don't like. This is honorable. But there is a very simple workflow that I can recommend to everyone. It's: write code – test – refactor. For every feature you implement, you should follow this pattern. Or even better, you can also write tests - code - refactor, as explained in the section on Test-Driven Development [](chapter Writing Better Code with Tests). This pattern is great because you can focus on one thing at a time. You can start by writing mediocre code. Maybe you are unsure about how to name a variable, or you might be inclined to create a class that is too large. There may be duplicated code. Certainly, it would be better to write flawless code from the outset. But you cannot multitask. You cannot develop code and make it perfect at the same time. You're not perfect. Learn to deal with your imperfections and refactor your code.
 
 Then you write the tests. Some tests may fail because your imperfect code might contain bugs. When you fix the bugs, the code becomes even more messy. Even if you had written sublime code to begin with, due to the inevitable bug fixes, you would still have to refactor at some point. This is something that was overlooked by the waterfall development process. You never write perfect code to start with. You always miss some details that you have to fix later on. It always takes some refactoring to end up with good code.
 
@@ -5502,7 +5494,7 @@ There are hundreds of things you could do to improve the quality of the code. Wh
 
 Maybe you have a simple question: At what level should you refactor? Should you only refactor small elements, or should you delve deep into the core of your software?
 
-Let me provide another brief example. If you are planning to build a house and enjoy cooking. Ensure that there is ample space in the kitchen for all your equipment. You are very pleased. This is the equivalent of a first draft of your code. Everything looks perfect.
+Let me provide another brief example. Lets assume you are planning to build a house and enjoy cooking. Ensure that there is ample space in the kitchen for all your equipment. You are very pleased. This is the equivalent of a first draft of your code. Everything looks perfect.
 
 Yet dishes get dirty, so you have to clean up the kitchen every day. Otherwise, you'd be left with a huge mess in no time. This corresponds to the everyday refactoring done by a software engineer. Ensure you eliminate code duplications, name all variables appropriately, and clean up anything you find unsatisfactory along the way.
 
@@ -5526,7 +5518,7 @@ Refactoring certainly has the highest impact when you have gained a new understa
 
 There is something very mean about refactoring. Refactoring good code is easier than refactoring bad code. For example, dealing with code that includes global variables, numerous dependencies, and large classes is always challenging, whether you are writing new code, tests, or performing refactoring. In all cases, you have to understand what the code really does. For writing new code and tests, this is bad enough. But with refactoring, it can become a nightmare due to the presence of a "circle of doom." You may find yourself delaying refactoring tasks because it can be challenging to comprehend poorly written code. But over time, this will only exacerbate the situation. Until you reach the point where refactoring becomes essentially impossible, and you are paralyzed. You would need to refactor your code because it is poorly written, but you are unable to do so because it has deteriorated to a point where improvement is no longer possible.
 
-Don't slack off on refactoring. You'll pay the price sooner rather than later. Make sure you always keep your code well-organized; this will greatly simplify your life. Always remember to keep writing tests. Missing tests are the most obvious sign that your code is getting out of hand.
+Don't slack off on refactoring. You'll pay the price sooner rather than later. Make sure you always keep your code well-organized; this will greatly simplify your life. And always remember to keep writing tests. Missing tests are the most obvious sign that your code is getting out of hand.
 
 However, there is one thing you should always consider while refactoring: even if you don't like the behavior of your code as you are refactoring, you should not change it. The behavior of the software may not be changed. Even if it's a bug, you should reconsider fixing it because users may rely on that bug.
 
@@ -5540,7 +5532,7 @@ As mentioned earlier, you should always refactor the code you have just written.
 
 Refactor when you find a bug. Don't just add a patch that might resolve the issue superficially. Search for the actual source of the problem. Consider if there is any redundant code that needs to be fixed or refactored for better efficiency. Find a viable solution for the bug, which may involve some refactoring. This is time well spent because usually bugs tend to cluster. So if you found one bug, there might be more.
 
-If you add a new feature, it may not seamlessly integrate into the existing codebase. Most likely, the code has not been cleaned up, or the other authors simply didn't know how the code should look in the future. Hence, the code has a different structure than what is required for this new feature. But now, as you're adding this new feature, you're more intelligent. You might have an idea of how the code should really look for the feature to fit in. Now, don't force the feature into the existing codebase. Refactor instead and ensure the new feature integrates seamlessly. Maybe transform a data structure as explained in the section on Orthogonality [...]. Altogether, this is less work. And especially, the code will ultimately be in a much better condition. Write an adapter to seamlessly integrate the feature into the existing code base.
+If you add a new feature, it may not seamlessly integrate into the existing codebase. Most likely, the code has not been cleaned up, or the other authors simply didn't know how the code should look in the future. Hence, the code has a different structure than what is required for this new feature. But now, as you're adding this new feature, you're more intelligent. You might have an idea of how the code should really look for the feature to fit in. Now, don't force the feature into the existing codebase. Refactor instead and ensure the new feature integrates seamlessly. Maybe transform a data structure as explained in the section on Orthogonality [](chapter Single Responsability Principle). Altogether, this is less work. And especially, the code will ultimately be in a much better condition. Write an adapter to seamlessly integrate the feature into the existing code base.
 
 During code review, you can also perform refactoring. Team up with the code author and engage in pair programming. This type of review is much more motivating than a standard one because it facilitates better knowledge exchange and significantly enhances the review's output.
 
@@ -5561,11 +5553,9 @@ Writing code follows a similar process to the one I use when writing this book. 
 
 "The fewer methods a class has, the better. The fewer variables a function knows about, the better. The fewer instance variables a class has, the better" - Robert C. Martin [Clean Code]
 
-// move some of these techniques to working with existing code? I believe most of them also work with legacy code.
-
 The techniques explained here mostly require an existing set of automated tests because changes to the code may introduce bugs otherwise. Refactoring can also be done without tests. In most cases, this game is very dangerous to play. Even if some techniques seem safe to be applied without tests, there is always some latent danger of breaking the code in some way. Especially if you have global variables or overridden functions, it becomes tricky. Refactoring code in compiled languages is easier than in interpreted languages because the compiler performs valuable checks on names, functions, types, and so on.
 
-There is a wide range of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most of the concepts originate from the book "Refactoring" by Martin Fowler [Refactoring, Improving the Design of Existing Code, 2019]. In the following, I will group these techniques into two categories: one category mostly explained in [Refactoring, Fowler] for good code, and the other category from [WELC, Feathers] for bad legacy code with global variables, inheritance, no tests, etc.
+There is a wide range of concrete refactoring techniques to be applied in specific cases. I will only briefly explain some of them. Most of the concepts originate from the book "Refactoring" by Martin Fowler [](Refactoring, Improving the Design of Existing Code). In the following, I will group these techniques into two categories: one category mostly explained in [Refactoring](Refactoring, Improving the Design of Existing Code) for good code, and the other category from [Working Effectively with Legacy Code](Working Effectively with Legacy Code, Feathers) for bad legacy code with global variables, inheritance, no tests, etc.
 
 The techniques explained in this chapter are unlikely to create bugs. The good refactoring usually consists of a sequence of small changes and the code should almost be in a working state all the time. However you never know. And in very convoluted code, I wouldn't dare to break a class into pieces without having it covered with unit tests.
 
@@ -5577,7 +5567,7 @@ Usually it takes me very little time to see whether some code needs to be refact
 
 Missing unit tests is also a very common problem. Though this one is even harder to fix in a code review. You simply lack information on what a piece of code does. Furthermore, it is certainly the task of the original programmer to write tests, not yours.
 
-A common problem that is easy to spot are comments. If the expression used to explain something in a comment is different than the name of the variable, something is off. Usually the variable should be renamed. Though renaming has not the highest priority. It is more important to fix the logic of the code.
+Another common problem that is easy to spot are comments. If the expression used to explain something in a comment is different than the name of the variable, something is off. Usually the variable should be renamed. Though renaming has not the highest priority. It is more important to fix the logic of the code.
 
 ## Breaking classes
 
@@ -5617,7 +5607,7 @@ class House:
         _print_address(self._address)
 ```
 
-This is of course a very artificial example and the question is, wherther it's worth doing this refactoring. As the class is very small, it doesn't really matter. But as the class grows, it becomes more and more important to increase cohesion and refactor out everything that doesn't need to be within the class. Here, `_print_address` is such an example. It requires only one member variable from the class, so it has comparably little cohesion. It is therefore a candidate to be refactored out into a separate function. If you don't refactor such methods out of your classes, your code becomes rigid and making changes to the class will require a lot of effort.
+This is of course a very artificial example and the question is, wherther it's worth doing this refactoring. If the class is very small, it doesn't really matter. But as the class grows, it becomes more and more important to increase cohesion and refactor out everything that doesn't need to be within the class. Here, `_print_address` is such an example. It requires only one member variable from the class, so it has comparably little cohesion. It is therefore a candidate to be refactored out into a separate function. If you don't refactor such methods out of your classes, your code becomes rigid and making changes to the class will require a lot of effort.
 
 In our example, we were able to reduce the number of methods that need access to `_address` from 2 to 1. This is a very significant improvement. If you now have to change the shape of the class by changing the `_address` member variable, it has become much easier. You'll only have to change one method class. 
 
@@ -5627,7 +5617,6 @@ Of course, this example is so small that you could completely dismantle the clas
 
 If variables are always used together in the same methods, they have high cohesion. This means that they probably belong together. They should be stored in a dataclass. Let's look at the following example:
 
-// add price in a separate list? It's a separate concern
 ```py
 class Fish:
     def __init__(self, name, age, weight):
@@ -5640,7 +5629,7 @@ class Fish:
         print(f"{self._name} is {self._age} years old and weighs {self._weight} kg.")
 ```
 
-Here, the variables `_name`, `_age` and `_weight` are all used together. So it makes sense to store them in a dedicated dataclass.
+Here, the variables `_name`, `_age` and `_weight` are all used together. So it makes sense to store them in a dedicated dataclass. Note that `PersonalDetails` is not really a property you would expect from a fish. On the other hand, fish usually don't have a name. It's all just an example.
 
 ```py
 from dataclasses import dataclass
@@ -5665,7 +5654,7 @@ class Fish:
 
 And probably we could rename the `print_fish` method into `print_personal_details` since it only prints the personal details of the fish. As the `print_fish` method now depends only on the `_personal_details` variable, we could also make it a freestanding function that takes only this variable as an argument.
 
-Possibly this code above is still coupled too strongly. The `personal_details` and the `price` are not part of the same domain. It might make sense to store the price in a dictionary with the name separate from the other information. So if you want to have complete information about the fish, you would have to combine the information from the `personal_details` and the `price` dictionary. That would probably be the best solution. But this is a different story.
+Possibly this code above is still coupled too strongly. The `personal_details` and the `price` are not part of the same domain. It might make sense to store the price in a dictionary with the name separate from the other information. So if you want to have complete information about the fish, you would have to combine the information from the `personal_details` and the `price` dictionary. That might be the best solution. But this is a different story.
 
 ### Too many variales
 
@@ -5738,7 +5727,7 @@ Usually these two techniques shown here are difficult to implement because the v
 
 ### Splitting classes
 
-One of the hardest tasks is splitting big classes into pieces. Here we have a very small, but suboptimal class that I made deliberately that bad. Here everything is implemented inside the `Shopping` class. This ib bad, because for every comestible, you have to extend the class. This violates the Open Closed Principle (OCP) [chapter SOLID].
+One of the hardest tasks is splitting big classes into pieces. Here we have a very small, but suboptimal class that I made deliberately that bad. Here everything is implemented inside the `Shopping` class. This is bad, because for every comestible, you have to extend the class. This violates the Open Closed Principle (OCP) [](chapter SOLID).
 
 ```py
 class Shopping:
@@ -5763,7 +5752,9 @@ print(shopping.get_shopping_items())
 
 Instead you should have a class for each comestible and inside the `Shopping` class, you have only one list for all different comestibles at the same time. The different behavior is implemented inside ever individual class, obeying the OCP. This allows you to simply add a new comestible without changing the `Shopping` class.
 
-Also testing this class may be hard. Possibly you'll have to use a mocking library to alter the functionality of some functions that are implemented inside this class. This is a sign that the class is badly designed.
+Also testing this class may be hard. Possibly you'll have to use a mocking library to alter the functionality of some functions that are implemented inside this class. This is a sign that the class is badly designed. Instead we can use dependency injection to inject the comestibles into the class. The class itself just contains one list storing all the items together.
+
+Note that the code is now slightly different and much longer. We don't have separate `apples` and `eggs` lists anymore. We have a list of `items` that can be of any type. Therefore the order in which the elements are stored may be different. But this is probably not a big deal since all elements inside a list should be treated equally. On the other hand, the `apples` and `eggs` were stored in separate lists, but they were pirvate and never used alone. So there is no problem with storing them in one list together.
 
 ```py
 from abc import ABC, abstractmethod
@@ -5797,9 +5788,9 @@ shopping.add_item(Egg())
 print(shopping.get_shopping_items())
 ```
 
-This is of course a very simple example. In reality the functions may be much more complex than this. But still, I think it was worth splitting up this class in many smaller classes because it can now be extended much more easily.
+This is of course a very simple example and I made some changes to the functionality which is usually inacceptable. In reality the functions may be much more complex than this. But still, I think it was worth splitting up this class in many smaller classes because it can now be extended much more easily.
 
-For testing purposes, you can also create a `FakeShoppingItem` if you want. This entire technique here we have already learned in the section on Dependency Injection (DI). 
+For testing purposes, you can also create a `FakeShoppingItem` if you want. This entire technique here we have already learned in the section on Dependency Injection (DI). This code here is similar to a factory.
 
 ## Renaming
 
@@ -5809,9 +5800,11 @@ Though you have to pay attention. People get used to names. If a name for an obj
 
 One possibility is to start with mediocre names initially and then search for better names towards the end of programming a few lines. Then, Copilot can also help you find better names.
 
-## Scratch refactoring [WELC p. 212]
+Note that renaming is generally a fairly save refactoring technique and there are plenty of tools helping you. In many cases, the search function of your IDE may do the job as well. However, things may get tricky if you use global variables or if you have overridden functions. In this case, you should be very careful because it's easy to miss some variables or functions.
 
-In chess, there is a rule of thumb that suggests you should silently communicate with your pieces during your opponent's turn. You should ask them where they would like to be and thus get a sense of their preferred position. In programming, there is something quite similar. Scratch refactoring is not about improving code; it is only about getting an idea of how the code could look. Just refactor as you like without worrying about bugs or similar issues. Figure out how the code should look in an ideal scenario. But also try to implement some of the edge cases to challenge your dream implementation and understand its limitations. I like the concept of scratch refactoring very much because it gives you an idea of how the code could look instead.
+## Scratch refactoring
+
+In chess, a rule of thumb suggests that you should silently communicate with your pieces during your opponent's turn. You should ask them where they would like to be and thus get a sense of their preferred position. In programming, there is something quite similar. Scratch refactoring [](Working Effectively with Legacy Code) is not about improving code; it is only about getting an idea of how the code could look. Just refactor as you like without worrying about bugs or similar issues. Figure out how the code should look in an ideal scenario. But also try to implement some of the edge cases to challenge your dream implementation and understand its limitations. I like the concept of scratch refactoring very much because it gives you an idea of how the code could look instead.
 
 Once you're done refactoring, discard everything and do a regular refactoring, attempting to implement the ideas you just acquired. Pay attention to not simply reimplementing the code you envisioned previously. You may have overlooked certain technical details, and the solution from scratch refactoring may not turn out as expected. After all, the scratch refactoring was just a dream...
 
@@ -5848,7 +5841,9 @@ For once, you are allowed to use copy-paste to create the new function since the
 
 You can also utilize Copilot to extract this function. Just write the command "move the print statements into a dedicated function," and Copilot will take care of the rest for you. As always, you should pay attention to ensure that the solution is correct. In this case, it happened to me that Copilot suggested an incorrect solution.
 
-There is not much more to know about extracting functions than what I just showed here. It is a simple yet crucial refactoring technique. This is probably the most commonly used refactoring technique besides renaming. The only thing you have to watch out for is the variables used by the newly created function. If the code is inside the class, you might consider making the function a member function of the class as well. Otherwise, you may end up having to pass too many arguments to the function. Though this would be a sign of poor class design because the class has too many member variables [chapter classes]. You may extract methods from this class later on if needed.
+There is not much more to know about extracting functions than what I just showed here. It is a simple yet crucial refactoring technique. This is probably the most commonly used refactoring technique besides renaming. The only thing you have to watch out for is the variables used by the newly created function. If the code is inside the class, you might consider making the function a member function of the class as well. Otherwise, you may end up having to pass too many arguments to the function. Though this would be a sign of poor class design because the class has too many member variables [](chapter classes). You may extract methods from this class later on if needed.
+
+### Inlining functions
 
 Inlining functions is the opposite process of what we have just seen and is rarely used. Replace a function call with the function body. Apparently, this makes the surrounding function longer when the copied function body has more than one line. This is generally not desirable because most functions are already long enough. Inlining functions only makes sense for one- or maybe two-line long functions, or if you are planning to refactor the surrounding function and split up the old function. One advantage of inlining functions is that you don't have to come up with a function name. Though usually this isn't a good sign if you don't know how to call a function.
 
@@ -5891,7 +5886,7 @@ car = Car(Engine(power=100))
 car.drive()
 ```
 
-For more refactoring examples, I would like to refer the interested reader to the book Refactoring [Refactoring, Improving the Design of Existing Code, 2019]. It contains numerous examples and is an excellent resource for learning how to refactor code. And, of course, I recommend doing a lot of refactoring yourself in order to learn it.
+For more refactoring examples, I would like to refer the interested reader to the book [Refactoring Second Edition](Refactoring Second Edition). It contains numerous examples and is an excellent resource for learning how to refactor code. And, of course, I recommend doing a lot of refactoring yourself in order to learn it.
 
 ## Copilot
 
@@ -5971,25 +5966,25 @@ As always, Copilot works best if you give it some step by step instructions. It 
 
 # 36. Refactoring Legacy Code
 
-"To me, legacy code is code without tests." - Michael Feathers [WELC]
+"To me, legacy code is code without tests." - Michael Feathers
 
-Up to this point, everything was great. We had no restrictions whatsoever. We assumed we were working on a greenfield project. I could tell you whatever I wanted. There were no restrictions because of the existing code base. I told you to write unit tests, and you started writing unit tests. Now, however, we will start working with existing code bases. We will learn how to handle legacy code: code without tests [WELC]. Or even worse, code without interfaces.
+Up to this point, everything was great. We had no restrictions whatsoever. We assumed we were working on a greenfield project. I could tell you whatever I wanted. There were no restrictions because of the existing code base. I told you to write unit tests, and you started writing unit tests. Now, however, we will start working with existing code bases. We will learn how to handle legacy code: code without tests [](Working Effectively with Legacy Code). Or even worse, code without interfaces.
 
-So far, we have only refactored code that is covered by tests. Refactoring code without tests would be too dangerous. But, unfortunately, this is precisely the issue with numerous projects. There are so many projects out there without tests. Due to global variables, functions with side effects, complex constructors, and missing interfaces, it is very challenging to write tests for them. In these cases, you may start to feel afraid to make changes to the code as you are supposed to do during refactoring. There's just too much that can break without testing. This is apparently a really bad thing. No one likes to live in fear. In your own code, you can prevent this situation by meticulously testing all the code you write. However, if you work on an existing project, you will have to face the demons.
+So far, we have mostly discussed refactoring techniques for code that is covered by tests. Refactoring code without tests would be dangerous. But, unfortunately, this is precisely the issue with numerous projects. There are so many projects out there without tests. Due to global variables, functions with side effects, complex constructors, and missing interfaces, it is very challenging to write tests for them. In these cases, you may start to feel afraid to make changes to the code as you are supposed to do during refactoring. There's just too much that can break without testing. This is apparently a really bad thing. No one likes to live in fear. In your own code, you can prevent this situation by meticulously testing all the code you write. However, if you work on an existing project, you will have to face the demons.
 
-When you start working on a project with bad code, you might be motivated to suggest a complete rewrite. You may do that, although I do not recommend it. A complete rewrite is rarely an option. It takes years, costs millions, and very often the final code is not significantly better. Generally, it is better to improve the existing code. You have identified something you want to enhance. You write tests and start refactoring. This may seem tedious to you, but you always have to consider that the code was written by many programmers over many years. It will not be fixed in a few months.
+When you start working on a project with bad code, you might be motivated to suggest a complete rewrite. You may do that, although I do not recommend it. A complete rewrite is rarely an option. It takes years, costs millions, and very often the final code is not significantly better. Generally, it is better to improve the existing code. Once you have identified something you want to enhance, you write tests and start refactoring. This may seem tedious to you, but you always have to consider that the code was written by many programmers over many years. It will not be fixed in a few months.
 
-Refactoring untested code is usually a very hard task. There are entire books about it [WELC], [Refactoring]. And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are:
-1. No tests
-2. Obscure code
-3. No time (or budget) to fix it
+Refactoring untested code is usually a very hard task. There are entire books about it [](Working Effectively with Legacy Code), [](Refactoring Second Edition). And if the code is already pretty bad, refactoring becomes even harder. The most common issues on the macro level are:
+1. No interfaces
+2. No tests
+3. Obscure code
+4. No time (or budget) to fix it
 
 And on the micro level we have a few more indications that things will get tough:
-1. No interfaces
-2. Functions with side effects and global variables
-3. Huge classes and functions
-4. Objects that are hard to construct 
-5. Inheritance chains
+1. Functions with side effects and global variables
+2. Huge classes and functions
+3. Objects that are hard to construct 
+4. Inheritance chains
 
 If you want to divide a large class into smaller parts, consider the following approach. It has no tests, and you are uncertain about the side effects it might have. This is bad because the functional changes introduced are bugs. The only way to prevent these changes is by having plenty of regression tests.
 
@@ -6007,27 +6002,27 @@ The difficult points are numbers 1 and 2. The rest involves textbook refactoring
 
 ## No Useful Interfaces
 
-Any code always has at least two interfaces: the input and the output. When one or both of them are a GUI, it becomes nearly impossible to write functional tests for the software. Furthermore, you can't write unit tests if there are no internal interfaces. Without tests, it is impossible to refactor and add interfaces. It is really bad, but it's not a lost cause. You can still try to refactor slowly. Though it will be painful, and you will constantly have to watch out for bugs. A salesperson will have to check your work constantly to ensure that you haven't introduced any bugs. The entire refactoring process will likely take years. Perhaps a complete rewrite is indeed the better choice. I hope you never find yourself in this kind of situation.
+Any code always has at least two interfaces: the input and the output. When one or both of them are a GUI, it becomes nearly impossible to write functional tests for the software. Furthermore, you can't write unit tests if there are no internal interfaces. Without tests, it is nearly impossible to refactor and add interfaces. It is really bad, but it's not a lost cause. You can still try to refactor slowly. Though it will be painful, and you will constantly have to watch out for bugs. A salesperson will have to check your work constantly to ensure that you haven't introduced any bugs. The entire refactoring process will likely take years. Perhaps a complete rewrite is indeed the better choice. I hope you never find yourself in this kind of situation.
 
 ## No Tests
 
 Code without tests is one thing. One can still write them later on, even though it takes much more effort than doing it right away. The real issue is usually the low quality of the code. Code without tests tends to be of low quality. While it may have some interfaces, the classes are excessively large, making the instantiation of objects difficult. This is one of the few cases where you are officially allowed to cheat. You may change private methods to public in order to test them. Once the refactoring is done, you should make it private again. Though that may take a year or two. Once you have some test coverage, you can break the classes into smaller ones.
 
-If you are working on an existing project, the test coverage may be insufficient. This is a serious issue. Not only from a technical point of view, but also from a political perspective. Due to the low test coverage, one might introduce bugs when refactoring. And the last person to touch the code becomes responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they will become responsible for it, not so much because it would be difficult. Therefore, the developers stop refactoring, and the code decays even faster than it did before.
+If you are working on an existing project, the test coverage may be insufficient. This is a serious issue. Not only from a technical point of view, but also from a political perspective. Due to the low test coverage, one might introduce bugs when refactoring. And the last person to touch the code becomes responsible for it because who else is supposed to know how it works? So it becomes yours to support. However, this is not what you intended. You only wanted to improve it, not own it. Ultimately, people are afraid of refactoring the code because they will become responsible for it, not so much because it would be difficult. Therefore, the developers stop refactoring, and the code decays even faster.
 
-One trick to avoid this political issue is the so-called "onion layer code." Instead of fixing a piece of code in place, you can write a wrapper around it and address all the issues inside the wrapper. By doing this, you avoid taking ownership of the code, yet you can still fix bugs, etc. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
+One trick to avoid this political issue is the so-called "onion layer code." Instead of fixing a piece of code in place, you can write a wrapper around it and address all the issues inside the wrapper. By doing this, you avoid taking ownership of the code, yet you can still fix bugs. However, this comes at a cost of having all these fairly useless wrapper layers around your code, where you could have fixed the code properly instead. Don't let politics get in the way of good code.
 
 ## Extremely Long Functions
 
-Let's be honest. A function, or even worse, a method of about a thousand lines is an absolute nightmare. It lacks interfaces. No one will ever understand it with all its corner cases. There are so many variables present that it is difficult for anyone to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some minor adjustments, but you are not addressing the core issue. The only way to truly change it is through a complete rewrite. The hardest part is obtaining the specification of what the function has actually done so far. If bugs are absolutely not allowed, you'd better leave the function as it is. Just work your way around it and accept the fact that at some point you'll have to rewrite it.
+Let's be honest. A function, or even worse, a method of about a thousand lines is an absolute nightmare. It lacks interfaces. It is not tested. No one will ever understand it with all its corner cases. There are so many variables present that it is difficult for anyone to comprehend the state your code is in. It is absolutely impossible. No one is ever going to touch such a function. You might be able to make some minor adjustments, but you are not addressing the core issue. The only way to truly change it is through a complete rewrite. The hardest part is obtaining the specification of what the function has actually done so far. If bugs are absolutely not allowed, you'd better leave the function as it is. Just work your way around it and accept the fact that at some point you'll have to rewrite it.
 
 ## Seams
 
-Writing tests can be a noble endeavor, but it is not always easy. As I explained previously, the ease with which you can write tests largely depends on the quality of your code. In order to write tests, you need something tangible to work with. Michael Feathers refers to this as a "seam." "A seam is a place where you can alter behavior in your program without editing in that place." [WELC] Vice versa, you can edit it elsewhere, at the so-called enabling point.
+Writing tests is a noble endeavor, but it is not always easy. As I explained previously, the ease with which you can write tests largely depends on the quality of your code. In order to write tests, you need something tangible to work with. Michael Feathers refers to this as a "seam." "A seam is a place where you can alter behavior in your program without editing in that place." [](Working Effectively with Legacy Code) Vice versa, you can edit it elsewhere, at the so-called enabling point.
 
 There are several different ways to implement seams. The best seams are interfaces using dependency injection. They are very easy to deal with and resemble typical code. Just create a new implementation of the interface or inject it, and you are done.
 
-Some of the seams described in [Working Effectively with Legacy Code] alter the behavior at the compiler level, either through the linker or the preprocessor. Needless to say, implementing such fancy seams is a rather desperate measure. Such techniques strongly resemble black magic and should be avoided. And they are not possible when programming in Python.
+Some of the seams described in [Working Effectively with Legacy Code](Working Effectively with Legacy Code) alter the behavior at the compiler level, either through the linker or the preprocessor. Needless to say, implementing such fancy seams is a rather desperate measure. Such techniques strongly resemble black magic and should be avoided. And they are only possible in old languages like C++.
 
 The most common scenario involves passing function arguments. It is not mentioned in Working Effectively with Legacy Code and the following code is simply a less effective version of using dependency injection, but it still serves as a seam. 
 
@@ -6079,13 +6074,9 @@ If your code doesn't have any interfaces or an API that you can use to write you
 
 Creating sketches and diagrams can help you find ways to refactor your code. This doesn't have to be UML diagrams. It can be anything that helps you understand your code. It can be a form of temporary behavior or what Feathers referred to as a "scratch refactoring". Essentially, a draft code that provides a rough idea of how the final code might look, without addressing all the intricate details that make real refactoring challenging. These tools help you better understand your code and make it easier to write the actual refactoring code.
 
-// Add the temporal graph from Evans? which one? nonlinear growth?
-
-[WELC p.200(?)]
-
 ## How do I get the Code under Test?
 
-This is a difficult topic. First of all, you have to be aware of the magnitude of the problem you are facing. In well-written software, the test code is at least as long as the production code. In highly regulated environments such as the airplane industry, it may take several times longer than that. If you want to write tests for a longer piece of software that has not been tested at all, it will most likely take years. So, achieving high test coverage is generally not feasible. You'll have to be more pragmatic than that.
+This is a difficult topic. First of all, you have to be aware of the magnitude of the problem you are facing. In well-written software, the test code is at least as long as the production code. In highly regulated environments such as the aerospace industry, it may take several times longer than that. If you want to write tests for a longer piece of software that has not been tested at all, it will most likely take years. So, achieving high test coverage is generally not feasible. You'll have to be more pragmatic than that.
 
 ### What Tests should I write?
 
@@ -6119,12 +6110,6 @@ def post_entries(transactions, entries):
 ```
 This, however, makes the untestable code even more complex. Instead we can create a new function that extracts the new functionality. This new function can be tested, so you can apply TDD.
 
-```py
-def test_get_valid_entries():
-    entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
-    valid_entries = get_valid_entries(entries)
-    assert len(valid_entries) == 2
-```
 
 ```py
 def get_valid_entries(entries):
@@ -6136,31 +6121,21 @@ def get_valid_entries(entries):
 
 def post_entries(transactions, entries):
     # ...
-    valid_entries = get_valid_entries(entries)
+    valid_entries = get_valid_entries(entries) # new line
     for entry in valid_entries:
         entry.post()
     transactions.get_current().add(valid_entries)
 ```
 
+```py
+def test_get_valid_entries():
+    entries = [Entry(is_valid=True), Entry(is_valid=False), Entry(is_valid=True)]
+    valid_entries = get_valid_entries(entries)
+    assert len(valid_entries) == 2
+```
+
 So, we managed to add only one additional line of code to the original function. All the other code was placed inside the `get_valid_entries` function. This new function is now also unit tested.
 
-### Sprout class [WELC p. 62]
-
-// WIP
-
-If you have a class that is becoming too big, you can extract some of its functionality into a new class. This is called sprouting a class. The new class is typically a member of the old class. This is a very simple refactoring technique. Just ensure that the new class is only loosely coupled with the old class. Otherwise, you might have to pass too many arguments to the new class. If there are too many arguments that you have to handle, you should perhaps reconsider your class design and rewrite it to reduce coupling.
-
-// I think there is still quite a bit more to write here. Maybe add some more examples?
-
-// "When you use Sprout Method, you are clearly separating new code from old code. Even if you can't get the old code under test immediately, you can at least see your changes separately and have a clean interface between the new code and the old code. You see all of the variables affected, and this can make it easier to determine whether the code is right in context." - Michael Feathers [WELC ]
-
-// make an example [https://www.codewithjason.com/taming-legacy-code-using-sprout-method-technique/]
-
-1. Write a test around the buggy area—expiration date validation—and watch it fail
-2. Extract the expiration date code into its own method so we can isolate the incorrect behavior
-3. Fix the bug and watch our test pass
-
-There are many more techniques how to refactor code that don't have tests. I recommend the book Working Effectively with Legacy Code [WELC] for further reading. I already applied some of the techniques explained there without even knowing about them.
 
 # 37. Performance Optimization
 
@@ -6172,7 +6147,7 @@ Performance is one of the most overestimated topics in programming. This has his
 
 As we have learned, the primary goals of a software engineer are to create value for the customer by writing code that is easy to understand, correct, and well covered with tests. Performance is not a primary objective. It is hardly ever an issue if the code is not optimized for performance. Hardly anyone cares about optimization anymore. Nowadays, computers are fast enough to run most standard programs at a reasonable speed without the need for optimization.
 
-I'd like to point out that the coding style I recommend does not necessarily lead to optimized performance. In my explanations, I didn't care about performance until now. Instead, I was recommending coding style for readability and reusability. The problem is that all this polymorphism that I recommended requires lookups in the so-called v-table, and this is slow. There are YouTube videos [https://youtu.be/tD5NrevFtbU] that explain these things in great detail. So, yes, the code I recommend you to write is comparatively slow. But it does not matter. When do you need millions of function calls for this slow polymorphic code? Probably never. It is unlikely that the code I recommend you to write will ever be the bottleneck of your software.
+I'd like to point out that the coding style I recommend does not necessarily lead to optimized performance. In my explanations, I didn't care about performance until now. Instead, I was recommending coding style for readability and reusability. The problem is that all this polymorphism that I recommended requires lookups in the so-called v-table, and this is slow. There are [YouTube videos](https://youtu.be/tD5NrevFtbU) that explain these things in great detail. So, yes, the code I recommend you to write is comparatively slow. But it does not matter. When do you need millions of function calls for this slow polymorphic code? Probably never. It is unlikely that the code I recommend you to write will ever be the bottleneck of your software.
 
 One issue with performance optimization is the fact that modern processors have many cores. In order to use them, you have to parallelize your code. This task can be tedious, and even if you complete it, you may not always gain anything. The overhead of orchestrating results between the different cores may be significantly slower than the single-threaded version of your code.
 
@@ -6184,23 +6159,22 @@ First of all, it is not recommended to optimize the code at all. In fact, it is 
 
 You may have felt the need to write highly optimized code to meet the performance requirements. But you didn't know for sure. And now is the time to test your assumption. If you need to execute your code just once and it requires 2 days to complete, consider running it during the weekend. Spending hours on optimization would be a waste of time.
 
-If your code takes an hour to run and you use it every day, it is worth getting a profiler to check the bottlenecks of your code. Most code you encounter typically has very few bottlenecks. Usually, it involves complex calculations on a large data structure that scales worse than O(N*log(N)) [https://en.wikipedia.org/wiki/Big_O_notation]. This is going to be the one and only point where you'll have to optimize. As you have written great code, it is very easy to identify this bottleneck using a profiler. For example, it turns out to be a self-written Fourier transformation operating on a list with 10,000 elements. As you start reading through the code, you realize that the algorithm you have implemented scales with O(N^2). Such poor scaling is typically unacceptable. When seeking advice, you turn to the internet. You can find Fourier transform libraries that scale with O(N*log(N)). As your code is well-structured, you can simply remove your custom Fourier transform function call, adjust your data structure slightly, and utilize the library you discovered. Now your code runs within seconds. Done. You won't have to worry about anything else.
+If your code takes an hour to run and you use it every day, it is worth getting a profiler to check the bottlenecks of your code. Most code you encounter typically has very few bottlenecks. Usually, it involves complex calculations on a large data structure that scales worse than O(N\*log(N)) [](https://en.wikipedia.org/wiki/Big_O_notation). This is going to be the one and only point where you'll have to optimize. As you have written great code, it is very easy to identify this bottleneck using a profiler. For example, it turns out to be a self-written Fourier transformation operating on a list with 10,000 elements. As you start reading through the code, you realize that the algorithm you have implemented scales with O(N^2). Such poor scaling is typically unacceptable. When seeking advice, you turn to the internet. You can find Fourier transform libraries that scale with O(N\*log(N)). As your code is well-structured, you can simply remove your custom Fourier transform function call, adjust your data structure slightly, and utilize the library you discovered. Now your code runs within seconds. Done. You won't have to worry about anything else.
 
 ## Optimizing Certainly Needed
 
-Finally, there are indeed some cases where you have to develop the software from scratch and focus on optimization. But these cases are very rare. These are mostly simulation software, games, websites containing a large amount of data, or infrastructure code for huge server farms where not only performance but also energy consumption is a major concern. If the code can be parallelized, it will become much more complicated due to the additional complexity involved in designing data structures and algorithms. As a very rough rule of thumb, it takes approximately twice the amount of time to write parallel (or distributed) code compared to linear code, but it can easily be much more than that. There is a lot to learn if you want to write high-performance code. But you won't be alone. You'll likely be working in a team where every team member knows much more about parallel programming than I do.
+Finally, there are the few cases where you have to develop the software from scratch and focus on optimization. But these cases are very rare. These are mostly simulation software, games, websites containing a large amount of data, or infrastructure code for huge server farms where not only performance but also energy consumption is a major concern. If the code can be parallelized, it will become much more complicated due to the additional complexity involved in designing data structures and algorithms. As a very rough rule of thumb, it takes approximately twice the amount of time to write parallel (or distributed) code compared to linear code, but it can easily be much more than that. There is a lot to learn if you want to write high-performance code. But you won't be alone. You'll likely be working in a team where every team member knows much more about parallel programming than I do.
 
 There are many small things you can do to optimize your code, such as manual loop unrolling. Keep your hands away! The performance gains are negligible. When working with a compiled language, the compiler can optimize such things much better than you can. Major algorithms should be the focus of improvement since they typically account for 90% of the runtime. Optimizing the remaining 10% is usually not worth it.
 
 Always keep in mind that code written with a focus on performance rather than readability is always very challenging to maintain. Due to the complexity of the code, it becomes very hard to understand!
 
 
-
-Part 8: Miscellaneous
+-# Part 8: Miscellaneous
 
 # 38. Comments
 
-"Code is like humor. When you have to explain it, it's bad." – Cory House
+*"Code is like humor. When you have to explain it, it's bad."* – Cory House
 
 As a very short rule of thumb, comments should not explain *what* a piece of code does, but *why*. *What* can be understood by examining the code. With the *why*, this is not possible. Was the code written in response to a specific ticket? Add a comment and with the ticket number.
 
@@ -6232,11 +6206,11 @@ Not convinced? Do you believe you won't encounter these issues because you work 
 
 "Ha ha. NO!"
 
-Now you're certainly wrong this time. By now, you should know better. This is precisely what I'm trying to teach you throughout this entire book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It's inevitable. Accept your fate and learn how to deal with it. Code is good if you can make as few mistakes as possible. Removing unnecessary comments is essential. They violate the third rule of software engineering. Such comments are an unnecessary source of bugs.
+Now you're certainly wrong this time. By now, you should know better. This is precisely what I'm trying to teach you throughout this entire book. You are human. Every human makes mistakes. I make mistakes, you make mistakes. It's inevitable. Accept your fate and learn how to deal with it. Code is good if you can make as few mistakes as possible. Removing unnecessary comments is essential. They violate the third rule of software engineering, "We write code that can have as few possible bugs as possible." Such comments are an unnecessary source of bugs.
 
-You want to become a software engineer. So, stop using the English language and start reading code instead. The code contains the absolute truth. Not the comment.
+You want to become a software engineer. So, stop using the English language and start reading code instead. Get used to it. The code contains the absolute truth. Not the comment.
 
-Here is an example from the book [The Art of Readable Code, Boswell & Foucher]. The book has some good ideas, but there are some examples that could be further improved. The original code was written in C++ and I translated it into Python as pseudo code.
+Here is an example from the book [The Art of Readable Code](The Art of Readable Code, Boswell & Foucher). The book has some good ideas, but there are some examples that could be further improved. The original code was written in C++ and I translated it into Python as pseudo code.
 
 ```py
 class FrontendServer:
@@ -6363,11 +6337,11 @@ def suggest_new_friends(user, email_password):
     return render("suggested_friends.html", dict_items)
 
 def get_friends_emails_of(user):
-    return set(f.email for f in user.friends())
+    return set(friend.email for friend in user.friends())
 
 def import_email_addresses_from(user, email_password):
     contacts = import_contacts(user.email, email_password)
-    return set(c.email for c in contacts)
+    return set(contact.email for contact in contacts)
 
 def find_suggested_friends(non_friend_emails):
     return User.objects.select(non_friend_emails)
@@ -6382,14 +6356,14 @@ def create_dict(user, friends, suggested_friends):
 
 This time, the code only became slightly longer compared to other refactoring examples. But at the same time, it is much more readable. You can understand its functionality simply by looking at the top-level function `suggest_new_friends`. You don't have to read the details of the function. You can read the function names to understand their purpose. This is what makes code readable. Not the comments.
 
-At times, it is very difficult to explain code using code alone. So, there is, of course, the temptation to use a comment to make it clearer. As in the following example, also from the book [The Art of Readable Code]:
+At times, it is very difficult to explain code using code alone. So, there is, of course, the temptation to use a comment to make it clearer. As in the following example, also from the book [The Art of Readable Code](The Art of Readable Code):
 
 ```C++
 // Rearrange 'v' so that elements < pivot come before those >= pivot;
 // Then return the largest 'i' for which v[i] < pivot (or -1 if none are < pivot)
 int Partition(vector<int>* v, int pivot);
 ```
-
+////
 I must say, I don't like this comment. It is very difficult to understand. And as always, providing a comment to explain what code does is suboptimal. Now, the first issue I see with this function is that it performs two tasks simultaneously. It orders the elements of the vector and returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value simultaneously. This is a violation of the SRP. The function should probably be split into two parts.
 
 Additionally, there is something else that can explain code: unit tests. The test cases act as examples of how the code is supposed to be used and serve as an example at the same time. This is often more helpful than a difficult-to-read comment.
@@ -7037,7 +7011,7 @@ not sure if this chapter is needed
 
 
 
-Part 9 Collaborating
+-# Part 9 Collaborating
 
 # 43. Working in teams
 
@@ -7277,122 +7251,115 @@ In order to be flexible, you have to be able to adapt your code. You have to cha
 
 # 46. Requirements Engineering
 
+"Do the Right Thing and Do Things Right the First Time" - Marcia (Marci) Malzahn
+
 Written by Felix Gähler
 
-Das Requirements Engineering (RE) befasst sich damit, wie man überhaupt bestimmt, was man implementieren soll. Denn wie wir bereits gelernt haben, soll man nur Code schreiben, wenn dies für den User auch Nutzen hat [Kapitel Einführung]. 
+Requirements Engineering (RE) is the process of determining what you should implement. Because as we have learned, we may only implement code if it's really useful for our customers [chapter Software Engineering].
 
-Auf den ersten Blick mag es erstaunen, warum es dafür überhaupt ein spezielles Kapitel braucht. Ist es nicht offensichtlich, was man implementieren soll? Leider nein. Es ist oftmals sogar sehr unklar, was man implementieren soll. Und wenn das Entwickler Team dann mal ein paar Monate mit einem Feature vergeudet, welches gar nicht gebraucht wird, so sind schnell mal ein paar Hunderttausend Euro vernichtet. Es ist also sehr wichtig, dass man sich immer bewusst ist, was und warum man entwickelt. 
+It may be surprising, why this chapter is even needed. Isn't it obvious what you have to implement? Unfortunately no. Many times it is even highly unclear what you have to implement. And you quickly wasted a few hundred thousand euros if the development team wastes a few months developing a feature which in the end isn't used. It is therefore very important to always be aware of what and why you are developing.
 
-## Entwicklugsmethoden 
-Für das RE gibt es, wie auch für die Software Entwicklung allgemein, zwei Methoden: Die Wasserfall-Methode, oder die agile Methode. Diese werden im Kapitel Agile besprochen [siehe Kapitel Agile]. 
+## Stakeholders
 
-### Wasserfall -> nach Kapitel Agile verschieben 
-Früher wurden Projekte mit der Wasserfall-Methode angegangen. Dabei wurde wie folgt vorgegangen: 
-1. Man sammelte die Anforderungen an die Software.
-2. Man plante die Architektur der Software.
-3. Man implementierte die Software.
-4. Man übergab die Software dem Kunden, welcher sie testete.
-Der ganze Prozess konnte gut mehrere Jahre dauern. In der Zeit haben sich oftmals die Anforderungen an die Sotfware verändert, es war aber nicht möglich, diese Änderungen in die laufende Entwicklung einzubringen. Oftmals war die Software bereits veraltet, wenn sie fertig war. Zudem gab es oft das Problem, dass die Software erst mit grosser Verspätung fertig wurde, da die einzelnen Schritte länger dauerten als erwartet und z.B. die Architektur des Systems sich doch nicht genau so umsetzen liess, wie erhofft. 
-Aus diesen Gründen wird die Wasserfall-Methode heute kaum noch angewandt. 
+As so often, you spend a large part of your work talking to other people. You have to find out who is important and who just feels important. You also have to consider the different characters in the team and act accordingly. Company politics. If you don't feel comfortable with this, you better stay in software development and don't switch to Requirements Engineering.
 
-### Agile -> siehe Kapitel Agile 
-Bei den agilen Methoden wird hingegen in Iterationen entwickelt. Nach jeder Iteration wird das Benutzer-Feedback eingeholt und die Anforderungen werden entsprechend angepasst. 
+Stakeholders are all persons with an interest in the system. If I forget to ask a stakeholder, he will not be satisfied at the end. Therefore, I create a stakeholder list, in which I estimate how big the interest is, and how big the power. A stakeholder with great power must of course be kept happy, even if his interest is rather small. Stakeholders with great interest but little power I actively involve, because they are often the daily users. Stakeholders with great interest and great power I prioritize. And those with little interest and little power I can safely ignore, even if they may make the most noise. [Create graphic]
 
-###Systembetrachtung
-Im RE wird das ganze zu entwickelnde System betrachtet, inklusive Hardware, Software, Bedienungsanleitungen usw. Die Anforderungen werden möglichst lösungsneutral formuliert. Die Entwickler erhalten damit die Freiheit, die zweckmässigste Lösung zu wählen, beispielsweise welche Anforderungen werden in Hardware implementiert, welche in Software, und welche mit manuellen Abläufen. 
+## Goals, Context and Scope
 
-## Stakeholders 
-Wie so oft, verbringt man einen Grossteil der Arbeit damit, mit anderen Personen zu sprechen. Man muss herausfinden, wer wichtig ist, und wer sich nur wichtig fühlt. Zudem muss man immer die unterschiedlichen Charaktere im Team bedenken und entsprechend handeln. Firmenpolitik halt. Wer sich damit nicht sicher fühlt, bleibt besser in der Software Entwicklung und wechselt nicht ins Requirements Engineering. 
+First, you have to ask yourself what goals you want to achieve with the new system. It is important to define the goals as completely and consistently as possible. They should also be weighted according to their importance. It is worth investing some time in a precise goal description, which is coordinated with the stakeholders.
 
-Stakeholders sind alle Personen mit Interesse am System. Wenn ich einen Stakeholder vergesse zu befragen, wird dieser am Schluss nicht zufrieden sein. Darum erstelle ich eine Stakeholder Liste, in welcher ich einschätze, wie gross das Interesse ist, und wie gross die Macht. Einen Stakeholder mit grosser Macht muss ich natürlich bei Laune halten, auch wenn sein Interesse eher klein ist. Stakeholder mit grossem Interesse aber kleiner Macht binde ich aktiv ein, denn das sind oft die täglichen Benutzer. Stakeholder mit grossem Interesse und grosser Macht priorisiere ich. Und solche mit kleinem Interesse und wenig Macht kann ich getrost ignorieren, auch wenn sie möglicherweise am meisten Lärm machen. [Grafik erstellen] 
+You always have to be aware of what exactly belongs to the new system and what does not (system boundary or scope). This also includes the question of what actually belongs to the system and what is predetermined from the outside. What is in the scope can also be changed in the project.
 
-## Ziele, Kontext und Scope
-Zuerst stellt sich die Frage, welche Ziele mit dem neuen System genau erreicht werden sollen. Dabei muss man immer beachten, dass die Ziele möglichst vollständig und widerspruchsfrei sind. Zudem sollen sie nach der Bedeutung gewichtet werden. Es lohnt sich, einige Zeit in eine genaue, mit den Stakeholders abgestimmte Zielbeschreibung zu investieren.
+The scope and context can be represented in a use case diagram. This diagram shows which actors influence components of the system. // Insert example
 
-Dabei muss man sich immer bewusst sein, was genau zum neuen System dazu gehört und was nicht (Systemgrenze oder engl. Scope). Dazu gehört auch die Frage, was überhaupt zum System gehört und was von aussen vorgegeben ist. Was im Scope ist, kann im Vorhaben auch verändert werden. 
+In the scope and context there is initially a gray area. The smaller this area is, the smaller the risk of the project. It is therefore worthwhile to determine the context and especially the scope as precisely as possible and to update it regularly in the case of iterative approaches.
 
-Ebenfalls wichtig ist die Frage, was aus der Aussenwelt relevant für das System ist. Dies nennt man den Kontext. 
+Goals, context and scope form the framework in which the requirements can now be determined.
 
-Der Scope und Kontext können in einem Use-Case-Diagramm dargestellt werden. In diesem Diagramm ist leicht ersichtlich, welche Aktoren Einfluss auf Komponenten des Systems nehmen. [Beispiel einfügen] 
+### Requirements Elicitation
 
-Im Scope und im Kontext gibt es anfangs einen Graubereich. Je geringer dieser ist, desto kleiner ist auch das Risiko des Vorhabens. Es lohnt sich also, den Kontext und vor allem den Scope möglichst genau zu ermitteln und bei iterativem Vorgehen, auch regelmässig zu aktualisieren. 
+Just as it is difficult to write good code, it is also difficult to describe a requirement in a ticket. It should not be too long, but still as clear as possible. It should also be well received by the developers. Not everything that seems logical to the author of a ticket is logical for the developer who will implement the ticket.
 
-Ziele, Kontext und Scope bilden den Rahmen, in welchem nun die Anforderungen ermittelt werden können. 
+It's best to write a few examples in the ticket, which can also serve as a test case. These should include both the "happy case" and boundary conditions and special cases. The latter is often forgotten. For example, in a bank transfer it must be prevented that a negative amount is transferred.
 
-### Anforderungen ermitteln 
-Genau so, wie es schwierig ist, guten Code zu schreiben, ist es auch schwierig, eine Anforderung in einem Ticket gut zu beschreiben. Sie soll gleichzeitig nicht zu lange, aber trotzdem möglichst klar sein. Dabei muss gut auf die Entwickler eingegangen werden. Nicht alles, was dem Autor eines Tickets logisch erscheint, ist dies auch für den Entwickler, welcher das Ticket implementieren wird. 
+The requirements should be formulated as neutrally as possible. They should describe the WHAT and not the HOW. The author of the feature should actually know nothing about the technical details of the code. In addition, developers often have better ideas on how to implement something than external persons.
 
-Am besten schreibt man ein paar Beispiele ins Ticket, welche zugleich auch als Testfall dienen können. Diese sollen sowohl den "Happy Case", als auch Randbedingungen und Spezialfälle beinhalten. Letzteres geht oftmals vergessen. So muss z.B. bei einer Banküberweisung verhindert werden, dass ein negativer Betrag überwiesen wird. 
+It is crucial to involve the stakeholders in the requirements elicitation. This is hard work. It is time-consuming and labor-intensive. I try to find as much as possible and to "tease out" the stakeholders.
 
-Die Anforderungen sollen möglichst lösungsneutral formuliert werden. Sie soll das WAS beschreiben und nicht das WIE. Der Autor des Features sollte eigentlich nichts von den technischen Details des Codes wissen. Zudem haben die Entwickler oftmals bessere Ideen, wie man etwas umsetzen kann, als aussenstehende Personen. 
+If you think it would be easy to find the requirements for a new system, you are wrong. The users, both outside and inside the company, are not waiting to discuss the advantages and disadvantages of the software with you for hours. They have work to do. Events such as company outings and aperitifs can help. Sometimes surveys and interviews are more helpful. The most important thing is that you are a good listener, so that people like to talk to you about their concerns and trust you.
 
-Es ist ganz wichtig, die Anforderungen bei und mit den Stakeholders zu ermitteln. Das ist Knochenarbeit. Sie ist zeit- und arbeitsintensiv. Ich versuche dabei, möglichst viel aufzuspüren und aus den Stakeholders ‹herauszukitzeln›. 
+Furthermore, you must also inform yourself independently of the users about the topic. It is not only important what the software can already do, but much more what the customers want. Often one thinks too narrowly. Just as Nokia did not want to develop a smartphone at the beginning of the 00s, although it was suggested by an engineer. Nokia simply saw no market for a phone without a keyboard.
 
-Wer denkt, es sei einfach, die Anforderungen für ein neues System zu finden, hat weit gefehlt. Die Benutzer, sowohl ausserhalb, als auch innerhalb der Firma, warten nicht darauf, mit Ihnen stundenlang über die Vor- und Nachteile der Software zu diskutieren. Sie haben schliesslich selbst Arbeit zu verrichten. Anlässe wie Firmenausflüge und Aperos können dabei helfen. Manchmal sind eher Umfragen und Interviews zielführend. Das Wichtigste dabei ist, dass Sie ein guter Zuhörer sind, so dass die Leute gerne mit Ihnen über ihre Anliegen sprechen und sich Ihnen anvertrauen.
+The most important sources are:
+- the stakeholders: clients, customers, users, managers, operators, developers, architects, testers
+- documents: laws, norms, standards, concepts, specialist articles, error reports
+- existing systems: old systems, predecessor systems, surrounding systems, competitor systems
 
-Des weiteren muss man sich auch unabhängig der Nutzer über das entsprechende Thema informieren. Dabei ist es nicht nur wichtig, was die Software schon kann, sondern viel mehr, was die Kunden wollen. Oftmals denkt man dabei viel zu engstirnig. So wie Nokia Anfangs der 00er Jahre kein Smartphone entwickeln wollte, obwohl es von einem Ingenieur vorgeschlagen wurde. Nokia sah schlichtwegs keinen Markt für ein Handy ohne Tastatur. 
+When determining the requirements, there are 3 different factors:
+- The basic factors are those that are often not even mentioned, as they are considered so self-evident. But they must not be forgotten.
+- The performance factors are the focus of the users and are usually discussed.
+- The enthusiasm factors are those that a user wishes for, although he does not know it. If you find these features, you have done a really good job.
 
-Wichtigste Quellen der Anforderungen sind 
-- die Stakeholder: Auftraggeber, Kunden, Benutzer, Manager, Betreiber, Entwickler, Architekten, Tester
-- Dokumente: Gesetze, Normen, Standards, Konzepte, Fachartikel, Fehlerberichte
-- Bestehende Systeme: Altsysteme, Vorgängersysteme, Umsysteme, Konkurrenzsysteme
+The best way to find all the basic factors, performance factors and enthusiasm factors is to combine several survey techniques. Interviews for the performance factors and additional creativity techniques such as workshops or brainstorming for the enthusiasm factors. Field observation is well suited for the basic factors, which are considered self-evident by the interviewees and are therefore not mentioned at all.
 
-Bei der Ermittlung von Anforderungen gibt es 3 verschiedene Faktoren:
-- Die Basisfaktoren sind jene, welche oftmals garnicht aufgezählt werden, da sie als so selbstverständlich erachtet werden. Sie dürfen aber trotzdem nicht vergessen werden.
-- Die Leistungsfaktoren stehen im Fokus der Nutzer und werden normalerweise diskutiert.
-- Die Begeisterungsfaktoren sind jene, welche sich ein Nutzer wünscht, obwohl er es gar nicht weiss. Wenn Sie diese Features finden, haben Sie eine richtig gute Arbeit gemacht.
+Example hotel: That toilet paper must be available is not mentioned, as it is considered self-evident. But woe if it is missing when you are sitting on the toilet!
 
-Um die Basisfaktoren, Leistungsfaktoren und Begeisterungsfaktoren alle zu finden, ist es am besten, mehrere Erhebungstechniken zu kombinieren. Interviews für die Leistungsfaktoren und ergänzend Kreativitätstechniken wie Workshops oder Brainstorming für die Begeisterungsfaktoren. Für die Basisfaktoren, die für die Interviewten selbstverständlich sind und deshalb gar nicht genannt werden, ist die Feldbeobachtung gut geeignet. 
 
-Beispiel Hotel: Dass Toilettenpapier vorhanden sein muss, wird niemand erwähnen da es als selbstverständlich betrachtet wird. Aber wehe, es fehlt wenn man auf dem Klo sitzt! 
+### Documentation of the requirements
 
-### Dokumentation der Anforderungen 
-Am besten geschieht das Dokumentieren der Anforderungen fortlaufend während der Interviews, Workshops usw. Dabei werden natürlich dieselben oder sehr ähnliche Anforderungen immer wieder genannt. Es macht also Sinn, die Anforderungen nach einem einheitlichen Muster festzuhalten, so dass man Duplikate leicht erkennt. 
+It is best to document the requirements continuously during the interviews, workshops, etc. The same or very similar requirements are of course mentioned again and again. It therefore makes sense to record the requirements in a uniform pattern so that duplicates can be easily recognized.
 
-Ich dokumentiere die Anforderungen gerne natürlichsprachig. Damit können auch nicht-technische Leser, Lieferanten, Kunden, Manager angesprochen werden. Die Stakeholder müssen nicht zuerst ein Tool lernen, sondern können ohne Einarbeitungszeit mitarbeiten. 
+I document the requirements in natural language. This way, non-technical readers, suppliers, customers, managers can also be addressed. The stakeholders do not have to learn a tool first, but can work without training.
 
-Mit Satzschablonen erziele ich einen standardisierten Aufbau. In diesen werden mehrdeutige Begriffe vermieden. [Beispiel] 
+With the help of a glossary, I can define terms that are used in the requirements. This way, misunderstandings can be avoided. // example
 
-Zusätzlich dokumentiere ich die Anforderungen mittels formaler Modelle. Diese helfen, Lücken und Widersprüche zu finden, und erleichtern die spätere Erarbeitung von Lösungsmodellen. Ein Modell ist wie eine Karte. Ein vereinfachtes Abbild der Wirklichkeit, welches nur die relevanten Sachen zeigt. Das Modell zeigt dieses Abbild aus einer bestimmten Perspektive. Es macht daher Sinn, mehrere Modelle zu erstellen, welche die Realität aus verschiedenen Perspektiven zeigen. 
+I also document the requirements using formal models. These help to find gaps and contradictions and facilitate the later development of solution models. A model is like a map. A simplified image of reality that only shows the relevant things. The model shows this image from a certain perspective. It therefore makes sense to create several models that show reality from different perspectives.
 
-#Use-Case Modell 
-Mit Use Cases lassen sich die Geschäftsfälle und ihre Interaktionen gut modellieren. Dafür erstelle ich als erstes ein Diagramm, das die Systemgrenze aufzeigt, und die Akteure welche von ausserhalb mit dem System interagieren.  
+## Use-Case Model
 
-Um die Use Cases zu identifizieren, beginne ich bei den Akteuren. Ich überlege, was soll das System für den Akteur erledigen? Speichert es dabei Daten? Wer löst die Aktion im System aus? 
+With use case models, the business cases and their interactions can be modeled well. I therefore create a diagram that shows the system boundary and the actors that interact with the system.
 
-Kleine Systeme haben typischerweise etwa 10 Use Cases, während grosse 50 oder mehr haben können.  [Beispiel] 
+In order to identify the use cases, I start with the actors. I think about what the system should do for the actor. Does it store data? Who triggers the action in the system?
 
-#Klassendiagramme
-Die Geschäftsobjekte und benötigten Daten können gut in Klassendiagrammen dargestellt werden. [Beispiel, UML-Klassendiagramm] 
+Small systems typically have about 10 use cases, while large systems can have 50 or more. // Example
 
-### Priorisierung der Anforderungen 
-Es werden nie alle Tickets implementiert, also beginnt man mit den wichtigsten. Die Anforderungen werden daher (in Absprache mit den Stakeholders) priorisiert. Nicht verwunderlich, dass jeder Stakeholder «seine» Anforderung zuoberst sehen will! Um diesen Konflikt zu versachlichen, gibt es Priorisierungsmodelle wie WSJF (Weighted Shortest Job First). Dieses optimiert den ökonomischen Nutzen, indem die Kosten der Verzögerung und Implementationsaufwand verglichen werden. Die Schwierigkeit besteht natürlich darin, diese Kosten abzuschätzen. 
+### Class Diagrams
 
-### Prüfung der Anforderungen
-Einen Fehler in der Anforderungsphase zu beheben, ist sehr viel einfacher und billiger, als später in der Testphase oder gar in der Produktion. Daher macht es Sinn, die Anforderungen vor ihrer Umsetzung zu prüfen. Typische Fehler sind nicht korrekte, unvollständige, widersprüchliche, oder unrealistische Anforderungen. 
+The business objects and required data can be well represented in class diagrams. //example
 
-Wichtig ist bei der Prüfung, die richtigen Stakeholder zu beteiligen. Fehlersuche und die Fehlerkorrektur sollen getrennt werden, die Ausbeute ist dann höher. In stark änderndem Umfeld macht es Sinn, die Prüfung periodisch zu wiederholen. Sind wir noch aktuell? 
 
-Eine einfache und wirksame Prüfmethode ist der Review. Ein Moderator lädt Stakeholder als Gutachter ein, geht mit ihnen die Anforderungen durch und erstellt eine Liste der Befunde mit Gewichtung. Aufgrund der Befunde sind dann die Anforderungen entsprechend zu korrigieren. 
+### Prioritization of Requirements
 
-Die geprüften und abgenommenen Anforderungen bilden die sogenannte Baseline für die Entwicklung. 
+You start with the most important tickets as you will never implement all of them. The requirements are therefore prioritized (in consultation with the stakeholders). It is not surprising that every stakeholder wants to see "his" requirement at the top! In order to objectify this conflict, there are prioritization models such as WSJF (Weighted Shortest Job First). This optimizes the economic benefit by comparing the costs of delay and implementation effort. The difficulty, of course, is to estimate these costs.
 
-### Verwaltung von Anforderungen
-Bei einem kleinen Vorhaben können die Anforderungen leicht in einem Textdokument verwaltet werden. Es lohnt sich aber trotzdem, jeder Anforderung eine eindeutige ID als Referenz zu geben. Die ID kann auch zur Dokumentation des Codes verwendet werden. 
+### Review of Requirements
 
-Anforderungen haben neben ID und Beschreibung, zudem weitere Attribute. Die wichtigsten sind: 
-- Quelle der Anforderung. Diese ist für Rückfragen wichtig.
-- Priorität der Anforderungen
-- Prüfstatus der Anforderung. Ist sie geprüft und abgenommen, oder erst im Entwurfsstadium?
-- Abnahmetests. Damit wird nachgewiesen, dass die Anforderung korrekt implementiert wurde.
+It is much easier and cheaper to fix a bug in the requirements phase than later in the testing phase or even in production. Therefore, it makes sense to review the requirements before they are implemented. Typical errors are incorrect, incomplete, contradictory, or unrealistic requirements.
 
-Wichtig ist auch, Aenderungen systematisch zu verwalten. Wenn eine Anforderung während des Projekts geändert wird, dokumentiere ich jeweils genau, was wann geändert wurde. Die geänderte Anforderung muss wiederum die Prüfung durchlaufen und abgenommen werden. Dann stellt sich die Frage, wo überall in der bereits realisierten Software, die Aenderung eine Auswirkung hat. 
+It is very important to involve the right stakeholders in the review. Error search and error correction should be separated, the yield is then higher. In a rapidly changing environment, it makes sense to repeat the review periodically. Are we still up to date?
 
-Bei sicherheitskritischen Systemen ist auch die Traceability ein Muss. Also die Rückverfolgbarkeit vom Abnahmetest bis zurück zur Quelle der Anforderung. 
+A simple and effectife review method is the review. A moderator invites stakeholders as reviewers, goes through the requirements with them and creates a list of findings with weighting. Based on the findings, the requirements are then to be corrected accordingly.
 
-### Tools zur Anforderungsverwaltung 
-Ein verbreitetes Tool ist Atlassian Jira. Damit können Anforderungen und Testfälle verwaltet werden, und Entwicklern zur Implementation zugeteilt werden. Auch festgestellte Fehler (engl. Bug, Defect) können gleich im Jira erfasst und priorisiert werden. 
+The reviewed and accepted requirements form the so-called baseline for development.
 
+### Administration of Requirements
+
+In a small project, the requirements can easily be managed in a text document. Nevertheless, it is worthwhile to give each requirement a unique ID as a reference. The ID can also be used to document the code.
+
+Requirements have other attributes in addition to ID and description. The most important are:
+- Source of the requirement. This is important for queries.
+- Priority of the requirements
+- Status of the requirement. Is it implemented, tested, accepted?
+- Verification tests. These are used to check whether the requirement is implemented correctly.
+
+It is also important to manage changes systematically. If a requirement is changed during the project, I document exactly what was changed when. The changed requirement must again go through the review and be accepted. Then the question arises, where in the already implemented software the change has an impact.
+
+In security relevant systems, traceability is a must. So the traceability from the acceptance test back to the source of the requirement.
+
+### Tools for Requirements Management
+
+A common tool is Atlassian Jira. With this tool, requirements and test cases can be managed and assigned to developers for implementation. Also, detected errors (bugs, defects) can be recorded and prioritized in Jira.
 
 # 47. Planning
 
@@ -7699,7 +7666,7 @@ And sorry folks, my preferred solution is not object-oriented, other than defini
 
 
 
-Part 10: Final remarks
+-# Part 10: Final remarks
 
 # 52. About Copilot
 
