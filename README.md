@@ -376,9 +376,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Copilot](#copilot-16)
   - [Databases](#databases)
     - [Copilot](#copilot-17)
-  - [Custom file format](#custom-file-format)
+  - [Custom File Formats](#custom-file-formats)
 - [41. Setting up a project](#41-setting-up-a-project)
-  - [Project Folder](#project-folder)
 - [42. Tools](#42-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
@@ -390,18 +389,18 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Debugger](#debugger)
   - [Profiler](#profiler)
   - [Formatter](#formatter)
-  - [Code quality checker](#code-quality-checker)
-  - [Pip, cmake](#pip-cmake)
+  - [Code Quality Checker](#code-quality-checker)
+  - [Pip, CMake](#pip-cmake)
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
 - [43. Working in teams](#43-working-in-teams)
-  - [Team structure](#team-structure)
-    - [The bus factor](#the-bus-factor)
+  - [Team Structure](#team-structure)
+    - [The Bus Factor](#the-bus-factor)
   - [Developers work](#developers-work)
   - [Communication](#communication)
   - [Working with customers](#working-with-customers)
-- [44. Code review](#44-code-review)
+- [44. Code Review](#44-code-review)
   - [Drawbacks](#drawbacks)
   - [Conclusions](#conclusions-3)
 - [45. Agile](#45-agile)
@@ -6363,7 +6362,7 @@ At times, it is very difficult to explain code using code alone. So, there is, o
 // Then return the largest 'i' for which v[i] < pivot (or -1 if none are < pivot)
 int Partition(vector<int>* v, int pivot);
 ```
-////
+
 I must say, I don't like this comment. It is very difficult to understand. And as always, providing a comment to explain what code does is suboptimal. Now, the first issue I see with this function is that it performs two tasks simultaneously. It orders the elements of the vector and returns the index of the last element that is smaller than the pivot. It has a mutable argument and a return value simultaneously. This is a violation of the SRP. The function should probably be split into two parts.
 
 Additionally, there is something else that can explain code: unit tests. The test cases act as examples of how the code is supposed to be used and serve as an example at the same time. This is often more helpful than a difficult-to-read comment.
@@ -6402,7 +6401,7 @@ Usually, the requirements are also expressed in an acceptance test. And I hope y
 
 ### How to write comments
 
-Just like code, comments should be concise and meaningful. In the following example, we have the opposite. What does "it" in the following sentence mean? Please avoid writing ambiguous sentences. [The Art of Readable Code]
+Just like code, comments should be concise and meaningful. In the following example, we have the opposite. What does "it" in the following sentence mean? Please avoid writing ambiguous sentences. [](The Art of Readable Code)
 
 ```py
 # Insert the data into the cache, but check if it's too big first
@@ -6419,22 +6418,22 @@ You may use docstring tools, such as Sphinx in Python, for automatically generat
 
 For using docstrings as documentation for external users, comments are also very useful. Furthermore, when commenting on external APIs using docstrings, completely different rules apply than for internal comments. When documenting an API, it is crucial to comment on the *what* rather than the *why*. The user doesn't have access to the code, or at least he's not supposed to read it. So he solely relies on the docstring comments. Therefore, you have to comment *what* your functions and classes do, and explain how to use them. Possibly by adding examples. The *why*, on the other hand, is not important at all.
 
-As a short summary: Docstrings are very useful for documenting your external APIs, but not for internal code. Docstrings should comment on the *what* and not the *why*.
+As a short summary: Docstrings are very useful for documenting your external APIs, but not for internal code. Contrary to normal comments, docstrings should comment on the *what* and not the *why*.
 
 ## Commenting magic numbers
 
-Here we have an example of poorly written code, this time in C++. I found it in [The Art of Readable Code]. The authors correctly state that this code is hard to understand and I suggest some changes on their solution. Note that this example is in C++ because one of the suggested solutions doesn't work in Python.
+Here we have an example of poorly written code, this time in C++. I found it in [The Art of Readable Code]. The authors correctly state that this code is hard to understand and I suggest some changes on their solution.
 
-```C++
-connect(10, false); 
+```py
+connect(10, false)
 ```
 
 This code is bad as it is very hard to understand what `10` and `false` exactly mean. You'd have to look up the function definition to understand it.
 
 Copilot suggests to improve the code by adding a comment at the end of the line. Honestly, this is a pretty bad solution.
 
-```C++
-connect(10, false);  // timeout_ms = 10, use_encryption = false
+```py
+connect(10, false)  # timeout_ms = 10, use_encryption = false
 ```
 
 The suggestion in the book was adding the comments inside the function call. This is possible in C++ but it's not a good solution. It's an attempt to make bad code better by commenting it.
@@ -6447,20 +6446,17 @@ In my opinion, this solution is still far from optimal - it uses comments.
 
 There are two better solutions to this problem. In Python, C++20, and most other modern programming language, keyword arguments are supported.
 
-// check that this is correct
-```C++
-connect{.timeout_ms=10, .use_encryption=false};
+```py
+connect(timeout_ms=10, use_encryption=false)
 ```
 
 The other solution is creating intermediate variables. The function arguments used here are magic numbers that have to be avoided. 
 
-```C++
-int timeout_ms = 10;
-bool use_encryption = false;
-connect(timeout_ms, use_encryption);
+```py
+timeout_ms = 10
+use_encryption = false
+connect(timeout_ms, use_encryption)
 ```
-
-Here I didn't even have to type anything as Copilot was able to suggest the correct solution.
 
 ## Summary
 
@@ -6487,8 +6483,6 @@ def roman_number(number):
 ```
 
 # 39. Logging
-
-// this chapter is very short. Merge it with another chapter?
 
 The basic idea of logging is to provide feedback on the steps that your software executed. It might help you find bugs. Now this sounds great, but in reality, there are several things to consider.
 
@@ -6564,7 +6558,7 @@ The JavaScript Object Notation (JSON) file format is probably one of the best fi
 
 Once you use JSON in a more serious project, you might want to consider using a schema to validate your files for accuracy. You may use different schemas for different versions of your interface. Before you manually write a schema, there are tools available to assist you. You only have to ensure that your JSON file contains all possible fields to obtain a complete schema.
 
-Thanks to schemas, JSON is also a meta language. It is possible to define a general pattern for how the JSON file should look. This defines a standard that enables easy file exchange between different projects.
+Thanks to schemas, JSON is also a meta language. It is possible to define a general pattern for how the JSON file should look. This defines a standard that enables easy file exchange between different projects. You can use schemas to define the version of a JSON based interface.
 
 The following code creates a JSON file:
 
@@ -6721,7 +6715,7 @@ tree.write("data.xml")
 
 HDF5 is the most common binary file format. It is designed to handle terabytes of data and optimized for high throughput. Most research facilities and companies that handle large amounts of data use this file format. It supports structured and auxiliary data. To access the data, you can either utilize the HDF5 library in your preferred programming language or download the free GUI software. Use HDF5 if you need to store multiple gigabytes of numerical data.
 
-Working with HDF5 is, in my opinion, slightly less intuitive than working with JSON files. This is because HDF5 uses datasets that need to be created instead of simply accepting a dictionary.
+Working with HDF5 is, in my opinion, slightly less intuitive than working with JSON files. This is because HDF5 uses datasets that need to be created instead of simply accepting a dictionary. Though with the current version of the HDF5 library, the code becomes quite simple.
 
 The following code saves a list of values in an HDF5 file.
 
@@ -6770,7 +6764,7 @@ with h5py.File('data.hdf5', 'r') as f:
 
 ## Databases
 
-Databases (DB) are used for a large amount of data that you want to analyze but doesn't fit into memory. Databases have a wide range of functionalities that enhance searching and manipulating data within the database. There are several vendors offering different technologies.
+Databases (DB) are used for a large amount of structured data that you want to analyze but doesn't fit into memory. Databases have a wide range of functionalities that enhance searching and manipulating data within the database. There are several vendors offering different technologies.
 
 I never really cared much about DBs and I'd like to teach you other things instead. So, you better get your information elsewhere. I only know that proprietary DBs can be extremely expensive, and it's important to write your code in a way that allows for easy replacement of the database with another one. Otherwise, you may find yourself locked into paying substantial annual fees.
 
@@ -6824,7 +6818,7 @@ conn.commit()
 conn.close()
 ```
 
-## Custom file format
+## Custom File Formats
 
 Similar to the CSV file, you can also define your own file format for things other than just numbers. You can define your own file with structured data. You can even define your own programming language, such as structured text, within your custom file format. You can do pretty much anything you like. You are a free person. Just don't expect to be paid for such a waste of time. If you aspire to become a successful software engineer, you must prioritize delivering value to the customer. You need to utilize JSON, HDF5 or a database. There is no need to define custom file formats.
 
@@ -6836,88 +6830,83 @@ Similar to the CSV file, you can also define your own file format for things oth
 
 Many software developers start by writing code immediately when they have a task to complete. And they postpone all infrastructure work for as long as possible. They continue to compile code using the command line for as long as possible. They don't use Git. And they certainly don't use a Continuous Integration (CI) tool. This is dreadful. Set up these things at the beginning of the project.
 
-Yes, it will take some time to get started. And yes, it's a painful process if you are not accustomed to it. But it is worth it. The very first reason why it is worth it is DRY. If you find yourself repeatedly typing the compilation command into the terminal, you are essentially repeating the same action over and over again. This is going to slow down the development process. This is much worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
+Yes, it will take some time to get started. And yes, it's a painful process if you are not accustomed to it. But it is worth it. The very first reason why it is worth it is Do not Repeat Yourself (DRY). If you find yourself repeatedly typing the compilation command into the terminal, you are essentially repeating the same action over and over again. This is going to slow down the development process. This is much worse than spending the same amount of time at the beginning of the process because it interrupts your thoughts.
 
 For small projects, setting up Git and a proper build tool hardly takes any time. After encountering a challenging bug for the first time, you will appreciate having version control in place. This will allow you to easily revert back to your previous changes. The same holds true for the build process. Typing in many long commands not only takes time but is also brittle. It is too easy to make a typo and screw up the build process in some unforeseen way that introduces hard-to-understand behavior. And especially when you have to cooperate with other developers, there is no way around using proper version control software and a build tool.
 
-Similarly, for Continuous Integration (CI). It will take some time to set it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests; otherwise, I recommend you read the chapter on testing [chapter Testing]) always run. The code committed to the master branch has been compiled, and the tests pass without any errors.
+Similarly, for CI. It will take some time to set it up. But you will save a lot of time later on because you can be sure that the tests you wrote (and I really hope you have tests; otherwise, I recommend you read the chapter on [testing](chapter Testing)) always run. The code committed to the master branch has been compiled, and the tests pass without any errors.
 
-Yes, setting up the infrastructure of a project may take some time. But it is certainly time well spent. There are so many advantages to having a properly set up infrastructure.
+Yes, setting up the infrastructure of a project may take some time. I already heard that setting up a project may take up to 20% of the total development time! But it is certainly time well spent. There are so many advantages to having a properly set up infrastructure.
 
 - You have to learn how to use Git, CMake, and all the other tools anyway. So, it's good practice to get started with them as soon as possible.
 - You will save a lot of time in the future. This will outweigh the time needed to set everything up now.
 - Having properly set up tools makes it easier for new team members to get started. Users only need to clone the repository and run the build tool to get started.
 
-////
-## Project Folder
+////## Project Folder
 
-// Add a plot with the folder structure
+// Add a plot showing the folder structure.
 
-Code is mostly a collection of text files. One question is: how do you deal with them?
+Code is primarily a collection of text files. One question arises: how do you manage them?
 
-The very first thing is the length of each file. Try to keep them short. About 100 lines per file would be great, a few hundred are kind of acceptable. Having many fairly small files improves the overview. Generally, one file contains either a class or a bunch of similar functions. Classes that have more than 1000 lines should have been broken into pieces a long time ago. For this reason, files should never have more than 1000 lines. In fact, files should usually be much smaller than this.
+The very first thing to consider is the length of each file. It is advisable to keep them short, ideally around 100 lines per file, with a few hundred lines being somewhat acceptable. Having numerous relatively small files enhances the overall organization. Typically, one file should either contain a class or a set of similar functions. Classes with over 1000 lines should have been divided into smaller parts long ago. Therefore, files should not exceed 1000 lines. In fact, files should generally be much smaller than this limit.
 
-The way to arrange the files in folders depends on the programming language. The code is located inside the src folder, sorted by further subfolders if necessary. Generally, each subfolder corresponds to a library of the project. Make sure there is only your own code and, depending on the programming language, your tests in there. Nothing else. Do never ever allow any auto generated files inside your src folder. Auto generated files should never make it into the version control. They just polute it!
+The organization of files into folders varies depending on the programming language. Typically, the code is stored within the src folder, further categorized into subfolders as needed. Each subfolder usually represents a library of the project. It is important to ensure that only your own code and, where applicable, your tests are placed in these folders. Avoid including any auto-generated files in the src folder at all costs. Auto-generated files should never be included in version control as they only clutter it.
 
-Generated files belong into the build folder. Like this cleaning up the build is quite simple. Just delete the build folder and all build files are gone. It also makes version control fairly simple. Add the build folder to the .gitignore file to make sure that generated files never make it into the version control.
+Generated files should be placed in the build folder. This makes cleaning up the build process simple. To remove all build files, just delete the build folder. This approach also simplifies version control. Add the build folder to the .gitignore file to ensure that generated files are never included in version control.
 
 Acceptance tests should also remain outside of the src folder as these tests are quite independent of the code. They only use the public API. I would keep them in a separate folder next to src, usually within the same git project. You may also have them outside of the repository or even hand over the responsibility to the sales team if everyone agrees.
 
-<!-- // is this true that in Python tests are written right along the source code in Python? https://stackoverflow.com/questions/1896918/running-unittest-with-typical-test-directory-structure
-
-The path where the unit tests reside differs, depending on the programming language. There are languages where the unit tests are in a separate folder alongside the src and acceptance tests, for example in C++. In other languages, as //???// for example, the unit tests are written right next to the corresponding source file. This is necessary as in //???// it's very tedious to import files from a parent folder. -->
-
-3rd party libraries belong into the lib folder. They are not part of the git project, therefore the lib folder should be on the .gitignore file. You need some other way to manage them. If you use few libraries just manage them manually. In Python you can use the package management software pip. Togheter with the requirements.txt file this makes managing libraries quite simple. In other programming languages like C++ this is a much harder task as you have to do this by yourself somehow. Dealing with libraries is certainly one of the drawbacks of older programming languages like C++, while Python or Rust have a very good package management system.
+3rd party libraries belong in the lib folder. They are not part of the git project; therefore, the lib folder should be in the .gitignore file. You need another way to manage them. If you use a few libraries, manage them manually. In Python, you can use the package management software pip. Together with the requirements.txt file, this makes managing libraries quite simple. In other programming languages like C++, this is a much harder task as you have to do this yourself somehow. Dealing with libraries is certainly one of the drawbacks of older programming languages like C++, while Python or Rust have a very good package management system.
 
 There are some additional files in a project.
 
-1.	Custom scripts for installation and build of the project. Getting the project, downloading the 3rd party libraries, building the project, running the tests and executing the project should all require only one single command.
-2.	The readme.md file shown on the front page of the git project. It usually contains installation instructions and a short description of the project. In fact, this book was also written as a readme.md file in a git project.
-3.	.gitignore is related with git. It lists all files and folders to be ignored by git. For example, auto generated files or files that are too big to be managed by git.
-4.	Some formatting, code quality checking or other miscelaneous files.
+1.  Custom scripts are created for the installation and build of the project. The process of obtaining the project, downloading third-party libraries, building the project, running tests, and executing the project should all be streamlined to require just one single command.
+2.  The README.md file is displayed on the front page of the Git project. It typically includes installation instructions and a brief project description. In fact, this book was also authored as a README.md file in a Git project.
+3. .gitignore is related to Git. It lists all files and folders to be ignored by Git. For example, auto-generated files or files that are too big to be managed by Git.
+4.  Some formatting, code quality checking, or other miscellaneous files.
 
-There are a few pitfalls how to arrange the files and folder of your project. But as long as you follow the general best advice you should be fine. Consult the wisdom of the internet for your programming language of choice.
+There are a few pitfalls in arranging the files and folders of your project. However, as long as you follow the general best practices, you should be fine. Consult the resources available on the internet for guidance on your programming language of choice.
 
 
 # 42. Tools
 
-"I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Thorwalds
+"I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Torvalds
 
-// I think this chapter needs some reworking. Or remove it completely?
+// I think this chapter needs some reworking. Or should we remove it completely?
 
-There is a fair amount of software that is supposed to help you writing more or better software. Here is a  list of the most important classes of tools I worked with so far:
+There is a fair amount of software that is supposed to help you write more or better software. Here is a  list of the most important classes of tools I have worked with so far:
 
-Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, package manager, build tools, docstring, container applications, container orchestration, databases and many more.
+Version control software (VCS), Command line, Continuous Integration (CI), Integrated Development Editor (IDE), debugger, profiler, formatter, code quality checker, ticketing system, Wiki, package manager, build tools, docstring, container applications, container orchestration, databases, and many more.
 
-For all these classes of software, there are several different vendors and open source solutions.
+For all these classes of software, there are several different vendors and open-source solutions.
 
-## Version control software 
+## Version control software
 
-Git is certainly the very first program to mention in this chapter. Git is everywhere. It’s the Version Control Software (VCS) that Linus Thorwalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like licencing issues [https://en.wikipedia.org/wiki/Git]. Git is clearly superior to most other version control software and there is no reason to learn anything else. Git is a de facto industry standard. Only Mercurial is a viable alternative, but it is not as widely used as git.
+Git is certainly the very first program to mention in this chapter. Git is everywhere. It’s the Version Control Software (VCS) that Linus Torvalds programmed because all the alternatives were too slow for managing the Linux kernel or had other drawbacks like licensing issues [https://en.wikipedia.org/wiki/Git]. Git is clearly superior to most other version control software, and there is no reason to learn anything else. Git is a de facto industry standard. Only Mercurial is a viable alternative, but it is not as widely used as Git.
 
-The original Git software is a console application but there are also proprietary software products with a GUI.
+The original Git software is a console application, but there are also proprietary software products with a GUI.
 
-I recommend learning the classic (command line) git. Start learning it as soon as possible. Every programmer has to be able to work with it. The only difference between companies is the way how they use git exactly. For example there are different ways how to deal with branches when merging them into master.
+I recommend learning the classic (command line) Git as soon as possible. Every programmer should be able to work with it. The only difference between companies is how they use Git. For example, there are different methods for dealing with branches when merging them into the master branch.
 
 ### Git, everywhere git
 
-Git should not only be used for bare code. Git can also be used on any text file that you have. The build files should certainly be version controlled. But also other pure text files are worth controlling with git. For example if you do research and have some files with measurement results. This could also be version controlled. The price you pay is negligible compared to what you gain by controlling all your files with git.
+Git should not only be used for bare code. Git can also be used on any text file that you have. The build files should certainly be version controlled. Additionally, other pure text files are worth controlling with Git. For example, if you conduct research and have files with measurement results, these could also be version controlled. The cost you incur is negligible compared to the benefits of controlling all your files with Git.
 
-Or if you write a book like this one. It is written in Markdown and version controlled with git. This makes it easy to cooperate with reviewers and at the same time I always have a safety net when I screwed up some of my text.
+If you write a book like this one, it is written in Markdown and version controlled with Git. This makes it easy to collaborate with reviewers, and at the same time, I always have a safety net when I mess up some of my text.
 
-I won't go further into details about git. There are plenty of tutorials in the web that teach you how to use git. They will teach you how to make commits, use branches and do merges. And remember as I told you in the chapter on unit tests: unit test are great if you have merge conflicts. The unit tests will tell you immediately if you resolved them correctly.
+I won't delve further into details about Git. There are plenty of tutorials on the web that can teach you how to use Git. They will guide you on making commits, using branches, and performing merges. Remember, as I mentioned in the chapter on unit tests, unit tests are invaluable when dealing with merge conflicts. They will promptly notify you if you have resolved them correctly.
 
 ### Copilot
 
-Copilot chat can convert human readable commands into git commands. For example it converts `git create a branch named "hello branch"` into `git branch hello_branch`. Just start the command with `git` and you will get a git command.
+Copilot chat can convert human-readable commands into git commands. For example, it converts `git create a branch named "hello branch"` into `git branch hello_branch`. Just start the command with `git` and you will get a git command.
 
 ## Command line
 
-The most common command line software is Bash (The Bourne-again shell, a.k.a. shell) on Unix systems. However, the Windows based PowerShell is a viable alternative. For many purposes Python or other scripting languages can be used as well.
+The most common command-line software is Bash (The Bourne-again shell, a.k.a. shell) on Unix systems. However, the Windows-based PowerShell is a viable alternative. For many purposes, Python or other scripting languages can be used as well.
 
-The command line is the Swiss military knife of software development. It is the glue that connects all the different tools together. It enables us to automate all the build processes. For this reason, the command line tools are generally to be preferred over GUI based tools. GUI based tools like the file browser are great for getting started with some smaller projects, however you’ll quickly reach some limits as they don’t scale up on bigger projects.
+The command line is the Swiss army knife of software development. It is the glue that connects all the different tools together, enabling us to automate all the build processes. For this reason, command line tools are generally preferred over GUI-based tools. GUI-based tools, such as the file browser, are excellent for starting smaller projects. However, they quickly reach limitations as they do not scale up well for larger projects.
 
-The shell is an extremely powerful and versatile tool for executing other programs and running scripts for running all kind of commands dealing with configuration settings, the filesystem, networking, etc. It is certainly worth learning at least some of the basic functionality once you have the opportunity of automating a shell process.
+The shell is an extremely powerful and versatile tool for executing other programs, running scripts, and handling various commands related to configuration settings, the filesystem, networking, and more. It is definitely worth learning some of the basic functionalities when you have the chance to automate a shell process.
 
 ### Copilot
 
@@ -6926,81 +6915,84 @@ The shell is an extremely powerful and versatile tool for executing other progra
 // Copilot for CLI might change how we use the command line (and all its programs with it). Now you no longer have to use google to find the syntax, but you can use Copilot CLI instead. https://youtu.be/8_0DJ9FOlOM?t=787 https://youtu.be/pw0SH7AHIFI -> how does this work exactly?
 
 ```sh
-git? how do I update the message of my last commit
+
+git? How do I update the message of my last commit?
+
 ```
-This returns the command `git commit --amend` along with a detailed explanation. The command can also be executed right away. Furthermore the `Revision` prompt allows you to ask for specific changes to the suggestion made.
+
+This returns the command `git commit --amend` along with a detailed explanation. The command can also be executed right away. Furthermore the `Revision` prompt enables you to request specific changes to the suggested content.
 
 ## IDE
 
-The Integrated Development Environment (IDE) is a class of software used for writing code. It's like Microsoft Word adapted to programmers. There are dozens of different IDEs available, both proprietary and freely available. I never cared about the IDEs. I just use what my work colleagues showed me: VS code. I don’t think it’s worth spending too much time here by yourself figuring out the details of one specific IDE. So I recommend you to do the same as I did. Just ask your friends.
+The Integrated Development Environment (IDE) is a type of software used for writing code. It's akin to Microsoft Word but tailored for programmers. There are numerous IDEs to choose from, some proprietary and others freely available. Personally, I never delved deep into IDEs. I simply use what my colleagues introduced me to: VS Code. I believe it's not necessary to invest a lot of time independently exploring the intricacies of a particular IDE. Therefore, I suggest you follow my approach and seek recommendations from your peers.
 
-In all up to date IDEs, there are plug-ins for most of the tools mentioned above. Ask your work colleague which ones you need. Spend a few hours with watching your colleague working in his IDE of choice to get an idea what the plug ins are used for. This is not wasted time. You also learn something about the code he writes during that time.
+In all up-to-date IDEs, there are plugins available for most of the tools mentioned above. Consult with your work colleague to determine which ones you need. Dedicate a few hours to observing your colleague working in their preferred IDE to understand the purpose of the plugins. This time is not wasted; you will also gain insights into the code they write during this period.
 
-It is worthwhile learning some of the shortcuts in your IDE that allow you to modify code in different files faster. This is useful as it improves your work flow. But don’t overdo it at the beginning, you may be wasting too much time here. You can still learn more once you know how your personal work flow looks like. And if you really like to push the shortcuts to the limit, you’ll have to learn the VIM text editor which is operated by keyboard only.
+It is worthwhile to learn some of the shortcuts in your IDE that enable you to modify code in different files more efficiently. This is beneficial as it enhances your workflow. However, do not overdo it initially, as you might end up wasting too much time. You can continue learning more shortcuts once you are familiar with your personal workflow. If you are keen on maximizing the use of shortcuts, you will need to learn the VIM text editor, which is operated solely by keyboard commands.
 
 ## Continuous Integration
 
-"Continuous integration (CI) is the practice of merging all developers' working copies to a shared mainline several times a day." [https://en.wikipedia.org/wiki/Continuous_integration]
+ integration (CI) is the practice of merging all developers' working copies to a shared mainline several times a day.
 
-This typically means checking in the latest changes of the code, compiling it if required, running all the tests and building the final artifact.
+This typically means checking in the latest changes of the code, compiling it if required, running all the tests, and building the final artifact.
 
-There are several different suppliers for Continuous Integration (CI) software. I don’t know the precise differences and probably you won’t have to neither. You don’t need this if you work alone and in any serious software company this choice is made by others.
+There are several different suppliers of Continuous Integration (CI) software. I don’t know the exact differences, and you probably won’t need to either. If you work alone, you don’t need this, and in any reputable software company, this choice is made by others.
 
-At the time of writing, Jenkins and Gitlab are the most commonly used CI software.
+At the time of writing, Jenkins and GitLab are the most commonly used CI software.
 
 ## Debugger
 
-Probably everybody knows what debugging is. Because it is about the first thing you learn at programming: The code doesn't work and I don't understand what it does. Let's walk through it and see what my variables do. For example using print statements. But there is a better way than using print statements. The Debugger.
+Probably everybody knows what debugging is. Because it is about the first thing you learn in programming: The code doesn't work, and I don't understand what it does. Let's walk through it and see what my variables do, for example, using print statements. However, there is a better way than using print statements: the Debugger.
 
-Every programming language has its own debuggers and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger. Mostly setting break points, navigating through the code and looking at the stack trace. But generally, it’s a sign of bad code if you have to use a debugger too often. Write small classes and functions where you can tell exactly what they should do. Along with plenty of unit tests. Depending on the error you should be able to pin point the source to a certain class or area of the code without using a debugger. Anyway. Feel free to use a debugger, for example if you work with legacy code. But always keep the code quality high and make sure you need the debugger as little as possible. It's a useful tool, but it's a bad sign if you need it.
+Every programming language has its own debuggers, and IDEs usually support a debugger plugin for most major programming languages. It is useful to know some of the basic functionality of a debugger, such as setting breakpoints, navigating through the code, and examining the stack trace. However, in general, it is a sign of poor code quality if you have to rely on a debugger too frequently. Write small classes and functions where the purpose is clear, along with ample unit tests. By doing so, you should be able to identify the source of errors without relying heavily on a debugger. If necessary, feel free to use a debugger, especially when working with legacy code. Nonetheless, always prioritize maintaining high code quality and aim to minimize the reliance on a debugger. While a debugger is a valuable tool, its frequent necessity may indicate underlying issues in the code.
 
 ## Profiler
 
-A profiler lets you check the time required for executing each part of the code. Depending what kind of programming you do, chances are high you will never need one. Only run the profiler if the program is slower than it should be, which is probably not too often. Thus, the profiler is not a software you have to get acquainted with at the very beginning of your programming career.
+A profiler allows you to measure the time needed to execute each part of the code. Depending on the type of programming you engage in, you may not need one frequently. It is advisable to use the profiler only when the program is running slower than expected, which may not occur frequently. Therefore, becoming familiar with the profiler is not essential at the outset of your programming journey.
 
 ## Formatter
 
-Pretty much all companies have a fixed ruleset how code should be formatted. Some teams can debate for days about tiny details. If you start at a company let someone set up the formatter for you. In most cases this consists of copying some config file. And don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterwards. If the formatter follows the wrong rule set you will have formatting changes in your merge requests. Which is absolutely terrible, because it’s hiding the real changes. The formatter may change thousands of lines in a single MR and you don’t care about them. Real code changes are short but you have to check them meticulously. Put both kind of changes into a single MR and you are done for. Judging such an MR becomes impossible.
+Pretty much all companies have a fixed ruleset on how code should be formatted. Some teams can debate for days about tiny details. If you start at a company, let someone set up the formatter for you. In most cases, this consists of copying some config file. And don’t start endless discussions about the formatting details. Having the formatter set up properly will save you some pain afterward. If the formatter follows the wrong ruleset, you will have formatting changes in your merge requests. This is absolutely terrible because it hides the real changes. The formatter may change thousands of lines in a single MR, and you don’t care about them. Real code changes are short, but you have to check them meticulously. Put both kinds of changes into a single MR, and you are done for. Judging such an MR becomes impossible.
 
-If you work with old code that was formatted with an out dated ruleset, you have to run the formatter and create an MR before you start writing code. Or at least the formatting needs to be in a separate commit, though a separate, dedicated MR is to be preferred. If you change the formatting rule set, run the formatter on all code and create a dedicated MR.
+If you work with old code that was formatted with an outdated ruleset, you have to run the formatter and create an MR before you start writing code. Or at least the formatting needs to be in a separate commit, though a separate, dedicated MR is preferred. If you change the formatting ruleset, run the formatter on all code and create a dedicated MR.
 
-There are also some companies where every employee can use any formatting style he likes. Once an employee creates an MR, the official formatter runs over the code as a first step of the merge request. This offers the best of both worlds: the users are free to use whatever formatter they like but there is still some default formatting that won't affect the merge requests. The only cost is the work of the DevOps developer who has to implement this feature.
+There are also some companies where every employee can use any formatting style they prefer. Once an employee creates an MR, the official formatter reviews the code as the initial step of the merge request process. This approach combines the benefits of both worlds: users have the freedom to choose their preferred formatter, while ensuring there is a default formatting that does not impact the merge requests. The only downside is the additional work for the DevOps developer who needs to implement this feature.
 
-Personally, I don’t care too much about the formatting style. If I have a choice, I use the default formatting with a tab width of 4 and a line length of 100. This is a reasonable compromise. Linus Thorwalds (the guy from Git) has a very strict opinion on that topic. If you write code for the Linux kernel you have to use a tab width of 8 and a line length of 80. Try writing code like that. You have to write extremely well to make all the code fit reasonably into this pattern. That’s exactly why he’s come up with this rule. The google style guide recommends also a line length of 80 characters, though it is less strict.
+Personally, I don’t care too much about the formatting style. If I have a choice, I use the default formatting with a tab width of 4 and a line length of 100. This is a reasonable compromise. Linus Torvalds (the guy from Git) has a very strict opinion on that topic. If you write code for the Linux kernel, you have to use a tab width of 8 and a line length of 80. Try writing code like that. You have to write extremely well to make all the code fit reasonably into this pattern. That’s exactly why he’s come up with this rule. The Google style guide also recommends a line length of 80 characters, though it is less strict.
 
-## Code quality checker
+## Code Quality Checker
 
-There are different programs available that check your code on the most common quality issues. I don’t know too much about them but it’s certainly worth a try. One example is the test coverage tool. Tough this metric shouldn’t be abused as a business metric. Use it to check that you have (almost) all code covered by your unit tests.
+There are different programs available that can check your code for the most common quality issues. I don’t know too much about them, but it’s certainly worth a try. One example is the test coverage tool. Though this metric shouldn’t be used as a business metric, use it to ensure that you have (almost) all code covered by your unit tests.
 
-If you use C++ or any other compiled language, your most important quality checker tool is the compiler. Enable the "treat warnings as errors" setting for all warnings. You may find it annoying in the beginning but you get used to it and it will make your code better and prevent bugs. There is a reason why the compiler warns you about something and he does a better job with finding unassigned variables and other problems than you ever could. Why should you search for potential bugs yourself if the compiler can do the job automatically?
+If you use C++ or any other compiled language, your most important quality checker tool is the compiler. Enable the "treat warnings as errors" setting for all warnings. You may find it annoying at first, but you will get used to it, and it will improve your code and prevent bugs. There is a reason why the compiler warns you about something; it does a better job of finding unassigned variables and other issues than you ever could. Why should you search for potential bugs yourself when the compiler can automatically do the job?
 
-## Pip, cmake
+## Pip, CMake
 
-Some people may argue that pip and cmake don’t belong into this list. Of course, they are right. But I'm still feeling like mentioning a sentence or two about them.
+Some people may argue that Pip and CMake don’t belong on this list. Of course, they are right. However, I still feel compelled to mention a sentence or two about them.
 
-Pip is the Python package management software [https://pypi.org/project/pip/]. As a Python developer it’s mandatory to know pip. It’s very easy to use. The command line pip install numpy will install the numpy library. Done. A little bit trickier is the handling of the virtual environment (venv) that allows you to install all the packages in a separate environment [https://docs.Python.org/3/library/venv.html]. This is useful if you have different projects that require different versions of the same library.
+Pip is the Python package management software [https://pypi.org/project/pip/]. As a Python developer, it is essential to be familiar with pip. It is very user-friendly. By using the command line pip install numpy, you can easily install the numpy library. Done. A bit more challenging is managing the virtual environment (venv), which enables you to install all packages in an isolated environment [](https://docs.Python.org/3/library/venv.html). This is beneficial when working on various projects that need different versions of the same library.
 
-Cmake is the most commonly used build tool for C++. Meson is a more modern alternative you can use for new projects. Make is outdated. And don’t ever use the Visual Studio build.
+CMake is the most commonly used build tool for C++. Meson is a more modern alternative that you can use for new projects. Make is outdated, and it is not recommended to use the Visual Studio build.
 
 ## Ticketing system
 
-Jira [should I add links for every software or for none??] is the most commonly used ticketing system and has little to do with code. It is very easy to use and most of the work in Jira will be done by the manager writing the tickets.
+Jira [should I add links for every software or for none??] is the most commonly used ticketing system and has little to do with code. It is very easy to use, and most of the work in Jira will be done by the manager writing the tickets.
 
-This ticketing software is also helpful when managing a one-man project as it helps organizing the work. And it doesn’t even have to be a software project. You can also use it for all other kind of projects. If you don’t work for a company there are also free alternatives. But I’ve never used any of them.
+This ticketing software is also helpful when managing a one-person project as it aids in organizing the work. It doesn’t necessarily have to be a software project; you can also use it for all other kinds of projects. If you don’t work for a company, there are also free alternatives available. However, I have never used any of them.
 
 ## Wiki
 
-Most companies use confluence as the knowledge base. Like Jira this is an industry standard. Write general thoughts and high level documentation here. However, things will go out of date quickly so be careful.
+Most companies use Confluence as their knowledge base, similar to Jira, which is an industry standard. Write general thoughts and high-level documentation here. However, keep in mind that information may become outdated quickly, so exercise caution.
 
-You may also write some high-level documentation of your code. But don’t go too much into details. Low level details change too often and will get outdated and they should better be looked up in the code.
+You may also write high-level documentation of your code. However, avoid delving too deeply into details. Low-level details frequently change and become outdated, so it is preferable to refer to the code for accurate information.
 
-Again, there are free alternatives around, though you are unlikely to see any alternatives in professional environments.
+Again, there are free alternatives available, although it is unlikely to encounter any alternatives in professional environments.
 
 ## Docstring
 
-The docstring software auto creates a documentation depending on the comments in the code. It sounds like a nice idea, though it should be used scarcely. There is very little use of using docstrings for internal documentation as you can also look at the code instead. Instead docstrings should be used as a documentation for external APIs used by your customers.
+The docstring software automatically creates documentation based on the comments in the code. It sounds like a good idea, although it should be used sparingly. There is minimal benefit in using docstrings for internal documentation since you can also refer to the code itself. Instead, docstrings should be utilized as documentation for external APIs that are accessed by your customers.
 
-Every programming language has one docstring tool. For Python it’s Sphynx, for C++ it’s doxygen.
+Every programming language has its own documentation tool. For Python, it’s Sphinx, and for C++, it’s Doxygen.
 
 <!-- 
 # Too short to be a chapter
@@ -7015,72 +7007,73 @@ not sure if this chapter is needed
 
 # 43. Working in teams
 
-// https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_85
-[Software Engineering at Google, chapter 2]
+[](97 things every programmer should know, thing 85), [](Software Engineering at Google, chapter 2)
 
 "Humans are mostly a collection of intermittent bugs." - Brian Fitzpatrick
 
-A good manager considers how things are done. A great manager considers what is to be done and leaves the rest to his employees. He has faith in them. This is much more motivating than someone yelling around.
+A good manager considers how things are done, but a great manager focuses on what needs to be done and entrusts the rest to his employees. He has faith in his team, which is far more motivating than someone who just yells orders.
 
-The times of the lone wolf programmers is over. Instead, you will spend most of your career working in teams. The story of the lone prodigy programmer in the basement is a myth. Modern programming is done in teams. Not only do programmers work with other programmers, but you'll also have to work with people from marketing and sales as well as customers.
+The era of lone wolf programmers is over. Instead, you will spend most of your career working in teams. The narrative of the solitary prodigy programmer in the basement is a myth. Modern programming is a collaborative effort. Programmers not only collaborate with their peers but also engage with individuals from marketing, sales, and customers.
 
-Cooporating with other programmers has its advantages and drawbacks at the same time. Comparing programming in teams with a lone programmer is like comparing a parliament with a dictator. A parliament requires more time to come to some conclusion, yet the solution is generally better than the decision made by a dictator.
+Collaborating with other programmers has its advantages and drawbacks simultaneously. Comparing programming in teams with working alone is akin to comparing a parliament with a dictator. A parliament may take more time to reach a conclusion, but the solution is typically superior to a decision made by a dictator.
 
-At the same time, scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the parliament.
+At the same time, scaling up software projects only works with teams where all programmers are cooperating together. It is not possible for a dictator to work on his own project. He has to adapt and become part of the team.
 
-## Team structure
+## Team Structure
 
-In most projects a team consists of roughly 4-12 software engineers, one project owner and one project manager. The software engineers are doing the real work. They work their ass off writing awesome code while everyone else is just slacking off. Just kidding. All other employees have work to do as well, it even if it might not be that apparent to the developers.
+In most projects, a team typically consists of around 4-10 software engineers, one project owner, and one project manager. The software engineers are responsible for the core work, putting in effort to write exceptional code, while the rest of the team also has their own tasks to complete, even if it may not be as visible to the developers.
 
-The project owner (PO) takes care of the tickets. He is at the interface between the project manager and the developers. The project manager (PM) is ... managing the whole project. He has to talk to customers and get an idea what they want. Or rather, what they need. These are not always the same thing. Nobody wanted an iPhone before it was released, yet still everybody needed one. And it's the PM's job to figure out such things.
+The project owner (PO) is responsible for managing the tickets. They act as the interface between the project manager and the developers. The project manager (PM) oversees the entire project. They are in charge of communicating with customers to understand their wants and needs. These two aspects are not always identical. For instance, before its release, nobody desired a mobile phone without a keyboard, yet everyone eventually needed an iPhone. It is the PM's responsibility to discern such distinctions.
 
-It is important that everybody in the team talks to each other. Software engineers talk a lot about their code. But quite frequently they have questions about the ticket that the PM has to answer. Vice versa the PM wants to know the state of each feature for estimating the progress of the software.
+It is important that everybody in the team communicates with each other. Software engineers often discuss their code extensively. However, they frequently have questions about the ticket that the project manager (PM) needs to address. Conversely, the PM needs to be informed about the status of each feature to estimate the progress of the software.
 
-### The bus factor
+### The Bus Factor
 
-The bus factor [https://en.wikipedia.org/wiki/Bus_factor] says how many team members have to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks. People can get sick or they quit their job for whatever reason. And for a low bus factor, this may put the whole project at risk.
+The [bus factor] (https://en.wikipedia.org/wiki/Bus_factor) says how many team members would need to be at least hit by a bus before the project is doomed. The definition of this expression may sound a little absurd. And it is. But it has a point. Fortunately people don't get hit too often by a bus. But there are other risks to consider, such as team members falling ill or leaving their positions for various reasons. A low bus factor increases the vulnerability of the entire project.
 
-Make sure the bus factor in your project is as high as possible. Ensure that there is a good amount of knowledge exchange between the team members. Such that everyone knows something about everything. That the whole project does not stall only because a single person is ill.
+Make sure the bus factor in your project is as high as possible. Ensure that there is a good amount of knowledge exchange between team members so that everyone has some understanding of all aspects of the project. This way, the entire project won't come to a halt just because one person is sick.
 
 ## Developers work
 
-The developers are the ones who do the real work. They are the ones who write all the code. For such hard work it is important that they stick together. Only a tight pack of hungry software engineers can do the job. That's at least their point of view. Now let's get a little bit more serious.
+The developers are the ones who do the real work. They are the ones who write all the code. For such hard work, it is important that they stick together. Only a tight pack of dedicated software engineers can accomplish the task. That's at least their perspective. Now, let's get a little bit more serious.
 
-Software engineers have several tasks. The most obvious one is, of course, talking to each other. This is why any modern software company has a coffee machine with free coffee. You also have to discuss the tickets, you have to discuss how the fundamental structure of the code should look like and you have to talk during pair programming or code review sessions. Though the talking during code reviews is not absolutely necessary. Smaller MRs can be done with written comments, but when in doubt, it’s always better to talk to each other. Especially during times like Corona, the human touch got lost and things sometimes got hairy.
+Software engineers have several tasks. The most obvious one is, of course, communicating with each other. This is why any modern software company provides a coffee machine with free coffee. Additionally, engineers need to discuss tickets, determine the fundamental structure of the code, and communicate during pair programming or code review sessions. While talking during code reviews is not mandatory, smaller MRs can be completed with written comments. However, when unsure, it is always preferable to engage in verbal communication. Particularly during times like the Corona pandemic, the personal connection has diminished, and situations can become challenging.
 
-You also have to talk during pair programming. Both participants discuss together how the code should look like. This creates important knowledge transfer, especially if both participants are experts in different areas of the code. Both programmers learn from each other and the code quality improves. Code review in the MR is no longer required. All together pair programming takes some more time than working alone but frequently this time is well worth it. Because remember: the most important resource in your company isn't code, but knowledge. And knowledge is gained by talking to each other.
+During pair programming, it is essential to communicate. Both participants engage in discussions to determine how the code should be structured. This facilitates crucial knowledge transfer, particularly when both participants are experts in different aspects of the code. Through this collaboration, both programmers gain insights from each other, leading to an enhancement in code quality. Consequently, the need for code review in the MR is eliminated. Although pair programming may require more time than working independently, the benefits often outweigh the additional time investment. It is important to remember that the most valuable resource in a company is not the code itself, but the knowledge. This knowledge is acquired through effective communication and collaboration.
 
-Another fairly big job is going through Merge Requests (MRs), also refered to as Pull Requests. Everyone has to do it, no one really likes it. But it has to be. Nobody likes to wait a day until his code is approved and merged. Therefore reviewing MRs has to be done quickly. So get up, open the browser and select the first MR. And now... doing code review is a tricky business. You can somehow tell that the code is not good but it’s so... elusive. It’s your job to bring it to the point without being too picky. Furthermore, you see some code that had been there before and now it’s duplicated. It should be refactored. And a dozen of other things. Time to give the author of this MR a call. This can’t be resolved by writing comments.
+Another fairly big job is going through Merge Requests (MRs), also referred to as Pull Requests. Everyone has to do it, and no one really likes it, but it has to be done. Nobody likes waiting a day for their code to be approved and merged. Therefore, reviewing MRs has to be done quickly. So, get up, open the browser, and select the first MR. Now, doing a code review is a tricky business. You can somehow sense that the code is not good, but it’s elusive. It's your job to pinpoint the issues without being too critical. Additionally, you may notice some duplicated code that needs to be refactored, among a dozen other things. It's time to reach out to the author of this MR. Some issues can't be resolved just by writing comments.
 
 ## Communication
 
-As mentioned above, teamwork is a key element in modern software engineering. Without good communication skills, team work is not possible. So it is important to learn how to talk to other people. To learn about the flaws of humans and how to deal with them.
+As mentioned above, teamwork is a key element in modern software engineering. Without good communication skills, teamwork is not possible. Therefore, it is important to learn how to effectively communicate with others, understand human flaws, and learn how to address them.
 
-In a team, the most important language is not Java but English (or German in some of the projects I worked on). Use this language to communicate with other team members. And if you think communicating with a computer is hard, think twice. For a computer you can just google what to do and most of the time it works. But with other humans it may take significantly more efforts for a good communication.
--	Make sure you know what you are talking about and know how to talk to the specific audience.
--	Keep communicating. Ask questions. Let the other person talk. Once you don’t get replies anymore you have an issue.
--	Make sure the other person really understood what you were talking about.
+In a team, the most important language is not Java but English (or German in some of the projects I worked on). Use this language to communicate with other team members. If you find communicating with a computer challenging, reconsider. With a computer, you can simply search online for what to do, and most of the time it works. However, effective communication with other humans may require significantly more effort.
 
-There are probably hundreds of other rules, but these few here are the ones I know. Even though I’m not that good at applying them. As a developer you don’t have to know all these things. But if you want to manage people you have to get a feel for how to talk to others. Get some books or seminars about it, this is not the place to go into details.
+-   Make sure you know what you are talking about know how communicate effectively with to the specific audience.
 
-Humans are all inherently flawed. They are insecure and try to hide themselves. They don't like to be criticized. They are scared because they are not a genius. But they don't have to be. Hardly anyone is a genius and most work is done by good, but not outstanding programmers. This fear, however, makes things worse. Because it is important to talk to other developers. Your team is much more productive if the team members talk to each other. If they are able to criticize each other in a constructive way.
+-   Keep communicating. Ask questions. Let Let the other person talk. Once you stop receiving replies, there may be an issue.
 
-It is ok to fail. Fail early, fail fast, fail often. Get feedback as early as possible and improve. This is the only way to make progress. Vice versa, you always have something to teach. Discuss with your colleagues and you can learn from each other. Don't be afraid, no body is perfect.
+-   Make sure the other truly understood what you discussing. 
 
-Don't come up with claims like "this is bad". Critisism is has to be constructive or else it is useless. Even worse, it can be regarded as a flat out assault. You have to be able to explain why something is bad such that the original author has a chance to improve.
+There are probably hundreds of other rules, but the few mentioned here are the ones I know, even though I’m not that proficient at applying them. As a developer, you don’t have to be familiar with all these things. However, if you aspire to manage people, you need to develop a sense of how to communicate effectively with others. Consider exploring books or attending seminars on this topic, as this is not the appropriate place to delve into specifics.
 
-In order to excel, humans need psychological safety. This requires 3 things: humility, respect and trust. Effective team work is not possible without these things. Discussions only work if all parties involved are treated equally. 
+Humans are all inherently flawed. They are insecure and tend to conceal their vulnerabilities. They dislike criticism and fear not being perceived as geniuses. However, being a genius is not a requirement. The majority of work is accomplished by competent, though not exceptional, programmers. This fear exacerbates the situation. Effective communication among developers is crucial. A team is significantly more productive when its members engage in constructive criticism and open dialogue.
+
+It is okay to fail. Fail early, fail fast, fail often. Get feedback as early as possible and improve. This is the only way to make progress. Conversely, you always have something to teach. Discuss with your colleagues, and you can learn from each other. Don't be afraid; nobody is perfect.
+
+Don't make statements like "this is bad". Critisism is has to be constructive; otherwise, it is pointless. Even worse, it can be seen as a direct attack. You need to be able to clarify why something is considered bad so that the original author has an opportunity to make improvements.
+
+In order to excel, humans need psychological safety. This requires three things: humility, respect, and trust. Effective teamwork is not possible without these elements. Discussions can only be successful if all parties involved are treated equally.
 
 ## Working with customers
 
-// https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_97 
+[](97 Things Every Programmer Should Know, Thing 97)
 
-Customers are only humans. Quite frequently they don't say what they mean because they don't know it any better. Keep your vocabulary changing to figure out what certain words actually mean in the view of the customer. At times this reveals some misguided view. For instance if customer and client have some completely different meaning. Do not expect the discussion on requirements to be over after one meeting with the customer. You have to stay in touch in order to get constant feedback to make sure you implement what the customer wants and not what he says.
+Customers are only humans. Quite frequently, they don't say what they mean because they may not know it any better. Keep adapting your vocabulary to understand what specific words truly mean from the customer's perspective. Sometimes, this reveals a misinterpretation. For example, if customer and client have some completely different understanding. Do not assume that the discussion on requirements is complete after just one meeting with the customer. It is essential to stay in touch to receive continuous feedback to ensure that you implement what the customer desires, not just what they say.
 
-Frequently customers don't know what is important. Or at least things are important to customers that are not important to the programmer. For instance a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was really badly designed, the customer refuses to adapt. You really have to come up with some significant improvement that your version will be accepted.
+Frequently, customers do not prioritize what is important. Or at least, things that are important to customers may not be important to the programmer. For instance, a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was poorly designed, the customer refuses to adapt. You really have to come up with some significant improvements for your version to be accepted.
 
-
-# 44. Code review
+# 44. Code Review
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
