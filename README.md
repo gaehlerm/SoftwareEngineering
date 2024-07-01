@@ -7077,61 +7077,55 @@ Frequently, customers do not prioritize what is important. Or at least, things t
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
-[software engineering at google]
+[](software engineering at Google)
 
-Code reviews are important for spreading knowledge and to improve the quality of the code. This does not work without some criticism, so it needs a little bit of intuition to know how to criticize the code without insulting the author. Most important of all, you have to critisize the code, rather than the author of it. But let's first have a look at how the whole code review process got started.
+Code reviews are important for spreading knowledge and improving the quality of the code. This does not work without some criticism, so it requires a bit of intuition to know how to critique the code without insulting the author. Most importantly, you have to criticize the code rather than the author. But let's first take a look at how the whole code review process began.
 
-A long time ago, in a kingdom far away, software developers started cooperating. They shared their code. They started working on the same code. At the same time. And problems started creeping up. They needed some software to control the different versions of the code.
+A long time ago, in a kingdom far away, software developers began collaborating. They shared their code and worked on the same code simultaneously, which led to problems arising. They required software to manage the various versions of the code.
 
-After some mediocre attempts to fix this issue there was our savior. Linus Thorwalds, the hero of every fanatic Linux developer, saved us by developing git. This solved the problem of version control software once and for all.
+After some mediocre attempts to fix this issue, our savior emerged. Linus Torvalds, the hero of every fervent Linux developer, rescued us by creating Git. This resolved the issue of version control software definitively.
 
-Unfortunately, git was not yet the final solution. It was still possible to write crappy code and merge it into the master. There was no other solution than firing this malicious developer.
+Unfortunately, Git was not yet the final solution. It was still possible to write poor quality code and merge it into the master branch. The only solution left was to dismiss this malicious developer.
 
-But now comes the real solution: Merge Requests (MR) and code reviews. No user is able anymore to make changes on master all by himself. Before he can merge his changes into master, he needs to create a public request and wait for someone else to accept it. And thus the other developer allows the changes to be merged into master.
+But now comes the real solution: Merge Requests (MR) and code reviews. No user is able to make changes on the master branch all by themselves anymore. Before merging changes into the master branch, a user needs to create a public request and wait for someone else to accept it. Only then can the other developer allow the changes to be merged into the master branch.
 
-Now there are a few things to consider regarding code reviews. First of all, code reviews are great not only to keep the code quality up to date, but it also helps improving the programming skills of all developers. They are a great opportunity for knowledge exchange. Developers are obliged to look at each-others code and thereby learn a lot.
+Now, there are a few things to consider regarding code reviews. First of all, code reviews are great not only for keeping the code quality up to date but also for improving the programming skills of all developers. They are a great opportunity for knowledge exchange. Developers are obligated to look at each other's code and thereby learn a lot.
 
 ## Drawbacks
 
-However, there are some downsides as well. They can be severe enough that teams even stopped using MRs altogether. Most importantly, everyone has to stick to the rules. There is no way to prevent foul play by the developers sabotaging the system in a way that will render the MRs useless or even counterproductive.
+However, there are some downsides as well. They can be severe enough that teams have even stopped using MRs altogether. Most importantly, everyone has to adhere to the rules. There is no way to prevent foul play by developers sabotaging the system in a way that renders the MRs useless or even counterproductive.
 
-The first problem is people just accepting merge requests without commenting anything, maybe even without looking at the MR. Either because they don’t understand it, because they are lazy, they don't have time, or to make the author of the MR a favor. One would be better off not using MRs at all.
+The first problem is people accepting merge requests without commenting, possibly without even reviewing the MR. This could be due to a lack of understanding, laziness, time constraints, or simply to do the MR author a favor. It might be more beneficial to avoid using MRs altogether.
 
-The second problem is speed. Speed is crucial. It is of utmost importance to check MRs as quickly as possible. Too long idle times for MRs lead to a very significant drop in the developers’ productivity. Additionally, it is highly frustrating waiting for an MR to be looked at and not being able to continue working.
+The second issue is speed, which is crucial. It is of utmost importance to review MRs as quickly as possible. Prolonged idle times for MRs result in a significant decrease in developers' productivity. Moreover, it is highly frustrating to wait for an MR to be reviewed and not be able to continue working.
 
-Another very serious problem are too long MRs. It is impossible to judge the quality of a change of a thousand, even a hundred lines of code. You should keep the tickets small. You should keep the commits small. And you should keep the MRs small. Huge MRs are a waste of time as no one understands what’s going on. If a ticket turns out to be too long, split up the code in several MRs and make sure the tickets become smaller in the future.
+Another very serious problem is overly long MRs. It maybe impossible to judge the quality of a change with a hundred lines of code. It is advisable to keep the tickets, commits, and MRs small. Enormous MRs are a waste of time as they make it difficult for others to understand the changes being made. If a ticket becomes too lengthy, it is recommended to divide the code into several MRs and ensure that tickets are kept smaller in the future.
 
-There is a wide spread and very fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs. This is in absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error free code along with good test coverage to prove that it most certainly free of bugs. MRs are more about the general structure of the code. And they are about knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
+There is a widespread and fundamental misunderstanding regarding MRs. Don’t expect the referee to find bugs; this is absolutely impossible. The referee doesn’t have time to think through all these details. The author is responsible for writing error-free code along with good test coverage to prove that it is most certainly free of bugs. MRs are more about the general structure of the code and knowledge exchange. The referee can only check that there is a reasonable amount of test coverage.
 
-Always be polite. An MR is like criticizing someones code by email. This is a highly delicate thing to do. Stay professional and make sure you only comment the code and not its author. Once people start YELLING at each other in MRs it is high time to quit the job. Now things certainly deteriorated during the Corona virus pandemic when most developers had to work in home office. It takes some good team spirit in order to deal with written comments on MRs.
+Always be polite. Giving feedback in a merge request (MR) is akin to critiquing someone's code via email. It is a delicate task, so maintain professionalism by focusing your comments on the code itself, not the author. If discussions escalate to yelling in MRs, it may be time to consider leaving the job. The situation worsened during the COVID-19 pandemic when many developers had to work from home. It requires strong team spirit to handle written feedback in MRs effectively.
 
 One thing I can highly recommend is looking at the code together, kind of a pair reviewing. In theory, the referee is supposed to understand the code all by himself, or at least that’s my understanding of an MR. However, discussing the code with the author turns out to be a really good alternative. Especially for long or important MRs. Additionally, it keeps up the human touch. It is much harder to insult someone orally than written. This is a highly important feat.
 
 ## Conclusions
 
-In case you do pair programming, you may skip the code review phase all together as there were already two developers in agreement that the code is fine. Pair programming also allows your team to exchange knowlegde that would have to be done in the code review. This is one of the reasons why pair programming does not require twice the amount of time. The code review would take a considerable amount of time that will be saved with pair programming.
+In case you engage in pair programming, you may skip the code review phase altogether since two developers have already agreed that the code is acceptable. Pair programming also enables your team to share knowledge that would otherwise need to be addressed during the code review. This is one of the reasons why pair programming does not necessitate double the time. The code review process would consume a significant amount of time, which can be saved through pair programming.
 
-For teams with little experience, I think it's still important to make merge requests. The advantages outweigh the drawbacks in my opinion. However, only if everyone plays by the rules and gives fast feedback. 
+For teams with little experience, I believe it is still important to create merge requests. In my opinion, the benefits outweigh the drawbacks. However, this is only effective if everyone adheres to the rules and provides prompt feedback.
 
-With very experienced programmers, on the other hand, one can skip the code reviews and just do some high-level discussion of the code instead. This is faster and usually does the job as well. Very experienced programmers only have to coordinate the high-level abstractions and don't have to review the low-level details. I hope your team gets to this state quickly as you can be so much more productive.
+With highly experienced programmers, on the other hand, one can skip the code reviews and engage in high-level discussions about the code instead. This approach is faster and typically just as effective. Highly experienced programmers only need to coordinate the high-level abstractions and do not have to review the low-level details. I hope your team reaches this stage quickly as it can significantly enhance productivity.
 
-I generally recommend doing code reviews. But if code reviews become a nuisance, which they easily can you have to rethink the way you work and possibly find alternative ways to share knowledge about your code. Just don't forget that sharing knowledge is very important, but unfortunately also very expensive.
-
+I generally recommend conducting code reviews. However, if code reviews become burdensome, which can easily happen, you have to reconsider your approach to work and perhaps explore alternative methods to disseminate information about your code. Just remember that sharing knowledge is crucial, albeit quite costly.
 
 # 45. Agile
-
+////
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
 Agile is the de facto industry standard when it comes to planning of software projects. But it has not always been this way. So how did we get there and what does Agile actually mean?
 
-// Volker: kanban worked much better with real paper. Software has all kind of drawbacks.
-
-
-// add the INVENT points from clean agile
-
 ## Problems of Waterfall
 
-Until the the early 2000s, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan all the complexity top down and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
+Until the the early 2000s, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan the complexity down to the last detail and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
 
 The first problem of waterfall was missing feedback. The whole project was just one big pile of work and it was impossible to get a reasonable estimate on the time it takes to get all the work is done. Many projects failed spectacularly as at the deadline there was still a significant fraction of this pile left but no one informed the management beforehand.
 
@@ -7139,40 +7133,38 @@ The main issue however was, that people had the wrong mindset. They assumed one 
 
 ## Agile was born
 
-When planning a project, there are three simple truths [Zühlke, www.zuehlke.com]:
+When planning a project, there are three simple truths [](Zühlke, www.zuehlke.com):
 1. It is rarely possible to gather all the requirements at the beginning of a project
 2. Users will change their minds
 3. There will always be more to do than time and money will allow
 
 These three truths are the reason why waterfall was never going to work. Instead a somewhat more adaptive approach was needed. A more ... agile one.
 
-In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto [Agile manifesto], [Clean Agile], a brief guide line how software development should be done. Some of the points were:
+In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto [](Agile manifesto), [](Clean Agile), a brief guide line how software development should be done. Some of the points were:
 -	Individuals and interactions over processes and tools.
 -	Working software over comprehensive documentation.
 -	Customer collaboration over contract negotiation.
 -	Responding to change over following a plan.
 
-// write something about these values?
-
 While the Agile Manifesto was about how a project should be run, there is also a Bill of Rights for the developers. The Bill of Rights states what kind of rights each individual in an agile process has.
-// add the bill of rights for the customers??
 - You have the right to know what is needed with clear declarations of priority.
 - You have the right to produce high-quality work at all times.
 - You have the right to ask for and receive help from peers, managers, and customers.
 - You have the right to make and update your own estimates.
 - You have the right to accept your responsibilities instead of having them assigned to you.
 
-Write something about the bill of rights?
 
 ## Work planning
 
-// explain story based velocity rather than story point based planning? [https://youtu.be/go_pLBt8PP8]
+// explain story based velocity rather than story point based planning? 
 
 The product owner has a set of requirements that the code should fulfill. This pile of work is broken down into small tickets. Where I’d like to emphasize the word small. Each ticket should be doable by one person during one sprint. Preferably it’s smaller than that.
 
 Every ticket is estimated for how much work it will take. The ticket size is quantified by the number of story points it gets. This is an artificial number to give the tickets a measurable size. Yet at the same time, the story points are vague enough to indicate that this value is only a vague estimation. In most projects, a story point is between one half and one day of work.
 
-The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task. Unfortunately this estimation of tickets does not always work too well. It takes really good planning such that all developers know what has to be done in the ticket. Otherwise the estimations are way off. This is especially the case when the ticket is not well defined. In this case, the ticket probably has to be split up into smaller tickets.
+The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task. Unfortunately this estimation of tickets does not always work too well. It takes really good planning such that all developers know what has to be done in the ticket. Otherwise the estimations are way off. This is especially the case when the ticket is not well defined. In this case, the ticket probably has to be split up into smaller tickets. 
+
+For these reasons there is the attempt to work without any estimations of ticket size. Just cut the tickets as small as possible and count the number of tickets instead[](https://youtu.be/go_pLBt8PP8). Story based velocity has the advantage that you don't have to do the notoriously imprecise estimation of the ticket size. And breaking down the tickets into as small junks as possible is anyway recommended.
 
 Tickets all have some business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on in a single ticket. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
 
