@@ -430,12 +430,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [50. Hiring and getting hired](#50-hiring-and-getting-hired)
   - [Hiring](#hiring)
   - [Getting hired](#getting-hired)
-- [51. Examples](#51-examples)
-  - [Apple pie](#apple-pie)
-    - [User story](#user-story)
-    - [Acceptance test](#acceptance-test)
-    - [Implementation](#implementation-1)
-  - [Paint](#paint)
 - [52. About Copilot](#52-about-copilot)
   - [Copilot and this book](#copilot-and-this-book)
   - [Issues](#issues)
@@ -7314,7 +7308,7 @@ Development and Operations, short DevOps, is the combination of Continuous Integ
 
 ## The early 2000s
 
-Working with code in the early 2000s was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because git didn't exist back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
+In the early 2000s, Working with code was tedious. Not only were Integrated Development Environments (IDEs) lacking a lot of functionality that we take for gruanted nowadays, also building a project was usually a tedious task. Many projects were lacking a one-click-build and instead the developers had to go through a series of steps in order to build the executable. Then they used SVN as a version control tool because there was nothing else available back then. They could just merge their code on to trunk (something similar to the main branch in git), possibly even without a merge request. And no one knew whether the code was really working. Code could go into production without anyone ever checking that it was working out! You could have even merged a commit that broke the build!
 
 Most teams were not writing tests for their code. It just wasn't fashion back then. Only with the advent of Extreme Programming (XP), [Extreme Programming Explained: Embrace Change, K. Beck, 1999] and with the Agile Manifesto in 2001 [http://agilemanifesto.org/], testing started taking up. This was certainly a mile stone for the software development, but it added another problem to it. So far you had to do a build, which was already quite tedious. Now you also had to build and run the tests. It sounds easy, but once you consider that you don't just have one kind of test, but several different ones, it becomes apparent that doing all the builds by hand wouldn't scale anymore. You have unit tests, integration tests, functional tests, performance tests, etc. The only way to keep up with all this new work is automating it. Continuous Integration was born. Not only the build and the formatting of the code was automated. Everything was automated. Code could only be merged if all the invariants were met:
 - The code is formated according to specification
@@ -7337,7 +7331,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 
 ## Benefits of DevOps
 
-[https://www.atlassian.com/devops]
+[](https://www.atlassian.com/devops)
 
 - Speed: Teams that use DevOps have a significantly faster development cycle. Building, testing and realeasing software becomes much faster.
 - Collaboration: DevOps improves collaboration between team members. For example due to merge requests. This makes teams more efficient.
@@ -7347,7 +7341,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 
 # 49. Mental health
 
-I didn't really think about this topic until I watched just another random youtube video about this topic[https://youtu.be/aK_Jq00Hd8E]. It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
+I didn't really think about this topic until I watched just another random youtube video about this topic [](https://youtu.be/aK_Jq00Hd8E). It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
 
 First of all, we have to agree to the fact that we are not machines. We are humans. Our brain is just one of our organs and it can be damaged. And the most common cause of brain damage is excessive amounts of adrenalin and cortisone, two stress related hormons. These hormons are great as they allowed us to suppress pain and gain powers to fight off wild animals. But when exposed to them for a long time, they seriously damage our bodies and brains. And this frequently happens in software engineering. We are constantly under pressure to deliver and do not have sufficient time to calm down again. On the long term, this is a serious issue as it causes burn-out and depression.
 
@@ -7364,7 +7358,7 @@ Furthermore a rewarding work is also very important to keep your spirits high. F
 
 # 50. Hiring and getting hired
 
-[The Software Craftsman (by Sandro Mancuso)], [Cracking the Coding interview]
+[](The Software Craftsman), [](Cracking the Coding interview)
 
 That’s the moment you’ve all been looking for your whole life. Your first real job. The first position as a software engineer. But how do you get there? What is the process behind getting hired? Or rather, what should the process behind getting hired look like?
 
@@ -7391,181 +7385,6 @@ As already written above, it’s about getting to know each other. Thus, you may
 You shouldn’t take the application process too serious. Just stay yourself. They ask for 3 years of experience? Well, that’s what they wish for. But in reality, 2 years are usually enough if your application is otherwise convincing. Or if you’re living in an area with few programmers around, which is basically all around the globe.
 
 Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
-
-# 51. Examples
-
-// remove?  Write a separate book with examples?
-
-So far, there was fairly little code in this book. Now I’d like to make one example, just to show you an application of some of the things we learned. Once again, I want to have a simple real world project. Assume we have a robot and we are going to give it some instructions. It’s a smart robot that understands a lot of things, but the general planning we have to do ourselves.
-
-## Apple pie
-
-###  User story
-
-Your father comes for dinner next Sunday and you want to make him happy. Creamy apple pie makes him happy, for example.
-
-Acceptance criteria: your father is happy
-
-### Acceptance test
-
-Now let’s first write the acceptance test. If we invite our dad, he has to say that he's happy. We assume that he prints out his feelings on the console. Thus, we can just check the console output.
-
-```py
-# inside acceptance_tests/test_dinner.py
-import subprocess
-
-def test_dinner_makes_dad_happy():
-    p = serve_dinner_as_subprocess()
-    assert(contains_happy(p.stdout))
-
-def serve_dinner_as_subprocess():
-    return subprocess.Popen(['Python', 'dinner.py'],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT,
-                            )
-
-def contains_happy(lines):
-    for line in lines:
-        if "happy" in str(line):
-            return True
-    return False
-```
-
-That’s it. We won’t have to touch the acceptance test anymore until the ticket is done. Note that I used the function contains to make the test a little more flexible. Your dad might say other things as well that we don’t care about.
-
-The very first thing we do is running the test.
-
-```sh
-pytest acceptance_tests
-```
-
-And we see that it fails. That was to be expected, we didn’t implement anything so far. But it was still worth the few milliseconds we spent here. There are better places where you can save time.
-
-### Implementation
-
-Let’s start with the implementation. It’s a fairly artificial example, so I can just make some assumptions. In the main function we create the apple pie and have our dad eat it. The big part of the work will be implementing the dad and the function to create the apple pie.
-
-Also note that the easiest solution would probably be buying an apple pie from the next bakery. This would be a perfectly viable solution to this task here. But let's assume that we have to bake the pie ourselves.
-
-Or course we have to make several assumptions on how the apple pie is to be implemented. Let's start with the high level code.
-
-```py
-apple_pie = create("apple_pie")
-dad = Dad()
-dad.eat(apple_pie)
-```
-
-Next we implement dad and then the create function.
-
-```py
-from enum import Enum
-
-class Flavor(Enum):
-    VERY_CREAMY = 1
-    SALTY = 2
-
-class Dad():
-    def eat(food):
-        if food.name == "apple_pie" and food.flavor == Falvor.VERY_CREAMY
-            print("I’m so happy")
-```
-
-Note that the `Flavor` is neither inside the `Dad`, nor inside the `ApplePie` class, as we have learned in the chapter on the solid principles (ISP).
-
-```py
-class ApplePie():
-    def __init__(self):
-        self.flavor = Flavor.VERY_CREAMY
-        self.name = "apple_pie"
-
-def create(food_name):
-    food_dict = {"apple_pie" : ApplePie()}
-    return food_dict[food_name]
-```
-
-// etc. Either finish the example or remove it.
-
-## Paint
-
-// DDD p.259
-
-Idea: We want to define paint of certain color that we can mix with each other and change its color accordingly. I would like to make some comments to the implementation in the book mentioned above.
-The code starts with a simple class paint and its variables.
-```py
-class Paint:
-    V: float
-    R: int
-    Y: int
-    B: int
-```
-
-These member variables don’t have expressive names at all. They are renamed to
-```py
-class Paint:
-    Volume: float
-    Red: int
-    Yellow: int
-    Blue: int
-```
-
-This can be further improved. The red, yellow and blue values all represent a color. They are all the same, while the volume has a clearly different meaning. Thus we can refactor the RYB colors into a dedicated object to fulfill the single responsibility principle.
-```py
-class Paint:
-    volume
-    color
-class Color:
-    Red
-    Yellow
-    Blue
-```
-So far so good. We made some smaller refactoring and the basic data structure looks good to go. Now comes the very tricky question: how should the syntax of mixing two colors look like?
-```py
-# paint a, b, c
-c = add(a,b)
-c.add(a)
-```
-The first is the procedural #? Way, the second is the object-oriented approach. Besides this fundamental question, we also have to figure out what kind of values a and b should have after this operation. Additionally, we also might want to find another name than add.
-
-First, I would like to answer the conceptual question. What happens with a and b? This is a somewhat philosophical question and without knowing the actual problem we’d like to solve there is no clear answer. We can only reason about it.
-```py
-def add(paint1, paint2):
-    Paint paint3
-    volume = paint1.volume + paint2.volume
-    Paint3.volume = volume
-    paint3.color.red = (Paint1.color.red* paint1.volume + Paint2.color.red* paint2.volume) / volume
-    paint3.color.yellow = (Paint1.color. yellow * paint1.volume + Paint2.color. yellow * paint2.volume) /volume
-    paint3.color.blue = (Paint1.color. blue * paint1.volume + Paint2.color. blue * paint2.volume) / volume
-    return paint3
-```
-Now I see 3 different possibilities:
-1.	We leave paint1 and paint2 as is. We used a copy of the actual paints and didn’t change the original paints.
-1.	We set the volume of both paints to 0. This is the equivalent of mixing the two paints and being left with two empty canisters containing no paint at all.
-1.	We set both paints to None. This would be somehow equivalent to throwing the canisters away.
-
-As I said, all of them are perfectly reasonable choices. It is up to us to choose one of them, depending on what seems to be the most appropriate choice for each case. This also has consequences how we should call the add function and what the best way of implementing is.
-
-For the first option, we don’t change neither paint1 nor paint2. Here it makes sense to call the function add or even define the + operator if possible, in your programming language of choice. This is a legitimate choice as we don’t expect add to change any of its function arguments.
-
-Let’s assume that we choose option 2 and we’re left with 2 empty canisters of paint. Calling this function add is no longer an option. Instead we could call it mix or mix_in. Additionally, we have to deal with the question if we want to be more or less object oriented. We do have the following options:
-```py
-paint3 = mix(paint1, paint2)
-paint1.mix_in(paint2)
-```
-Now this is a matter of choice. A whole generation of programmers grew up hearing that the later option is the better one. It would be more natural. But honestly, I don’t see why this is supposed to be so super natural. As already seen, for case number 1 I clearly prefer the non-OO solution, simply because we are used to the add function not changing any function arguments while with the mix function, we have to take a look at the definition in order to be sure. Even here, I still opt for the first option. It just feels more natural to me as the function is symmetric, while the OO solution is asymmetric for no apparent reason.
-
-The solution
-
-```py
-paint3 = mix(paint1, paint2)
-```
-
-Has one drawback. It creates a new object and it changes both function arguments. Now this is a very unfortunate solution. Changing one function argument is already bad enough and changing two is even worse. Now one solution would be passing a list of paints, `paint3 = mix([paint1, paint2])`
-
-Reasonable programming dictates that all list elements are treated equally and thus they are either all altered together or none at all. Furthermore, we can implement a mix function for any number of paints.
-
-Still, in the end I’m preferring option 1 (not changing paint1 and paint2) and implementing a simple add function. This follows the general conventions and minimizes confusion. It follows the Single Responsibility Principle as it only adds the two paints and doesn’t alter anything else. Changing the volume of the function arguments can be done in a separate step, if needed.
-
-And sorry folks, my preferred solution is not object-oriented, other than defining the pure data classes.
 
 
 
