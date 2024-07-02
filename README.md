@@ -422,8 +422,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Review of Requirements](#review-of-requirements)
     - [Administration of Requirements](#administration-of-requirements)
     - [Tools for Requirements Management](#tools-for-requirements-management)
-- [47. Planning](#47-planning)
-  - [Planning code](#planning-code)
 - [48. DevOps](#48-devops)
   - [The early 2000s](#the-early-2000s)
     - [Getting a project](#getting-a-project)
@@ -7296,11 +7294,8 @@ In a small project, the requirements can easily be managed in a text document. N
 Requirements have other attributes in addition to ID and description. The most important ones include:
 
 - Source of the requirement: This is important for queries.
-
 - Priority of the requirements
-
 - Status of the requirement. Has it been implemented, tested, andaccepted?
-
 - Verification tests are used to check whether the requirement is implemented correctly.
 
 It is also important to manage changes systematically. If a requirement changes during the project, I document precisely what was changed and when. The altered requirement must undergo review again and be accepted. Subsequently, the question arises as to where in the already implemented software the change will have an impact.
@@ -7311,51 +7306,9 @@ In security-relevant systems, traceability is a must. This includes tracing back
 
 A common tool is Atlassian Jira. With this tool, requirements and test cases can be managed and assigned to developers for implementation. Additionally, detected errors (bugs, defects) can be recorded and prioritized in Jira.
 
-# 47. Planning
-
-// TODO: read through again. Is there duplication with the agile section?
-
-"We take the most experienced engineer. He spends 2 days making various attempts to estimate the amount of work required. In the end we take the highest estimate and multiply it by two." – unknown
-
-Planning major projects is extremely hard, not only in software engineering. Architects and civil engineers plan houses and streets all the time so they’ve become fairly good at it. But as soon as there is something much bigger they never did before, they start struggling. Frequently they are quite good but there are always cases where things go haywire. Not only at the Berlin airport.
-
-With software development it is even worse. There are no small houses and streets that we can get some practice with. Unless you do very basic web or app development. Most software is simply way too complex and fairly unique. It’s impossible to understand all the details. Even the fundamental logic of the problem is not always apparent. Somehow plans on writing software are always too optimistic and failed deadlines are standard.
-
-This sounds very logical. We are all motivated and want to get things done. But our working speed is limited. It’s slower than we want it to be. We need more time to understand problems and code, we have to change more code than intended and we also spend a lot of time with MRs and meetings. If your boss asks you when the software is going to be ready, try hard not to be too optimistic. It is very hard but making too optimistic guesses won’t help anyone. You put yourself under pressure and ultimately you still miss the deadline.
-
-Planning code in detail is a similar topic. But at least there is now a solution that seems to work in most cases.
-
-For a very long time, software projects were developed using the waterfall approach. There is a team of developers who try to understand the topic and develop a model on the white board how the structure of the code should look like. Another team, or maybe even the same one, takes these ideas and implements them. Do I have to tell you how this ended? Let me give you some hints. People tend to underestimate complexity; people miss features and furthermore there are changing requirements. The result is a team of software engineers trying hard to implement what they were supposed to. At the same time, it doesn’t work as the planning team missed important details and over the time new requirements showed up. I heard of cases where this approach worked. A few. As well as a lot of disaster. Software projects are simply too complex as if the waterfall approach would work.
-
-Now let’s go back to the civil engineer and his houses. It makes sense that the civil engineer plans and the construction workers build the house. That’s what they do. That’s their job. Over the time a construction worker gets an idea how the structure of a house has to look like. But still, he is never going to plan one. He wouldn’t know how. Vice versa, the civil engineer could maybe build a house, but it’s financially not interesting. It makes sense to have two different groups of workers taking care of planning and construction. And even here the civil engineer has to check the progress of the construction frequently and improvise in case of unexpected events.
-
-In software engineering the planning and the development team both have the same education. The planning team might have a little more experience than the development team, but that’s negligible. Then why do you separate the two tasks? This creates only overhead and frustration. If the planning team is smart enough to plan the whole software on their head, they should also have enough experience to write the whole thing down in code. There's barely and overhead between planning the software and writing it down. When writing the code down, they will be able to see if everything really works out as plannned. Ultimately the planning team can make the whole job on their own.
-
-<!-- 
-// here is some redundancy with the agile chapter
-
-This doesn’t mean that there is no planning needed at all. It’s just different. Smaller and faster. 
-
-We need more feedback and to be able to adapt. In one word: Agile. You still need a quite good idea how the general structure of the code should look like. The fundamental structure is something you should get right on the first attemt because changing it later on is really expensive. Then you start implementing one feature after another. At the same time, you have to make sure that everything is well covered with tests. It will be inevitable to do refactoring once in a while and that's impossible without tests. But even here the old waterfall approach wasn’t any better. The tests were not there and the refactoring got ignored. But I have to warn you. Agile is not going to solve all your problems. You can have terrible code in Agile and be stuck or you can have great code in a waterfall project and be highly productive.
-
-As a conclusion I would say that Agile is generally the better approach than waterfall. But it only works if you first build a solid basement for your code, you write well tested code and you refactor frequently.
-
-In an Agile project it is important to cut the tickets as small as possible. This clarifies the task and minimizes the risk of a ticket to fail within a sprint. Small tickets are much easier to estimate. Figuring out the number of small tickets up to a certain point in development is the really tricky part. -->
-
-## Planning code 
-
-// move elsewhere? Rename section? Most of it is about UML diagramms.
-
-A widely used tool to display interactions between classes are UML diagrams. To put it up front, I don’t like UML. It's generally a waste of time. You can also just briefly write the empty classes and connect them in code. It’s the same, just in a different representation. UML is the worse one. It would be easy to create the UML programming language. But no one has done it. Because graphical programming is terrible. It is harder to understand than code. Small UML diagrams are OK, but one can quickly get lost if they get bigger. Ask scientists about their experience with Labview. I prefer writing the code framework right away and save the effort for creating UML diagrams. However, feel free to try UML diagrams. If they are a great help for you or your team it doesn’t matter what I think.
-
-One also has to consider the limitations of UML diagrams. The only represent classes and their relationships. This covers only a tiny fraction of a program. Quite frequently you have to understand the logic behind a problem where UMLs won’t help you. You need something different. Try out whatever you feel like. Some different sketch, a plot, a coffee break, a walk in the forest, ... As long as it helps you understanding the problem it does the job. 
-
-I also had such a moment during my master thesis when I was calculating the expected value of the experiment but I was stuck for a long time. One late afternoon a PhD student came by and talked for a little. He just casually mentioned every step of my calculation and within a minute I found my mistake. Talking to other people is usually the best way to solve a problem. 
 
 
 # 48. DevOps
-
-// move this chapter further to the back? It contains some testing, but it's more a high level overview of the software development process.
 
 Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
