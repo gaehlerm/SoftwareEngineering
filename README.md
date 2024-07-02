@@ -431,7 +431,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Hiring](#hiring)
   - [Getting hired](#getting-hired)
 - [53. Further reading](#53-further-reading)
-- [54. Outlook](#54-outlook)
 - [55. Frequently used Abbreviations](#55-frequently-used-abbreviations)
 
 
@@ -7386,6 +7385,23 @@ Make yourself seen with your application. Mention all kind of open source projec
 
 -# Part 10: Final remarks
 
+
+# 54. Outlook
+
+"Programming is learned by writing programs." ― Brian Kernighan
+
+Maybe you were surprised sometimes that there were so few code examples. But I hope you understood that they are not required. I wanted to explain fundamental concepts of software engineering. I wanted to give you an overview of the most important things to look out for. This should be a book that tells you the very basic rules that make your code better. There are not so many. But they are really important.
+
+You might have realized that in software engineering, for every problem, there are millions of possible solutions. Even when writing these very simple examples in this book, I have to reconsider how to do it best. For you, it must be even worse. I remember how lost I was when I started programming. This book aims to help you by explaining many things you should avoid or not use. It's about setting boundaries for you. I don’t want you to get lost due to the overwhelming number of possibilities available.
+
+Soon comes the next big step: the real world of writing code. Finally, you are there, and I have to let you go. I could write another book with code examples and explain why some code is better than others. However, there are plenty of such books, and I doubt I know better examples than other authors do. Still, I hope that you'll return to this book occasionally if you seek fundamental advice.
+
+Your next step will be to apply all the things you learned on your journey so far. Write code. As much as you can. And always try to improve it. How can you make it easier to understand? How should you break that class into pieces? How is the test coverage doing? There are so many things to look out for. There are so many obstacles along the way. Find a good programmer to help you overcome them. Or even better, do an internship. (But make sure the company writes tests before you accept the job.) Talking with other programmers is important to understand how you can change your code to make it better.
+
+I hope you have learned many things that will assist you in your career as a software engineer. Good luck!
+
+Marco
+
 # 53. Further reading
 
 I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
@@ -7427,21 +7443,6 @@ Google Style Guide, https://google.github.io/styleguide/
 And several youtube channels:
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim, @ContinuousDelivery, 
 
-# 54. Outlook
-
-"Programming is learned by writing programs." ― Brian Kernighan
-
-Maybe you were surprised sometimes that there were so few code examples. But I hope you understood that they are not required. I wanted to explain fundamental concepts of software engineering. I wanted to give you an overview of the most important things to look out for. This should be a book that tells you the very basic rules that make your code better. There are not so many. But they are really important.
-
-You might have realized that in software engineering for every problem there are a million of possible solutions. Even when writing these very simple examples in this book I have to reconsider how to do it best. For you it must be even worse. I remember how I was lost when I started programming. This book wants to help you. It explains a lot of things you shouldn’t do or use. It’s restricting you. I don’t want you to get lost because of all the posibilities you have.
-
-Soon comes the next big step. The real world. Writing code. Finally, you are there. And I have to let you go. I could write another book with code examples and explain why some code is better than the other. But there are plenty such books and I doubt I know better examples than the other authors do. Still, I hope that you'll get back to this book once in a while if you seek fundamental advice.
-
-Your next step will be to apply all the things you learned on your journey so far. Write code. As much as you can. And always try to improve it. How can you make it easier to understand? How should you break that class into pieces? How is the test coverage doing? There are so many things to look out for. There are so many obstacles along the way. Find a good programmer to help you overcome them. Or even better, do an internship. (But make sure the company writes tests before you accept the job.) Talking with other programmers is important to understand how you can change your code to make it better.
-
-I hope you learned a lot of things that will help you in your life as a software engineer. Good luck!
-
-Marco
 
 # 55. Frequently used Abbreviations
 
