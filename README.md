@@ -26,9 +26,9 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [4. The short story behind this book](#4-the-short-story-behind-this-book)
   - [Thanks to](#thanks-to)
 - [5. Preface](#5-preface)
+  - [What this book is about](#what-this-book-is-about)
   - [Who this book is for](#who-this-book-is-for)
   - [Writing this book](#writing-this-book)
-  - [A word about Copilot](#a-word-about-copilot)
 - [6. Software Engineering](#6-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
   - [Writing correct code](#writing-correct-code)
@@ -406,15 +406,11 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [45. Agile](#45-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
-  - [Work planning](#work-planning)
+  - [Work Planning](#work-planning)
   - [Quality Assurance](#quality-assurance)
-  - [The Iron Cross](#the-iron-cross)
-    - [Good](#good)
-    - [Fast](#fast)
-    - [Cheap](#cheap)
-    - [Done](#done)
   - [Sprints](#sprints)
-  - [Becoming agile](#becoming-agile)
+  - [Becoming Agile](#becoming-agile)
+  - [Drawbacks of Agile](#drawbacks-of-agile)
 - [46. Requirements Engineering](#46-requirements-engineering)
   - [Stakeholders](#stakeholders)
   - [Goals, Context and Scope](#goals-context-and-scope)
@@ -577,7 +573,7 @@ I would also like to thank the team of Pearson Germany for their support. Most n
 
 "I have been consistently disappointed by the quality of CS [computer science] graduates. It's not that the graduates aren't bright or talented, it's just that they haven't been taught what programming is really all about." - Robert C. Martin
 
-In 2007, I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, const expressions, etc. I struggled to understand these concepts. They just felt wrong. There were numerous unresolved questions about writing the code correctly, and I didn't know where to get good advice. I passed the exam, but I was somewhat dissatisfied.
+In 2007, I had my first semester at university. It was the first time I learned programming. We learned C++ and I found it very confusing. Especially things like plain old arrays, pointers, const expressions, and so on. I struggled to understand these concepts. They just felt wrong. There were numerous unresolved questions about writing the code correctly, and I didn't know where to get good advice. I passed the exam, but I was somewhat dissatisfied.
 
 Three years later, I took a course on computational physics. There, I had to write slightly bigger programs. It worked, but I struggled a lot. The code was dreadful, and I knew it. But I didn't know how to make it any better. Changing things was hard, and I learned how to use a debugger. I still have all my university files, but I haven't dared to look at this code ever since. Already thinking about it makes me shudder.
 
@@ -603,6 +599,21 @@ Reading this book is only one step in your career. Next, you have to get out int
 
 Enjoy this book and good luck with your career.
 
+
+## What this book is about
+
+In the first chapter, we want to examine how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn't, use. In my opinion, there are numerous practices in object-oriented (OO) programming that are predominantly utilized for historical reasons. In reality, they usually lead to poor code and should be abandoned. In fact, pretty much everything other than plain classes and interfaces should be used with care in OO programming.
+
+But OO programming is by far not the most important topic in this book. No matter how good or bad your use of OO features is, you can still write good or bad code regardless. There are more important concepts to learn from this book. Most notably, the Single Responsibility Principle (SRP), basics of interfaces, testing, and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
+
+This book contains relatively few code examples. It's more about general concepts of software engineering, rather than concrete code examples. Still, some concepts are easier to understand with a few lines of code. Therefore, I tried to create some code examples. Even though it's quite challenging to find concise examples that are still expressive enough to fit into a book. As for the programming languages I chose, mostly Python and some C++. Not because these languages would be better than, for example, JavaScript, but rather because these are the languages I know. I chose two programming languages because there are some concepts that I can only explain using one or the other. Though there are only a few things that depend on the programming language. Most of the explanations provided here consist of general recommendations that are applicable to almost any programming language.
+
+"Software Engineering is the application of an epmirical, scientific approach to finding efficient, economic solutions to practical problems in software" - David Farely [](Modern Software Engineering, p. xxii) 
+
+This book aims to provide clear answers to simple problems in software engineering. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books. This is what makes the problems so challenging and software engineering exciting. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. This is why it is fun. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
+
+This book is about engineering. It's about finding ways how to write better code. It's not a strictly scientific approach, it's more of an empiric approach. Thus, there is no absolute truth and there are no proofs in this book. I will rather give you some general advice on best practices. Due to this reason, there are only a few references available for specific topics but no scientific studies. Most chapters consist of my personal interpretations of more specialized books. Thus, I mention the books I was reading as a foundation for the corresponding chapter. And of course, all of these books are biased by my personal opinions and reasonings.
+
 ## Who this book is for
 
 This book was initially intended for PhD students. I know quite a few who spend a lot of time programming but have never really learned how to do it properly. After learning the basic syntax of a programming language, they began writing code. But it was dreadful. They never learned how to write good code. They never learned about the necessity of small class sizes or the significance of tests. And there are many more points that I am going to explain throughout this book.
@@ -617,15 +628,6 @@ Writing a book about software development is hard. Harder than writing a book ab
 
 I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book aims to serve as a manual, but ultimately, you will need to learn how to apply the recommendations given here on your own.
 
-## A word about Copilot
-
-// remove the Copilot part altogether?
-
-My publisher had the idea to include Copilot, one of the new AI code generation tools available at the time of writing, in this book. And indeed, there are quite a few cases where Copilot can be useful when writing code. I tried to create examples that correspond to the chapters. Though I couldn't provide examples for every chapter. In many cases, the content of the chapters was too generic, as if code examples would be very helpful. In these chapters where I provided code examples, Copilot was generally able to generate useful code. Though sometimes I had to experiment a bit to achieve satisfactory results, I didn't always obtain the desired code. I think there is still a lot of research to be done on how to use Copilot in the best way.
-
-In general, it can be said that AI code generation is already a very useful tool. It can significantly improve your productivity and the quality of your code if used correctly. It also helped me write this book here. Though you always have to be cautious. While Copilot is not perfect, it can generate code that is not always correct. It provides only some suggestions. Or as it is called: "Copilot". It's not a replacement for a software engineer; it's just a tool that assists you with your work. You still have to guide it in the right direction.
-
-
 
 -# Part 1: First things first
 
@@ -633,23 +635,12 @@ In general, it can be said that AI code generation is already a very useful tool
 
 "If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
-In this chapter, we want to examine how code should look like. What kind of rules there are to judge the quality of code and some of my personal recommendations what kind of features of your programming language you should, or rather shouldn't, use. In my opinion, there are numerous practices in object-oriented (OO) programming that are predominantly utilized for historical reasons. In reality, they usually lead to poor code and should be abandoned. In fact, pretty much everything other than plain classes and interfaces should be used with care in OO programming.
-
-But OO programming is by far not the most important topic in this book. No matter how good or bad your use of OO features is, you can still write good or bad code. There are more important concepts to learn from this book. Most notably, the Single Responsibility Principle (SRP), basics of interfaces, testing, and naming. Furthermore, there are several chapters on how to work with code that has not been written up to current standards and how to collaborate with other programmers. Topics that are highly important but are frequently neglected in books on software development.
-
-This book contains relatively few code examples. It's more about general concepts of software engineering, rather than concrete code examples. Still, some concepts are easier to understand with a few lines of code. Therefore, I tried to create some code examples. Even though it's quite challenging to find concise examples that are still expressive enough to fit into a book. As for the programming languages I chose, mostly Python and some C++. Not because these languages would be better than, for example, JavaScript, but rather because these are the languages I know. I chose two programming languages because there are some concepts that I can only explain using one or the other. Though there are only a few things that depend on the programming language. Most of the explanations provided here consist of general recommendations that are applicable to almost any programming language.
-
-"Software Engineering is the application of an epmirical, scientific approach to finding efficient, economic solutions to practical problems in software" - David Farely [Modern Software Engineering, p. xxii] 
-
-This book aims to provide clear answers to simple problems in software engineering. I also attempt to provide answers to challenging problems like naming, but these are typically quite vague, as in other books. This is what makes the problems so challenging and software engineering exciting. The only thing that truly helps with challenging problems is a lot of experience. It would take too much explanation or code to explain all the details. I can only attempt to present all the various arguments for certain trade-offs, and then you will need to do all the reasoning by yourself. This is why software engineering is challenging. This is why it is fun. There are too many problems without any clear solutions. And you have to deal with them all by yourself.
-
-This book is about engineering. It's about finding ways how to write better code. It's not a strictly scientific approach, it's more of an empiric approach. Thus, there is no absolute truth and there are no proofs in this book. I will rather give you some general advice on best practices. Due to this reason, there are only a few references available for specific topics. Most chapters consist of my personal interpretations of more specialized books. Thus, I mention the books I was reading as a foundation for the corresponding chapter. And of course, all of these books are biased by my personal opinions and reasonings.
 
 ## The Life of a Software Engineer
 
-I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is all so vague. We have to sit down and analyze the situation.
+I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is not how it works. We first have to sit down and analyze the situation.
 
-Let me start with a very blunt question: What do you think a software engineer does?
+Let me start with a very blunt question: "What do you think a software engineer does?"
 
 "He writes code" may be your first response.
 
@@ -7118,121 +7109,93 @@ With highly experienced programmers, on the other hand, one can skip the code re
 I generally recommend conducting code reviews. However, if code reviews become burdensome, which can easily happen, you have to reconsider your approach to work and perhaps explore alternative methods to disseminate information about your code. Just remember that sharing knowledge is crucial, albeit quite costly.
 
 # 45. Agile
-////
+
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
-Agile is the de facto industry standard when it comes to planning of software projects. But it has not always been this way. So how did we get there and what does Agile actually mean?
+Agile is the de facto industry standard when it comes to planning and executing software projects. But it has not always been this way. So how did we get here, and what does Agile actually mean?
 
 ## Problems of Waterfall
 
-Until the the early 2000s, most software development teams were working according to the so-called waterfall scheme. For every project, there was an analysis, a design and an implementation phase. This sounds like a good thing to do, as other engineers work the same way. However, planning software top-down never really worked out as it was not possible to plan the complexity down to the last detail and changing requirements made things even worse. Brief, in many cases waterfall projects turned out to be a disaster.
+Until the early 2000s, most software development teams followed the waterfall model. Each project involved analysis, design, and implementation phases. While this approach seemed logical and was widely adopted, planning software in a top-down manner proved ineffective. It was not possible to anticipate every detail of the complex process, and evolving requirements exacerbated the situation. In short, many waterfall projects ended in disaster.
 
-The first problem of waterfall was missing feedback. The whole project was just one big pile of work and it was impossible to get a reasonable estimate on the time it takes to get all the work is done. Many projects failed spectacularly as at the deadline there was still a significant fraction of this pile left but no one informed the management beforehand.
+The primary issue with the waterfall model was the absence of feedback. The entire project was a massive workload, making it impossible to provide a realistic time estimate for completion. Numerous projects failed dramatically because, at the deadline, a substantial portion of the workload remained unfinished, and no one had alerted the management in advance.
 
-The main issue however was, that people had the wrong mindset. They assumed one can plan software like building a house. One makes a plan in the beginning and gets a team of developers to execute it. This does not work out. It is simply not possible to plan a house down to the very last detail. The architect has to visit the construction site weekly, if not daily to fix problems that will show up. But that's not the only issue. Maybe even worse, since the team was working in waterfall mode, they were not in the right mind set to adapt to changing requirements or problems encountered during the implementation.
+The main issue, however, was that people had the wrong mindset. They assumed that one could plan software development like building a house. The common belief was that one could create a plan at the beginning and then assemble a team of developers to carry it out. This approach, however, proved to be ineffective. It is simply not feasible to plan every detail of a project like one would plan a house. The architect must visit the construction site regularly to address emerging issues. Moreover, another significant problem was that the team was operating in waterfall mode, which hindered their ability to adapt to changing requirements or address issues that arose during the implementation process.
 
 ## Agile was born
 
 When planning a project, there are three simple truths [](Zühlke, www.zuehlke.com):
+
 1. It is rarely possible to gather all the requirements at the beginning of a project
+
 2. Users will change their minds
+
 3. There will always be more to do than time and money will allow
 
-These three truths are the reason why waterfall was never going to work. Instead a somewhat more adaptive approach was needed. A more ... agile one.
+These three truths are the reasons why the waterfall approach was never going to work. Instead, a more adaptive approach was needed. A more ... agile one.
 
-In 2001, a group of software engineers met for two days in the Rocky Mountains in order to improve the planning of software projects. The result was the Agile Manifesto [](Agile manifesto), [](Clean Agile), a brief guide line how software development should be done. Some of the points were:
--	Individuals and interactions over processes and tools.
--	Working software over comprehensive documentation.
--	Customer collaboration over contract negotiation.
--	Responding to change over following a plan.
+In 2001, a group of software engineers met for two days in the Rocky Mountains to enhance the planning of software projects. The outcome was the Agile Manifesto [](https://agilemanifesto.org/), [](Clean Agile), a concise guideline on how software development should be approached. The key principle is to prioritize working on the most crucial task first (the manifesto is articulated in a broader manner, but this is its core). Subsequently, the process involves iteration. It is advised not to begin with minor details that could potentially be deemed irrelevant later on.
 
-While the Agile Manifesto was about how a project should be run, there is also a Bill of Rights for the developers. The Bill of Rights states what kind of rights each individual in an agile process has.
-- You have the right to know what is needed with clear declarations of priority.
-- You have the right to produce high-quality work at all times.
-- You have the right to ask for and receive help from peers, managers, and customers.
-- You have the right to make and update your own estimates.
-- You have the right to accept your responsibilities instead of having them assigned to you.
+Part of the Agile Manifesto is the Bill of Rights. Both developers and customers have their own rights. This serves as a constitution for software development. Like any legal document, it involves making trade-offs. However, it is definitely worth a read [](https://www.informit.com/articles/article.aspx?p=2990402&seqNum=3), [](Clean Agile).
 
+## Work Planning
 
-## Work planning
+The product owner has a set of requirements that the code should fulfill. This workload is broken down into small tickets. I would like to emphasize the word small. Each ticket should be manageable by one person during one sprint, preferably even smaller.
 
-// explain story based velocity rather than story point based planning? 
+Every task is estimated based on the amount of work it will require. The task size is measured in story points, which is an arbitrary unit used to assign a relative size to tasks. However, story points are intentionally kept vague to signify that they are rough estimates. Typically, in projects, a story point represents between half a day and a full day of work.
 
-The product owner has a set of requirements that the code should fulfill. This pile of work is broken down into small tickets. Where I’d like to emphasize the word small. Each ticket should be doable by one person during one sprint. Preferably it’s smaller than that.
+The ticket size is estimated during the sprint planning meeting, where the next sprint is planned. Each ticket's number of story points is estimated by the team. Typically, each developer provides a hidden estimation, and the average becomes the number of story points assigned to the ticket. If there is a significant difference in the estimations, the team needs to discuss the reasons behind it. It could be due to a missed difficulty or that most developers underestimated the task. Unfortunately, this ticket estimation process does not always work effectively. It requires thorough planning so that all developers understand the ticket requirements. Otherwise, the estimations can be significantly inaccurate, especially when the ticket is not well-defined. In such cases, the ticket may need to be divided into smaller tickets.
 
-Every ticket is estimated for how much work it will take. The ticket size is quantified by the number of story points it gets. This is an artificial number to give the tickets a measurable size. Yet at the same time, the story points are vague enough to indicate that this value is only a vague estimation. In most projects, a story point is between one half and one day of work.
+For these reasons, there is an attempt to work without any estimations of ticket size. The approach is to cut the tickets as small as possible and count the number of tickets instead [](https://youtu.be/go_pLBt8PP8). This method, known as story-based velocity, has the advantage that you don't have to do the notoriously imprecise estimation of the ticket size. Breaking down the tickets into as small chunks as possible is recommended.
 
-The ticket size is estimated at the so called sprint planning, a meeting where the next sprint is planned. For each ticket, the number of story points is estimated by the team. Usually every developer makes a hidden estimation and the average is the number of story points being assigned to the ticket. If there is a large discrepancy in the estimations, the team needs to discuss why this is the case. Probably some difficulty was missed, but it could also be that most developers underestimated the task. Unfortunately this estimation of tickets does not always work too well. It takes really good planning such that all developers know what has to be done in the ticket. Otherwise the estimations are way off. This is especially the case when the ticket is not well defined. In this case, the ticket probably has to be split up into smaller tickets. 
+Tickets all have inherent business value as they must directly and measurably impact the user. This implies that each ticket represents a comprehensive segment across the software stack, spanning from the database, through the back-end code, and up to the GUI. All components must be addressed within a single ticket. Therefore, you either possess the necessary expertise to work on every layer of the software stack independently, or you collaborate with a team member to engage in pair programming to bridge any knowledge gaps.
 
-For these reasons there is the attempt to work without any estimations of ticket size. Just cut the tickets as small as possible and count the number of tickets instead[](https://youtu.be/go_pLBt8PP8). Story based velocity has the advantage that you don't have to do the notoriously imprecise estimation of the ticket size. And breaking down the tickets into as small junks as possible is anyway recommended.
+At the same time, one can write acceptance tests for every ticket: "... if the user clicks x, then the window closes". This test also serves as the acceptance criterion for the ticket. The ticket is considered accepted if the acceptance test passes.
 
-Tickets all have some business value. They have a direct effect on the user. This means, that every ticket is a vertical slice through the software stack. From the database through the back end code and to the GUI. Everything has to be worked on in a single ticket. So, either you know already how to work on each layer of the software stack, or you team up with someone else and do pair programming in order to fill the knowledge gap.
-
-At the same time, one can write acceptance tests for every ticket. "... if the user clicks x, then the window closes." This test is also the acceptance criterion of the ticket. The ticket is accepted if the acceptance test passes.
-
-// Write SMART Acceptance ciriteria [Zühlke, www.zuehlke.com] // move this to Requirements Engineering??
-
+The acceptance criteria of a ticket have to be SMART [](Zühlke, www.zuehlke.com):
 Specific: Use examples with values.
 Measurable: You have to be able to test it.
-Achievable: It should not depend on 3rd parties.
+Achievable: It should not depend on third parties.
 Relevant: It should be important to the user.
-Time-bound: It should be done in a reasonable time frame.
+Time-bound: It should be done in a reasonable timeframe.
 
 ## Quality Assurance
 
-In waterfall projects, the Quality Assurance (QA) was manually trying to find bugs in the existing software. This certainly does not fit anymore with agile. Instead, the QA should write the acceptance tests of every ticket. These tests should preferably be written before the developers finished working on the same ticket. This is quite similar to TDD and is called Behavior Driven Development (BDD) or at times Acceptance Test Driven Development (ATDD).
+In waterfall projects, Quality Assurance (QA) teams used to manually search for bugs in the existing software. However, this approach no longer aligns with the agile workflow. In the current scenario, QA should be responsible for writing acceptance tests for each ticket. Ideally, these tests should be created before developers complete their work on the respective ticket. This practice is akin to Test-Driven Development (TDD) and is known as Behavior Driven Development (BDD) or sometimes as Acceptance Test Driven Development (ATDD).
 
-Finishing the acceptance tests before the developers finish the actual ticket is a hard task. One way to mitigate this issue is working ahead. The QA team can always try to be half a sprint ahead. This is not so easy as the sprint planning was not yet done. On the other hand, the PM should know quite well one sprint ahead what is going to follow next.
-
-## The Iron Cross
-
-// make a graph of the iron cross // or remove this alltogether?
-
-As in most other domains, there is frequent problem of projects not being done in time. There is of course always the solution of reducing quality far enough to make it in time. 
-
-In Software engineering, we have the rule of the Iron Cross: Good, fast, cheap, done. Choose three. Here are some options how the management can deal with these issues.
-
-### Good
-
-Reducing the quality of the code is the first option. Albeit, it is probably the worst one. This will lead to bugs and the overall productivity of the team will plummet quite quickly. Quick and Dirty just doesn’t work. Especially not on the long term.
-
-### Fast
-
-Reducing scope of a project is usually the best option. In Agile, the important tickets were done at the beginning of the project. Furthermore, the work was cut vertically. Meaning that all the important stuff is already working. This allows the management to remove some of the less important tickets from the scope of the project.
-
-### Cheap
-
-If a software project goes wrong it’s usually not that cheap anymore, no matter what’s being done. 
-
-One thing the management tends to do is throwing more developers at the problem. This, however, is not working out as planned. It takes time and effort to introduce the new developers into the project, leading to a short-term dip in the overall productivity, before ramping up.
-
-### Done
-
-Changing the schedule helps a lot and is frequently the only option. As it was already the case in waterfall times. On the other hand, there are also plenty of projects where the scope of work is tuned in order to get the work done. It is quite amazing how often the core requirements of a project were overestimated. There are projects where some of the first requirements were in the end not implemented because it turned out that these requirements were not really needed.
+Finishing the acceptance tests before the developers complete the actual ticket is a challenging task. One way to mitigate this issue is by working ahead. The QA team can strive to be half a sprint ahead. However, this is not easy as the sprint planning has not been completed yet. On the other hand, the project manager should have a good understanding of what will follow in the next sprint.
 
 ## Sprints
 
-In Agile, the whole project is split up into pieces of one to four weeks, called sprints. During each sprint, there is a sprint planning, some time for implementing the features and a sprint presentation meeting in the end where the outcome of the sprint is being discussed. This structure results in regular feedback how the project is progressing. It allows the project manager to extrapolate the current progress and make rough a estimate on how long it will take until the next mile stone. This progress can also be used as a monitoring tool how well the development team is doing.
+In Agile, the entire project is divided into pieces lasting one to four weeks, known as sprints. Each sprint involves sprint planning, time for implementing features, and a sprint presentation meeting at the end to discuss the sprint's outcomes. This framework provides regular feedback on the project's progress, enabling the project manager to assess the current progress and estimate roughly how long it will take to reach the next milestone. This progress can also serve as a monitoring tool to evaluate the development team's performance.
 
-The first meeting of a spring is the sprint planning. It takes the whole team to discuss the tickets and which ones to scope into the sprint. The sprint planning for a two-week sprint may take a half a day.
+The first meeting of a sprint is the planning. It involves the entire team discussing the tickets and deciding which ones to include in the sprint. The sprint planning for a two-week sprint may take half a day.
 
-Part of the meeting is the planning game (see Work Planning), where the story points for each ticket are estimated. This is required to plan the scope of the next sprint.
+Part of the meeting involves the planning game (see Work Planning), where the story points for each ticket are estimated. This is necessary to plan the scope of the next sprint.
 
-Next is the daily meeting. This meeting is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what he’s doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
+Next is the daily meeting. This meeting is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what they are doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
 
-Toward the end of the sprint, the software developers present their work done in the sprint presentation meeting. The idea of this meeting is for all the stake holders to get an idea what the status of the software is. And hopefully, the developers are proud to present their work done.
+Toward the end of the sprint, the software developers present their work in the sprint presentation meeting. The purpose of this meeting is for all stakeholders to understand the current status of the software. Hopefully, the developers are proud to showcase their completed work.
 
-The last meeting is the retro perspective. Here the team meets to discuss anything that could improve the productivity of the development. Issues why the ticket size was estimated wrongly, blockers that were not resolved for too long, unresolved MRs, etc.
+The last meeting is the retrospective. Here, the team meets to discuss anything that could improve the productivity of the development process. This includes issues such as why the ticket size was estimated incorrectly, blockers that were not resolved for too long, unresolved merge requests (MRs), etc.
 
-## Becoming agile
+## Becoming Agile
 
-What I tried to explain in this chapter so far was supposed to be something like a manual how to become Agile. The real effort, however, lies before you. There is no Agile a manual. It is more like a schema. And you can stretch this schema in many possible directions, whether it makes sense or not.
+What I tried to explain in this chapter so far was supposed to be something like a manual on how to become Agile. The real effort, however, lies ahead of you. There is no Agile manual. It is more like a framework. And you can extend this framework in many possible directions, whether it makes sense or not.
 
-The most important point from Agile is that you should figure out by yourself what works best. And be honest with yourself. It may be more convenient to work alone for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. You don't know how your colleagues are doing. You lack knowledge how you are progressing. And not only you, also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
+The most important point from Agile is that you have to figure out by yourself what works best. And be honest with yourself. It may be more convenient to work alone for several weeks and hand in a pile of work in the end, than spending some time in meetings every two weeks. You don't know how your colleagues are doing. You lack knowledge of how you are progressing. And not only you, but also your project manager would like to know how things are going. This is a pretty important aspect of Agile: you gain a lot of information about the progress of the project that will help you to further plan the rest of the work.
 
-Furthermore, there are some things that are absolutely mandatory, when working agile. You are not planning the whole software anymore at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. What most people don't understand is that they would have to remain flexible also in waterfall mode as plaining everything from scratch isn't working out. 
+Furthermore, there are some things that are absolutely mandatory when working agile. You are not planning the whole software all at once in the beginning. Instead, you have to be able to adapt. Your code has to be flexible. What most people don't understand is that they would have to remain flexible even in waterfall mode, as planning everything from scratch isn't effective.
 
-In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a hard task and you’re probably afraid that you may break something. But it’s inevitable. You have to be able to change your code. That’s your job. Instead, you have to mitigate your fear of breaking the code. And the only way to do so are automated tests. Loads of it. Pretty much every single line of your code should be covered by a test. This is the only way how Agile can ever work out.
+In order to be flexible, you have to be able to adapt your code. You have to change its structure. You have to refactor. This is a challenging task, and you're probably afraid that you may break something. But it's inevitable. You have to be able to change your code; that's your job. Instead, you have to mitigate your fear of breaking the code. The only way to do so is through automated tests. Loads of them. Practically every single line of your code should be covered by a test. This is the only way Agile can truly excell.
+
+## Drawbacks of Agile
+
+Agile is an empirical approach to improve processes. The continuous feedback loop in the process is supposed to enhance the entire software development process. However, it is not simple. It always involves balancing different interests, and often the success of Agile depends on subtle nuances. A friend of mine used Kanban, a method where all tasks are written on paper. Although digital versions of the Kanban board are now available, using a digital version did not yield the same results. The effectiveness of Kanban relied on numerous small details that were not replicated in the digital version. For instance, it was much easier to notice issues on paper, such as when a task was too lengthy. In contrast, in the digital version, one could easily minimize the task description, concealing the problem.
+
+Another very common problem is the number of meetings. While there is a need to coordinate the work done by team members and keep the marketing team informed about progress, excessive meetings can slow down the team and be counterproductive. Therefore, it is important to constantly assess the effectiveness of each meeting.
+
+Finally, Agile does not solve the problem of inaccurate estimations of the total workload. Although these estimations are less imprecise than they used to be with waterfall, the issue remains that nobody truly knows the exact amount of work required. While you may have a backlog with tickets and possibly even some vague estimations of their sizes, the total amount of work remaining is still quite uncertain. The actual workload only becomes clear as time progresses.
 
 # 46. Requirements Engineering
 
