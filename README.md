@@ -413,7 +413,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Drawbacks of Agile](#drawbacks-of-agile)
 - [46. Requirements Engineering](#46-requirements-engineering)
   - [Stakeholders](#stakeholders)
-  - [Goals, Context and Scope](#goals-context-and-scope)
+  - [Goals, Context, and Scope](#goals-context-and-scope)
     - [Requirements Elicitation](#requirements-elicitation)
     - [Documentation of the requirements](#documentation-of-the-requirements)
   - [Use-Case Model](#use-case-model)
@@ -7199,74 +7199,73 @@ Finally, Agile does not solve the problem of inaccurate estimations of the total
 
 # 46. Requirements Engineering
 
-"Do the Right Thing and Do Things Right the First Time" - Marcia (Marci) Malzahn
+"The most difficult part of requirements gathering is not the act of recording what the user wants, it is the exploratory development activity of helping users figure out what they want." - Steve McConnell
 
 Written by Felix Gähler
 
-Requirements Engineering (RE) is the process of determining what you should implement. Because as we have learned, we may only implement code if it's really useful for our customers [chapter Software Engineering].
+Requirements Engineering (RE) is the process of determining what should be implemented. As we have learned, code should only be implemented if it is truly beneficial for our customers [chapter Software Engineering].
 
-It may be surprising, why this chapter is even needed. Isn't it obvious what you have to implement? Unfortunately no. Many times it is even highly unclear what you have to implement. And you quickly wasted a few hundred thousand euros if the development team wastes a few months developing a feature which in the end isn't used. It is therefore very important to always be aware of what and why you are developing.
+It may be surprising why this chapter is even needed. Isn't it obvious what you have to implement? Unfortunately, no. Many times it is highly unclear what you have to implement. You could quickly waste a few hundred thousand euros if the development team spends a few months developing a feature that isn't used in the end. It is, therefore, crucial to always be aware of what and why you are developing.
 
 ## Stakeholders
 
-As so often, you spend a large part of your work talking to other people. You have to find out who is important and who just feels important. You also have to consider the different characters in the team and act accordingly. Company politics. If you don't feel comfortable with this, you better stay in software development and don't switch to Requirements Engineering.
+As is often the case, a significant portion of your work involves interacting with others. You must discern who holds genuine importance and who simply perceives themselves as important. Additionally, you need to navigate the various personalities within the team and adjust your approach accordingly. This involves understanding company politics. If you are not at ease with this aspect, it may be preferable to remain in software development rather than transitioning to Requirements Engineering.
 
-Stakeholders are all persons with an interest in the system. If I forget to ask a stakeholder, he will not be satisfied at the end. Therefore, I create a stakeholder list, in which I estimate how big the interest is, and how big the power. A stakeholder with great power must of course be kept happy, even if his interest is rather small. Stakeholders with great interest but little power I actively involve, because they are often the daily users. Stakeholders with great interest and great power I prioritize. And those with little interest and little power I can safely ignore, even if they may make the most noise. [Create graphic]
+Stakeholders are all individuals with an interest in the system. If I forget to consult a stakeholder, they will not be content in the end. Therefore, I compile a stakeholder list, where I assess the level of their interest and power. A stakeholder with significant power must be satisfied, even if their interest is minimal. Stakeholders with high interest but low power should be actively engaged as they are often the primary users. Stakeholders with both high interest and power should be given priority. Those with low interest and power can be disregarded, even if they are making the most noise. [Create graphic]
 
-## Goals, Context and Scope
+## Goals, Context, and Scope
 
 First, you have to ask yourself what goals you want to achieve with the new system. It is important to define the goals as completely and consistently as possible. They should also be weighted according to their importance. It is worth investing some time in a precise goal description, which is coordinated with the stakeholders.
 
-You always have to be aware of what exactly belongs to the new system and what does not (system boundary or scope). This also includes the question of what actually belongs to the system and what is predetermined from the outside. What is in the scope can also be changed in the project.
+You always have to be aware of what exactly belongs to the new system and what does not (system boundary or scope). This also includes determining what actually belongs to the system and what is predetermined from the outside. Items within the scope can also be modified during the project.
 
-The scope and context can be represented in a use case diagram. This diagram shows which actors influence components of the system. // Insert example
+The scope and context can be represented in a use case diagram. This diagram illustrates how actors influence components of the system. // Insert example
 
-In the scope and context there is initially a gray area. The smaller this area is, the smaller the risk of the project. It is therefore worthwhile to determine the context and especially the scope as precisely as possible and to update it regularly in the case of iterative approaches.
+In the scope and context, there is initially a gray area. The smaller this area is, the lower the risk of the project. It is therefore worthwhile to determine the context and especially the scope as precisely as possible and to update it regularly in the case of iterative approaches.
 
-Goals, context and scope form the framework in which the requirements can now be determined.
+Goals, context, and scope form the framework within which the requirements can now be determined.
 
 ### Requirements Elicitation
 
-Just as it is difficult to write good code, it is also difficult to describe a requirement in a ticket. It should not be too long, but still as clear as possible. It should also be well received by the developers. Not everything that seems logical to the author of a ticket is logical for the developer who will implement the ticket.
+Just as it is challenging to write good code, describing a requirement in a ticket is equally challenging. It should be concise yet clear, and well-received by developers. Not everything that appears logical to the author of a ticket may be logical for the developer tasked with its implementation.
 
-It's best to write a few examples in the ticket, which can also serve as a test case. These should include both the "happy case" and boundary conditions and special cases. The latter is often forgotten. For example, in a bank transfer it must be prevented that a negative amount is transferred.
+It's best to include a few examples in the ticket, which can also serve as test cases. These examples should encompass both the "happy case" and boundary conditions, as well as special cases. The latter is often overlooked. For instance, in a bank transfer, it is crucial to prevent the transfer of a negative amount.
 
-The requirements should be formulated as neutrally as possible. They should describe the WHAT and not the HOW. The author of the feature should actually know nothing about the technical details of the code. In addition, developers often have better ideas on how to implement something than external persons.
+The requirements should be formulated as neutrally as possible. They should describe the WHAT and not the HOW. The author of the feature should ideally have no knowledge of the technical details of the code. Additionally, developers often have better ideas on how to implement something than external individuals.
 
-It is crucial to involve the stakeholders in the requirements elicitation. This is hard work. It is time-consuming and labor-intensive. I try to find as much as possible and to "tease out" the stakeholders.
+It is crucial to involve stakeholders in the requirements elicitation process. This task is challenging, time-consuming, and labor-intensive. I strive to gather as much information as possible and to effectively engage with the stakeholders.
 
-If you think it would be easy to find the requirements for a new system, you are wrong. The users, both outside and inside the company, are not waiting to discuss the advantages and disadvantages of the software with you for hours. They have work to do. Events such as company outings and aperitifs can help. Sometimes surveys and interviews are more helpful. The most important thing is that you are a good listener, so that people like to talk to you about their concerns and trust you.
+If you think it would be easy to find the requirements for a new system, you are mistaken. The users, both external and internal to the company, are not eager to spend hours discussing the pros and cons of the software with you. They have work to do. Events like company outings and social gatherings can be beneficial. Sometimes, surveys and interviews can provide more insight. The key is to be a good listener, so that people feel comfortable sharing their concerns with you and trust you.
 
-Furthermore, you must also inform yourself independently of the users about the topic. It is not only important what the software can already do, but much more what the customers want. Often one thinks too narrowly. Just as Nokia did not want to develop a smartphone at the beginning of the 00s, although it was suggested by an engineer. Nokia simply saw no market for a phone without a keyboard.
+Furthermore, you must also inform yourself independently about the topic, not solely relying on the users for information. It is crucial to consider not just what the software is capable of, but more importantly, what the customers desire. Often, one's perspective is too limited. For instance, Nokia resisted developing a smartphone in the early 2000s, despite an engineer's suggestion. Nokia failed to see the potential market for a keyboard-less phone.
 
 The most important sources are:
-- the stakeholders: clients, customers, users, managers, operators, developers, architects, testers
-- documents: laws, norms, standards, concepts, specialist articles, error reports
-- existing systems: old systems, predecessor systems, surrounding systems, competitor systems
+- The stakeholders: clients, customers, users, managers, operators, developers, architects, testers
+- Documents: laws, norms, standards, concepts, specialist articles, error reports
+- Existing systems: old systems, predecessor systems, surrounding systems, competitor systems
 
-When determining the requirements, there are 3 different factors:
-- The basic factors are those that are often not even mentioned, as they are considered so self-evident. But they must not be forgotten.
+When determining the requirements, there are three different factors:
+- The basic factors are often overlooked as they are considered self-evident. However, they must not be forgotten.
 - The performance factors are the focus of the users and are usually discussed.
-- The enthusiasm factors are those that a user wishes for, although he does not know it. If you find these features, you have done a really good job.
+- The enthusiasm factors are those that a user desires, even if they are not aware of it. If you identify these features, you have done an excellent job.
 
-The best way to find all the basic factors, performance factors and enthusiasm factors is to combine several survey techniques. Interviews for the performance factors and additional creativity techniques such as workshops or brainstorming for the enthusiasm factors. Field observation is well suited for the basic factors, which are considered self-evident by the interviewees and are therefore not mentioned at all.
+The best way to identify all the fundamental factors, performance factors, and enthusiasm factors is to integrate various survey techniques. Conduct interviews to explore performance factors and utilize creative methods like workshops or brainstorming sessions for enthusiasm factors. Field observation is ideal for identifying basic factors, which interviewees may consider self-evident and thus may not mention at all.
 
-Example hotel: That toilet paper must be available is not mentioned, as it is considered self-evident. But woe if it is missing when you are sitting on the toilet!
-
+Example hotel: The availability of toilet paper is not mentioned, as it is considered self-evident. However, it can be a problem if it is missing when you are sitting on the toilet!
 
 ### Documentation of the requirements
 
-It is best to document the requirements continuously during the interviews, workshops, etc. The same or very similar requirements are of course mentioned again and again. It therefore makes sense to record the requirements in a uniform pattern so that duplicates can be easily recognized.
+It is best to document the requirements continuously during interviews, workshops, etc. The same or very similar requirements are mentioned repeatedly. Therefore, it makes sense to record the requirements in a consistent format to easily identify duplicates.
 
-I document the requirements in natural language. This way, non-technical readers, suppliers, customers, managers can also be addressed. The stakeholders do not have to learn a tool first, but can work without training.
+I document the requirements in natural language. This approach allows non-technical readers, suppliers, customers, and managers to be addressed. Stakeholders do not need to learn a tool first; they can work without training.
 
-With the help of a glossary, I can define terms that are used in the requirements. This way, misunderstandings can be avoided. // example
+With the assistance of a glossary, I can define terms utilized in the requirements. This practice helps prevent misunderstandings. // example
 
-I also document the requirements using formal models. These help to find gaps and contradictions and facilitate the later development of solution models. A model is like a map. A simplified image of reality that only shows the relevant things. The model shows this image from a certain perspective. It therefore makes sense to create several models that show reality from different perspectives.
+I also document the requirements using formal models. These models help identify gaps and contradictions and streamline the development of solution models. A model is akin to a map, offering a simplified representation of reality that highlights only the pertinent aspects. Each model presents this representation from a specific viewpoint. Hence, it is beneficial to create multiple models that depict reality from various perspectives.
 
 ## Use-Case Model
 
-With use case models, the business cases and their interactions can be modeled well. I therefore create a diagram that shows the system boundary and the actors that interact with the system.
+With use case models, the business cases and their interactions can be modeled well. I, therefore, create a diagram that shows the system boundary and the actors that interact with the system.
 
 In order to identify the use cases, I start with the actors. I think about what the system should do for the actor. Does it store data? Who triggers the action in the system?
 
@@ -7276,38 +7275,41 @@ Small systems typically have about 10 use cases, while large systems can have 50
 
 The business objects and required data can be well represented in class diagrams. //example
 
-
 ### Prioritization of Requirements
 
-You start with the most important tickets as you will never implement all of them. The requirements are therefore prioritized (in consultation with the stakeholders). It is not surprising that every stakeholder wants to see "his" requirement at the top! In order to objectify this conflict, there are prioritization models such as WSJF (Weighted Shortest Job First). This optimizes the economic benefit by comparing the costs of delay and implementation effort. The difficulty, of course, is to estimate these costs.
+You should begin with the most crucial tickets since it is unlikely that you will be able to implement all of them. The requirements should be prioritized (in consultation with the stakeholders). It is common for each stakeholder to want to see "their" requirement at the top of the list. To address this conflict objectively, there are prioritization models like WSJF (Weighted Shortest Job First). This model optimizes economic benefits by comparing the costs of delay and implementation effort. The challenge lies in accurately estimating these costs.
 
 ### Review of Requirements
 
-It is much easier and cheaper to fix a bug in the requirements phase than later in the testing phase or even in production. Therefore, it makes sense to review the requirements before they are implemented. Typical errors are incorrect, incomplete, contradictory, or unrealistic requirements.
+It is much easier and more cost-effective to fix a bug in the requirements phase than in the testing phase or during production. Hence, it is advisable to scrutinize the requirements before their implementation. Common errors include inaccurate, incomplete, conflicting, or unrealistic requirements.
 
-It is very important to involve the right stakeholders in the review. Error search and error correction should be separated, the yield is then higher. In a rapidly changing environment, it makes sense to repeat the review periodically. Are we still up to date?
+It is very important to involve the right stakeholders in the review. Error search and error correction should be separated to increase efficiency. In a rapidly changing environment, it is advisable to conduct periodic reviews. Are we still up to date?
 
-A simple and effectife review method is the review. A moderator invites stakeholders as reviewers, goes through the requirements with them and creates a list of findings with weighting. Based on the findings, the requirements are then to be corrected accordingly.
+A simple and effective review method is the review. A moderator invites stakeholders as reviewers, goes through the requirements with them, and creates a list of findings with weighting. Based on the findings, the requirements are then corrected accordingly.
 
-The reviewed and accepted requirements form the so-called baseline for development.
+The reviewed and accepted requirements form the baseline for development.
 
 ### Administration of Requirements
 
-In a small project, the requirements can easily be managed in a text document. Nevertheless, it is worthwhile to give each requirement a unique ID as a reference. The ID can also be used to document the code.
+In a small project, the requirements can easily be managed in a text document. Nevertheless, it is beneficial to assign a unique ID to each requirement for reference purposes. This ID can also be utilized for documenting the code.
 
-Requirements have other attributes in addition to ID and description. The most important are:
-- Source of the requirement. This is important for queries.
+Requirements have other attributes in addition to ID and description. The most important ones include:
+
+- Source of the requirement: This is important for queries.
+
 - Priority of the requirements
-- Status of the requirement. Is it implemented, tested, accepted?
-- Verification tests. These are used to check whether the requirement is implemented correctly.
 
-It is also important to manage changes systematically. If a requirement is changed during the project, I document exactly what was changed when. The changed requirement must again go through the review and be accepted. Then the question arises, where in the already implemented software the change has an impact.
+- Status of the requirement. Has it been implemented, tested, andaccepted?
 
-In security relevant systems, traceability is a must. So the traceability from the acceptance test back to the source of the requirement.
+- Verification tests are used to check whether the requirement is implemented correctly.
+
+It is also important to manage changes systematically. If a requirement changes during the project, I document precisely what was changed and when. The altered requirement must undergo review again and be accepted. Subsequently, the question arises as to where in the already implemented software the change will have an impact.
+
+In security-relevant systems, traceability is a must. This includes tracing back from the acceptance test to the source of the requirement.
 
 ### Tools for Requirements Management
 
-A common tool is Atlassian Jira. With this tool, requirements and test cases can be managed and assigned to developers for implementation. Also, detected errors (bugs, defects) can be recorded and prioritized in Jira.
+A common tool is Atlassian Jira. With this tool, requirements and test cases can be managed and assigned to developers for implementation. Additionally, detected errors (bugs, defects) can be recorded and prioritized in Jira.
 
 # 47. Planning
 
