@@ -31,11 +31,12 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Writing this book](#writing-this-book)
 - [6. Software Engineering](#6-software-engineering)
   - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+  - [Understandable Code](#understandable-code)
   - [Writing correct code](#writing-correct-code)
   - [Cleaning up code](#cleaning-up-code)
   - [Writing code for a purpose](#writing-code-for-a-purpose)
-  - [The five rules of software engineering](#the-five-rules-of-software-engineering)
-- [7. Good code: a list of rules](#7-good-code-a-list-of-rules)
+  - [The Four Rules of Software Engineering](#the-four-rules-of-software-engineering)
+- [7. Good code: Some Rules of Thumb](#7-good-code-some-rules-of-thumb)
   - [The Zen of Python](#the-zen-of-python)
 - [8. Understandable code](#8-understandable-code)
   - [How Humans Think](#how-humans-think)
@@ -62,7 +63,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Real world example](#real-world-example)
   - [Programming Example](#programming-example)
   - [The Abstraction Layers](#the-abstraction-layers)
-    - [Example of layered code](#example-of-layered-code)
+    - [Code Example](#code-example)
     - [3rd party libraries](#3rd-party-libraries)
     - [Infrastructure code](#infrastructure-code)
     - [The domain level](#the-domain-level)
@@ -84,15 +85,32 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 - [12. Naming](#12-naming)
   - [The importance of Names](#the-importance-of-names)
   - [How to name things](#how-to-name-things)
+  - [Naming Functions](#naming-functions)
   - [Naming Antipatterns](#naming-antipatterns)
     - [Useles Words](#useles-words)
     - [Generic Names](#generic-names)
   - [Copilot](#copilot-2)
+- [13. Data Types](#13-data-types)
+  - [Lists](#lists)
+  - [Enums](#enums)
+    - [Booleans](#booleans)
+    - [Strings](#strings)
+    - [Ints](#ints)
+    - [Classes](#classes)
+    - [Enums](#enums-1)
+  - [Booleans](#booleans-1)
+    - [Match case statements](#match-case-statements)
+    - [For Loops](#for-loops)
+    - [Filtering Lists](#filtering-lists)
+  - [Strings](#strings-1)
+    - [Stringly typed objects](#stringly-typed-objects)
+    - [Natural Language](#natural-language)
+  - [Dictionaries](#dictionaries)
+  - [Trees](#trees)
+  - [Pointers](#pointers)
 - [13. Functions](#13-functions)
   - [Do one thing only](#do-one-thing-only)
     - [Levels of indentation](#levels-of-indentation)
-    - [Naming](#naming-1)
-  - [Temporal Coupling](#temporal-coupling)
   - [Number of Arguments](#number-of-arguments)
     - [Copilot](#copilot-3)
   - [Output arguments](#output-arguments)
@@ -126,8 +144,8 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Drawbacks of Classes](#drawbacks-of-classes)
   - [Conclusions](#conclusions)
   - [Copilot](#copilot-5)
-- [15. Inheritance](#15-inheritance)
-  - [Two Types of Inheritance](#two-types-of-inheritance)
+  - [Inheritance](#inheritance-1)
+    - [Two Types of Inheritance](#two-types-of-inheritance)
   - [Drawbacks of Inheritance](#drawbacks-of-inheritance)
     - [Tight Coupling](#tight-coupling)
     - [Inheritance is Error-Prone](#inheritance-is-error-prone)
@@ -137,24 +155,6 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Advantages of Inheritance](#advantages-of-inheritance)
   - [Inheritance and Composition](#inheritance-and-composition)
   - [Conclusions](#conclusions-1)
-- [16. Data Types](#16-data-types)
-  - [Lists](#lists)
-  - [Enums](#enums)
-    - [Booleans](#booleans)
-    - [Strings](#strings)
-    - [Ints](#ints)
-    - [Classes](#classes)
-    - [Enums](#enums-1)
-  - [Booleans](#booleans-1)
-    - [Match case statements](#match-case-statements)
-    - [For Loops](#for-loops)
-    - [Filtering Lists](#filtering-lists)
-  - [Strings](#strings-1)
-    - [Stringly typed objects](#stringly-typed-objects)
-    - [Natural Language](#natural-language)
-  - [Dictionaries](#dictionaries)
-  - [Trees](#trees)
-  - [Pointers](#pointers)
 - [17. Properties of Variables](#17-properties-of-variables)
   - [Compile-time constant](#compile-time-constant)
   - [Runtime Constant](#runtime-constant)
@@ -237,6 +237,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Object-Oriented Programming](#object-oriented-programming)
   - [Procedural programming](#procedural-programming)
   - [Functional Programming](#functional-programming)
+  - [Temporal Coupling](#temporal-coupling)
   - [Conclusions](#conclusions-2)
   - [Copilot](#copilot-8)
 - [24. Programming Languages](#24-programming-languages)
@@ -394,16 +395,16 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
-- [43. Working in teams](#43-working-in-teams)
+- [44. Working in teams](#44-working-in-teams)
   - [Team Structure](#team-structure)
     - [The Bus Factor](#the-bus-factor)
   - [Developers work](#developers-work)
   - [Communication](#communication)
   - [Working with customers](#working-with-customers)
-- [44. Code Review](#44-code-review)
+- [45. Code Review](#45-code-review)
   - [Drawbacks](#drawbacks)
   - [Conclusions](#conclusions-3)
-- [45. Agile](#45-agile)
+- [46. Agile](#46-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
   - [Work Planning](#work-planning)
@@ -411,7 +412,7 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
   - [Sprints](#sprints)
   - [Becoming Agile](#becoming-agile)
   - [Drawbacks of Agile](#drawbacks-of-agile)
-- [46. Requirements Engineering](#46-requirements-engineering)
+- [47. Requirements Engineering](#47-requirements-engineering)
   - [Stakeholders](#stakeholders)
   - [Goals, Context, and Scope](#goals-context-and-scope)
     - [Requirements Elicitation](#requirements-elicitation)
@@ -427,11 +428,11 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
     - [Getting a project](#getting-a-project)
   - [Benefits of DevOps](#benefits-of-devops)
 - [49. Mental health](#49-mental-health)
-- [50. Hiring and getting hired](#50-hiring-and-getting-hired)
+- [50. Hiring and Getting Hired](#50-hiring-and-getting-hired)
   - [Hiring](#hiring)
-  - [Getting hired](#getting-hired)
-- [53. Further reading](#53-further-reading)
-- [55. Frequently used Abbreviations](#55-frequently-used-abbreviations)
+  - [Getting Hired](#getting-hired)
+- [51. Further reading](#51-further-reading)
+- [52. Frequently used Abbreviations](#52-frequently-used-abbreviations)
 
 
 # 3. One sentence summary
@@ -439,18 +440,75 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 // mention which part the chapters are in??
 // fix the whole enumeration
 
-Parts:
-Part 1: First things first 6-12
-Part 2: Components of Code 13-17
-Part 3: Testing 18-20
-Part 4: Design Principles 21-22
-Part 5: Programming 23-29
-Part 6: High level design 30-32
-Part 7: Existing code 33-36
-Part 8: Miscelaneous 37-41
-Part 9: Collaborating 42-50
-Part 10: Final remarks 51-54
+Chapters
 
+Chapter 1: Fundamentals of Software Engineering 6-12
+- Software Engineering
+- Good Code, a list of rules
+- Understandable Code
+- The Single Responsibility Principle (SRP)
+- Levels of Abstraction
+- Interfaces
+- Naming
+
+Chapter 2: Components of Code 13-17
+- Functions
+- Classes
+- Inheritance
+- Data Types
+- Properties of Variables
+
+Chapter 3: Testing 18-20
+- Introduction to Testing
+- Types of Tests
+- Writing better code with tests
+
+Chapter 4: Design Principles 21-22
+- SOLID principles
+- Software Engineering principles
+
+Chapter 5: Programming 23-29
+- Programming Paradigms
+- Programming Languages
+- Physical Laws of Code
+- Bugs, Errors, Exceptions
+- Complexity
+- Dependencies
+- Decoupling
+
+Chapter 6: High level design 30-32
+- Software Architecture
+- Design patterns
+- Domain Driven Design
+- 3rd party software
+
+Chapter 7: Refactoring 33-36
+- Refactoring Fundamentals
+- Refactoring techniques
+- Refactoring Legacy Code
+
+Chapter 8: Miscelaneous 37-41
+- Performance Optimization
+- Comments
+- Logging
+- Data files
+
+Chapter 9: Collaborating 42-50
+- Setting up a project
+- Tools
+- Working in teams
+- Code review
+- Agile
+- Requirements Engineering
+- DevOps
+- Mental health
+- Hiring and getting hired
+
+Appendix A
+- Further Reading
+
+Appendix B
+- Abbreviations
 
 1. .
 2. .
@@ -611,17 +669,19 @@ At the same time, I'd like to mention what this book isn't about. It doesn't tea
 
 ## Writing this book
 
-Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and mathematics are precise sciences, and you can derive all your formulas. Software engineering, on the other hand, is not an exact science. I can only give some examples to support my claims, but no proofs. And you can certainly find counter examples if you try. There are some rules of thumb at most, but there may be two rules contradicting each other. The best example is the naming of variables, functions, and classes. There is the rule that "a name should be short, yet concise". Good luck finding such a name.
+Writing a book about software development is hard. Harder than writing a book about physics or math. Physics and mathematics are precise sciences, and you can derive all your formulas. Software engineering, on the other hand, is not an exact science. I can only give some examples to support my claims, but no proofs. And you can certainly find counter examples if you try. There are some rules of thumb at most, but there may be two rules contradicting each other. The best example is the naming of variables, functions, and classes. There is the rule that "a name should be short, yet descriptive". Good luck finding such a name.
 
-I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book aims to serve as a manual, but ultimately, you will need to learn how to apply the recommendations given here on your own.
+I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book is a collection of recommendations. But ultimately, you will need to learn how to apply the recommendations given here on your own.
 
 
--# Part 1: First things first
+-# Chapter 1: First things first
 
 # 6. Software Engineering
 
 "If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
 
+// volker: first the rule and then the explanations, maybe also the list first
+don't use politicians as an example, rather use Harry Potter (easy to understand, yet good story)
 
 ## The Life of a Software Engineer
 
@@ -639,69 +699,67 @@ You will, of course, spend a fair amount of time with your precious code. But I 
 
 <img src=images/programmerActivity.png width="400">
 
+// get an image without copy right
+
 You definitely need to take a second look to fully understand the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not to mention all the meetings you have to attend as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you are working on a new project where no refactoring (code clean up) is required yet, you will have less code to read. Ultimately, you will spend more time coding. In a very large project, it takes more time to implement changes. It can take a year to become fully productive in a large project! But the company has been generating revenue from this code for a long time, so prioritizing the addition of new features is no longer as crucial. Either way, I will continue the discussion with the value from the plot.
 
 The most obvious and undeniable conclusion we can draw from the plot is that software engineering is not about writing code. It's about reading code! If you can reduce the time required to read code by half, you save more time than you spend writing code in total. By a lot.
 
-I came up with five fundamental rules for software engineering. The first one is:
+## Understandable Code
 
-**We write code that is easy to understand.**
+I came up with four fundamental rules for software engineering. The first one is:
 
-Good code is not fancy; it is not complex, and it is not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It's ... it's rather like watching some politicians... Who's vocabulary consists of only 1000 different words. This is beneficial when speaking on television. Everyone understands you. Even when people are tired or uneducated, they enjoy listening to you. They don't have to focus in order to understand you. I sometimes feel embarrassed because of my poor English skills. But writing these lines is really cheering me up. Most people reading this book are not native English speakers, and therefore, my somewhat limited language skills may actually be helpful in that regard. It makes this book easier to understand. And with code, it's fairly similar. Simple code is good because it is easy to comprehend.
+**Write code that is easy to understand.**
+
+Good code is not fancy; it is not complex, and it is not necessarily short. Good code is simple. It is as simple as it gets. Reading good code is not like reading Shakespeare. It's rather like reading Harry Potter. Who's vocabulary is comparably limited. This is beneficial. Everyone understands it. Even when people are tired they may like reading it. I sometimes feel embarrassed because of my poor English skills. But writing these lines is really cheering me up. Most people reading this book are not native English speakers, and therefore, my somewhat limited language skills may actually be helpful in that regard. It makes this book easier to understand. And you can write good books nevertheless. And with code, it's fairly similar. Simple code is good because it is easy to comprehend.
 
 Good code utilizes only the essential syntax provided by a programming language. It is great if you don't know a programming language too well. You avoid falling into the trap of using fancy but useless features. Don't learn programming languages. Learn programming. Unless you work for Google or another company developing highly specialized code, you will never need all the gimmicks that modern programming languages have to offer.
 
 ## Writing correct code
 
-Now, it is not only important to ensure that the code works, but we also have to verify its correctness. The crash of two Boeing airplanes in 2018/2019 was not the first time that software bugs led to catastrophic damage. Nor will it be the last time, unfortunately.
-
-We don't want to be responsible for people dying or companies going bankrupt. We want to write impeccable code. We want to ensure that there are no bugs to the best of our ability. We constantly check that our code is correct. We test our code. We let our computers test our code. We write code to test our code!
-
 The second rule of software engineering:
 
-**We write automated tests that cover all of our code.**
+**Write code that can have as few possible bugs as possible.**
 
-Along with this rule comes the fact that we all make mistakes. We're only human after all. So we have to write our code accordingly.
+Now, it is not only important to ensure that the code works, but we also have to verify its correctness. The crash of two Boeing airplanes in 2018/2019 was not the first time that software bugs led to catastrophic damage. Nor will it be the last time, unfortunately.
 
-The third rule of software engineering:
-
-**We write code that can have as few possible bugs as possible.**
+We don't want to be responsible for people dying or companies going bankrupt. We want to write impeccable code. We want to ensure that there are no bugs to the best of our ability. We constantly check that our code is correct. We test our code. We're only human after all. So we have to write our code accordingly.
 
 ## Cleaning up code
 
+The third rule of software engineering:
+
+**Constantly clean up our code.**
+
 Now let's return to our lovely plot. There is one more substantial chunk of work. Modifying the current code. Also known as refactoring. Yes, as astonishing as it sounds, you have to clean up your code just the same way as you have to clean up your kitchen. This process is called refactoring, and its importance cannot be understated. It helps you keep the logic of the code under control by sorting things out. All the time, over and over again. Without refactoring, your code quite quickly becomes a huge mess, making it difficult to implement any changes. And there will be a million places where bugs can hide. Though changing code always carries the inherent risk of potentially breaking it. This is one of the reasons why we need good tests. If we have good test coverage, we can change the code with confidence that we won't break it.
-
-The fourth rule of software engineering:
-
-**We constantly clean up our code.**
 
 Now you have an idea of what the life of a programmer will look like. Now you know what to look out for. Now we can do what you wanted me to do half an hour ago. I can explain the fundamental principles of writing good code.
 
 ## Writing code for a purpose
 
+The fourth rule of software engineering:
+
+**Write code to create value for our customers.**
+
 You might already be working in a company, or you will be soon. Your boss is not going to let you write code for a month just because you like it. You will be spending a considerable amount of time in meetings and engaging in discussions with others to determine precisely what you should do. What your customers want.
 
-The fifth rule of software engineering:
+If you don't like meetings nor customers, you can stay at home and write whatever code you like. But unless you are a genius, the chances of anyone caring about your code are very low. It is more rewarding to write mediocre code that is being used than to write brilliant code that no one cares about.
 
-**We write code to create value for our customers.**
+## The Four Rules of Software Engineering
 
-If you don't like meetings nor customers, you can stay at home and write whatever code you like. But unless you are a genius, the chances of anyone paying you for that are very low. It is more rewarding to write mediocre code that is being used than to write brilliant code that no one cares about.
+These four rules will accompany us throughout our book, with a strong emphasis on the first one.
 
-## The five rules of software engineering
+---
+- Write code that is easy to understand.
+- Write code that can have as few possible bugs as possible.
+- Constantly clean up your code.
+- Write code to create value for your customers.
+---
 
-These five rules will accompany us throughout our book.
+If you like to know more about the other rules, I can recommend you to read dedicated books on testing, refactoring, requirements engineering or similar topics. But in this book, we will mainly focus on the first rule. Writing code that is easy to understand.
 
-//make a list of the 5 rules in a box
-
-- We write code that is easy to understand.
-- We write automated tests that cover all of our code.
-- We write code that can have as few possible bugs as possible.
-- We constantly clean up our code.
-- We write code to create value for our customers.
-
-# 7. Good code: a list of rules
-
-// remove this chapter? we already have the one sentence summary
+# 7. Good code: Some Rules of Thumb
+// volker: maybe at the end of the book? Or spread it accross the book?
 
 "Truth can only be found in one place: the code." - Robert C. Martin
 
@@ -713,7 +771,7 @@ Good code is well-tested [testing]. It includes unit and functional tests [types
 
 Pretty much all your code follows the SRP [Single Responsability Principle]. Functions, classes, modules. Everything. The build process only requires one command. This makes the code much easier to understand, and naming also becomes simpler.
 
-Names should be short yet concise [Naming].
+Names should be short yet descriptive [Naming].
 
 Do not repeat yourself (DRY) [section Do not Repeat Yourself]. Do not copy-paste code around. But also avoid conceptual code duplication. Code duplication is terrible as you can never be sure if making a single change is sufficient, or if it needs to be applied in multiple other locations. This leads to bugs and high maintenance costs very quickly.
 
@@ -817,7 +875,7 @@ This entire book is about writing code with low complexity. The sections on the 
 In the following code, one can easily mix up the different arguments since they are all of the same type. This is a very common problem in programming. The solution is to use a class object instead of a tuple.
 
 ```py
-def send_email(to, subject, body):
+send_email("google", "new search engine", "it's awesome")
 # ...
 ```
 
@@ -839,7 +897,9 @@ In Python (and C++ 20), this problem is less prevalent as keyword arguments are 
 
 ```py
 def send_email(to: str, subject: str, body: str):
+    # ...
     pass
+
 send_email(to="google", subject="new search engine", body="it's awesome")
 ```
 
@@ -1040,6 +1100,9 @@ There are very few drawbacks of the SRP that I could think of. The SRP is someti
 
 # 10. Levels of abstraction
 
+//building blocks vs. layered architecture: this is a different level of abstraction! layers belong to architecture.
+the title is not optimal. -> reducing complexity?
+
 "You can solve every problem with another level of indirection." – Andrew Konig
 
 "Except for the problem of too many levels of indirection." – my hero
@@ -1122,8 +1185,6 @@ Vectors are a higher level of abstraction than arrays. They are easier to use an
 
 ## The Abstraction Layers
 
-// I think I have to rework this text here. Maybe I should move it into the architecture chapter?
-
 In your code, you will also have different levels of abstraction. The upper levels always depend on the layer itself and on lower layers. The code in a layer never depends on higher levels, but only on lower levels. The code can be divided into different layers. I personally like to break it up into five layers. Though it has to be remarked that this is by far not the only way to sort the code. There are many different ways to approach it, and the number of levels depends on the complexity of the problem to be solved.
 
 //create a Figure with levels of abstraction. Levels (bottom to top): Infrastructure – Domain level – application layer – API – acceptance tests/GUI. See DDD p.68 what the layers are used for there.
@@ -1132,7 +1193,7 @@ No matter if you are looking at horizontal layers as shown here, or at onion lay
 
 Furthermore, the dependencies should always be only one level deep. Even if some dependencies do not appear to rely on an intermediate level, they should still be routed through this level. This is important in order to decouple the code. For example, database access should always be redirected through the infrastructure layer and never be handed directly to the domain layer. You should only bypass levels of abstraction if it is absolutely necessary, for example, due to performance reasons. But this should be the exception rather than the rule.
 
-### Example of layered code
+### Code Example
 
 In the following code snippet, not all lines of code are at the same level of abstraction:
 
@@ -1194,9 +1255,7 @@ As a summary, I want to emphasize once again the tremendous importance of abstra
 
 "Make interfaces easy to use correctly and hard to use incorrectly" - Scott Meyers
 
-Interfaces are closely related to levels of abstraction. Each level of abstraction has two interfaces. One is on the low-level side, and the other is on the high-level side.
-
-In this chapter, we learn that interfaces exist not only in software but also in the real world. And we can learn a great deal from them. An interface is always the connection between a developer and a user. It is defined by the developer, but it should be designed from a user perspective, as the developer only has to implement it once, while users might have to interact with the interface thousands of times. Therefore, it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
+An interface is always the boundary between a developer and a user. It is defined by the developer, but it should be designed from a user perspective, as the developer only has to implement it once, while users might have to interact with the interface thousands of times. Therefore, it pays off to design an interface properly, as it was already explained in the chapter on [levels of abstraction].
 
 ## Real-world Interfaces
 
@@ -1243,6 +1302,7 @@ class Car:
     def get_speed(self):
         return self._speed
 ```
+
 
 ## APIs
 
@@ -1307,10 +1367,11 @@ Usually, companies support multiple API versions simultaneously. They know that 
 
 Orthogonality is a mathematical concept. It has been used in software engineering by Thomas and Hunt in their highly recommended book "The Pragmatic Programmer" [](The Pragmatic Programmer). Orthogonality states that two objects are at a right angle in the current coordinate system. The first part of this sentence may seem intuitive, but what about the coordinate system...? Let me explain code orthogonality by providing a brief example that is familiar to everyone.
 
+<!-- <div class="row">
+    <img src ="images/watertabs.png" alt="retro water">
+</div> -->
+<img src=images/watertabs.png width="200">
 
-<div class="row">
-    <img src ="images/watertabs.png" alt="retro water>
-</div>
 
 [](image Shutterstock) On the right-hand side, we have old-school water taps. The user has 2 degrees of freedom (if you're not into math: 2 function arguments), one for the amount of cold water and one for the amount of warm water. However, this is not what the user typically desires. It turns out that the user wants to be able to control the two degrees of freedom differently. He wants to control both the total amount and temperature of the water. The orthogonal solution from the user's perspective is shown on the left-hand side. The solution on the right-hand side is outdated. In the engineer's coordinate system, it is orthogonal. However, nowadays, users have higher requirements and are no longer satisfied with the engineers' solutions. We expect this coordinate transformation into the user's coordinate system to be performed within the water tab.
 
@@ -1347,7 +1408,7 @@ Copilot is generally not very good at writing interfaces. Instead, you should do
 
 # 12. Naming
 
-"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction citing the bible"
+"And you will know, my name is the Lord!" – Samuel L. Jackson, Pulp Fiction citing the bible
 [https://youtu.be/MBRoCdtZOYg]
 
 This chapter is a futile attempt to help you find better names. If you are not satisfied by my lousy explanations, I recommend the book [The Art of Readable Code] which has some more detailed explanations.
@@ -1371,7 +1432,7 @@ Coming up with your own names is anything but easy. Especially new programmers r
 ## How to name things
 
 As I already mentioned, naming is one of the most challenging aspects of programming. I tried to collect and synthesize some rules on the properties of good names. The result is a pretty long list of unfortunately quite vague recommendations when naming things:
-1. Names should be short yet clear. Thus, there is a constant trade-off regarding the length of a name. Short names may be unclear, while long names may indicate that the object is difficult to describe. On the other hand, long names are not as detrimental as unclear names. When in doubt, choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb, a variable name is fine if a new work colleague can understand it.
+1. Names should be short yet descriptive. Thus, there is a constant trade-off regarding the length of a name. Short names may be unclear, while long names may indicate that the object is difficult to describe. On the other hand, long names are not as detrimental as unclear names. When in doubt, choose a longer name. For example: Should you choose `p`, `price` or `price_of_apple`? The answer is: it depends on the context. As a rule of thumb, a variable name is fine if a new work colleague can understand it.
 2. Use the same words for creating a name that you would use in a comment. If you use different words, either your abstraction may be bad or your naming is inconsistent.
 3. Think about how you would articulate a word in an everyday conversation. Would you refer to it `price of an apple` or is the context of your conversation clear enough that only `price` is sufficient?
 4. Classes and functions that adhere to the SRP are relatively easy to name because they perform only one task. Vice versa, if it's difficult to find a suitable name, reconsider whether the object adheres to the SRP and rewrite it accordingly.
@@ -1394,6 +1455,30 @@ As I already mentioned, naming is one of the most challenging aspects of program
 21. Normal reasoning should be able to help you understand how an algorithm generally scales. A function `size()` should not have a time complexity of O(n). If you want to create a function that calculates the size in O(n) time complexity, you should name it `compute_size()`.
 22. At times, it is suggested to use a trailing underscore character for class variables. This is to distinguish them from local variables. However, I think this is a sign of poor code. If you require such a distinction, your methods are likely too lengthy, and your class may be too large.
 23. According to Robert C. Martin, high-level objects have short names because they describe very general things. Low-level objects have long names because they are very specific [clean code?]. This rule, in my opinion, is quite inaccurate. It rather depends whether the object is part of a well-known interface or not. Generally names on interfaces are short because they are commonly agreed upon. For example "sin" in the math library.
+
+
+## Naming Functions
+
+Naming of functions becomes less challenging (I would love to write "easier", but it's never easy...) if you follow the rules below:
+- The name is a summary of the function content.
+- There are no hidden behaviors within a function.
+- There is no unexpected behavior within a function.
+- The entire function body is one level of abstraction lower than the function name.
+
+The following function clearly has a side effect:
+
+```py
+counter = 0
+def log_in(email_address):
+    counter +=1
+    check(email_address)
+```
+
+The function name does not indicate the presence of a hidden counter, making this hidden behavior that should be avoided. Additionally, side effects may lead to temporal coupling [see next section] because the order of calling functions with side effects matters.
+
+A more suitable name for this function could be `log_in_and_increase_counter`, but this would reveal that the function performs multiple tasks, contradicting the SRP. A function name should not contain an `and` as this indicates a violation of the SRP.
+
+Side effects can also become a significant issue when testing code. When calling the function `log_in` twice, the value of `counter` will be different each time. This will make the tests very fragile due to temporal coupling. And as we will learn in the chapter on testing [Writing better Code with Tests], brittle tests are a strong indication of poor code quality.
 
 ## Naming Antipatterns
 
@@ -1462,11 +1547,398 @@ def add(b, c):
     return b + c
 ```
 
+-# Chapter 2: Components of Code
 
+# 13. Data Types
 
--# Part 2: Components of Code
+"Primitive obsession [https://refactoring.guru/smells/primitive-obsession] is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
+
+There are hundreds of built-in data types. But using too many primitive data types is also known as "Primitive Obsession". Avoid excessive use of built-in data types. Instead, you should use custom types (classes) as much as possible. This makes the code more readable and easier to write.
+
+Using custom types (classes) is highly recommended. For example, you should always use a class `Money` when appropriate and avoid using floating-point numbers. Utilizing custom types enhances the readability and simplifies the writing process of the code. It prevents you from primitive obsessions.
+
+Primitive obsession is a very common phenomenon. Integer values are often used to represent time, even though there is typically a dedicated time class in most programming languages. Strings are used to store all kinds of information, as we will see in an example below.
+
+Here is a list of data types that I typically use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
+
+I will provide explanations for all these types except floats, integers, and classes. I don't have much to say about floats and ints, except that I typically avoid using unsigned ints, as advised by the Google Style Guide. Classes are discussed in their own section due to their significance.
+
+## Lists
+
+Lists are the workhorse in programming. Whenever you deal with several values that should all be treated in the same way, they belong in a list. I would like to emphasize the importance of being treated equally. When working with a list, it is important to iterate through all elements and perform the same operation on each of them. If you only need one value from a list, it is likely that you should not use a list.
+
+Here is an example of how not to do it:
+
+```py
+fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
+print(fruits[4]) # ...?
+```
+
+I intentionally made this code so terrible for you to understand. Strings and numbers cannot be equal objects, so they should not be placed side by side in the same list. In C++, this kind of list isn't even possible because C++ vectors cannot contain objects of different types. At least not without attending a highly advanced course in C++ black magic. In Python, on the other hand, this code is syntactically correct, and it is often tempting to write such a list. Please resist this temptation! 
+
+Your code becomes really bad if you store different things in the same list. The `print(fruits[4])` in the code example above is extremely error prone because you have to count the elements in the list. This list does several things at once and it violates the single responsibility principle (SRP) all by itself. Use data classes instead [clases].
+
+Apparently, three values inside this list always belong together. A first improvement would be to use a list of lists,
+
+```py
+fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
+```
+
+This provides some structure to the list, making it less likely that this data structure will be used incorrectly. This inner list is still far from optimal. We should use a data class instead.
+
+The code should be rewritten as follows:
+
+```py
+@dataclass
+class ShoppingItem:
+    name: str
+    weight: float
+    price: float
+
+apples = ShoppingItem(name='apple', weight=1.5, price=3.1)
+bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
+
+shopping_list = [apples, bananas]
+```
+
+Now the code is much longer, but it is also much better. It is much easier to read and understand. As we learned, the only quality measures of code. All the elements inside the list are equal. All of them are `ShoppingItems`. If you can do something, you should iterate over all elements and treat them equally. The data structure is now also pretty save. Correlated data is all stored together. It is almost impossible to confuse the weight of the apple and the banana. And it's also pretty hard now to make an error when creating the list.
+
+We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to create a list with groups of objects, you should create a data class for these groups and make a list of instances of these classes. If you only need to access a single object from a list, it is likely that your code is bad. Always iterate over the entire list and treat all elements equally.
+
+## Enums
+
+Enums are something that even many experienced software developers don't know about. You don't really need it. But they should know that enums make your code much better. There are several alternative methods to write code without utilizing enums. They are all bad.
+
+```py
+# 1. boolean:
+is_blue = True
+
+# 2. string:
+favorite_color = "blue"
+
+# 3. integer:
+favorite_color = 7
+
+# 4. class instance:
+class Blue:
+    pass
+favorite_color = Blue()
+
+# 5. enum:
+from enum import Enum
+class Color(Enum):
+    BLUE = 1
+favorite_color = Color.BLUE
+```
+
+The first four options all have some severe drawbacks.
+
+### Booleans
+
+The first one is extremely ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Avoid using booleans in general.
+
+### Strings
+
+The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time, it's easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might introduce a bug that could result in strange behavior. Without you noticing either that you have a bug or where the error comes from. The compiler won't be able to help you with this bug. Avoid using string comparisons as they are prone to errors.
+
+### Ints
+
+Third option: 7? A color? No. Please, don't do this to me. This is an example of a magic number and should be avoided. You would always have to look up the number corresponding to one color. This would be very tedious and error prone. Unless it is a well-known international color standard, for example RGB: `blue = RGB(0,0,255)`.
+
+### Classes
+
+Fourth option: Using types is not the best choice in this case. It can be verified using `isinstance(blue, Blue)`, but this process is laborious and not feasible in C++, for instance. Using classes in this case does not offer any advantages, only drawbacks.
+
+### Enums
+
+Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums may seem slightly unusual at first glance due to the `Color::` prefix, and there is no way to alter this. However, this code is really solid and foolproof. If you write `Color::BLU`, you will get an error message because you most likely did not define a color `BLU` inside the enum. This is infinitely better than having a bug [Bugs, Errors, Exceptions]. Furthermore, most Integrated Development Environments (IDEs) and programming languages support auto-completion for enums. Gone are the times when you had to look up magic values in the manual. Enums are great. Use them wherever you define a selection from a limited number of options.
+
+Enums can only be used if you know all possible options when writing the code. If the user can define custom options, string comparison must be used. Though cases where you really have to make string comparisons are rare. It is rare to encounter a situation where you receive a random string and then invoke a function based on its content. The only thing you usually have to do with random strings is pass them on without altering them.
+
+## Booleans
+
+"Have a seat, my son. There is something very important that I have to tell you. If you hear it for the first time, it may be very shocking. But it has to be said: Booleans are evil."
+
+"What? But... how...? This can't be. Booleans are only a theoretical construct. It's everywhere. The entire binary system consists of Boolean values. What do you mean?"
+
+"Yes, of course, you are right. Let me explain. It's somewhat similar to alcohol. Alcohol does not do any harm if it is inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can cause a car accident or start a pub brawl. Humans can't handle alcohol. This is why some people say that alcohol is evil. There is a very similar issue with Booleans. Booleans can be used for great things. But at the same time, using Booleans can lead to the creation of bugs. Humans struggle with Booleans. They mix it up too often. And even worse than Booleans lead to if statements. But okay, maybe we should not call them evil, but dangerous."
+
+Of course, I may be exaggerating slightly. But there's no denying: Humans struggle with Booleans and if statements. They lead to bugs. You will create bugs with if statements if you keep using them. Here are some points to consider when working with if statements:
+
+- Good code design results in fewer if statements.
+- Polymorphism can be utilized to avoid using if statements.
+- Resolve `if` statements as early as possible. Use Dependency Injection (DI) instead of booleans.
+- Avoid nesting if statements. Excessive levels of indentation are a sign of poor code quality.
+- Avoid passing Booleans as function arguments.
+- Consider using enums instead of booleans.
+- Ensure that your unit tests cover all branches of if-else statements.
+- Avoid using traditional C++ or Java iterators. Looping over iterators requires comparisons. Range-based loops are much safer and easier to use.
+
+Here is an example how to use DI instead of passing on booleans:
+
+```py
+if __name__ == "__main__":
+    if "debug" in sys.argv:
+        reader = DebugReader()
+    else:
+        reader = Reader()
+    main(reader)
+```
+
+Well yes, we didn't get rid of all `if` statements. This will never be possible. But further down in the code, there are no more booleans. Instead you only have the `reader` object that you can use polymorphically.
+
+### Match case statements
+
+// This section really needs some consideration: When should a switch/match be used?
+
+In case you have a `match case` statement (a Pythonic expression, in other languages called a `switch` statement), you should encapsulate it inside a dedicated function or use a dictionary.
+
+This is not how the code should look:
+
+```py
+def do_a_lot_of_work():
+    # a lot of code here
+    # ...
+    city_name = "Zurich"
+    match city_name:
+        case "Zurich":
+            return 8000
+        case "Bern":
+            return 3000
+```
+
+This code is flawed for a very simple reason: it almost certainly violates the SRP. The likelihood is high that this `match case` statement will be repeated multiple times in your codebase. Instead, the `match case` statement should be refactored into its own function.
+
+```py
+def post_code(city_name):
+    match city_name:
+        case "Zurich":
+            return 8000
+        case "Bern":
+            return 3000
+
+print(post_code("Zurich"))
+```
+
+The best solution, in my opinion, is using a dictionary and abandoning `match case` statements altogether. This is shorter and easier to read. If desired, you can still wrap the dictionary in a function.
+
+```py
+post_codes = {
+    "Zurich": 8000,
+    "Bern": 3000,
+}
+print(post_codes["Zurich"])
+```
+
+For larger dictionaries, this may still appear quite verbose. But this code will be hidden at a low level of abstraction.
+
+Dictionaries can also be used polymorphically. Depending on the key, it creates an object of a different type. This will prevent some `if` statements in the future, as polymorphism generally does.
+
+```py
+class Zurich:
+    def postcode(self):
+         return 8000
+
+class Bern:
+    def postcode(self):
+        return 3000
+
+cities = {
+    "Zurich": Zurich(),
+    "Bern": Bern(),
+}
+
+zurich = cities["Zurich"]
+print(zurich.postcode())
+```
+
+A little side remark: `match case` statements were only introduced with Python 3.10. This is because they are not supposed to simply replace the switch-case statements, as seen in C++ for example or as shown in the examples here. [For the full story, please visit https://youtu.be/ASRqxDGutpA]
+
+In summary, one can say that `match case` statements are not bad at all. Though they could easily be replaced by dictionaries, and they should be wrapped inside a function to make them reusable and adhere to the SRP. Additionally, they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
+
+### For Loops
+
+A long time ago, for loops required the use of booleans. Fortunately, these times are long gone. I add this topic here as an example how to get rid of boolean comparisons.
+
+There are many ways how to implement for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical C++ version:
+
+```C++
+#include <vector>
+#include <iostream>
+
+std::vector<int> numbers = {1, 2, 3, 4, 5};
+for (int i = 0; i < numbers.size(); i++) {
+    std::cout << numbers[i] << std::endl;
+}
+```
+
+Note that I had to use C++ for this example. I wouldn't know how to write such a terrible for loop in Python. There is so much that can go wrong here. You have the `<` sign which does a comparison. And comparisons are dangerous because you can always mix up `<` and `<=`.
+
+One level better is this Python code:
+
+```py
+numbers = [1, 2, 3, 4, 5]
+for i in range(len(numbers)):
+    print(numbers[i])
+```
+
+Here we got rid of the comparison. But we still have the index `i` which can be mixed up. Of course, there are times where you need this index. But generally you can use an enumeration instead.
+
+```py
+for i, number in enumerate(numbers):
+    print(i, number)
+```
+
+Assuming that you don't need the index `i`, by far the best code is the following:
+
+```py
+for number in numbers:
+    print(number)
+```
+
+Here you don't need any comparison nor an index.
+
+### Filtering Lists
+
+Another question: how should you filter lists?. The classical way is to use a for loop and an if statement. But there are two alternatives: list comprehensions and lambdas. Both solutions are quite similar (even in performance), so feel free to use the one you prefer.
+
+```py
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+odds = [n for n in numbers if n % 2 == 1]
+ten_times = [n*10 for n in odds]
+plus_five = [n+5 for n in ten_times]
+average = sum(plus_five) / len(plus_five)
+print(average)
+```
+
+```py
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+plus_five = map(lambda n: n+5,
+            map(lambda n: n*10,
+            filter(lambda n: n % 2 == 1, numbers)))
+five_list = list(plus_five)
+average = sum(five_list)/len(list(five_list))
+print(average)
+```
+
+Note that the filtering part of both versions could be written in a single line if you insist. And I'm not showing the loop version as it's too much code. 
+
+## Strings
+
+"You should never use two different languages in a single file. English is also a language." - Adapted from Robert C. Martin [Clean Code]
+
+After pointers and Booleans, strings are arguably the third most error-prone data type. Programmers often compare two strings for equality. One of them is written in plain text in the code. A string possibly twenty characters long. If a single character is wrong, you have a bug, and there is no way the computer is able to know and warn you. Of course, you can make this code work. But it is extremely brittle. You should eliminate such risks whenever possible. String comparison is a potential source of errors, and we should strive to avoid them whenever feasible. Remember, programming is all about avoiding potential sources of errors. As we have already seen, you should always consider using enums if you want to perform string comparisons.
+
+### Stringly typed objects
+
+Some people even start to encode all kinds of logic into strings. This is dreadful. At times, this is also referred to as "stringly typed" to emphasize the importance of using appropriate types instead of strings. // See also "primitive obsession"
+
+Here are some examples of strings storing all kind of information that shouldn't be stored as strings [https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]:
+
+```py
+robot.move("1","2") 
+# Should be int like 1 and 2, and maybe better a point
+
+getattr(dog, "bark")
+# Dispatching a method passing in a string that is the method's name. dog.Bark()
+
+message.push("transaction_completed")
+# Could be an enum
+```
+
+I found the following example in the book "Clean Code" on page 128, where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, he somehow went haywire. What he explained all made sense, but he missed that one should never write code the way he did.
+
+He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each character encodes whether it was too hot or not, too cold or not, etc. Capital letters represent `true`, while lowercase letters represent `false`. It's such a beautiful example of the kind of logic that can be implemented in strings. But he completely missed the point. Strings should never ever be used to encode logic. To make matters worse, the letter `"h"` is even used twice. Like this, the code becomes even more fragile because the state relies on the order of the characters.
+
+The unit tests written by Uncle Bob look quite nice at first glance. But it takes some knowledge to understand what these five characters are supposed to mean. Without appropriate background knowledge, it is impossible to understand the meaning of this string. The order of the characters within this string may seem arbitrary, but they must be in the correct sequence. This is not something that should show up in a unit test nor in your code.
+
+Now let's consider how we could improve things. We have five states that can each be either true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is an improvement over the string logic, but it still requires significant restructuring. All elements in a list should be treated equally and accessed simultaneously. But here, you will probably need only one element at a time: `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list [section lists].
+
+A better solution is to use a dataclass that stores five different variables. One Boolean value replacing each character in the string above.
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class WaterState{
+    heater_state: bool
+    blower_state: bool
+    cooler_state: bool
+    high_temp_alert: bool
+    low_temp_alert: bool
+}
+```
+
+Still, this is not optimal yet. What does `heater_state = true` or `= false` mean? Let's define an enum instead to make the code more readable.
+
+```py
+from enum import Enum
+from dataclasses import dataclass
+
+class State(Enum):
+    on = True
+    off = False
+
+@dataclass
+class WaterState:
+    heater_state: State
+    blower_state: State
+    cooler_state: State
+    high_temp_alert: State
+    low_temp_alert: State
+```
+
+Now the `heater_state` can be either `on` or `off`. This is much more intuitive to read.
+
+Once you found this solution, it looks so natural. This code is much more readable than the encoded string. It is definitely worth the extra effort required to write this struct and enum. The code has now become significantly longer, but remember: we always code for readability, not for the fewest lines of code.
+
+The code utilizing this dataclass, including the unit tests, is very straightforward. Opposite of the string solution, there is no need for logic, comparison, or anything similar. It is simply obvious how to use it.
+
+```py
+if water_state.high_temp_alert == State.on:
+    print("Attention: the water is too hot")
+```
+
+### Natural Language
+
+Many software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, nor does the translator want to deal with your code. He wants to work with only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
+
+Ultimately, you are left with barely any strings at all. You replaced them with enums, proper logic, and a file containing human-readable text. Only when reading or writing a text file do you briefly have to deal with strings. Then you immediately convert it into data. In theory, at least. For small projects, it is not always worth the effort to convert all strings into objects or dedicated text files.
+
+## Dictionaries
+
+When defining your variable, you have two different choices on how to proceed. You may either use normal variables or a dictionary (a map in C++).
+
+```py
+a = 0
+b = 1
+```
+
+```py
+vars = {"a" : 0, "b" : 1}
+```
+
+These lines do something very similar. They both assign the value `0` to `a` and the value `1` to `b` (okay, in the case of the dictionary, it is rather `"a"`, but you get my point). Yet, there is a fundamental difference. In the first line, the programmer knows that he needs variables `a` and `b` as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there would be `"a"` and `"b"` used as keys. Maybe he didn't, and these dictionary entries were generated by user input that the programmer had no control over.
+
+If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file where he doesn't the content, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance how the dishes are called and what kind of ingredients will be needed.
+
+Dictionaries are closely related to JSON and XML files. They are essentially similar to a nested dictionary serialized into a string. If you ever need to read JSON files, the resulting data structure will be a nested dictionary that you might further convert into nested class instances.
+
+## Trees
+
+It is not too often that I've had to create a tree myself, yet I have been working on tree structures for a significant part of my programming career. Trees are an extremely important data structure. When dealing with a recursive data structure, it is highly likely that you will be working with a tree. This allows you to utilize many standard algorithms that are very efficient, typically with a time complexity of `O(N log(N))`. If you implement your own algorithms, ensure that they are recursive and write automated tests that cover the corner cases.
+
+## Pointers
+
+Python, as most other modern programming languages, doesn't use pointers. C++ on the other hand used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented in C++ for and completely replaced pointers. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
+
+The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine.
+
 
 # 13. Functions
+
+naming of functions is in functions! -> move it here as well
+temporal coupling -> move elsewhere
 
 "Functions should do one thing. They should do it well. And they should do it only." - Robert C. Martin [Clean Code, chapter 3]
 
@@ -1572,97 +2044,7 @@ Assuming that global variables are not used, I had to include the `fighter` obje
 
 Anyway, we have seen some approaches on how to deal with nested `if/else` clauses. There is usually no perfect solution, but at least we have improved it significantly compared to the initial code.
 
-### Naming
 
-Naming becomes less challenging (I would love to write "easier", but it's never easy...) if you follow the rules below:
-- The name is a summary of the function content.
-- There are no hidden behaviors within a function.
-- There is no unexpected behavior within a function.
-- The entire function body is one level of abstraction lower than the function name.
-
-The following function clearly has a side effect:
-
-```py
-counter = 0
-def log_in(email_address):
-    counter +=1
-    check(email_address)
-```
-
-The function name does not indicate the presence of a hidden counter, making this hidden behavior that should be avoided. Additionally, side effects may lead to temporal coupling [see next section] because the order of calling functions with side effects matters.
-
-A more suitable name for this function could be `log_in_and_increase_counter`, but this would reveal that the function performs multiple tasks, contradicting the SRP. A function name should not contain an `and` as this indicates a violation of the SRP.
-
-Side effects can also become a significant issue when testing code. When calling the function `log_in` twice, the value of `counter` will be different each time. This will make the tests very fragile due to temporal coupling. And as we will learn in the chapter on testing [Writing better Code with Tests], brittle tests are a strong indication of poor code quality.
-
-## Temporal Coupling
-
-Temporal coupling occurs when tasks can be performed in an incorrect sequence. Sometimes the code enforces the correct order, and sometimes it does not. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. The class variables are there all the time. Let me make a brief example:
-
-```Py
-class Shopping():
-    def get_money(self, amount):
-        self.money = amount
-
-    def create_shopping_list(self, shopping_list):
-        self.shopping_list = shopping_list
-
-    def go_shopping(self):
-        # use the shopping_list and money
-```
-
-Apparently you need to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
-
-```py
-shopping = Shopping()
-shopping.get_money(50)
-shopping.create_shopping_list(["apple", "banana"])
-shopping.go_shopping()
-```
-
-This sequence of function calls follows the natural order of the shopping process. First, you need money and a shopping list before you go shopping. However, this order is not enforced by the code. One could also swap two of the function calls as follows:
-
-```py
-shopping = Shopping()
-shopping.get_money(50)
-shopping.go_shopping()
-shopping.create_shopping_list(["apple", "banana"])
-```
-
-Now you go shopping before creating a shopping list. In fact, the call to `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead, you go shopping with a shopping list, which is either empty or non-existent. Either way, this behavior is apparently undesired. It would probably be best to throw an exception in this case.
-
-This is one of the drawbacks of OO code. Methods change the state of the object. Therefore, it is very difficult to enforce that the methods are called in the correct order.
-
-One advantage of procedural code is that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes, other paradigms produce better code. Let's examine the procedural version of this code.
-
-```Py
-money = get_money(50)
-shopping_list = create_shopping_list(["apple", "banana"])
-go_shopping(money, shopping_list)
-```
-
-In this case, it is physically impossible to go shopping without having a shopping list, as shown below:
-
-```Py
-money = get_money(50)
-go_shopping(money, shopping_list)
-shopping_list = create_shopping_list(["apple", "banana"])
-```
-
-After having swapped the last two lines, this code cannot be executed anymore because the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above, you will get an error: `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
-
-Long story short: Ensure that your functions never have side effects. Functions and methods should only affect the class instance or, if necessary, mutable arguments. If possible, enforce temporal order, for instance, by utilizing functional programming.
-
-Another source for temporal coupling are global or static variables.
-
-```py
-counter = 0
-def log_in(email_address):
-    counter +=1
-    check(email_address)
-```
-
-Here, the value of the `counter` depends on how often `log_in` has been called before. Now it might make sense to have such a counter in your code; however, this may lead to all kinds of problems. For example, when testing it [Testing?].
 
 ## Number of Arguments
 
@@ -2231,7 +2613,8 @@ class Car():
 
 The only drawback is that Copilot suggests the function `get_descriptive_name` instead of defining the Pythonic `__str__` method. Furthermore, if you already know what members and methods a class should have, you are probably faster writing it yourself instead of asking Copilot to do it. Copilot is only beneficial if you need ideas on how to structure your class.
 
-# 15. Inheritance
+## Inheritance
+// volker: figure out how to deal with the chapter structure.
 
 "Inheritance is the base class of evil" [https://youtu.be/bIhUE5uUFOA]
 
@@ -2239,7 +2622,7 @@ Why inheritance should not be used: [https://youtu.be/da_Rvn0au-g]
 
 Inheritance is considered to be one of the integral parts of OO programming and certainly one of the most widely used. Inheritance is often described as an "is a" relationship. A sheep is an animal. Therefore, the sheep class has to inherit from the animal class. But as always, there is more to it.
 
-## Two Types of Inheritance
+### Two Types of Inheritance
 
 There are two types of inheritance: implementation inheritance and interface inheritance. Interface inheritance is used to define and implement interfaces. In C++, these base classes consist of only pure virtual functions that will be implemented in the derived classes. This type of inheritance is perfectly acceptable. Actually, it is needed for many different purposes, such as runtime polymorphism.
 
@@ -2392,391 +2775,6 @@ You don't gain much by using inheritance. Using composition is, in most cases, a
 There are also some more esoteric concepts, such as friend classes. At first sight, friend classes seem like a good idea because they make writing code easier. However, in the long term, this has similar issues to making private variables public. In most cases, it results in poorly written code that lacks proper encapsulation. Just ignore friend classes and similar concepts and never look back. There are very few cases where friend classes are truly beneficial. [https://google.github.io/styleguide/cppguide.html#Friends]. Write your code using the most common language features, and only consider using fancy language features if they genuinely enhance your code.
 
 
-# 16. Data Types
-
-"Primitive obsession [https://refactoring.guru/smells/primitive-obsession] is a code smell in which primitive data is used excessively to represent data models." - David Sackstein
-
-There are hundreds of built-in data types. But using too many primitive data types is also known as "Primitive Obsession". Avoid excessive use of built-in data types. Instead, you should use custom types (classes) as much as possible. This makes the code more readable and easier to write.
-
-Using custom types (classes) is highly recommended. For example, you should always use a class `Money` when appropriate and avoid using floating-point numbers. Utilizing custom types enhances the readability and simplifies the writing process of the code. It prevents you from primitive obsessions.
-
-Primitive obsession is a very common phenomenon. Integer values are often used to represent time, even though there is typically a dedicated time class in most programming languages. Strings are used to store all kinds of information, as we will see in an example below.
-
-Here is a list of data types that I typically use. They are called differently in most languages. I write the Python name and in brackets the C++ name: floats, ints, lists (vectors), enums, Booleans, strings, dicts (maps), trees, classes, (pointers).
-
-I will provide explanations for all these types except floats, integers, and classes. I don't have much to say about floats and ints, except that I typically avoid using unsigned ints, as advised by the Google Style Guide. Classes are discussed in their own section due to their significance.
-
-## Lists
-
-Lists are the workhorse in programming. Whenever you deal with several values that should all be treated in the same way, they belong in a list. I would like to emphasize the importance of being treated equally. When working with a list, it is important to iterate through all elements and perform the same operation on each of them. If you only need one value from a list, it is likely that you should not use a list.
-
-Here is an example of how not to do it:
-
-```py
-fruits = [‘apple’, 1.5, 3.1, ‘banana’, 0.8, 2.1]
-print(fruits[4]) # ...?
-```
-
-I intentionally made this code so terrible for you to understand. Strings and numbers cannot be equal objects, so they should not be placed side by side in the same list. In C++, this kind of list isn't even possible because C++ vectors cannot contain objects of different types. At least not without attending a highly advanced course in C++ black magic. In Python, on the other hand, this code is syntactically correct, and it is often tempting to write such a list. Please resist this temptation! 
-
-Your code becomes really bad if you store different things in the same list. The `print(fruits[4])` in the code example above is extremely error prone because you have to count the elements in the list. This list does several things at once and it violates the single responsibility principle (SRP) all by itself. Use data classes instead [clases].
-
-Apparently, three values inside this list always belong together. A first improvement would be to use a list of lists,
-
-```py
-fruits = [[‘apple’, 1.5, 3.1], [‘banana’, 0.8, 2.1]]
-```
-
-This provides some structure to the list, making it less likely that this data structure will be used incorrectly. This inner list is still far from optimal. We should use a data class instead.
-
-The code should be rewritten as follows:
-
-```py
-@dataclass
-class ShoppingItem:
-    name: str
-    weight: float
-    price: float
-
-apples = ShoppingItem(name='apple', weight=1.5, price=3.1)
-bananas = ShoppingItem(name='banana', weight=0.8, price=2.1)
-
-shopping_list = [apples, bananas]
-```
-
-Now the code is much longer, but it is also much better. It is much easier to read and understand. As we learned, the only quality measures of code. All the elements inside the list are equal. All of them are `ShoppingItems`. If you can do something, you should iterate over all elements and treat them equally. The data structure is now also pretty save. Correlated data is all stored together. It is almost impossible to confuse the weight of the apple and the banana. And it's also pretty hard now to make an error when creating the list.
-
-We can summarize: Lists are very common. They should always contain objects of equal meaning. If you want to create a list with groups of objects, you should create a data class for these groups and make a list of instances of these classes. If you only need to access a single object from a list, it is likely that your code is bad. Always iterate over the entire list and treat all elements equally.
-
-## Enums
-
-Enums are something that even many experienced software developers don't know about. You don't really need it. But they should know that enums make your code much better. There are several alternative methods to write code without utilizing enums. They are all bad.
-
-```py
-# 1. boolean:
-is_blue = True
-
-# 2. string:
-favorite_color = "blue"
-
-# 3. integer:
-favorite_color = 7
-
-# 4. class instance:
-class Blue:
-    pass
-favorite_color = Blue()
-
-# 5. enum:
-from enum import Enum
-class Color(Enum):
-    BLUE = 1
-favorite_color = Color.BLUE
-```
-
-The first four options all have some severe drawbacks.
-
-### Booleans
-
-The first one is extremely ugly. What does `is_blue = False` mean? Is it red? Invisible? Undefined? There are simply too many different options that can confuse the developer. Avoid using booleans in general.
-
-### Strings
-
-The second one looks reasonable at first sight. Just write `"red"` and you have another color. But at the same time, it's easy to introduce bugs. If you write `"blu"` instead of `"blue"` you might introduce a bug that could result in strange behavior. Without you noticing either that you have a bug or where the error comes from. The compiler won't be able to help you with this bug. Avoid using string comparisons as they are prone to errors.
-
-### Ints
-
-Third option: 7? A color? No. Please, don't do this to me. This is an example of a magic number and should be avoided. You would always have to look up the number corresponding to one color. This would be very tedious and error prone. Unless it is a well-known international color standard, for example RGB: `blue = RGB(0,0,255)`.
-
-### Classes
-
-Fourth option: Using types is not the best choice in this case. It can be verified using `isinstance(blue, Blue)`, but this process is laborious and not feasible in C++, for instance. Using classes in this case does not offer any advantages, only drawbacks.
-
-### Enums
-
-Fifth option: The best solution is certainly using an enum. Even if it takes getting used to it. Enums may seem slightly unusual at first glance due to the `Color::` prefix, and there is no way to alter this. However, this code is really solid and foolproof. If you write `Color::BLU`, you will get an error message because you most likely did not define a color `BLU` inside the enum. This is infinitely better than having a bug [Bugs, Errors, Exceptions]. Furthermore, most Integrated Development Environments (IDEs) and programming languages support auto-completion for enums. Gone are the times when you had to look up magic values in the manual. Enums are great. Use them wherever you define a selection from a limited number of options.
-
-Enums can only be used if you know all possible options when writing the code. If the user can define custom options, string comparison must be used. Though cases where you really have to make string comparisons are rare. It is rare to encounter a situation where you receive a random string and then invoke a function based on its content. The only thing you usually have to do with random strings is pass them on without altering them.
-
-## Booleans
-
-"Have a seat, my son. There is something very important that I have to tell you. If you hear it for the first time, it may be very shocking. But it has to be said: Booleans are evil."
-
-"What? But... how...? This can't be. Booleans are only a theoretical construct. It's everywhere. The entire binary system consists of Boolean values. What do you mean?"
-
-"Yes, of course, you are right. Let me explain. It's somewhat similar to alcohol. Alcohol does not do any harm if it is inside a bottle. You can drink it and have a great time, maybe the best time of your life. But at the same time, it can cause a car accident or start a pub brawl. Humans can't handle alcohol. This is why some people say that alcohol is evil. There is a very similar issue with Booleans. Booleans can be used for great things. But at the same time, using Booleans can lead to the creation of bugs. Humans struggle with Booleans. They mix it up too often. And even worse than Booleans lead to if statements. But okay, maybe we should not call them evil, but dangerous."
-
-Of course, I may be exaggerating slightly. But there's no denying: Humans struggle with Booleans and if statements. They lead to bugs. You will create bugs with if statements if you keep using them. Here are some points to consider when working with if statements:
-
-- Good code design results in fewer if statements.
-- Polymorphism can be utilized to avoid using if statements.
-- Resolve `if` statements as early as possible. Use Dependency Injection (DI) instead of booleans.
-- Avoid nesting if statements. Excessive levels of indentation are a sign of poor code quality.
-- Avoid passing Booleans as function arguments.
-- Consider using enums instead of booleans.
-- Ensure that your unit tests cover all branches of if-else statements.
-- Avoid using traditional C++ or Java iterators. Looping over iterators requires comparisons. Range-based loops are much safer and easier to use.
-
-Here is an example how to use DI instead of passing on booleans:
-
-```py
-if __name__ == "__main__":
-    if "debug" in sys.argv:
-        reader = DebugReader()
-    else:
-        reader = Reader()
-    main(reader)
-```
-
-Well yes, we didn't get rid of all `if` statements. This will never be possible. But further down in the code, there are no more booleans. Instead you only have the `reader` object that you can use polymorphically.
-
-### Match case statements
-
-// This section really needs some consideration: When should a switch/match be used?
-
-In case you have a `match case` statement (a Pythonic expression, in other languages called a `switch` statement), you should encapsulate it inside a dedicated function or use a dictionary.
-
-This is not how the code should look:
-
-```py
-def do_a_lot_of_work():
-    # a lot of code here
-    # ...
-    city_name = "Zurich"
-    match city_name:
-        case "Zurich":
-            return 8000
-        case "Bern":
-            return 3000
-```
-
-This code is flawed for a very simple reason: it almost certainly violates the SRP. The likelihood is high that this `match case` statement will be repeated multiple times in your codebase. Instead, the `match case` statement should be refactored into its own function.
-
-```py
-def post_code(city_name):
-    match city_name:
-        case "Zurich":
-            return 8000
-        case "Bern":
-            return 3000
-
-print(post_code("Zurich"))
-```
-
-The best solution, in my opinion, is using a dictionary and abandoning `match case` statements altogether. This is shorter and easier to read. If desired, you can still wrap the dictionary in a function.
-
-```py
-post_codes = {
-    "Zurich": 8000,
-    "Bern": 3000,
-}
-print(post_codes["Zurich"])
-```
-
-For larger dictionaries, this may still appear quite verbose. But this code will be hidden at a low level of abstraction.
-
-Dictionaries can also be used polymorphically. Depending on the key, it creates an object of a different type. This will prevent some `if` statements in the future, as polymorphism generally does.
-
-```py
-class Zurich:
-    def postcode(self):
-         return 8000
-
-class Bern:
-    def postcode(self):
-        return 3000
-
-cities = {
-    "Zurich": Zurich(),
-    "Bern": Bern(),
-}
-
-zurich = cities["Zurich"]
-print(zurich.postcode())
-```
-
-A little side remark: `match case` statements were only introduced with Python 3.10. This is because they are not supposed to simply replace the switch-case statements, as seen in C++ for example or as shown in the examples here. [For the full story, please visit https://youtu.be/ASRqxDGutpA]
-
-In summary, one can say that `match case` statements are not bad at all. Though they could easily be replaced by dictionaries, and they should be wrapped inside a function to make them reusable and adhere to the SRP. Additionally, they are a great match with polymorphism in the creation of objects to prevent further `if` statements.
-
-### For Loops
-
-A long time ago, for loops required the use of booleans. Fortunately, these times are long gone. I add this topic here as an example how to get rid of boolean comparisons.
-
-There are many ways how to implement for loops. And if you use them, there are better and worse ways how to use them. Let's start with the classical C++ version:
-
-```C++
-#include <vector>
-#include <iostream>
-
-std::vector<int> numbers = {1, 2, 3, 4, 5};
-for (int i = 0; i < numbers.size(); i++) {
-    std::cout << numbers[i] << std::endl;
-}
-```
-
-Note that I had to use C++ for this example. I wouldn't know how to write such a terrible for loop in Python. There is so much that can go wrong here. You have the `<` sign which does a comparison. And comparisons are dangerous because you can always mix up `<` and `<=`.
-
-One level better is this Python code:
-
-```py
-numbers = [1, 2, 3, 4, 5]
-for i in range(len(numbers)):
-    print(numbers[i])
-```
-
-Here we got rid of the comparison. But we still have the index `i` which can be mixed up. Of course, there are times where you need this index. But generally you can use an enumeration instead.
-
-```py
-for i, number in enumerate(numbers):
-    print(i, number)
-```
-
-Assuming that you don't need the index `i`, by far the best code is the following:
-
-```py
-for number in numbers:
-    print(number)
-```
-
-Here you don't need any comparison nor an index.
-
-### Filtering Lists
-
-Another question: how should you filter lists?. The classical way is to use a for loop and an if statement. But there are two alternatives: list comprehensions and lambdas. Both solutions are quite similar (even in performance), so feel free to use the one you prefer.
-
-```py
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-odds = [n for n in numbers if n % 2 == 1]
-ten_times = [n*10 for n in odds]
-plus_five = [n+5 for n in ten_times]
-average = sum(plus_five) / len(plus_five)
-print(average)
-```
-
-```py
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-plus_five = map(lambda n: n+5,
-            map(lambda n: n*10,
-            filter(lambda n: n % 2 == 1, numbers)))
-five_list = list(plus_five)
-average = sum(five_list)/len(list(five_list))
-print(average)
-```
-
-Note that the filtering part of both versions could be written in a single line if you insist. And I'm not showing the loop version as it's too much code. 
-
-## Strings
-
-"You should never use two different languages in a single file. English is also a language." - Adapted from Robert C. Martin [Clean Code]
-
-After pointers and Booleans, strings are arguably the third most error-prone data type. Programmers often compare two strings for equality. One of them is written in plain text in the code. A string possibly twenty characters long. If a single character is wrong, you have a bug, and there is no way the computer is able to know and warn you. Of course, you can make this code work. But it is extremely brittle. You should eliminate such risks whenever possible. String comparison is a potential source of errors, and we should strive to avoid them whenever feasible. Remember, programming is all about avoiding potential sources of errors. As we have already seen, you should always consider using enums if you want to perform string comparisons.
-
-### Stringly typed objects
-
-Some people even start to encode all kinds of logic into strings. This is dreadful. At times, this is also referred to as "stringly typed" to emphasize the importance of using appropriate types instead of strings. // See also "primitive obsession"
-
-Here are some examples of strings storing all kind of information that shouldn't be stored as strings [https://www.hanselman.com/blog/stringly-typed-vs-strongly-typed]:
-
-```py
-robot.move("1","2") 
-# Should be int like 1 and 2, and maybe better a point
-
-getattr(dog, "bark")
-# Dispatching a method passing in a string that is the method's name. dog.Bark()
-
-message.push("transaction_completed")
-# Could be an enum
-```
-
-I found the following example in the book "Clean Code" on page 128, where Robert C. Martin (a.k.a. Uncle Bob) did some refactoring on a unit test. I quite like the book. It served as a model for this book here. But in this example, he somehow went haywire. What he explained all made sense, but he missed that one should never write code the way he did.
-
-He encoded five Boolean states `{heater_state, blower_state, cooler_state, hi_temp_alarm, low_temp_alarm}` into a single string `"hbCHl"`, where each character encodes whether it was too hot or not, too cold or not, etc. Capital letters represent `true`, while lowercase letters represent `false`. It's such a beautiful example of the kind of logic that can be implemented in strings. But he completely missed the point. Strings should never ever be used to encode logic. To make matters worse, the letter `"h"` is even used twice. Like this, the code becomes even more fragile because the state relies on the order of the characters.
-
-The unit tests written by Uncle Bob look quite nice at first glance. But it takes some knowledge to understand what these five characters are supposed to mean. Without appropriate background knowledge, it is impossible to understand the meaning of this string. The order of the characters within this string may seem arbitrary, but they must be in the correct sequence. This is not something that should show up in a unit test nor in your code.
-
-Now let's consider how we could improve things. We have five states that can each be either true or false. Writing a list with 5 Booleans is probably the first thought, something like `water_state = [False, False, True, True, False]`. This is an improvement over the string logic, but it still requires significant restructuring. All elements in a list should be treated equally and accessed simultaneously. But here, you will probably need only one element at a time: `needs_hot_water != water_state[0]`. Accessing the first element with `[0]` is a clear indication that we should not use a list [section lists].
-
-A better solution is to use a dataclass that stores five different variables. One Boolean value replacing each character in the string above.
-
-```py
-from dataclasses import dataclass
-
-@dataclass
-class WaterState{
-    heater_state: bool
-    blower_state: bool
-    cooler_state: bool
-    high_temp_alert: bool
-    low_temp_alert: bool
-}
-```
-
-Still, this is not optimal yet. What does `heater_state = true` or `= false` mean? Let's define an enum instead to make the code more readable.
-
-```py
-from enum import Enum
-from dataclasses import dataclass
-
-class State(Enum):
-    on = True
-    off = False
-
-@dataclass
-class WaterState:
-    heater_state: State
-    blower_state: State
-    cooler_state: State
-    high_temp_alert: State
-    low_temp_alert: State
-```
-
-Now the `heater_state` can be either `on` or `off`. This is much more intuitive to read.
-
-Once you found this solution, it looks so natural. This code is much more readable than the encoded string. It is definitely worth the extra effort required to write this struct and enum. The code has now become significantly longer, but remember: we always code for readability, not for the fewest lines of code.
-
-The code utilizing this dataclass, including the unit tests, is very straightforward. Opposite of the string solution, there is no need for logic, comparison, or anything similar. It is simply obvious how to use it.
-
-```py
-if water_state.high_temp_alert == State.on:
-    print("Attention: the water is too hot")
-```
-
-### Natural Language
-
-Many software products are available in many different countries. They have to be available in many languages. But you don't want the translator to write his translations into your code, nor does the translator want to deal with your code. He wants to work with only the text visible to the user. He wants the text to be placed in a dedicated text file so that he knows exactly what to translate. There is no arguing with that. Thus, it is your job to extract all the human-readable text from your code. Upon start-up, your software reads this text file and assigns the various strings to the corresponding variables. Selecting a different language is as easy as selecting a different file.
-
-Ultimately, you are left with barely any strings at all. You replaced them with enums, proper logic, and a file containing human-readable text. Only when reading or writing a text file do you briefly have to deal with strings. Then you immediately convert it into data. In theory, at least. For small projects, it is not always worth the effort to convert all strings into objects or dedicated text files.
-
-## Dictionaries
-
-When defining your variable, you have two different choices on how to proceed. You may either use normal variables or a dictionary (a map in C++).
-
-```py
-a = 0
-b = 1
-```
-
-```py
-vars = {"a" : 0, "b" : 1}
-```
-
-These lines do something very similar. They both assign the value `0` to `a` and the value `1` to `b` (okay, in the case of the dictionary, it is rather `"a"`, but you get my point). Yet, there is a fundamental difference. In the first line, the programmer knows that he needs variables `a` and `b` as he writes the code. In the second case, we have a dynamic data structure. Maybe the programmer knew that there would be `"a"` and `"b"` used as keys. Maybe he didn't, and these dictionary entries were generated by user input that the programmer had no control over.
-
-If the developer knows all the variables that are needed, it is generally advisable to use normal variables. If the data originates from an external source, such as a text file where he doesn't the content, he must use a dynamic data structure like a dictionary. At first, this may sound a little confusing. But think about cooking recipes. You might have a few recipes that you define in your code, where the name of the recipe corresponds to the name of the variable. Or, you can write a parser that reads them from a cookbook into a dictionary. Here you have to use a dynamic data structure because you don't know in advance how the dishes are called and what kind of ingredients will be needed.
-
-Dictionaries are closely related to JSON and XML files. They are essentially similar to a nested dictionary serialized into a string. If you ever need to read JSON files, the resulting data structure will be a nested dictionary that you might further convert into nested class instances.
-
-## Trees
-
-It is not too often that I've had to create a tree myself, yet I have been working on tree structures for a significant part of my programming career. Trees are an extremely important data structure. When dealing with a recursive data structure, it is highly likely that you will be working with a tree. This allows you to utilize many standard algorithms that are very efficient, typically with a time complexity of `O(N log(N))`. If you implement your own algorithms, ensure that they are recursive and write automated tests that cover the corner cases.
-
-## Pointers
-
-Python, as most other modern programming languages, doesn't use pointers. C++ on the other hand used pointers extensively. Pointers were used to point to a specific location in your memory and access the corresponding value. However, pointers are still used to implement polymorphism. Pointers are arguably the most powerful yet potentially risky objects in the programming world. With pointers, pretty much anything can go wrong. Fortunately, they are barely needed these days. Vectors and smart pointers have implemented in C++ for and completely replaced pointers. Vectors, for example, also use a pointer, but it is hidden deep inside their implementation.
-
-The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine.
-
 
 # 17. Properties of Variables
 
@@ -2878,7 +2876,7 @@ A Singleton is a class that can have at most one instance. If you create objects
 
 
 
--# Part 3: Testing
+-# Chapter 3: Testing
 
 # 18. Introduction to Testing
 
@@ -4067,7 +4065,7 @@ print(process_data(reader))
 
 
 
--# Part 4: Design Principles
+-# Chapter 4: Design Principles
 
 
 # 21. SOLID principles 
@@ -4398,7 +4396,7 @@ That being said, you have to know where you can go fast and where technical debt
 
 
 
--# Part 5: Programming
+-# Chapter 5: Programming
 
 # 23. Programming Paradigms
 
@@ -4453,6 +4451,76 @@ Due to the nature of pure functions, functional code is generally easier to unde
 One drawback of functional programming is that it does not support the use of for loops since they require a non-constant counter. Instead, you have to use recursion, which can be a little tedious at times. Furthermore, it requires you to use a programming language that supports tail call optimization. This technique allows the compiler to optimize recursion into a loop. Without tail call optimization, recursion can be very slow and may even lead to a stack overflow.
 
 In many programming languages, you can emulate functional programming to some extent by utilizing only pure functions. And I highly recommend doing so because you will be left with only pure functions, making testing very easy. Using only functional programming, however, is, in my opinion, not worth it. It is overly restrictive and makes programming needlessly challenging. At least somewhere in your code you need to have some effect, like writing data to a file. Otherwise your program will not do much. This is where functional programming reaches its limits.
+
+
+## Temporal Coupling
+
+Temporal coupling occurs when tasks can be performed in an incorrect sequence. Sometimes the code enforces the correct order, and sometimes it does not. Most notably, temporal order is not enforced by classes. Class methods can usually be called in any order. There is nothing enforcing the correct order. The class variables are there all the time. Let me make a brief example:
+
+```Py
+class Shopping():
+    def get_money(self, amount):
+        self.money = amount
+
+    def create_shopping_list(self, shopping_list):
+        self.shopping_list = shopping_list
+
+    def go_shopping(self):
+        # use the shopping_list and money
+```
+
+Apparently you need to get money and create a shopping list before you go shopping. The correct usage of this class is as follows:
+
+```py
+shopping = Shopping()
+shopping.get_money(50)
+shopping.create_shopping_list(["apple", "banana"])
+shopping.go_shopping()
+```
+
+This sequence of function calls follows the natural order of the shopping process. First, you need money and a shopping list before you go shopping. However, this order is not enforced by the code. One could also swap two of the function calls as follows:
+
+```py
+shopping = Shopping()
+shopping.get_money(50)
+shopping.go_shopping()
+shopping.create_shopping_list(["apple", "banana"])
+```
+
+Now you go shopping before creating a shopping list. In fact, the call to `create_shopping_list` is probably superfluous because the shopping list might not be used anymore. Instead, you go shopping with a shopping list, which is either empty or non-existent. Either way, this behavior is apparently undesired. It would probably be best to throw an exception in this case.
+
+This is one of the drawbacks of OO code. Methods change the state of the object. Therefore, it is very difficult to enforce that the methods are called in the correct order.
+
+One advantage of procedural code is that such issues are less likely to occur. Code doesn't always have to be OO. Sometimes, other paradigms produce better code. Let's examine the procedural version of this code.
+
+```Py
+money = get_money(50)
+shopping_list = create_shopping_list(["apple", "banana"])
+go_shopping(money, shopping_list)
+```
+
+In this case, it is physically impossible to go shopping without having a shopping list, as shown below:
+
+```Py
+money = get_money(50)
+go_shopping(money, shopping_list)
+shopping_list = create_shopping_list(["apple", "banana"])
+```
+
+After having swapped the last two lines, this code cannot be executed anymore because the variable `shopping_list` is not initialized at the `go_shopping` function call. When executing the code above, you will get an error: `NameError: name 'shopping_list' is not defined`. This prevents you from calling the functions in the wrong order.
+
+Long story short: Ensure that your functions never have side effects. Functions and methods should only affect the class instance or, if necessary, mutable arguments. If possible, enforce temporal order, for instance, by utilizing functional programming.
+
+Another source for temporal coupling are global or static variables.
+
+```py
+counter = 0
+def log_in(email_address):
+    counter +=1
+    check(email_address)
+```
+
+Here, the value of the `counter` depends on how often `log_in` has been called before. Now it might make sense to have such a counter in your code; however, this may lead to all kinds of problems. For example, when testing it [Testing?].
 
 ## Conclusions
 
@@ -5019,7 +5087,7 @@ Microservices, on the other hand, are highly decoupled. They are chunks of code 
 Only ask for things you directly need. This is another advantage of functional programming or microservices. If you need to validate an email, you can utilize the email validator, which can be either a microservice or a pure function. The email validator returns a result and resets. You only received what you asked for, nothing more. There are no semi-useful objects wobbling around that you don't know how to deal with. You need exactly what is around. This is the strength of functional programming.
 
 
--# Part 6: High level design
+-# Chapter 6: High level design
 
 # 30. Software Architecture
 
@@ -5153,7 +5221,7 @@ The domain model is a high-level concept that needs to be described. This can be
 
 First, UML diagrams support only a somewhat limited amount of interactions between classes or class instances. There are often more effective ways to describe code than using a class diagram. Maybe a piece of text or a diagram illustrating the temporal dependency of a process would be suitable. It does not really matter how you represent the domain model, as long as you understand it.
 
-Secondly, one always has to consider that UML diagrams should remain small. Some development teams have printed out their entire code base as a UML diagram. But this practice is largely ineffective. There are too many objects and interactions between each other in such a graph, as if it could be useful. It's just like a map with too many details. Buried in all the information you won't find what you are looking for. A map should be simple and easy to understand. It should only show what you are interessted in. And the same applies to UML diagrams. Keep them small and concise. Focus on what you are interessted in.
+Secondly, one always has to consider that UML diagrams should remain small. Some development teams have printed out their entire code base as a UML diagram. But this practice is largely ineffective. There are too many objects and interactions between each other in such a graph, as if it could be useful. It's just like a map with too many details. Buried in all the information you won't find what you are looking for. A map should be simple and easy to understand. It should only show what you are interessted in. And the same applies to UML diagrams. Keep them concise. Focus on what you are interessted in.
 
 There have been attempts to create a programming language similar to UML, but they have all failed for various reasons. Graphical programming simply isn't any better than textual programming. On the contrary. Graphical programming generally lacks important tooling like version control or testing frameworks. Furthermore, a significant amount of information may be lost during the creation of the diagram. UML is not a complete programming language and it will never be. UML diagrams cannot explain the entire functionality of your code. Thus, keep UML diagrams small.
 
@@ -5425,7 +5493,7 @@ The very big question is always when you really need such an adapter. Most of th
 You should reconsider using a third-party library if it has only a few developers. If there is a reasonable alternative, you might be better off avoiding it. On the other hand, if this code is crucial for your software, it would be beneficial to participate in the project and contribute as a developer. In fact, pretty much all major software companies support the software projects they rely on. Some projects received so much additional manpower that they ran out of work to do. And even the unthinkable happened: Microsoft became one of the biggest contributors to the Linux kernel!
 
 
--# Part 7: Existing Code
+-# Chapter 7: Existing Code
 
 # 34. Refactoring Fundamentals
 
@@ -6147,7 +6215,7 @@ There are many small things you can do to optimize your code, such as manual loo
 Always keep in mind that code written with a focus on performance rather than readability is always very challenging to maintain. Due to the complexity of the code, it becomes very hard to understand!
 
 
--# Part 8: Miscellaneous
+-# Chapter 8: Miscellaneous
 
 # 38. Comments
 
@@ -6973,7 +7041,7 @@ The docstring software automatically creates documentation based on the comments
 Every programming language has its own documentation tool. For Python, it’s Sphinx, and for C++, it’s Doxygen.
 
 <!-- 
-# Too short to be a chapter
+# 43. Too short to be a chapter
 not sure if this chapter is needed
 ## Logging
 
@@ -6981,9 +7049,9 @@ not sure if this chapter is needed
 
 
 
--# Part 9 Collaborating
+-# Chapter 9 Collaborating
 
-# 43. Working in teams
+# 44. Working in teams
 
 [](97 things every programmer should know, thing 85), [](Software Engineering at Google, chapter 2)
 
@@ -7051,7 +7119,7 @@ Customers are only humans. Quite frequently, they don't say what they mean becau
 
 Frequently, customers do not prioritize what is important. Or at least, things that are important to customers may not be important to the programmer. For instance, a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was poorly designed, the customer refuses to adapt. You really have to come up with some significant improvements for your version to be accepted.
 
-# 44. Code Review
+# 45. Code Review
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
@@ -7095,7 +7163,7 @@ With highly experienced programmers, on the other hand, one can skip the code re
 
 I generally recommend conducting code reviews. However, if code reviews become burdensome, which can easily happen, you have to reconsider your approach to work and perhaps explore alternative methods to disseminate information about your code. Just remember that sharing knowledge is crucial, albeit quite costly.
 
-# 45. Agile
+# 46. Agile
 
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
@@ -7123,7 +7191,7 @@ These three truths are the reasons why the waterfall approach was never going to
 
 In 2001, a group of software engineers met for two days in the Rocky Mountains to enhance the planning of software projects. The outcome was the Agile Manifesto [](https://agilemanifesto.org/), [](Clean Agile), a concise guideline on how software development should be approached. The key principle is to prioritize working on the most crucial task first (the manifesto is articulated in a broader manner, but this is its core). Subsequently, the process involves iteration. It is advised not to begin with minor details that could potentially be deemed irrelevant later on.
 
-Part of the Agile Manifesto is the Bill of Rights. Both developers and customers have their own rights. This serves as a constitution for software development. Like any legal document, it involves making trade-offs. However, it is definitely worth a read [](https://www.informit.com/articles/article.aspx?p=2990402&seqNum=3), [](Clean Agile).
+Chapter of the Agile Manifesto is the Bill of Rights. Both developers and customers have their own rights. This serves as a constitution for software development. Like any legal document, it involves making trade-offs. However, it is definitely worth a read [](https://www.informit.com/articles/article.aspx?p=2990402&seqNum=3), [](Clean Agile).
 
 ## Work Planning
 
@@ -7158,7 +7226,7 @@ In Agile, the entire project is divided into pieces lasting one to four weeks, k
 
 The first meeting of a sprint is the planning. It involves the entire team discussing the tickets and deciding which ones to include in the sprint. The sprint planning for a two-week sprint may take half a day.
 
-Part of the meeting involves the planning game (see Work Planning), where the story points for each ticket are estimated. This is necessary to plan the scope of the next sprint.
+Chapter of the meeting involves the planning game (see Work Planning), where the story points for each ticket are estimated. This is necessary to plan the scope of the next sprint.
 
 Next is the daily meeting. This meeting is not mandatory and it’s very short. It is kind of replacing the coffee machine gossip. Everyone very briefly says what they are doing at the moment and if there are any blockers. There are no discussions in this meeting. Discussions are held afterwards.
 
@@ -7184,7 +7252,7 @@ Another very common problem is the number of meetings. While there is a need to 
 
 Finally, Agile does not solve the problem of inaccurate estimations of the total workload. Although these estimations are less imprecise than they used to be with waterfall, the issue remains that nobody truly knows the exact amount of work required. While you may have a backlog with tickets and possibly even some vague estimations of their sizes, the total amount of work remaining is still quite uncertain. The actual workload only becomes clear as time progresses.
 
-# 46. Requirements Engineering
+# 47. Requirements Engineering
 
 "The most difficult part of requirements gathering is not the act of recording what the user wants, it is the exploratory development activity of helping users figure out what they want." - Steve McConnell
 
@@ -7350,40 +7418,38 @@ On the other hand, there are also plenty of things that can make you feel better
 
 Furthermore a rewarding work is also very important to keep your spirits high. For example if you frequently finish your tickets in time and you are praised for it by your boss. On the other side it is very depressing if your tickets are too big to be finished and you are constantly behind your schedule. This is a common issue in Agile development [section ?]. Your work is only rewarding if your team is realistic about how fast they can work.
 
+# 50. Hiring and Getting Hired
 
-# 50. Hiring and getting hired
+[](The Software Craftsman), [](Cracking the Coding Interview)
 
-[](The Software Craftsman), [](Cracking the Coding interview)
-
-That’s the moment you’ve all been looking for your whole life. Your first real job. The first position as a software engineer. But how do you get there? What is the process behind getting hired? Or rather, what should the process behind getting hired look like?
+That’s the moment you’ve all been looking forward to your whole life - your first real job. The initial position as a software engineer. But how do you get there? What is the process behind getting hired? Or rather, what should the process of getting hired look like?
 
 ## Hiring
 
-Let's say it frankly. Unfortunately, quite some job application processes suck. There’s no other way to put it. And the problem behind it is very simple. The application process is being led by a manager who likes numbers. He thinks that 5 years of professional Java development is a reasonable qualification. Even though there are plenty of developers with more than 10 years of experience who don’t manage to write reasonable code. They just never made the effort to learn anything by themselves. They keep writing the same old crappy code they did 10 years ago. Meanwhile someone working for 3 different companies for 1 year each probably has improved his programming skill significantly in the meantime.
+Let's be honest. Unfortunately, many job application processes suck. There’s no sugarcoating it. The root of the issue is simple. The application process is overseen by a manager who values numbers. He believes that having 5 years of professional Java development experience is a sufficient qualification. However, there are numerous developers with over 10 years of experience who struggle to produce quality code. They have not taken the initiative to enhance their skills and continue to produce subpar code they were creating a decade ago. On the other hand, an individual who has worked for 3 different companies for 1 year each has likely made significant improvements in their programming skills during that time.
 
-Instead of the bulleted point lists of requirements, a company should rather describe in whole sentences what they are doing and who they are looking for.
+Instead of using bulleted lists of requirements, a company should describe in complete sentences what they are doing and specify the type of candidate they are seeking.
 
-Similarly for the interviews. It’s about getting to know each other personally. This is a very hard task, but there’s no way around it. This is why many companies hire psychologists to support the HR processes. So, ask personal questions. What did you do at your previous job? What were the challenges? How did you get along with the previous work colleagues? There are hundreds such questions and to none of them you will find an answer on the CV. Make sure you don’t waste your time asking the standard Java questions. How can I create a memory leak? Etc. And if you do, make sure the Java version used for the questions is at least up to date.
+Similarly, for the interviews, it's about getting to know each other personally. This is a challenging task, but there's no way around it. That's why many companies hire psychologists to support the HR processes. Therefore, ask personal questions such as: What did you do at your previous job? What were the challenges you faced? How did you get along with your previous colleagues? There are hundreds of such questions, and you won't find answers to any of them on the CV. Avoid wasting time by asking standard Java questions like  can I create a memory leak? And if you ask technical questions, the Java version used should be up to date.
 
-Instead do some pair programming during the interview. Let the applicant bring his own laptop and give him internet access. He should be working on his laptop the way he’s used to. It’s not about testing his knowledge on the latest IDE or testing framework. It’s about finding out whether he’s smart and sharing the same coding values as you do. About having fruitful discussions on the code you are just writing. It’s about simulating some real pair programming, as you will do together if the applicant gets the job.
+Instead do some pair programming during the interview. Let the applicant bring his own laptop and give him internet access. He should be working on his laptop the way he’s used to. It’s not about testing his knowledge on the latest IDE or testing framework. It’s about finding out whether he’s smart and sharing the same coding values as you do. About having fruitful discussions on the code being written, simulating a real pair programming scenario that may occur if the applicant is hired.
 
-Search for applicants with that something extra. Developers who are working on some open source project in their free time. There’s hardly any better sign that someone is a very motivated and possibly also a skilled programmer. Join one of these software development groups, possibly sponsor an event. This is a great opportunity to get to know other software developers and hire them without the tedious application process.
+Search for applicants with that extra edge. Look for developers who are actively involved in open-source projects during their free time. There’s hardly any better sign that someone is a very motivated and possibly also a skilled programmer. Join one of these software development groups, possibly sponsor an event. This is a great opportunity to network with software professionals and potentially recruit them without the need for a lengthy application process.
 
-Keep recruiting all the time. This is a difficult task as the number of proficient programmers is too small to cover all the open positions. Thus, you can’t be too picky about when you are hiring your new team mate. If you have to hire someone under pressure, you’ll end up hiring someone who is not quite up to the task.
+Keep recruiting all the time. This is a challenging task as the pool of skilled programmers is limited to fill all the vacant positions. Therefore, you cannot afford to be too selective when hiring your new team member. If you hire someone under pressure, you may end up with a candidate who is not fully capable of handling the job.
 
-## Getting hired
+## Getting Hired
 
-Getting hired does not take quite as much know-how as hiring someone. For the simple reason that you are getting invited and mostly follow the hiring process. Yet at the same time you should always stay aware that you are an equal partner during the application procedure. If you don’t agree with something you may very well just leave the recruiting process.
+Getting hired does not require as much expertise as hiring someone, mainly because you are the one being invited and mostly following the hiring process. However, it is essential to remember that you are an equal participant during the application procedure. If you disagree with something, you have the option to withdraw from the recruiting process at any time.
 
-As already written above, it’s about getting to know each other. Thus, you may also ask questions. In fact, you are expected to ask questions. If you don’t know what else to ask, ask the developer what he’s exactly working at and what kind of problems they are facing. This is something to get started with.
+As mentioned earlier, the purpose is to get to know each other. Therefore, feel free to ask questions. In fact, it is encouraged that you ask questions. If you're unsure about what to ask, consider inquiring about the developer's current projects and the challenges they are encountering. This can serve as a good starting point.
 
-You shouldn’t take the application process too serious. Just stay yourself. They ask for 3 years of experience? Well, that’s what they wish for. But in reality, 2 years are usually enough if your application is otherwise convincing. Or if you’re living in an area with few programmers around, which is basically all around the globe.
+You shouldn’t take the application process too seriously. Just be yourself. They ask for 3 years of experience? Well, that’s what they wish for. But in reality, 2 years are usually enough if your application is otherwise convincing. Or if you’re living in an area with few programmers around, which is basically the case all around the globe.
 
-Make yourself seen with your application. Mention all kind of open source projects, blog posts and conferences you attended. This also makes a good start for the interview.
+Make yourself visible through your application. Include any open-source projects, blog posts, and conferences you have participated in. This will also serve as a strong starting point for the interview.
 
 
-
--# Part 10: Final remarks
+-# Chapter 10: Final remarks
 
 
 # 54. Outlook
@@ -7402,7 +7468,7 @@ I hope you have learned many things that will assist you in your career as a sof
 
 Marco
 
-# 53. Further reading
+# 51. Further reading
 
 I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
 
@@ -7444,7 +7510,7 @@ And several youtube channels:
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim, @ContinuousDelivery, 
 
 
-# 55. Frequently used Abbreviations
+# 52. Frequently used Abbreviations
 
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
@@ -7459,6 +7525,7 @@ OO	Object-Oriented
 QA	Quality Assurance 
 TDD	Test-Driven Development 
 YAGNI You Aren’t Going Need It
+
 
 
 
