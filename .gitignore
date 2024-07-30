@@ -1,4 +1,5 @@
 code_examples/
+.vscode/
 
 *.html
 *.webp

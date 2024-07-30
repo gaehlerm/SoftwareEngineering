@@ -6,11 +6,11 @@ from dataclasses import dataclass
 OFFSET = 0
 
 # input files: pure text and pdf file
-PURE_TEXT_FILE = "README.md"
+# PURE_TEXT_FILE = "README.md"
 PDF_FILE = "README.pdf"
 
 # ALL_WORDS_FILE gets created by this script it can be filtered by hand to create the DESIRED_INDEX_FILE
-ALL_WORDS_FILE = "all_words.txt"
+# ALL_WORDS_FILE = "all_words.txt"
 
 # The DESIRED_INDEX_FILE is a hand filtered file that contains only the words that we want to index
 DESIRED_INDEX_FILE = "desired_index.txt"
@@ -18,34 +18,34 @@ DESIRED_INDEX_FILE = "desired_index.txt"
 # The INDEX_FILE is the actual result
 INDEX_FILE = "index.txt"
 
-def remove_special_characters(s):
-    s = re.sub(r'[^\w]', '', s)
-    s = re.sub(r'[0-9]', '', s)
-    return s
+# def remove_special_characters(s):
+#     s = re.sub(r'[^\w]', '', s)
+#     s = re.sub(r'[0-9]', '', s)
+#     return s
 
 
-def save_all_words(words):
-    with open(ALL_WORDS_FILE, "w") as all_words:
-        for word in words:
-            all_words.write(word + "\n")
+# def save_all_words(words):
+#     with open(ALL_WORDS_FILE, "w") as all_words:
+#         for word in words:
+#             all_words.write(word + "\n")
 
-def deal_with_commas(word):
-    words = word.split(",")
-    return words[1].strip() + " " + words[0]
+# def deal_with_commas(word):
+#     words = word.split(",")
+    # return words[1].strip() + " " + words[0]
 
-def get_words_from_PURE_TEXT_FILE(PURE_TEXT_FILE):
-    no_duplicates = []
+# def get_words_from_PURE_TEXT_FILE(PURE_TEXT_FILE):
+#     no_duplicates = []
 
-    with open(PURE_TEXT_FILE) as readme:
-        content = readme.read()
-        words = [word.lower() for word in content.split()]
+#     with open(PURE_TEXT_FILE) as readme:
+#         content = readme.read()
+#         words = [word.lower() for word in content.split()]
 
-        no_special_character_words = [remove_special_characters(word) for word in words]
-        no_duplicates = list(set(no_special_character_words))
+#         no_special_character_words = [remove_special_characters(word) for word in words]
+#         no_duplicates = list(set(no_special_character_words))
 
-        no_duplicates.sort()
+#         no_duplicates.sort()
     
-    return no_duplicates
+#     return no_duplicates
 
 
 @dataclass
@@ -70,13 +70,14 @@ def convert_number_range_to_string(number_range):
             result += str(number_range[i].min) + "-" + str(number_range[i].max)
         if i != len(number_range) - 1:
             result += ", "
+        if i == len(number_range) - 1:
+            result += "\n"
     return result
 
 def process_page_numbers(number_range):
     still_processing = False
     for i in range(1, len(number_range)):
-        print(number_range)
-        if number_range[i].min - number_range[i-1].max < 2:
+        if number_range[i].min - number_range[i-1].max < 4:
             number_range[i-1].max = number_range[i].max
             del number_range[i]
             still_processing = True
@@ -86,13 +87,15 @@ def process_page_numbers(number_range):
     return convert_number_range_to_string(number_range)
 
 
-def search_page_numbers(word, complete_text):
+def search_page_numbers(words, complete_text):
     page_numbers = []
-    for i in range(0, len(complete_text.pages)):
-        PageObj = complete_text.pages[i]
-        Text = PageObj.extract_text()
-        if re.search(word ,Text, re.IGNORECASE):
-            page_numbers.append(i+1+OFFSET)
+    split_words = words.split(";")
+    for i in range(OFFSET, len(complete_text.pages)):    
+        for word in split_words:
+            page_obj = complete_text.pages[i]
+            text = page_obj.extract_text()
+            if re.search(word, text, re.IGNORECASE):
+                page_numbers.append(i+1+OFFSET)
     return page_numbers
 
 def save_desired_words():
@@ -103,14 +106,18 @@ def save_desired_words():
     complete_text = pypdf.PdfReader(PDF_FILE)
 
     with open(INDEX_FILE, "w") as index:
-        for word in desired_words:
-            if word.count(",") > 0:
-                word = deal_with_commas(word)
-            index.write(word + " ")
+        for words in desired_words:
+            # if word.count(",") > 0:
+            #     word = deal_with_commas(word)
+            word = words.split(";")[0]
+            index.write(word + ": ")
             # this search takes a long time!!
-            index.write(str(search_page_numbers(word, complete_text)))
+            page_numbers = search_page_numbers(words, complete_text)
+            number_range = create_number_range(page_numbers)
+            index.write(process_page_numbers(number_range))
 
 if __name__ == "__main__":
+    # not sure if this is really useful
     # all_words = get_words_from_PURE_TEXT_FILE(PURE_TEXT_FILE)
     # save_all_words(all_words)
 
