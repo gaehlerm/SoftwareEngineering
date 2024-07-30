@@ -12,10 +12,7 @@ The current configuration of the project is quite neat when working with Visual 
 
 This is a book about software engineering, similar to "Clean Code" by Robert C. Martin, "The Pragmatic Programmer" by Thomas & Hunt and "Code Complete 2" by Steve McConnell. The current document is only a rough draft, though it's making progress. The initial chapters feel already quite good, the latter portion of the book requires significant revision.
 
-## Things to write
-
-- Some more chapters towards the end of the book need to be improved.
-
+## suggested chapter structure
 
 A suggestion how to sort the text into bigger chapters. The auto generated ToC below has to be adapted as well.
 
@@ -64,7 +61,7 @@ Chapter 7: Refactoring 33-36
 - Refactoring techniques
 - Refactoring Legacy Code
 
-Chapter 8: Miscelaneous 37-41
+Chapter 8: Other Common topics 37-41
 - Performance Optimization
 - Comments
 - Logging
@@ -91,7 +88,7 @@ Appendix B
 
 - [1. Introduction to Software Engineering](#1-introduction-to-software-engineering)
   - [Getting started](#getting-started)
-  - [Things to write](#things-to-write)
+  - [suggested chapter structure](#suggested-chapter-structure)
 - [2. Table of content](#2-table-of-content)
 - [3. One sentence summary](#3-one-sentence-summary)
 - [4. The short story behind this book](#4-the-short-story-behind-this-book)
@@ -100,8 +97,7 @@ Appendix B
   - [What this book is about](#what-this-book-is-about)
   - [Who this book is for](#who-this-book-is-for)
   - [Writing this book](#writing-this-book)
-- [6. Software Engineering](#6-software-engineering)
-  - [The Life of a Software Engineer](#the-life-of-a-software-engineer)
+- [6. The Life of a Software Engineer](#6-the-life-of-a-software-engineer)
   - [Understandable Code](#understandable-code)
   - [Writing correct code](#writing-correct-code)
   - [Cleaning up code](#cleaning-up-code)
@@ -673,16 +669,11 @@ Writing a book about software development is hard. Harder than writing a book ab
 I can only provide you with some general rules of thumb, and you will have to determine how to apply them yourself. This will take practice, and it is preferable to work together with a more experienced coworker who can assist you in case you have any questions. This book is a collection of recommendations. But ultimately, you will need to learn how to apply the recommendations given here on your own.
 
 
--# Chapter 1: First things first
+-# Chapter 1: Fundamentals of Software Engineering
 
-# 6. Software Engineering
+# 6. The Life of a Software Engineer
 
 "If I had an hour to solve a problem, I'd spend 55 minutes thinking about the problem and 5 minutes thinking about solutions." – Albert Einstein
-
-// volker: first the rule and then the explanations, maybe also the list first
-don't use politicians as an example, rather use Harry Potter (easy to understand, yet good story)
-
-## The Life of a Software Engineer
 
 I understand that you want me to begin and provide you with some sophisticated code examples. And I'm sorry to inform you that this is not happening. We don't even know yet what this book should be about. Of course, you want to become a great software engineer, get a job at Google, earn a lot of money, and live a happy life. But this is not how it works. We first have to sit down and analyze the situation.
 
@@ -698,7 +689,7 @@ You will, of course, spend a fair amount of time with your precious code. But I 
 
 <img src=images/programmerActivity.png width="400">
 
-// get an image without copy right
+// TODO: get an image without copy right
 
 You definitely need to take a second look to fully understand the meaning of this plot. You will spend only 5% of the time implementing new features! 5%! Not to mention all the meetings you have to attend as well. Of course, these numbers are only a very rough estimate. They depend on many factors. If you are working on a new project where no refactoring (code clean up) is required yet, you will have less code to read. Ultimately, you will spend more time coding. In a very large project, it takes more time to implement changes. It can take a year to become fully productive in a large project! But the company has been generating revenue from this code for a long time, so prioritizing the addition of new features is no longer as crucial. Either way, I will continue the discussion with the value from the plot.
 
