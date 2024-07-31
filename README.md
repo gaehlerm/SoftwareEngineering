@@ -14,34 +14,33 @@ This is a book about software engineering, similar to "Clean Code" by Robert C. 
 
 ## suggested chapter structure
 
-A suggestion how to sort the text into bigger chapters. The auto generated ToC below has to be adapted as well.
+A suggestion how to sort the text into bigger chapters. The auto generated ToC does not contain yet the chapters. Only the sections. This will have to be adapted in the future.
 
-Chapter 1: Fundamentals of Software Engineering 6-12
-- Software Engineering
-- Good Code, a list of rules
+Chapter 1: Fundamentals of Software Engineering
+- The Life of a Software Engineer
+- Good Code: Some Rules of Thumb
 - Understandable Code
-- The Single Responsibility Principle (SRP)
+- The Single Responsibility Principle
 - Levels of Abstraction
 - Interfaces
 - Naming
 
-Chapter 2: Components of Code 13-17
+Chapter 2: Components of Code
 - Data Types
 - Properties of Variables
 - Functions
 - Classes
-- Inheritance
 
-Chapter 3: Testing 18-20
+Chapter 3: Testing
 - Introduction to Testing
 - Types of Tests
 - Writing better code with tests
 
-Chapter 4: Design Principles 21-22
+Chapter 4: Design Principles 
 - SOLID principles
 - Software Engineering principles
 
-Chapter 5: Programming 23-29
+Chapter 5: Programming 
 - Programming Paradigms
 - Programming Languages
 - Physical Laws of Code
@@ -50,24 +49,24 @@ Chapter 5: Programming 23-29
 - Dependencies
 - Decoupling
 
-Chapter 6: High level design 30-32
+Chapter 6: High level design
 - Software Architecture
 - Design patterns
 - Domain Driven Design
 - 3rd party software
 
-Chapter 7: Refactoring 33-36
+Chapter 7: Refactoring
 - Refactoring Fundamentals
 - Refactoring techniques
 - Refactoring Legacy Code
 
-Chapter 8: Other Common topics 37-41
+Chapter 8: Other Common topics
 - Performance Optimization
 - Comments
 - Logging
 - Data files
 
-Chapter 9: Collaborating 42-50
+Chapter 9: Collaborating
 - Setting up a project
 - Tools
 - Working in teams
@@ -175,7 +174,7 @@ Appendix B
   - [Dictionaries](#dictionaries)
   - [Trees](#trees)
   - [Pointers](#pointers)
-- [13. Properties of Variables](#13-properties-of-variables)
+- [14. Properties of Variables](#14-properties-of-variables)
   - [Compile-time constant](#compile-time-constant)
   - [Runtime Constant](#runtime-constant)
   - [Mutable Variables](#mutable-variables)
@@ -183,7 +182,7 @@ Appendix B
   - [Static Variables](#static-variables)
   - [Global Variables](#global-variables)
   - [Comparison of Variable Properties](#comparison-of-variable-properties)
-- [13. Functions](#13-functions)
+- [15. Functions](#15-functions)
   - [Do one thing only](#do-one-thing-only)
     - [Levels of indentation](#levels-of-indentation)
   - [Number of Arguments](#number-of-arguments)
@@ -192,7 +191,7 @@ Appendix B
   - [Return Values](#return-values)
   - [Summary](#summary-1)
   - [Copilot](#copilot-4)
-- [14. Classes](#14-classes)
+- [16. Classes](#16-classes)
   - [Data Classes and Structs](#data-classes-and-structs)
   - [Private or Public](#private-or-public)
   - [Different Kinds of Classes](#different-kinds-of-classes)
@@ -230,7 +229,7 @@ Appendix B
     - [Advantages of Inheritance](#advantages-of-inheritance)
     - [Inheritance and Composition](#inheritance-and-composition)
     - [Conclusions](#conclusions-1)
-- [18. Introduction to Testing](#18-introduction-to-testing)
+- [17. Introduction to Testing](#17-introduction-to-testing)
   - [A short story about tests](#a-short-story-about-tests)
   - [Test Example](#test-example)
     - [Structure of a Software Test](#structure-of-a-software-test)
@@ -254,7 +253,7 @@ Appendix B
   - [The Beyoncé Rule](#the-beyoncé-rule)
   - [Exceptions and Tests](#exceptions-and-tests)
   - [Not Automatable Tests](#not-automatable-tests)
-- [19. Types of Tests](#19-types-of-tests)
+- [18. Types of Tests](#18-types-of-tests)
   - [Unit Tests](#unit-tests)
     - [Testing Files in Unit Tests](#testing-files-in-unit-tests)
     - [Testing classes](#testing-classes)
@@ -267,7 +266,7 @@ Appendix B
   - [When to run Tests](#when-to-run-tests)
   - [Who should write Tests?](#who-should-write-tests)
   - [The Testing Pyramid](#the-testing-pyramid)
-- [20. Writing Better Code with Tests](#20-writing-better-code-with-tests)
+- [19. Writing Better Code with Tests](#19-writing-better-code-with-tests)
   - [Unit Tests](#unit-tests-1)
   - [Integration and Functional Tests](#integration-and-functional-tests)
   - [Testing Existing Code](#testing-existing-code)
@@ -282,7 +281,7 @@ Appendix B
     - [Dependency Injection](#dependency-injection)
   - [Summary](#summary-2)
   - [Copilot](#copilot-7)
-- [21. SOLID principles](#21-solid-principles)
+- [20. SOLID principles](#20-solid-principles)
   - [Single Responsibility Principle](#single-responsibility-principle)
   - [Open Closed Principle](#open-closed-principle)
   - [Liskov Substitution Principle](#liskov-substitution-principle)
@@ -290,7 +289,7 @@ Appendix B
   - [Dependency Inversion Principle](#dependency-inversion-principle)
     - [Example](#example-1)
   - [Summary](#summary-3)
-- [22. Software Engineering Principles](#22-software-engineering-principles)
+- [21. Software Engineering Principles](#21-software-engineering-principles)
   - [Divide and Conquer](#divide-and-conquer)
   - [Increase Cohesion](#increase-cohesion)
   - [Reduce coupling](#reduce-coupling)
@@ -300,14 +299,14 @@ Appendix B
   - [Anticipate Obsolescence](#anticipate-obsolescence)
   - [Design for Testability](#design-for-testability)
   - [Pay Now or Pay More Later](#pay-now-or-pay-more-later)
-- [23. Programming Paradigms](#23-programming-paradigms)
+- [22. Programming Paradigms](#22-programming-paradigms)
   - [Object-Oriented Programming](#object-oriented-programming)
   - [Procedural programming](#procedural-programming)
   - [Functional Programming](#functional-programming)
   - [Temporal Coupling](#temporal-coupling)
   - [Conclusions](#conclusions-2)
   - [Copilot](#copilot-8)
-- [24. Programming Languages](#24-programming-languages)
+- [23. Programming Languages](#23-programming-languages)
   - [Java and C++](#java-and-c)
   - [Existing Programming Languages](#existing-programming-languages)
   - [Code Examples](#code-examples)
@@ -322,12 +321,12 @@ Appendix B
     - [Classes](#classes-1)
     - [Structs](#structs)
   - [Copilot](#copilot-9)
-- [25. Physical Laws of Code](#25-physical-laws-of-code)
+- [24. Physical Laws of Code](#24-physical-laws-of-code)
   - [Entropy](#entropy)
   - [Correlation](#correlation)
   - [Quality](#quality)
     - [Over Engineering](#over-engineering)
-- [26. Bugs, Errors, Exceptions](#26-bugs-errors-exceptions)
+- [25. Bugs, Errors, Exceptions](#25-bugs-errors-exceptions)
   - [Syntax Errors](#syntax-errors)
   - [Bugs](#bugs)
     - [Cost of Bugs](#cost-of-bugs)
@@ -339,28 +338,28 @@ Appendix B
   - [Exceptions](#exceptions)
     - [Wrapping exceptions](#wrapping-exceptions)
     - [Exceptions and Goto](#exceptions-and-goto)
-- [27. Complexity](#27-complexity)
+- [26. Complexity](#26-complexity)
   - [Complexity of Code](#complexity-of-code)
   - [Estimating complexity](#estimating-complexity)
     - [Precision and Accuracy](#precision-and-accuracy)
   - [Single line complexity](#single-line-complexity)
   - [Black magic code](#black-magic-code)
-- [28. Dependencies](#28-dependencies)
+- [27. Dependencies](#27-dependencies)
   - [The Early Days](#the-early-days)
   - [The dependency graph](#the-dependency-graph)
   - [Breaking up Dependencies](#breaking-up-dependencies)
   - [Circular Dependencies](#circular-dependencies)
     - [Example](#example-2)
-- [29. Decoupling](#29-decoupling)
-- [30. Software Architecture](#30-software-architecture)
+- [28. Decoupling](#28-decoupling)
+- [29. Software Architecture](#29-software-architecture)
   - [The end of Architecture](#the-end-of-architecture)
   - [Designing Interfaces](#designing-interfaces)
   - [Separate Libraries](#separate-libraries)
     - [Coupling](#coupling)
     - [Coupling](#coupling-1)
-- [31. Design Patterns](#31-design-patterns)
+- [30. Design Patterns](#30-design-patterns)
   - [Factory](#factory)
-- [32. Domain Driven Design](#32-domain-driven-design)
+- [31. Domain Driven Design](#31-domain-driven-design)
   - [Ubiquitous Language](#ubiquitous-language)
   - [The Domain Model](#the-domain-model)
     - [Documentation and Planning](#documentation-and-planning)
@@ -381,8 +380,8 @@ Appendix B
     - [Value Object](#value-object)
     - [Services](#services)
     - [Aggregates](#aggregates)
-- [33. 3rd party software](#33-3rd-party-software)
-- [34. Refactoring Fundamentals](#34-refactoring-fundamentals)
+- [32. 3rd party software](#32-3rd-party-software)
+- [33. Refactoring Fundamentals](#33-refactoring-fundamentals)
   - [There will be change](#there-will-be-change)
   - [Don't Let Your Code Rot](#dont-let-your-code-rot)
     - [Refactoring and Automated Tests](#refactoring-and-automated-tests)
@@ -393,7 +392,7 @@ Appendix B
   - [When to Refactor](#when-to-refactor)
   - [What to Refactor](#what-to-refactor)
   - [Refactoring Process](#refactoring-process)
-- [35. Refactoring Techniques](#35-refactoring-techniques)
+- [34. Refactoring Techniques](#34-refactoring-techniques)
   - [Where to start](#where-to-start)
   - [Breaking classes](#breaking-classes)
     - [Too many methods](#too-many-methods)
@@ -406,7 +405,7 @@ Appendix B
     - [Inlining functions](#inlining-functions)
   - [Dependency Injector](#dependency-injector)
   - [Copilot](#copilot-11)
-- [36. Refactoring Legacy Code](#36-refactoring-legacy-code)
+- [35. Refactoring Legacy Code](#35-refactoring-legacy-code)
   - [No Useful Interfaces](#no-useful-interfaces)
   - [No Tests](#no-tests)
   - [Extremely Long Functions](#extremely-long-functions)
@@ -416,11 +415,11 @@ Appendix B
   - [How do I get the Code under Test?](#how-do-i-get-the-code-under-test)
     - [What Tests should I write?](#what-tests-should-i-write)
   - [Sprout Method](#sprout-method)
-- [37. Performance Optimization](#37-performance-optimization)
+- [36. Performance Optimization](#36-performance-optimization)
   - [No Optimization Needed](#no-optimization-needed)
   - [Optimization Maybe Needed](#optimization-maybe-needed)
   - [Optimizing Certainly Needed](#optimizing-certainly-needed)
-- [38. Comments](#38-comments)
+- [37. Comments](#37-comments)
   - [Bad comments](#bad-comments)
     - [Commented Out Code](#commented-out-code)
     - [TODO Comments](#todo-comments)
@@ -432,8 +431,8 @@ Appendix B
   - [Commenting magic numbers](#commenting-magic-numbers)
   - [Summary](#summary-4)
   - [Copilot](#copilot-12)
-- [39. Logging](#39-logging)
-- [40. Data files](#40-data-files)
+- [38. Logging](#38-logging)
+- [39. Data files](#39-data-files)
   - [CSV](#csv)
     - [Copilot](#copilot-13)
   - [JSON](#json)
@@ -445,8 +444,8 @@ Appendix B
   - [Databases](#databases)
     - [Copilot](#copilot-17)
   - [Custom File Formats](#custom-file-formats)
-- [41. Setting up a project](#41-setting-up-a-project)
-- [42. Tools](#42-tools)
+- [40. Setting up a project](#40-setting-up-a-project)
+- [41. Tools](#41-tools)
   - [Version control software](#version-control-software)
     - [Git, everywhere git](#git-everywhere-git)
     - [Copilot](#copilot-18)
@@ -462,16 +461,16 @@ Appendix B
   - [Ticketing system](#ticketing-system)
   - [Wiki](#wiki)
   - [Docstring](#docstring-1)
-- [44. Working in teams](#44-working-in-teams)
+- [43. Working in teams](#43-working-in-teams)
   - [Team Structure](#team-structure)
     - [The Bus Factor](#the-bus-factor)
   - [Developers work](#developers-work)
   - [Communication](#communication)
   - [Working with customers](#working-with-customers)
-- [45. Code Review](#45-code-review)
+- [44. Code Review](#44-code-review)
   - [Drawbacks](#drawbacks)
   - [Conclusions](#conclusions-3)
-- [46. Agile](#46-agile)
+- [45. Agile](#45-agile)
   - [Problems of Waterfall](#problems-of-waterfall)
   - [Agile was born](#agile-was-born)
   - [Work Planning](#work-planning)
@@ -479,7 +478,7 @@ Appendix B
   - [Sprints](#sprints)
   - [Becoming Agile](#becoming-agile)
   - [Drawbacks of Agile](#drawbacks-of-agile)
-- [47. Requirements Engineering](#47-requirements-engineering)
+- [46. Requirements Engineering](#46-requirements-engineering)
   - [Stakeholders](#stakeholders)
   - [Goals, Context, and Scope](#goals-context-and-scope)
     - [Requirements Elicitation](#requirements-elicitation)
@@ -490,16 +489,16 @@ Appendix B
     - [Review of Requirements](#review-of-requirements)
     - [Administration of Requirements](#administration-of-requirements)
     - [Tools for Requirements Management](#tools-for-requirements-management)
-- [48. DevOps](#48-devops)
+- [47. DevOps](#47-devops)
   - [The early 2000s](#the-early-2000s)
     - [Getting a project](#getting-a-project)
   - [Benefits of DevOps](#benefits-of-devops)
-- [49. Mental health](#49-mental-health)
-- [50. Hiring and Getting Hired](#50-hiring-and-getting-hired)
+- [48. Mental health](#48-mental-health)
+- [49. Hiring and Getting Hired](#49-hiring-and-getting-hired)
   - [Hiring](#hiring)
   - [Getting Hired](#getting-hired)
-- [51. Further reading](#51-further-reading)
-- [52. Frequently used Abbreviations](#52-frequently-used-abbreviations)
+- [50. Further reading](#50-further-reading)
+- [51. Frequently used Abbreviations](#51-frequently-used-abbreviations)
 
 
 # 3. One sentence summary
@@ -1925,7 +1924,7 @@ Python, as most other modern programming languages, doesn't use pointers. C++ on
 The only remnant where pointers are still needed for technical reasons is interfaces. Use pointers only for interfaces and opt for modern smart pointers (unique pointer or shared pointer) and you will be fine.
 
 
-# 13. Properties of Variables
+# 14. Properties of Variables
 
 Once again, things only got started with the introduction to the data types. The hard part is not choosing a data type, but figuring out how to deal with them. How to facilitate interaction between them. Here, one can easily create a huge mess if things are not considered properly. Even experienced programmers do not always know how to structure them properly. It is challenging. And I'm trying to explain to you at least some very fundamental ideas to look out for.
 
@@ -2024,7 +2023,7 @@ Inherited variables are even worse than class variables. It is not easy to see w
 A Singleton is a class that can have at most one instance. If you create objects of this class in several locations, they all share the same class instance. There are very few cases where singletons are truly useful. This is mostly the case for connections. It allows multiple sections of your code to utilize the same connection to your database, web server, mobile phone, etc. If you have limited communication and only a few relatively large datasets, this is not necessary. You wouldn't gain much from using the singleton pattern. Every class or library can connect to the database to retrieve data when needed and disconnect when finished. For many small database requests, using a singleton may significantly increase performance. However, singletons are commonly abused to act as a global variable. And this is really bad. For this reason, it is generally discouraged to use singletons unless you truly understand why you need one [https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_73].
 
 
-# 13. Functions
+# 15. Functions
 
 naming of functions is in functions! -> move it here as well
 temporal coupling -> move elsewhere
@@ -2241,7 +2240,7 @@ def author_is(author):
 print_books_where(author_is('Paulo Coelho'))
 ```
 
-# 14. Classes
+# 16. Classes
 
 "I think it's a new feature. Don't tell anyone it was an accident." — Larry Wall
 
@@ -2869,7 +2868,7 @@ There are also some more esoteric concepts, such as friend classes. At first sig
 
 -# Chapter 3: Testing
 
-# 18. Introduction to Testing
+# 17. Introduction to Testing
 
 // if you don't use TDD, insert errors into the production code to test the tests. https://github.com/97-things/97-things-every-programmer-should-know/tree/master/en/thing_95
 
@@ -3308,7 +3307,7 @@ Test-Driven Development (TDD) may help to avoid this issue. With TDD you first w
 
 As software engineers, we aim to automate everything, including tests. However, this is not always possible. There are still things that we can hardly automate. One example is image processing algorithms. How much can an image be compressed while still maintaining good quality? This is very difficult to determine with an automated test and is better assessed by humans. When running complex simulations, such as analyzing the aerodynamics of an airplane, it is impossible to create a test to verify the accuracy of the simulation results. Simply because you don't know the correct result. You can only judge if the result makes sense based on your experience. There are still things that are better tested by humans than computers.
 
-# 19. Types of Tests
+# 18. Types of Tests
 
 There are different types of tests, depending on their scope. There are several different categories of tests. Though, for the sake of simplicity, I'd like to reduce it to only 3 different types. Please note that the distinction between the different types of tests is not always clear. There are some tests that are a combination of two different types. But, in general, the following three categories are sufficient.
 
@@ -3580,7 +3579,7 @@ Functional tests are the least common. They are very valuable for verifying that
 
 Once you confirm that the engine, gearbox, and brakes of a car are functioning properly and working in harmony, there is not much more to test on the fully assembled car. If it runs, it's probably fine. Only about 5% of all tests are functional tests.
 
-# 20. Writing Better Code with Tests
+# 19. Writing Better Code with Tests
 
 "Quality is a product of a conflict between programmers and testers." ― Yegor Bugayenk
 
@@ -4059,7 +4058,7 @@ print(process_data(reader))
 -# Chapter 4: Design Principles
 
 
-# 21. SOLID principles 
+# 20. SOLID principles 
 
 "It is not enough for code to work." Robert C. Martin
 
@@ -4329,7 +4328,7 @@ Now, `main` depends only on the interface of `NothingBase`, not on the implement
 
 I believe this was the longest section in the book where I delve into technical details for C++ that may not be essential for Python users. At the same time, I would like to emphasize that this section was very important for C++ and Java programmers. Both for the quality of the code and for understanding how the concepts of includes, compiler, and linker work.
 
-# 22. Software Engineering Principles
+# 21. Software Engineering Principles
 
 In this chapter, I explain some very general design principles that I learned from a YouTube video [https://youtu.be/XQzEo1qag4A] published by the channel "Tech with Tim". I really liked these very general principles and therefore decided to write a chapter about them.
 
@@ -4389,7 +4388,7 @@ That being said, you have to know where you can go fast and where technical debt
 
 -# Chapter 5: Programming
 
-# 23. Programming Paradigms
+# 22. Programming Paradigms
 
 "Object-Oriented programming at the edges of your system always has side effects. Because otherwise, it wouldn't do anything." - David Farley [https://youtu.be/Ly9dtWwqqwY?t=776]
 
@@ -4548,7 +4547,7 @@ a = [i for i in range(10)]
 // [https://youtu.be/RDd71IUIgpg]
 
 
-# 24. Programming Languages
+# 23. Programming Languages
 
 "I think I'm a much better programmer now than I used to be, even though I know less about the details in each programming language I work in." – Michael Feathers [WELC, p.311]
 
@@ -4715,7 +4714,7 @@ for i in range(10):
     print(i)
 ```
 
-# 25. Physical Laws of Code
+# 24. Physical Laws of Code
 
 // break up this chapter merge it with other?
 
@@ -4766,7 +4765,7 @@ Whether something is over engineering or not is also a question of what stage in
 Another thing you should avoid is future profing. YAGNI: You Ain't Gonna Need It. It happens more often than not that you write code that you think you will need in the future. But you never do. And then you have to maintain this code for the rest of your life. This is a huge waste of time. Make sure that you write your code to the best of your knowledge now and cover it with tests. Then you can still improve it later on if needed. Only the architect is allowed to make some decisions that may affect your code in the future.
 
 
-# 26. Bugs, Errors, Exceptions
+# 25. Bugs, Errors, Exceptions
 
 "One in a million is always next Tuesday." - Gordon Letwin
 
@@ -4888,7 +4887,7 @@ Make sure your unit tests also verify the handling of exceptions. Exceptions are
 By the way, you might have heard of the `goto` statement that was widely used until the 1970s. Then Edsger Dijkstra wrote the famous paper "Go to Statement Considered Harmful" [](https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf) which basically ended the usage of the goto statement. As always, there was a lot of truth behind his argument, but there are cases where goto statements are a legitimate choice. The Linux kernel is written in C, which does not support exceptions. Therefore, the Linux kernel uses goto statements instead. The goto is called when an error occurs and redirects the code to the equivalent of a catch block. Thus, goto statements are not always that bad. But you can certainly write terrible spaghetti code if you abuse goto statements.
 
 
-# 27. Complexity
+# 26. Complexity
 
 "I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it." – Bill Gates
 
@@ -4980,7 +4979,7 @@ Your code will contain some complexity. There's no doubt about it. The only ques
 It is much better to be honest. The problem has a certain complexity, and we break it down into smaller pieces that we can solve. Do not hide the complexity; make it apparent.
 
 
-# 28. Dependencies
+# 27. Dependencies
 
 "If you automate a mess, you get an automated mess." — Rod Michael
 
@@ -5060,7 +5059,7 @@ def a(counter):
 As a summary, one can say that circular dependencies should be avoided altogether. This task is usually not too difficult if you use proper levels of abstraction, and it significantly enhances the readability of the code. Even a single recursive call can often be refactored to improve code readability.
 
 
-# 29. Decoupling
+# 28. Decoupling
 
 
 "Before software should be reusable, it should be usable." — Ralph Johnson
@@ -5080,7 +5079,7 @@ Only ask for things you directly need. This is another advantage of functional p
 
 -# Chapter 6: High level design
 
-# 30. Software Architecture
+# 29. Software Architecture
 
 "Architecture: The decisions you wish you could get right early." - Ralph Johnson
 
@@ -5128,7 +5127,7 @@ Interestingly, all the explanations about coupling and cohesion made for classes
 
 An apple can have a color, a flavor, and a price. There can be three different areas: graphical rendering, food, and shopping. Each one uses exactly one property, and it makes no sense to mix them up. Keep the libraries separate and write glue code between them if needed. That's the only way to go. Just trust me. Don't write monolithic software that tries to replicate the entire world. It won't work.
 
-# 31. Design Patterns
+# 30. Design Patterns
 
 Design patterns [](Design Patterns, Elements of Reusable Object-Oriented Software) refer to a specific arrangement of classes, methods, and inheritance that give rise to unique properties in the resulting object. There are about two dozen commonly recognized design patterns and numerous books explaining them. I have neither the space nor the knowledge to write about all of them. I just added this chapter because I think it's important that you learn about design patterns.
 
@@ -5177,7 +5176,7 @@ vehicle = factory["car"]
 ```
 
 
-# 32. Domain Driven Design
+# 31. Domain Driven Design
 
 "The complexity of your code should be at most as complex as the problem space it inhabits and no greater." - David Whitney
 
@@ -5459,7 +5458,7 @@ car = Car(Engine())
 
 Of course, it is sometimes more convenient to have an `engine` as a temporary object. For example, if the readability is affected because the engine is created by a function with a very long name. To achieve this, you should create the mentioned object along with the `car` instance within a specialized factory to encapsulate this temporary object. There, you construct the `engine` and then pass it on to the `car` constructor. The engine should never be visible from the outside. It should be accessible only through the `car` interface.
 
-# 33. 3rd party software
+# 32. 3rd party software
 
 "Prefer visa over power shell" – some YouTube video 
 
@@ -5486,7 +5485,7 @@ You should reconsider using a third-party library if it has only a few developer
 
 -# Chapter 7: Existing Code
 
-# 34. Refactoring Fundamentals
+# 33. Refactoring Fundamentals
 
 "If you wait until you can make a complete justification for a change, you've waited too long." – Eric Evans
 
@@ -5585,7 +5584,7 @@ Last but not least, it is your code. You are responsible. You are the one to dec
 Writing code follows a similar process to the one I use when writing this book. I first started by jotting down the basic ideas. A rough draft of the content I wanted to include in this book. Some ideas I had for a long time, while others I acquired while reading other books. I read the text repeatedly, reworking it several times. I clarified points, removed redundancies, rearranged chapters, and added explanations where necessary. Every time I started to understand my text better, I could further improve it. Until I reached the point where the text said what I wanted it to. Until I had gathered all my knowledge from my head and organized it into a human readable text. Or as Ward Cunningham put it: "By refactoring, I move the understanding from my head into the code."
 
 
-# 35. Refactoring Techniques
+# 34. Refactoring Techniques
 
 "The fewer methods a class has, the better. The fewer variables a function knows about, the better. The fewer instance variables a class has, the better" - Robert C. Martin [Clean Code]
 
@@ -6000,7 +5999,7 @@ This code can be further refactored with the following command:
 As always, Copilot works best if you give it some step by step instructions. It is not always able to find the best solution by itself. Though it is still a great help for refactoring code.
 
 
-# 36. Refactoring Legacy Code
+# 35. Refactoring Legacy Code
 
 "To me, legacy code is code without tests." - Michael Feathers
 
@@ -6173,7 +6172,7 @@ def test_get_valid_entries():
 So, we managed to add only one additional line of code to the original function. All the other code was placed inside the `get_valid_entries` function. This new function is now also unit tested.
 
 
-# 37. Performance Optimization
+# 36. Performance Optimization
 
 "Premature optimization is the root of all evil." - Donald Knuth
 
@@ -6208,7 +6207,7 @@ Always keep in mind that code written with a focus on performance rather than re
 
 -# Chapter 8: Miscellaneous
 
-# 38. Comments
+# 37. Comments
 
 *"Code is like humor. When you have to explain it, it's bad."* – Cory House
 
@@ -6519,7 +6518,7 @@ def roman_number(number):
     return roman
 ```
 
-# 39. Logging
+# 38. Logging
 
 The basic idea of logging is to provide feedback on the steps that your software executed. It might help you find bugs. Now this sounds great, but in reality, there are several things to consider.
 
@@ -6534,7 +6533,7 @@ At the same time, there are some cases where you can consider using a logger.
 - In a GUI the logger could store all the actions performed by the user. This may also be helpful if the user encounters a bug.
 - Finally, a logger may be helpful for the user send in auto-generated error reports if something goes wrong. Users can simply click a button to submit an error report containing all relevant data, eliminating the need to manually write the report themselves. This may be very useful as errors are almost inevitable, and the users are a very helpful group to test your software. As long as the bugs are not too subtle or too serious.
 
-# 40. Data files
+# 39. Data files
 
 There are several file formats available for saving data or using them as an interface. A lot of people apparently don't even know the most important ones, so I would like to give you a very short introduction.
 
@@ -6859,7 +6858,7 @@ conn.close()
 
 Similar to the CSV file, you can also define your own file format for things other than just numbers. You can define your own file with structured data. You can even define your own programming language, such as structured text, within your custom file format. You can do pretty much anything you like. You are a free person. Just don't expect to be paid for such a waste of time. If you aspire to become a successful software engineer, you must prioritize delivering value to the customer. You need to utilize JSON, HDF5 or a database. There is no need to define custom file formats.
 
-# 41. Setting up a project
+# 40. Setting up a project
 
 "If it's your job to eat a frog, it's best to do it in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first." - Mark Twain
 
@@ -6905,7 +6904,7 @@ There are some additional files in a project.
 There are a few pitfalls in arranging the files and folders of your project. However, as long as you follow the general best practices, you should be fine. Consult the resources available on the internet for guidance on your programming language of choice.
 
 
-# 42. Tools
+# 41. Tools
 
 "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." - Linus Torvalds
 
@@ -7032,7 +7031,7 @@ The docstring software automatically creates documentation based on the comments
 Every programming language has its own documentation tool. For Python, it’s Sphinx, and for C++, it’s Doxygen.
 
 <!-- 
-# 43. Too short to be a chapter
+# 42. Too short to be a chapter
 not sure if this chapter is needed
 ## Logging
 
@@ -7042,7 +7041,7 @@ not sure if this chapter is needed
 
 -# Chapter 9 Collaborating
 
-# 44. Working in teams
+# 43. Working in teams
 
 [](97 things every programmer should know, thing 85), [](Software Engineering at Google, chapter 2)
 
@@ -7110,7 +7109,7 @@ Customers are only humans. Quite frequently, they don't say what they mean becau
 
 Frequently, customers do not prioritize what is important. Or at least, things that are important to customers may not be important to the programmer. For instance, a software is only used if the GUI looks exactly the same as in the previous software. As long as the user does not have to learn anything new. Even if the old GUI was poorly designed, the customer refuses to adapt. You really have to come up with some significant improvements for your version to be accepted.
 
-# 45. Code Review
+# 44. Code Review
 
 "The computer was born to solve problems that did not exist before." — Bill Gates
 
@@ -7154,7 +7153,7 @@ With highly experienced programmers, on the other hand, one can skip the code re
 
 I generally recommend conducting code reviews. However, if code reviews become burdensome, which can easily happen, you have to reconsider your approach to work and perhaps explore alternative methods to disseminate information about your code. Just remember that sharing knowledge is crucial, albeit quite costly.
 
-# 46. Agile
+# 45. Agile
 
 "All architectures become iterative because of unknown unknowns. Agile just recognizes this and does it sooner." - Mark Richards
 
@@ -7243,7 +7242,7 @@ Another very common problem is the number of meetings. While there is a need to 
 
 Finally, Agile does not solve the problem of inaccurate estimations of the total workload. Although these estimations are less imprecise than they used to be with waterfall, the issue remains that nobody truly knows the exact amount of work required. While you may have a backlog with tickets and possibly even some vague estimations of their sizes, the total amount of work remaining is still quite uncertain. The actual workload only becomes clear as time progresses.
 
-# 47. Requirements Engineering
+# 46. Requirements Engineering
 
 "The most difficult part of requirements gathering is not the act of recording what the user wants, it is the exploratory development activity of helping users figure out what they want." - Steve McConnell
 
@@ -7356,7 +7355,7 @@ A common tool is Atlassian Jira. With this tool, requirements and test cases can
 
 
 
-# 48. DevOps
+# 47. DevOps
 
 Development and Operations, short DevOps, is the combination of Continuous Integration (CI) and Continuous Delivery (CD). In short, it is automating everything from the build, tests to the release. But in order to understand more precisely behind DevOps, we have to take a look at how software development teams used to work in the early 2000s. What kind of problems they had that DevOps promisses to solve.
 
@@ -7393,7 +7392,7 @@ It was a pain. And in many companies it still is. There is a simple rule about g
 - Reliability: DevOps improves the reliability of the software. It is easier to find bugs and fix them. Also the software is more stable as it is tested more thoroughly.
 
 
-# 49. Mental health
+# 48. Mental health
 
 I didn't really think about this topic until I watched just another random youtube video about this topic [](https://youtu.be/aK_Jq00Hd8E). It's not exactly the topic I wanted to write about in this book to begin with, but as I look at the other chapters around here, it probably makes sense to write about it as well. Because mental health is a huge problem in software engineering. Trust me, I've been there as well. Of course there are also physical problems because we sit too much, but probably more prevalent are mental health issues.
 
@@ -7409,7 +7408,7 @@ On the other hand, there are also plenty of things that can make you feel better
 
 Furthermore a rewarding work is also very important to keep your spirits high. For example if you frequently finish your tickets in time and you are praised for it by your boss. On the other side it is very depressing if your tickets are too big to be finished and you are constantly behind your schedule. This is a common issue in Agile development [section ?]. Your work is only rewarding if your team is realistic about how fast they can work.
 
-# 50. Hiring and Getting Hired
+# 49. Hiring and Getting Hired
 
 [](The Software Craftsman), [](Cracking the Coding Interview)
 
@@ -7459,7 +7458,7 @@ I hope you have learned many things that will assist you in your career as a sof
 
 Marco
 
-# 51. Further reading
+# 50. Further reading
 
 I learned quite some things reading books and watching youtube videos, even though not as much as I did when thinking about and discussing code at work. The selection of books may be somewhat biased by the algorithms used by Amazon and YouTube. There are probably plenty of other good books and videos out there, I just didn't know about them. Here are the books that I read so far:
 
@@ -7501,7 +7500,7 @@ And several youtube channels:
 @alexhyettdev, @ArjanCodes, @ThePrimeTimeagen, @CodeOpinion, @derekbanas, @TechWithTim, @ContinuousDelivery, 
 
 
-# 52. Frequently used Abbreviations
+# 51. Frequently used Abbreviations
 
 API	Application Programmable Interface 
 BDD	Behavior Driven Development
@@ -7516,6 +7515,7 @@ OO	Object-Oriented
 QA	Quality Assurance 
 TDD	Test-Driven Development 
 YAGNI You Aren’t Going Need It
+
 
 
 
